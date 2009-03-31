@@ -1,0 +1,68 @@
+SDAPS
+=====
+
+This Program can be used to carry out paper based surveys.
+
+The questinaire is designed using OpenOffice.org and then exported to PDF.
+SDAPS then uses both the ODT document and the PDF file to figure out what
+questions are asked, and where checkboxes and freeform fields are placed.
+After this, the program can create an arbitrary number of (unique)
+questinaires that can be printed and handed out. After being filled out, you
+just scan them in, let sdaps run over them, and let it create a report with
+the results.
+
+
+Requirements
+============
+
+ * Python (only tested with python 2.5)
+ * GTK+ (for the front end that can be used to control/correct the results)
+ * reportlab version 2.1
+ * python-cairo (including development files)
+ * libtiff (including development files)
+ * python development files
+ * pkg-config
+
+Installation
+============
+
+SDAPS cannot currently be installed as a python module. Currently the best
+way to go ahead is to just run it from its own directory.
+
+Compiling the C extension
+=========================
+
+SDAPS uses a custom C extension for python to be able to handle the image
+data efficiently. Thanks to this it is quite fast at what it does.
+
+To compile the C module, go into the "image" subdirectory and run make. You
+may need to install some software to be able to compile the module (see also
+above). If the module is compiled for the wrong python version, replace the
+python-config calls with calls to python2.x-config, or make sure
+python-config corresponds to the correct python version that is used.
+
+On sucess you an image.so file should be created, that can be imported into
+python with "import image".
+
+
+Using SDAPS
+===========
+
+Please run ./sdaps.py without arguments to see the options for now.
+
+Quality of the recognition
+==========================
+
+The quality of the recognition of SDAPS is quite good. The algorithm just
+tests for how much black is in the area of the box. This works pretty good,
+with only a few mistakes in corner cases.
+That said, this is based on results that the authors of this software had.
+To achive these, we had our scanner set configured in a way that meant that
+pretty much all pens or pencils turned out nice black. If you want to use
+this software it is likely that you need to have a look at your scanners
+option to find usable ones, and to also adjust the magic values that SDAPS
+uses.
+For this a tool called "boxgallery" is provided, which will output a list of
+all boxes, and the value that the program uses to detect if they are empty,
+checked or filled in.
+
