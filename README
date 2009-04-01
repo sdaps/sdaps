@@ -18,6 +18,7 @@ Requirements
  * Python (only tested with python 2.5)
  * GTK+ (for the front end that can be used to control/correct the results)
  * reportlab version 2.1
+ * pdftk (recommended)
  * python-cairo (including development files)
  * libtiff (including development files)
  * python development files
@@ -62,7 +63,7 @@ pretty much all pens or pencils turned out nice black. If you want to use
 this software it is likely that you need to have a look at your scanners
 option to find usable ones, and to also adjust the magic values that SDAPS
 uses.
-For this a tool called "boxgallery" is provided, which will output a list of
-all boxes, and the value that the program uses to detect if they are empty,
-checked or filled in.
+For this a tool called "boxgallery" is provided, which will output a sorted
+list of all checkboxes. With this the threshold that is needed can be
+determined.
 
