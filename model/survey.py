@@ -100,6 +100,9 @@ class Survey (object) :
 		'''call function once for each sheet and display a progressbar
 		'''
 		print '%i sheets' % len(self.sheets)
+		if len(self.sheets) == 0:
+			return
+
 		log.progressbar.start(len(self.sheets))
 		
 		for self.index in range(len(self.sheets)) :
