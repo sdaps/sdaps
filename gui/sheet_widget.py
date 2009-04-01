@@ -78,11 +78,10 @@ class SheetWidget(gtk.DrawingArea):
 			yoffset = int(self.vadj.value)
 
 		m = cairo.Matrix(self._zoom, 0,
-						 0, self._zoom,
-						 -xoffset, -yoffset)
+		                 0, self._zoom,
+		                 -xoffset, -yoffset)
 		form_matrix = self.provider.image.matrix.mm_to_px()
-
-		m = form_matrix * m
+		m = form_matrix.multiply(m)
 
 		self._mm_to_widget_matrix = m
 		self._widget_to_mm_matrix = \
@@ -276,7 +275,6 @@ class SheetWidget(gtk.DrawingArea):
 		cr.set_source_rgba(1.0, 0.0, 0.0, 0.6)
 		cr.set_line_width(1.0 * 25.4 / 72.0)
 		cr.rectangle(defs.corner_mark_x, defs.corner_mark_y, defs.corner_mark_width, defs.corner_mark_height)
-		#cr.rectangle(self._survey.x, self._survey.y, self._survey.width, self._survey.height)
 		cr.stroke()
 
 		# Draw the overlay stuff.
