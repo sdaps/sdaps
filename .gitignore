@@ -1,0 +1,7 @@
+*.pyc
+*.wpr
+*~
+*.o
+*.so
+debug.py
+test/test_project
