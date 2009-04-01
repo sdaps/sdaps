@@ -294,32 +294,6 @@ class SheetWidget(gtk.DrawingArea):
 		inner_box(cr, 193.5 - half_pt, 278.5 - half_pt, 3.5 + pt, 3.5 + pt)
 		cr.stroke()
 		
-		if self.provider.image.page_number % 2:
-			return True
-		cr.set_source_rgba(1, 0, 0, 0.3)
-		for i in range(defs.codebox_length) :
-			x = defs.survey_id_msb_x
-			y = defs.survey_id_msb_y
-			cr.rectangle(
-				x + (i * defs.codebox_step) + defs.codebox_offset,
-				y + defs.codebox_offset, 
-				defs.codebox_step - 2 * defs.codebox_offset,
-				defs.codebox_height - 2 * defs.codebox_offset
-			)
-			cr.fill()
-
-		for i in range(defs.codebox_length) :
-			x = defs.survey_id_lsb_x
-			y = defs.survey_id_lsb_y
-			cr.rectangle(
-				x + (i * defs.codebox_step) + defs.codebox_offset,
-				y + defs.codebox_offset, 
-				defs.codebox_step - 2 * defs.codebox_offset,
-				defs.codebox_height - 2 * defs.codebox_offset
-			)
-			cr.fill()
-
-
 		return True
 
 	def do_key_press_event(self, event):
