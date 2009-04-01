@@ -55,56 +55,29 @@ class Provider (object) :
 		self.images.extend(list(self.survey.sheet.images))
 	
 	def next (self) : #, skip_valid = 1) :
-		#self._surface = None
 		self.image.surface.clean()
-		#tmp = self.index
 		self.index += 1
 		if self.index == len(self.images) :
 			self.index = 0
-		#while skip_valid and self.image.sheet.valid :
-			#self.index += 1
-			#if self.index == len(self.images) :
-				#self.index = 0
-			#if self.index == tmp : break
 		self.image.surface.load()
 		self.survey.goto_sheet(self.image.sheet)
 
 	def previous (self) : #, skip_valid = 1) :
-		#self._surface = None
 		self.image.surface.clean()
-		#tmp = self.index
 		self.index -= 1
 		if self.index < 0 :
 			self.index = len(self.images) - 1
-		#while skip_valid and self.image.sheet.valid :
-			#self.index -= 1
-			#if self.index < 0 :
-				#self.index = len(self.images) - 1
-			#if self.index == tmp : break
 		self.image.surface.load()
 		self.survey.goto_sheet(self.image.sheet)
 	
 	def goto (self, index) :
+		print index
 		if index >= 0 and index < len(self.images):
-			#self._surface = None
 			self.image.surface.clean()
 			self.index = index
 			self.image.surface.load()
 			self.survey.goto_sheet(self.image.sheet)
 
-	#def get_surface (self) :
-		#if not hasattr(self.image.surface, 'surface') :
-			#self.image.surface.load()
-		#return self.image.surface.surface
-		##if self._surface is None :
-			##self._surface = image.get_a1_from_tiff(
-				##self.survey.path(self.image.filename),
-				##self.image.rotated
-			##)
-		##return self._surface
-	
-	#surface = property(get_surface)
-	
 	
 class MainWindow(object):
 	
