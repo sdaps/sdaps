@@ -175,6 +175,8 @@ def stamp (survey, count = 0, used_ids = None) :
 	stamped.write(file(survey.path('tmp.pdf'), 'wb'))
 	
 	# use pdftk to compress the file
-	subprocess.call(['pdftk', survey.path('tmp.pdf'), 'output', survey.new_path('stamped_%i.pdf'), 'compress'])
-	os.remove(survey.path('tmp.pdf'))
-	
+	try:
+		subprocess.call(['pdftk', survey.path('tmp.pdf'), 'output', survey.new_path('stamped_%i.pdf'), 'compress'])
+		os.remove(survey.path('tmp.pdf'))
+	except OSError:
+		os.rename(survey.path('tmp.pdf'), survey.new_path('stamped_%i.pdf'))
