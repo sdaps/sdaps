@@ -35,6 +35,6 @@ def ids (survey, pattern = '%i\n') :
 
 	ids = file(survey.new_path('ids_%i'), 'w')
 	for id in survey.questionnaire_ids :
-		print >> ids, (pattern % id).encode('utf-8')
+		ids.write((pattern % id).encode('utf-8'))
 	ids.close()
 
