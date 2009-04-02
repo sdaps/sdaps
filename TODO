@@ -1,0 +1,4 @@
+ * Test more Scanners
+ * Internationalization, most things are currently hardcoded to german
+ * Different paper sizes (hardcoded to A4)
+ * Multipage/singlepage (up to 6 pages are possible)
