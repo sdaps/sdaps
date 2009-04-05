@@ -271,7 +271,7 @@ class Text (platypus.Flowable) :
 		x0, y0 = mm_to_px.transform_point(box.data.x, box.data.y)
 		x1, y1 = mm_to_px.transform_point(box.data.x + box.data.width, box.data.y + box.data.height)
 		
-		self.bbox = (x0, y0, x1, y1)
+		self.bbox = (int(x0), int(y0), int(x1), int(y1))
 		
 		self.width = box.data.width * mm
 		self.height = box.data.height * mm
