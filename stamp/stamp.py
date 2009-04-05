@@ -203,6 +203,7 @@ def stamp (survey, count = 0, used_ids = None) :
 			subprocess.call(['pdftk', survey.path('tmp.pdf'), 'cat', '1-endeven', 'output', os.path.join(tmp_dir, 'even.pdf')])
 
 			# Extract the second page, as the first page is used for watermarking
+			print "pdftk: Extracting the second page of the questionnaire for watermarking."
 			subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'cat', '2', 'output', os.path.join(tmp_dir, 'even-watermark.pdf')])
 
 			print "pdftk: Watermarking the odd pages."
