@@ -29,7 +29,6 @@ import shutil
 
 import reportlab.pdfgen.canvas
 from reportlab.lib import units
-import pyPdf
 
 import model
 import log
@@ -121,48 +120,7 @@ def stamp (survey, count = 0, used_ids = None) :
 	else :
 		sheets = 1
 	
-	questionnaire = pyPdf.PdfFileReader(
-		file(survey.path('questionnaire.pdf'), 'rb')
-	)
-
-	questionnaire_length = questionnaire.getNumPages()
-
-	stampsfile = StringIO.StringIO()
-	canvas = reportlab.pdfgen.canvas.Canvas(stampsfile, bottomup = False)
-	# bottomup = False => (0, 0) is the upper left corner
-	
-	for i in range(sheets) :
-		for j in range(questionnaire_length) :
-			draw_corner_marks(canvas)
-			draw_corner_boxes(canvas, j)
-			if j % 2 :
-				if questionnaire_ids :
-					id = questionnaire_ids.pop()
-					survey.questionnaire_ids.append(id)
-					draw_questionnaire_id(canvas, id)
-				draw_survey_id(canvas, survey.survey_id)
-			canvas.showPage()
-
-	canvas.save()
-	
-	survey.save()
-	
-	stamped = pyPdf.PdfFileWriter()
-	stamped._info.getObject().update({
-		pyPdf.generic.NameObject('/Producer'): pyPdf.generic.createStringObject(u'sdaps'),
-		pyPdf.generic.NameObject('/Title'): pyPdf.generic.createStringObject(survey.title),
-	})
-	if u'Umfrage' in survey.info :
-		stamped._info.getObject().update({
-			pyPdf.generic.NameObject('/Subject'): pyPdf.generic.createStringObject(survey.info[u'Umfrage']),
-		})
-
-	stamps = pyPdf.PdfFileReader(stampsfile)
-	
-	del stampsfile
-
-	print '%i sheets' % sheets
-	log.progressbar.start(sheets)
+	questionnaire_length = survey.questionnaire.page_count
 
 	have_pdftk = False
 	# Test if pdftk is present, if it is we can use it to be faster
@@ -174,55 +132,85 @@ def stamp (survey, count = 0, used_ids = None) :
 	except OSError:
 		pass
 
-	if questionnaire_length != 2:
-		have_pdftk = False
-		print >>sys.stderr, "The fast code (that uses pdftk) can only handle two page questionnaires. Using slower fallback code."
-	elif not have_pdftk:
-		print >>sys.stderr, "If you install pdftk, the process will be much faster and the PDF will be smaller."
+	if not have_pdftk:
+		try:
+			import pyPdf
+		except:
+			print >>sys.stderr, "You need to have either pdftk or pyPdf installed. pdftk is the faster method."
+			sys.exit(1)
+
+	# Write the "stamp" out to tmp.pdf if are using pdftk.
+	if have_pdftk:
+		stampsfile = file(survey.path('tmp.pdf'), 'wb')
+	else:
+		stampsfile = StringIO.StringIO()
+
+	canvas = reportlab.pdfgen.canvas.Canvas(stampsfile, bottomup = False)
+	# bottomup = False => (0, 0) is the upper left corner
 	
+	print 'Creating stamp PDF for %i sheets' % sheets
+	log.progressbar.start(sheets)
 	for i in range(sheets) :
 		for j in range(questionnaire_length) :
-			s = stamps.getPage(i * questionnaire_length + j)
-			if not have_pdftk:
-				q = questionnaire.getPage(j)
-				s.mergePage(q)
-			stamped.addPage(s)
+			draw_corner_marks(canvas)
+			draw_corner_boxes(canvas, j)
+			if j % 2 :
+				if questionnaire_ids :
+					id = questionnaire_ids.pop()
+					survey.questionnaire_ids.append(id)
+					draw_questionnaire_id(canvas, id)
+				draw_survey_id(canvas, survey.survey_id)
+			canvas.showPage()
 		log.progressbar.update(i + 1)
+
+	canvas.save()
 
 	print '%i sheets; %f seconds per sheet' % (
 		log.progressbar.max_value,
 		float(log.progressbar.elapsed_time) / 
 		float(log.progressbar.max_value)
 	)
-	
-	stamped.write(file(survey.path('tmp.pdf'), 'wb'))
-	
+
 	if have_pdftk:
+		stampsfile.close()
+		# Merge using pdftk
+		print "Stamping using pdftk"
 		tmp_dir = tempfile.mkdtemp()
 		try:
-			print "pdftk: Splitting out the odd pages."
-			subprocess.call(['pdftk', survey.path('tmp.pdf'), 'cat', '1-endodd', 'output', os.path.join(tmp_dir, 'odd.pdf')])
-			print "pdftk: Splitting out the even pages."
-			subprocess.call(['pdftk', survey.path('tmp.pdf'), 'cat', '1-endeven', 'output', os.path.join(tmp_dir, 'even.pdf')])
+			for page in xrange(1, questionnaire_length + 1):
+				print "pdftk: Splitting out page %d of each sheet." % page
+				args = []
+				args.append('pdftk')
+				args.append(survey.path('tmp.pdf'))
+				args.append('cat')
+				cur = page
+				for i in range(sheets):
+					args.append('%d' % cur)
+					cur += questionnaire_length
+				args.append('output')
+				args.append(os.path.join(tmp_dir, 'stamp-%d.pdf' % page))
 
-			# Extract the second page, as the first page is used for watermarking
-			print "pdftk: Extracting the second page of the questionnaire for watermarking."
-			subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'cat', '2', 'output', os.path.join(tmp_dir, 'even-watermark.pdf')])
+				subprocess.call(args)
 
-			print "pdftk: Watermarking the odd pages."
-			subprocess.call(['pdftk', os.path.join(tmp_dir, 'odd.pdf'), 'background', survey.path('questionnaire.pdf'), 'output', os.path.join(tmp_dir, 'odd-watermarked.pdf')])
-			print "pdftk: Watermarking the even pages."
-			subprocess.call(['pdftk', os.path.join(tmp_dir, 'even.pdf'), 'background', os.path.join(tmp_dir, 'even-watermark.pdf'), 'output', os.path.join(tmp_dir, 'even-watermarked.pdf')])
+			print "pdftk: Splitting the questionnaire for watermarking."
+			subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'burst', 'output', os.path.join(tmp_dir, 'watermark-%d.pdf')])
+
+			for page in xrange(1, questionnaire_length + 1):
+				print "pdftk: Watermarking page %d of all sheets." % page
+				subprocess.call(['pdftk', os.path.join(tmp_dir, 'stamp-%d.pdf' % page), 'background', os.path.join(tmp_dir, 'watermark-%d.pdf' % page), 'output', os.path.join(tmp_dir, 'watermarked-%d.pdf' % page)])
 
 			args = []
 			args.append('pdftk')
-			args.append('A=' + os.path.join(tmp_dir, 'odd-watermarked.pdf'))
-			args.append('B=' + os.path.join(tmp_dir, 'even-watermarked.pdf'))
+			for page in xrange(1, questionnaire_length + 1):
+				char = chr(ord('A') + page - 1)
+				args.append('%s=' % char + os.path.join(tmp_dir, 'watermarked-%d.pdf' % page))
+
 			args.append('cat')
 
 			for i in range(sheets):
-				args.append('A%d' % (i + 1))
-				args.append('B%d' % (i + 1))
+				for page in xrange(1, questionnaire_length + 1):
+					char = chr(ord('A') + page - 1)
+					args.append('%s%d' % (char, i + 1))
 
 			args.append('output')
 			args.append(survey.new_path('stamped_%i.pdf'))
@@ -234,6 +222,46 @@ def stamp (survey, count = 0, used_ids = None) :
 		os.unlink(survey.path('tmp.pdf'))
 		# Remove all the temporary files
 		shutil.rmtree(tmp_dir)
+
 	else:
-		os.rename(survey.path('tmp.pdf'), survey.new_path('stamped_%i.pdf'))
+		# Merge using pyPdf
+		stamped = pyPdf.PdfFileWriter()
+		stamped._info.getObject().update({
+			pyPdf.generic.NameObject('/Producer'): pyPdf.generic.createStringObject(u'sdaps'),
+			pyPdf.generic.NameObject('/Title'): pyPdf.generic.createStringObject(survey.title),
+		})
+		if u'Umfrage' in survey.info :
+			stamped._info.getObject().update({
+				pyPdf.generic.NameObject('/Subject'): pyPdf.generic.createStringObject(survey.info[u'Umfrage']),
+			})
+
+		stamps = pyPdf.PdfFileReader(stampsfile)
+
+		del stampsfile
+
+		questionnaire = pyPdf.PdfFileReader(
+			file(survey.path('questionnaire.pdf'), 'rb')
+		)
+
+		print 'Stamping using pyPdf. For faster stamping, install pdftk.'
+		log.progressbar.start(sheets)
+
+		for i in range(sheets) :
+			for j in range(questionnaire_length) :
+				s = stamps.getPage(i * questionnaire_length + j)
+				if not have_pdftk:
+					q = questionnaire.getPage(j)
+					s.mergePage(q)
+				stamped.addPage(s)
+			log.progressbar.update(i + 1)
+
+		stamped.write(open(survey.new_path('stamped_%i.pdf'), 'wb'))
+
+		print '%i sheets; %f seconds per sheet' % (
+			log.progressbar.max_value,
+			float(log.progressbar.elapsed_time) / 
+			float(log.progressbar.max_value)
+		)
+
+	survey.save()
 
