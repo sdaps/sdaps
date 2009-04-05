@@ -49,38 +49,27 @@ get_a1_from_tiff (char *filename, gboolean rotated)
 	TIFFGetField(tiff, TIFFTAG_IMAGEWIDTH, &width);
 	TIFFGetField(tiff, TIFFTAG_IMAGELENGTH, &height);
 	t_pixels = g_malloc(width * height *sizeof(uint32));
-	TIFFReadRGBAImage(tiff, width, height, t_pixels, 0);
+	if (!rotated)
+        	TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_TOPLEFT, 0);
+	else
+        	TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_BOTRIGHT, 0);
 
 	surface = cairo_image_surface_create(CAIRO_FORMAT_A1, width, height);
 	s_pixels = (guint32*) cairo_image_surface_get_data(surface);
 	s_stride = cairo_image_surface_get_stride(surface);
 
 	t_stride = width * sizeof(guint32);
-	
-	if (!rotated) {
-		t_row = t_pixels + width * (height - 1);
+	t_row = t_pixels;
 
-		for (y = 0; y < height; y++) {
-			guint32 *t_p = t_row;
-			for (x = 0; x < width; x++) {
-				SET_PIXEL(s_pixels, s_stride, x, y, !(TIFFGetR(*t_p) >> 7));
-				t_p = t_p + 1;
-			}
-			t_row = (guint32*) ((char*) t_row - t_stride);
+	for (y = 0; y < height; y++) {
+		guint32 *t_p = t_row;
+		for (x = 0; x < width; x++) {
+			SET_PIXEL(s_pixels, s_stride, x, y, !(TIFFGetR(*t_p) >> 7));
+			t_p = t_p + 1;
 		}
-	} else {
-		t_row = t_pixels + width * (height - 1);
-
-		for (y = 0; y < height; y++) {
-			guint32 *t_p = t_row;
-			for (x = 0; x < width; x++) {
-				SET_PIXEL(s_pixels, s_stride, width - x - 1, height - y - 1, !(TIFFGetR(*t_p) >> 7));
-				t_p = t_p + 1;
-			}
-			t_row = (guint32*) ((char*) t_row - t_stride);
-		}
+		t_row = (guint32*) ((char*) t_row + t_stride);
 	}
-	
+
 	g_free(t_pixels);
 	TIFFClose(tiff);
 	
