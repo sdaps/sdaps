@@ -20,6 +20,9 @@ import random
 import StringIO
 import subprocess
 import os
+import sys
+import tempfile
+import shutil
 
 import reportlab.pdfgen.canvas
 from reportlab.lib import units
@@ -157,12 +160,29 @@ def stamp (survey, count = 0, used_ids = None) :
 
 	print '%i sheets' % sheets
 	log.progressbar.start(sheets)
+
+	have_pdftk = False
+	# Test if pdftk is present, if it is we can use it to be faster
+	try:
+		result = subprocess.Popen(['pdftk', '--version'], stdout=subprocess.PIPE)
+		# Just assume pdftk is there, if it was executed sucessfully
+		if result is not None:
+			have_pdftk = True
+	except OSError:
+		pass
+
+	if questionnaire_length != 2:
+		have_pdftk = False
+		print >>sys.stderr, "The fast code (that uses pdftk) can only handle two page questionnaires. Using slower fallback code."
+	elif not have_pdftk:
+		print >>sys.stderr, "If you install pdftk, the process will be much faster and the PDF will be smaller."
 	
 	for i in range(sheets) :
 		for j in range(questionnaire_length) :
 			s = stamps.getPage(i * questionnaire_length + j)
 			q = questionnaire.getPage(j)
-			s.mergePage(q)
+			if not have_pdftk:
+				s.mergePage(q)
 			stamped.addPage(s)
 		log.progressbar.update(i + 1)
 
@@ -174,9 +194,42 @@ def stamp (survey, count = 0, used_ids = None) :
 	
 	stamped.write(file(survey.path('tmp.pdf'), 'wb'))
 	
-	# use pdftk to compress the file
-	try:
-		subprocess.call(['pdftk', survey.path('tmp.pdf'), 'output', survey.new_path('stamped_%i.pdf'), 'compress'])
-		os.remove(survey.path('tmp.pdf'))
-	except OSError:
+	if have_pdftk:
+		tmp_dir = tempfile.mkdtemp()
+		try:
+			print "pdftk: Splitting out the odd pages."
+			subprocess.call(['pdftk', survey.path('tmp.pdf'), 'cat', '1-endodd', 'output', os.path.join(tmp_dir, 'odd.pdf')])
+			print "pdftk: Splitting out the even pages."
+			subprocess.call(['pdftk', survey.path('tmp.pdf'), 'cat', '1-endeven', 'output', os.path.join(tmp_dir, 'even.pdf')])
+
+			# Extract the second page, as the first page is used for watermarking
+			subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'cat', '2', 'output', os.path.join(tmp_dir, 'even-watermark.pdf')])
+
+			print "pdftk: Watermarking the odd pages."
+			subprocess.call(['pdftk', os.path.join(tmp_dir, 'odd.pdf'), 'background', survey.path('questionnaire.pdf'), 'output', os.path.join(tmp_dir, 'odd-watermarked.pdf')])
+			print "pdftk: Watermarking the even pages."
+			subprocess.call(['pdftk', os.path.join(tmp_dir, 'even.pdf'), 'background', os.path.join(tmp_dir, 'even-watermark.pdf'), 'output', os.path.join(tmp_dir, 'even-watermarked.pdf')])
+
+			args = []
+			args.append('pdftk')
+			args.append('A=' + os.path.join(tmp_dir, 'odd-watermarked.pdf'))
+			args.append('B=' + os.path.join(tmp_dir, 'even-watermarked.pdf'))
+			args.append('cat')
+
+			for i in range(sheets):
+				args.append('A%d' % (i + 1))
+				args.append('B%d' % (i + 1))
+
+			args.append('output')
+			args.append(survey.new_path('stamped_%i.pdf'))
+			print "pdftk: Assembling everything into the final PDF."
+			subprocess.call(args)
+		except OSError:
+			print >>sys.stderr, "Something bad has happened!"
+		# Remove tmp.pdf
+		os.unlink(survey.path('tmp.pdf'))
+		# Remove all the temporary files
+		shutil.rmtree(tmp_dir)
+	else:
 		os.rename(survey.path('tmp.pdf'), survey.new_path('stamped_%i.pdf'))
+
