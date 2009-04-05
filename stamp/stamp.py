@@ -119,6 +119,7 @@ def stamp (survey, count = 0, used_ids = None) :
 		random.shuffle(questionnaire_ids)
 	else :
 		sheets = 1
+		questionnaire_ids = None
 	
 	questionnaire_length = survey.questionnaire.page_count
 
