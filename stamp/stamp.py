@@ -17,7 +17,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import random
-import StringIO
+try:
+	import cStringIO as StringIO
+except:
+	import StringIO
 import subprocess
 import os
 import sys
@@ -180,8 +183,8 @@ def stamp (survey, count = 0, used_ids = None) :
 	for i in range(sheets) :
 		for j in range(questionnaire_length) :
 			s = stamps.getPage(i * questionnaire_length + j)
-			q = questionnaire.getPage(j)
 			if not have_pdftk:
+				q = questionnaire.getPage(j)
 				s.mergePage(q)
 			stamped.addPage(s)
 		log.progressbar.update(i + 1)
