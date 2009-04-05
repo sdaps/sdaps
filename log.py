@@ -88,7 +88,7 @@ class ProgressBar (object) :
 	def start (self, max_value) :
 		self.max_value = max_value
 		self.start_time = time.time()
-		self.update(-1)
+		self.update(0)
 	
 	def update (self, value) :
 		progress = float(value) / float(self.max_value)
