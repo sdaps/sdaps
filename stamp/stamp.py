@@ -176,48 +176,47 @@ def stamp (survey, count = 0, used_ids = None) :
 		# Merge using pdftk
 		print "Stamping using pdftk"
 		tmp_dir = tempfile.mkdtemp()
-		try:
-			for page in xrange(1, questionnaire_length + 1):
-				print "pdftk: Splitting out page %d of each sheet." % page
-				args = []
-				args.append('pdftk')
-				args.append(survey.path('tmp.pdf'))
-				args.append('cat')
-				cur = page
-				for i in range(sheets):
-					args.append('%d' % cur)
-					cur += questionnaire_length
-				args.append('output')
-				args.append(os.path.join(tmp_dir, 'stamp-%d.pdf' % page))
 
-				subprocess.call(args)
-
-			print "pdftk: Splitting the questionnaire for watermarking."
-			subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'burst', 'output', os.path.join(tmp_dir, 'watermark-%d.pdf')])
-
-			for page in xrange(1, questionnaire_length + 1):
-				print "pdftk: Watermarking page %d of all sheets." % page
-				subprocess.call(['pdftk', os.path.join(tmp_dir, 'stamp-%d.pdf' % page), 'background', os.path.join(tmp_dir, 'watermark-%d.pdf' % page), 'output', os.path.join(tmp_dir, 'watermarked-%d.pdf' % page)])
-
+		for page in xrange(1, questionnaire_length + 1):
+			print "pdftk: Splitting out page %d of each sheet." % page
 			args = []
 			args.append('pdftk')
+			args.append(survey.path('tmp.pdf'))
+			args.append('cat')
+			cur = page
+			for i in range(sheets):
+				args.append('%d' % cur)
+				cur += questionnaire_length
+			args.append('output')
+			args.append(os.path.join(tmp_dir, 'stamp-%d.pdf' % page))
+
+			subprocess.call(args)
+
+		print "pdftk: Splitting the questionnaire for watermarking."
+		subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'burst', 'output', os.path.join(tmp_dir, 'watermark-%d.pdf')])
+
+		for page in xrange(1, questionnaire_length + 1):
+			print "pdftk: Watermarking page %d of all sheets." % page
+			subprocess.call(['pdftk', os.path.join(tmp_dir, 'stamp-%d.pdf' % page), 'background', os.path.join(tmp_dir, 'watermark-%d.pdf' % page), 'output', os.path.join(tmp_dir, 'watermarked-%d.pdf' % page)])
+
+		args = []
+		args.append('pdftk')
+		for page in xrange(1, questionnaire_length + 1):
+			char = chr(ord('A') + page - 1)
+			args.append('%s=' % char + os.path.join(tmp_dir, 'watermarked-%d.pdf' % page))
+
+		args.append('cat')
+
+		for i in range(sheets):
 			for page in xrange(1, questionnaire_length + 1):
 				char = chr(ord('A') + page - 1)
-				args.append('%s=' % char + os.path.join(tmp_dir, 'watermarked-%d.pdf' % page))
+				args.append('%s%d' % (char, i + 1))
 
-			args.append('cat')
+		args.append('output')
+		args.append(survey.new_path('stamped_%i.pdf'))
+		print "pdftk: Assembling everything into the final PDF."
+		subprocess.call(args)
 
-			for i in range(sheets):
-				for page in xrange(1, questionnaire_length + 1):
-					char = chr(ord('A') + page - 1)
-					args.append('%s%d' % (char, i + 1))
-
-			args.append('output')
-			args.append(survey.new_path('stamped_%i.pdf'))
-			print "pdftk: Assembling everything into the final PDF."
-			subprocess.call(args)
-		except OSError:
-			print >>sys.stderr, "Something bad has happened!"
 		# Remove tmp.pdf
 		os.unlink(survey.path('tmp.pdf'))
 		# Remove all the temporary files
