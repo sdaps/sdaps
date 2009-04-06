@@ -16,6 +16,7 @@ Requirements
 ============
 
  * Python (only tested with python 2.5)
+ * distutils and distutils-extra
  * GTK+ (for the front end that can be used to control/correct the results)
  * reportlab version 2.1
  * pdftk or pyPdf (pdftk is recommended, as it is much faster)
