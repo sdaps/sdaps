@@ -41,17 +41,21 @@ analyse the scanned data, and create a report.
                 'sdaps.setup',
                 'sdaps.gui'
       ],
+      package_dir={'sdaps.gui': 'sdaps/gui'},
+      # I would prefere putting the glade file into ${prefix}/share/sdaps ...
+      # but I have no idea how to store the install prefix for later use
+      package_data={'sdaps.gui': ['*.glade']},
       scripts=[
                'sdaps/sdaps',
                ],
       ext_modules=[Extension('sdaps.image.image',
                    ['sdaps/image/wrap_image.c', 'sdaps/image/image.c'],
                    **pkgconfig('pycairo', 'cairo' ,'glib-2.0', libraries=['tiff']))],
-      data_files=[
-                  ('share/sdaps/glade',
-                   glob.glob("sdaps/gui/*.glade")
-                  ),
-                  ],
+      data_files=[],
+      #            ('share/sdaps/glade',
+      #             glob.glob("sdaps/gui/*.glade")
+      #            ),
+      #            ],
       cmdclass = { "build" : build_extra.build_extra,
                    "build_i18n" :  build_i18n.build_i18n,
                    "build_help" :  build_help.build_help,
