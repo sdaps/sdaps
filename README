@@ -19,6 +19,7 @@ Requirements
  * GTK+ (for the front end that can be used to control/correct the results)
  * reportlab version 2.1
  * pdftk or pyPdf (pdftk is recommended, as it is much faster)
+ * Python Imaging Library (PIL)
  * python-cairo (including development files)
  * libtiff (including development files)
  * python development files
