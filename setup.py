@@ -38,9 +38,6 @@ setup(name='sdaps',
                    ['sdaps/image/wrap_image.c', 'sdaps/image/image.c'],
                    **pkgconfig('pycairo', 'cairo' ,'glib-2.0', libraries=['tiff']))],
       data_files=[
-#                  ('share/software-properties/designer',
-#                   glob.glob("data/designer/*.ui")
-#                  ),
                   ('share/sdaps/glade',
                    glob.glob("sdaps/gui/*.glade")
                   ),
