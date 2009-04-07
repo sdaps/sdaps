@@ -29,29 +29,14 @@ Requirements
 Installation
 ============
 
-SDAPS cannot currently be installed as a python module. Currently the best
-way to go ahead is to just run it from its own directory.
-
-Compiling the C extension
-=========================
-
-SDAPS uses a custom C extension for python to be able to handle the image
-data efficiently. Thanks to this it is quite fast at what it does.
-
-To compile the C module, go into the "image" subdirectory and run make. You
-may need to install some software to be able to compile the module (see also
-above). If the module is compiled for the wrong python version, replace the
-python-config calls with calls to python2.x-config, or make sure
-python-config corresponds to the correct python version that is used.
-
-On sucess you an image.so file should be created, that can be imported into
-python with "import image".
-
+You can install sdaps using "./setup.py install". The C extension will
+be compiled automatically, but of course you have to have all the
+dependencies installed for this to work.
 
 Using SDAPS
 ===========
 
-Please run ./sdaps.py without arguments to see the options for now.
+Please run sdaps without arguments after installing it for a lit of commands.
 
 Quality of the recognition
 ==========================
