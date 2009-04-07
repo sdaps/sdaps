@@ -58,12 +58,17 @@ def report (survey, filter, filename = None, stats = 0, small = 0) :
 	
 	# create report
 	if filename is None : filename = survey.new_path('report_%i.pdf')
+	subject = []
+	for key, value in survey.info.iteritems():
+		subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
+	subject = u'\n'.join(subject)
+
 	doc = template.DocTemplate(
 		filename,
 		u'report',
 		{
 			'title' : survey.title,
-			'subject' : survey.info[u'Umfrage'],
+			'subject' : subject,
 		}
 	)
 	doc.build(story)

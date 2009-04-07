@@ -234,10 +234,15 @@ def stamp (survey, count = 0, used_ids = None) :
 			pyPdf.generic.NameObject('/Producer'): pyPdf.generic.createStringObject(u'sdaps'),
 			pyPdf.generic.NameObject('/Title'): pyPdf.generic.createStringObject(survey.title),
 		})
-		if u'Umfrage' in survey.info :
-			stamped._info.getObject().update({
-				pyPdf.generic.NameObject('/Subject'): pyPdf.generic.createStringObject(survey.info[u'Umfrage']),
-			})
+
+		subject = []
+		for key, value in survey.info.iteritems():
+			subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
+		subject = u'\n'.join(subject)
+
+		stamped._info.getObject().update({
+			pyPdf.generic.NameObject('/Subject'): pyPdf.generic.createStringObject(subject),
+		})
 
 		stamps = pyPdf.PdfFileReader(stampsfile)
 

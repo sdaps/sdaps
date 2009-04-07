@@ -56,13 +56,13 @@ class MetaHandler (xml.sax.ContentHandler) :
 	
 	def startElement (self, name, attrs) :
 		if name == u'meta:user-defined' :
-			if not attrs[u'meta:name'].startswith(u'Info') :
-				self.attribute = attrs[u'meta:name']
-				self.chars = unicode()
+			self.attribute = attrs[u'meta:name']
+			self.chars = unicode()
 	
 	def endElement (self, name) :
 		if self.attribute and name == u'meta:user-defined' :
-			self.survey.info[self.attribute] = self.chars
+			if len(self.chars.strip()) > 0:
+				self.survey.info[self.attribute] = self.chars
 			self.attribute = None
 	
 	def characters (self, chars) :

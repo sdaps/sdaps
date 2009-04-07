@@ -35,12 +35,17 @@ class cover (script.script):
 		assert isinstance(survey, model.survey.Survey)
 
 		story = template.story_title(survey)
+		subject = []
+		for key, value in survey.info.iteritems():
+			subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
+		subject = u'\n'.join(subject)
+
 		doc = template.DocTemplate(
 			survey.path('cover.pdf'),
 			u'questionnaire',
 			{
 				'title' : survey.title,
-				'subject' : survey.info[u'Umfrage'],
+				'subject' : subject
 			}
 		)
 		doc.build(story)
