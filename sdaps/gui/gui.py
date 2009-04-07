@@ -23,6 +23,8 @@ import os
 import time
 import sys
 
+from gettext import ngettext
+
 from sdaps import model
 from sdaps import surface
 from sdaps import clifilter
@@ -72,7 +74,6 @@ class Provider (object) :
 		self.survey.goto_sheet(self.image.sheet)
 	
 	def goto (self, index) :
-		print index
 		if index >= 0 and index < len(self.images):
 			self.image.surface.clean()
 			self.index = index
@@ -106,7 +107,7 @@ class MainWindow(object):
 		
 		store = gtk.ListStore(gobject.TYPE_STRING, gobject.TYPE_INT)
 		for i in range(self.provider.survey.questionnaire.page_count) :
-			store.append(row = ("Seite %i" % (i + 1), i + 1))
+			store.append(row = (ngettext("Page %i", "Page %i", i + 1) % (i + 1), i + 1))
 			
 		combo.set_model(store)
 		
@@ -144,9 +145,9 @@ class MainWindow(object):
 			self.about_dialog.set_name("SDAPS")
 			self.about_dialog.set_version("") #XXX: Version?
 			self.about_dialog.set_authors([u"Benjamin Berg <benjamin@sipsolution.net>", u"Christoph Simon <christoph.simon@gmx.eu>"])
-			self.about_dialog.set_copyright(u"Copyright © 2007-2008 Benjamin Berg, Christoph Simon")
-			self.about_dialog.set_license(u"GPL Version 3, 29 June 2007")
-			self.about_dialog.set_comments(u"Scripts for data acquisition with paper based surveys")
+			self.about_dialog.set_copyright(_(u"Copyright © 2007-2008 Benjamin Berg, Christoph Simon"))
+			self.about_dialog.set_license(_(u"GPL Version 3, 29 June 2007"))
+			self.about_dialog.set_comments(_(u"Scripts for data acquisition with paper based surveys"))
 			self.about_dialog.set_default_response(gtk.RESPONSE_CANCEL)
 			
 		self.about_dialog.run()
@@ -186,7 +187,7 @@ class MainWindow(object):
 		
 		position_label = self._glade.get_widget("position_label")
 		page_spin = self._glade.get_widget("page_spin")
-		position_label.set_text(u"von %i" % len(self.provider.images))
+		position_label.set_text(_(u" of %i") % len(self.provider.images))
 		#position_label.props.sensitive = True
 		page_spin.set_range(1, len(self.provider.images))
 		page_spin.set_value(self.provider.index + 1)
@@ -270,8 +271,8 @@ class MainWindow(object):
 	def quit_application(self, *args):
 		if not self.close_dialog:
 			self.close_dialog = gtk.MessageDialog(parent=self._window, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING)
-			self.close_dialog.add_buttons("Schließen ohne zu Speichern", gtk.RESPONSE_CLOSE, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
-			self.close_dialog.set_markup(u"<b>Projekt vor dem Beenden noch speichern?</b>\n\nWenn Sie nicht Speichern kann dies zu Datenverlust führen.")
+			self.close_dialog.add_buttons(_(u"Close with saving"), gtk.RESPONSE_CLOSE, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
+			self.close_dialog.set_markup(_(u"<b>Save the project before closing?</b>\n\nIf you do not save you may loose data."))
 			self.close_dialog.set_default_response(gtk.RESPONSE_CANCEL)
 			
 		response = self.close_dialog.run()
