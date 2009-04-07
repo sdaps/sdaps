@@ -61,3 +61,20 @@ questionnaire_id_msb_y = 272.0 # mm
 questionnaire_id_lsb_x = 134.5 # mm
 questionnaire_id_lsb_y = 272.0 # mm
 
+# XXX: I do not like this, but I did not find any sane way to generate a .py
+#      file with the information during setup. If someone knows, please drop
+#      me a line.
+def find_data_prefix():
+	import sys
+	import os
+	for path in sys.path:
+		while True:
+			new_path, tail = os.path.split(path)
+			if path == new_path:
+				break
+			path = new_path
+			if os.path.exists(os.path.join(path, 'share', 'sdaps')):
+				return os.path.join(path, 'share')
+	return os.path.join(sys.prefix, 'share')
+
+data_dir = find_data_prefix()

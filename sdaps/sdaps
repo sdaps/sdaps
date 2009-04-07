@@ -29,6 +29,23 @@ scripts
 '''
 
 import sys
+import os
+
+from sdaps import defs
+
+# Initilize the translation system
+import gettext, locale
+import __builtin__
+__builtin__._ = gettext.gettext
+
+gettext.bindtextdomain('sdaps', os.path.join(defs.data_dir, "locale"))
+if hasattr(gettext, 'bind_textdomain_codeset'):
+    gettext.bind_textdomain_codeset('sdaps','UTF-8')
+gettext.textdomain('sdaps')
+locale.bindtextdomain('sdaps', os.path.join(defs.data_dir, "locale"))
+if hasattr(locale, 'bind_textdomain_codeset'):
+    locale.bind_textdomain_codeset('sdaps','UTF-8')
+locale.textdomain('sdaps')
 
 from sdaps import script
 from sdaps import model

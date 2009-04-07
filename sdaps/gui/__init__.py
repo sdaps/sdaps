@@ -30,5 +30,5 @@ def gui (survey, *filter) :
 	import buddies
 	import gui
 	
-	gui.gui(survey, __path__[0], *filter)
+	gui.gui(survey, *filter)
 

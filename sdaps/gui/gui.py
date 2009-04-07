@@ -26,6 +26,7 @@ import sys
 from sdaps import model
 from sdaps import surface
 from sdaps import clifilter
+from sdaps import defs
 
 from sheet_widget import SheetWidget
 
@@ -33,9 +34,9 @@ from sheet_widget import SheetWidget
 zoom_steps = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0]
 
 
-def gui (survey, path, *filter) :
+def gui (survey, *filter) :
 	filter = clifilter.clifilter(survey, *filter)
-	MainWindow(Provider(survey, filter), path).run()
+	MainWindow(Provider(survey, filter)).run()
 	
 
 class Provider (object) :
@@ -81,15 +82,14 @@ class Provider (object) :
 	
 class MainWindow(object):
 	
-	def __init__(self, provider, path) :
+	def __init__(self, provider) :
 		self.about_dialog = None
 		self.close_dialog = None
 		self.ask_open_dialog = None
 		self.provider = provider
 		
 		self._load_image = 0
-		
-		self._glade = gtk.glade.XML(os.path.join(path, 'main_window.glade'))
+		self._glade = gtk.glade.XML(os.path.join(defs.data_dir, 'sdaps', 'glade', 'main_window.glade'))
 		
 		self._window = self._glade.get_widget("main_window")
 		self._glade.signal_autoconnect(self)
