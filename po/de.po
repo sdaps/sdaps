@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-07 14:35+0200\n"
+"POT-Creation-Date: 2009-04-07 16:51+0200\n"
 "PO-Revision-Date: 2009-04-07 15:00+0200\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
@@ -462,6 +462,16 @@ msgstr ""
 "\tErstellt: stamped_[index].pdf\n"
 "\t"
 
+#: ../sdaps/stamp/stamp.py:43
+#, python-format
+msgid "Survey-ID: %i"
+msgstr "Umfrage-ID: %i"
+
+#: ../sdaps/stamp/stamp.py:53
+#, python-format
+msgid "Questionnaire-ID: %i"
+msgstr "Fragebogen-ID: %i"
+
 #: ../sdaps/stamp/stamp.py:140
 msgid ""
 "You need to have either pdftk or pyPdf installed. pdftk is the faster method."
@@ -477,7 +487,7 @@ msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
 msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
 
-#: ../sdaps/stamp/stamp.py:169 ../sdaps/stamp/stamp.py:260
+#: ../sdaps/stamp/stamp.py:169 ../sdaps/stamp/stamp.py:264
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
@@ -495,17 +505,17 @@ msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
 msgid "pdftk: Splitting the questionnaire for watermarking."
 msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens"
 
-#: ../sdaps/stamp/stamp.py:200
+#: ../sdaps/stamp/stamp.py:202
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
 msgstr[0] "pdftk: Stempele die Seite %d."
 msgstr[1] "pdftk: Stempele die Seite %d."
 
-#: ../sdaps/stamp/stamp.py:218
+#: ../sdaps/stamp/stamp.py:220
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr "pdftk: Erstelle das fertige PDF."
 
-#: ../sdaps/stamp/stamp.py:246
+#: ../sdaps/stamp/stamp.py:250
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
