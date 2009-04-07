@@ -194,7 +194,9 @@ def stamp (survey, count = 0, used_ids = None) :
 			subprocess.call(args)
 
 		print _(u"pdftk: Splitting the questionnaire for watermarking.")
-		subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'burst', 'output', os.path.join(tmp_dir, 'watermark-%d.pdf')])
+		subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'dump_data', 'output', os.path.join(tmp_dir, 'doc_data.txt')])
+		for page in xrange(1, questionnaire_length + 1):
+			subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'cat', '%d' % page, 'output', os.path.join(tmp_dir, 'watermark-%d.pdf' % page)])
 
 		for page in xrange(1, questionnaire_length + 1):
 			print ngettext(u"pdftk: Watermarking page %d of all sheets.", u"pdftk: Watermarking page %d of all sheets.", page) % page
@@ -214,9 +216,11 @@ def stamp (survey, count = 0, used_ids = None) :
 				args.append('%s%d' % (char, i + 1))
 
 		args.append('output')
-		args.append(survey.new_path('stamped_%i.pdf'))
+		args.append(os.path.join(tmp_dir, 'final.pdf'))
 		print _(u"pdftk: Assembling everything into the final PDF.")
 		subprocess.call(args)
+
+		subprocess.call(['pdftk', os.path.join(tmp_dir, 'final.pdf'), 'update_info', os.path.join(tmp_dir, 'doc_data.txt'), 'output',  survey.new_path('stamped_%i.pdf')])
 
 		# Remove tmp.pdf
 		os.unlink(survey.path('tmp.pdf'))
