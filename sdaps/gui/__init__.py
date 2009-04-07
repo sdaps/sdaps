@@ -18,17 +18,18 @@
 
 from sdaps import script
 
-@script.register
-def gui (survey, *filter) :
-	u'''[filter...]
+class gui (script.script) :
+	doc = _(u'''gui [filter...]
 	
 	Launch a gui. You can view and alter the (recognized) answers with it.
 	
 	filter: filter expression to select the sheets to display
-	
-	'''
-	import buddies
-	import gui
-	
-	gui.gui(survey, *filter)
+	''')
+
+	@classmethod
+	def run (klass, survey, *filter) :
+		import buddies
+		import gui
+
+		gui.gui(survey, *filter)
 

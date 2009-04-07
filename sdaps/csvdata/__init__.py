@@ -19,9 +19,8 @@
 from sdaps import script
 
 
-@script.register
-def csvdata (survey, command, *args) :
-	u'''export [filter...]
+class csvdata (script.script) :
+	doc = _(u'''csvdata export [filter...]
 	
 	Export to csv
 	
@@ -35,12 +34,14 @@ csvdata import filename
 	Import from csv
 
 	filename: file to read from
+	''')
 
-	'''
-	import csvdata
-	if command == 'export' :
-		csvdata.csvdata_export(survey, *args)
-	elif command == 'import' :
-		csvdata.csvdata_import(survey, *args)
-	else :
-		print _('Unknown command')
+	@classmethod
+	def run (klass, survey, command, *args) :
+		import csvdata
+		if command == 'export' :
+			csvdata.csvdata_export(survey, *args)
+		elif command == 'import' :
+			csvdata.csvdata_import(survey, *args)
+		else :
+			print _('Unknown command')

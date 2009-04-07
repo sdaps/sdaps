@@ -18,18 +18,17 @@
 
 from sdaps import script
 
-
-@script.register
-def recognize (survey) :
-	u'''
+class recognize (script.script) :
+	doc = _(u'''recognize
 	
 	Recognize all added sheets.
 	
 	Attention: This script overwrites all data, including manual changes made
 		with the gui!
-	
-	'''
-	import buddies
-	import recognize
-	recognize.recognize(survey)
+	''')
 
+	@classmethod
+	def run (klass, survey) :
+		import buddies
+		import recognize
+		recognize.recognize(survey)

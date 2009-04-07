@@ -19,29 +19,30 @@
 from sdaps import script
 
 
-@script.register
-def cover (survey) :
-	u'''
-	
+class cover (script.script):
+	doc = _(u'''cover
+
 	The cover is a title page for the pile of questionnaires.
 
-	creates cover.pdf
-	
-	'''
-	import model
-	import template
-	
-	assert isinstance(survey, model.survey.Survey)
-	
-	story = template.story_title(survey)
-	doc = template.DocTemplate(
-		survey.path('cover.pdf'),
-		u'questionnaire',
-		{
-			'title' : survey.title,
-			'subject' : survey.info[u'Umfrage'],
-		}
-	)
-	doc.build(story)
-	
-	
+	creates cover.odf
+	''')
+
+	@classmethod
+	def run (klass, survey) :
+		import model
+		import template
+
+		assert isinstance(survey, model.survey.Survey)
+
+		story = template.story_title(survey)
+		doc = template.DocTemplate(
+			survey.path('cover.pdf'),
+			u'questionnaire',
+			{
+				'title' : survey.title,
+				'subject' : survey.info[u'Umfrage'],
+			}
+		)
+		doc.build(story)
+
+

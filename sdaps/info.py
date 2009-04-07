@@ -18,27 +18,28 @@
 
 from sdaps import script
 
-@script.register
-def info (survey, field, content = None) :
-	u'''field [content]
+class info (script.script) :
+	doc = _(u'''info field [content]
 	
 	Alter metadata.
 	
 	field: name of the field you whish to alter
 	content: the new content for that field
 		(empty if you want to delete the field)
-	
-	'''	
-	import model
-	
-	assert isinstance(survey, model.survey.Survey)	
-	field = field.decode('utf-8').strip()
-	content = content.decode('utf-8').strip()
-	
-	if content :
-		survey.info[field] = content
-	else :
-		del survey.info[field]
-	
-	survey.save()
-	
+	''')	
+
+	@classmethod
+	def run (klass, survey, field, content = None) :
+		import model
+
+		assert isinstance(survey, model.survey.Survey)	
+		field = field.decode('utf-8').strip()
+		content = content.decode('utf-8').strip()
+
+		if content :
+			survey.info[field] = content
+		else :
+			del survey.info[field]
+
+		survey.save()
+

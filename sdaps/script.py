@@ -45,12 +45,27 @@ Defining a script
 
 scripts = dict()
 
-def register (function) :
-	scripts[function.__name__] = function
-	function.new_survey = 0
-	return function
+# Metaclass that registers scripts automatically
+class _script_metaclass(type):
+	def __new__(meta, classname, bases, classDict):
+		new_class = type.__new__(meta, classname, bases, classDict)
 
-def new_survey (function) :
-	function.new_survey = 1
-	return function
-	
+		# Ignore the script baseclass
+		if bases[0] == object:
+			return new_class
+		scripts[classname] = new_class
+
+		doc = new_class.doc
+		func = new_class.run
+
+		return new_class
+
+class script (object):
+	"""Metaclass that represents an SDAPS script. Scripts are automatically
+	registered"""
+	__metaclass__ = _script_metaclass
+
+	new_survey = 0
+
+
+

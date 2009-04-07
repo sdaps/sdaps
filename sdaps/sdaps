@@ -76,13 +76,13 @@ def sdaps (survey_dir, script_name, *arguments) :
 	else :
 		survey = model.survey.Survey.load(survey_dir)
 		log.logfile.open(survey.path('log'))
-	script.scripts[script_name](survey, *arguments)
+	script.scripts[script_name].run(survey, *arguments)
 	log.logfile.close()
 
 
 def doc () :
-	for name, function in script.scripts.items() :
-		print name, function.__doc__
+	for script_class in script.scripts.itervalues() :
+		print script_class.doc
 
 
 def main () :

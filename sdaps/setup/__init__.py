@@ -18,10 +18,8 @@
 
 from sdaps import script
 
-@script.new_survey
-@script.register
-def setup (survey, questionnaire_odt, questionnaire_pdf, internetquestions = None) :
-	u'''questionnaire_odt questionnaire_pdf [additional_questions]
+class setup (script.script) :
+	doc = _(u'''setup questionnaire_odt questionnaire_pdf [additional_questions]
 	
 	Setup creates a new survey. It parses the questionnaire to create the data
 	model. The survey must not exist yet.
@@ -29,8 +27,12 @@ def setup (survey, questionnaire_odt, questionnaire_pdf, internetquestions = Non
 	questionnaire_odt: the questionnaire in odt-format
 	questionnaire_pdf: the questionnaire in pdf-format
 	internetquestions: the questions in the internet (optional)
-	
-	'''	
-	import setup
-	setup.setup(survey, questionnaire_odt, questionnaire_pdf, internetquestions)
+	''')
+
+	new_survey = 1
+
+	@classmethod
+	def run (klass, survey, questionnaire_odt, questionnaire_pdf, internetquestions = None) :
+		import setup
+		setup.setup(survey, questionnaire_odt, questionnaire_pdf, internetquestions)
 

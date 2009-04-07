@@ -19,15 +19,15 @@
 from sdaps import script
 
 
-@script.register
-def boxgallery (survey) :
-	u'''
+class boxgallery (script.script) :
+	doc = _(u'''boxgallery
 	
 	The boxgallery shows a list of all boxes, sorted by their coverage.
 	
 	creates boxgallery.pdf
-	
-	'''
-	import boxgallery
-	boxgallery.boxgallery(survey)
+	''')
 
+	@classmethod
+	def run (klass, survey) :
+		import boxgallery
+		boxgallery.boxgallery(survey)

@@ -19,9 +19,8 @@
 from sdaps import script
 
 
-@script.register
-def report (survey, *filter) :
-	u'''[filter...]
+class report (script.script) :
+	doc = _(u'''report [filter...]
 	
 	Report generates a basic report which shows for every question (if appropriate)
 		- the histogramm
@@ -32,15 +31,16 @@ def report (survey, *filter) :
 	filter: filter expression to select the sheets to appear in the report
 
 	creates report_[index].pdf
-	
-	'''
-	import report
-	report.report(survey, filter)
+	''')
+
+	@classmethod
+	def run (klass, survey, *filter) :
+		import report
+		report.report(survey, filter)
 
 
-@script.register
-def stats (survey, *filter) :
-	u'''[filter...]
+class stats (script.script) :
+	doc = _(u'''stats [filter...]
 	
 	Stats generates a report for every filter condition (not compounded)
 	
@@ -48,15 +48,16 @@ def stats (survey, *filter) :
 
 	creates report_[index].pdf (the reference report)
 	creates report_[index]_[index] description.pdf
-	
-	'''
-	import report
-	report.report(survey, filter, stats = 1)
+	''')
+
+	@classmethod
+	def run (klass, survey, *filter) :
+		import report
+		report.report(survey, filter, stats = 1)
 
 
-@script.register
-def smallreport (survey, *filter) :
-	u'''[filter...]
+class smallreport (script.script) :
+	doc = _(u'''smallreport [filter...]
 	
 	Smallreport generates a basic report which shows for every question (if appropriate)
 		- the histogramm
@@ -67,7 +68,9 @@ def smallreport (survey, *filter) :
 	filter: filter expression to select the sheets to appear in the report
 
 	creates report_[index].pdf
-	
-	'''
-	import report
-	report.report(survey, filter, small = 1)
+	''')
+
+	@classmethod
+	def run (klass, survey, *filter) :
+		import report
+		report.report(survey, filter, small = 1)

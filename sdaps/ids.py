@@ -18,23 +18,23 @@
 
 from sdaps import script
 
-
-@script.register
-def ids (survey, pattern = '%i\n') :
-	u'''[pattern = '%i\\n']
+class ids (script.script) :
+	doc = _(u'''ids [pattern = '%i\\n']
 	
 	Write a list containing all questionnaire ids.
 	
 	creates ids_[index]
-	
-	'''
-	import model
-	assert isinstance(survey, model.survey.Survey)
-	
-	pattern = pattern.decode('utf-8')
+	''')
 
-	ids = file(survey.new_path('ids_%i'), 'w')
-	for id in survey.questionnaire_ids :
-		ids.write((pattern % id).encode('utf-8'))
-	ids.close()
+	@classmethod
+	def run (klass, survey, pattern = '%i\n') :
+		import model
+		assert isinstance(survey, model.survey.Survey)
+
+		pattern = pattern.decode('utf-8')
+
+		ids = file(survey.new_path('ids_%i'), 'w')
+		for id in survey.questionnaire_ids :
+			ids.write((pattern % id).encode('utf-8'))
+		ids.close()
 

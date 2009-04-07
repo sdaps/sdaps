@@ -3,18 +3,35 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Benjamin Berg <benjamin@sipsolutions.net>, 2009.
 #
+#  <>, 2009.
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-07 03:33+0200\n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"POT-Creation-Date: 2009-04-07 14:35+0200\n"
+"PO-Revision-Date: 2009-04-07 15:00+0200\n"
+"Last-Translator:  <>\n"
+"Language-Team:  <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../sdaps/add.py:27
+msgid ""
+"add files\n"
+"\t\n"
+"\tAdd scanned questionnaires to the survey.\n"
+"\t\n"
+"\tfiles: TIFF-Images containing scanned questionnaires\n"
+"\t"
+msgstr ""
+"add dateien\n"
+"\t\n"
+"\tFügt eingescannte Daten zum Projekt hinzu.\n"
+"\t\n"
+"\tdateien: TIFF-Bilder mit den gescannten Daten\n"
+"\t"
 
 #: ../sdaps/add.py:46
 #, python-format
@@ -45,9 +62,194 @@ msgstr ""
 msgid "Done"
 msgstr "Fertig"
 
-#: ../sdaps/csvdata/__init__.py:46
+#: ../sdaps/boxgallery/__init__.py:23
+msgid ""
+"boxgallery\n"
+"\t\n"
+"\tThe boxgallery shows a list of all boxes, sorted by their coverage.\n"
+"\t\n"
+"\tcreates boxgallery.pdf\n"
+"\t"
+msgstr ""
+"boxgallery\n"
+"\t\n"
+"\tSchneidet alle Checkboxen aus allen eingescannten Seiten heraus.\n"
+"\t\n"
+"\tErstellt boxgallery.pdf\n"
+"\t"
+
+#: ../sdaps/cover.py:23
+msgid ""
+"cover\n"
+"\n"
+"\tThe cover is a title page for the pile of questionnaires.\n"
+"\n"
+"\tcreates cover.odf\n"
+"\t"
+msgstr ""
+"cover\n"
+"\n"
+"\tErstellt eine Titelseite für die Fragebögen.\n"
+"\n"
+"\tErstellt cover.odf\n"
+"\t"
+
+#: ../sdaps/csvdata/__init__.py:23
+msgid ""
+"csvdata export [filter...]\n"
+"\t\n"
+"\tExport to csv\n"
+"\t\n"
+"\tfilter: filter expression to select the sheets to export\n"
+"\t\n"
+"\tcreates data_[index].csv\n"
+"\n"
+"\n"
+"csvdata import filename\n"
+"\n"
+"\tImport from csv\n"
+"\n"
+"\tfilename: file to read from\n"
+"\t"
+msgstr ""
+"csvdata export [filter...]\n"
+"\t\n"
+"\tCSV Export\n"
+"\t\n"
+"\tfilter: Filter um nur einen Teil der Bögen zu exportieren\n"
+"\t\n"
+"\tErstellt data_[index].csv\n"
+"\n"
+"\n"
+"csvdata import Dateiname\n"
+"\n"
+"\tImportiert Daten aus einer CSV Datei\n"
+"\n"
+"\tDateiname: file to read from\n"
+"\t"
+
+#: ../sdaps/csvdata/__init__.py:47
 msgid "Unknown command"
 msgstr "Unbekannter Befehl"
+
+#: ../sdaps/gui/gui.py:108
+#, python-format
+msgid "Page %i"
+msgid_plural "Page %i"
+msgstr[0] "Seite %i"
+msgstr[1] "Seite %i"
+
+#: ../sdaps/gui/gui.py:146
+msgid "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
+msgstr "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
+
+#: ../sdaps/gui/gui.py:147
+msgid "GPL Version 3, 29 June 2007"
+msgstr "GPL Version 3, 29 Juni 2007"
+
+#: ../sdaps/gui/gui.py:148
+msgid "Scripts for data acquisition with paper based surveys"
+msgstr "SDAPS - Scripts zum auswerten von Papier basierten Umfragen"
+
+#: ../sdaps/gui/gui.py:188
+#, python-format
+msgid " of %i"
+msgstr " von %i"
+
+#: ../sdaps/gui/gui.py:272
+msgid "Close with saving"
+msgstr "Beenden ohne zu Speichern"
+
+#: ../sdaps/gui/gui.py:273
+msgid ""
+"<b>Save the project before closing?</b>\n"
+"\n"
+"If you do not save you may loose data."
+msgstr ""
+"<b>Beenden ohne zu Speichern?</b>\n"
+"Wenn Sie nicht speichern, kann es zu Datenverlust kommen."
+
+#: ../sdaps/gui/__init__.py:22
+msgid ""
+"gui [filter...]\n"
+"\t\n"
+"\tLaunch a gui. You can view and alter the (recognized) answers with it.\n"
+"\t\n"
+"\tfilter: filter expression to select the sheets to display\n"
+"\t"
+msgstr ""
+"gui [filter...]\n"
+"\t\n"
+"\tStartet eine Grafische Oberfläche, mit der die erkannten Antworten "
+"betrachtet und korrigiert werden können.\n"
+"\t\n"
+"\tfilter: Ein Filter Ausdruck, um nur bestimmte Bögen anzuzeigen\n"
+"\t"
+
+#: ../sdaps/gui/main_window.glade.h:1
+msgid "Page Rotated"
+msgstr "Seite Gedreht"
+
+#: ../sdaps/gui/main_window.glade.h:2
+msgid "_File"
+msgstr "_Datei"
+
+#: ../sdaps/gui/main_window.glade.h:3
+msgid "_Help"
+msgstr "_Hilfe"
+
+#: ../sdaps/gui/main_window.glade.h:4
+msgid "_View"
+msgstr "_Ansicht"
+
+#: ../sdaps/ids.py:22
+#, python-format
+msgid ""
+"ids [pattern = '%i\\n']\n"
+"\t\n"
+"\tWrite a list containing all questionnaire ids.\n"
+"\t\n"
+"\tcreates ids_[index]\n"
+"\t"
+msgstr ""
+"ids [pattern = '%i\\n']\n"
+"\t\n"
+"\tSchreibt eine Liste mit alle Fragebogen IDs.\n"
+"\t\n"
+"\tErstellt ids_[index]\n"
+"\t"
+
+#: ../sdaps/info.py:22
+msgid ""
+"info field [content]\n"
+"\t\n"
+"\tAlter metadata.\n"
+"\t\n"
+"\tfield: name of the field you whish to alter\n"
+"\tcontent: the new content for that field\n"
+"\t\t(empty if you want to delete the field)\n"
+"\t"
+msgstr ""
+"info field [content]\n"
+"\t\n"
+"\tMetadata Editor.\n"
+"\t\n"
+"\tfield: Das Feld, dass verändert werden soll.\n"
+"\tcontent: Der neue Inhalt des Feldes. Wenn dies übersprungen\n"
+"\t\twird, dann fragt SDAPS nach.\n"
+"\t"
+
+#: ../sdaps/model/survey.py:102
+#, python-format
+msgid "%i sheet"
+msgid_plural "%i sheets"
+msgstr[0] "%i Bogen"
+msgstr[1] "%i Bögen"
+
+#: ../sdaps/model/survey.py:112
+#, python-format
+msgid "%f seconds per sheet"
+msgstr "%f Sekunden pro Bogen"
 
 #: ../sdaps/recognize/buddies.py:69 ../sdaps/recognize/buddies.py:125
 #, python-format
@@ -64,9 +266,22 @@ msgstr "%s: Seitenzahl wurde nicht erkannt. Überspringe dieses Bild."
 msgid "%s: Wrong survey_id. Cancelling recognition of that image."
 msgstr "%s: Falsche Umfrage ID. Überspringe dieses Bild."
 
-#: ../sdaps/report/report.py:54
-msgid "Turned in Questionnaires"
-msgstr "Abgegebene Fragebögen"
+#: ../sdaps/recognize/__init__.py:22
+msgid ""
+"recognize\n"
+"\t\n"
+"\tRecognize all added sheets.\n"
+"\t\n"
+"\tAttention: This script overwrites all data, including manual changes made\n"
+"\t\twith the gui!\n"
+"\t"
+msgstr ""
+"recognize\n"
+"\t\n"
+"\tLässt den Erkennungsalgorithmus über die gescannten Daten laufen.\n"
+"\t\n"
+"\tAchtung: Dieses Script überschreibt alle vorherigen änderungen!\n"
+"\t"
 
 #: ../sdaps/report/answers.py:178
 #, python-format
@@ -84,6 +299,115 @@ msgstr "Mittelwert: %.2f"
 #, python-format
 msgid "Standard Deviation: %.2f"
 msgstr "Standardabweichung: %.2f"
+
+#: ../sdaps/report/__init__.py:23
+msgid ""
+"report [filter...]\n"
+"\t\n"
+"\tReport generates a basic report which shows for every question (if "
+"appropriate)\n"
+"\t\t- the histogramm\n"
+"\t\t- the mean\n"
+"\t\t- the standard derivation\n"
+"\t\t- all handwritten comments\n"
+"\t\n"
+"\tfilter: filter expression to select the sheets to appear in the report\n"
+"\n"
+"\tcreates report_[index].pdf\n"
+"\t"
+msgstr ""
+"report [filter...]\n"
+"\t\n"
+"\tErstellt einen Report in PDF Form. In dem Report enthalten sind:\n"
+"\t\t- Histogram\n"
+"\t\t- Durchschnittswert\n"
+"\t\t- Standardabweichung\n"
+"\t\t- Alle handgeschriebenen Kommentare\n"
+"\t\n"
+"\tfilter: Filter Ausdruck, um nur bestimmte Bögen auszuwerten.\n"
+"\n"
+"\tErstellt report_[index].pdf\n"
+"\t"
+
+#: ../sdaps/report/__init__.py:43
+msgid ""
+"stats [filter...]\n"
+"\t\n"
+"\tStats generates a report for every filter condition (not compounded)\n"
+"\t\n"
+"\tfilter: filter expression to select the sheets to appear in the reference "
+"report\n"
+"\n"
+"\tcreates report_[index].pdf (the reference report)\n"
+"\tcreates report_[index]_[index] description.pdf\n"
+"\t"
+msgstr ""
+"stats [filter...]\n"
+"\t\n"
+"\tErstellt einen Report für alle möglichen Filter Kombinationen.\n"
+"\t(nicht zusammengesetzt)\n"
+"\t\n"
+"\tfilter: Filter Ausdruck, für den referenz Report.\n"
+"\n"
+"\tErstellt report_[index].pdf (Referenz Report)\n"
+"\tErstellt report_[index]_[index] description.pdf\n"
+"\t"
+
+#: ../sdaps/report/__init__.py:60
+msgid ""
+"smallreport [filter...]\n"
+"\t\n"
+"\tSmallreport generates a basic report which shows for every question (if "
+"appropriate)\n"
+"\t\t- the histogramm\n"
+"\t\t- the mean\n"
+"\t\t- the standard derivation\n"
+"\tIt does not contain any handwritten comment\n"
+"\t\n"
+"\tfilter: filter expression to select the sheets to appear in the report\n"
+"\n"
+"\tcreates report_[index].pdf\n"
+"\t"
+msgstr ""
+"smallreport [filter...]\n"
+"\t\n"
+"\tSmallreport erstellt einen Report, der die folgenden Daten enthält:\n"
+"\t\t- Histogram\n"
+"\t\t- Durchschnitt\n"
+"\t\t- Standardabweichung\n"
+"\tDer Report enthält keine handschriftlichen Kommentare.\n"
+"\t\n"
+"\tfilter: Filter Ausdruck, um nur bestimmte Bögen auszuwerten.\n"
+"\n"
+"\tErstellt report_[index].pdf\n"
+"\t"
+
+#: ../sdaps/report/report.py:54
+msgid "Turned in Questionnaires"
+msgstr "Abgegebene Fragebögen"
+
+#: ../sdaps/setup/__init__.py:22
+msgid ""
+"setup questionnaire_odt questionnaire_pdf [additional_questions]\n"
+"\t\n"
+"\tSetup creates a new survey. It parses the questionnaire to create the "
+"data\n"
+"\tmodel. The survey must not exist yet.\n"
+"\t\n"
+"\tquestionnaire_odt: the questionnaire in odt-format\n"
+"\tquestionnaire_pdf: the questionnaire in pdf-format\n"
+"\tinternetquestions: the questions in the internet (optional)\n"
+"\t"
+msgstr ""
+"setup questionnaire_odt questionnaire_pdf [additional_questions]\n"
+"\t\n"
+"\tErstellt ein neues Projektverzeichniss. Das Verzeichniss darf noch nicht "
+"existieren.\n"
+"\t\n"
+"\tquestionnaire_odt: Der Fragebogen im ODT-Format\n"
+"\tquestionnaire_pdf: Der Fragebogen im PDF-Format\n"
+"\tinternetquestions: Datei mit zusätzlichen Fragen.\n"
+"\t"
 
 #: ../sdaps/setup/setup.py:35
 msgid "The survey directory already exists"
@@ -113,6 +437,30 @@ msgstr ""
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
+
+#: ../sdaps/stamp/__init__.py:23
+#, python-format
+msgid ""
+"stamp [count [used_ids]]\n"
+"\t\n"
+"\tStamp corner marks and questionnaire ids on the questionnaire.\n"
+"\t\n"
+"\tcount: number of unique questionnaire ids you want to create\n"
+"\tused_ids: don't use any id named in this file (pattern = '%i\\n')\n"
+"\t\n"
+"\tcreates stamped_[index].pdf\n"
+"\t"
+msgstr ""
+"stamp [count [used_ids]]\n"
+"\t\n"
+"\tStempelt Eckmarker und IDs auf den Fragebogen.\n"
+"\t\n"
+"\tcount: Die Anzahl an eindeutigen Fragebögen die erstellt werden soll\n"
+"\tused_ids: Datei mit Fragebogen IDs die schon benutzt wurden (Muster = '%i"
+"\\n')\n"
+"\t\n"
+"\tErstellt: stamped_[index].pdf\n"
+"\t"
 
 #: ../sdaps/stamp/stamp.py:140
 msgid ""
@@ -161,68 +509,3 @@ msgstr "pdftk: Erstelle das fertige PDF."
 #: ../sdaps/stamp/stamp.py:246
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
-
-#: ../sdaps/model/survey.py:102
-#, python-format
-msgid "%i sheet"
-msgid_plural "%i sheets"
-msgstr[0] "%i Bogen"
-msgstr[1] "%i Bögen"
-
-#: ../sdaps/model/survey.py:112
-#, python-format
-msgid "%f seconds per sheet"
-msgstr "%f Sekunden pro Bogen"
-
-#: ../sdaps/gui/gui.py:108
-#, python-format
-msgid "Page %i"
-msgid_plural "Page %i"
-msgstr[0] "Seite %i"
-msgstr[1] "Seite %i"
-
-#: ../sdaps/gui/gui.py:146
-msgid "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
-msgstr "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
-
-#: ../sdaps/gui/gui.py:147
-msgid "GPL Version 3, 29 June 2007"
-msgstr "GPL Version 3, 29 Juni 2007"
-
-#: ../sdaps/gui/gui.py:148
-msgid "Scripts for data acquisition with paper based surveys"
-msgstr "SDAPS - Scripts zum auswerten von Papier basierten Umfragen"
-
-#: ../sdaps/gui/gui.py:188
-#, python-format
-msgid " of %i"
-msgstr " von %i"
-
-#: ../sdaps/gui/gui.py:272
-msgid "Close with saving"
-msgstr "Beenden ohne zu Speichern"
-
-#: ../sdaps/gui/gui.py:273
-msgid ""
-"<b>Save the project before closing?</b>\n"
-"\n"
-"If you do not save you may loose data."
-msgstr ""
-"<b>Beenden ohne zu Speichern?</b>\n"
-"Wenn Sie nicht speichern, kann es zu Datenverlust kommen."
-
-#: ../sdaps/gui/main_window.glade.h:1
-msgid "Page Rotated"
-msgstr "Seite Gedreht"
-
-#: ../sdaps/gui/main_window.glade.h:2
-msgid "_File"
-msgstr "_Datei"
-
-#: ../sdaps/gui/main_window.glade.h:3
-msgid "_Help"
-msgstr "_Hilfe"
-
-#: ../sdaps/gui/main_window.glade.h:4
-msgid "_View"
-msgstr "_Ansicht"

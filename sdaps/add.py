@@ -23,78 +23,78 @@ from sdaps import script
 # recognize can not join papers together!
 # Dont shuffle them!!!!
 
-@script.register
-def add (survey, *files) :
-	u'''files
+class add (script.script) :
+	doc = _(u'''add files
 	
 	Add scanned questionnaires to the survey.
 	
 	files: TIFF-Images containing scanned questionnaires
-	
-	'''
-	
-	import Image
-	import subprocess
-	import os
-	
-	from sdaps import model
-	
-	assert isinstance(survey, model.survey.Survey)
-		
-	for file in files :
-		
-		print _('Processing %s') % file
-		
-		try :
-			image = Image.open(file)
-		except IOError :
-			print _('Unknown file format. Only TIFF is supported')
-			print _('Processing stopped')
-			continue
-		
-		if image.format != 'TIFF' :
-			print _('Unknown image file format (%s). Only TIFF is supported') % image.format
-			print _('Processing stopped')
-			continue
-		
-		if not image.mode == '1' :
-			print _('Wrong data type inside TIFF (%s). It should be black and white data.') % image.mode
-			print _('Processing stopped')
-			continue
-		
-		directory = survey.new_path('%i')
-		os.mkdir(directory)
-		tiffsplit = subprocess.Popen(
-			['tiffsplit', file, directory + '/'],
-			stdout = subprocess.PIPE, stderr = subprocess.PIPE
-		)
-		stdout, stderr = tiffsplit.communicate()
+	''')
 
-		for line in stdout.split('\n') :
-			line = line.strip()
-			if line: print line
-		
-		for line in stderr.split('\n') :
-			if line.startswith('%s: Warning, incorrect count for field "DateTime"' % file) :
+	@classmethod
+	def run (klass, survey, *files):
+		import Image
+		import subprocess
+		import os
+
+		from sdaps import model
+
+		assert isinstance(survey, model.survey.Survey)
+	
+		for file in files :
+
+			print _('Processing %s') % file
+
+			try :
+				image = Image.open(file)
+			except IOError :
+				print _('Unknown file format. Only TIFF is supported')
+				print _('Processing stopped')
 				continue
-			line = line.strip()
-			if line: print line
-		
-		img_list = os.listdir(directory)
-		img_list.sort()
-		c = survey.questionnaire.page_count
-		assert len(img_list) % c == 0
-		
-		dir = os.path.basename(directory)
-		for i in range(len(img_list) / c) :
-			sheet = model.sheet.Sheet()
-			survey.add_sheet(sheet)
-			for j in range(c) :
-				image = model.sheet.Image()
-				sheet.add_image(image)
-				image.filename = os.path.join(dir, img_list[c*i+j])
-		
-		print _('Done')
-	
-	survey.save()
-	
+
+			if image.format != 'TIFF' :
+				print _('Unknown image file format (%s). Only TIFF is supported') % image.format
+				print _('Processing stopped')
+				continue
+
+			if not image.mode == '1' :
+				print _('Wrong data type inside TIFF (%s). It should be black and white data.') % image.mode
+				print _('Processing stopped')
+				continue
+
+			directory = survey.new_path('%i')
+			os.mkdir(directory)
+			tiffsplit = subprocess.Popen(
+				['tiffsplit', file, directory + '/'],
+				stdout = subprocess.PIPE, stderr = subprocess.PIPE
+			)
+			stdout, stderr = tiffsplit.communicate()
+
+			for line in stdout.split('\n') :
+				line = line.strip()
+				if line: print line
+
+			for line in stderr.split('\n') :
+				if line.startswith('%s: Warning, incorrect count for field "DateTime"' % file) :
+					continue
+				line = line.strip()
+				if line: print line
+
+			img_list = os.listdir(directory)
+			img_list.sort()
+			c = survey.questionnaire.page_count
+			assert len(img_list) % c == 0
+
+			dir = os.path.basename(directory)
+			for i in range(len(img_list) / c) :
+				sheet = model.sheet.Sheet()
+				survey.add_sheet(sheet)
+				for j in range(c) :
+					image = model.sheet.Image()
+					sheet.add_image(image)
+					image.filename = os.path.join(dir, img_list[c*i+j])
+
+			print _('Done')
+
+		survey.save()
+
