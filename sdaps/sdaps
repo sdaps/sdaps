@@ -36,7 +36,8 @@ from sdaps import defs
 # Initilize the translation system
 import gettext, locale
 import __builtin__
-__builtin__._ = gettext.gettext
+__builtin__._ = lambda x: gettext.gettext(x).decode('UTF-8')
+__builtin__.ngettext = lambda a, b, c: gettext.ngettext(a, b, c).decode('UTF-8')
 
 gettext.bindtextdomain('sdaps', os.path.join(defs.data_dir, "locale"))
 if hasattr(gettext, 'bind_textdomain_codeset'):
@@ -80,7 +81,6 @@ def sdaps (survey_dir, script_name, *arguments) :
 
 
 def doc () :
-	print __doc__
 	for name, function in script.scripts.items() :
 		print name, function.__doc__
 

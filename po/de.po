@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-07 02:28+0200\n"
+"POT-Creation-Date: 2009-04-07 03:33+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,35 +16,193 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../sdaps/gui/gui.py:110
+#: ../sdaps/add.py:46
+#, python-format
+msgid "Processing %s"
+msgstr "Beartbeite %s"
+
+#: ../sdaps/add.py:51
+msgid "Unknown file format. Only TIFF is supported"
+msgstr "Unbekanntes Datei Format. Nur TIFF wird unterstüzt."
+
+#: ../sdaps/add.py:52 ../sdaps/add.py:57 ../sdaps/add.py:62
+msgid "Processing stopped"
+msgstr "Bearbeitung abgebrochen"
+
+#: ../sdaps/add.py:56
+#, python-format
+msgid "Unknown image file format (%s). Only TIFF is supported"
+msgstr "Unbekanntes Datei Format (%s). Nur TIFF wird unterstüzt."
+
+#: ../sdaps/add.py:61
+#, python-format
+msgid "Wrong data type inside TIFF (%s). It should be black and white data."
+msgstr ""
+"TIFF hat die falsche Farbtiefe (%s). Das Bild sollte im schwarz/weiß Modus "
+"sein"
+
+#: ../sdaps/add.py:97
+msgid "Done"
+msgstr "Fertig"
+
+#: ../sdaps/csvdata/__init__.py:46
+msgid "Unknown command"
+msgstr "Unbekannter Befehl"
+
+#: ../sdaps/recognize/buddies.py:69 ../sdaps/recognize/buddies.py:125
+#, python-format
+msgid "%s: Matrix not recognized. Cancelling recognition of that image."
+msgstr "%s: Matrix wurde nicht erkannt. Überspringe dieses Bild."
+
+#: ../sdaps/recognize/buddies.py:117
+#, python-format
+msgid "%s: Page number not recognized. Cancelling recognition of that image."
+msgstr "%s: Seitenzahl wurde nicht erkannt. Überspringe dieses Bild."
+
+#: ../sdaps/recognize/buddies.py:142
+#, python-format
+msgid "%s: Wrong survey_id. Cancelling recognition of that image."
+msgstr "%s: Falsche Umfrage ID. Überspringe dieses Bild."
+
+#: ../sdaps/report/report.py:54
+msgid "Turned in Questionnaires"
+msgstr "Abgegebene Fragebögen"
+
+#: ../sdaps/report/answers.py:178
+#, python-format
+msgid "Answers: %i"
+msgstr "Antworten: %i"
+
+#. if not significant else stylesheet['Normal_Highlight'])
+#: ../sdaps/report/answers.py:179
+#, python-format
+msgid "Mean: %.2f"
+msgstr "Mittelwert: %.2f"
+
+#. if not significant else stylesheet['Normal_Highlight'])
+#: ../sdaps/report/answers.py:180
+#, python-format
+msgid "Standard Deviation: %.2f"
+msgstr "Standardabweichung: %.2f"
+
+#: ../sdaps/setup/setup.py:35
+msgid "The survey directory already exists"
+msgstr "Das Umfrageverzeichniss existiert bereits."
+
+#: ../sdaps/setup/setup.py:36 ../sdaps/setup/setup.py:42
+#: ../sdaps/setup/setup.py:48 ../sdaps/setup/setup.py:55
+msgid "Cancelling setup"
+msgstr "Setup abgebrochen"
+
+#: ../sdaps/setup/setup.py:41
+#, python-format
+msgid ""
+"Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
+"opendocument.text"
+msgstr ""
+"Unbekanntes Dateiformat (%s). questionnaire_odt muss application/vnd.oasis."
+"opendocument.text sein."
+
+#: ../sdaps/setup/setup.py:47
+#, python-format
+msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
+msgstr ""
+"Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
+
+#: ../sdaps/setup/setup.py:54
+#, python-format
+msgid "Unknown file type (%s). additionalqobjects should be text/plain"
+msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
+
+#: ../sdaps/stamp/stamp.py:140
+msgid ""
+"You need to have either pdftk or pyPdf installed. pdftk is the faster method."
+msgstr ""
+"Sie müssen entweder pdtk oder pyPdf installiert haben.pdftk ist die "
+"schnellere Metode."
+
+#. bottomup = False => (0, 0) is the upper left corner
+#: ../sdaps/stamp/stamp.py:152
+#, python-format
+msgid "Creating stamp PDF for %i sheet"
+msgid_plural "Creating stamp PDF for %i sheets"
+msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
+msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
+
+#: ../sdaps/stamp/stamp.py:169 ../sdaps/stamp/stamp.py:260
+#, python-format
+msgid "%i sheet; %f seconds per sheet"
+msgid_plural "%i sheet; %f seconds per sheet"
+msgstr[0] "%i Bogen; %f Sekunden pro Bogen"
+msgstr[1] "%i Bögen; %f Sekunden pro Bogen"
+
+#: ../sdaps/stamp/stamp.py:182
+#, python-format
+msgid "pdftk: Splitting out page %d of each sheet."
+msgid_plural "pdftk: Splitting out page %d of each sheet."
+msgstr[0] "pdftk: Extrahier die %d Seite aus dem Stempel."
+msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
+
+#: ../sdaps/stamp/stamp.py:196
+msgid "pdftk: Splitting the questionnaire for watermarking."
+msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens"
+
+#: ../sdaps/stamp/stamp.py:200
+#, python-format
+msgid "pdftk: Watermarking page %d of all sheets."
+msgid_plural "pdftk: Watermarking page %d of all sheets."
+msgstr[0] "pdftk: Stempele die Seite %d."
+msgstr[1] "pdftk: Stempele die Seite %d."
+
+#: ../sdaps/stamp/stamp.py:218
+msgid "pdftk: Assembling everything into the final PDF."
+msgstr "pdftk: Erstelle das fertige PDF."
+
+#: ../sdaps/stamp/stamp.py:246
+msgid "Stamping using pyPdf. For faster stamping, install pdftk."
+msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
+
+#: ../sdaps/model/survey.py:102
+#, python-format
+msgid "%i sheet"
+msgid_plural "%i sheets"
+msgstr[0] "%i Bogen"
+msgstr[1] "%i Bögen"
+
+#: ../sdaps/model/survey.py:112
+#, python-format
+msgid "%f seconds per sheet"
+msgstr "%f Sekunden pro Bogen"
+
+#: ../sdaps/gui/gui.py:108
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Seite %i"
 msgstr[1] "Seite %i"
 
-#: ../sdaps/gui/gui.py:148
+#: ../sdaps/gui/gui.py:146
 msgid "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
 msgstr "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
 
-#: ../sdaps/gui/gui.py:149
+#: ../sdaps/gui/gui.py:147
 msgid "GPL Version 3, 29 June 2007"
 msgstr "GPL Version 3, 29 Juni 2007"
 
-#: ../sdaps/gui/gui.py:150
+#: ../sdaps/gui/gui.py:148
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "SDAPS - Scripts zum auswerten von Papier basierten Umfragen"
 
-#: ../sdaps/gui/gui.py:190
+#: ../sdaps/gui/gui.py:188
 #, python-format
 msgid " of %i"
 msgstr " von %i"
 
-#: ../sdaps/gui/gui.py:274
+#: ../sdaps/gui/gui.py:272
 msgid "Close with saving"
 msgstr "Beenden ohne zu Speichern"
 
-#: ../sdaps/gui/gui.py:275
+#: ../sdaps/gui/gui.py:273
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"

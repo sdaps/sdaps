@@ -51,7 +51,7 @@ def report (survey, filter, filename = None, stats = 0, small = 0) :
 	story = template.story_title(
 		survey,
 		{
-			u'Abgegebene Fragebögen': survey.questionnaire.report.count,
+			_(u'Turned in Questionnaires'): survey.questionnaire.report.count,
 		}
 	)
 	story.extend(survey.questionnaire.report.story())

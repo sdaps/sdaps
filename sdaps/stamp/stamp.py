@@ -137,7 +137,7 @@ def stamp (survey, count = 0, used_ids = None) :
 		try:
 			import pyPdf
 		except:
-			print >>sys.stderr, "You need to have either pdftk or pyPdf installed. pdftk is the faster method."
+			print >>sys.stderr, _(u'You need to have either pdftk or pyPdf installed. pdftk is the faster method.')
 			sys.exit(1)
 
 	# Write the "stamp" out to tmp.pdf if are using pdftk.
@@ -149,7 +149,7 @@ def stamp (survey, count = 0, used_ids = None) :
 	canvas = reportlab.pdfgen.canvas.Canvas(stampsfile, bottomup = False)
 	# bottomup = False => (0, 0) is the upper left corner
 	
-	print 'Creating stamp PDF for %i sheets' % sheets
+	print ngettext(u'Creating stamp PDF for %i sheet', u'Creating stamp PDF for %i sheets', sheets) % sheets
 	log.progressbar.start(sheets)
 	for i in range(sheets) :
 		for j in range(questionnaire_length) :
@@ -166,7 +166,7 @@ def stamp (survey, count = 0, used_ids = None) :
 
 	canvas.save()
 
-	print '%i sheets; %f seconds per sheet' % (
+	print ngettext(u'%i sheet; %f seconds per sheet', u'%i sheet; %f seconds per sheet', log.progressbar.max_value) % (
 		log.progressbar.max_value,
 		float(log.progressbar.elapsed_time) / 
 		float(log.progressbar.max_value)
@@ -179,7 +179,7 @@ def stamp (survey, count = 0, used_ids = None) :
 		tmp_dir = tempfile.mkdtemp()
 
 		for page in xrange(1, questionnaire_length + 1):
-			print "pdftk: Splitting out page %d of each sheet." % page
+			print ngettext(u"pdftk: Splitting out page %d of each sheet.", u"pdftk: Splitting out page %d of each sheet.", page) % page
 			args = []
 			args.append('pdftk')
 			args.append(survey.path('tmp.pdf'))
@@ -193,11 +193,11 @@ def stamp (survey, count = 0, used_ids = None) :
 
 			subprocess.call(args)
 
-		print "pdftk: Splitting the questionnaire for watermarking."
+		print _(u"pdftk: Splitting the questionnaire for watermarking.")
 		subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'burst', 'output', os.path.join(tmp_dir, 'watermark-%d.pdf')])
 
 		for page in xrange(1, questionnaire_length + 1):
-			print "pdftk: Watermarking page %d of all sheets." % page
+			print ngettext(u"pdftk: Watermarking page %d of all sheets.", u"pdftk: Watermarking page %d of all sheets.", page) % page
 			subprocess.call(['pdftk', os.path.join(tmp_dir, 'stamp-%d.pdf' % page), 'background', os.path.join(tmp_dir, 'watermark-%d.pdf' % page), 'output', os.path.join(tmp_dir, 'watermarked-%d.pdf' % page)])
 
 		args = []
@@ -215,7 +215,7 @@ def stamp (survey, count = 0, used_ids = None) :
 
 		args.append('output')
 		args.append(survey.new_path('stamped_%i.pdf'))
-		print "pdftk: Assembling everything into the final PDF."
+		print _(u"pdftk: Assembling everything into the final PDF.")
 		subprocess.call(args)
 
 		# Remove tmp.pdf
@@ -243,7 +243,7 @@ def stamp (survey, count = 0, used_ids = None) :
 			file(survey.path('questionnaire.pdf'), 'rb')
 		)
 
-		print 'Stamping using pyPdf. For faster stamping, install pdftk.'
+		print _(u'Stamping using pyPdf. For faster stamping, install pdftk.')
 		log.progressbar.start(sheets)
 
 		for i in range(sheets) :
@@ -257,7 +257,7 @@ def stamp (survey, count = 0, used_ids = None) :
 
 		stamped.write(open(survey.new_path('stamped_%i.pdf'), 'wb'))
 
-		print '%i sheets; %f seconds per sheet' % (
+		print ngettext(u'%i sheet; %f seconds per sheet', u'%i sheet; %f seconds per sheet', log.progressbar.max_value) % (
 			log.progressbar.max_value,
 			float(log.progressbar.elapsed_time) / 
 			float(log.progressbar.max_value)

@@ -23,8 +23,6 @@ import os
 import time
 import sys
 
-from gettext import ngettext
-
 from sdaps import model
 from sdaps import surface
 from sdaps import clifilter

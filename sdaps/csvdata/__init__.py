@@ -43,4 +43,4 @@ csvdata import filename
 	elif command == 'import' :
 		csvdata.csvdata_import(survey, *args)
 	else :
-		print 'Unknown command'
+		print _('Unknown command')

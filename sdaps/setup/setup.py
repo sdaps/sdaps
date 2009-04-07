@@ -32,30 +32,27 @@ import metaparser
 
 def setup (survey, questionnaire_odt, questionnaire_pdf, additionalqobjects = None) :
 	if os.access(survey.path(), os.F_OK) :
-		print 'The survey directory already exists'
-		print 'Cancelling setup'
+		print _('The survey directory already exists')
+		print _('Cancelling setup')
 		return 1
 
 	mimetype = utils.mimetype(questionnaire_odt)
 	if mimetype != 'application/vnd.oasis.opendocument.text' and mimetype != '':
-		print 'Unknown file type', '(%s)' % mimetype
-		print 'questionnaire_odt should be application/vnd.oasis.opendocument.text'
-		print 'Cancelling setup'
+		print _('Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text') % mimetype
+		print _('Cancelling setup')
 		return 1
 	
 	mimetype = utils.mimetype(questionnaire_pdf)
 	if mimetype != 'application/pdf' and mimetype != '':
-		print 'Unknown file type', '(%s)' % mimetype
-		print 'questionnaire_pdf should be application/pdf'
-		print 'Cancelling setup'
+		print _('Unknown file type (%s). questionnaire_pdf should be application/pdf') % mimetype
+		print _('Cancelling setup')
 		return 1
 	
 	if additionalqobjects is not None :
 		mimetype = utils.mimetype(additionalqobjects)
 		if mimetype != 'text/plain' and mimetype != '':
-			print 'Unknown file type', '(%s)' % mimetype
-			print 'additionalqobjects should be text/plain'
-			print 'Cancelling setup'
+			print _('Unknown file type (%s). additionalqobjects should be text/plain') % mimetype
+			print _('Cancelling setup')
 			return 1
 	
 	# Add the new questionnaire

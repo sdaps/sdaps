@@ -99,7 +99,7 @@ class Survey (object) :
 	def iterate_progressbar (self, function, filter = lambda : True) :
 		'''call function once for each sheet and display a progressbar
 		'''
-		print '%i sheets' % len(self.sheets)
+		print ngettext('%i sheet', '%i sheets', len(self.sheets)) % len(self.sheets)
 		if len(self.sheets) == 0:
 			return
 
@@ -109,7 +109,7 @@ class Survey (object) :
 			if filter() : function()
 			log.progressbar.update(self.index + 1)
 		
-		print '%f seconds per sheet' % (
+		print _('%f seconds per sheet') % (
 			float(log.progressbar.elapsed_time) / 
 			float(log.progressbar.max_value)
 		)

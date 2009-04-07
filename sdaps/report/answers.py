@@ -175,9 +175,9 @@ class Mark (platypus.Flowable) :
 			stylesheet_name = 'Normal'
 			
 		self.answers_paragraph = platypus.Paragraph(u' - '.join(answers), stylesheet[stylesheet_name])
-		self.count_paragraph = platypus.Paragraph(u'Antworten: %i' % self.count, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
-		self.mean_paragraph = platypus.Paragraph(u'Mittelwert: %.2f' % self.mean, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
-		self.stdd_paragraph = platypus.Paragraph(u'Standardabweichung: %.2f' % self.standard_derivation, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
+		self.count_paragraph = platypus.Paragraph(_(u'Answers: %i') % self.count, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
+		self.mean_paragraph = platypus.Paragraph(_(u'Mean: %.2f') % self.mean, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
+		self.stdd_paragraph = platypus.Paragraph(_(u'Standard Deviation: %.2f') % self.standard_derivation, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
 	
 	def wrap (self, available_width, available_height) :
 		self.answers_paragraph.wrap(available_width, available_height)

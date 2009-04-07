@@ -1,2 +1,10 @@
+sdaps/add.py
+sdaps/csvdata/__init__.py
+sdaps/recognize/buddies.py
+sdaps/report/report.py
+sdaps/report/answers.py
+sdaps/setup/setup.py
+sdaps/stamp/stamp.py
+sdaps/model/survey.py
 sdaps/gui/gui.py
 sdaps/gui/main_window.glade

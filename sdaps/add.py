@@ -43,26 +43,23 @@ def add (survey, *files) :
 		
 	for file in files :
 		
-		print 'Processing', file
+		print _('Processing %s') % file
 		
 		try :
 			image = Image.open(file)
 		except IOError :
-			print 'Unknown file format'
-			print 'It should be TIFF'
-			print 'Processing stopped'
+			print _('Unknown file format. Only TIFF is supported')
+			print _('Processing stopped')
 			continue
 		
 		if image.format != 'TIFF' :
-			print 'Unknown image file format', '(%s)' % image.format
-			print 'It should be TIFF'
-			print 'Processing stopped'
+			print _('Unknown image file format (%s). Only TIFF is supported') % image.format
+			print _('Processing stopped')
 			continue
 		
 		if not image.mode == '1' :
-			print 'Wrong data type inside TIFF', '(%s)' % image.mode
-			print 'It should be black and white data'
-			print 'Processing stopped'
+			print _('Wrong data type inside TIFF (%s). It should be black and white data.') % image.mode
+			print _('Processing stopped')
 			continue
 		
 		directory = survey.new_path('%i')
@@ -97,7 +94,7 @@ def add (survey, *files) :
 				sheet.add_image(image)
 				image.filename = os.path.join(dir, img_list[c*i+j])
 		
-		print 'Done'
+		print _('Done')
 	
 	survey.save()
 	
