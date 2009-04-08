@@ -42,7 +42,7 @@ class cover (script.script):
 
 		doc = template.DocTemplate(
 			survey.path('cover.pdf'),
-			u'questionnaire',
+			_(u'sdaps questionnaire'),
 			{
 				'title' : survey.title,
 				'subject' : subject

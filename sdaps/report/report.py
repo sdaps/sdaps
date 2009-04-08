@@ -65,7 +65,7 @@ def report (survey, filter, filename = None, stats = 0, small = 0) :
 
 	doc = template.DocTemplate(
 		filename,
-		u'report',
+		_(u'sdaps report'),
 		{
 			'title' : survey.title,
 			'subject' : subject,

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-07 16:51+0200\n"
+"POT-Creation-Date: 2009-04-08 14:11+0200\n"
 "PO-Revision-Date: 2009-04-07 15:00+0200\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
@@ -93,6 +93,11 @@ msgstr ""
 "\n"
 "\tErstellt cover.odf\n"
 "\t"
+
+#: ../sdaps/cover.py:45
+#
+msgid "sdaps questionnaire"
+msgstr "sdaps Fragebögen"
 
 #: ../sdaps/csvdata/__init__.py:23
 msgid ""
@@ -386,6 +391,10 @@ msgstr ""
 msgid "Turned in Questionnaires"
 msgstr "Abgegebene Fragebögen"
 
+#: ../sdaps/report/report.py:68
+msgid "sdaps report"
+msgstr "sdaps Report"
+
 #: ../sdaps/setup/__init__.py:22
 msgid ""
 "setup questionnaire_odt questionnaire_pdf [additional_questions]\n"
@@ -487,7 +496,7 @@ msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
 msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
 
-#: ../sdaps/stamp/stamp.py:169 ../sdaps/stamp/stamp.py:264
+#: ../sdaps/stamp/stamp.py:169 ../sdaps/stamp/stamp.py:269
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
@@ -516,6 +525,6 @@ msgstr[1] "pdftk: Stempele die Seite %d."
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr "pdftk: Erstelle das fertige PDF."
 
-#: ../sdaps/stamp/stamp.py:250
+#: ../sdaps/stamp/stamp.py:255
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."

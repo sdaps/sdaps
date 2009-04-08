@@ -74,7 +74,7 @@ class TitlePageTemplate (platypus.PageTemplate) :
 		canvas.drawCentredString(
 			document.width / 2.0,
 			document.height - 50 * mm,
-			u'sdaps %s' % self.title
+			self.title
 		)
 		canvas.restoreState()
 
