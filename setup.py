@@ -5,11 +5,17 @@ from distutils.extension import Extension
 import glob
 import os
 import commands
+import sys
 from DistUtilsExtra.command import *
 
 def pkgconfig(*packages, **kw):
     flag_map = {'-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries', '-D' : 'define_macros'}
-    for token in commands.getoutput("pkg-config --libs --cflags %s" % ' '.join(packages)).split():
+    (status, tokens) = commands.getstatusoutput("pkg-config --libs --cflags %s" % ' '.join(packages))
+    if status != 0:
+        print tokens
+        sys.exit(1)
+
+    for token in tokens.split():
         type = flag_map.get(token[:2])
         value = token[2:]
         if type == 'define_macros':
