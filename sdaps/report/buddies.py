@@ -22,6 +22,7 @@ from reportlab import platypus
 from reportlab.lib import styles
 from reportlab.lib import colors
 from reportlab.lib import units
+from sdaps import clifilter
 
 from sdaps import template
 
@@ -296,3 +297,55 @@ class Additional_Mark (Mark) :
 	name = 'report'
 	obj_class = model.questionnaire.Additional_Mark
 	
+class Additional_FilterHistogram (Question) :	
+	
+	__metaclass__ = model.buddy.Register
+	name = 'report'
+	obj_class = model.questionnaire.Additional_FilterHistogram
+	
+	def init (self, small) :
+		self.small = small
+		self.values = [0]*len(self.obj.answers)
+		self.count = 0
+	
+	def report (self) :
+		for i in range(len(self.obj.answers)) :
+			filter = clifilter.clifilter(self.obj.questionnaire.survey, self.obj.filters[i])
+			if filter():
+				self.values[i] += 1
+		self.count += 1
+
+	def calculate (self) :
+		if self.count :
+			self.significant = dict()
+			for i in range(len(self.values)) :
+				self.values[i] = self.values[i] / float(self.count)
+				if hasattr(self, 'ref_count') and self.ref_count :
+					# c = abs(self.values[value] - self.ref_values[value]) / pow(self.ref_standard_derivation, 2)
+					# a = 0.1
+					# libm = ctypes.CDLL("libm.so")
+					# libm.erf.restype = ctypes.c_double
+					# P = libm.erf(ctypes.c_double(c))				
+					# self.significant = not (P <= a)
+					self.significant[i] = abs(self.values[i] - self.ref_values[i]) > 0.1
+				else :
+					self.significant[i] = 0
+
+	def reference (self) :
+		if self.count :
+			self.ref_values = self.values
+			self.ref_count = self.count
+	
+	def story (self) :
+		story = Question.story(self)
+		if self.count :
+			for i in range(len(self.values)) :
+				story.append(
+					answers.Choice(
+						self.obj.answers[i],
+						self.values[i],
+						self.significant[i]
+					)
+				)
+			story = [platypus.KeepTogether(story)]
+		return story

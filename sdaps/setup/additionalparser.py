@@ -24,6 +24,7 @@ def parse (survey, additionalqobjects) :
 	document = file(additionalqobjects, 'r')
 	
 	for line in document :
+		line = line.decode('utf-8')
 		args = line.strip().split('\t')
 		qobject = getattr(model.questionnaire, 'Additional_%s' % args.pop(0))
 		assert issubclass(qobject, model.questionnaire.QObject)

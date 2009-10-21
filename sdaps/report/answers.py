@@ -74,7 +74,7 @@ class Choice (platypus.Flowable) :
 			stylesheet_name = 'Right_Highlight'
 		else :
 			stylesheet_name = 'Right'
-		self.answer = platypus.Paragraph(answer, stylesheet[stylesheet_name])
+		self.answer = platypus.Paragraph(answer.replace('<', '\\<'), stylesheet[stylesheet_name])
 		self.value = platypus.Paragraph(
 			u'%.2f %%' % (value * 100), stylesheet[stylesheet_name]
 		)

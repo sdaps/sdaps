@@ -223,6 +223,26 @@ class Additional_Mark (Question, DataObject) :
 	def set_answer (self, answer) :
 		self.data.value = answer
 
+class Additional_FilterHistogram (Question, DataObject) :
+	
+	def init_attributes (self) :
+		Question.init_attributes(self)
+		self.answers = list()
+		self.filters = list()
+	
+	def __unicode__ (self) :
+		result = []
+		result.append(Question.__unicode__(self))
+		for i in xrange(len(self.answers)):
+			result.append(u'\t%s - %s\n' % (self.answers[i], self.filters[i]))
+		return unicode().join(result)
+	
+	def get_answer (self) :
+		return self.data.value
+
+	def set_answer (self, answer) :
+		raise NotImplemented()
+
 
 class Box (buddy.Object, DataObject) :
 	'''

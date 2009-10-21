@@ -195,6 +195,19 @@ class Additional_Mark (Question) :
 		self.validate()
 
 
+class Additional_FilterHistogram (Question) :
+
+	__metaclass__ = model.buddy.Register
+	obj_class = model.questionnaire.Additional_FilterHistogram
+
+	def setup (self, args) :
+		assert len(args) % 2 == 1
+		self.question(args.pop(0))
+		while len(args):
+			self.obj.answers.append(args.pop(0))
+			self.obj.filters.append(args.pop(0))
+		self.validate()
+
 class Box (model.buddy.Buddy) :
 	
 	__metaclass__ = model.buddy.Register
