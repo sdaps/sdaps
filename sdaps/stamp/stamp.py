@@ -157,8 +157,10 @@ def stamp (survey, count = 0, used_ids = None) :
 			draw_corner_boxes(canvas, j)
 			if j % 2 :
 				if questionnaire_ids :
-					id = questionnaire_ids.pop()
-					survey.questionnaire_ids.append(id)
+					if j == 1 :
+						# Only read a new ID for the first page.
+						id = questionnaire_ids.pop()
+						survey.questionnaire_ids.append(id)
 					draw_questionnaire_id(canvas, id)
 				draw_survey_id(canvas, survey.survey_id)
 			canvas.showPage()
