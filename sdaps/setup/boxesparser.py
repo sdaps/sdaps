@@ -28,8 +28,8 @@ mm = cm * 0.1
 
 # TODO Documentation for these values
 # (min, max)
-TEXTBOX_WIDTH = (17.3 * cm, 17.5 * cm)
-TEXTBOX_HEIGHT = (1.5 * cm, 20 * cm)
+TEXTBOX_WIDTH = (6.0 * cm, 20.0 * cm)
+TEXTBOX_HEIGHT = (0.8 * cm, 20.0 * cm)
 CHECKBOX_SIZE = (3.4 * mm, 3.6 * mm)
 
 
