@@ -16,6 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+from pkg_resources import get_build_platform
+from distutils.sysconfig import get_python_version
+
 paper_width = 210.0 # mm
 paper_height = 297.0 # mm
 
@@ -77,4 +81,37 @@ def find_data_prefix():
 				return os.path.join(path, 'share')
 	return os.path.join(sys.prefix, 'share')
 
-data_dir = find_data_prefix()
+def find_locale_dir(src_dir=None):
+	if src_dir:
+		if os.path.exists(os.path.join(src_dir, 'mo')):
+			return os.path.join(src_dir, 'mo')
+		else:
+			sys.stderr.write("You should run ./setup.py build_i18n!")
+			return None
+	else:
+		return os.path.join(find_data_prefix(), 'locale')
+
+def find_data_dir(src_dir=None):
+	return os.path.join(find_data_prefix(), 'sdaps')
+
+build_tree = None
+def init(sdaps_src_tree=None):
+	global in_src, src_tree, build_tree, locale_dir, glade_dir
+
+	if sdaps_src_tree is not None:
+		in_src = True
+	else:
+		in_src = False
+	src_tree = sdaps_src_tree
+	dir = 'lib.%s-%s' % (get_build_platform(), get_python_version())
+
+	if in_src:
+		build_tree = os.path.abspath(os.path.join(src_tree, 'build', dir, 'sdaps'))
+		if not os.path.exists(build_tree):
+			import sys
+			sys.stderr.write('You need to at least run "./setup.py build_ext" to run sdaps!\n')
+			sys.exit(1)
+
+	locale_dir = find_locale_dir()
+	if not in_src:
+		data_dir = find_data_dir()

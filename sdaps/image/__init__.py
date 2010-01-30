@@ -16,4 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from image import *
+from sdaps import defs
+
+if defs.in_src:
+    import os
+    import sys
+    path = sys.path
+    sys.path.insert(0, os.path.join(defs.build_tree, 'image'))
+    from image import *
+    sys.path = path
+else:
+    from image import *

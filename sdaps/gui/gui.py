@@ -88,7 +88,10 @@ class MainWindow(object):
 		self.provider = provider
 		
 		self._load_image = 0
-		self._glade = gtk.glade.XML(os.path.join(defs.data_dir, 'sdaps', 'glade', 'main_window.glade'))
+		if not defs.in_src:
+			self._glade = gtk.glade.XML(os.path.join(defs.data_dir, 'sdaps', 'glade', 'main_window.glade'))
+		else:
+			self._glade = gtk.glade.XML(os.path.join(os.path.dirname(__file__), 'main_window.glade'))
 		
 		self._window = self._glade.get_widget("main_window")
 		self._glade.signal_autoconnect(self)

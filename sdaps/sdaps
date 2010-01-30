@@ -31,7 +31,17 @@ scripts
 import sys
 import os
 
+dir = os.path.dirname(__file__)
+if os.path.join(dir, '..', 'setup.py'):
+	# We assume that we are running locally, so add the local version to
+	# the search path
+	src_tree = os.path.abspath(os.path.join(dir, '..'))
+	sys.path.insert(0, src_tree)
+else:
+	src_tree = None
+
 from sdaps import defs
+defs.init(src_tree)
 
 # Initilize the translation system
 import gettext, locale
@@ -39,11 +49,11 @@ import __builtin__
 __builtin__._ = lambda x: gettext.gettext(x).decode('UTF-8')
 __builtin__.ngettext = lambda a, b, c: gettext.ngettext(a, b, c).decode('UTF-8')
 
-gettext.bindtextdomain('sdaps', os.path.join(defs.data_dir, "locale"))
+gettext.bindtextdomain('sdaps', defs.locale_dir)
 if hasattr(gettext, 'bind_textdomain_codeset'):
     gettext.bind_textdomain_codeset('sdaps','UTF-8')
 gettext.textdomain('sdaps')
-locale.bindtextdomain('sdaps', os.path.join(defs.data_dir, "locale"))
+locale.bindtextdomain('sdaps', defs.locale_dir)
 if hasattr(locale, 'bind_textdomain_codeset'):
     locale.bind_textdomain_codeset('sdaps','UTF-8')
 locale.textdomain('sdaps')
