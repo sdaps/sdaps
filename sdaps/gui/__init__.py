@@ -16,6 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+u"""
+This modules contains a GTK+ user interface. With the help of this GUI it is
+possible to manually correct the automatic recognition and do basic debugging.
+"""
+
 from sdaps import script
 
 class gui (script.script) :

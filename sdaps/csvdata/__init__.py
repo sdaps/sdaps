@@ -16,6 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+u"""
+This module implements a simple export/import to/from CSV files.
+"""
+
 from sdaps import script
 
 

@@ -16,6 +16,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+u"""
+The matrix module adds support to find out the rotation matrix for a scanned
+page. After loading the (cairo) matrixes can be accessed via two functions:
+
+  model.sheet.Image.matrix.mm_to_px() and
+  model.sheet.Image.matrix.px_to_mm()
+
+The return value of mm_to_px() can be used to convert milimeter values to pixel
+on the scanned page. px_to_mm() returns the inverse matrix to convert on page
+pixels to milimiter values of the original document.
+
+Warning: The correct values are only available after "recognize" has been run!
+"""
+
 from sdaps import model
 import cairo
 

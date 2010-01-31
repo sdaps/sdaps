@@ -16,6 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+u"""
+Template
+========
+
+This modules contains templates for reportlab. These are used to create the
+reports.
+"""
+
 from reportlab import platypus
 from reportlab.lib import styles
 from reportlab.lib import units

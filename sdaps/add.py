@@ -19,10 +19,6 @@
 from sdaps import script
 
 
-# Warning for questionnaires with more than 2 pages
-# recognize can not join papers together!
-# Dont shuffle them!!!!
-
 class add (script.script) :
 	doc = _(u'''add files
 	

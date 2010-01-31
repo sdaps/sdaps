@@ -16,6 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+u"""
+Contains the functionality to create a new SDAPS project using an OpenOffice.org
+document and its PDF Export.
+"""
+
 from sdaps import script
 
 class setup (script.script) :

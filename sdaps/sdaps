@@ -43,21 +43,6 @@ else:
 from sdaps import defs
 defs.init(src_tree)
 
-# Initilize the translation system
-import gettext, locale
-import __builtin__
-__builtin__._ = lambda x: gettext.gettext(x).decode('UTF-8')
-__builtin__.ngettext = lambda a, b, c: gettext.ngettext(a, b, c).decode('UTF-8')
-
-gettext.bindtextdomain('sdaps', defs.locale_dir)
-if hasattr(gettext, 'bind_textdomain_codeset'):
-    gettext.bind_textdomain_codeset('sdaps','UTF-8')
-gettext.textdomain('sdaps')
-locale.bindtextdomain('sdaps', defs.locale_dir)
-if hasattr(locale, 'bind_textdomain_codeset'):
-    locale.bind_textdomain_codeset('sdaps','UTF-8')
-locale.textdomain('sdaps')
-
 from sdaps import script
 from sdaps import model
 from sdaps import log

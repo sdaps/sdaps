@@ -16,6 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+u"""
+The surface module adds support for loading the scanned images. It adds a buddy
+to the model.sheet.Image and provides the surface via
+model.sheet.Image.surface.surface at runtime.
+"""
+
 from sdaps import model
 from sdaps import image
 

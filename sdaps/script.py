@@ -43,6 +43,9 @@ Defining a script
 
 '''
 
+# Import defs to initilize the i18n system
+from sdaps import defs
+
 scripts = dict()
 
 # Metaclass that registers scripts automatically

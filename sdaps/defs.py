@@ -16,9 +16,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+u"""
+Defs
+====
+
+This module contains constants and some magic values.
+"""
+
 import os
 from pkg_resources import get_build_platform
 from distutils.sysconfig import get_python_version
+import gettext, locale
+import __builtin__
 
 paper_width = 210.0 # mm
 paper_height = 297.0 # mm
@@ -115,3 +124,19 @@ def init(sdaps_src_tree=None):
 	locale_dir = find_locale_dir()
 	if not in_src:
 		data_dir = find_data_dir()
+
+
+
+	# Initilize the translation system, step 2
+	gettext.bindtextdomain('sdaps', defs.locale_dir)
+	if hasattr(gettext, 'bind_textdomain_codeset'): 
+		gettext.bind_textdomain_codeset('sdaps','UTF-8')
+		gettext.textdomain('sdaps')
+		locale.bindtextdomain('sdaps', defs.locale_dir)
+	if hasattr(locale, 'bind_textdomain_codeset'): 
+		locale.bind_textdomain_codeset('sdaps','UTF-8')
+		locale.textdomain('sdaps')
+
+# Initilize the translation system, step 1
+__builtin__._ = lambda x: gettext.gettext(x).decode('UTF-8')
+__builtin__.ngettext = lambda a, b, c: gettext.ngettext(a, b, c).decode('UTF-8')

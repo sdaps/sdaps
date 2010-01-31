@@ -16,6 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+u"""
+This modules contains low level image processing functions. These functions
+are implemented in C for speed reasons. Usually one will not need to use these
+directly, instead modules like "recognize" or "surface" use them to load and
+analyze the image data.
+"""
+
 from sdaps import defs
 
 if defs.in_src:
