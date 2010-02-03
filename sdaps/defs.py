@@ -128,11 +128,11 @@ def init(sdaps_src_tree=None):
 
 
 	# Initilize the translation system, step 2
-	gettext.bindtextdomain('sdaps', defs.locale_dir)
+	gettext.bindtextdomain('sdaps', locale_dir)
 	if hasattr(gettext, 'bind_textdomain_codeset'): 
 		gettext.bind_textdomain_codeset('sdaps','UTF-8')
 		gettext.textdomain('sdaps')
-		locale.bindtextdomain('sdaps', defs.locale_dir)
+		locale.bindtextdomain('sdaps', locale_dir)
 	if hasattr(locale, 'bind_textdomain_codeset'): 
 		locale.bind_textdomain_codeset('sdaps','UTF-8')
 		locale.textdomain('sdaps')
