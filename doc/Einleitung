@@ -1,0 +1,54 @@
+sdaps
+
+scripts for data acquisition with paper based surveys
+
+Programmstruktur
+
+Sdaps ist in einzelne Skripte unterteilt. Sie werden zwar alle über ein
+gemeinsames Startmodul, „sdaps.py“, gestartet, arbeiten aber
+unabhängig. von einander. Ein Interpreter führt dabei immer nur ein Skript
+aus und endet dann wieder.
+
+Die Skripte laden zunächst die Daten des Projekts, das Objekt survey, von
+der Festplatte. Im survey sind sowohl der Fragebogen (survey.questionnaire)
+als auch die Daten der eingescannten Bögen (survey.sheets) gespeichert.
+
+Der Fragebogen (survey.questionnaire) wird durch eine Sammlung von qobjects
+beschrieben. Questionnaire enthält eine Liste qobjects, mit einem qobject
+für jede Überschrift und für jede Frage im Fragebogen. Ein qobject
+wiederum enthält eine Liste boxes, mit einer box für jedes ausfüllbare
+Feld (Ankreuzfeld oder Textfeld) bei der Frage.
+
+Die Umfragedaten (survey.sheets) werden bogenweise gespeichert. Ein sheet
+repräsentiert einen ausgefüllten Fragebogen mit allen seinen Seiten.
+
+Ein Skript kann nun eigene Objekte an die Objekte des Fragebogens anhängen
+und damit deren Funktionalität erweitern. Dieser erweiterte Fragebogen
+bearbeitet dann die Umfragedaten.
+
+Im Detail
+
+Ein Skript definiert buddies (Kumpels). Die Buddy-Klasse ist einer
+QObject-Klasse zugewiesen. Für jedes qobject dieser Klasse wird ein buddy
+instanziert. Vom qobject aus kann der Kumpel mittels qobject.name
+angesprochen werden, wobei name der Name des Kumpels ist (in der Klasse
+definiert). Vom Kumpel aus kann das qobject mittels buddy.obj angesprochen
+werden.
+
+Dann kann das Skript mit der Funktion iterate() des surveys über die
+Umfragedaten iterieren. Die Funktion iterate() setzt bei jedem
+Iterationsschritt den Zeiger survey.sheet auf das nächste zu bearbeitende
+sheet (ein ausgefüllter Bogen) und ruft eine gegebene Funktion auf. Die
+gegebene Funktion (oft survey.questionnaire.buddy.do_something()) kann
+einerseits durch die qobjects des Fragebogens andere
+qobject.buddy.do_something() aufrufen und andererseits über survey.sheet
+auf den in diesem Iterationsschritt aktuellen Datensatz zugreifen.
+
+Dieses Verfahren mag kompliziert erscheinen, bietet aber die Möglichkeit
+für das Skript, seine Objektstruktur an die dem Programmierer bis dahin
+unbekannte Objektstruktur des Fragebogens anzupassen und dann die Daten zu
+bearbeiten.
+
+Oder objektorientiert betrachtet: Das Buddy-System erweitert die
+Fragebogenobjekte zur Laufzeit um neue Funktionen, als würde es die Klassen
+ableiten.
