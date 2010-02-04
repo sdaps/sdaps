@@ -35,8 +35,12 @@ survey
 
 
 The questionnaire tree resembles the structer of the questionnaire and the
-internal structure of the programm. It is setup by the setup script and not
+internal structure of the programm. It is set up by the setup script and not
 altered (much) later.
+
+The sheets tree holds the data of the answered questionnaires. The sheet objects are created while the scanned images are added to the project.
+
+Ein Skript kann Kumpels (buddies) zu den Objekten im questionnaire tree definieren. 
 
 Iterating through sheets and jumping
 ====================================
@@ -65,3 +69,5 @@ import data
 import questionnaire
 import sheet
 import survey
+
+

@@ -15,12 +15,23 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+u'''
+
+Hinweis zu den Diamantstrukturen 
+
+Bei Klassen mit mehreren Basisklassen definiert maximal eine Basisklasse
+eine eigene __init__ - Funktion. Die anderen Klassen sind "nur" Mixin - Klassen.
+Dadurch werden die Probleme der Diamantstruktur umgangen.
+
+'''
 
 import buddy
 import data
 
 
 class DataObject (object) :
+	u'''Mixin
+	'''
 	
 	def get_data (self) :
 		if not self.id in self.sheet.data :
@@ -71,7 +82,6 @@ class QObject (buddy.Object) :
 	'''
 	
 	def __init__ (self) :
-		DataObject.__init__(self)
 		self.questionnaire = None
 		self.boxes = list()
 		self.last_id = -1
@@ -253,7 +263,6 @@ class Box (buddy.Object, DataObject) :
 	'''
 	
 	def __init__ (self) :
-		DataObject.__init__(self)
 		self.question = None
 		self.init_attributes()
 
