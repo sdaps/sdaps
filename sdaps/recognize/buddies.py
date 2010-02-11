@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -22,9 +22,7 @@ import random
 from sdaps import model
 from sdaps import matrix
 from sdaps import surface
-
 from sdaps import image
-
 from sdaps import defs
 
 
@@ -48,9 +46,9 @@ class Sheet (model.buddy.Buddy) :
 		for image in self.obj.images :
 			image.recognize.clean()
 
-	
+
 class RecognitionError (Exception) :
-	
+
 	pass
 
 
@@ -65,16 +63,16 @@ class Image (model.buddy.Buddy) :
 		self.obj.surface.load()
 		try :
 			self.calculate_matrix()
-		except RecognitionError :	
+		except RecognitionError :
 			print _('%s: Matrix not recognized. Cancelling recognition of that image.') % self.obj.filename
 			raise RecognitionError
-		
+
 		# The coordinates in defs are the center of the line, not the bounding box of the box ...
 		# Its a bug im stamp
 		# So we need to adjust them
 		half_pt = 0.5 / 72.0 * 25.4
 		pt = 1.0 / 72.0 * 25.4
-		
+
 		corners = [
 			int(image.get_coverage(
 				self.obj.surface.surface, self.matrix,
@@ -85,7 +83,7 @@ class Image (model.buddy.Buddy) :
 			) > 0.7)
 			for corner in defs.corner_boxes_positions
 		]
-		
+
 		#topleft = image.get_coverage(
 			#self.obj.surface.surface, self.matrix,
 			#13.0 - half_pt, 15.0 - half_pt, 3.5 + pt, 3.5 + pt
@@ -102,12 +100,12 @@ class Image (model.buddy.Buddy) :
 			#self.obj.surface.surface, self.matrix,
 			#193.5 - half_pt, 278.5 - half_pt, 3.5 + pt, 3.5 + pt
 		#)
-		
+
 		#topleft = topleft > 0.7
 		#topright = topright > 0.7
 		#bottomleft = bottomleft > 0.7
 		#bottomright = bottomright > 0.7
-		
+
 		try :
 			self.obj.page_number = defs.corner_boxes.index(corners) + 1
 		except ValueError :
@@ -126,7 +124,7 @@ class Image (model.buddy.Buddy) :
 					raise RecognitionError
 		else :
 			self.obj.rotated = 0
-		
+
 		if self.obj.page_number % 2 == 0 :
 			# read ids
 			self.obj.sheet.survey_id = self.read_codebox(
@@ -157,13 +155,13 @@ class Image (model.buddy.Buddy) :
 				self.obj.surface.surface,
 				self.matrix,
 				x + (i * defs.codebox_step) + defs.codebox_offset,
-				y + defs.codebox_offset, 
+				y + defs.codebox_offset,
 				defs.codebox_step - 2 * defs.codebox_offset,
 				defs.codebox_height - 2 * defs.codebox_offset
 			)
 			if coverage > 0.7 : code += 1
 		return code
-	
+
 	def calculate_matrix (self) :
 		try :
 			matrix = image.calculate_matrix(
@@ -184,7 +182,7 @@ class Image (model.buddy.Buddy) :
 			self.matrix,
 			x, y, width, height
 		)
-	
+
 	def correction_matrix(self, x, y, width, height):
 		return image.calculate_correction_matrix(
 			self.obj.surface.surface,
@@ -212,7 +210,7 @@ class Questionnaire (model.buddy.Buddy) :
 				qobject.recognize.recognize()
 		# clean up
 		self.obj.sheet.recognize.clean()
-	
+
 
 class QObject (model.buddy.Buddy) :
 
@@ -236,7 +234,7 @@ class Question (model.buddy.Buddy) :
 			box.recognize.recognize()
 
 
-#class Choice (Question) :	
+#class Choice (Question) :
 
 	#__metaclass__ = model.buddy.Register
 	#name = 'recognize'
@@ -265,7 +263,7 @@ class Checkbox (Box) :
 	__metaclass__ = model.buddy.Register
 	name = 'recognize'
 	obj_class = model.questionnaire.Checkbox
-	
+
 	BORDER_WIDTH = 0.45
 
 	def recognize (self) :
@@ -295,12 +293,12 @@ class Textbox (Box) :
 	def recognize (self) :
 		bbox = None
 		image = self.obj.sheet.images[self.obj.page_number - 1]
-	
+
 		x = self.obj.x
 		y = self.obj.y
 		width = self.obj.width
 		height = self.obj.height
-		
+
 		# Always test a 2x2 mm area, so that every pixel is tested 4 times ...
 		test_width = 2.0
 		test_height = 2.0
@@ -308,17 +306,17 @@ class Textbox (Box) :
 
 		steps_x = int(width)
 		steps_y = int(height)
-		
+
 		# Test the inner part, leaving out the edge around the box.
 		x_start = x + padding
 		y_start = y + padding
 
 		step_x = width / float(steps_x)
 		step_y = height / float(steps_y)
-		
+
 		x_end = width + x_start - test_width - 2 * padding
 		y_end = height + y_start - test_width - 2 * padding
-		
+
 		x = x_start
 		while x <= x_end:
 			y = y_start
@@ -340,7 +338,7 @@ class Textbox (Box) :
 
 		if bbox:
 			self.obj.data.state = True
-			
+
 			self.obj.data.x = bbox[0] - 1.0
 			self.obj.data.y = bbox[1] - 1.0
 			self.obj.data.width = bbox[2] + 2.0

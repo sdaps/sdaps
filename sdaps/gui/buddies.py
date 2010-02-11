@@ -5,21 +5,22 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import cairo
 
 from sdaps import model
-import cairo
 from sdaps import defs
+
 
 LINE_WIDTH = 0.2
 MIN_FREETEXT_SIZE = 4.0
@@ -29,19 +30,20 @@ _RIGHT = 2
 _TOP = 3
 _BOTTOM = 4
 
+
 def inner_box(cr, x, y, width, height):
 	line_width = cr.get_line_width()
-	
+
 	cr.rectangle(x + line_width/2.0, y + line_width/2.0,
 	             width - line_width, height - line_width)
 
 
 class Questionnaire (model.buddy.Buddy) :
-	
+
 	__metaclass__ = model.buddy.Register
 	name = 'gui'
 	obj_class = model.questionnaire.Questionnaire
-	
+
 	def draw (self, cr, page_number) :
 		for qobject in self.obj.qobjects:
 			qobject.gui.draw(cr, page_number)
@@ -62,11 +64,11 @@ class Questionnaire (model.buddy.Buddy) :
 
 
 class QObject (model.buddy.Buddy) :
-	
+
 	__metaclass__ = model.buddy.Register
 	name = 'gui'
 	obj_class = model.questionnaire.QObject
-	
+
 	def draw (self, cr, page_number) :
 		pass
 
@@ -78,11 +80,11 @@ class QObject (model.buddy.Buddy) :
 
 
 class Question (model.buddy.Buddy) :
-	
+
 	__metaclass__ = model.buddy.Register
 	name = 'gui'
 	obj_class = model.questionnaire.Question
-	
+
 	def draw (self, cr, page_number) :
 		# Does the sheet contain this question?
 		if page_number == self.obj.page_number :
@@ -112,17 +114,17 @@ class Question (model.buddy.Buddy) :
 
 
 class Box (model.buddy.Buddy) :
-	
+
 	__metaclass__ = model.buddy.Register
 	name = 'gui'
 	obj_class = model.questionnaire.Checkbox
-	
+
 	def draw (self, cr) :
 		cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
-		
+
 		cr.set_source_rgba(0.0, 0.0, 1.0, 0.5)
 		cr.set_line_width(LINE_WIDTH)
-		
+
 		inner_box(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
 		cr.stroke()
 
@@ -135,45 +137,44 @@ class Box (model.buddy.Buddy) :
 	def find_edge (self, x, y, tollerance_x, tollerance_y) :
 		return None
 
+
 class Checkbox (Box) :
-	
+
 	__metaclass__ = model.buddy.Register
 	name = 'gui'
 	obj_class = model.questionnaire.Checkbox
 
 	def draw (self, cr) :
 		cr.save()
-		
+
 		cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
-		
+
 		cr.set_source_rgba(0.0, 0.0, 1.0, 0.5)
 		cr.set_line_width(LINE_WIDTH)
-		
+
 		if self.obj.data.state:
 			cr.rectangle(self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
 			cr.fill()
 		else:
 			inner_box(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
 			cr.stroke()
-			
-		cr.restore()
-			
 
+		cr.restore()
 
 
 class Textbox (Box) :
-	
+
 	__metaclass__ = model.buddy.Register
 	name = 'gui'
 	obj_class = model.questionnaire.Textbox
 
 	def draw (self, cr) :
 		cr.save()
-		
+
 		cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
-		
+
 		cr.set_source_rgba(0.0, 0.0, 1.0, 0.5)
-		
+
 		if self.obj.data.state:
 			cr.set_line_width(3 * LINE_WIDTH)
 		else:
@@ -181,7 +182,7 @@ class Textbox (Box) :
 
 		inner_box(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
 		cr.stroke()
-			
+
 		cr.restore()
 
 	def find_edge (self, x, y, tollerance_x, tollerance_y) :
@@ -206,7 +207,7 @@ class Textbox (Box) :
 			x = max(x, defs.corner_mark_x)
 			new_width = max(MIN_FREETEXT_SIZE, self.obj.data.width + self.obj.data.x - x)
 			x = self.obj.data.x + (self.obj.data.width - new_width)
-			
+
 			self.obj.data.width = new_width
 			self.obj.data.x = x
 		elif side == _RIGHT:
@@ -219,7 +220,7 @@ class Textbox (Box) :
 			y = max(y, defs.corner_mark_y)
 			new_height = max(MIN_FREETEXT_SIZE, self.obj.data.height + self.obj.data.y - y)
 			new_y = self.obj.data.y + (self.obj.data.height - new_height)
-			
+
 			self.obj.data.height = new_height
 			self.obj.data.y = new_y
 		elif side == _BOTTOM:
@@ -227,5 +228,5 @@ class Textbox (Box) :
 			new_height = max(MIN_FREETEXT_SIZE, y - self.obj.data.y)
 
 			self.obj.data.height = new_height
-		
-		
+
+

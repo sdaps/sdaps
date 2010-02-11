@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright (C) 2008, Christoph Simon <christoph.simon@gmx.eu>
 # Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>

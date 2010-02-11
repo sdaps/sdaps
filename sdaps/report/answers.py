@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import StringIO
 import Image
 
 from reportlab import pdfgen
@@ -27,14 +28,14 @@ from reportlab.lib import enums
 from reportlab.lib import colors
 
 from sdaps import template
-import flowables
 from sdaps import model
 from sdaps import image
 
-import StringIO
-
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
+
+import flowables
+
 
 mm = units.mm
 

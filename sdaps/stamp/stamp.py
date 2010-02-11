@@ -17,10 +17,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import random
+
 try:
 	import cStringIO as StringIO
 except:
 	import StringIO
+
 import subprocess
 import os
 import sys

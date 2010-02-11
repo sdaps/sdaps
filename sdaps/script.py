@@ -17,30 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 u'''
-
-	sdaps - scripts for data acquisition with paper based surveys
-
-	script - Registration center for sdaps scripts
-
-
-Defining a script
-=================
-
-	from sdaps import script
-
-	@script.register
-	def my_script (survey, *arguments) :
-		u\'''arguments
-		description
-		\'''
-		from sdaps import buddies
-		do the work
-
-	if sdaps imports your module, the script will be registerd
-
-	if sdaps calls your script, it should import any buddies, so that they will
-	be registerd.
-
+This module defines some decorators, helping to implement sdaps-scripts.
+To register a function as a sdaps-script (callable from the command line), use
+@register
 '''
 
 import os
@@ -83,6 +62,15 @@ def doc (docstring) :
 
 
 def logfile (function) :
+	u'''open the logfile when running the function and close it afterwards.
+
+	@logfile
+	def function (survey_dir, *args, **kwargs) :
+		pass
+
+	@logfile will open survey_dir/log as a logfile when function is called and
+	close it, when function finishes.
+	'''
 	def decorated_function (survey_dir, *args, **kwargs) :
 		log.logfile.open(os.path.join(survey_dir, 'log'))
 		function(survey_dir, *args, **kwargs)

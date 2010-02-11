@@ -22,11 +22,12 @@ data. It reads the image data and tries to guess whether a checkbox is
 empty/checked/filled and finds the written area in a textfield.
 """
 
+from sdaps import model
+from sdaps import script
+
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
-from sdaps import script
-from sdaps import model
 
 @script.register
 @script.logfile
@@ -39,8 +40,6 @@ from sdaps import model
 	'''))
 def recognize (survey_dir) :
 	survey = model.survey.Survey.load(survey_dir)
-
-	import buddies
 	import recognize
 	recognize.recognize(survey)
 

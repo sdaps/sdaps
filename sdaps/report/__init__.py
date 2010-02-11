@@ -20,11 +20,12 @@ u"""
 This modules contains the functionality to create PDF based reports.
 """
 
+from sdaps import model
+from sdaps import script
+
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
-from sdaps import script
-from sdaps import model
 
 @script.register
 @script.logfile

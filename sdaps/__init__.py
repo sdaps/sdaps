@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright (C) 2008, Christoph Simon <christoph.simon@gmx.eu>
 # Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 u"""
-SDAPS has a modular design. It ships a core python module called "model" which
+sdaps has a modular design. It ships a core python module called "model" which
 is responsible for storing and basic modification of the data. When other
 modules like "recognize" are loaded they '''extend''' the original model.
 
@@ -33,8 +33,10 @@ Please have a look at the documentation of the "model" package.
 import sys
 
 import paths
-import ugettext
 import script
+
+from ugettext import ugettext, ungettext
+_ = ugettext
 
 
 def sdaps (survey_dir, script_name, *arguments) :
@@ -50,18 +52,14 @@ def sdaps (survey_dir, script_name, *arguments) :
 		print _(u'''Unknown script "%s". Aborting.''') % script_name
 		return 1
 
-
 def doc () :
 	for script_class in script.scripts.itervalues() :
 		print script_class.func_name, script_class.func_doc
 	return 0
 
-
 def main (local_run = False) :
 	paths.init(local_run, __path__[0])
 
-	# Import scripts
-	# (They will register themselfs)
 	import add
 	import boxgallery
 	import cover
@@ -74,7 +72,6 @@ def main (local_run = False) :
 	import setup
 	import stamp
 
-	# Run
 	if len(sys.argv) < 3 :
 		return doc()
 	else :

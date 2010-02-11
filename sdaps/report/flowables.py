@@ -5,16 +5,18 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import math
 
 from reportlab import pdfgen
 from reportlab import platypus
@@ -23,11 +25,10 @@ from reportlab.lib import units
 from reportlab.lib import pagesizes
 from reportlab.lib import enums
 
-import math
+from sdaps import template
+
 
 mm = units.mm
-
-from sdaps import template
 
 stylesheet = template.stylesheet
 
@@ -41,7 +42,7 @@ stylesheet['Right'] = styles.ParagraphStyle(
 class Box (platypus.Flowable) :
 	u'''3d box
 	'''
-	
+
 	def __init__ (self, a, b, c, margin = 0) :
 		platypus.Flowable.__init__(self)
 		self.a = float(a)
@@ -54,12 +55,12 @@ class Box (platypus.Flowable) :
 		self.fill = 0
 		self.transparent = 1
 		self.fill_color = (255, 255, 255)
-	
+
 	def wrap (self, available_width, available_height) :
 		self.width = self.a + self.cx
 		self.height = self.b + self.cy + 2 * self.margin
 		return self.width, self.height
-	
+
 	def draw (self) :
 		if 0 : assert isinstance(self.canv, pdfgen.canvas.Canvas)
 		self.canv.setLineJoin(1)
@@ -89,7 +90,7 @@ class Box (platypus.Flowable) :
 		path.lineTo(x, y + self.b)
 		path.lineTo(x, y)
 		self.canv.drawPath(path, fill = self.fill)
-	
+
 	def draw_top (self, x, y) :
 		path = self.canv.beginPath()
 		path.moveTo(x, y)
@@ -98,7 +99,7 @@ class Box (platypus.Flowable) :
 		path.lineTo(x + self.cx, y + self.cy)
 		path.lineTo(x, y)
 		self.canv.drawPath(path, fill = self.fill)
-	
+
 	def draw_front (self, x, y) :
 		path = self.canv.beginPath()
 		path.moveTo(x, y)
@@ -110,7 +111,7 @@ class Box (platypus.Flowable) :
 
 
 #class ChoiceBar (platypus.Flowable) :
-	
+
 	#def __init__ (self, value) :
 		#platypus.Flowable.__init__(self)
 		#self.a = 200
@@ -118,12 +119,12 @@ class Box (platypus.Flowable) :
 		#self.depth_x = 6
 		#self.depth_y = 3
 		#self.value = value
-	
+
 	#def wrap (self, available_width, available_height) :
 		#self.width = self.a + self.depth_x
 		#self.height = self.height + self.depth_y
 		#return self.width, self.height
-	
+
 	#def draw (self) :
 		#if 0 : assert isinstance(self.canv, pdfgen.canvas.Canvas)
 		#self.canv.setLineJoin(1)
@@ -140,7 +141,7 @@ class Box (platypus.Flowable) :
 		#self.canv.line(self.a * self.value + self.depth_x, self.b + self.depth_y, self.a + self.depth_x, self.b + self.depth_y)
 		## bar
 		#self.draw_side(1, 0)
-	
+
 	#def draw_front (self, value, fill) :
 		#path = self.canv.beginPath()
 		#path.moveTo(0, 0)
@@ -158,7 +159,7 @@ class Box (platypus.Flowable) :
 		#path.lineTo(self.depth_x, self.b + self.depth_y)
 		#path.lineTo(0, self.b)
 		#self.canv.drawPath(path, fill = fill)
-		
+
 	#def draw_side (self, value, fill) :
 		#path = self.canv.beginPath()
 		#path.moveTo(self.a * value, 0)
@@ -167,10 +168,10 @@ class Box (platypus.Flowable) :
 		#path.lineTo(self.a * value + self.depth_x, self.depth_y)
 		#path.lineTo(self.a * value, 0)
 		#self.canv.drawPath(path, fill = fill)
-		
-		
+
+
 #class ChoiceAnswer (platypus.Flowable) :
-	
+
 	#def __init__ (self, answer, value) :
 		#platypus.Flowable.__init__(self)
 		#self.answer = platypus.Paragraph(answer, template.stylesheet['Right'])
@@ -189,8 +190,8 @@ class Box (platypus.Flowable) :
 		#self.answer.wrap(available_width, available_height)
 		#self.height = max(self.answer.height, self.bar.height, self.value.height)
 		#return self.width, self.height
-	
-	
+
+
 	#def draw (self) :
 		#if 0 : assert isinstance(self.canv, pdfgen.canvas.Canvas)
 		#self.answer.drawOn(self.canv, 0, 0)
@@ -198,7 +199,7 @@ class Box (platypus.Flowable) :
 		#self.bar.drawOn(self.canv, self.answer.width + self.value.width + self.gap, 0)
 
 #class MarkAnswer (platypus.Flowable) :
-	
+
 	#def __init__ (self) :
 		#platypus.Flowable.__init__(self)
 		#self.box_width = 40
@@ -210,14 +211,14 @@ class Box (platypus.Flowable) :
 		##self.values = [0.2, 0.20, 0.2, 0.20, 0.20]
 		#self.values = [0.25, 0.10, 0.35, 0.20, 0.10]
 		#self.mean = sum([(mark + 1) * value for mark, value in enumerate(self.values)])
-			
-	
+
+
 	#def wrap (self, available_width, available_height) :
 		#self.width = available_width #self.box_width * 5
 		#self.offset = self.width - self.box_width * 5 - self.margin
 		#self.height = max(self.values) * self.box_height + self.mean_height
 		#return self.width, self.height
-	
+
 	#def draw (self) :
 		#if 0 : assert isinstance(self.canv, pdfgen.canvas.Canvas)
 		#self.canv.setLineJoin(1)
@@ -239,5 +240,5 @@ class Box (platypus.Flowable) :
 				#self.canv.line(self.offset + (i / 10.0 + 0.5) * self.box_width, 2, self.offset + (i / 10.0 + 0.5) * self.box_width, 4)
 			#if i % 10 == 0 :
 				#self.canv.setLineWidth(0.1)
-		
-	
+
+

@@ -21,11 +21,11 @@ This modules contains a GTK+ user interface. With the help of this GUI it is
 possible to manually correct the automatic recognition and do basic debugging.
 """
 
+from sdaps import model
+from sdaps import script
+
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
-
-from sdaps import script
-from sdaps import model
 
 @script.register
 @script.logfile
@@ -37,9 +37,6 @@ from sdaps import model
 	'''))
 def gui (survey_dir, *filter) :
 	survey = model.survey.Survey.load(survey_dir)
-
-	import buddies
 	import gui
-
 	gui.gui(survey, *filter)
 

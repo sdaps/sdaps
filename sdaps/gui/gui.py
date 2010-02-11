@@ -29,10 +29,15 @@ from sdaps import clifilter
 from sdaps import defs
 from sdaps import paths
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
+
 from sheet_widget import SheetWidget
+import buddies
 
 
-zoom_steps = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0]
+zoom_steps = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
+              1.25, 1.5, 2.0, 2.5, 3.0]
 
 
 def gui (survey, *filter) :
@@ -90,9 +95,13 @@ class MainWindow(object):
 
 		self._load_image = 0
 		if paths.local_run :
-			self._glade = gtk.glade.XML(os.path.join(os.path.dirname(__file__), 'main_window.glade'))
+			self._glade = gtk.glade.XML(
+			    os.path.join(os.path.dirname(__file__), 'main_window.glade'))
 		else :
-			self._glade = gtk.glade.XML(os.path.join(paths.prefix, 'share', 'sdaps', 'glade', 'main_window.glade'))
+			self._glade = gtk.glade.XML(
+			    os.path.join(
+			        paths.prefix,
+			        'share', 'sdaps', 'glade', 'main_window.glade'))
 
 		self._window = self._glade.get_widget("main_window")
 		self._glade.signal_autoconnect(self)
@@ -109,7 +118,8 @@ class MainWindow(object):
 
 		store = gtk.ListStore(gobject.TYPE_STRING, gobject.TYPE_INT)
 		for i in range(self.provider.survey.questionnaire.page_count) :
-			store.append(row = (ngettext("Page %i", "Page %i", i + 1) % (i + 1), i + 1))
+			store.append(row = (
+			    ungettext("Page %i", "Page %i", i + 1) % (i + 1), i + 1))
 
 		combo.set_model(store)
 

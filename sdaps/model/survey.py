@@ -21,8 +21,10 @@ import cPickle
 import os
 
 from sdaps import log
+
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
+
 
 class Survey (object) :
 

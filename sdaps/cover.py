@@ -16,11 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import model
+import script
+
 from ugettext import ugettext, ungettext
 _ = ugettext
 
-import script
-import model
 
 @script.register
 @script.logfile

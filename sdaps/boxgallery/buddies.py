@@ -5,21 +5,23 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import cairo
+
 from sdaps import model
 from sdaps import surface
 from sdaps import matrix
-import cairo
+
 
 class Sheet (model.buddy.Buddy) :
 
@@ -41,7 +43,7 @@ class Questionnaire (model.buddy.Buddy) :
 	__metaclass__ = model.buddy.Register
 	name = 'boxgallery'
 	obj_class = model.questionnaire.Questionnaire
-	
+
 	def init (self) :
 		self.checkboxes = list()
 
@@ -56,20 +58,21 @@ class Questionnaire (model.buddy.Buddy) :
 
 
 class QObject (model.buddy.Buddy) :
-	
+
 	__metaclass__ = model.buddy.Register
 	name = 'boxgallery'
 	obj_class = model.questionnaire.QObject
-	
+
 	def get_checkbox_images (self) :
 		return []
 
+
 class Question (QObject) :
-	
+
 	__metaclass__ = model.buddy.Register
 	name = 'boxgallery'
 	obj_class = model.questionnaire.Question
-	
+
 	def get_checkbox_images (self) :
 		boxes = []
 
@@ -78,7 +81,8 @@ class Question (QObject) :
 			if new_box:
 				boxes.append(new_box)
 		return boxes
-		
+
+
 class Box (model.buddy.Buddy):
 	__metaclass__ = model.buddy.Register
 	name = 'boxgallery'
@@ -95,23 +99,26 @@ class Checkbox (model.buddy.Buddy):
 
 	def get_checkbox_image (self):
 		image = self.obj.sheet.images[self.obj.page_number - 1]
-		
+
 		border = 1.5
 		mm_to_px = image.matrix.mm_to_px()
 
-		px_x, px_y = mm_to_px.transform_point(self.obj.data.x - border, self.obj.data.y - border)
-		px_width, px_height = mm_to_px.transform_distance(self.obj.data.width + 2*border, self.obj.data.height + 2*border)
+		px_x, px_y = mm_to_px.transform_point(
+		    self.obj.data.x - border, self.obj.data.y - border)
+		px_width, px_height = mm_to_px.transform_distance(
+		    self.obj.data.width + 2*border, self.obj.data.height + 2*border)
 
-		dest = cairo.ImageSurface(cairo.FORMAT_RGB24, int(px_width), int(px_height))
+		dest = cairo.ImageSurface(
+		    cairo.FORMAT_RGB24, int(px_width), int(px_height))
 		src = image.surface.surface
-		
+
 		cr = cairo.Context(dest)
 		cr.set_source_rgb(1, 1, 1)
 		cr.paint()
-		
+
 		cr.set_source_rgb(0, 0, 0)
 		cr.mask_surface(src, -px_x, -px_y)
-		
+
 		return (self.obj.data.coverage, dest)
 
 

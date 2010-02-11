@@ -5,21 +5,18 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u'''
-	sdaps model
-	
-data model for sdaps
+u'''data model for sdaps
 
 Survey
 ======
@@ -38,9 +35,11 @@ The questionnaire tree resembles the structer of the questionnaire and the
 internal structure of the programm. It is set up by the setup script and not
 altered (much) later.
 
-The sheets tree holds the data of the answered questionnaires. The sheet objects are created while the scanned images are added to the project.
+The sheets tree holds the data of the answered questionnaires. The sheet
+objects are created while the scanned images are added to the project.
 
-Ein Skript kann Kumpels (buddies) zu den Objekten im questionnaire tree definieren. 
+Ein Skript kann Kumpels (buddies) zu den Objekten im questionnaire tree
+definieren.
 
 Iterating through sheets and jumping
 ====================================

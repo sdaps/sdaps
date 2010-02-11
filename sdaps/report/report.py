@@ -18,9 +18,6 @@
 
 import os
 
-from sdaps.ugettext import ugettext, ungettext
-_ = ugettext
-
 from reportlab import platypus
 
 from sdaps import model
@@ -28,6 +25,9 @@ from sdaps import model
 from sdaps import clifilter
 from sdaps import template
 from sdaps import matrix
+
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
 
 import buddies
 

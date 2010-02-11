@@ -21,11 +21,12 @@ This modules contains a script for the user to output all boxes sorted by their
 coverage. This can be used to adjust magic values for checkbox recognition.
 """
 
+from sdaps import model
+from sdaps import script
+
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
-from sdaps import script
-from sdaps import model
 
 @script.register
 @script.logfile
@@ -37,7 +38,6 @@ from sdaps import model
 	'''))
 def boxgallery (survey_dir) :
 	survey = model.survey.Survey.load(survey_dir)
-
 	import boxgallery
 	boxgallery.boxgallery(survey)
 

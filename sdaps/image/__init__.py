@@ -28,11 +28,13 @@ import sys
 
 from sdaps import paths
 
+
 if paths.local_run :
     # image.so liegt in build_dir/image/
     __path__.append(os.path.join(paths.build_dir, 'image'))
 
 # Wenn ein installiertes sdaps ausgeführt wird (local_run == False), liegt
 # image.so im selben Verzeichnis wie diese Datei
+
 
 from image import *

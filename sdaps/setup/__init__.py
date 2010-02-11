@@ -21,11 +21,12 @@ Contains the functionality to create a new SDAPS project using an OpenOffice.org
 document and its PDF Export.
 """
 
+from sdaps import model
+from sdaps import script
+
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
-from sdaps import script
-from sdaps import model
 
 @script.register
 @script.doc(_(u'''questionnaire_odt questionnaire_pdf [additional_questions]

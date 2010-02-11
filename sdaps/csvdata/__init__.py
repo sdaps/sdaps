@@ -20,11 +20,12 @@ u"""
 This module implements a simple export/import to/from CSV files.
 """
 
+from sdaps import model
+from sdaps import script
+
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
-from sdaps import script
-from sdaps import model
 
 @script.register
 @script.logfile
@@ -45,7 +46,6 @@ csvdata import filename
 	'''))
 def csvdata (survey_dir, command, *args) :
 	survey = model.survey.Survey.load(survey_dir)
-
 	import csvdata
 	if command == 'export' :
 		csvdata.csvdata_export(survey, *args)

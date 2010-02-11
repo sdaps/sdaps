@@ -17,7 +17,12 @@ else
 	PROJECT="$2"
 fi
 
-# Remove any old project that may exist
+# Create projects dir if it does not exist
+if [ ! -e "projects" ]; then
+	mkdir "projects"
+fi
+
+# Remove project dir that may exist
 rm -rf "$PROJECT"
 
 # Setup the test project, using the data in "data"
