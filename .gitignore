@@ -1,6 +1,5 @@
 MANIFEST
 build
-dist
 *.pyc
 *.wpr
 *~
@@ -8,3 +7,7 @@ dist
 *.so
 debug.py
 test/test_project
+doc-pak
+description-pak
+sdaps_*.deb
+backup-*sdaps.tgz
