@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -23,14 +23,16 @@ directly, instead modules like "recognize" or "surface" use them to load and
 analyze the image data.
 """
 
-from sdaps import defs
+import os
+import sys
 
-if defs.in_src:
-    import os
-    import sys
-    path = sys.path
-    sys.path.insert(0, os.path.join(defs.build_tree, 'image'))
-    from image import *
-    sys.path = path
-else:
-    from image import *
+from sdaps import paths
+
+if paths.local_run :
+    # image.so liegt in build_dir/image/
+    __path__.append(os.path.join(paths.build_dir, 'image'))
+
+# Wenn ein installiertes sdaps ausgeführt wird (local_run == False), liegt
+# image.so im selben Verzeichnis wie diese Datei
+
+from image import *

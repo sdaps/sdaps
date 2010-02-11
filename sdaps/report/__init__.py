@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -20,61 +20,63 @@ u"""
 This modules contains the functionality to create PDF based reports.
 """
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
+
 from sdaps import script
+from sdaps import model
 
+@script.register
+@script.logfile
+@script.doc(_(u'''report [filter...]
 
-class report (script.script) :
-	doc = _(u'''report [filter...]
-	
 	Report generates a basic report which shows for every question (if appropriate)
 		- the histogramm
 		- the mean
 		- the standard derivation
 		- all handwritten comments
-	
+
 	filter: filter expression to select the sheets to appear in the report
 
 	creates report_[index].pdf
-	''')
+	'''))
+def report (survey_dir, *filter) :
+	survey = model.survey.Survey.load(survey_dir)
+	import report
+	report.report(survey, filter)
 
-	@classmethod
-	def run (klass, survey, *filter) :
-		import report
-		report.report(survey, filter)
+@script.register
+@script.logfile
+@script.doc(_(u'''[filter...]
 
-
-class stats (script.script) :
-	doc = _(u'''stats [filter...]
-	
 	Stats generates a report for every filter condition (not compounded)
-	
+
 	filter: filter expression to select the sheets to appear in the reference report
 
 	creates report_[index].pdf (the reference report)
 	creates report_[index]_[index] description.pdf
-	''')
+	'''))
+def stats (survey_dir, *filter) :
+	survey = model.survey.Survey.load(survey_dir)
+	import report
+	report.report(survey, filter, stats = 1)
 
-	@classmethod
-	def run (klass, survey, *filter) :
-		import report
-		report.report(survey, filter, stats = 1)
+@script.register
+@script.logfile
+@script.doc(_(u'''smallreport [filter...]
 
-
-class smallreport (script.script) :
-	doc = _(u'''smallreport [filter...]
-	
 	Smallreport generates a basic report which shows for every question (if appropriate)
 		- the histogramm
 		- the mean
 		- the standard derivation
 	It does not contain any handwritten comment
-	
+
 	filter: filter expression to select the sheets to appear in the report
 
 	creates report_[index].pdf
-	''')
+	'''))
+def smallreport (survey_dir, *filter) :
+	survey = model.survey.Survey.load(survey_dir)
+	import report
+	report.report(survey, filter, small = 1)
 
-	@classmethod
-	def run (klass, survey, *filter) :
-		import report
-		report.report(survey, filter, small = 1)

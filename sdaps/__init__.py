@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -29,3 +29,55 @@ image data (transformation matrix calculation).
 
 Please have a look at the documentation of the "model" package.
 """
+
+import sys
+
+import paths
+import ugettext
+import script
+
+
+def sdaps (survey_dir, script_name, *arguments) :
+	print '-' * 80
+	print
+	print 'sdaps', script_name
+	print
+	print '-' * 80
+
+	try :
+		return script.scripts[script_name](survey_dir, *arguments)
+	except KeyError, detail :
+		print _(u'''Unknown script "%s". Aborting.''') % script_name
+		return 1
+
+
+def doc () :
+	for script_class in script.scripts.itervalues() :
+		print script_class.func_name, script_class.func_doc
+	return 0
+
+
+def main (local_run = False) :
+	paths.init(local_run, __path__[0])
+
+	# Import scripts
+	# (They will register themselfs)
+	import add
+	import boxgallery
+	import cover
+	import csvdata
+	import gui
+	import ids
+	import info
+	import recognize
+	import report
+	import setup
+	import stamp
+
+	# Run
+	if len(sys.argv) < 3 :
+		return doc()
+	else :
+		return sdaps(*sys.argv[1:])
+
+

@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -33,6 +33,8 @@ from sdaps import image
 
 import StringIO
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
 
 mm = units.mm
 
@@ -60,14 +62,14 @@ stylesheet['Normal_Highlight'] = styles.ParagraphStyle(
 class Choice (platypus.Flowable) :
 	u'''One answer of a choice
 	'''
-	
+
 	box_width = 200
 	box_height = 9
 	box_depth = 5
 	box_margin = 1
 	value_width = 45
 	gap = 6
-	
+
 	def __init__ (self, answer, value, significant = 0) :
 		platypus.Flowable.__init__(self)
 		if significant :
@@ -106,8 +108,8 @@ class Choice (platypus.Flowable) :
 			self.white_box.height + self.box_margin
 		)
 		return self.width, self.height
-	
-	
+
+
 	def draw (self) :
 		if 0 : assert isinstance(self.canv, pdfgen.canvas.Canvas)
 		self.answer.drawOn(
@@ -143,42 +145,42 @@ class Mark (platypus.Flowable) :
 	marks (1 - 5)		self.marks_height
 	-----
 	'''
-	
+
 	margin = 6
 	top_margin = 0
 	left_margin = 12
-	
+
 	def __init__ (self, values, answers, mean, standard_derivation, count, significant = 0) :
 		platypus.Flowable.__init__(self)
-		
+
 		self.values = values
 		self.mean = mean
 		self.standard_derivation = standard_derivation
 		self.count = count
-		
+
 		self.box_width = 40
 		self.box_height = 60
 		self.box_depth = 6
-		
+
 		self.mean_width = 2
 		self.mean_height = 6
-		
+
 		self.values_height = 10
 		self.values_gap = self.box_depth
 		self.bars_height = max(self.values) * self.box_height
 		self.skala_height = self.mean_height
 		self.marks_height = 10
-		
+
 		if significant :
 			stylesheet_name = 'Normal_Highlight'
 		else :
 			stylesheet_name = 'Normal'
-			
+
 		self.answers_paragraph = platypus.Paragraph(u' - '.join(answers), stylesheet[stylesheet_name])
 		self.count_paragraph = platypus.Paragraph(_(u'Answers: %i') % self.count, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
 		self.mean_paragraph = platypus.Paragraph(_(u'Mean: %.2f') % self.mean, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
 		self.stdd_paragraph = platypus.Paragraph(_(u'Standard Deviation: %.2f') % self.standard_derivation, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
-	
+
 	def wrap (self, available_width, available_height) :
 		self.answers_paragraph.wrap(available_width, available_height)
 		self.count_paragraph.wrap(available_width, available_height)
@@ -188,7 +190,7 @@ class Mark (platypus.Flowable) :
 		self.offset = self.width - self.box_width * 5 - self.margin
 		self.height = self.top_margin + self.values_height + self.values_gap + self.bars_height + self.skala_height + self.marks_height
 		return self.width, self.height
-	
+
 	def draw (self) :
 		if 0 : assert isinstance(self.canv, pdfgen.canvas.Canvas)
 		self.canv.setFont("Times-Roman", 10)
@@ -241,7 +243,7 @@ class Mark (platypus.Flowable) :
 		# marks
 		for i in range(1, 6) :
 			self.canv.drawCentredString(
-				self.offset + (i - 0.5) * self.box_width, 0, 
+				self.offset + (i - 0.5) * self.box_width, 0,
 				'%i' % i
 			)
 		# statistics
@@ -249,37 +251,37 @@ class Mark (platypus.Flowable) :
 		self.count_paragraph.drawOn(self.canv, self.left_margin, self.marks_height + self.skala_height + self.bars_height + self.values_gap + self.values_height - 27)
 		self.mean_paragraph.drawOn(self.canv, self.left_margin, self.marks_height + self.skala_height + self.bars_height + self.values_gap + self.values_height - 39)
 		self.stdd_paragraph.drawOn(self.canv, self.left_margin, self.marks_height + self.skala_height + self.bars_height + self.values_gap + self.values_height - 51)
-		
-	
+
+
 
 class Text (platypus.Flowable) :
-	
+
 	cache = dict()
-	
+
 	def __init__ (self, box) :
 		platypus.Flowable.__init__(self)
-		
+
 		assert isinstance(box, model.questionnaire.Textbox)
 		assert box.data.state
-		
+
 		image = box.sheet.images[box.question.page_number - 1]
-		
+
 		self.filename = box.question.questionnaire.survey.path(image.filename)
 		self.rotated = image.rotated
-		
+
 		mm_to_px = image.matrix.mm_to_px()
 		x0, y0 = mm_to_px.transform_point(box.data.x, box.data.y)
 		x1, y1 = mm_to_px.transform_point(box.data.x + box.data.width, box.data.y + box.data.height)
-		
+
 		self.bbox = (int(x0), int(y0), int(x1), int(y1))
-		
+
 		self.width = box.data.width * mm
 		self.height = box.data.height * mm
-	
+
 	def wrap (self, available_width, available_height) :
 		self.available_width = available_width
 		return self.available_width, self.height
-	
+
 	def draw (self) :
 		if 0 : assert isinstance(self.canv, pdfgen.canvas.Canvas)
 		if (self.filename, self.bbox) in self.cache :
@@ -297,4 +299,4 @@ class Text (platypus.Flowable) :
 		self.canv.setStrokeColorRGB(0.6, 0.6, 0.6)
 		self.canv.line(0, 0, self.available_width, 0)
 		self.canv.line(0, self.height, self.available_width, self.height)
-	
+

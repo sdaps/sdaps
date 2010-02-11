@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -20,16 +20,20 @@ u"""
 This module implements a simple export/import to/from CSV files.
 """
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
+
 from sdaps import script
+from sdaps import model
 
+@script.register
+@script.logfile
+@script.doc(_(u'''export [filter...]
 
-class csvdata (script.script) :
-	doc = _(u'''csvdata export [filter...]
-	
 	Export to csv
-	
+
 	filter: filter expression to select the sheets to export
-	
+
 	creates data_[index].csv
 
 
@@ -38,14 +42,15 @@ csvdata import filename
 	Import from csv
 
 	filename: file to read from
-	''')
+	'''))
+def csvdata (survey_dir, command, *args) :
+	survey = model.survey.Survey.load(survey_dir)
 
-	@classmethod
-	def run (klass, survey, command, *args) :
-		import csvdata
-		if command == 'export' :
-			csvdata.csvdata_export(survey, *args)
-		elif command == 'import' :
-			csvdata.csvdata_import(survey, *args)
-		else :
-			print _('Unknown command')
+	import csvdata
+	if command == 'export' :
+		csvdata.csvdata_export(survey, *args)
+	elif command == 'import' :
+		csvdata.csvdata_import(survey, *args)
+	else :
+		print _('Unknown command')
+

@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -22,19 +22,25 @@ data. It reads the image data and tries to guess whether a checkbox is
 empty/checked/filled and finds the written area in a textfield.
 """
 
-from sdaps import script
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
 
-class recognize (script.script) :
-	doc = _(u'''recognize
-	
+from sdaps import script
+from sdaps import model
+
+@script.register
+@script.logfile
+@script.doc(_(u'''
+
 	Recognize all added sheets.
-	
+
 	Attention: This script overwrites all data, including manual changes made
 		with the gui!
-	''')
+	'''))
+def recognize (survey_dir) :
+	survey = model.survey.Survey.load(survey_dir)
 
-	@classmethod
-	def run (klass, survey) :
-		import buddies
-		import recognize
-		recognize.recognize(survey)
+	import buddies
+	import recognize
+	recognize.recognize(survey)
+

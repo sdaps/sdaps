@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -37,38 +37,58 @@ Defining a script
 		do the work
 
 	if sdaps imports your module, the script will be registerd
-	
+
 	if sdaps calls your script, it should import any buddies, so that they will
 	be registerd.
 
 '''
 
-# Import defs to initilize the i18n system
-from sdaps import defs
+import os
+
+import log
+
 
 scripts = dict()
 
-# Metaclass that registers scripts automatically
-class _script_metaclass(type):
-	def __new__(meta, classname, bases, classDict):
-		new_class = type.__new__(meta, classname, bases, classDict)
+def register (function) :
+	u'''decorator to register a function as a script.
 
-		# Ignore the script baseclass
-		if bases[0] == object:
-			return new_class
-		scripts[classname] = new_class
+	sdaps will be able to call a registerd script.
 
-		doc = new_class.doc
-		func = new_class.run
+	@register
+	def function (survey, *args, **kwargs) :
+		pass
 
-		return new_class
+	'''
+	scripts[function.func_name] = function
+	return function
 
-class script (object):
-	"""Metaclass that represents an SDAPS script. Scripts are automatically
-	registered"""
-	__metaclass__ = _script_metaclass
 
-	new_survey = 0
+def doc (docstring) :
+	u'''decorator to add a docstring to a function.
 
+	When using normal Python docstring syntax, gettext can not find it to
+	translate it. Using @doc, you can pass your docstring through _() to make it
+	translatable.
+
+	@doc(_(u'docstring'))
+	def function (*args, **kwargs) :
+		pass
+
+	'''
+	def decorator (function) :
+		function.func_doc = docstring
+		return function
+	return decorator
+
+
+def logfile (function) :
+	def decorated_function (survey_dir, *args, **kwargs) :
+		log.logfile.open(os.path.join(survey_dir, 'log'))
+		function(survey_dir, *args, **kwargs)
+		log.logfile.close()
+	decorated_function.func_name = function.func_name
+	decorated_function.func_doc = function.func_doc
+	return decorated_function
 
 

@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -32,6 +32,9 @@ from reportlab.lib import units
 
 from sdaps import model
 from sdaps import log
+
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
 
 mm = units.mm
 
@@ -63,13 +66,13 @@ def draw_codebox (canvas, x, y, code) :
 	canvas.saveState()
 	canvas.translate(x, y)
 	canvas.rect(0, 0, length * size, size)
-	for i in range(length) : 
+	for i in range(length) :
 		if code & (1 << i) :
 			canvas.rect((length - i - 1) * size, 0, size, size, stroke = 1, fill = 1)
 	canvas.restoreState()
 
 
-def draw_corner_marks (canvas) :	
+def draw_corner_marks (canvas) :
 	if 0 : assert isinstance(canvas, reportlab.pdfgen.canvas.Canvas)
 	canvas.line( 10 * mm,  12 * mm, 30 * mm, 12 * mm)
 	canvas.line( 10 * mm,  12 * mm, 10 * mm, 32 * mm)
@@ -89,7 +92,7 @@ corners = [
 	[1, 0, 1, 0],
 	[1, 0, 0, 0],
 	[0, 0, 0, 1],
-]	
+]
 
 def draw_corner_boxes (canvas, page) :
 	if 0 : assert isinstance(canvas, reportlab.pdfgen.canvas.Canvas)
@@ -120,7 +123,7 @@ def stamp (survey, count = 0, used_ids = None) :
 	else :
 		sheets = 1
 		questionnaire_ids = None
-	
+
 	questionnaire_length = survey.questionnaire.page_count
 
 	have_pdftk = False
@@ -148,8 +151,8 @@ def stamp (survey, count = 0, used_ids = None) :
 
 	canvas = reportlab.pdfgen.canvas.Canvas(stampsfile, bottomup = False)
 	# bottomup = False => (0, 0) is the upper left corner
-	
-	print ngettext(u'Creating stamp PDF for %i sheet', u'Creating stamp PDF for %i sheets', sheets) % sheets
+
+	print ungettext(u'Creating stamp PDF for %i sheet', u'Creating stamp PDF for %i sheets', sheets) % sheets
 	log.progressbar.start(sheets)
 	for i in range(sheets) :
 		for j in range(questionnaire_length) :
@@ -168,9 +171,9 @@ def stamp (survey, count = 0, used_ids = None) :
 
 	canvas.save()
 
-	print ngettext(u'%i sheet; %f seconds per sheet', u'%i sheet; %f seconds per sheet', log.progressbar.max_value) % (
+	print ungettext(u'%i sheet; %f seconds per sheet', u'%i sheet; %f seconds per sheet', log.progressbar.max_value) % (
 		log.progressbar.max_value,
-		float(log.progressbar.elapsed_time) / 
+		float(log.progressbar.elapsed_time) /
 		float(log.progressbar.max_value)
 	)
 
@@ -181,7 +184,7 @@ def stamp (survey, count = 0, used_ids = None) :
 		tmp_dir = tempfile.mkdtemp()
 
 		for page in xrange(1, questionnaire_length + 1):
-			print ngettext(u"pdftk: Splitting out page %d of each sheet.", u"pdftk: Splitting out page %d of each sheet.", page) % page
+			print ungettext(u"pdftk: Splitting out page %d of each sheet.", u"pdftk: Splitting out page %d of each sheet.", page) % page
 			args = []
 			args.append('pdftk')
 			args.append(survey.path('tmp.pdf'))
@@ -201,7 +204,7 @@ def stamp (survey, count = 0, used_ids = None) :
 			subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'cat', '%d' % page, 'output', os.path.join(tmp_dir, 'watermark-%d.pdf' % page)])
 
 		for page in xrange(1, questionnaire_length + 1):
-			print ngettext(u"pdftk: Watermarking page %d of all sheets.", u"pdftk: Watermarking page %d of all sheets.", page) % page
+			print ungettext(u"pdftk: Watermarking page %d of all sheets.", u"pdftk: Watermarking page %d of all sheets.", page) % page
 			subprocess.call(['pdftk', os.path.join(tmp_dir, 'stamp-%d.pdf' % page), 'background', os.path.join(tmp_dir, 'watermark-%d.pdf' % page), 'output', os.path.join(tmp_dir, 'watermarked-%d.pdf' % page)])
 
 		args = []
@@ -268,9 +271,9 @@ def stamp (survey, count = 0, used_ids = None) :
 
 		stamped.write(open(survey.new_path('stamped_%i.pdf'), 'wb'))
 
-		print ngettext(u'%i sheet; %f seconds per sheet', u'%i sheet; %f seconds per sheet', log.progressbar.max_value) % (
+		print ungettext(u'%i sheet; %f seconds per sheet', u'%i sheet; %f seconds per sheet', log.progressbar.max_value) % (
 			log.progressbar.max_value,
-			float(log.progressbar.elapsed_time) / 
+			float(log.progressbar.elapsed_time) /
 			float(log.progressbar.max_value)
 		)
 

@@ -38,18 +38,18 @@ analyse the scanned data, and create a report.
       packages=['sdaps',
                 'sdaps.boxgallery',
                 'sdaps.csvdata',
+                'sdaps.gui',
                 'sdaps.image',
                 'sdaps.model',
                 'sdaps.recognize',
                 'sdaps.stamp',
                 'sdaps.report',
                 'sdaps.setup.pdftools',
-                'sdaps.setup',
-                'sdaps.gui'
+                'sdaps.setup'
       ],
       package_dir={'sdaps.gui': 'sdaps/gui'},
       scripts=[
-               'sdaps/sdaps',
+               'bin/sdaps',
                ],
       ext_modules=[Extension('sdaps.image.image',
                    ['sdaps/image/wrap_image.c', 'sdaps/image/image.c'],

@@ -5,12 +5,12 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -21,9 +21,11 @@ import cPickle
 import os
 
 from sdaps import log
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
 
 class Survey (object) :
-	
+
 	def __init__ (self) :
 		self.questionnaire = None
 		self.sheets = list()
@@ -36,11 +38,11 @@ class Survey (object) :
 	def add_questionnaire (self, questionnaire) :
 		self.questionnaire = questionnaire
 		questionnaire.survey = self
-	
+
 	def add_sheet (self, sheet) :
 		self.sheets.append(sheet)
 		sheet.survey = self
-	
+
 	def calculate_survey_id (self) :
 		try:
 			import hashlib
@@ -48,10 +50,10 @@ class Survey (object) :
 		except ImportError:
 			from md5 import md5 as md5_cls
 			md5 = md5_cls()
-			
+
 
 		for qobject in self.questionnaire.qobjects :
-			qobject.calculate_survey_id(md5)		
+			qobject.calculate_survey_id(md5)
 		self.survey_id = 0
 		for i, c in enumerate(md5.digest()) :
 			self.survey_id += bool(ord(c) & 1) << (2 * i)
@@ -64,7 +66,7 @@ class Survey (object) :
 		file.close()
 		survey.survey_dir = survey_dir
 		return survey
-	
+
 	@staticmethod
 	def new (survey_dir) :
 		survey = Survey()
@@ -75,45 +77,45 @@ class Survey (object) :
 		file = bz2.BZ2File(os.path.join(self.survey_dir, 'survey'), 'w')
 		cPickle.dump(self, file, 2)
 		file.close()
-	
+
 	def path (self, *path) :
 		return os.path.join(self.survey_dir, *path)
-	
+
 	def new_path (self, path) :
 		content = os.listdir(self.path())
 		i = 1
 		while path % i in content : i += 1
 		return os.path.join(self.survey_dir, path % i)
-	
+
 	def get_sheet (self) :
 		return self.sheets[self.index]
 
 	sheet = property(get_sheet)
-	
+
 	def iterate (self, function, filter = lambda : True) :
 		'''call function once for each sheet
 		'''
 		for self.index in range(len(self.sheets)) :
 			if filter() : function()
-	
+
 	def iterate_progressbar (self, function, filter = lambda : True) :
 		'''call function once for each sheet and display a progressbar
 		'''
-		print ngettext('%i sheet', '%i sheets', len(self.sheets)) % len(self.sheets)
+		print ungettext('%i sheet', '%i sheets', len(self.sheets)) % len(self.sheets)
 		if len(self.sheets) == 0:
 			return
 
 		log.progressbar.start(len(self.sheets))
-		
+
 		for self.index in range(len(self.sheets)) :
 			if filter() : function()
 			log.progressbar.update(self.index + 1)
-		
+
 		print _('%f seconds per sheet') % (
-			float(log.progressbar.elapsed_time) / 
+			float(log.progressbar.elapsed_time) /
 			float(log.progressbar.max_value)
 		)
-	
+
 	def goto_sheet (self, sheet) :
 		u'''goto the specified sheet object
 		'''
@@ -134,7 +136,7 @@ class Survey (object) :
 	def reset (self) :
 		print 'DeprecationWarning'
 		self.index = None
-	
+
 	def next (self) :
 		print 'DeprecationWarning'
 		if self.index == None :
@@ -158,7 +160,7 @@ class Survey (object) :
 			return 0
 		else :
 			return 1
-	
+
 	def goto (self, index) :
 		print 'DeprecationWarning'
 		if index >= 0 and index < len(self.sheets):
@@ -167,4 +169,4 @@ class Survey (object) :
 		else :
 			self.index = None
 			return 0
-	
+

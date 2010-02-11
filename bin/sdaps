@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright (C) 2008, Christoph Simon <christoph.simon@gmx.eu>
@@ -16,30 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
-Contains the functionality to create a new SDAPS project using an OpenOffice.org
-document and its PDF Export.
-"""
+import sys
 
-from sdaps.ugettext import ugettext, ungettext
-_ = ugettext
-
-from sdaps import script
-from sdaps import model
-
-@script.register
-@script.doc(_(u'''questionnaire_odt questionnaire_pdf [additional_questions]
-
-	Setup creates a new survey. It parses the questionnaire to create the data
-	model. The survey must not exist yet.
-
-	questionnaire_odt: the questionnaire in odt-format
-	questionnaire_pdf: the questionnaire in pdf-format
-	internetquestions: the questions in the internet (optional)
-	'''))
-def setup (survey_dir, questionnaire_odt, questionnaire_pdf,
-	internetquestions = None) :
-	survey = model.survey.Survey.new(survey_dir)
-	import setup
-	setup.setup(survey, questionnaire_odt, questionnaire_pdf, internetquestions)
-
+import sdaps
+sys.exit(sdaps.main())
