@@ -6,7 +6,7 @@ build
 *.o
 *.so
 debug.py
-test/test_project
+test/projects
 doc-pak
 description-pak
 sdaps_*.deb

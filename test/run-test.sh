@@ -1,29 +1,43 @@
-#! /bin/sh
+#!/bin/sh
 
-# Stop if anything goes wrong.
+# Stop if anything goes wrong
 set -e
 
-# Remove any old test_project that may exist
-rm -rf test_project
+# Executable
+if [ "x$1" = "x" ]; then
+	SDAPS="sdaps"
+else
+	SDAPS="$1"
+fi
 
-# Setup the test_project, using the data in "data"
-sdaps test_project setup data/debug.odt data/debug.pdf data/debug.internetquestions
+# Default project or $1
+if [ "x$2" = "x" ]; then
+	PROJECT="projects/test"
+else
+	PROJECT="$2"
+fi
 
-# Create a cover page in test_project/cover.pdf
-sdaps test_project cover
+# Remove any old project that may exist
+rm -rf "$PROJECT"
+
+# Setup the test project, using the data in "data"
+"$SDAPS" "$PROJECT" setup "data/debug.odt" "data/debug.pdf" "data/debug.internetquestions"
+
+# Create a cover page in projects/test/cover.pdf
+"$SDAPS" "$PROJECT" cover
 
 # Create 10 unique sheets that can be printed and handed out
-sdaps test_project stamp 10
+"$SDAPS" "$PROJECT" stamp 10
 
-# Dumps a list of all the questionaire IDs (ie. the ideas of each of the 100 sheets)
-sdaps test_project ids
+# Dumps a list of all the questionaire IDs (ie. the ids of each of the 100 sheets)
+"$SDAPS" "$PROJECT" ids
 
 # Import the scanned data. The data has to be a multipage 1bpp tif file.
-sdaps test_project add data/debug.tif
+"$SDAPS" "$PROJECT" add "data/debug.tif"
 
 # Analyse the image data
-sdaps test_project recognize
+"$SDAPS" "$PROJECT" recognize
 
 # And finally, create a report with the result
-sdaps test_project report
+"$SDAPS" "$PROJECT" report
 
