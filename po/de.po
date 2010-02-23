@@ -4,12 +4,11 @@
 # Benjamin Berg <benjamin@sipsolutions.net>, 2009.
 #
 #  <>, 2009.
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-08 14:11+0200\n"
+"POT-Creation-Date: 2010-02-23 19:00+0100\n"
 "PO-Revision-Date: 2009-04-07 15:00+0200\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
@@ -17,96 +16,96 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../sdaps/add.py:27
+#: ../sdaps/add.py:30
 msgid ""
-"add files\n"
-"\t\n"
+"files\n"
+"\n"
 "\tAdd scanned questionnaires to the survey.\n"
-"\t\n"
-"\tfiles: TIFF-Images containing scanned questionnaires\n"
+"\n"
+"\tfiles: TIFF-Images containing scanned questionnaires.\n"
 "\t"
 msgstr ""
-"add dateien\n"
+"dateien\n"
 "\t\n"
 "\tFügt eingescannte Daten zum Projekt hinzu.\n"
 "\t\n"
 "\tdateien: TIFF-Bilder mit den gescannten Daten\n"
 "\t"
 
-#: ../sdaps/add.py:46
+#: ../sdaps/add.py:44
 #, python-format
 msgid "Processing %s"
 msgstr "Beartbeite %s"
 
-#: ../sdaps/add.py:51
+#: ../sdaps/add.py:49
 msgid "Unknown file format. Only TIFF is supported"
 msgstr "Unbekanntes Datei Format. Nur TIFF wird unterstüzt."
 
-#: ../sdaps/add.py:52 ../sdaps/add.py:57 ../sdaps/add.py:62
+#: ../sdaps/add.py:50 ../sdaps/add.py:55 ../sdaps/add.py:60
 msgid "Processing stopped"
 msgstr "Bearbeitung abgebrochen"
 
-#: ../sdaps/add.py:56
+#: ../sdaps/add.py:54
 #, python-format
 msgid "Unknown image file format (%s). Only TIFF is supported"
 msgstr "Unbekanntes Datei Format (%s). Nur TIFF wird unterstüzt."
 
-#: ../sdaps/add.py:61
+#: ../sdaps/add.py:59
 #, python-format
 msgid "Wrong data type inside TIFF (%s). It should be black and white data."
 msgstr ""
 "TIFF hat die falsche Farbtiefe (%s). Das Bild sollte im schwarz/weiß Modus "
 "sein"
 
-#: ../sdaps/add.py:97
+#: ../sdaps/add.py:95
 msgid "Done"
 msgstr "Fertig"
 
-#: ../sdaps/boxgallery/__init__.py:23
+#: ../sdaps/boxgallery/__init__.py:33
 msgid ""
-"boxgallery\n"
-"\t\n"
+"\n"
+"\n"
 "\tThe boxgallery shows a list of all boxes, sorted by their coverage.\n"
-"\t\n"
+"\n"
 "\tcreates boxgallery.pdf\n"
 "\t"
 msgstr ""
-"boxgallery\n"
+"\n"
 "\t\n"
 "\tSchneidet alle Checkboxen aus allen eingescannten Seiten heraus.\n"
 "\t\n"
 "\tErstellt boxgallery.pdf\n"
 "\t"
 
-#: ../sdaps/cover.py:23
+#: ../sdaps/cover.py:28
 msgid ""
-"cover\n"
+"\n"
 "\n"
 "\tThe cover is a title page for the pile of questionnaires.\n"
 "\n"
 "\tcreates cover.odf\n"
 "\t"
 msgstr ""
-"cover\n"
+"\n"
 "\n"
 "\tErstellt eine Titelseite für die Fragebögen.\n"
 "\n"
 "\tErstellt cover.odf\n"
 "\t"
 
-#: ../sdaps/cover.py:45
 #
+#: ../sdaps/cover.py:47
 msgid "sdaps questionnaire"
 msgstr "sdaps Fragebögen"
 
-#: ../sdaps/csvdata/__init__.py:23
+#: ../sdaps/csvdata/__init__.py:32
 msgid ""
-"csvdata export [filter...]\n"
-"\t\n"
+"export [filter...]\n"
+"\n"
 "\tExport to csv\n"
-"\t\n"
+"\n"
 "\tfilter: filter expression to select the sheets to export\n"
-"\t\n"
+"\n"
 "\tcreates data_[index].csv\n"
 "\n"
 "\n"
@@ -117,7 +116,7 @@ msgid ""
 "\tfilename: file to read from\n"
 "\t"
 msgstr ""
-"csvdata export [filter...]\n"
+"export [filter...]\n"
 "\t\n"
 "\tCSV Export\n"
 "\t\n"
@@ -133,39 +132,39 @@ msgstr ""
 "\tDateiname: file to read from\n"
 "\t"
 
-#: ../sdaps/csvdata/__init__.py:47
+#: ../sdaps/csvdata/__init__.py:55
 msgid "Unknown command"
 msgstr "Unbekannter Befehl"
 
-#: ../sdaps/gui/gui.py:108
+#: ../sdaps/gui/gui.py:122
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Seite %i"
 msgstr[1] "Seite %i"
 
-#: ../sdaps/gui/gui.py:146
+#: ../sdaps/gui/gui.py:160
 msgid "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
 msgstr "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
 
-#: ../sdaps/gui/gui.py:147
+#: ../sdaps/gui/gui.py:161
 msgid "GPL Version 3, 29 June 2007"
 msgstr "GPL Version 3, 29 Juni 2007"
 
-#: ../sdaps/gui/gui.py:148
+#: ../sdaps/gui/gui.py:162
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "SDAPS - Scripts zum auswerten von Papier basierten Umfragen"
 
-#: ../sdaps/gui/gui.py:188
+#: ../sdaps/gui/gui.py:202
 #, python-format
 msgid " of %i"
 msgstr " von %i"
 
-#: ../sdaps/gui/gui.py:272
-msgid "Close with saving"
+#: ../sdaps/gui/gui.py:286
+msgid "Close without saving"
 msgstr "Beenden ohne zu Speichern"
 
-#: ../sdaps/gui/gui.py:273
+#: ../sdaps/gui/gui.py:287
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -174,16 +173,16 @@ msgstr ""
 "<b>Beenden ohne zu Speichern?</b>\n"
 "Wenn Sie nicht speichern, kann es zu Datenverlust kommen."
 
-#: ../sdaps/gui/__init__.py:22
+#: ../sdaps/gui/__init__.py:32
 msgid ""
-"gui [filter...]\n"
-"\t\n"
+"[filter...]\n"
+"\n"
 "\tLaunch a gui. You can view and alter the (recognized) answers with it.\n"
-"\t\n"
+"\n"
 "\tfilter: filter expression to select the sheets to display\n"
 "\t"
 msgstr ""
-"gui [filter...]\n"
+"[filter...]\n"
 "\t\n"
 "\tStartet eine Grafische Oberfläche, mit der die erkannten Antworten "
 "betrachtet und korrigiert werden können.\n"
@@ -207,35 +206,38 @@ msgstr "_Hilfe"
 msgid "_View"
 msgstr "_Ansicht"
 
-#: ../sdaps/ids.py:22
+#: ../sdaps/ids.py:28
 #, python-format
 msgid ""
-"ids [pattern = '%i\\n']\n"
-"\t\n"
+"[pattern = '%i\\n']\n"
+"\n"
 "\tWrite a list containing all questionnaire ids.\n"
-"\t\n"
+"\n"
 "\tcreates ids_[index]\n"
 "\t"
 msgstr ""
-"ids [pattern = '%i\\n']\n"
+"[pattern = '%i\\n']\n"
 "\t\n"
 "\tSchreibt eine Liste mit alle Fragebogen IDs.\n"
 "\t\n"
 "\tErstellt ids_[index]\n"
 "\t"
 
-#: ../sdaps/info.py:22
+#: ../sdaps/info.py:28
 msgid ""
-"info field [content]\n"
-"\t\n"
+"[field [content]]\n"
+"\n"
 "\tAlter metadata.\n"
-"\t\n"
+"\n"
 "\tfield: name of the field you whish to alter\n"
-"\tcontent: the new content for that field\n"
-"\t\t(empty if you want to delete the field)\n"
+"\tcontent: the new content for that field or empty if you want to delete "
+"the\n"
+"\t\tfield.\n"
+"\n"
+"\tWith no arguments, info will print a list of existing fields.\n"
 "\t"
 msgstr ""
-"info field [content]\n"
+"[field [content]]\n"
 "\t\n"
 "\tMetadata Editor.\n"
 "\t\n"
@@ -244,84 +246,89 @@ msgstr ""
 "\t\twird, dann fragt SDAPS nach.\n"
 "\t"
 
-#: ../sdaps/model/survey.py:102
+#: ../sdaps/info.py:50
+#, python-format
+msgid "Existing fields: %s"
+msgstr "Definierte Felder: %s"
+
+#: ../sdaps/model/survey.py:106
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:112
+#: ../sdaps/model/survey.py:116
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/recognize/buddies.py:69 ../sdaps/recognize/buddies.py:125
+#: ../sdaps/recognize/buddies.py:67 ../sdaps/recognize/buddies.py:123
 #, python-format
 msgid "%s: Matrix not recognized. Cancelling recognition of that image."
 msgstr "%s: Matrix wurde nicht erkannt. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:117
+#: ../sdaps/recognize/buddies.py:115
 #, python-format
 msgid "%s: Page number not recognized. Cancelling recognition of that image."
 msgstr "%s: Seitenzahl wurde nicht erkannt. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:142
+#: ../sdaps/recognize/buddies.py:140
 #, python-format
 msgid "%s: Wrong survey_id. Cancelling recognition of that image."
 msgstr "%s: Falsche Umfrage ID. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/__init__.py:22
+#: ../sdaps/recognize/__init__.py:34
 msgid ""
-"recognize\n"
-"\t\n"
+"\n"
+"\n"
 "\tRecognize all added sheets.\n"
-"\t\n"
+"\n"
 "\tAttention: This script overwrites all data, including manual changes made\n"
 "\t\twith the gui!\n"
 "\t"
 msgstr ""
-"recognize\n"
+"\n"
 "\t\n"
 "\tLässt den Erkennungsalgorithmus über die gescannten Daten laufen.\n"
 "\t\n"
-"\tAchtung: Dieses Script überschreibt alle vorherigen änderungen!\n"
+"\tAchtung: Dieses Script überschreibt alle vorherigen Änderungen!\n"
 "\t"
 
-#: ../sdaps/report/answers.py:178
+#: ../sdaps/report/answers.py:181
 #, python-format
 msgid "Answers: %i"
 msgstr "Antworten: %i"
 
 #. if not significant else stylesheet['Normal_Highlight'])
-#: ../sdaps/report/answers.py:179
+#: ../sdaps/report/answers.py:182
 #, python-format
 msgid "Mean: %.2f"
 msgstr "Mittelwert: %.2f"
 
 #. if not significant else stylesheet['Normal_Highlight'])
-#: ../sdaps/report/answers.py:180
+#: ../sdaps/report/answers.py:183
 #, python-format
 msgid "Standard Deviation: %.2f"
 msgstr "Standardabweichung: %.2f"
 
-#: ../sdaps/report/__init__.py:23
+#: ../sdaps/report/__init__.py:32
 msgid ""
-"report [filter...]\n"
-"\t\n"
+"[filter...]\n"
+"\n"
 "\tReport generates a basic report which shows for every question (if "
 "appropriate)\n"
 "\t\t- the histogramm\n"
 "\t\t- the mean\n"
 "\t\t- the standard derivation\n"
 "\t\t- all handwritten comments\n"
-"\t\n"
+"\n"
 "\tfilter: filter expression to select the sheets to appear in the report\n"
 "\n"
 "\tcreates report_[index].pdf\n"
 "\t"
 msgstr ""
-"report [filter...]\n"
+"[filter...]\n"
 "\t\n"
 "\tErstellt einen Report in PDF Form. In dem Report enthalten sind:\n"
 "\t\t- Histogram\n"
@@ -334,12 +341,12 @@ msgstr ""
 "\tErstellt report_[index].pdf\n"
 "\t"
 
-#: ../sdaps/report/__init__.py:43
+#: ../sdaps/report/__init__.py:51
 msgid ""
-"stats [filter...]\n"
-"\t\n"
+"[filter...]\n"
+"\n"
 "\tStats generates a report for every filter condition (not compounded)\n"
-"\t\n"
+"\n"
 "\tfilter: filter expression to select the sheets to appear in the reference "
 "report\n"
 "\n"
@@ -347,7 +354,7 @@ msgid ""
 "\tcreates report_[index]_[index] description.pdf\n"
 "\t"
 msgstr ""
-"stats [filter...]\n"
+"[filter...]\n"
 "\t\n"
 "\tErstellt einen Report für alle möglichen Filter Kombinationen.\n"
 "\t(nicht zusammengesetzt)\n"
@@ -358,23 +365,23 @@ msgstr ""
 "\tErstellt report_[index]_[index] description.pdf\n"
 "\t"
 
-#: ../sdaps/report/__init__.py:60
+#: ../sdaps/report/__init__.py:67
 msgid ""
-"smallreport [filter...]\n"
-"\t\n"
+"[filter...]\n"
+"\n"
 "\tSmallreport generates a basic report which shows for every question (if "
 "appropriate)\n"
 "\t\t- the histogramm\n"
 "\t\t- the mean\n"
 "\t\t- the standard derivation\n"
 "\tIt does not contain any handwritten comment\n"
-"\t\n"
+"\n"
 "\tfilter: filter expression to select the sheets to appear in the report\n"
 "\n"
 "\tcreates report_[index].pdf\n"
 "\t"
 msgstr ""
-"smallreport [filter...]\n"
+"[filter...]\n"
 "\t\n"
 "\tSmallreport erstellt einen Report, der die folgenden Daten enthält:\n"
 "\t\t- Histogram\n"
@@ -387,28 +394,28 @@ msgstr ""
 "\tErstellt report_[index].pdf\n"
 "\t"
 
-#: ../sdaps/report/report.py:54
+#: ../sdaps/report/report.py:57
 msgid "Turned in Questionnaires"
 msgstr "Abgegebene Fragebögen"
 
-#: ../sdaps/report/report.py:68
+#: ../sdaps/report/report.py:71
 msgid "sdaps report"
 msgstr "sdaps Report"
 
-#: ../sdaps/setup/__init__.py:22
+#: ../sdaps/setup/__init__.py:32
 msgid ""
-"setup questionnaire_odt questionnaire_pdf [additional_questions]\n"
-"\t\n"
+"questionnaire_odt questionnaire_pdf [additional_questions]\n"
+"\n"
 "\tSetup creates a new survey. It parses the questionnaire to create the "
 "data\n"
 "\tmodel. The survey must not exist yet.\n"
-"\t\n"
+"\n"
 "\tquestionnaire_odt: the questionnaire in odt-format\n"
 "\tquestionnaire_pdf: the questionnaire in pdf-format\n"
 "\tinternetquestions: the questions in the internet (optional)\n"
 "\t"
 msgstr ""
-"setup questionnaire_odt questionnaire_pdf [additional_questions]\n"
+"questionnaire_odt questionnaire_pdf [additional_questions]\n"
 "\t\n"
 "\tErstellt ein neues Projektverzeichniss. Das Verzeichniss darf noch nicht "
 "existieren.\n"
@@ -447,20 +454,20 @@ msgstr ""
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
 
-#: ../sdaps/stamp/__init__.py:23
+#: ../sdaps/stamp/__init__.py:28
 #, python-format
 msgid ""
-"stamp [count [used_ids]]\n"
-"\t\n"
+"[count [used_ids]]\n"
+"\n"
 "\tStamp corner marks and questionnaire ids on the questionnaire.\n"
-"\t\n"
+"\n"
 "\tcount: number of unique questionnaire ids you want to create\n"
 "\tused_ids: don't use any id named in this file (pattern = '%i\\n')\n"
-"\t\n"
+"\n"
 "\tcreates stamped_[index].pdf\n"
 "\t"
 msgstr ""
-"stamp [count [used_ids]]\n"
+"[count [used_ids]]\n"
 "\t\n"
 "\tStempelt Eckmarker und IDs auf den Fragebogen.\n"
 "\t\n"
@@ -471,17 +478,17 @@ msgstr ""
 "\tErstellt: stamped_[index].pdf\n"
 "\t"
 
-#: ../sdaps/stamp/stamp.py:43
+#: ../sdaps/stamp/stamp.py:48
 #, python-format
 msgid "Survey-ID: %i"
 msgstr "Umfrage-ID: %i"
 
-#: ../sdaps/stamp/stamp.py:53
+#: ../sdaps/stamp/stamp.py:58
 #, python-format
 msgid "Questionnaire-ID: %i"
 msgstr "Fragebogen-ID: %i"
 
-#: ../sdaps/stamp/stamp.py:140
+#: ../sdaps/stamp/stamp.py:145
 msgid ""
 "You need to have either pdftk or pyPdf installed. pdftk is the faster method."
 msgstr ""
@@ -489,42 +496,42 @@ msgstr ""
 "schnellere Metode."
 
 #. bottomup = False => (0, 0) is the upper left corner
-#: ../sdaps/stamp/stamp.py:152
+#: ../sdaps/stamp/stamp.py:157
 #, python-format
 msgid "Creating stamp PDF for %i sheet"
 msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
 msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
 
-#: ../sdaps/stamp/stamp.py:169 ../sdaps/stamp/stamp.py:269
+#: ../sdaps/stamp/stamp.py:176 ../sdaps/stamp/stamp.py:276
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
 msgstr[0] "%i Bogen; %f Sekunden pro Bogen"
 msgstr[1] "%i Bögen; %f Sekunden pro Bogen"
 
-#: ../sdaps/stamp/stamp.py:182
+#: ../sdaps/stamp/stamp.py:189
 #, python-format
 msgid "pdftk: Splitting out page %d of each sheet."
 msgid_plural "pdftk: Splitting out page %d of each sheet."
 msgstr[0] "pdftk: Extrahier die %d Seite aus dem Stempel."
 msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
 
-#: ../sdaps/stamp/stamp.py:196
+#: ../sdaps/stamp/stamp.py:203
 msgid "pdftk: Splitting the questionnaire for watermarking."
 msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens"
 
-#: ../sdaps/stamp/stamp.py:202
+#: ../sdaps/stamp/stamp.py:209
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
 msgstr[0] "pdftk: Stempele die Seite %d."
 msgstr[1] "pdftk: Stempele die Seite %d."
 
-#: ../sdaps/stamp/stamp.py:220
+#: ../sdaps/stamp/stamp.py:227
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr "pdftk: Erstelle das fertige PDF."
 
-#: ../sdaps/stamp/stamp.py:255
+#: ../sdaps/stamp/stamp.py:262
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."

@@ -29,7 +29,7 @@ _ = ugettext
 
 @script.register
 @script.logfile
-@script.doc(_(u'''report [filter...]
+@script.doc(_(u'''[filter...]
 
 	Report generates a basic report which shows for every question (if appropriate)
 		- the histogramm
@@ -64,7 +64,7 @@ def stats (survey_dir, *filter) :
 
 @script.register
 @script.logfile
-@script.doc(_(u'''smallreport [filter...]
+@script.doc(_(u'''[filter...]
 
 	Smallreport generates a basic report which shows for every question (if appropriate)
 		- the histogramm

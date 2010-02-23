@@ -283,7 +283,7 @@ class MainWindow(object):
 	def quit_application(self, *args):
 		if not self.close_dialog:
 			self.close_dialog = gtk.MessageDialog(parent=self._window, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING)
-			self.close_dialog.add_buttons(_(u"Close with saving"), gtk.RESPONSE_CLOSE, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
+			self.close_dialog.add_buttons(_(u"Close without saving"), gtk.RESPONSE_CLOSE, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
 			self.close_dialog.set_markup(_(u"<b>Save the project before closing?</b>\n\nIf you do not save you may loose data."))
 			self.close_dialog.set_default_response(gtk.RESPONSE_CANCEL)
 
