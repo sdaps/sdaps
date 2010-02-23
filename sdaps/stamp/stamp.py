@@ -182,7 +182,7 @@ def stamp (survey, count = 0, used_ids = None) :
 	if have_pdftk:
 		stampsfile.close()
 		# Merge using pdftk
-		print "Stamping using pdftk"
+		print _("Stamping using pdftk")
 		tmp_dir = tempfile.mkdtemp()
 
 		for page in xrange(1, questionnaire_length + 1):
