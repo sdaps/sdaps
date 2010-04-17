@@ -1,15 +1,11 @@
-# German Translation for SDAPS.
-# Copyright (C) 2009 Benjamin Berg, Christoph Simon
-# This file is distributed under the same license as the PACKAGE package.
-# Benjamin Berg <benjamin@sipsolutions.net>, 2009.
 #
-#  <>, 2009.
+#  <>, Christoph Simon, 2009,žÁð,¤°9, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-23 19:06+0100\n"
-"PO-Revision-Date: 2010-02-23 19:23+0100\n"
+"POT-Creation-Date: 2010-04-18 01:52+0200\n"
+"PO-Revision-Date: 2010-04-18 01:47+0200\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
 "MIME-Version: 1.0\n"
@@ -425,16 +421,16 @@ msgstr ""
 "\tinternetquestions: Datei mit zusÃ¤tzlichen Fragen.\n"
 "\t"
 
-#: ../sdaps/setup/setup.py:35
+#: ../sdaps/setup/setup.py:38
 msgid "The survey directory already exists"
 msgstr "Das Umfrageverzeichniss existiert bereits."
 
-#: ../sdaps/setup/setup.py:36 ../sdaps/setup/setup.py:42
-#: ../sdaps/setup/setup.py:48 ../sdaps/setup/setup.py:55
+#: ../sdaps/setup/setup.py:39 ../sdaps/setup/setup.py:45
+#: ../sdaps/setup/setup.py:51 ../sdaps/setup/setup.py:58
 msgid "Cancelling setup"
 msgstr "Setup abgebrochen"
 
-#: ../sdaps/setup/setup.py:41
+#: ../sdaps/setup/setup.py:44
 #, python-format
 msgid ""
 "Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
@@ -443,16 +439,32 @@ msgstr ""
 "Unbekanntes Dateiformat (%s). questionnaire_odt muss application/vnd.oasis."
 "opendocument.text sein."
 
-#: ../sdaps/setup/setup.py:47
+#: ../sdaps/setup/setup.py:50
 #, python-format
 msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
 msgstr ""
 "Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
 
-#: ../sdaps/setup/setup.py:54
+#: ../sdaps/setup/setup.py:57
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
+
+#: ../sdaps/setup/setup.py:72
+msgid ""
+"Error: Caught an Exception while parsing the ODT file. The current state is:"
+msgstr ""
+"Fehler: Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der "
+"jetzige Zustand ist:"
+
+#: ../sdaps/setup/boxesparser.py:118
+#, python-format
+msgid ""
+"Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: "
+"%.1f)."
+msgstr ""
+"Warnung: Ignoriere Box (Seite: %i, x: %.1f, y: %.1f, width: %.1f, height: "
+"%.1f)."
 
 #: ../sdaps/stamp/__init__.py:28
 #, python-format

@@ -176,11 +176,18 @@ class Mark (Question) :
 		self.answers = list()
 	
 	def __unicode__ (self) :
-		return unicode().join(
-			[Question.__unicode__(self)] + \
-			[u'\t%s - %s\n' % tuple(self.answers)] + \
-			[unicode(box) for box in self.boxes]
-		)
+		if len(self.answers) == 2:
+			return unicode().join(
+				[Question.__unicode__(self)] + \
+				[u'\t%s - %s\n' % tuple(self.answers)] + \
+				[unicode(box) for box in self.boxes]
+			)
+		else:
+			return unicode().join(
+				[Question.__unicode__(self)] + \
+				[u'\t? - ?\n'] + \
+				[unicode(box) for box in self.boxes]
+			)
 	
 	def get_answer (self) :
 		'''it's an integer between 0 and 5

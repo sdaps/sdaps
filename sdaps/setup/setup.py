@@ -23,6 +23,9 @@ from sdaps import utils
 from sdaps import model
 from sdaps import log
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
+
 import buddies
 import boxesparser
 import qobjectsparser
@@ -63,7 +66,14 @@ def setup (survey, questionnaire_odt, questionnaire_pdf, additionalqobjects = No
 	survey.questionnaire.page_count = page_count
 
 	# Parse qobjects
-	qobjectsparser.parse(survey, questionnaire_odt, boxes)
+	try:
+		qobjectsparser.parse(survey, questionnaire_odt, boxes)
+	except:
+		print _("Error: Caught an Exception while parsing the ODT file. The current state is:")
+		print unicode(survey.questionnaire)
+		print "------------------------------------"
+
+		raise
 
 	# Parse additionalqobjects
 	if additionalqobjects :

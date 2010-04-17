@@ -130,6 +130,7 @@ class Mark (Question) :
 		self.obj.answers.append(chars)
 
 	def box (self, box) :
+		assert isinstance(box, model.questionnaire.Checkbox)
 		self.obj.add_box(box)
 		if self.obj.page_number == 0 :
 			self.obj.page_number = box.page_number
@@ -156,6 +157,7 @@ class Text (Question) :
 	obj_class = model.questionnaire.Text
 	
 	def box (self, box) :
+		assert isinstance(box, model.questionnaire.Textbox)
 		self.obj.add_box(box)
 		if self.obj.page_number == 0 :
 			self.obj.page_number = box.page_number
