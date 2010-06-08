@@ -46,11 +46,10 @@ def sdaps (survey_dir, script_name, *arguments) :
 	print
 	print '-' * 80
 
-	try :
-		return script.scripts[script_name](survey_dir, *arguments)
-	except KeyError, detail :
+	if not script_name in script.scripts :
 		print _(u'''Unknown script "%s". Aborting.''') % script_name
 		return 1
+	return script.scripts[script_name](survey_dir, *arguments)
 
 def doc () :
 	for script_class in script.scripts.itervalues() :
