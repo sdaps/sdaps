@@ -6,7 +6,7 @@ Programmstruktur
 
 Sdaps ist in einzelne Skripte unterteilt. Sie werden zwar alle über ein
 gemeinsames Startmodul, „sdaps.py“, gestartet, arbeiten aber
-unabhängig. von einander. Ein Interpreter führt dabei immer nur ein Skript
+unabhängig von einander. Ein Interpreter führt dabei immer nur ein Skript
 aus und endet dann wieder.
 
 Die Skripte laden zunächst die Daten des Projekts, das Objekt survey, von

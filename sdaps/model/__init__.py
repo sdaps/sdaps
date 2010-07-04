@@ -38,9 +38,6 @@ altered (much) later.
 The sheets tree holds the data of the answered questionnaires. The sheet
 objects are created while the scanned images are added to the project.
 
-Ein Skript kann Kumpels (buddies) zu den Objekten im questionnaire tree
-definieren.
-
 Iterating through sheets and jumping
 ====================================
 

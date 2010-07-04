@@ -34,7 +34,7 @@ rm -rf "$PROJECT"
 # Create 10 unique sheets that can be printed and handed out
 "$SDAPS" "$PROJECT" stamp 10
 
-# Dumps a list of all the questionaire IDs (ie. the ids of each of the 100 sheets)
+# Dumps a list of all the questionaire IDs (ie. the ids of each of the 10 sheets)
 "$SDAPS" "$PROJECT" ids
 
 # Import the scanned data. The data has to be a multipage 1bpp tif file.
