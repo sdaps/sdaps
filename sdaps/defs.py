@@ -29,8 +29,8 @@ paper_height = 297.0 # mm
 
 corner_mark_x = 10.0 # mm
 corner_mark_y = 12.0 # mm
-corner_mark_width = 190.0 # mm
-corner_mark_height = 273.0 # mm
+corner_mark_width = paper_width - 2 * corner_mark_x # mm
+corner_mark_height = paper_height - 2 * corner_mark_y # mm
 corner_mark_length = 20.0 # mm
 
 # top left, top right, bottom left, bottom right
@@ -42,16 +42,17 @@ corner_boxes = [
 	[1, 0, 0, 0],
 	[0, 0, 0, 1],
 ]
-# x, y
-corner_boxes_positions = [
-	[13.0, 15.0],
-	[193.5, 15.0],
-	[13.0, 278.5],
-	[193.5, 278.5],
-]
+
 corner_box_width = 3.5 # mm
 corner_box_height = 3.5 # mm
-
+corner_box_padding = 3 # mm
+# x, y
+corner_boxes_positions = [
+	[corner_mark_x + corner_box_padding, corner_mark_y + corner_box_padding],
+	[corner_mark_x + corner_mark_width - corner_box_padding - corner_box_width, corner_mark_y + corner_box_padding],
+	[corner_mark_x + corner_box_padding, corner_mark_y + corner_mark_height - corner_box_padding - corner_box_height],
+	[corner_mark_x + corner_mark_width - corner_box_padding - corner_box_width, corner_mark_y + corner_mark_height - corner_box_padding - corner_box_height],
+]
 
 codebox_length = 16 # bits
 codebox_step = 3.5 # mm

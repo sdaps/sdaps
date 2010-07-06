@@ -25,6 +25,8 @@ from sdaps import surface
 from sdaps import image
 from sdaps import defs
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
 
 class Sheet (model.buddy.Buddy) :
 
@@ -166,8 +168,8 @@ class Image (model.buddy.Buddy) :
 		try :
 			matrix = image.calculate_matrix(
 				self.obj.surface.surface,
-				10, 12,
-				190, 273
+				defs.corner_mark_x, defs.corner_mark_y,
+				defs.corner_mark_width, defs.corner_mark_height
 			)
 		except AssertionError :
 			self.matrix = self.obj.matrix.mm_to_px()

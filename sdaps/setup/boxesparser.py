@@ -49,7 +49,7 @@ def parse (questionnaire_pdf) :
 	boxes = list()
 	
 	page_count = doc.count_pages()
-	assert page_count % 2 == 0
+	assert page_count == 1 or page_count % 2 == 0
 	
 	for page_number in range(1, page_count + 1) :
 		page = doc.read_page(page_number)
