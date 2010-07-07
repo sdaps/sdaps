@@ -62,7 +62,7 @@ class ContentHandler (xml.sax.ContentHandler) :
 			self.active = 0
 			if attrs[u'draw:style-name'] in BOXES or self.parent_styles[attrs[u'draw:style-name']] in BOXES :
 				self.answer.setup.box(self.boxes.pop(0))
-		elif name == u'style:style' and u'style:parent-style-name' in attrs:
+		elif name == u'style:style' and attrs.has_key(u'style:parent-style-name'):
 			self.parent_styles[attrs[u'style:name']] = attrs[u'style:parent-style-name']
 
 	def endElement (self, name) :
