@@ -95,10 +95,10 @@ class SheetWidget(gtk.DrawingArea):
 		x, y = self._mm_to_widget_matrix.transform_point(bbox[0], bbox[1])
 		width, height = self._mm_to_widget_matrix.transform_distance(bbox[2], bbox[3])
 
-		width = int(math.ceil(width + x - int(x)))
-		height = int(math.ceil(height + y - int(y)))
-		x = int(x)
-		y = int(y)
+		width = int(math.ceil(width + x - int(x)))+20
+		height = int(math.ceil(height + y - int(y)))+20
+		x = int(x)-10
+		y = int(y)-10
 
 		self.queue_draw_area(x, y, width, height)
 
@@ -106,10 +106,10 @@ class SheetWidget(gtk.DrawingArea):
 		x, y = self._mm_to_widget_matrix.transform_point(x_mm, y_mm)
 		width, height = self._mm_to_widget_matrix.transform_distance(width_mm, height_mm)
 
-		width = int(math.ceil(width + x - int(x)))
-		height = int(math.ceil(height + y - int(y)))
-		x = int(x)
-		y = int(y)
+		width = int(math.ceil(width + x - int(x)))+20
+		height = int(math.ceil(height + y - int(y)))+20
+		x = int(x)-10
+		y = int(y)-10
 
 		self.queue_draw_area(x, y, width, height)
 
