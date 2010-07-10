@@ -5,19 +5,19 @@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 u'''
 
-Hinweis zu den Diamantstrukturen 
+Hinweis zu den Diamantstrukturen
 
 Bei Klassen mit mehreren Basisklassen definiert maximal eine Basisklasse
 eine eigene __init__ - Funktion. Die anderen Klassen sind "nur" Mixin - Klassen.
@@ -32,14 +32,14 @@ import data
 class DataObject (object) :
 	u'''Mixin
 	'''
-	
+
 	def get_data (self) :
 		if not self.id in self.sheet.data :
 			self.sheet.data[self.id] = getattr(data, self.__class__.__name__)()
 		return self.sheet.data[self.id]
-	
+
 	data = property(get_data)
-	
+
 
 class Questionnaire (buddy.Object) :
 	'''
@@ -47,7 +47,7 @@ class Questionnaire (buddy.Object) :
 	Reference: survey.questionnaire
 	Parent: self.survey
 	'''
-	
+
 	def __init__ (self) :
 		self.survey = None
 		self.qobjects = list()
@@ -56,31 +56,31 @@ class Questionnaire (buddy.Object) :
 
 	def init_attributes (self) :
 		self.page_count = 0
-	
+
 	def add_qobject (self, qobject) :
 		qobject.questionnaire = self
 		self.last_id = qobject.init_id(self.last_id)
 		self.qobjects.append(qobject)
-	
+
 	def get_sheet (self) :
 		return self.survey.sheet
 
 	sheet = property(get_sheet)
-	
+
 	def __unicode__ (self) :
 		return unicode().join(
 			[u'%s\n' % self.__class__.__name__] + \
 			[unicode(qobject) for qobject in self.qobjects]
 		)
 
-	
+
 class QObject (buddy.Object) :
 	'''
 	Identification: id == (major, minor)
 	Reference: survey.questionnaire.qobjects[i] (i != id)
-	Parent: self.questionnaire	
+	Parent: self.questionnaire
 	'''
-	
+
 	def __init__ (self) :
 		self.questionnaire = None
 		self.boxes = list()
@@ -98,12 +98,12 @@ class QObject (buddy.Object) :
 		box.question = self
 		self.last_id = box.init_id(self.last_id)
 		self.boxes.append(box)
-	
+
 	def get_sheet (self) :
 		return self.questionnaire.sheet
 
 	sheet = property(get_sheet)
-	
+
 	def calculate_survey_id (self, md5) :
 		pass
 
@@ -114,7 +114,7 @@ class QObject (buddy.Object) :
 
 
 class Head (QObject) :
-	
+
 	def init_attributes (self) :
 		QObject.init_attributes(self)
 		self.title = unicode()
@@ -132,12 +132,12 @@ class Head (QObject) :
 
 
 class Question (QObject) :
-	
+
 	def init_attributes (self) :
 		QObject.init_attributes(self)
 		self.page_number = 0
 		self.question = unicode()
-	
+
 	def calculate_survey_id (self, md5) :
 		for box in self.boxes :
 			box.calculate_survey_id(md5)
@@ -152,13 +152,13 @@ class Question (QObject) :
 
 
 class Choice (Question) :
-	
+
 	def __unicode__ (self) :
 		return unicode().join(
 			[Question.__unicode__(self)] + \
 			[unicode(box) for box in self.boxes]
 		)
-	
+
 	def get_answer (self) :
 		'''it's a list containing all selected values
 		'''
@@ -170,11 +170,11 @@ class Choice (Question) :
 
 
 class Mark (Question) :
-	
+
 	def init_attributes (self) :
 		Question.init_attributes(self)
 		self.answers = list()
-	
+
 	def __unicode__ (self) :
 		if len(self.answers) == 2:
 			return unicode().join(
@@ -188,7 +188,7 @@ class Mark (Question) :
 				[u'\t? - ?\n'] + \
 				[unicode(box) for box in self.boxes]
 			)
-	
+
 	def get_answer (self) :
 		'''it's an integer between 0 and 5
 		1 till 5 are valid marks, 0 is returned if there's something wrong
@@ -202,38 +202,44 @@ class Mark (Question) :
 			return answer[0] + 1
 		else :
 			return 0
-	
+
 	def set_answer (self, answer) :
 		for box in self.boxes :
 			box.data.state = box.value == answer - 1
 
 
 class Text (Question) :
-	
+
 	def __unicode__ (self) :
 		return unicode().join(
 			[Question.__unicode__(self)] + \
 			[unicode(box) for box in self.boxes]
 		)
 
+	def get_answer (self) :
+		'''it's a bool, wether there is content in the textbox
+		'''
+		assert len(self.boxes) == 1
+		return self.boxes[0].data.state
+
 
 class Additional_Head (Head) :
-	
+
 	pass
 
 
 class Additional_Mark (Question, DataObject) :
-	
+
 	def init_attributes (self) :
 		Question.init_attributes(self)
 		self.answers = list()
-	
+
 	def __unicode__ (self) :
 		return unicode().join(
 			[Question.__unicode__(self)] + \
 			[u'\t%s - %s\n' % tuple(self.answers)]
 		)
-	
+
 	def get_answer (self) :
 		return self.data.value
 
@@ -241,19 +247,19 @@ class Additional_Mark (Question, DataObject) :
 		self.data.value = answer
 
 class Additional_FilterHistogram (Question, DataObject) :
-	
+
 	def init_attributes (self) :
 		Question.init_attributes(self)
 		self.answers = list()
 		self.filters = list()
-	
+
 	def __unicode__ (self) :
 		result = []
 		result.append(Question.__unicode__(self))
 		for i in xrange(len(self.answers)):
 			result.append(u'\t%s - %s\n' % (self.answers[i], self.filters[i]))
 		return unicode().join(result)
-	
+
 	def get_answer (self) :
 		return self.data.value
 
@@ -268,7 +274,7 @@ class Box (buddy.Object, DataObject) :
 	Reference: survey.questionnaire.qobjects[i].boxes[j]
 	Parent: self.question
 	'''
-	
+
 	def __init__ (self) :
 		self.question = None
 		self.init_attributes()
@@ -280,7 +286,7 @@ class Box (buddy.Object, DataObject) :
 		self.width = 0
 		self.height = 0
 		self.text = unicode()
-	
+
 	def init_id (self, id) :
 		self.value = id + 1
 		self.id = self.question.id + (self.value,)
@@ -290,7 +296,7 @@ class Box (buddy.Object, DataObject) :
 		return self.question.sheet
 
 	sheet = property(get_sheet)
-	
+
 	def calculate_survey_id (self, md5) :
 		# TODO Change this, so that a move of 0.1 mm also changes the hash
 		md5.update(
@@ -299,7 +305,7 @@ class Box (buddy.Object, DataObject) :
 			chr(int(self.width * 256.0 / 210.0)) + \
 			chr(int(self.height * 256.0 / 297.0))
 		)
-	
+
 	def __unicode__ (self) :
 		return u'\t%i (%s) %s %s %s %s %s\n' % (
 			self.value,
@@ -313,11 +319,11 @@ class Box (buddy.Object, DataObject) :
 
 
 class Checkbox (Box) :
-	
+
 	pass
 
 
 class Textbox (Box) :
-	
+
 	pass
 
