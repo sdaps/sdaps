@@ -60,7 +60,7 @@ def report (survey_dir, *filter) :
 def stats (survey_dir, *filter) :
 	survey = model.survey.Survey.load(survey_dir)
 	import report
-	report.report(survey, filter, stats = 1)
+	report.stats(survey, filter)
 
 @script.register
 @script.logfile

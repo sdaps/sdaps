@@ -338,9 +338,8 @@ class Textbox (Box) :
 				y += step_y
 			x += step_x
 
-		# Only count textboxes if the recognized area is larger
-		# than 3 mm in at least one direction.
-		if bbox and (bbox[2] > 3.0 or bbox[3] > 3.0):
+		if bbox and (bbox[2] > 7 or bbox[3] > 7) :
+			# Do not accept very small bounding boxes.
 			self.obj.data.state = True
 
 			self.obj.data.x = bbox[0] - 1.0
