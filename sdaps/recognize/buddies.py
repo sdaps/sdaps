@@ -25,6 +25,9 @@ from sdaps import surface
 from sdaps import image
 from sdaps import defs
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
+
 
 class Sheet (model.buddy.Buddy) :
 
@@ -336,7 +339,8 @@ class Textbox (Box) :
 				y += step_y
 			x += step_x
 
-		if bbox:
+		if bbox and (bbox[2] > 7 or bbox[3] > 7) :
+			# Do not accept very small bounding boxes.
 			self.obj.data.state = True
 
 			self.obj.data.x = bbox[0] - 1.0
