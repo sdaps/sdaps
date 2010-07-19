@@ -123,10 +123,28 @@ count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint hei
 	guint32 *pixels;
 	int stride;
 	int x_pos, y_pos;
+	int img_width, img_height;
 	int black_pixel = 0;
 
 	pixels = (guint32*) cairo_image_surface_get_data(surface);
+	img_width = cairo_image_surface_get_width(surface);
+	img_height = cairo_image_surface_get_height(surface);
 	stride = cairo_image_surface_get_stride(surface);
+
+	if (y < 0) {
+		height += y;
+		y = 0;
+	}
+	if (x < 0) {
+		width += x;
+		x = 0;
+	}
+	if (x + width > img_width) {
+		width = img_width - x;
+	}
+	if (y + height > img_height) {
+		height = img_height - y;
+	}
 
 	for (y_pos = y; y_pos < y + height; y_pos++) {
 		for (x_pos = x; x_pos < x + width; x_pos++) {
