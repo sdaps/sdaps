@@ -132,7 +132,60 @@ def parse (questionnaire_pdf) :
 							rect.width / mm,
 							rect.height / mm
 						)
-						
+				elif len(obj.subpaths) == 1 and isinstance(obj.subpaths[0], pdfpath.Subpath):
+					# OOo 3.x draws the box using a move + 4 lines + close.	
+					if box is None:
+						continue
+
+					if len(obj.subpaths[0].contents) != 6:
+						# 5 subpaths, m,l,l,l,l,c
+						continue
+
+					point = obj.subpaths[0].contents[0]
+					if not isinstance(point, pdfpath.Move):
+						continue
+					point = point.point
+					if not (point.x / mm - box.x < 0.0001 and (height - point.y) / mm - box.y < 0.0001):
+						continue
+
+					point = obj.subpaths[0].contents[1]
+					if not isinstance(point, pdfpath.Line):
+						continue
+					point = point.point2
+					if not (point.x / mm - box.x < 0.0001 and (height - point.y) / mm - box.y - box.height < 0.0001):
+						continue
+
+					point = obj.subpaths[0].contents[2]
+					if not isinstance(point, pdfpath.Line):
+						continue
+					point = point.point2
+					if not (point.x / mm - box.x - box.width < 0.0001 and (height - point.y) / mm - box.y - box.height < 0.0001):
+						continue
+
+					point = obj.subpaths[0].contents[3]
+					if not isinstance(point, pdfpath.Line):
+						continue
+					point = point.point2
+					if not (point.x / mm - box.x - box.width < 0.0001 and (height - point.y) / mm - box.y < 0.0001):
+						continue
+					point = obj.subpaths[0].contents[4]
+					if not isinstance(point, pdfpath.Line):
+						continue
+					point = point.point2
+
+					if not (point.x / mm - box.x < 0.0001 and (height - point.y) / mm - box.y - box.height < 0.0001):
+						continue
+
+					if not isinstance(obj.subpaths[0].contents[5], pdfpath.Close):
+						continue
+
+					if isinstance(box, DummyBox):
+						print _("Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: %.1f).") % \
+							(box.page, box.x, box.y, box.width, box.height)
+					else:
+						boxes.append(box)
+					box = None
+
 	
 	return boxes, page_count
 
