@@ -27,7 +27,7 @@ Dadurch werden die Probleme der Diamantstruktur umgangen.
 
 import buddy
 import data
-
+import struct
 
 class DataObject (object) :
 	u'''Mixin
@@ -298,13 +298,8 @@ class Box (buddy.Object, DataObject) :
 	sheet = property(get_sheet)
 
 	def calculate_survey_id (self, md5) :
-		# TODO Change this, so that a move of 0.1 mm also changes the hash
-		md5.update(
-			chr(int(self.x * 256.0 / 210.0)) + \
-			chr(int(self.y * 256.0 / 297.0)) + \
-			chr(int(self.width * 256.0 / 210.0)) + \
-			chr(int(self.height * 256.0 / 297.0))
-		)
+		tmp = struct.pack('!ffff', self.x, self.y, self.width, self.height)
+		md5.update(tmp)
 
 	def __unicode__ (self) :
 		return u'\t%i (%s) %s %s %s %s %s\n' % (
