@@ -50,17 +50,14 @@ class Survey (object) :
 		sheet.survey = self
 
 	def calculate_survey_id (self) :
-		try:
-			import hashlib
-			md5 = hashlib.new('md5')
-		except ImportError:
-			from md5 import md5 as md5_cls
-			md5 = md5_cls()
-
+		import hashlib
+		md5 = hashlib.new('md5')
 
 		for qobject in self.questionnaire.qobjects :
 			qobject.calculate_survey_id(md5)
 		self.survey_id = 0
+		# This compresses the md5 hash to a 32 bit unsigned value, by
+		# taking the lower two bits of each byte.
 		for i, c in enumerate(md5.digest()) :
 			self.survey_id += bool(ord(c) & 1) << (2 * i)
 			self.survey_id += bool(ord(c) & 2) << (2 * i + 1)
