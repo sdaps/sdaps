@@ -36,6 +36,7 @@ _ = ugettext
 def add (survey_dir, *files):
 	import Image
 	import subprocess
+	import sys
 
 	survey = model.survey.Survey.load(survey_dir)
 
@@ -62,10 +63,16 @@ def add (survey_dir, *files):
 
 		directory = survey.new_path('%i')
 		os.mkdir(directory)
-		tiffsplit = subprocess.Popen(
-			['tiffsplit', file, directory + '/'],
-			stdout = subprocess.PIPE, stderr = subprocess.PIPE
-		)
+		try:
+			tiffsplit = subprocess.Popen(
+				['tiffsplit', file, directory + '/'],
+				stdout = subprocess.PIPE, stderr = subprocess.PIPE
+			)
+		except OSError, e:
+			if e.errno == 2:
+				raise AssertionError(_('Could not execute tiffsplit!'))
+			else:
+				raise e
 		stdout, stderr = tiffsplit.communicate()
 
 		for line in stdout.split('\n') :
