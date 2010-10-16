@@ -75,38 +75,27 @@ class Image (model.buddy.Buddy) :
 		half_pt = 0.5 / 72.0 * 25.4
 		pt = 1.0 / 72.0 * 25.4
 
+		width = defs.corner_box_width
+		height = defs.corner_box_height
+		padding = defs.corner_box_padding
+		survey = self.obj.sheet.survey
+		corner_boxes_positions = [
+			(defs.corner_mark_left + padding, defs.corner_mark_top + padding),
+			(survey.defs.paper_width - defs.corner_mark_right - padding - width, defs.corner_mark_top + padding),
+			(defs.corner_mark_left + padding, survey.defs.paper_height - defs.corner_mark_bottom - padding - height),
+			(survey.defs.paper_width - defs.corner_mark_right - padding - width,
+			 survey.defs.paper_height - defs.corner_mark_bottom - padding - height)
+		]
 		corners = [
 			int(image.get_coverage(
 				self.obj.surface.surface, self.matrix,
 				corner[0] - half_pt,
 				corner[1] - half_pt,
-				defs.corner_box_width + pt,
-				defs.corner_box_height + pt
+				width + pt,
+				height + pt
 			) > 0.7)
-			for corner in defs.corner_boxes_positions
+			for corner in corner_boxes_positions
 		]
-
-		#topleft = image.get_coverage(
-			#self.obj.surface.surface, self.matrix,
-			#13.0 - half_pt, 15.0 - half_pt, 3.5 + pt, 3.5 + pt
-		#)
-		#topright = image.get_coverage(
-			#self.obj.surface.surface, self.matrix,
-			#193.5 - half_pt, 15.0 - half_pt, 3.5 + pt, 3.5 + pt
-		#)
-		#bottomleft = image.get_coverage(
-			#self.obj.surface.surface, self.matrix,
-			#13.0 - half_pt, 278.5 - half_pt, 3.5 + pt, 3.5 + pt
-		#)
-		#bottomright = image.get_coverage(
-			#self.obj.surface.surface, self.matrix,
-			#193.5 - half_pt, 278.5 - half_pt, 3.5 + pt, 3.5 + pt
-		#)
-
-		#topleft = topleft > 0.7
-		#topright = topright > 0.7
-		#bottomleft = bottomleft > 0.7
-		#bottomright = bottomright > 0.7
 
 		try :
 			self.obj.page_number = defs.corner_boxes.index(corners) + 1
@@ -168,8 +157,9 @@ class Image (model.buddy.Buddy) :
 		try :
 			matrix = image.calculate_matrix(
 				self.obj.surface.surface,
-				defs.corner_mark_x, defs.corner_mark_y,
-				defs.corner_mark_width, defs.corner_mark_height
+				defs.corner_mark_left, defs.corner_mark_top,
+				self.obj.sheet.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right,
+				self.obj.sheet.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom,
 			)
 		except AssertionError :
 			self.matrix = self.obj.matrix.mm_to_px()

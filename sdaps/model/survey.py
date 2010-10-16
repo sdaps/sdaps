@@ -25,6 +25,9 @@ from sdaps import log
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
+# Force a certain set of options using slots
+class Defs (object) :
+	__slots__ = ["paper_width", "paper_height"]
 
 class Survey (object) :
 
@@ -36,6 +39,7 @@ class Survey (object) :
 		self.survey_id = 0
 		self.questionnaire_ids = list()
 		self.index = 0
+		self.defs = Defs()
 
 	def add_questionnaire (self, questionnaire) :
 		self.questionnaire = questionnaire

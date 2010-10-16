@@ -274,7 +274,9 @@ class SheetWidget(gtk.DrawingArea):
 
 		cr.set_source_rgba(1.0, 0.0, 0.0, 0.6)
 		cr.set_line_width(1.0 * 25.4 / 72.0)
-		cr.rectangle(defs.corner_mark_x, defs.corner_mark_y, defs.corner_mark_width, defs.corner_mark_height)
+		cr.rectangle(defs.corner_mark_left, defs.corner_mark_top,
+		             self.provider.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right,
+		             self.provider.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom)
 		cr.stroke()
 
 		# Draw the overlay stuff.

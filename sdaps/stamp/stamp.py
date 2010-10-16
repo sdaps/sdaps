@@ -76,23 +76,23 @@ def draw_codebox (canvas, x, y, code) :
 	canvas.restoreState()
 
 
-def draw_corner_marks (canvas) :
+def draw_corner_marks (survey, canvas) :
 	if 0 : assert isinstance(canvas, reportlab.pdfgen.canvas.Canvas)
 	
 	length = defs.corner_mark_length
-	x, y = (defs.corner_mark_x, defs.corner_mark_y)
+	x, y = (defs.corner_mark_left, defs.corner_mark_top)
 	canvas.line( x * mm,  y * mm, (x + length) * mm, y * mm)
 	canvas.line( x * mm,  y * mm, x * mm, (y + length) * mm)
 
-	x, y = (defs.corner_mark_x + defs.corner_mark_width, defs.corner_mark_y)
+	x, y = (survey.defs.paper_width - defs.corner_mark_right, defs.corner_mark_top)
 	canvas.line( x * mm,  y * mm, (x - length) * mm, y * mm)
 	canvas.line( x * mm,  y * mm, x * mm, (y + length) * mm)
 
-	x, y = (defs.corner_mark_x, defs.corner_mark_y + defs.corner_mark_height)
+	x, y = (defs.corner_mark_left, survey.defs.paper_height - defs.corner_mark_bottom)
 	canvas.line( x * mm,  y * mm, (x + length) * mm, y * mm)
 	canvas.line( x * mm,  y * mm, x * mm, (y - length) * mm)
 
-	x, y = (defs.corner_mark_x + defs.corner_mark_width, defs.corner_mark_y + defs.corner_mark_height)
+	x, y = (survey.defs.paper_width - defs.corner_mark_right, survey.defs.paper_height - defs.corner_mark_bottom)
 	canvas.line( x * mm,  y * mm, (x - length) * mm, y * mm)
 	canvas.line( x * mm,  y * mm, x * mm, (y - length) * mm)
 
@@ -107,15 +107,22 @@ corners = [
 	[0, 0, 0, 1],
 ]
 
-def draw_corner_boxes (canvas, page) :
+def draw_corner_boxes (survey, canvas, page) :
 	if 0 : assert isinstance(canvas, reportlab.pdfgen.canvas.Canvas)
 
 	width = defs.corner_box_width
 	height = defs.corner_box_height
 	padding = defs.corner_box_padding
 
+	corner_boxes_positions = [
+		(defs.corner_mark_left + padding, defs.corner_mark_top + padding),
+		(survey.defs.paper_width - defs.corner_mark_right - padding - width, defs.corner_mark_top + padding),
+		(defs.corner_mark_left + padding, survey.defs.paper_height - defs.corner_mark_bottom - padding - height),
+		(survey.defs.paper_width - defs.corner_mark_right - padding - width, survey.defs.paper_height - defs.corner_mark_bottom - padding - height)
+	]
+                                
 	for i in xrange(4):
-		x, y = defs.corner_boxes_positions[i]
+		x, y = corner_boxes_positions[i]
 		canvas.rect(x * mm,  y * mm, width * mm, height * mm, fill = corners[page][i])
 
 def stamp (survey, count = 0, used_ids = None) :
@@ -165,15 +172,15 @@ def stamp (survey, count = 0, used_ids = None) :
 	else:
 		stampsfile = StringIO.StringIO()
 
-	canvas = reportlab.pdfgen.canvas.Canvas(stampsfile, bottomup = False, pagesize=(defs.paper_width * mm, defs.paper_height * mm))
+	canvas = reportlab.pdfgen.canvas.Canvas(stampsfile, bottomup = False, pagesize=(survey.defs.paper_width * mm, survey.defs.paper_height * mm))
 	# bottomup = False => (0, 0) is the upper left corner
 
 	print ungettext(u'Creating stamp PDF for %i sheet', u'Creating stamp PDF for %i sheets', sheets) % sheets
 	log.progressbar.start(sheets)
 	for i in range(sheets) :
 		for j in range(questionnaire_length) :
-			draw_corner_marks(canvas)
-			draw_corner_boxes(canvas, j)
+			draw_corner_marks(survey, canvas)
+			draw_corner_boxes(survey, canvas, j)
 			if j % 2 or questionnaire_length == 1:
 				if questionnaire_ids :
 					if j == 1 :

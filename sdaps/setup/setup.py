@@ -31,6 +31,7 @@ import boxesparser
 import qobjectsparser
 import additionalparser
 import metaparser
+from pdftools import pdffile
 
 
 def setup (survey, questionnaire_odt, questionnaire_pdf, additionalqobjects = None) :
@@ -65,6 +66,12 @@ def setup (survey, questionnaire_odt, questionnaire_pdf, additionalqobjects = No
 	boxes, page_count = boxesparser.parse(questionnaire_pdf)
 	survey.questionnaire.page_count = page_count
 
+	# Get the papersize
+	doc = pdffile.PDFDocument(questionnaire_pdf)
+	page = doc.read_page(1)
+	survey.defs.paper_width = abs(page.MediaBox[0] - page.MediaBox[2]) / 72.0 * 25.4
+	survey.defs.paper_height = abs(page.MediaBox[1] - page.MediaBox[3]) / 72.0 * 25.4
+                        
 	# Parse qobjects
 	try:
 		qobjectsparser.parse(survey, questionnaire_odt, boxes)

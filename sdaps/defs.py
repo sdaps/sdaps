@@ -24,13 +24,10 @@ This module contains constants and some magic values.
 """
 
 
-paper_width = 210.0 # mm
-paper_height = 297.0 # mm
-
-corner_mark_x = 10.0 # mm
-corner_mark_y = 12.0 # mm
-corner_mark_width = paper_width - 2 * corner_mark_x # mm
-corner_mark_height = paper_height - 2 * corner_mark_y # mm
+corner_mark_left = 10.0 # mm
+corner_mark_right = 10.0 # mm
+corner_mark_top = 12.0 # mm
+corner_mark_bottom = 12.0 # mm
 corner_mark_length = 20.0 # mm
 
 # top left, top right, bottom left, bottom right
@@ -46,13 +43,6 @@ corner_boxes = [
 corner_box_width = 3.5 # mm
 corner_box_height = 3.5 # mm
 corner_box_padding = 3 # mm
-# x, y
-corner_boxes_positions = [
-	[corner_mark_x + corner_box_padding, corner_mark_y + corner_box_padding],
-	[corner_mark_x + corner_mark_width - corner_box_padding - corner_box_width, corner_mark_y + corner_box_padding],
-	[corner_mark_x + corner_box_padding, corner_mark_y + corner_mark_height - corner_box_padding - corner_box_height],
-	[corner_mark_x + corner_mark_width - corner_box_padding - corner_box_width, corner_mark_y + corner_mark_height - corner_box_padding - corner_box_height],
-]
 
 codebox_length = 16 # bits
 codebox_step = 3.5 # mm
