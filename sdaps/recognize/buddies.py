@@ -320,8 +320,8 @@ class Textbox (Box) :
 					else:
 						bbox_x = min(bbox[0], x)
 						bbox_y = min(bbox[1], y)
-						bbox[2] = max(bbox[0] + bbox[2], x + 2.0) - bbox_x
-						bbox[3] = max(bbox[1] + bbox[3], y + 2.0) - bbox_y
+						bbox[2] = max(bbox[0] + bbox[2], x + test_width) - bbox_x
+						bbox[3] = max(bbox[1] + bbox[3], y + test_height) - bbox_y
 						bbox[0] = bbox_x
 						bbox[1] = bbox_y
 
@@ -332,10 +332,10 @@ class Textbox (Box) :
 			# Do not accept very small bounding boxes.
 			self.obj.data.state = True
 
-			self.obj.data.x = bbox[0] - 1.0
-			self.obj.data.y = bbox[1] - 1.0
-			self.obj.data.width = bbox[2] + 2.0
-			self.obj.data.height = bbox[3] + 2.0
+			self.obj.data.x = bbox[0] - padding
+			self.obj.data.y = bbox[1] - padding
+			self.obj.data.width = bbox[2] + 2*padding
+			self.obj.data.height = bbox[3] + 2*padding
 		else:
 			self.obj.data.state = False
 
