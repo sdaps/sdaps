@@ -187,19 +187,27 @@ class Textbox (Box) :
 
 	def find_edge (self, x, y, tollerance_x, tollerance_y) :
 		if self.obj.data.x - tollerance_x <= x and \
-		   self.obj.data.x + tollerance_y >= x:
+		   self.obj.data.x + tollerance_x >= x and \
+		   self.obj.data.y <= y and \
+		   self.obj.data.y + self.obj.data.height >= y:
 			return (self.obj, _LEFT)
 
 		if self.obj.data.x + self.obj.data.width - tollerance_x <= x and \
-		   self.obj.data.x + self.obj.data.width + tollerance_x >= x:
+		   self.obj.data.x + self.obj.data.width + tollerance_x >= x and \
+		   self.obj.data.y <= y and \
+		   self.obj.data.y + self.obj.data.height >= y:
 			return (self.obj, _RIGHT)
 
 		if self.obj.data.y - tollerance_y <= y and \
-		   self.obj.data.y + tollerance_y >= y:
+		   self.obj.data.y + tollerance_y >= y and \
+		   self.obj.data.x <= x and \
+		   self.obj.data.x + self.obj.data.width >= x:
 			return (self.obj, _TOP)
 
 		if self.obj.data.y + self.obj.data.height - tollerance_y <= y and \
-		   self.obj.data.y + self.obj.data.height + tollerance_y >= y:
+		   self.obj.data.y + self.obj.data.height + tollerance_y >= y and \
+		   self.obj.data.x <= x and \
+		   self.obj.data.x + self.obj.data.width >= x:
 			return (self.obj, _BOTTOM)
 
 	def move_edge (self, side, x, y) :
