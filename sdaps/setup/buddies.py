@@ -112,7 +112,8 @@ class Choice (Question) :
 	
 	def validate (self) :
 		Question.validate(self)
-		assert not self.cache
+		if self.cache:
+			raise AssertionError(_("Error in question \"%s\"") % self.obj.question)
 		del self.cache
 		if not self.obj.boxes :
 			print u'Warning: %s %i.%i got no boxes.' % (
