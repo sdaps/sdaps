@@ -408,13 +408,13 @@
 \providecommand{\textbox}[2]{%
   % Both baselineskip and lineskip?
   \question{#2}%
-  \immediate\write\sdapsoutfile{QObject-Text=\thesubsection. #2}
-  \immediate\write\sdapsoutfile{Box=Textbox}
-  \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em}
-  \begingroup
-    \setlength\@tempdima{#1}
-    \@tempdimb=\linewidth
-    \advance\@tempdimb by-1\elementlinewidth
+  \immediate\write\sdapsoutfile{QObject-Text=\thesubsection. #2} %
+  \immediate\write\sdapsoutfile{Box=Textbox} %
+  \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em} %
+  \begingroup %
+    \setlength\@tempdima{#1}%
+    \@tempdimb=\linewidth%
+    \advance\@tempdimb by-1pt%
     \def\sides{%
       \hbox to\@tempdimb {%
         \vrule height \@tempdima width \elementlinewidth %
@@ -422,16 +422,16 @@
         \vrule width \elementlinewidth%
       }%
     }%
-    \offinterlineskip
-    \hrule width \@tempdimb height \elementlinewidth
-    \sides
-    \kern-0.5\@tempdima
-    \cleaders\sides\vfill
-    \kern-0.5\@tempdima
-    \sides
-    \hrule width \@tempdimb height \elementlinewidth
-  \endgroup
-  \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em}
+    \offinterlineskip %
+    \hrule width \@tempdimb height \elementlinewidth %
+    \sides %
+    \kern-0.5\@tempdima %
+    \cleaders\sides\vfill %
+    \kern-0.5\@tempdima %
+    \sides %
+    \hrule width \@tempdimb height \elementlinewidth %
+  \endgroup %
+  \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em} %
 }
 
 %\providecommand*{\textbox}[2]{%
