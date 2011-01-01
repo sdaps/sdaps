@@ -536,37 +536,46 @@
   \multicolumn{#2}{l}{%
     \addtocounter{choiceitems}{#2}%
     \begingroup%
-        \setlength\@tempdima{#1}%
-        \advance\@tempdima by -0.5\@tempdima%
-        \advance\@tempdima by -0.5ex%
-        \raise\@tempdima\hbox{#3~}%
-        %
-        \immediate\write\sdapsoutfile{Answer-Choice=#3}%
-        \immediate\write\sdapsoutfile{Box=Textbox}%
-        \setlength\@tempdima{#1}%
-        %\addtolength\@tempdima{20\elementlinewidth}%
-        \setlength\@tempdimb{2cm}%
-        \@tempdimc=\@tempdima%
-        \advance\@tempdimc by +2.0\elementlinewidth%
-        \def\horizontallines{%
-          \vbox {%
-            %\vspace \elementlinewidth%
-            \hrule depth 0pt width \@tempdimb height \elementlinewidth %
-            \vspace \@tempdima%
-            %\vspace \elementlinewidth
-            %\vspace -1.0\elementlinewidth%
+      \newdimen\@tempdimlower%
+      \newdimen\@tempdimboxlower%
+      \newdimen\@tempdimheight%
+      \newdimen\@tempdimruleheight%
+      \raise0pt\hbox{#3~}%
+      %
+      \immediate\write\sdapsoutfile{Answer-Choice=#3}%
+      \immediate\write\sdapsoutfile{Box=Textbox}%
+      \setlength\@tempdimheight{#1}%
+      %
+      \setlength\@tempdimlower{0pt}%
+      \advance\@tempdimlower by -0.5\@tempdimheight%
+      \advance\@tempdimlower by 0.8ex%
+      %
+      \setlength\@tempdimboxlower\@tempdimlower%
+      \advance\@tempdimboxlower by -\smallskipamount%
+      %
+      \setlength\@tempdima{2cm}%
+      \@tempdimruleheight=\@tempdimheight%
+      \advance\@tempdimruleheight by +2.0\elementlinewidth%
+      \advance\@tempdimruleheight by \@tempdimlower%
+      %
+      \def\horizontallines{%
+        \hbox{%
+          \raise\@tempdimboxlower\vbox{%
+            \hrule depth 0em width \@tempdima height \elementlinewidth %
+            \vspace \@tempdimheight%
             \hrule depth 0pt height \elementlinewidth%
+            \vspace\smallskipamount%
           }%
         }%
-        \offinterlineskip%
-        \vrule depth 0pt width \elementlinewidth height \@tempdimc %
-        \horizontallines%
-        \kern-0.5\@tempdimb%
-        \cleaders\horizontallines\hfill%
-        \kern-0.5\@tempdimb%
-        \horizontallines%
-        \vrule depth 0pt width \elementlinewidth height \@tempdimc%
-      %}%
+      }%
+      \offinterlineskip%
+      \vrule depth -\@tempdimlower width \elementlinewidth height \@tempdimruleheight %
+      \horizontallines%
+      \kern-0.5\@tempdima%
+      \cleaders\horizontallines\hfill%
+      \kern-0.5\@tempdima%
+      \horizontallines%
+      \vrule depth -\@tempdimlower width \elementlinewidth height \@tempdimruleheight%
     \endgroup%
   }%
   \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%
