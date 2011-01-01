@@ -536,29 +536,37 @@
   \multicolumn{#2}{l}{%
     \addtocounter{choiceitems}{#2}%
     \begingroup%
-      \hbox{%
-        #3~%
+        \setlength\@tempdima{#1}%
+        \advance\@tempdima by -0.5\@tempdima%
+        \advance\@tempdima by -0.5ex%
+        \raise\@tempdima\hbox{#3~}%
+        %
         \immediate\write\sdapsoutfile{Answer-Choice=#3}%
         \immediate\write\sdapsoutfile{Box=Textbox}%
         \setlength\@tempdima{#1}%
         %\addtolength\@tempdima{20\elementlinewidth}%
-        \setlength\@tempdimb{1pt}%
-        \def\sides{%
-          \vbox to \@tempdima {%
-            \hrule width \@tempdimb height \elementlinewidth %
+        \setlength\@tempdimb{2cm}%
+        \@tempdimc=\@tempdima%
+        \advance\@tempdimc by +2.0\elementlinewidth%
+        \def\horizontallines{%
+          \vbox {%
+            %\vspace \elementlinewidth%
+            \hrule depth 0pt width \@tempdimb height \elementlinewidth %
             \vspace \@tempdima%
-            \hrule height \elementlinewidth%
+            %\vspace \elementlinewidth
+            %\vspace -1.0\elementlinewidth%
+            \hrule depth 0pt height \elementlinewidth%
           }%
         }%
         \offinterlineskip%
-        \vrule width \elementlinewidth height \@tempdima %
-        \sides%
+        \vrule depth 0pt width \elementlinewidth height \@tempdimc %
+        \horizontallines%
         \kern-0.5\@tempdimb%
-        \cleaders\sides\hfill%
+        \cleaders\horizontallines\hfill%
         \kern-0.5\@tempdimb%
-        \sides%
-        \vrule width \elementlinewidth height \@tempdima%
-      }%
+        \horizontallines%
+        \vrule depth 0pt width \elementlinewidth height \@tempdimc%
+      %}%
     \endgroup%
   }%
   \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%
