@@ -355,7 +355,7 @@
 %-------------------------------------------------------------------------------
 % symbols used 
 \providecommand{\checkbox}{%
-  \immediate\write\sdapsoutfile{Box=Checkbox}
+  \immediate\write\sdapsoutfile{Box=Checkbox}%
   \tikz[baseline=0.5mm]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
   }%
@@ -537,7 +537,7 @@
       \hbox{%
         #3~%
         \immediate\write\sdapsoutfile{Answer-Choice=#3}%
-        \immediate\write\sdapsoutfile{Box=Textbox}
+        \immediate\write\sdapsoutfile{Box=Textbox}%
         \setlength\@tempdima{#1}%
         %\addtolength\@tempdima{20\elementlinewidth}%
         \setlength\@tempdimb{1pt}%
