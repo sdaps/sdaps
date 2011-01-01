@@ -413,21 +413,23 @@
   \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em}
   \begingroup
     \setlength\@tempdima{#1}
+    \@tempdimb=\linewidth
+    \advance\@tempdimb by-1\elementlinewidth
     \def\sides{%
-      \hbox to\linewidth {%
+      \hbox to\@tempdimb {%
         \vrule height \@tempdima width \elementlinewidth %
         \hfill%
         \vrule width \elementlinewidth%
       }%
     }%
     \offinterlineskip
-    \hrule width \linewidth height \elementlinewidth
+    \hrule width \@tempdimb height \elementlinewidth
     \sides
     \kern-0.5\@tempdima
     \cleaders\sides\vfill
     \kern-0.5\@tempdima
     \sides
-    \hrule width \linewidth height \elementlinewidth
+    \hrule width \@tempdimb height \elementlinewidth
   \endgroup
   \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em}
 }
