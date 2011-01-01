@@ -57,9 +57,15 @@ class Questionnaire (buddy.Object) :
 	def init_attributes (self) :
 		self.page_count = 0
 
-	def add_qobject (self, qobject) :
+	def add_qobject (self, qobject, new_id = None) :
 		qobject.questionnaire = self
-		self.last_id = qobject.init_id(self.last_id)
+		# XXX: Is this any good?
+		if new_id is not None:
+			assert new_id > self.last_id
+			self.last_id = new_id
+			qobject.id = new_id
+		else:
+			self.last_id = qobject.init_id(self.last_id)
 		self.qobjects.append(qobject)
 
 	def get_sheet (self) :
@@ -107,6 +113,14 @@ class QObject (buddy.Object) :
 	def calculate_survey_id (self, md5) :
 		pass
 
+	def id_str (self) :
+		ids = [str(x) for x in self.id]
+		return u'.'.join(ids)
+
+	def id_filter (self) :
+		ids = [str(x) for x in self.id]
+		return u'_'+u'_'.join(ids)
+
 	def __unicode__ (self) :
 		return u'(%s)\n' % (
 			self.__class__.__name__,
@@ -124,8 +138,8 @@ class Head (QObject) :
 		return self.id
 
 	def __unicode__ (self) :
-		return u'%i. (%s) %s\n' % (
-			self.id[0],
+		return u'%s (%s) %s\n' % (
+			self.id_str(),
 			self.__class__.__name__,
 			self.title,
 		)
@@ -143,8 +157,8 @@ class Question (QObject) :
 			box.calculate_survey_id(md5)
 
 	def __unicode__ (self) :
-		return u'%i.%i (%s) %s {%i}\n' % (
-			self.id[0], self.id[1],
+		return u'%s (%s) %s {%i}\n' % (
+			self.id_str(),
 			self.__class__.__name__,
 			self.question,
 			self.page_number

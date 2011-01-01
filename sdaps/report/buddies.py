@@ -115,7 +115,7 @@ class Head (QObject) :
 	def story (self) :
 		return [
 			platypus.Paragraph(
-		        u'%i. %s' % (self.obj.id[0], self.obj.title),
+		        u'%s %s' % (self.obj.id_str(), self.obj.title),
 		        stylesheet['Head'])]
 
 
@@ -128,8 +128,8 @@ class Question (QObject) :
 	def story (self) :
 		return [
 			platypus.Paragraph(
-		        u'%i.%i %s' % (
-		            self.obj.id[0], self.obj.id[1], self.obj.question),
+		        u'%s %s' % (
+		            self.obj.id_str(), self.obj.question),
 		        stylesheet['Question'])]
 
 
@@ -169,7 +169,7 @@ class Choice (Question) :
 
 	def filters (self) :
 		for box in self.obj.boxes :
-			yield u'%i in _%i_%i' % (box.value, self.obj.id[0], self.obj.id[1])
+			yield u'%i in %s' % (box.value, self.obj.id_filter())
 
 
 class Mark (Question) :
@@ -193,7 +193,7 @@ class Mark (Question) :
 
 	def filters (self) :
 		for x in range(6) :
-			yield u'%i == _%i_%i' % (x, self.obj.id[0], self.obj.id[1])
+			yield u'%i == %s' % (x, self.obj.id_filter())
 
 
 class Text (Question) :

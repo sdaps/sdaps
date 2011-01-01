@@ -27,7 +27,7 @@ class Locals (object) :
 	def __init__ (self, survey) :
 		self.survey = survey
 		self.qobjects = dict([
-			(u'_%i_%i' % qobject.id, qobject)
+			(qobject.id_filter(), qobject)
 			for qobject in self.survey.questionnaire.qobjects
 		])
 

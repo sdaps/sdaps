@@ -69,6 +69,7 @@ def main (local_run = False) :
 	import recognize
 	import report
 	import setup
+	import setuptex
 	import stamp
 
 	if len(sys.argv) < 3 :
