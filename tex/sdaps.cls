@@ -307,7 +307,7 @@
 \newlength{\edgelen}
 \setlength{\edgelen}{2.00cm}
 \newlength{\elementlinewidth}
-\setlength{\elementlinewidth}{1.0pt}
+\setlength{\elementlinewidth}{1.0bp}
 \newlength{\boxsize}
 \setlength{\boxsize}{3.5mm}
 %\addtolength{\boxsize}{1pt}
@@ -355,6 +355,7 @@
 %-------------------------------------------------------------------------------
 % symbols used 
 \providecommand{\checkbox}{%
+  \immediate\write\sdapsoutfile{Box=Checkbox}
   \tikz[baseline=0.5mm]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
   }%
@@ -362,6 +363,7 @@
 \providecommand{\checkedbox}{%
   \hspace{-2pt}%
   \tikz[baseline=0.5mm]{%
+    % Note: This box is *not* detected by the PDF parser later on.
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
     \begin{scope}[decoration={random steps,segment length=4pt,amplitude=1pt}]
       \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\boxsize, \boxsize) + (2pt,2pt)$);%
@@ -407,9 +409,9 @@
   % Both baselineskip and lineskip?
   \question{#2}%
   \immediate\write\sdapsoutfile{QObject-Text=\thesubsection. #2}
+  \immediate\write\sdapsoutfile{Box=Textbox}
   \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em}
   \begingroup
-    \immediate\write\sdapsoutfile{QObject-Text-Pos=\pdfsavepos}
     \setlength\@tempdima{#1}
     \def\sides{%
       \hbox to\linewidth {%
@@ -535,6 +537,7 @@
       \hbox{%
         #3~%
         \immediate\write\sdapsoutfile{Answer-Choice=#3}%
+        \immediate\write\sdapsoutfile{Box=Textbox}
         \setlength\@tempdima{#1}%
         %\addtolength\@tempdima{20\elementlinewidth}%
         \setlength\@tempdimb{1pt}%
