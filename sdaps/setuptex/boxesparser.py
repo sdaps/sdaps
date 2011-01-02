@@ -79,10 +79,7 @@ Q \s+
 ''', re.MULTILINE | re.VERBOSE)
 
 
-# y_top = 492.038
-# x_out = 36.85
-# width = 521.575
-textfield_regexp = re.compile(r'''
+textfield_vert_regexp = re.compile(r'''
 q \s+
 1 \s+ 0 \s+ 0 \s+ 1 \s+ (?P<x_out>[0-9.]+) \s+ (?P<y_top>[0-9.]+) \s+ cm \s+
 \[\]0 \s+ d \s+ 0 \s+ J \s+ (?P<line_width>[0-9.]+) \s+ w \s+ 0 \s+ 0 \s+ m \s+ (?P<width>[0-9.]+) \s+ 0 \s+ l \s+ S \s+
@@ -109,6 +106,36 @@ Q \s+
 q \s+
 1 \s+ 0 \s+ 0 \s+ 1 \s+ (?P=x_out) \s+ (?P<y_bottom>[0-9.]+) \s+ cm \s+
 \[\]0 \s+ d \s+ 0 \s+ J \s+ (?P=line_width) \s+ w \s+ 0 \s+ 0 \s+ m \s+ (?P=width) \s+ 0 \s+ l \s+ S \s+
+Q \s+
+''', re.MULTILINE | re.VERBOSE)
+
+textfield_horiz_regexp = re.compile(r'''
+q \s+
+1 \s+ 0 \s+ 0 \s+ 1 \s+ (?P<x_left>[0-9.]+) \s+ (?P<y_bottom>[0-9.]+) \s+ cm \s+
+\[\]0 \s+ d \s+ 0 \s+ J \s+ (?P<line_width>[0-9.]+) \s+ w \s+ 0 \s+ 0 \s+ m \s+ 0 \s+ (?P<height>[0-9.]+) \s+ l \s+ S \s+
+Q \s+
+q \s+
+1 \s+ 0 \s+ 0 \s+ 1 \s+ (?P<x_first_line>[0-9.]+) \s+ (?P<y_line_top>[0-9.]+) \s+ cm \s+
+\[\]0 \s+ d \s+ 0 \s+ J \s+ (?P=line_width) \s+ w \s+0 \s+ 0 \s+ m \s+ (?P<line_length>[0-9.]+) \s+ 0 \s+ l \s+ S \s+
+Q \s+
+q \s+
+1 \s+ 0 \s+ 0 \s+ 1 \s+ (?P=x_first_line) \s+ (?P<y_line_bottom>[0-9.]+) \s+ cm \s+
+\[\]0 \s+ d \s+ 0 \s+ J \s+ (?P=line_width) \s+ w \s+0 \s+ 0 \s+ m \s+ (?P=line_length) \s+ 0 \s+ l \s+ S \s+
+Q \s+
+# There can be multiple lines
+(?:
+  q \s+
+  1 \s+ 0 \s+ 0 \s+ 1 \s+ (?P<x_last_line>[0-9.]+) \s+ (?P=y_line_top) \s+ cm \s+
+  \[\]0 \s+ d \s+ 0 \s+ J \s+ (?P=line_width) \s+ w \s+0 \s+ 0 \s+ m \s+ (?P=line_length) \s+ 0 \s+ l \s+ S \s+
+  Q \s+
+  q \s+
+  1 \s+ 0 \s+ 0 \s+ 1 \s+ (?P=x_last_line) \s+ (?P=y_line_bottom) \s+ cm \s+
+  \[\]0 \s+ d \s+ 0 \s+ J \s+ (?P=line_width) \s+ w \s+0 \s+ 0 \s+ m \s+ (?P=line_length) \s+ 0 \s+ l \s+ S \s+
+  Q \s+
+)+
+q \s+
+1 \s+ 0 \s+ 0 \s+ 1 \s+ (?P<x_right>[0-9.]+) \s+ (?P=y_bottom) \s+ cm \s+
+\[\]0 \s+ d \s+ 0 \s+ J \s+ (?P=line_width) \s+ w \s+ 0 \s+ 0 \s+ m \s+ 0 \s+ (?P=height) \s+ l \s+ S \s+
 Q \s+
 ''', re.MULTILINE | re.VERBOSE)
 
@@ -162,7 +189,7 @@ def parse (questionnaire_pdf) :
 			x_old = x
 			y_old = y
 
-		matches = textfield_regexp.finditer(contents)
+		matches = textfield_vert_regexp.finditer(contents)
 		for match in matches:
 			# Position is on the center of the line ...!
 			x_out = float(match.group('x_out'))
@@ -193,6 +220,51 @@ def parse (questionnaire_pdf) :
 			# I have seen values of ~0 and once slightly above 0.001
 			if height - line_width - (line_length + y_line_bottom - y_line_top) > 0.002:
 				continue
+			box = model.questionnaire.Textbox()
+			box.setup.setup(
+				page_number,
+				x / mm,
+				# transform the coordinate origin from the lower left corner to the upper left corner
+				# and name the upper left corner of the box, not the lower left one
+				y / mm,
+				width / mm,
+				height / mm
+			)
+			boxes.append(box)
+
+		matches = textfield_horiz_regexp.finditer(contents)
+		for match in matches:
+			# Position is on the center of the line ...!
+			x = float(match.group('x_left'))
+			line_length = float(match.group('line_length'))
+			width = float(match.group('x_last_line')) - float(match.group('x_first_line')) + line_length + line_width
+			line_width = float(match.group('line_width'))
+			height = float(match.group('height')) - line_width
+			y = page_height - float(match.group('y_bottom')) - height
+			y = y + line_width / 2.0
+
+			print x/mm, y/mm, width/mm, height/mm
+
+			# Sanity checks
+			if line_width != 1.0:
+				continue
+
+			y_line_top = float(match.group('y_line_top'))
+			y_line_bottom = float(match.group('y_line_bottom'))
+			if abs(y_line_top - y_line_bottom - height) > 0.002:
+				continue
+
+			x_first_line = float(match.group('x_first_line'))
+			if abs(x_first_line - (x + line_width / 2.0)) > 0.001:
+				continue
+			x_last_line = float(match.group('x_last_line'))
+			if abs(x_last_line + line_length - (x + width - line_width / 2.0)) > 0.001:
+				continue
+			line_length = float(match.group('line_length'))
+			if line_length > width:
+				continue
+
+
 			box = model.questionnaire.Textbox()
 			box.setup.setup(
 				page_number,
