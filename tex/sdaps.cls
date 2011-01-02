@@ -73,6 +73,15 @@
 % Symbols (boxes)
 \RequirePackage{amssymb}
 
+% pagehooks
+% This is a bit weird. According to the bophook documentation it should be
+% loaded after the hyperref package. However, loading it *before* the hyperref
+% package fixes a warning, and everything keeps working correctly.
+% From the documentation:
+%  The hyperref package does a lot of modification to the LaTeX kernel. Prepare
+%  for the case that it is loaded. Note that it has to be loaded prior to bophook!
+\RequirePackage{bophook}
+
 % hyperrefs
 \RequirePackage{url}
 \ifpdf
@@ -110,9 +119,6 @@
 \clearscrheadings
   \chead[\@author\\\@title]{\@author\\\@title}
 \pagestyle{scrheadings}
-
-% pagehooks
-\RequirePackage{bophook}
 
 % Section formatting
 \RequirePackage{sectsty}
