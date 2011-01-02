@@ -413,23 +413,21 @@
   \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em} %
   \begingroup %
     \setlength\@tempdima{#1}%
-    \@tempdimb=\linewidth%
-    \advance\@tempdimb by-1pt%
     \def\sides{%
-      \hbox to\@tempdimb {%
-        \vrule height \@tempdima width \elementlinewidth %
+      \hbox to\linewidth {%
+        \vrule depth 0pt height \@tempdima width \elementlinewidth %
         \hfill%
-        \vrule width \elementlinewidth%
+        \vrule depth 0pt width \elementlinewidth%
       }%
     }%
     \offinterlineskip %
-    \hrule width \@tempdimb height \elementlinewidth %
+    \hrule depth 0pt width \linewidth height \elementlinewidth %
     \sides %
     \kern-0.5\@tempdima %
     \cleaders\sides\vfill %
     \kern-0.5\@tempdima %
     \sides %
-    \hrule width \@tempdimb height \elementlinewidth %
+    \hrule depth 0pt width \linewidth height \elementlinewidth %
   \endgroup %
   \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em} %
 }
@@ -449,7 +447,6 @@
  \noindent\protect\colorbox{sectionbgcolor}{%
    \@tempdima=\hsize
    \advance\@tempdima by-2\fboxsep
-   \advance\@tempdima by-2\fboxrule
    \protect\parbox{\@tempdima}{%
      \smallskip
      \raggedright % extra commands here
