@@ -410,7 +410,7 @@
   \question{#2}%
   \immediate\write\sdapsoutfile{QObject-Text=\thesubsection. #2} %
   \immediate\write\sdapsoutfile{Box=Textbox} %
-  \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em} %
+  \vspace{-\lineskip}%
   \begingroup %
     \setlength\@tempdima{#1}%
     \def\sides{%
@@ -429,7 +429,7 @@
     \sides %
     \hrule depth 0pt width \linewidth height \elementlinewidth %
   \endgroup %
-  \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em} %
+  \vspace{\baselineskip}%
 }
 
 %\providecommand*{\textbox}[2]{%
