@@ -148,7 +148,7 @@
       \begin{scope}[line width=\elementlinewidth, line join=miter]%
         \begin{scope}[shift={($(current page.north west) + (10mm, -12mm)$)}]%
           \draw (0,-\edgelen) -- (0, 0) -- (\edgelen,0);%
-          \begin{scope}[shift={(0.5\elementlinewidth,-0.5\elementlinewidth)}]%
+          \begin{scope}%
             \ifodd \thepage%
               \draw (3mm, -3mm) rectangle +(\boxsize,-\boxsize);%
             \else%
@@ -158,13 +158,13 @@
         \end{scope}%
         \begin{scope}[shift={($(current page.north east) + (-10mm, -12mm)$)}]%
           \draw (0,-\edgelen) -- (0,0) -- (-\edgelen,0);%
-          \begin{scope}[shift={(-0.5\elementlinewidth,-0.5\elementlinewidth)}]%
+          \begin{scope}%
             \fill (-3mm, -3mm) rectangle +(-\boxsize,-\boxsize);%
           \end{scope}%
         \end{scope}%
         \begin{scope}[shift={($(current page.south west) + (10mm, 12mm)$)}]%
           \draw (0,\edgelen) -- (0, 0) -- (\edgelen,0);%
-          \begin{scope}[shift={(0.5\elementlinewidth,0.5\elementlinewidth)}]%
+          \begin{scope}%
             \ifodd \thepage%
               \fill (3mm, 3mm) rectangle +(\boxsize,\boxsize);%
             \else%
@@ -174,7 +174,7 @@
         \end{scope}%
         \begin{scope}[shift={($(current page.south east) + (-10mm, 12mm)$)}]%
           \draw (0,\edgelen) -- (0mm, 0mm) -- (-\edgelen,0);%
-          \begin{scope}[shift={(-0.5\elementlinewidth,0.5\elementlinewidth)}]%
+          \begin{scope}%
             \ifodd \thepage%
               \fill (-3mm, 3mm) rectangle +(-\boxsize,\boxsize);%
             \else%
@@ -193,7 +193,7 @@
       \else%
         % questionaire-id
         \begingroup
-          \begin{scope}[shift={(current page.north west)}]%
+          \begin{scope}[line width=\elementlinewidth, shift={(current page.north west)}]%
             \begin{scope}[shift={($(\questionaireidmsbx, -\questionaireidmsby) + (0, -\codeboxheight)$)}]%
               \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
               \@tempcnta=\value{questionaireid}%
