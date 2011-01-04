@@ -148,39 +148,31 @@
       \begin{scope}[line width=\elementlinewidth, line join=miter]%
         \begin{scope}[shift={($(current page.north west) + (10mm, -12mm)$)}]%
           \draw (0,-\edgelen) -- (0, 0) -- (\edgelen,0);%
-          \begin{scope}%
-            \ifodd \thepage%
-              \draw (3mm, -3mm) rectangle +(\boxsize,-\boxsize);%
-            \else%
-              \fill (3mm, -3mm) rectangle +(\boxsize,-\boxsize);%
-            \fi%
-          \end{scope}%
+          \ifodd \thepage%
+            \draw (3mm, -3mm) rectangle +(\boxsize,-\boxsize);%
+          \else%
+            \fill (3mm, -3mm) rectangle +(\boxsize,-\boxsize);%
+          \fi%
         \end{scope}%
         \begin{scope}[shift={($(current page.north east) + (-10mm, -12mm)$)}]%
           \draw (0,-\edgelen) -- (0,0) -- (-\edgelen,0);%
-          \begin{scope}%
-            \fill (-3mm, -3mm) rectangle +(-\boxsize,-\boxsize);%
-          \end{scope}%
+          \fill (-3mm, -3mm) rectangle +(-\boxsize,-\boxsize);%
         \end{scope}%
         \begin{scope}[shift={($(current page.south west) + (10mm, 12mm)$)}]%
           \draw (0,\edgelen) -- (0, 0) -- (\edgelen,0);%
-          \begin{scope}%
-            \ifodd \thepage%
-              \fill (3mm, 3mm) rectangle +(\boxsize,\boxsize);%
-            \else%
-              \draw (3mm, 3mm) rectangle +(\boxsize,\boxsize);%
-            \fi%
-          \end{scope}%
+          \ifodd \thepage%
+            \fill (3mm, 3mm) rectangle +(\boxsize,\boxsize);%
+          \else%
+            \draw (3mm, 3mm) rectangle +(\boxsize,\boxsize);%
+          \fi%
         \end{scope}%
         \begin{scope}[shift={($(current page.south east) + (-10mm, 12mm)$)}]%
           \draw (0,\edgelen) -- (0mm, 0mm) -- (-\edgelen,0);%
-          \begin{scope}%
-            \ifodd \thepage%
-              \fill (-3mm, 3mm) rectangle +(-\boxsize,\boxsize);%
-            \else%
-              \draw (-3mm, 3mm) rectangle +(-\boxsize,\boxsize);%
-            \fi%
-          \end{scope}%
+          \ifodd \thepage%
+            \fill (-3mm, 3mm) rectangle +(-\boxsize,\boxsize);%
+          \else%
+            \draw (-3mm, 3mm) rectangle +(-\boxsize,\boxsize);%
+          \fi%
         \end{scope}%
       \end{scope}%
     \fi
@@ -427,13 +419,13 @@
       }%
     }%
     \offinterlineskip %
-    \hrule depth 0pt width \linewidth height \elementlinewidth %
+    \hrule width \linewidth height \elementlinewidth %
     \sides %
     \kern-0.5\@tempdima %
     \cleaders\sides\vfill %
     \kern-0.5\@tempdima %
     \sides %
-    \hrule depth 0pt width \linewidth height \elementlinewidth %
+    \hrule width \linewidth height \elementlinewidth %
   \endgroup %
   \vspace{\baselineskip}%
 }
@@ -544,7 +536,7 @@
       \newdimen\@tempdimboxlower%
       \newdimen\@tempdimheight%
       \newdimen\@tempdimruleheight%
-      \raise0pt\hbox{#3~}%
+      #3~%
       %
       \immediate\write\sdapsoutfile{Answer-Choice=#3}%
       \immediate\write\sdapsoutfile{Box=Textbox}%
@@ -565,14 +557,13 @@
       \def\horizontallines{%
         \hbox{%
           \raise\@tempdimboxlower\vbox{%
-            \hrule depth 0em width \@tempdima height \elementlinewidth %
+            \hrule width \@tempdima height \elementlinewidth %
             \vspace \@tempdimheight%
-            \hrule depth 0pt height \elementlinewidth%
+            \hrule height \elementlinewidth%
             \vspace\smallskipamount%
           }%
         }%
       }%
-      \offinterlineskip%
       \vrule depth -\@tempdimlower width \elementlinewidth height \@tempdimruleheight %
       \horizontallines%
       \kern-0.5\@tempdima%
