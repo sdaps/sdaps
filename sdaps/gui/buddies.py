@@ -212,27 +212,27 @@ class Textbox (Box) :
 
 	def move_edge (self, side, x, y) :
 		if side == _LEFT:
-			x = max(x, defs.corner_mark_x)
+			x = max(x, defs.corner_mark_left)
 			new_width = max(MIN_FREETEXT_SIZE, self.obj.data.width + self.obj.data.x - x)
 			x = self.obj.data.x + (self.obj.data.width - new_width)
 
 			self.obj.data.width = new_width
 			self.obj.data.x = x
 		elif side == _RIGHT:
-			x = min(x, defs.corner_mark_x + defs.corner_mark_width)
+			x = min(x, self.obj.question.questionnaire.survey.defs.paper_width - defs.corner_mark_right)
 			new_width = max(MIN_FREETEXT_SIZE, x - self.obj.data.x)
 			new_width = min(new_width, self.obj.data.x + self.obj.data.width)
 
 			self.obj.data.width = new_width
 		elif side == _TOP:
-			y = max(y, defs.corner_mark_y)
+			y = max(y, defs.corner_mark_top)
 			new_height = max(MIN_FREETEXT_SIZE, self.obj.data.height + self.obj.data.y - y)
 			new_y = self.obj.data.y + (self.obj.data.height - new_height)
 
 			self.obj.data.height = new_height
 			self.obj.data.y = new_y
 		elif side == _BOTTOM:
-			y = min(y, defs.corner_mark_y + defs.corner_mark_height)
+			y = min(y, self.obj.question.questionnaire.survey.defs.paper_height - defs.corner_mark_bottom)
 			new_height = max(MIN_FREETEXT_SIZE, y - self.obj.data.y)
 
 			self.obj.data.height = new_height
