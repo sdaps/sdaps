@@ -529,6 +529,7 @@
     \checkbox~#2%
   }
   \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%
+    \setcounter{choiceitems}{1}%
     \\
   }{%
     &
@@ -582,6 +583,7 @@
     \endgroup%
   }%
   \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%
+    \setcounter{choiceitems}{1}%
     \\%
   }{%
     &%
