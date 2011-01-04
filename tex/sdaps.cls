@@ -347,13 +347,20 @@
 \definecolor{sectionbgcolor}{gray}{0.8}
 \definecolor{sectionfgcolor}{gray}{0.0}
 
+\long\def \protectedimmediatewrite#1#2{%
+  \begingroup
+    \let\protect\noexpand%
+    \immediate\write#1{#2}%
+  \endgroup
+}
+
 
 %-------------------------------------------------------------------------------
 %                style commands definitions
 %-------------------------------------------------------------------------------
 % symbols used 
 \providecommand{\checkbox}{%
-  \immediate\write\sdapsoutfile{Box=Checkbox}%
+  \protectedimmediatewrite\sdapsoutfile{Box=Checkbox}%
   \tikz[baseline=0.5mm]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
   }%
@@ -406,8 +413,8 @@
 \providecommand{\textbox}[2]{%
   % Both baselineskip and lineskip?
   \question{#2}%
-  \immediate\write\sdapsoutfile{QObject-Text=\thesubsection. #2} %
-  \immediate\write\sdapsoutfile{Box=Textbox} %
+  \protectedimmediatewrite\sdapsoutfile{QObject-Text=\thesubsection. #2} %
+  \protectedimmediatewrite\sdapsoutfile{Box=Textbox} %
   \vspace{-\lineskip}%
   \begingroup %
     \setlength\@tempdima{#1}%
@@ -456,24 +463,24 @@
 \let\origsection\section
 \renewcommand{\section}[1]{%
   \origsection{#1}
-  \immediate\write\sdapsoutfile{}
-  \immediate\write\sdapsoutfile{QObject-Head=\thesection. #1}
+  \protectedimmediatewrite\sdapsoutfile{}
+  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\thesection. #1}
 }
 
 
 \newenvironment{markgroup}[1]{%
   \offinterlineskip%
   \question{#1}%
-  \immediate\write\sdapsoutfile{QObject-Head=\thesubsection. #1}
+  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\thesubsection. #1}
   \tabularx{\linewidth}{Xr*{5}{c}l}
 }{%
   \endtabularx%
 }
 
 \providecommand*{\markline}[3]{%
-  \immediate\write\sdapsoutfile{QObject-Mark=#1}%
-  \immediate\write\sdapsoutfile{Answer-Mark=#2}%
-  \immediate\write\sdapsoutfile{Answer-Mark=#3}%
+  \protectedimmediatewrite\sdapsoutfile{QObject-Mark=#1}%
+  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
+  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
   #1 & #2 & \checkbox & \checkbox & \checkbox & \checkbox & \checkbox & #3\\%
 }
 
@@ -481,9 +488,9 @@
 
 \providecommand*{\singlemark}[3]{%
   \question{#1}%
-  \immediate\write\sdapsoutfile{QObject-Mark=\thesubsection. #1}%
-  \immediate\write\sdapsoutfile{Answer-Mark=#2}%
-  \immediate\write\sdapsoutfile{Answer-Mark=#3}%
+  \protectedimmediatewrite\sdapsoutfile{QObject-Mark=\thesubsection. #1}%
+  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
+  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
   %\offinterlineskip%
   \begin{tabularx}{\linewidth}{Y*{5}{c}X}%
     #2 & \checkbox & \checkbox & \checkbox & \checkbox & \checkbox & #3%
@@ -497,14 +504,14 @@
   \setcounter{choiceitems}{1}%
   \setcounter{maxchoiceitems}{#1}%
   \question{#2}%
-  \immediate\write\sdapsoutfile{QObject-Choice=\thesubsection. #2}%
+  \protectedimmediatewrite\sdapsoutfile{QObject-Choice=\thesubsection. #2}%
   \tabularx{\linewidth}{*{\themaxchoiceitems}{X}}%
 }{%
   \endtabularx%
 }
 
 \providecommand*{\choiceitem}[1]{%
-  \immediate\write\sdapsoutfile{Answer-Choice=#1}%
+  \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#1}%
   \ifthenelse{\thechoiceitems=\themaxchoiceitems}{%
     \setcounter{choiceitems}{1}%
     \checkbox~#1 \\%
@@ -517,7 +524,7 @@
 \providecommand*{\choicemulticolitem}[2]{%
   \multicolumn{#1}{l}{%
     \addtocounter{choiceitems}{#1}%
-    \immediate\write\sdapsoutfile{Answer-Choice=#2}%
+    \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#2}%
     \checkbox~#2%
   }
   \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%
@@ -538,8 +545,8 @@
       \newdimen\@tempdimruleheight%
       #3~%
       %
-      \immediate\write\sdapsoutfile{Answer-Choice=#3}%
-      \immediate\write\sdapsoutfile{Box=Textbox}%
+      \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#3}%
+      \protectedimmediatewrite\sdapsoutfile{Box=Textbox}%
       \setlength\@tempdimheight{#1}%
       %
       \setlength\@tempdimlower{0pt}%
@@ -594,12 +601,12 @@
 \AtBeginDocument{%
   \newwrite\sdapsoutfile%
   \immediate\openout\sdapsoutfile=\jobname.sdaps%
-  \immediate\write\sdapsoutfile{Author=\@author}
-  \immediate\write\sdapsoutfile{Title=\@title}
+  \protectedimmediatewrite\sdapsoutfile{Author=\@author}
+  \protectedimmediatewrite\sdapsoutfile{Title=\@title}
 }
 
 \AtEndDocument{%
-  \immediate\write\sdapsoutfile{}
+  \protectedimmediatewrite\sdapsoutfile{}
   \immediate\closeout\sdapsoutfile%
 }
 
