@@ -1,5 +1,6 @@
 %% start of file `sdaps.cls'.
-%% Copyright 2010 Ferdinand Schwenk (ferdisdot@gmail.com).
+%% Copyright 2010-2011 Ferdinand Schwenk (ferdisdot@gmail.com).
+%% Copyright 2011 Benjamin Berg (benjamin@sipsolutions.net).
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License version 1.3c,
@@ -10,7 +11,7 @@
 % identification
 %-------------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{sdaps}[2010/11/08%
+\ProvidesClass{sdaps}[2011/01/04%
                       v0.1 Class for composing questionairs for SDAPS]
 
 
