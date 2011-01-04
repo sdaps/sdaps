@@ -167,12 +167,15 @@ def parse (questionnaire_pdf) :
 			if y == 0:
 				x += x_old
 				y += y_old
-			width = height = float(match.group('size'))
 			line_width = float(match.group('line_width'))
+			width = height = float(match.group('size')) + line_width
 			if not (9.9213 < width <= 10):
 				continue
 			if line_width != 1.0:
 				continue
+
+			x -= line_width / 2.0
+			y -= line_width / 2.0
 
 			box = model.questionnaire.Checkbox()
 			box.setup.setup(
@@ -186,8 +189,8 @@ def parse (questionnaire_pdf) :
 			)
 			boxes.append(box)
 
-			x_old = x
-			y_old = y
+			x_old = x + line_width / 2.0
+			y_old = y + line_width / 2.0
 
 		matches = textfield_vert_regexp.finditer(contents)
 		for match in matches:
@@ -243,8 +246,6 @@ def parse (questionnaire_pdf) :
 			y = page_height - float(match.group('y_bottom')) - height
 			y = y + line_width / 2.0
 
-			print x/mm, y/mm, width/mm, height/mm
-
 			# Sanity checks
 			if line_width != 1.0:
 				continue
@@ -278,9 +279,21 @@ def parse (questionnaire_pdf) :
 			boxes.append(box)
 
 	# Sort by order of occurance
-	boxes.sort(key=lambda box: box.x)
-	boxes.sort(key=lambda box: box.y)
-	boxes.sort(key=lambda box: box.page_number)
+	def sort_cmd(a, b):
+		# does the height overlap?
+		if a.page_number != b.page_number:
+			return a.page_number - b.page_number
+		if a.y > b.y and a.y < b.y + b.height or \
+		   b.y > a.y and b.y < a.y + a.height:
+			if a.x - b.x > 0:
+				return 1
+			else:
+				return -1
+		if a.y - b.y > 0:
+			return 1
+		else:
+			return -1
+	boxes.sort(sort_cmd)
 
 	return boxes, page_count
 

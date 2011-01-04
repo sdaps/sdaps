@@ -309,7 +309,7 @@
 \setlength{\elementlinewidth}{1.0bp}
 \newlength{\boxsize}
 \setlength{\boxsize}{3.5mm}
-%\addtolength{\boxsize}{1pt}
+\addtolength{\boxsize}{-\elementlinewidth}
 
 \newcounter{codeboxlength}
 \setcounter{codeboxlength}{16}
