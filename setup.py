@@ -20,6 +20,9 @@ def pkgconfig(*packages, **kw):
         value = token[2:]
         if type == 'define_macros':
             value = tuple(value.split('=', 1))
+        if type is None:
+           value = token
+           type = 'extra_compile_args'
         kw.setdefault(type, []).append(value)
     return kw
 
