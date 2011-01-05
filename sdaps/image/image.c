@@ -72,7 +72,9 @@ get_a1_from_tiff (char *filename, gboolean rotated)
 
 	g_free(t_pixels);
 	TIFFClose(tiff);
-	
+
+	cairo_surface_mark_dirty(surface);
+
 	return surface;
 }
 
