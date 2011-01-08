@@ -19,7 +19,11 @@
 import xml.sax
 import zipfile
 import re
-from latexmap import mapping
+try:
+	from latexmap import mapping
+except ImportError:
+	mapping = {}
+	print >>sys.stderr, _(u'The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).')
 
 from sdaps import model
 
