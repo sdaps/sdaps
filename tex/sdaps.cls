@@ -1,6 +1,7 @@
 %% start of file `sdaps.cls'.
 %% Copyright 2010-2011 Ferdinand Schwenk (ferdisdot@gmail.com).
 %% Copyright 2011 Benjamin Berg (benjamin@sipsolutions.net).
+%% Copyright 2010 Tobias Simon <tobsimon@googlemail.com>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License version 1.3c,
