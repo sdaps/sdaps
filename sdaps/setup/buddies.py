@@ -18,6 +18,8 @@
 
 from sdaps import model
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
 
 class QObject (model.buddy.Buddy) :
 	

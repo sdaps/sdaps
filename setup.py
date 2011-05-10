@@ -48,7 +48,8 @@ analyse the scanned data, and create a report.
                 'sdaps.stamp',
                 'sdaps.report',
                 'sdaps.setup.pdftools',
-                'sdaps.setup'
+                'sdaps.setup',
+                'sdaps.setuptex'
       ],
       package_dir={'sdaps.gui': 'sdaps/gui'},
       scripts=[
