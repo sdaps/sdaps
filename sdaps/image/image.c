@@ -551,7 +551,7 @@ calculate_matrix(cairo_surface_t *surface,
 {
 	gint width, height;
 	gint line_width = 5; /* XXX: Guestimation! 5? */
-	gint line_length = 230; /* XXX: Guestimation! */
+	gint line_length = 215; /* XXX: Guestimation! */
 	gdouble x_topleft, y_topleft;
 	gdouble x_topright, y_topright;
 	gdouble x_bottomleft, y_bottomleft;
