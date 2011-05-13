@@ -37,6 +37,7 @@ Using SDAPS
 ===========
 
 Please run sdaps without arguments after installing it for a list of commands.
+Also check the website http://sdaps.sipsolutions.net for some examples.
 
 Quality of the recognition
 ==========================
@@ -48,7 +49,7 @@ That said, this is based on results that the authors of this software had.
 To achive these, we had our scanner set configured in a way that meant that
 pretty much all pens or pencils turned out nice black. If you want to use
 this software it is likely that you need to have a look at your scanners
-option to find usable ones, and to also adjust the magic values that SDAPS
+options to find usable ones, and to also adjust the magic values that SDAPS
 uses.
 For this a tool called "boxgallery" is provided, which will output a sorted
 list of all checkboxes. With this the threshold that is needed can be

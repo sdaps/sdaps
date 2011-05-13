@@ -1,0 +1,54 @@
+What to do when things go wrong
+===============================
+
+Matrix could not be recognized
+------------------------------
+
+This means SDAPS could not find all four edge markers.
+
+Please have a look at the following:
+ * Check that the scan is OK.
+   * Does it have black/white lines? This can happen in the scanner is not
+     clean.
+   * Check that the resolution is set to 300dpi
+   * Check there is no black line at one side
+   * Check that the line is nice and black in the image. If not you may be
+     able to change LINE_COVERAGE in image.c to a lower value.
+ * Measure the length and width of the corner marks in pixel. Try adjusting
+   the "line_length" and "line_width" variables (image.c, calculate_matrix
+   function).
+   The most likely change is to lower line_length.
+
+
+Recognition quality is bad
+--------------------------
+
+Load a lot of images into the project, then run
+  $ sdaps project_dir boxgallery
+Now look at the PDF file and find threshold values that work well for you.
+The values need to be adjusted in recognize/buddies.py, where there is
+something like:
+ 0.32 < coverage < 0.55
+Which is the minimum and maximum value for a checked box.
+
+
+Text boxes are recognized even though they are empty
+----------------------------------------------------
+
+There are different ways that this can happen. One thing that I have seen
+happening is that the tolerance that SDAPS uses is not large enough, and it
+thinks that the black frame around the box is actually handwriting. You can
+adjust the padding to work around this. This can be done in
+recognize/buddies.py in the Textbox class. Adjust the "padding" in the
+recognize function.
+
+If black dots, eg. from a cross on the other side of the paper are detect
+too often, you can try to adjust test_width/test_height and coverage later
+in the function.
+
+If the above does not help
+==========================
+
+Mail the authors :-)
+It may be neccessary to have all the data to help. So if you can try to
+always provide examples where things fail.
