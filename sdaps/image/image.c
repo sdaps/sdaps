@@ -20,6 +20,7 @@
 #include <tiffio.h>
 #include "image.h"
 #include <string.h>
+#include <math.h>
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
 #define SET_PIXEL(_pixels, _stride, _x, _y, _value) *(guint32*)((char*)(_pixels) + (_stride) * (_y) + (_x) / 32 * 4) = (*(guint32*)((char*)(_pixels) + (_stride) * (_y) + (_x) / 32 * 4) & (0xffffffff ^ (1 << (31 - (_x) % 32)))) | ((!!(_value)) << (31 - (_x) % 32))
@@ -180,25 +181,26 @@ follow_line(cairo_surface_t *surface,
 	gint x, y;
 	gint start_x, start_y;
 	gint end_x, end_y;
-	gint length = 1;
-	
-	x = x_start;
-	y = y_start;
-	
+	double length;
+
+	x = x_start + x_dir*2;
+	y = y_start + y_dir*2;
+
 	start_x = 100000; /* MAY NOT OVERFLOW WHEN ADDED UP! */
 	start_y = 100000;
 	end_x = 0;
 	end_y = 0;
-	
+
 	found_segment = TRUE;
 
 	/* go into the positive direction */
 	while (found_segment) {
 		gint offset;
 		gint coverage = 0;
+
 		x += x_dir;
 		y += y_dir;
-		
+
 		found_segment = FALSE;
 		for (offset = -5; (offset <= 5) && !found_segment; offset++) {
 			gint old_coverage = coverage;
@@ -211,8 +213,6 @@ follow_line(cairo_surface_t *surface,
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
 				gint p_x, p_y;
 				found_segment = TRUE;
-
-				length += 1;
 
 				p_x = x + offset * y_dir;
 				p_y = y + offset * x_dir;
@@ -227,24 +227,28 @@ follow_line(cairo_surface_t *surface,
 				}
 			}
 		}
+
 		x += offset * y_dir;
 		y += offset * x_dir;
-		
+
+		length = sqrt((start_x - end_x)*(start_x - end_x) + (start_y - end_y)*(start_y - end_y));
 		if (length >= line_max_length)
 			goto FOLLOW_LINE_BAIL;
 	}
 	
-	x = x_start;
-	y = y_start;
+	x = x_start - x_dir*2;
+	y = y_start - y_dir*2;
+
 	found_segment = TRUE;
 
 	/* go into the negative direction */
 	while (found_segment) {
 		gint offset;
 		gint coverage = 0;
+
 		x -= x_dir;
 		y -= y_dir;
-		
+
 		found_segment = FALSE;
 		for (offset = -5; (offset <= 5) && !found_segment; offset++) {
 			gint old_coverage = coverage;
@@ -257,8 +261,6 @@ follow_line(cairo_surface_t *surface,
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
 				gint p_x, p_y;
 				found_segment = TRUE;
-
-				length += 1;
 
 				p_x = x + offset * y_dir;
 				p_y = y + offset * x_dir;
@@ -273,15 +275,17 @@ follow_line(cairo_surface_t *surface,
 				}
 			}
 		}
+
 		x += offset * y_dir;
 		y += offset * x_dir;
-		
+
+		length = sqrt((start_x - end_x)*(start_x - end_x) + (start_y - end_y)*(start_y - end_y));
 		if (length >= line_max_length)
 			goto FOLLOW_LINE_BAIL;
 	}
 
 	found_line = length >= line_length;
-	
+
 	if (found_line) {
 		gint offset;
 		gdouble w1_x, w1_y;
@@ -352,9 +356,9 @@ follow_line(cairo_surface_t *surface,
 		*x2 = w2_x - (w1_x - w2_x) / 2.0;
 		*y2 = w2_y - (w1_y - w2_y) / 2.0;
 	}
-	
+
 FOLLOW_LINE_BAIL:
-	
+
 	return found_line;
 }
 
@@ -366,7 +370,7 @@ calc_intersection(gdouble  l1a_x,    gdouble l1a_y,
                   gdouble *result_x, gdouble *result_y)
 {
 	gdouble u;
-	
+
 	u = ((l2b_x - l2a_x)*(l1a_y - l2a_y) - (l2b_y - l2a_y)*(l1a_x - l2a_x)) / ((l2b_y - l2a_y)*(l1b_x - l1a_x) - (l2b_x - l2a_x)*(l1b_y - l1a_y));
 	*result_x = l1a_x + u*(l1b_x - l1a_x);
 	*result_y = l1a_y + u*(l1b_y - l1a_y);
@@ -388,7 +392,7 @@ test_corner_marker(cairo_surface_t *surface,
 	gboolean h_found_line;
 	gdouble v_x1, v_x2, v_y1, v_y2;
 	gboolean v_found_line;
-	
+
 	h_found_line = follow_line(surface, x, y, x_dir, 0,
 	                           line_width, line_length, line_max_length,
 	                           &h_x1, &h_y1, &h_x2, &h_y2);
@@ -401,23 +405,34 @@ test_corner_marker(cairo_surface_t *surface,
 		return FALSE;
 
 	if (!h_found_line) {
-		h_found_line = follow_line(surface, v_x2, v_y2, x_dir, 0,
-		                           line_width, line_length, line_max_length,
-		                           &h_x1, &h_y1, &h_x2, &h_y2);
+		if (y_dir < 0)
+			h_found_line = follow_line(surface, v_x1, v_y1, x_dir, 0,
+			                           line_width, line_length, line_max_length,
+			                           &h_x1, &h_y1, &h_x2, &h_y2);
+		else
+			h_found_line = follow_line(surface, v_x2, v_y2, x_dir, 0,
+			                           line_width, line_length, line_max_length,
+			                           &h_x1, &h_y1, &h_x2, &h_y2);
 	}
 
 	if (!v_found_line) {
-		v_found_line = follow_line(surface, h_x2, h_y2, 0, y_dir,
-		                           line_width, line_length, line_max_length,
-		                           &v_x1, &v_y1, &v_x2, &v_y2);
+		if (x_dir < 0)
+			v_found_line = follow_line(surface, h_x1, h_y1, 0, y_dir,
+			                           line_width, line_length, line_max_length,
+			                           &v_x1, &v_y1, &v_x2, &v_y2);
+		else
+			v_found_line = follow_line(surface, h_x2, h_y2, 0, y_dir,
+			                           line_width, line_length, line_max_length,
+			                           &v_x1, &v_y1, &v_x2, &v_y2);
 	}
-	
+
 	if (!v_found_line || !h_found_line)
 		return FALSE;
 
 	calc_intersection(h_x1, h_y1, h_x2, h_y2,
 	                  v_x1, v_y1, v_x2, v_y2,
 	                  x_result, y_result);
+
 	return TRUE;
 }
 
@@ -465,7 +480,7 @@ find_corner_marker(cairo_surface_t *surface,
 			                             line_width);
 			
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
-				if (test_corner_marker(surface, x, y, x_dir, y_dir,
+				if (test_corner_marker(surface, x, y, -x_dir, -y_dir,
 				                       line_width, line_length, line_max_length,
 				                       x_result, y_result))
 					return TRUE;
@@ -489,7 +504,7 @@ find_corner_marker(cairo_surface_t *surface,
 			                             line_width);
 			
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
-				if (test_corner_marker(surface, x, y, x_dir, y_dir,
+				if (test_corner_marker(surface, x, y, -x_dir, -y_dir,
 				                       line_width, line_length, line_max_length,
 				                       x_result, y_result))
 					return TRUE;
