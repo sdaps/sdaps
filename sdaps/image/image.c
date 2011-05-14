@@ -158,6 +158,7 @@ count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint hei
 	return black_pixel;	
 }
 
+#define LINE_WIDTH 5
 #define LINE_COVERAGE 0.65
 
 static gboolean
@@ -545,7 +546,7 @@ calculate_matrix(cairo_surface_t *surface,
                           gdouble mm_height)
 {
 	gint width, height;
-	gint line_width = 5; /* XXX: Guestimation! 5? */
+	gint line_width = LINE_WIDTH; /* XXX: Guestimation! 5? */
 	gint line_length = 215; /* XXX: Guestimation! */
 	gint line_max_length = 250; /* XXX: Guestimation! */
 	gdouble x_topleft, y_topleft;
@@ -618,7 +619,7 @@ calculate_correction_matrix(cairo_surface_t  *surface,
 	cairo_matrix_t inverse;
 	cairo_matrix_t *result = NULL;
 	gint test_dist = 10;
-	gint line_width = 5;
+	gint line_width = LINE_WIDTH;
 	gint x_offset, y_offset;
 	gint x_cov;
 	gint y_cov;
@@ -685,6 +686,83 @@ calculate_correction_matrix(cairo_surface_t  *surface,
 	result->y0 = tmp_y - mm_y;
 	
 	return result;
+}
+
+gboolean
+find_box_corners(cairo_surface_t  *surface,
+                 cairo_matrix_t   *matrix,
+                 gdouble           mm_x,
+                 gdouble           mm_y,
+                 gdouble           mm_width,
+                 gdouble           mm_height,
+                 gdouble          *mm_x1,
+                 gdouble          *mm_y1,
+                 gdouble          *mm_x2,
+                 gdouble          *mm_y2,
+                 gdouble          *mm_x3,
+                 gdouble          *mm_y3,
+                 gdouble          *mm_x4,
+                 gdouble          *mm_y4)
+{
+	cairo_matrix_t inverse;
+	gdouble px_x1, px_y1, px_x2, px_y2, px_x3, px_y3, px_x4, px_y4;
+	gdouble px_width, px_height;
+	gint line_width = LINE_WIDTH;
+	gint line_length;
+	gint line_max_length;
+
+	inverse = *matrix;
+	cairo_matrix_invert(&inverse);
+
+	/* Assume that the image is loaded rotated and pixel with/height is positive. */
+	px_x1 = mm_x;
+	px_y1 = mm_y;
+	px_x2 = mm_x + mm_width;
+	px_y2 = mm_y;
+	px_x3 = mm_x + mm_width;
+	px_y3 = mm_y + mm_height;
+	px_x4 = mm_x;
+	px_y4 = mm_y + mm_height;
+
+	px_width = mm_width;
+	px_height = mm_height;
+
+	cairo_matrix_transform_point(matrix, &px_x1, &px_y1);
+	cairo_matrix_transform_point(matrix, &px_x2, &px_y2);
+	cairo_matrix_transform_point(matrix, &px_x3, &px_y3);
+	cairo_matrix_transform_point(matrix, &px_x4, &px_y4);
+
+	cairo_matrix_transform_distance(matrix, &px_width, &px_height);
+
+	line_length = MIN(10*line_width, MIN(px_width, px_height));
+	line_max_length = MAX(10*line_width, MAX(px_width, px_height)) + 5*line_width;
+	/* We have the corner pixel positions, now try to find them. */
+
+	if (!find_corner_marker(surface, px_x1 - 5*line_width, px_y1 - 5*line_width, 1, 1, line_width, line_length, line_max_length, &px_x1, &px_y1))
+		return FALSE;
+	if (!find_corner_marker(surface, px_x2 + 5*line_width, px_y2 - 5*line_width, -1, 1, line_width, line_length, line_max_length, &px_x2, &px_y2))
+		return FALSE;
+	if (!find_corner_marker(surface, px_x3 + 5*line_width, px_y3 + 5*line_width, -1, -1, line_width, line_length, line_max_length, &px_x3, &px_y3))
+		return FALSE;
+	if (!find_corner_marker(surface, px_x4 - 5*line_width, px_y4 + 5*line_width, 1, -1, line_width, line_length, line_max_length, &px_x4, &px_y4))
+		return FALSE;
+
+	/* Found the corners, convert them back and return. */
+	*mm_x1 = px_x1;
+	*mm_y1 = px_y1;
+	*mm_x2 = px_x2;
+	*mm_y2 = px_y2;
+	*mm_x3 = px_x3;
+	*mm_y3 = px_y3;
+	*mm_x4 = px_x4;
+	*mm_y4 = px_y4;
+
+	cairo_matrix_transform_point(&inverse, mm_x1, mm_y1);
+	cairo_matrix_transform_point(&inverse, mm_x2, mm_y2);
+	cairo_matrix_transform_point(&inverse, mm_x3, mm_y3);
+	cairo_matrix_transform_point(&inverse, mm_x4, mm_y4);
+
+	return TRUE;
 }
 
 float

@@ -12,13 +12,8 @@ Please have a look at the following:
      clean.
    * Check that the resolution is set to 300dpi
    * Check there is no black line at one side
-   * Check that the line is nice and black in the image. If not you may be
-     able to change LINE_COVERAGE in image.c to a lower value.
- * Measure the length and width of the corner marks in pixel. Try adjusting
-   the "line_length" and "line_width" variables (image.c, calculate_matrix
-   function).
-   The most likely change is to lower line_length.
-
+If this does not help, please send a mail to see if some other constants
+should be adjusted.
 
 Recognition quality is bad
 --------------------------
@@ -39,8 +34,10 @@ There are different ways that this can happen. One thing that I have seen
 happening is that the tolerance that SDAPS uses is not large enough, and it
 thinks that the black frame around the box is actually handwriting. You can
 adjust the padding to work around this. This can be done in
-recognize/buddies.py in the Textbox class. Adjust the "padding" in the
+recognize/buddies.py in the Textbox class. Adjust the "scan_padding" in the
 recognize function.
+
+If you need to adjust scan_padding, please drop us a line!
 
 If black dots, eg. from a cross on the other side of the paper are detect
 too often, you can try to adjust test_width/test_height and coverage later

@@ -24,6 +24,7 @@
 static PyObject *wrap_get_a1_from_tiff(PyObject *self, PyObject *args);
 static PyObject *wrap_calculate_matrix(PyObject *self, PyObject *args);
 static PyObject *wrap_calculate_correction_matrix(PyObject *self, PyObject *args);
+static PyObject *wrap_find_box_corners(PyObject *self, PyObject *args);
 static PyObject *wrap_get_coverage(PyObject *self, PyObject *args);
 static PyObject *wrap_get_pbm(PyObject *self, PyObject *args);
 
@@ -33,6 +34,7 @@ static PyMethodDef EvaluateMethods[] = {
 	{"get_a1_from_tiff",  wrap_get_a1_from_tiff, METH_VARARGS, "Creates a cairo A1 surface from a monochrome tiff file."},
 	{"calculate_matrix",  wrap_calculate_matrix, METH_VARARGS, "Calculates the transformation matrix transform the image into the survey coordinate system."},
 	{"calculate_correction_matrix",  wrap_calculate_correction_matrix, METH_VARARGS, "Calculates a corrected transformation matrix for the box at the given position (argument should be the bounding box)."},
+	{"find_box_corners",  wrap_find_box_corners, METH_VARARGS, "Tries to find the actuall corners of a box in the milimeter space."},
 	{"get_coverage",  wrap_get_coverage, METH_VARARGS, "Calculates the black coverage in the given area."},
 	{"get_pbm",  wrap_get_pbm, METH_VARARGS, "Returns a string that contains a binary PBM data representation of the cairo A1 surface."},
 	{NULL, NULL, 0, NULL} /* Sentinel */
@@ -118,6 +120,29 @@ wrap_calculate_correction_matrix(PyObject *self, PyObject *args)
 		return PycairoMatrix_FromMatrix(correction_matrix);
 	} else {
 		PyErr_SetString(PyExc_AssertionError, "Could not calculate the corrected matrix!");
+		return NULL;
+	}
+}
+
+static PyObject *
+wrap_find_box_corners(PyObject *self, PyObject *args)
+{
+	PycairoSurface *py_surface;
+	PycairoMatrix *py_matrix;
+	gdouble mm_x, mm_y, mm_width, mm_height;
+	gdouble mm_x1, mm_y1, mm_x2, mm_y2, mm_x3, mm_y3, mm_x4, mm_y4;
+	gboolean success;
+
+	if (!PyArg_ParseTuple(args, "O!O!dddd", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height))
+		return NULL;
+
+	success = find_box_corners(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height,
+	                           &mm_x1, &mm_y1, &mm_x2, &mm_y2, &mm_x3, &mm_y3, &mm_x4, &mm_y4);
+
+	if (success) {
+		return Py_BuildValue("(dd)(dd)(dd)(dd)", mm_x1, mm_y1, mm_x2, mm_y2, mm_x3, mm_y3, mm_x4, mm_y4);
+	} else {
+		PyErr_SetString(PyExc_AssertionError, "Could not find all the corners!");
 		return NULL;
 	}
 }

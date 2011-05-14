@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright (C) 2008, Christoph Simon <christoph.simon@gmx.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright (C) 2008,2011, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -128,8 +128,9 @@ class Image (model.buddy.Buddy) :
 				self.obj.sheet.survey_id
 			)
 			if not self.obj.sheet.survey_id == self.obj.sheet.survey.survey_id :
-				print _('%s: Wrong survey_id. Cancelling recognition of that image.') % self.obj.filename
-				raise RecognitionError
+				#print _('%s: Wrong survey_id. Cancelling recognition of that image.') % self.obj.filename
+				#raise RecognitionError
+				pass
 			self.obj.sheet.questionnaire_id = self.read_codebox(
 				defs.questionnaire_id_lsb_x,
 				defs.questionnaire_id_lsb_y,
@@ -177,6 +178,14 @@ class Image (model.buddy.Buddy) :
 
 	def correction_matrix(self, x, y, width, height):
 		return image.calculate_correction_matrix(
+			self.obj.surface.surface,
+			self.matrix,
+			x, y,
+			width, height
+		)
+
+	def find_box_corners(self, x, y, width, height):
+		return image.find_box_corners(
 			self.obj.surface.surface,
 			self.matrix,
 			x, y,
@@ -283,6 +292,91 @@ class Textbox (Box) :
 	obj_class = model.questionnaire.Textbox
 
 	def recognize (self) :
+		class Quadrilateral():
+			"""This class iterates through small box areas in a quadriliteral.
+			This is usefull because some scanners have trapezoidal distortions."""
+			# Assumes top left, top right, bottom right, bottom left
+			# corner.
+			def __init__(self, p0, p1, p2, p3):
+				self.x0 = p0[0]
+				self.y0 = p0[1]
+				self.x1 = p1[0]
+				self.y1 = p1[1]
+				self.x2 = p2[0]
+				self.y2 = p2[1]
+				self.x3 = p3[0]
+				self.y3 = p3[1]
+
+				# 0 -> 1
+				self.m0 = (self.y1 - self.y0) / (self.x1 - self.x0)
+				self.m1 = (self.x2 - self.x1) / (self.y2 - self.y1)
+				self.m2 = (self.y3 - self.y2) / (self.x3 - self.x2)
+				self.m3 = (self.x0 - self.x3) / (self.y0 - self.y3)
+
+				self.top = min(self.y0, self.y1)
+				self.bottom = max(self.y2, self.y3)
+				self.left = min(self.x0, self.x3)
+				self.right = max(self.x1, self.x2)
+
+			def iterate_bb(self, step_x, step_y, test_width, test_height, padding):
+				y = self.top
+				while y + test_height < self.bottom:
+					x = self.left
+					while x + test_width < self.right:
+						yield x, y
+						x += step_x
+
+					y += step_y
+
+			def iterate_outline(self, step_x, step_y, test_width, test_height, padding):
+				x = self.left
+				while x + test_width < self.right:
+					y = self.y0 + self.m0 * (x - self.x0)
+					yield x, y
+
+					y = self.y2 + self.m2 * (x - self.x2)
+					yield x, y
+
+					x += step_x
+
+				y = self.top
+				while y + test_width < self.bottom:
+					x = self.x1 + self.m1 * (y - self.y1)
+					yield x, y
+
+					x = self.x3 + self.m3 * (y - self.y3)
+					yield x, y
+
+					y += step_y
+
+
+
+			def iterate_all(self, step_x, step_y, test_width, test_height, padding):
+				for x, y in self.iterate_bb(step_x, step_y, test_width, test_height, padding):
+					yield x, y
+				for x, y in self.iterate_outline(step_x, step_y, test_width, test_height, padding):
+					yield x, y
+
+			def iterate(self, step_x, step_y, test_width, test_height, padding):
+				for x, y in self.iterate_bb(step_x, step_y, test_width, test_height, padding):
+					ly = self.y0 + self.m0 * (x - self.x0)
+					if not ly + padding < y:
+						continue
+
+					ly = self.y2 + self.m2 * (x - self.x2)
+					if not ly - padding > y + test_height:
+						continue
+
+					lx = self.x1 + self.m1 * (y - self.y1)
+					if not lx - padding > x + test_width:
+						continue
+
+					lx = self.x3 + self.m3 * (y - self.y3)
+					if not lx + padding < x:
+						continue
+
+					yield x, y
+
 		bbox = None
 		image = self.obj.sheet.images[self.obj.page_number - 1]
 
@@ -292,50 +386,45 @@ class Textbox (Box) :
 		height = self.obj.height
 
 		# Always test a 2x2 mm area, so that every pixel is tested 4 times ...
+		step_x = 1.0
+		step_y = 1.0
 		test_width = 2.0
 		test_height = 2.0
-		padding = 1.0
+		# extra_padding is always added to the box side at the end.
+		# It should be large enough so that the bounding box is visible
+		# if the user wrote outside the box
+		extra_padding = 0.5
+		scan_padding = 1.5
 
-		steps_x = int(width)
-		steps_y = int(height)
+		quad = Quadrilateral((x, y), (x + width, y), (x + width, y + height), (x, y + height))
+		try:
+			quad = Quadrilateral(*image.recognize.find_box_corners(x, y, width, height))
+			# Lower padding, as we found the corners and are therefore more acurate
+			scan_padding = 0.5
+		except AssertionError:
+			print "Did not find corners."
 
-		# Test the inner part, leaving out the edge around the box.
-		x_start = x + padding
-		y_start = y + padding
-
-		step_x = width / float(steps_x)
-		step_y = height / float(steps_y)
-
-		x_end = width + x_start - test_width - 2 * padding
-		y_end = height + y_start - test_width - 2 * padding
-
-		x = x_start
-		while x <= x_end:
-			y = y_start
-			while y <= y_end:
-				coverage = image.recognize.get_coverage(x, y, test_width, test_height)
-				if coverage > 0.06:
-					if not bbox:
-						bbox = [x, y, test_width, test_height]
-					else:
-						bbox_x = min(bbox[0], x)
-						bbox_y = min(bbox[1], y)
-						bbox[2] = max(bbox[0] + bbox[2], x + test_width) - bbox_x
-						bbox[3] = max(bbox[1] + bbox[3], y + test_height) - bbox_y
-						bbox[0] = bbox_x
-						bbox[1] = bbox_y
-
-				y += step_y
-			x += step_x
+		for x, y in quad.iterate(step_x, step_y, test_width, test_height, scan_padding):
+			coverage = image.recognize.get_coverage(x, y, test_width, test_height)
+			if coverage > 0.06:
+				if not bbox:
+					bbox = [x, y, test_width, test_height]
+				else:
+					bbox_x = min(bbox[0], x)
+					bbox_y = min(bbox[1], y)
+					bbox[2] = max(bbox[0] + bbox[2], x + test_width) - bbox_x
+					bbox[3] = max(bbox[1] + bbox[3], y + test_height) - bbox_y
+					bbox[0] = bbox_x
+					bbox[1] = bbox_y
 
 		if bbox and (bbox[2] > 7 or bbox[3] > 7) :
 			# Do not accept very small bounding boxes.
 			self.obj.data.state = True
 
-			self.obj.data.x = bbox[0] - padding
-			self.obj.data.y = bbox[1] - padding
-			self.obj.data.width = bbox[2] + 2*padding
-			self.obj.data.height = bbox[3] + 2*padding
+			self.obj.data.x = bbox[0] - (scan_padding + extra_padding)
+			self.obj.data.y = bbox[1] - (scan_padding + extra_padding)
+			self.obj.data.width = bbox[2] + 2*(scan_padding + extra_padding)
+			self.obj.data.height = bbox[3] + 2*(scan_padding + extra_padding)
 		else:
 			self.obj.data.state = False
 
