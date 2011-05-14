@@ -367,11 +367,59 @@ calc_intersection(gdouble  l1a_x,    gdouble l1a_y,
 {
 	gdouble u;
 	
-	u = ((l2b_x - l2a_x)*(l1a_y - l2a_y) - (l2b_y - l2a_y)*(l1a_x - l2a_x)) / ((l2b_y - l2a_y)*(l1b_x-l1a_x) - (l2b_x - l2a_x)*(l1b_y - l1a_y));
+	u = ((l2b_x - l2a_x)*(l1a_y - l2a_y) - (l2b_y - l2a_y)*(l1a_x - l2a_x)) / ((l2b_y - l2a_y)*(l1b_x - l1a_x) - (l2b_x - l2a_x)*(l1b_y - l1a_y));
 	*result_x = l1a_x + u*(l1b_x - l1a_x);
 	*result_y = l1a_y + u*(l1b_y - l1a_y);
 }
 
+static gboolean
+test_corner_marker(cairo_surface_t *surface,
+                   gint             x,
+                   gint             y,
+                   gint             x_dir,
+                   gint             y_dir,
+                   gint             line_width,
+                   gint             line_length,
+                   gint             line_max_length,
+                   gdouble         *x_result,
+                   gdouble         *y_result)
+{
+	gdouble h_x1, h_x2, h_y1, h_y2;
+	gboolean h_found_line;
+	gdouble v_x1, v_x2, v_y1, v_y2;
+	gboolean v_found_line;
+	
+	h_found_line = follow_line(surface, x, y, x_dir, 0,
+	                           line_width, line_length, line_max_length,
+	                           &h_x1, &h_y1, &h_x2, &h_y2);
+
+	v_found_line = follow_line(surface, x, y, 0, y_dir,
+	                           line_width, line_length, line_max_length,
+	                           &v_x1, &v_y1, &v_x2, &v_y2);
+
+	if (!(h_found_line || v_found_line))
+		return FALSE;
+
+	if (!h_found_line) {
+		h_found_line = follow_line(surface, v_x2, v_y2, x_dir, 0,
+		                           line_width, line_length, line_max_length,
+		                           &h_x1, &h_y1, &h_x2, &h_y2);
+	}
+
+	if (!v_found_line) {
+		v_found_line = follow_line(surface, h_x2, h_y2, 0, y_dir,
+		                           line_width, line_length, line_max_length,
+		                           &v_x1, &v_y1, &v_x2, &v_y2);
+	}
+	
+	if (!v_found_line || !h_found_line)
+		return FALSE;
+
+	calc_intersection(h_x1, h_y1, h_x2, h_y2,
+	                  v_x1, v_y1, v_x2, v_y2,
+	                  x_result, y_result);
+	return TRUE;
+}
 
 static gboolean
 find_corner_marker(cairo_surface_t *surface,
@@ -417,52 +465,10 @@ find_corner_marker(cairo_surface_t *surface,
 			                             line_width);
 			
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
-				/* XXX: TODO: Put this into a separate function! */
-				gdouble h_x1, h_x2, h_y1, h_y2;
-				gboolean h_found_line;
-				gdouble v_x1, v_x2, v_y1, v_y2;
-				gboolean v_found_line;
-				
-				h_found_line = follow_line(surface, x, y - y_dir, x_dir, 0,
-				                           line_width, line_length, line_max_length,
-				                           &h_x1, &h_y1, &h_x2, &h_y2);
-
-				v_found_line = follow_line(surface, x, y - y_dir, 0, y_dir,
-				                           line_width, line_length, line_max_length,
-				                           &v_x1, &v_y1, &v_x2, &v_y2);
-
-				if (!(h_found_line || v_found_line))
-					continue;
-
-				if (!h_found_line) {
-					h_found_line = follow_line(surface, v_x1, v_y1, x_dir, 0,
-					                           line_width, line_length, line_max_length,
-					                           &h_x1, &h_y1, &h_x2, &h_y2);
-				}
-				if (!h_found_line) {
-					h_found_line = follow_line(surface, v_x2, v_y2, x_dir, 0,
-					                           line_width, line_length, line_max_length,
-					                           &h_x1, &h_y1, &h_x2, &h_y2);
-				}
-
-				if (!v_found_line) {
-					v_found_line = follow_line(surface, h_x1, h_y1, 0, y_dir,
-					                           line_width, line_length, line_max_length,
-					                           &v_x1, &v_y1, &v_x2, &v_y2);
-				}
-				if (!v_found_line) {
-					v_found_line = follow_line(surface, h_x2, h_y2, 0, y_dir,
-					                           line_width, line_length, line_max_length,
-					                           &v_x1, &v_y1, &v_x2, &v_y2);
-				}
-				
-				if (!v_found_line || !h_found_line)
-					continue;
-
-				calc_intersection(h_x1, h_y1, h_x2, h_y2,
-				                  v_x1, v_y1, v_x2, v_y2,
-				                  x_result, y_result);
-				return TRUE;
+				if (test_corner_marker(surface, x, y, x_dir, y_dir,
+				                       line_width, line_length, line_max_length,
+				                       x_result, y_result))
+					return TRUE;
 			}
 		}
 
@@ -483,51 +489,10 @@ find_corner_marker(cairo_surface_t *surface,
 			                             line_width);
 			
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
-				gdouble h_x1, h_x2, h_y1, h_y2;
-				gboolean h_found_line;
-				gdouble v_x1, v_x2, v_y1, v_y2;
-				gboolean v_found_line;
-				
-				h_found_line = follow_line(surface, x - x_dir, y, 1, 0,
-				                           line_width, line_length, line_max_length,
-				                           &h_x1, &h_y1, &h_x2, &h_y2);
-
-				v_found_line = follow_line(surface, x - x_dir, y, 0, 1,
-				                           line_width, line_length, line_max_length,
-				                           &v_x1, &v_y1, &v_x2, &v_y2);
-
-				if (!(h_found_line || v_found_line))
-					continue;
-
-				if (!h_found_line) {
-					h_found_line = follow_line(surface, v_x1, v_y1, 1, 0,
-					                           line_width, line_length, line_max_length,
-					                           &h_x1, &h_y1, &h_x2, &h_y2);
-				}
-				if (!h_found_line) {
-					h_found_line = follow_line(surface, v_x2, v_y2, 1, 0,
-					                           line_width, line_length, line_max_length,
-					                           &h_x1, &h_y1, &h_x2, &h_y2);
-				}
-
-				if (!v_found_line) {
-					v_found_line = follow_line(surface, h_x1, h_y1, 0, 1,
-					                           line_width, line_length, line_max_length,
-					                           &v_x1, &v_y1, &v_x2, &v_y2);
-				}
-				if (!v_found_line) {
-					v_found_line = follow_line(surface, h_x2, h_y2, 0, 1,
-					                           line_width, line_length, line_max_length,
-					                           &v_x1, &v_y1, &v_x2, &v_y2);
-				}
-				
-				if (!v_found_line || !h_found_line)
-					continue;
-
-				calc_intersection(h_x1, h_y1, h_x2, h_y2,
-				                  v_x1, v_y1, v_x2, v_y2,
-				                  x_result, y_result);
-				return TRUE;
+				if (test_corner_marker(surface, x, y, x_dir, y_dir,
+				                       line_width, line_length, line_max_length,
+				                       x_result, y_result))
+					return TRUE;
 			}
 		}
 	}
