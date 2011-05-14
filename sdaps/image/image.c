@@ -167,6 +167,7 @@ follow_line(cairo_surface_t *surface,
             gint             y_dir,
             gint             line_width,
             gint             line_length,
+            gint             line_max_length,
             gdouble         *x1,
             gdouble         *y1,
             gdouble         *x2,
@@ -229,7 +230,7 @@ follow_line(cairo_surface_t *surface,
 		x += offset * y_dir;
 		y += offset * x_dir;
 		
-		if (length >= line_length * 1.5)
+		if (length >= line_max_length)
 			goto FOLLOW_LINE_BAIL;
 	}
 	
@@ -275,7 +276,7 @@ follow_line(cairo_surface_t *surface,
 		x += offset * y_dir;
 		y += offset * x_dir;
 		
-		if (length >= line_length * 1.5)
+		if (length >= line_max_length)
 			goto FOLLOW_LINE_BAIL;
 	}
 
@@ -380,6 +381,7 @@ find_corner_marker(cairo_surface_t *surface,
                    gint             y_dir,
                    gint             line_width,
                    gint             line_length,
+                   gint             line_max_length,
                    gdouble         *x_result,
                    gdouble         *y_result)
 {
@@ -398,6 +400,7 @@ find_corner_marker(cairo_surface_t *surface,
 	while (!found && (distance < 600)) {
 		distance += 1;
 
+		/* Try searching from the top/bottom. */
 		coverage = 0;
 		x = x_start + (x_dir * line_width) / 2 + x_dir * distance;
 		y = y_start + (y_dir * line_width) / 2;
@@ -421,11 +424,11 @@ find_corner_marker(cairo_surface_t *surface,
 				gboolean v_found_line;
 				
 				h_found_line = follow_line(surface, x, y - y_dir, x_dir, 0,
-				                           line_width, line_length,
+				                           line_width, line_length, line_max_length,
 				                           &h_x1, &h_y1, &h_x2, &h_y2);
 
 				v_found_line = follow_line(surface, x, y - y_dir, 0, y_dir,
-				                           line_width, line_length,
+				                           line_width, line_length, line_max_length,
 				                           &v_x1, &v_y1, &v_x2, &v_y2);
 
 				if (!(h_found_line || v_found_line))
@@ -433,23 +436,23 @@ find_corner_marker(cairo_surface_t *surface,
 
 				if (!h_found_line) {
 					h_found_line = follow_line(surface, v_x1, v_y1, x_dir, 0,
-					                           line_width, line_length,
+					                           line_width, line_length, line_max_length,
 					                           &h_x1, &h_y1, &h_x2, &h_y2);
 				}
 				if (!h_found_line) {
 					h_found_line = follow_line(surface, v_x2, v_y2, x_dir, 0,
-					                           line_width, line_length,
+					                           line_width, line_length, line_max_length,
 					                           &h_x1, &h_y1, &h_x2, &h_y2);
 				}
 
 				if (!v_found_line) {
 					v_found_line = follow_line(surface, h_x1, h_y1, 0, y_dir,
-					                           line_width, line_length,
+					                           line_width, line_length, line_max_length,
 					                           &v_x1, &v_y1, &v_x2, &v_y2);
 				}
 				if (!v_found_line) {
 					v_found_line = follow_line(surface, h_x2, h_y2, 0, y_dir,
-					                           line_width, line_length,
+					                           line_width, line_length, line_max_length,
 					                           &v_x1, &v_y1, &v_x2, &v_y2);
 				}
 				
@@ -463,6 +466,7 @@ find_corner_marker(cairo_surface_t *surface,
 			}
 		}
 
+		/* Try searching from the left/right. */
 		coverage = 0;
 		x = x_start + x_dir * line_width / 2;
 		y = y_start + y_dir * line_width / 2 + y_dir * distance;
@@ -485,11 +489,11 @@ find_corner_marker(cairo_surface_t *surface,
 				gboolean v_found_line;
 				
 				h_found_line = follow_line(surface, x - x_dir, y, 1, 0,
-				                           line_width, line_length,
+				                           line_width, line_length, line_max_length,
 				                           &h_x1, &h_y1, &h_x2, &h_y2);
 
 				v_found_line = follow_line(surface, x - x_dir, y, 0, 1,
-				                           line_width, line_length,
+				                           line_width, line_length, line_max_length,
 				                           &v_x1, &v_y1, &v_x2, &v_y2);
 
 				if (!(h_found_line || v_found_line))
@@ -497,23 +501,23 @@ find_corner_marker(cairo_surface_t *surface,
 
 				if (!h_found_line) {
 					h_found_line = follow_line(surface, v_x1, v_y1, 1, 0,
-					                           line_width, line_length,
+					                           line_width, line_length, line_max_length,
 					                           &h_x1, &h_y1, &h_x2, &h_y2);
 				}
 				if (!h_found_line) {
 					h_found_line = follow_line(surface, v_x2, v_y2, 1, 0,
-					                           line_width, line_length,
+					                           line_width, line_length, line_max_length,
 					                           &h_x1, &h_y1, &h_x2, &h_y2);
 				}
 
 				if (!v_found_line) {
 					v_found_line = follow_line(surface, h_x1, h_y1, 0, 1,
-					                           line_width, line_length,
+					                           line_width, line_length, line_max_length,
 					                           &v_x1, &v_y1, &v_x2, &v_y2);
 				}
 				if (!v_found_line) {
 					v_found_line = follow_line(surface, h_x2, h_y2, 0, 1,
-					                           line_width, line_length,
+					                           line_width, line_length, line_max_length,
 					                           &v_x1, &v_y1, &v_x2, &v_y2);
 				}
 				
@@ -552,6 +556,7 @@ calculate_matrix(cairo_surface_t *surface,
 	gint width, height;
 	gint line_width = 5; /* XXX: Guestimation! 5? */
 	gint line_length = 215; /* XXX: Guestimation! */
+	gint line_max_length = 250; /* XXX: Guestimation! */
 	gdouble x_topleft, y_topleft;
 	gdouble x_topright, y_topright;
 	gdouble x_bottomleft, y_bottomleft;
@@ -560,17 +565,17 @@ calculate_matrix(cairo_surface_t *surface,
 	gdouble dx, dy;
 	gdouble length_squared;
 	cairo_matrix_t *result;
-	
+
 	width = cairo_image_surface_get_width (surface);
 	height = cairo_image_surface_get_height (surface);
-	
-	if (!find_corner_marker(surface, 0, 0, 1, 1, line_width, line_length, &x_topleft, &y_topleft))
+
+	if (!find_corner_marker(surface, 0, 0, 1, 1, line_width, line_length, line_max_length, &x_topleft, &y_topleft))
 		return NULL;
-	if (!find_corner_marker(surface, width - 1, 0, -1, 1, line_width, line_length, &x_topright, &y_topright))
+	if (!find_corner_marker(surface, width - 1, 0, -1, 1, line_width, line_length, line_max_length, &x_topright, &y_topright))
 		return NULL;
-	if (!find_corner_marker(surface, 0, height - 1, 1, -1, line_width, line_length, &x_bottomleft, &y_bottomleft))
+	if (!find_corner_marker(surface, 0, height - 1, 1, -1, line_width, line_length, line_max_length, &x_bottomleft, &y_bottomleft))
 		return NULL;
-	if (!find_corner_marker(surface, width - 1, height - 1,-1, -1, line_width, line_length, &x_bottomright, &y_bottomright))
+	if (!find_corner_marker(surface, width - 1, height - 1,-1, -1, line_width, line_length, line_max_length, &x_bottomright, &y_bottomright))
 		return NULL;
 
 	/* Corners are known, now calculate the matrix. */
