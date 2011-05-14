@@ -1,6 +1,6 @@
 /* SDAPS
  * Copyright (C) 2008  Christoph Simon <christoph.simon@gmx.eu>
- * Copyright (C) 2008  Benjamin Berg <benjamin@sipsolutions.net>
+ * Copyright (C) 2008, 2011  Benjamin Berg <benjamin@sipsolutions.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
