@@ -184,12 +184,28 @@ class Image (model.buddy.Buddy) :
 		)
 
 	def find_box_corners(self, x, y, width, height):
-		return image.find_box_corners(
+		tl, tr, br, bl = image.find_box_corners(
 			self.obj.surface.surface,
 			self.matrix,
 			x, y,
-			width, height
-		)
+			width, height)
+
+		tolerance = 1.5
+		if (abs(x - tl[0]) > tolerance or
+		    abs(y - tl[1]) > tolerance or
+		    abs(x + width - tr[0]) > tolerance or
+		    abs(y - tr[1]) > tolerance or
+		    abs(x + width - br[0]) > tolerance or
+		    abs(y + height - br[1]) > tolerance or
+		    abs(x - bl[0]) > tolerance or
+		    abs(y + height - bl[1]) > tolerance
+		   ):
+		   	print x, y, x + width, y + width
+		   	print tl, tr, br, bl
+		   	import sys
+		   	sys.exit(1)
+			raise AssertionError("The found values differ too much from where the box should be.")
+		return tl, tr, br, bl
 
 
 class Questionnaire (model.buddy.Buddy) :
@@ -399,7 +415,7 @@ class Textbox (Box) :
 		try:
 			quad = Quadrilateral(*image.recognize.find_box_corners(x, y, width, height))
 			# Lower padding, as we found the corners and are therefore more acurate
-			scan_padding = 0.5
+			scan_padding = 0.3
 		except AssertionError:
 			print "Did not find corners."
 
