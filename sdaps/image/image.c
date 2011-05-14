@@ -183,17 +183,20 @@ follow_line(cairo_surface_t *surface,
 	gint end_x, end_y;
 	double length;
 
-	x = x_start + x_dir*2;
-	y = y_start + y_dir*2;
-
-	start_x = 100000; /* MAY NOT OVERFLOW WHEN ADDED UP! */
+	/* Large default values to begin with. These may not overflow when added up! */
+	start_x = 100000;
 	start_y = 100000;
 	end_x = 0;
 	end_y = 0;
 
 	found_segment = TRUE;
 
-	/* go into the positive direction */
+	/* ****** Positive Direction */
+
+	/* Add some headstart to make sure we are actually testing inside the line! */
+	x = x_start + x_dir*2;
+	y = y_start + y_dir*2;
+
 	while (found_segment) {
 		gint offset;
 		gint coverage = 0;
@@ -235,13 +238,15 @@ follow_line(cairo_surface_t *surface,
 		if (length >= line_max_length)
 			goto FOLLOW_LINE_BAIL;
 	}
-	
+
+	/* ****** Negative Direction */
+
+	/* Add some headstart to make sure we are actually testing inside the line! */
 	x = x_start - x_dir*2;
 	y = y_start - y_dir*2;
 
 	found_segment = TRUE;
 
-	/* go into the negative direction */
 	while (found_segment) {
 		gint offset;
 		gint coverage = 0;
@@ -393,6 +398,8 @@ test_corner_marker(cairo_surface_t *surface,
 	gdouble v_x1, v_x2, v_y1, v_y2;
 	gboolean v_found_line;
 
+	/* We just try to find both right away, even though we can only
+	 * expect to find one of them. */
 	h_found_line = follow_line(surface, x, y, x_dir, 0,
 	                           line_width, line_length, line_max_length,
 	                           &h_x1, &h_y1, &h_x2, &h_y2);
@@ -592,184 +599,6 @@ calculate_matrix(cairo_surface_t *surface,
 
 	return result;
 }
-
-
-#if 0
-
-/* The following code was an attempt at calculating the correction matrix.
- * It may turn out to work well for large boxes, however for small ones it
- * fails sometimes. */
-
-static gboolean
-find_edge(cairo_surface_t  *surface,
-          gint              x,
-          gint              y,
-          gint              x_dir,
-          gint              y_dir,
-          gint              test_dist,
-          gint              test_length,
-          gint              test_width,
-          gdouble          *edge_x,
-          gdouble          *edge_y)
-{
-	gint i;
-	gint black_pixel = 0;
-	
-	for (i = -test_dist; i < test_dist; i++) {
-		gint old_black_pixel = black_pixel;
-		
-		black_pixel = count_black_pixel(surface,
-		                                x + x_dir * i - (ABS(y_dir) * test_length + ABS(x_dir) * test_width) / 2,
-		                                y + y_dir * i - (ABS(x_dir) * test_length + ABS(y_dir) * test_width) / 2,
-		                                MAX(ABS(y_dir) * test_length, test_width),
-		                                MAX(ABS(x_dir) * test_length, test_width));
-
-		if ((old_black_pixel > LINE_COVERAGE * test_length * test_width) &&
-		    (old_black_pixel > black_pixel) &&
-		    (black_pixel <= LINE_COVERAGE * test_length * test_width)) {
-			/* Assume we found the edge, return current position */
-			*edge_x = x + x_dir * i - (ABS(y_dir) * test_length) / 2 + 0.5;
-			*edge_y = y + y_dir * i - (ABS(x_dir) * test_length) / 2 + 0.5;
-			return TRUE;
-		}
-	}
-	
-	return FALSE;
-}
-
-cairo_matrix_t*
-calculate_correction_matrix(cairo_surface_t  *surface,
-                            cairo_matrix_t   *matrix,
-                            gdouble           mm_x,
-                            gdouble           mm_y,
-                            gdouble           mm_width,
-                            gdouble           mm_height)
-{
-	gdouble tmp_x, tmp_y;
-	gint px_x, px_y, px_width, px_height;
-	gdouble x, y, width, height;
-	cairo_matrix_t inverse;
-	cairo_matrix_t *result = NULL;
-	gint test_length = 30;
-	gint test_dist = 8; /* search +- 8px (which should be more then enough) */
-	gint test_width = 5;
-	gint test_count;
-	gint i;
-	GArray *top = g_array_new(FALSE, FALSE, sizeof(gdouble));
-	GArray *bottom = g_array_new(FALSE, FALSE, sizeof(gdouble));
-	GArray *left = g_array_new(FALSE, FALSE, sizeof(gdouble));
-	GArray *right = g_array_new(FALSE, FALSE, sizeof(gdouble));
-	
-	inverse = *matrix;
-	cairo_matrix_invert(&inverse);
-	
-	tmp_x = mm_x;
-	tmp_y = mm_y;
-	cairo_matrix_transform_point(matrix, &tmp_x, &tmp_y);
-	px_x = tmp_x;
-	px_y = tmp_y;
-
-	tmp_x = mm_width;
-	tmp_y = mm_height;
-	cairo_matrix_transform_distance(matrix, &tmp_x, &tmp_y);
-	px_width = tmp_x + 0.5;
-	px_height = tmp_y + 0.5;
-
-	/* Top */
-	test_count = px_width / test_length;
-	if (test_count == 0)
-		return NULL;
-
-	for (i = 0; i < test_count; i++) {
-		gdouble edge_x = 0, edge_y = 0;
-		gboolean found_edge;
-		
-		found_edge = find_edge(surface,
-		                       (px_width - test_length * test_count) / 2 + test_length / 2 + px_x + test_length * i,
-		                       px_y,
-		                       0, -1,
-		                       test_dist, test_length, test_width,
-		                       &edge_x, &edge_y);
-
-		cairo_matrix_transform_point(&inverse, &edge_x, &edge_y);
-		if (found_edge)
-			g_array_append_val(top, edge_y);
-	}
-
-	for (i = 0; i < test_count; i++) {
-		gdouble edge_x = 0, edge_y = 0;
-		gboolean found_edge;
-		
-		found_edge = find_edge(surface,
-		                       (px_width - test_length * test_count) / 2 + test_length / 2 + px_x + test_length * i,
-		                       px_y + px_height,
-		                       0, 1,
-		                       test_dist, test_length, test_width,
-		                       &edge_x, &edge_y);
-
-		cairo_matrix_transform_point(&inverse, &edge_x, &edge_y);
-		if (found_edge)
-			g_array_append_val(bottom, edge_y);
-	}
-
-	test_count = px_height / test_length;
-	if (test_count == 0)
-		return NULL;
-
-	for (i = 0; i < test_count; i++) {
-		gdouble edge_x = 0, edge_y = 0;
-		gboolean found_edge;
-		
-		found_edge = find_edge(surface,
-		                       px_x,
-		                       (px_height - test_length * test_count) / 2 + test_length / 2 + px_y + test_length * i,
-		                       -1, 0,
-		                       test_dist, test_length, test_width,
-		                       &edge_x, &edge_y);
-
-		cairo_matrix_transform_point(&inverse, &edge_x, &edge_y);
-		if (found_edge)
-			g_array_append_val(left, edge_x);
-	}
-
-	for (i = 0; i < test_count; i++) {
-		gdouble edge_x = 0, edge_y = 0;
-		gboolean found_edge;
-		
-		found_edge = find_edge(surface,
-		                       px_x + px_width,
-		                       (px_height - test_length * test_count) / 2 + test_length / 2 + px_y + test_length * i,
-		                       1, 0,
-		                       test_dist, test_length, test_width,
-		                       &edge_x, &edge_y);
-
-		cairo_matrix_transform_point(&inverse, &edge_x, &edge_y);
-		if (found_edge)
-			g_array_append_val(right, edge_x);
-	}
-	if ((top->len == 0) || (bottom->len == 0))
-		return NULL;
-	if ((left->len == 0) || (right->len == 0))
-		return NULL;
-	
-	result = g_malloc(sizeof(cairo_matrix_t));
-	cairo_matrix_init_identity(result);
-	
-	x = g_array_index(left, gdouble, 0);
-	width = g_array_index(right, gdouble, 0) - x;
-	y = g_array_index(top, gdouble, 0);
-	height = g_array_index(bottom, gdouble, 0) - y;
-	
-	result->xx = width / mm_width;
-	result->yy = height / mm_height;
-	result->x0 = x - mm_x * width / mm_width;
-	result->y0 = y - mm_y * height / mm_height;
-	
-	return result;
-}
-
-#endif
-
 
 /* This will only work for small boxes! */
 cairo_matrix_t*
