@@ -196,45 +196,76 @@ follow_line(cairo_surface_t *surface,
 	x = x_start;
 	y = y_start;
 
-	search_length_left = line_width;
+	search_length_left = 2*line_width;
 	while (found_segment || search_length_left > 0) {
 		gint offset;
-		gint coverage = 0;
+		gint found_offset = 0;
+		gint coverage;
+		gint max_coverage = 0;
+
 		search_length_left -= 1;
 
 		x += x_dir;
 		y += y_dir;
 
 		found_segment = FALSE;
-		for (offset = -5; (offset <= 5) && !found_segment; offset++) {
-			gint old_coverage = coverage;
-			coverage = count_black_pixel(surface,
-			                             x + offset * y_dir - line_width / 2,
-			                             y + offset * x_dir - line_width / 2,
-			                             line_width,
-			                             line_width);
+		for (offset = -line_width; offset <= line_width; offset++) {
+			gint coverage_1, coverage_2, coverage_3;
 
-			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
+			coverage_1 = count_black_pixel(surface,
+			                               x + offset * y_dir - line_width / 2,
+			                               y + offset * x_dir - line_width / 2,
+			                               line_width,
+			                               line_width);
+			coverage_2 = count_black_pixel(surface,
+			                               x - line_width*x_dir + offset * y_dir - line_width / 2,
+			                               y - line_width*y_dir + offset * x_dir - line_width / 2,
+			                               line_width,
+			                               line_width);
+			coverage_3 = count_black_pixel(surface,
+			                               x + line_width*x_dir + offset * y_dir - line_width / 2,
+			                               y + line_width*y_dir + offset * x_dir - line_width / 2,
+			                               line_width,
+			                               line_width);
+
+			if (coverage_1 < (line_width * line_width) * LINE_COVERAGE)
+				continue;
+
+			if (coverage_2 < (line_width * line_width) * LINE_COVERAGE)
+				continue;
+
+			if (coverage_3 < (line_width * line_width) * LINE_COVERAGE)
+				continue;
+
+			coverage = coverage_1 + coverage_2 + coverage_3;
+
+			if ((coverage >= (3*line_width * line_width) * LINE_COVERAGE) && (coverage > max_coverage)) {
 				gint p_x, p_y;
 				found_segment = TRUE;
+				found_offset = offset;
+				max_coverage = coverage;
 				search_length_left = 0;
 
-				p_x = x + offset * y_dir;
-				p_y = y + offset * x_dir;
-				
-				if (start_x + start_y > p_x + p_y) {
+				p_x = x - line_width*ABS(x_dir) + offset * y_dir;
+				p_y = y - line_width*ABS(y_dir) + offset * x_dir;
+
+				if (ABS(start_x * x_dir + start_y * y_dir) > ABS(p_x * x_dir + p_y * y_dir)) {
 					start_x = p_x;
 					start_y = p_y;
 				}
-				if (end_x + end_y < p_x + p_y) {
+
+				p_x = x + line_width*ABS(x_dir) + offset * y_dir;
+				p_y = y + line_width*ABS(y_dir) + offset * x_dir;
+
+				if (ABS(end_x * x_dir + end_y * y_dir) < ABS(p_x * x_dir + p_y * y_dir)) {
 					end_x = p_x;
 					end_y = p_y;
 				}
 			}
 		}
 
-		x += offset * y_dir;
-		y += offset * x_dir;
+		x += found_offset * y_dir;
+		y += found_offset * x_dir;
 
 		length = sqrt((start_x - end_x)*(start_x - end_x) + (start_y - end_y)*(start_y - end_y));
 		if (length >= line_max_length)
@@ -243,51 +274,80 @@ follow_line(cairo_surface_t *surface,
 
 	/* ****** Negative Direction */
 
-	/* Add some headstart to make sure we are actually testing inside the line! */
-	x = x_start - x_dir*2;
-	y = y_start - y_dir*2;
+	x = x_start;
+	y = y_start;
 
 	found_segment = TRUE;
 
-	search_length_left = line_width;
+	search_length_left = 2*line_width;
 	while (found_segment || search_length_left > 0) {
 		gint offset;
-		gint coverage = 0;
+		gint found_offset = 0;
+		gint coverage;
+		gint max_coverage = 0;
 		search_length_left -= 1;
 
 		x -= x_dir;
 		y -= y_dir;
 
 		found_segment = FALSE;
-		for (offset = -5; (offset <= 5) && !found_segment; offset++) {
-			gint old_coverage = coverage;
-			coverage = count_black_pixel(surface,
-			                             x + offset * y_dir - line_width / 2,
-			                             y + offset * x_dir - line_width / 2,
-			                             line_width,
-			                             line_width);
+		for (offset = -line_width; (offset <= line_width) && !found_segment; offset++) {
+			gint coverage_1, coverage_2, coverage_3;
 
-			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
+			coverage_1 = count_black_pixel(surface,
+			                               x + offset * y_dir - line_width / 2,
+			                               y + offset * x_dir - line_width / 2,
+			                               line_width,
+			                               line_width);
+			coverage_2 = count_black_pixel(surface,
+			                               x - line_width*x_dir + offset * y_dir - line_width / 2,
+			                               y - line_width*y_dir + offset * x_dir - line_width / 2,
+			                               line_width,
+			                               line_width);
+			coverage_3 = count_black_pixel(surface,
+			                               x + line_width*x_dir + offset * y_dir - line_width / 2,
+			                               y + line_width*y_dir + offset * x_dir - line_width / 2,
+			                               line_width,
+			                               line_width);
+
+			if (coverage_1 < (line_width * line_width) * LINE_COVERAGE)
+				continue;
+
+			if (coverage_2 < (line_width * line_width) * LINE_COVERAGE)
+				continue;
+
+			if (coverage_3 < (line_width * line_width) * LINE_COVERAGE)
+				continue;
+
+			coverage = coverage_1 + coverage_2 + coverage_3;
+
+			if ((coverage >= (3*line_width * line_width) * LINE_COVERAGE) && (coverage > max_coverage)) {
 				gint p_x, p_y;
 				found_segment = TRUE;
+				found_offset = offset;
+				max_coverage = coverage;
 				search_length_left = 0;
 
-				p_x = x + offset * y_dir;
-				p_y = y + offset * x_dir;
-				
-				if (start_x + start_y > p_x + p_y) {
+				p_x = x - line_width*ABS(x_dir) + offset * y_dir;
+				p_y = y - line_width*ABS(y_dir) + offset * x_dir;
+
+				if (ABS(start_x * x_dir + start_y * y_dir) > ABS(p_x * x_dir + p_y * y_dir)) {
 					start_x = p_x;
 					start_y = p_y;
 				}
-				if (end_x + end_y < p_x + p_y) {
+
+				p_x = x + line_width*ABS(x_dir) + offset * y_dir;
+				p_y = y + line_width*ABS(y_dir) + offset * x_dir;
+
+				if (ABS(end_x * x_dir + end_y * y_dir) < ABS(p_x * x_dir + p_y * y_dir)) {
 					end_x = p_x;
 					end_y = p_y;
 				}
 			}
 		}
 
-		x += offset * y_dir;
-		y += offset * x_dir;
+		x += found_offset * y_dir;
+		y += found_offset * x_dir;
 
 		length = sqrt((start_x - end_x)*(start_x - end_x) + (start_y - end_y)*(start_y - end_y));
 		if (length >= line_max_length)
@@ -318,12 +378,12 @@ follow_line(cairo_surface_t *surface,
 
 			if (weight == 0) { /* this prevents a division by zero if seg_weight is 0 too. */
 				weight = seg_weight;
-				w1_x = x + offset * y_dir + 0.5 * y_dir;
-				w1_y = y + offset * x_dir + 0.5 * x_dir;
+				w1_x = x + offset * y_dir + 0.5;
+				w1_y = y + offset * x_dir + 0.5;
 			} else {
 				gdouble seg_x, seg_y;
-				seg_x = x + offset * y_dir + 0.5 * y_dir;
-				seg_y = y + offset * x_dir + 0.5 * x_dir;
+				seg_x = x + offset * y_dir + 0.5;
+				seg_y = y + offset * x_dir + 0.5;
 				
 				w1_x = w1_x * weight / (weight + seg_weight) + seg_x * seg_weight / (weight + seg_weight);
 				w1_y = w1_y * weight / (weight + seg_weight) + seg_y * seg_weight / (weight + seg_weight);
@@ -347,12 +407,12 @@ follow_line(cairo_surface_t *surface,
 
 			if (weight == 0) { /* this prevents a division by zero if seg_weight is 0 too. */
 				weight = seg_weight;
-				w2_x = x + offset * y_dir + 0.5 * y_dir;
-				w2_y = y + offset * x_dir + 0.5 * x_dir;
+				w2_x = x + offset * y_dir + 0.5;
+				w2_y = y + offset * x_dir + 0.5;
 			} else {
 				gdouble seg_x, seg_y;
-				seg_x = x + offset * y_dir + 0.5 * y_dir;
-				seg_y = y + offset * x_dir + 0.5 * x_dir;
+				seg_x = x + offset * y_dir + 0.5;
+				seg_y = y + offset * x_dir + 0.5;
 				
 				w2_x = w2_x * weight / (weight + seg_weight) + seg_x * seg_weight / (weight + seg_weight);
 				w2_y = w2_y * weight / (weight + seg_weight) + seg_y * seg_weight / (weight + seg_weight);
