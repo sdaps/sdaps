@@ -128,9 +128,8 @@ class Image (model.buddy.Buddy) :
 				self.obj.sheet.survey_id
 			)
 			if not self.obj.sheet.survey_id == self.obj.sheet.survey.survey_id :
-				#print _('%s: Wrong survey_id. Cancelling recognition of that image.') % self.obj.filename
-				#raise RecognitionError
-				pass
+				print _('%s: Wrong survey_id. Cancelling recognition of that image.') % self.obj.filename
+				raise RecognitionError
 			self.obj.sheet.questionnaire_id = self.read_codebox(
 				defs.questionnaire_id_lsb_x,
 				defs.questionnaire_id_lsb_y,
