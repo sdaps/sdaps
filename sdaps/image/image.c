@@ -174,14 +174,13 @@ follow_line(cairo_surface_t *surface,
             gdouble         *x2,
             gdouble         *y2)
 {
-	/* This function assumes that there is enough space in every direction and
-	 * it will not run off the buffer. */
 	gboolean found_segment;
 	gboolean found_line = FALSE;
 	gint x, y;
 	gint start_x, start_y;
 	gint end_x, end_y;
 	double length;
+	gint search_length_left;
 
 	/* Large default values to begin with. These may not overflow when added up! */
 	start_x = 100000;
@@ -193,13 +192,14 @@ follow_line(cairo_surface_t *surface,
 
 	/* ****** Positive Direction */
 
-	/* Add some headstart to make sure we are actually testing inside the line! */
-	x = x_start + x_dir*2;
-	y = y_start + y_dir*2;
+	x = x_start;
+	y = y_start;
 
-	while (found_segment) {
+	search_length_left = line_width;
+	while (found_segment || search_length_left > 0) {
 		gint offset;
 		gint coverage = 0;
+		search_length_left -= 1;
 
 		x += x_dir;
 		y += y_dir;
@@ -216,6 +216,7 @@ follow_line(cairo_surface_t *surface,
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
 				gint p_x, p_y;
 				found_segment = TRUE;
+				search_length_left = 0;
 
 				p_x = x + offset * y_dir;
 				p_y = y + offset * x_dir;
@@ -247,9 +248,11 @@ follow_line(cairo_surface_t *surface,
 
 	found_segment = TRUE;
 
-	while (found_segment) {
+	search_length_left = line_width;
+	while (found_segment || search_length_left > 0) {
 		gint offset;
 		gint coverage = 0;
+		search_length_left -= 1;
 
 		x -= x_dir;
 		y -= y_dir;
@@ -266,6 +269,7 @@ follow_line(cairo_surface_t *surface,
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
 				gint p_x, p_y;
 				found_segment = TRUE;
+				search_length_left = 0;
 
 				p_x = x + offset * y_dir;
 				p_y = y + offset * x_dir;
