@@ -200,10 +200,6 @@ class Image (model.buddy.Buddy) :
 		    abs(x - bl[0]) > tolerance or
 		    abs(y + height - bl[1]) > tolerance
 		   ):
-		   	print x, y, x + width, y + width
-		   	print tl, tr, br, bl
-		   	import sys
-		   	sys.exit(1)
 			raise AssertionError("The found values differ too much from where the box should be.")
 		return tl, tr, br, bl
 
