@@ -15,6 +15,8 @@ sdaps/report/__init__.py
 sdaps/report/report.py
 sdaps/setup/__init__.py
 sdaps/setup/setup.py
+sdaps/setup/buddies.py
 sdaps/setup/boxesparser.py
 sdaps/stamp/__init__.py
 sdaps/stamp/stamp.py
+sdaps/setuptex/setup.py

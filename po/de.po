@@ -1,16 +1,19 @@
-#
-#  <>, Christoph Simon, 2009,���,��9, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-18 01:52+0200\n"
-"PO-Revision-Date: 2010-04-18 01:47+0200\n"
-"Last-Translator:  <>\n"
-"Language-Team:  <>\n"
+"POT-Creation-Date: 2011-05-15 02:18+0200\n"
+"PO-Revision-Date: 2011-05-15 02:28+0100\n"
+"Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
+"Language-Team: <>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../sdaps/add.py:30
 msgid ""
@@ -28,32 +31,36 @@ msgstr ""
 "\tdateien: TIFF-Bilder mit den gescannten Daten\n"
 "\t"
 
-#: ../sdaps/add.py:44
+#: ../sdaps/add.py:45
 #, python-format
 msgid "Processing %s"
 msgstr "Beartbeite %s"
 
-#: ../sdaps/add.py:49
+#: ../sdaps/add.py:50
 msgid "Unknown file format. Only TIFF is supported"
 msgstr "Unbekanntes Datei Format. Nur TIFF wird unterstüzt."
 
-#: ../sdaps/add.py:50 ../sdaps/add.py:55 ../sdaps/add.py:60
+#: ../sdaps/add.py:51
+#: ../sdaps/add.py:56
+#: ../sdaps/add.py:61
 msgid "Processing stopped"
 msgstr "Bearbeitung abgebrochen"
 
-#: ../sdaps/add.py:54
+#: ../sdaps/add.py:55
 #, python-format
 msgid "Unknown image file format (%s). Only TIFF is supported"
 msgstr "Unbekanntes Datei Format (%s). Nur TIFF wird unterstüzt."
 
-#: ../sdaps/add.py:59
+#: ../sdaps/add.py:60
 #, python-format
 msgid "Wrong data type inside TIFF (%s). It should be black and white data."
-msgstr ""
-"TIFF hat die falsche Farbtiefe (%s). Das Bild sollte im schwarz/weiß Modus "
-"sein"
+msgstr "TIFF hat die falsche Farbtiefe (%s). Das Bild sollte im schwarz/weiß Modus sein"
 
-#: ../sdaps/add.py:95
+#: ../sdaps/add.py:73
+msgid "Could not execute tiffsplit!"
+msgstr "Konnte tiffsplit nicht ausführen!"
+
+#: ../sdaps/add.py:102
 msgid "Done"
 msgstr "Fertig"
 
@@ -180,8 +187,7 @@ msgid ""
 msgstr ""
 "[filter...]\n"
 "\t\n"
-"\tStartet eine Grafische Oberfläche, mit der die erkannten Antworten "
-"betrachtet und korrigiert werden können.\n"
+"\tStartet eine Grafische Oberfläche, mit der die erkannten Antworten betrachtet und korrigiert werden können.\n"
 "\t\n"
 "\tfilter: Ein Filter Ausdruck, um nur bestimmte Bögen anzuzeigen\n"
 "\t"
@@ -205,14 +211,16 @@ msgstr "_Ansicht"
 #: ../sdaps/ids.py:28
 #, python-format
 msgid ""
-"[pattern = '%i\\n']\n"
+"[pattern = '%i\\n"
+"']\n"
 "\n"
 "\tWrite a list containing all questionnaire ids.\n"
 "\n"
 "\tcreates ids_[index]\n"
 "\t"
 msgstr ""
-"[pattern = '%i\\n']\n"
+"[pattern = '%i\\n"
+"']\n"
 "\t\n"
 "\tSchreibt eine Liste mit alle Fragebogen IDs.\n"
 "\t\n"
@@ -226,8 +234,7 @@ msgid ""
 "\tAlter metadata.\n"
 "\n"
 "\tfield: name of the field you whish to alter\n"
-"\tcontent: the new content for that field or empty if you want to delete "
-"the\n"
+"\tcontent: the new content for that field or empty if you want to delete the\n"
 "\t\tfield.\n"
 "\n"
 "\tWith no arguments, info will print a list of existing fields.\n"
@@ -247,29 +254,30 @@ msgstr ""
 msgid "Existing fields: %s"
 msgstr "Definierte Felder: %s"
 
-#: ../sdaps/model/survey.py:106
+#: ../sdaps/model/survey.py:137
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:116
+#: ../sdaps/model/survey.py:147
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/recognize/buddies.py:67 ../sdaps/recognize/buddies.py:123
+#: ../sdaps/recognize/buddies.py:69
+#: ../sdaps/recognize/buddies.py:114
 #, python-format
 msgid "%s: Matrix not recognized. Cancelling recognition of that image."
 msgstr "%s: Matrix wurde nicht erkannt. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:115
+#: ../sdaps/recognize/buddies.py:106
 #, python-format
 msgid "%s: Page number not recognized. Cancelling recognition of that image."
 msgstr "%s: Seitenzahl wurde nicht erkannt. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:140
+#: ../sdaps/recognize/buddies.py:133
 #, python-format
 msgid "%s: Wrong survey_id. Cancelling recognition of that image."
 msgstr "%s: Falsche Umfrage ID. Überspringe dieses Bild."
@@ -312,8 +320,7 @@ msgstr "Standardabweichung: %.2f"
 msgid ""
 "[filter...]\n"
 "\n"
-"\tReport generates a basic report which shows for every question (if "
-"appropriate)\n"
+"\tReport generates a basic report which shows for every question (if appropriate)\n"
 "\t\t- the histogramm\n"
 "\t\t- the mean\n"
 "\t\t- the standard derivation\n"
@@ -343,8 +350,7 @@ msgid ""
 "\n"
 "\tStats generates a report for every filter condition (not compounded)\n"
 "\n"
-"\tfilter: filter expression to select the sheets to appear in the reference "
-"report\n"
+"\tfilter: filter expression to select the sheets to appear in the reference report\n"
 "\n"
 "\tcreates report_[index].pdf (the reference report)\n"
 "\tcreates report_[index]_[index] description.pdf\n"
@@ -365,8 +371,7 @@ msgstr ""
 msgid ""
 "[filter...]\n"
 "\n"
-"\tSmallreport generates a basic report which shows for every question (if "
-"appropriate)\n"
+"\tSmallreport generates a basic report which shows for every question (if appropriate)\n"
 "\t\t- the histogramm\n"
 "\t\t- the mean\n"
 "\t\t- the standard derivation\n"
@@ -390,11 +395,11 @@ msgstr ""
 "\tErstellt report_[index].pdf\n"
 "\t"
 
-#: ../sdaps/report/report.py:57
+#: ../sdaps/report/report.py:71
 msgid "Turned in Questionnaires"
 msgstr "Abgegebene Fragebögen"
 
-#: ../sdaps/report/report.py:71
+#: ../sdaps/report/report.py:85
 msgid "sdaps report"
 msgstr "sdaps Report"
 
@@ -402,8 +407,7 @@ msgstr "sdaps Report"
 msgid ""
 "questionnaire_odt questionnaire_pdf [additional_questions]\n"
 "\n"
-"\tSetup creates a new survey. It parses the questionnaire to create the "
-"data\n"
+"\tSetup creates a new survey. It parses the questionnaire to create the data\n"
 "\tmodel. The survey must not exist yet.\n"
 "\n"
 "\tquestionnaire_odt: the questionnaire in odt-format\n"
@@ -413,58 +417,58 @@ msgid ""
 msgstr ""
 "questionnaire_odt questionnaire_pdf [additional_questions]\n"
 "\t\n"
-"\tErstellt ein neues Projektverzeichniss. Das Verzeichniss darf noch nicht "
-"existieren.\n"
+"\tErstellt ein neues Projektverzeichniss. Das Verzeichniss darf noch nicht existieren.\n"
 "\t\n"
 "\tquestionnaire_odt: Der Fragebogen im ODT-Format\n"
 "\tquestionnaire_pdf: Der Fragebogen im PDF-Format\n"
 "\tinternetquestions: Datei mit zusätzlichen Fragen.\n"
 "\t"
 
-#: ../sdaps/setup/setup.py:38
+#: ../sdaps/setup/setup.py:39
+#: ../sdaps/setuptex/setup.py:40
 msgid "The survey directory already exists"
 msgstr "Das Umfrageverzeichniss existiert bereits."
 
-#: ../sdaps/setup/setup.py:39 ../sdaps/setup/setup.py:45
-#: ../sdaps/setup/setup.py:51 ../sdaps/setup/setup.py:58
+#: ../sdaps/setup/setup.py:40
+#: ../sdaps/setup/setup.py:46
+#: ../sdaps/setup/setup.py:52
+#: ../sdaps/setup/setup.py:59
+#: ../sdaps/setuptex/setup.py:41
+#: ../sdaps/setuptex/setup.py:47
+#: ../sdaps/setuptex/setup.py:54
 msgid "Cancelling setup"
 msgstr "Setup abgebrochen"
 
-#: ../sdaps/setup/setup.py:44
+#: ../sdaps/setup/setup.py:45
 #, python-format
-msgid ""
-"Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
-"opendocument.text"
-msgstr ""
-"Unbekanntes Dateiformat (%s). questionnaire_odt muss application/vnd.oasis."
-"opendocument.text sein."
+msgid "Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text"
+msgstr "Unbekanntes Dateiformat (%s). questionnaire_odt muss application/vnd.oasis.opendocument.text sein."
 
-#: ../sdaps/setup/setup.py:50
+#: ../sdaps/setup/setup.py:51
 #, python-format
 msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
-msgstr ""
-"Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
+msgstr "Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
 
-#: ../sdaps/setup/setup.py:57
+#: ../sdaps/setup/setup.py:58
+#: ../sdaps/setuptex/setup.py:53
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
 
-#: ../sdaps/setup/setup.py:72
-msgid ""
-"Error: Caught an Exception while parsing the ODT file. The current state is:"
-msgstr ""
-"Fehler: Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der "
-"jetzige Zustand ist:"
+#: ../sdaps/setup/setup.py:81
+msgid "Error: Caught an Exception while parsing the ODT file. The current state is:"
+msgstr "Fehler: Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der jetzige Zustand ist:"
+
+#: ../sdaps/setup/buddies.py:118
+#, python-format
+msgid "Error in question \"%s\""
+msgstr "Fehler in der Frage \"%s\""
 
 #: ../sdaps/setup/boxesparser.py:118
+#: ../sdaps/setup/boxesparser.py:183
 #, python-format
-msgid ""
-"Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: "
-"%.1f)."
-msgstr ""
-"Warnung: Ignoriere Box (Seite: %i, x: %.1f, y: %.1f, width: %.1f, height: "
-"%.1f)."
+msgid "Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: %.1f)."
+msgstr "Warnung: Ignoriere Box (Seite: %i, x: %.1f, y: %.1f, width: %.1f, height: %.1f)."
 
 #: ../sdaps/stamp/__init__.py:28
 #, python-format
@@ -473,8 +477,12 @@ msgid ""
 "\n"
 "\tStamp corner marks and questionnaire ids on the questionnaire.\n"
 "\n"
-"\tcount: number of unique questionnaire ids you want to create\n"
-"\tused_ids: don't use any id named in this file (pattern = '%i\\n')\n"
+"\tcount: number of unique questionnaire ids you want to create.\n"
+"\t       This is only used if questionnaire ids are supposed to be\n"
+"\t       printed. This option needs to be specified when creating the\n"
+"\t       project.\n"
+"\tused_ids: don't use any id named in this file (pattern = '%i\\n"
+"')\n"
 "\n"
 "\tcreates stamped_[index].pdf\n"
 "\t"
@@ -484,38 +492,45 @@ msgstr ""
 "\tStempelt Eckmarker und IDs auf den Fragebogen.\n"
 "\t\n"
 "\tcount: Die Anzahl an eindeutigen Fragebögen die erstellt werden soll\n"
-"\tused_ids: Datei mit Fragebogen IDs die schon benutzt wurden (Muster = '%i"
-"\\n')\n"
+"\t       Dies wird nur verwendet, wenn eindeutige Fragebogen IDs auf jeden Bogen\t       gedruckt werden sollen. Diese Option muss beim Anlegen des Projekts\n"
+"\t       angegeben werden.\tused_ids: Datei mit Fragebogen IDs die schon benutzt wurden (Muster = '%i\\n"
+"')\n"
 "\t\n"
 "\tErstellt: stamped_[index].pdf\n"
 "\t"
 
-#: ../sdaps/stamp/stamp.py:48
+#: ../sdaps/stamp/stamp.py:53
 #, python-format
 msgid "Survey-ID: %i"
 msgstr "Umfrage-ID: %i"
 
-#: ../sdaps/stamp/stamp.py:58
+#: ../sdaps/stamp/stamp.py:66
 #, python-format
 msgid "Questionnaire-ID: %i"
 msgstr "Fragebogen-ID: %i"
 
-#: ../sdaps/stamp/stamp.py:145
-msgid ""
-"You need to have either pdftk or pyPdf installed. pdftk is the faster method."
-msgstr ""
-"Sie müssen entweder pdtk oder pyPdf installiert haben.pdftk ist die "
-"schnellere Metode."
+#: ../sdaps/stamp/stamp.py:139
+msgid "You may not specify the number of sheets for surveys that do not print a quesitonnaire ID."
+msgstr "Es ist nicht möglich eine Anzahl von Fragebögen anzugeben, wenn die Fragebogen-ID nicht auf den Bogen gedruckt wird."
+
+#: ../sdaps/stamp/stamp.py:156
+msgid "You needs to specify the number of questionnaires to create when questionnaire are printed IDs."
+msgstr "Es notwendig eine Anzahl an Bögen anzugeben, wenn eine Fragebogen-ID auf die Bögen gedruckt wird."
+
+#: ../sdaps/stamp/stamp.py:178
+msgid "You need to have either pdftk or pyPdf installed. pdftk is the faster method."
+msgstr "Sie müssen entweder pdtk oder pyPdf installiert haben.pdftk ist die schnellere Metode."
 
 #. bottomup = False => (0, 0) is the upper left corner
-#: ../sdaps/stamp/stamp.py:157
+#: ../sdaps/stamp/stamp.py:190
 #, python-format
 msgid "Creating stamp PDF for %i sheet"
 msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
 msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
 
-#: ../sdaps/stamp/stamp.py:176 ../sdaps/stamp/stamp.py:276
+#: ../sdaps/stamp/stamp.py:211
+#: ../sdaps/stamp/stamp.py:311
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
@@ -523,32 +538,50 @@ msgstr[0] "%i Bogen; %f Sekunden pro Bogen"
 msgstr[1] "%i Bögen; %f Sekunden pro Bogen"
 
 #. Merge using pdftk
-#: ../sdaps/stamp/stamp.py:185
+#: ../sdaps/stamp/stamp.py:220
 msgid "Stamping using pdftk"
 msgstr "Stempele mit Hilfe von pdftk."
 
-#: ../sdaps/stamp/stamp.py:189
+#: ../sdaps/stamp/stamp.py:224
 #, python-format
 msgid "pdftk: Splitting out page %d of each sheet."
 msgid_plural "pdftk: Splitting out page %d of each sheet."
 msgstr[0] "pdftk: Extrahier die %d Seite aus dem Stempel."
 msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
 
-#: ../sdaps/stamp/stamp.py:203
+#: ../sdaps/stamp/stamp.py:238
 msgid "pdftk: Splitting the questionnaire for watermarking."
 msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens"
 
-#: ../sdaps/stamp/stamp.py:209
+#: ../sdaps/stamp/stamp.py:244
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
 msgstr[0] "pdftk: Stempele die Seite %d."
 msgstr[1] "pdftk: Stempele die Seite %d."
 
-#: ../sdaps/stamp/stamp.py:227
+#: ../sdaps/stamp/stamp.py:262
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr "pdftk: Erstelle das fertige PDF."
 
-#: ../sdaps/stamp/stamp.py:262
+#: ../sdaps/stamp/stamp.py:297
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
+
+#: ../sdaps/setuptex/setup.py:46
+#, python-format
+msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex"
+msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
+
+#: ../sdaps/setuptex/setup.py:70
+msgid "Error running \"rubber -d\" to compile the LaTeX file."
+msgstr "Fehler beim ausführen von \"rubber -d\" um die LaTeX Datei zu kompilieren."
+
+#: ../sdaps/setuptex/setup.py:90
+msgid "Error: Caught an Exception while parsing the SDAPS file. The current state is:"
+msgstr "Fehler: Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der jetzige Zustand ist:"
+
+#: ../sdaps/setuptex/setup.py:116
+msgid "An error occured in the setup routine, deleting the survey directory again."
+msgstr "Ein Fehler ist während der Herstellung des SDAPS Projekts aufgetreten. Das Umfrageverzeichniss wird wieder gelöscht."
+
