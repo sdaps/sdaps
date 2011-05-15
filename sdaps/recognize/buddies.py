@@ -427,7 +427,7 @@ class Textbox (Box) :
 			# Lower padding, as we found the corners and are therefore more acurate
 			scan_padding = defs.textbox_scan_padding
 		except AssertionError:
-			print "Did not find corners."
+			pass
 
 		for x, y in quad.iterate(step_x, step_y, test_width, test_height, scan_padding):
 			coverage = image.recognize.get_coverage(x, y, test_width, test_height)
