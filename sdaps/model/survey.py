@@ -166,40 +166,4 @@ class Survey (object) :
 		else :
 			raise ValueError
 
-	def reset (self) :
-		print 'DeprecationWarning'
-		self.index = None
-
-	def next (self) :
-		print 'DeprecationWarning'
-		if self.index == None :
-			self.index = 0
-		else :
-			self.index += 1
-		if self.index == len(self.sheets) :
-			self.index = None
-			return 0
-		else :
-			return 1
-
-	def previous (self) :
-		print 'DeprecationWarning'
-		if self.index == None :
-			self.index = len(self.sheets)-1
-		else :
-			self.index -= 1
-		if self.index < 0 :
-			self.index = None
-			return 0
-		else :
-			return 1
-
-	def goto (self, index) :
-		print 'DeprecationWarning'
-		if index >= 0 and index < len(self.sheets):
-			self.index = index
-			return 1
-		else :
-			self.index = None
-			return 0
 
