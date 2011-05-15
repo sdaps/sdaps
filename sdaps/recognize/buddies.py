@@ -116,24 +116,34 @@ class Image (model.buddy.Buddy) :
 		else :
 			self.obj.rotated = 0
 
-		if self.obj.page_number % 2 == 0 :
-			# read ids
-			self.obj.sheet.survey_id = self.read_codebox(
-				defs.survey_id_msb_x,
-				defs.survey_id_msb_y,
-			)
-			self.obj.sheet.survey_id = self.read_codebox(
-				defs.survey_id_lsb_x,
-				defs.survey_id_lsb_y,
-				self.obj.sheet.survey_id
-			)
-			if not self.obj.sheet.survey_id == self.obj.sheet.survey.survey_id :
-				print _('%s: Wrong survey_id. Cancelling recognition of that image.') % self.obj.filename
-				raise RecognitionError
-			self.obj.sheet.questionnaire_id = self.read_codebox(
-				defs.questionnaire_id_lsb_x,
-				defs.questionnaire_id_lsb_y,
-			)
+		if self.obj.page_number % 2 == 0 or \
+		   self.obj.sheet.survey.questionnaire.page_count == 1 :
+			# read ids if they are printed on the page
+			if self.obj.sheet.survey.defs.print_survey_id :
+				pos = self.obj.sheet.survey.defs.get_survey_id_pos()
+
+				self.obj.sheet.survey_id = self.read_codebox(
+					pos[0], pos[2]
+				)
+				self.obj.sheet.survey_id = self.read_codebox(
+					pos[1], pos[2],
+					self.obj.sheet.survey_id
+				)
+				if not self.obj.sheet.survey_id == self.obj.sheet.survey.survey_id :
+					print _('%s: Wrong survey_id. Cancelling recognition of that image.') % self.obj.filename
+					raise RecognitionError
+			else:
+				self.obj.sheet.survey_id = self.obj.sheet.survey.survey_id
+
+			if self.obj.sheet.survey.defs.print_questionnaire_id :
+				pos = self.obj.sheet.survey.defs.get_questionnaire_id_pos()
+
+				self.obj.sheet.questionnaire_id = self.read_codebox(
+					pos[0], pos[2]
+				)
+				print self.obj.sheet.questionnaire_id
+			else:
+				self.obj.sheet.questionnaire_id = -1
 
 	def clean (self) :
 		self.obj.surface.clean()

@@ -46,8 +46,9 @@ corner_box_padding = 3 # mm
 
 codebox_length = 16 # bits
 codebox_step = 3.5 # mm
-codebox_width = codebox_step * 16 # mm
+codebox_width = codebox_step * codebox_length # mm
 codebox_height = 3.5 # mm
+# Padding that is ignored when testing the image whether it is 1/0
 codebox_offset = 0.75 # mm
 
 survey_id_msb_x = 19.5 # mm
@@ -59,3 +60,4 @@ questionnaire_id_msb_x = 19.5 # mm
 questionnaire_id_msb_y = 272.0 # mm
 questionnaire_id_lsb_x = 134.5 # mm
 questionnaire_id_lsb_y = 272.0 # mm
+

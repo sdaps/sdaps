@@ -43,36 +43,42 @@ _ = ugettext
 mm = units.mm
 
 
-def draw_survey_id (canvas, survey_id) :
+def draw_survey_id (canvas, survey) :
 	if 0 : assert isinstance(canvas, reportlab.pdfgen.canvas.Canvas)
+
+	pos = survey.defs.get_survey_id_pos()
+
 	canvas.saveState()
 	canvas.setFont('Courier-Bold', 10.5)
-	canvas.drawCentredString(105 * mm, 281.5 * mm, _(u'Survey-ID: %i') % survey_id)
-	draw_codebox(canvas, 19.5 * mm, 278.5 * mm, survey_id >> 16)
-	draw_codebox(canvas, 134.5 * mm, 278.5 * mm, survey_id & ((1 << 16) - 1))
+	canvas.drawCentredString(pos[3] * mm, pos[4] * mm, _(u'Survey-ID: %i') % survey.survey_id)
+	draw_codebox(canvas, pos[0] * mm, pos[2] * mm, survey.survey_id >> 16)
+	draw_codebox(canvas, pos[1] * mm, pos[2] * mm, survey.survey_id & ((1 << 16) - 1))
 	canvas.restoreState()
 
 
-def draw_questionnaire_id (canvas, questionnaire_id) :
+def draw_questionnaire_id (canvas, survey, questionnaire_id) :
 	if 0 : assert isinstance(canvas, reportlab.pdfgen.canvas.Canvas)
+
+	pos = survey.defs.get_questionnaire_id_pos()
+
 	canvas.saveState()
 	canvas.setFont('Courier-Bold', 10.5)
-	canvas.drawCentredString(105 * mm, 275 * mm, _(u'Questionnaire-ID: %i') % questionnaire_id)
-	draw_codebox(canvas, 19.5 * mm, 272 * mm, questionnaire_id)
-	draw_codebox(canvas, 134.5 * mm, 272 * mm, questionnaire_id)
+	canvas.drawCentredString(pos[3] * mm, pos[4] * mm, _(u'Questionnaire-ID: %i') % questionnaire_id)
+	draw_codebox(canvas, pos[0] * mm, pos[2] * mm, questionnaire_id)
+	draw_codebox(canvas, pos[1] * mm, pos[2] * mm, questionnaire_id)
 	canvas.restoreState()
 
 
 def draw_codebox (canvas, x, y, code) :
 	if 0 : assert isinstance(canvas, reportlab.pdfgen.canvas.Canvas)
-	size = 3.5 * mm
-	length = 2 * 8 # 2 Bytes
+	size = defs.codebox_step * mm
+	length = defs.codebox_length # 2 Bytes
 	canvas.saveState()
 	canvas.translate(x, y)
-	canvas.rect(0, 0, length * size, size)
+	canvas.rect(0, 0, defs.codebox_width * mm, defs.codebox_height * mm)
 	for i in range(length) :
 		if code & (1 << i) :
-			canvas.rect((length - i - 1) * size, 0, size, size, stroke = 1, fill = 1)
+			canvas.rect((length - i - 1) * size, 0, size, defs.codebox_height * mm, stroke = 1, fill = 1)
 	canvas.restoreState()
 
 
@@ -126,11 +132,13 @@ def draw_corner_boxes (survey, canvas, page) :
 		canvas.rect(x * mm,  y * mm, width * mm, height * mm, fill = corners[page][i])
 
 def stamp (survey, count = 0, used_ids = None) :
-	# Warning: Only even number of pages is allowed!!!
-
 	# copy questionnaire_ids
 	# get number of sheets to create
 	if count :
+		if not survey.defs.print_questionnaire_id :
+			print _("You may not specify the number of sheets for surveys that do not print a quesitonnaire ID.")
+			return 1
+
 		if used_ids :
 			used_ids = file(used_ids, 'r')
 			survey.questionnaire_ids.extend([int(id) for id in used_ids.readlines()])
@@ -144,6 +152,10 @@ def stamp (survey, count = 0, used_ids = None) :
 		questionnaire_ids = [id for id in questionnaire_ids if id > min]
 		random.shuffle(questionnaire_ids)
 	else :
+		if survey.defs.print_questionnaire_id :
+			print _("You needs to specify the number of questionnaires to create when questionnaire are printed IDs.")
+			return 1
+
 		sheets = 1
 		questionnaire_ids = None
 
@@ -183,12 +195,14 @@ def stamp (survey, count = 0, used_ids = None) :
 			draw_corner_boxes(survey, canvas, j)
 			if j % 2 or questionnaire_length == 1:
 				if questionnaire_ids :
-					if j == 1 :
+					if j == 1 or questionnaire_length == 1 :
 						# Only read a new ID for the first page.
 						id = questionnaire_ids.pop()
 						survey.questionnaire_ids.append(id)
-					draw_questionnaire_id(canvas, id)
-				draw_survey_id(canvas, survey.survey_id)
+					draw_questionnaire_id(canvas, survey, id)
+
+				if survey.defs.print_survey_id:
+					draw_survey_id(canvas, survey)
 			canvas.showPage()
 		log.progressbar.update(i + 1)
 

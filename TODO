@@ -1,3 +1,3 @@
- * Test more Scanners
- * Different paper sizes (hardcoded to A4)
- * Multipage/singlepage (up to 6 pages are possible)
+ * Allow the user to select whether to print questionnaire/survey ID.
+ * Aggregating multipage scans via the questionnaire ID (I think this may
+   work, but don't remember).

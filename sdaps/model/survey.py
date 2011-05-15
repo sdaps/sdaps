@@ -19,6 +19,7 @@
 import bz2
 import cPickle
 import os
+from sdaps import defs
 
 from sdaps import log
 
@@ -27,7 +28,36 @@ _ = ugettext
 
 # Force a certain set of options using slots
 class Defs (object) :
-	__slots__ = ["paper_width", "paper_height"]
+	__slots__ = ['paper_width', 'paper_height', 'print_questionnaire_id',
+	             'print_survey_id']
+
+	def get_survey_id_pos(self):
+		y_pos = self.paper_height - defs.corner_mark_bottom - defs.corner_box_padding
+		y_pos -= defs.codebox_height
+
+		left_padding = defs.corner_mark_left + 2*defs.corner_box_padding + defs.corner_box_width
+		right_padding = defs.corner_mark_right + 2*defs.corner_box_padding + defs.corner_box_width
+
+		text_y_pos = y_pos + 3
+		x_center = left_padding + (self.paper_width - left_padding - right_padding) / 2.0
+
+		msb_box_x = left_padding
+		lsb_box_x = self.paper_width - right_padding - defs.codebox_width
+
+		text_x_pos = left_padding + (self.paper_width - right_padding - left_padding) / 2
+
+		return msb_box_x, lsb_box_x, y_pos, text_x_pos, text_y_pos
+
+	def get_questionnaire_id_pos(self):
+		msb_box_x, lsb_box_x, y_pos, text_x_pos, text_y_pos = self.get_survey_id_pos()
+
+		if self.print_survey_id:
+			# Just move the y positions up if neccessary
+			y_pos -= defs.codebox_height + defs.corner_box_padding
+			text_y_pos -= defs.codebox_height + defs.corner_box_padding
+
+		return msb_box_x, lsb_box_x, y_pos, text_x_pos, text_y_pos
+
 
 class Survey (object) :
 

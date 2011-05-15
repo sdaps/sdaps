@@ -71,7 +71,9 @@ def setup (survey, questionnaire_odt, questionnaire_pdf, additionalqobjects = No
 	page = doc.read_page(1)
 	survey.defs.paper_width = abs(page.MediaBox[0] - page.MediaBox[2]) / 72.0 * 25.4
 	survey.defs.paper_height = abs(page.MediaBox[1] - page.MediaBox[3]) / 72.0 * 25.4
-                        
+	survey.defs.print_questionnaire_id = False
+	survey.defs.print_survey_id = True
+
 	# Parse qobjects
 	try:
 		qobjectsparser.parse(survey, questionnaire_odt, boxes)
@@ -89,7 +91,7 @@ def setup (survey, questionnaire_odt, questionnaire_pdf, additionalqobjects = No
 	# Parse Metadata
 	metaparser.parse(survey, questionnaire_odt)
 
-	# Last not least calculate the survey id
+	# Last but not least calculate the survey id
 	survey.calculate_survey_id()
 
 	# Print the result
