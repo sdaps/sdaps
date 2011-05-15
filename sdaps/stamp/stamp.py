@@ -49,7 +49,7 @@ def draw_survey_id (canvas, survey) :
 	pos = survey.defs.get_survey_id_pos()
 
 	canvas.saveState()
-	canvas.setFont('Courier-Bold', 10.5)
+	canvas.setFont(defs.codebox_text_font, defs.codebox_text_font_size)
 	canvas.drawCentredString(pos[3] * mm, pos[4] * mm, _(u'Survey-ID: %i') % survey.survey_id)
 	draw_codebox(canvas, pos[0] * mm, pos[2] * mm, survey.survey_id >> 16)
 	draw_codebox(canvas, pos[1] * mm, pos[2] * mm, survey.survey_id & ((1 << 16) - 1))
@@ -62,7 +62,7 @@ def draw_questionnaire_id (canvas, survey, questionnaire_id) :
 	pos = survey.defs.get_questionnaire_id_pos()
 
 	canvas.saveState()
-	canvas.setFont('Courier-Bold', 10.5)
+	canvas.setFont(defs.codebox_text_font, defs.codebox_text_font_size)
 	canvas.drawCentredString(pos[3] * mm, pos[4] * mm, _(u'Questionnaire-ID: %i') % questionnaire_id)
 	draw_codebox(canvas, pos[0] * mm, pos[2] * mm, questionnaire_id)
 	draw_codebox(canvas, pos[1] * mm, pos[2] * mm, questionnaire_id)

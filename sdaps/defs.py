@@ -51,6 +51,11 @@ codebox_height = 3.5 # mm
 # Padding that is ignored when testing the image whether it is 1/0
 codebox_offset = 0.75 # mm
 
+# The font and size of the font for the text that is printed between the codeboxes
+codebox_text_font = 'Courier-Bold'
+codebox_text_font_size = 10.5
+# This is added to the vertical position to shift the text visually into the center
+codebox_text_baseline_shift = 3
 
 # Magic values for recognition
 # The coverage above which a codebox is considered to be a logical 1

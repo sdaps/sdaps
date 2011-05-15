@@ -38,7 +38,7 @@ class Defs (object) :
 		left_padding = defs.corner_mark_left + 2*defs.corner_box_padding + defs.corner_box_width
 		right_padding = defs.corner_mark_right + 2*defs.corner_box_padding + defs.corner_box_width
 
-		text_y_pos = y_pos + 3
+		text_y_pos = y_pos + defs.codebox_text_baseline_shift
 		x_center = left_padding + (self.paper_width - left_padding - right_padding) / 2.0
 
 		msb_box_x = left_padding
