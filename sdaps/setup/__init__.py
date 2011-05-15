@@ -23,24 +23,52 @@ document and its PDF Export.
 
 from sdaps import model
 from sdaps import script
+import optparse
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
-
-@script.register
-@script.doc(_(u'''questionnaire_odt questionnaire_pdf [additional_questions]
+usage=_("""[options] questionnaire_odt questionnaire_pdf [additional_questions]
 
 	Setup creates a new survey. It parses the questionnaire to create the data
 	model. The survey must not exist yet.
 
 	questionnaire_odt: the questionnaire in odt-format
 	questionnaire_pdf: the questionnaire in pdf-format
-	internetquestions: the questions in the internet (optional)
-	'''))
-def setup (survey_dir, questionnaire_odt, questionnaire_pdf,
-	internetquestions = None) :
+	internetquestions: the questions in the internet (optional)""")
+
+# Stupid bugger always adds a "Usage:" string that we do not want.
+parser = optparse.OptionParser(usage=optparse.SUPPRESS_USAGE)
+
+parser.set_defaults(print_survey_id=True)
+parser.set_defaults(print_questionnaire_id=True)
+
+parser.add_option('--print-survey-id', action="store_const",
+                  help=_('Enable printing of the survey ID (default).'),
+                  dest='print_survey_id', const=True)
+parser.add_option('--no-print-survey-id', action="store_const",
+                  help=_('Disable printing of the survey ID.'),
+                  dest='print_survey_id', const=False)
+
+parser.add_option('--print-questionnaire-id', action="store_const",
+                  help=_('Enable printing of the questionnaire ID.'),
+                  dest='print_questionnaire_id', const=True)
+parser.add_option('--no-print-questionnaire-id', action="store_const",
+                  help=_('Disable printing of the questionnaire ID (default).'),
+                  dest='print_questionnaire_id', const=False)
+
+@script.register
+@script.doc(usage + '\n\n\t' + '\n\t'.join(parser.format_help().split('\n')))
+def setup (survey_dir, *args) :
 	survey = model.survey.Survey.new(survey_dir)
+
+	(options, arguments) = parser.parse_args(list(args))
+
+	if not len(arguments) in [2, 3]:
+		# Print our documentation string
+		print setup.func_doc
+		return 1
+
 	import setup
-	setup.setup(survey, questionnaire_odt, questionnaire_pdf, internetquestions)
+	setup.setup(survey, options, *arguments)
 

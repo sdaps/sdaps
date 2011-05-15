@@ -26,7 +26,10 @@ fi
 rm -rf "$PROJECT"
 
 # Setup the test project, using the data in "data"
-"$SDAPS" "$PROJECT" setup "data/debug.odt" "data/debug.pdf" "data/debug.internetquestions"
+# By disabling the surveyid and enable the questionnaire id we test more
+# unsual code paths, and we don't have a problem because the survey id
+# changed ...
+"$SDAPS" "$PROJECT" setup --print-questionnaire-id --no-print-survey-id "data/debug.odt" "data/debug.pdf" "data/debug.internetquestions"
 
 # Create a cover page in projects/test/cover.pdf
 "$SDAPS" "$PROJECT" cover

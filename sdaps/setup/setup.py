@@ -34,7 +34,8 @@ import metaparser
 from pdftools import pdffile
 
 
-def setup (survey, questionnaire_odt, questionnaire_pdf, additionalqobjects = None) :
+def setup (survey, options, questionnaire_odt, questionnaire_pdf, additionalqobjects=None) :
+
 	if os.access(survey.path(), os.F_OK) :
 		print _('The survey directory already exists')
 		print _('Cancelling setup')
@@ -71,8 +72,8 @@ def setup (survey, questionnaire_odt, questionnaire_pdf, additionalqobjects = No
 	page = doc.read_page(1)
 	survey.defs.paper_width = abs(page.MediaBox[0] - page.MediaBox[2]) / 72.0 * 25.4
 	survey.defs.paper_height = abs(page.MediaBox[1] - page.MediaBox[3]) / 72.0 * 25.4
-	survey.defs.print_questionnaire_id = False
-	survey.defs.print_survey_id = True
+	survey.defs.print_questionnaire_id = options.print_questionnaire_id
+	survey.defs.print_survey_id = options.print_survey_id
 
 	# Parse qobjects
 	try:
