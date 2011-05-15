@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-15 03:40+0200\n"
-"PO-Revision-Date: 2011-05-15 03:41+0100\n"
+"POT-Creation-Date: 2011-05-15 13:03+0200\n"
+"PO-Revision-Date: 2011-05-15 13:06+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: <>\n"
 "Language: \n"
@@ -254,14 +254,14 @@ msgstr ""
 msgid "Existing fields: %s"
 msgstr "Definierte Felder: %s"
 
-#: ../sdaps/model/survey.py:137
+#: ../sdaps/model/survey.py:144
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:147
+#: ../sdaps/model/survey.py:154
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
@@ -407,59 +407,74 @@ msgstr "Abgegebene Fragebögen"
 msgid "sdaps report"
 msgstr "sdaps Report"
 
-#: ../sdaps/setup/__init__.py:32
+#: ../sdaps/setup/__init__.py:31
 msgid ""
-"questionnaire_odt questionnaire_pdf [additional_questions]\n"
+"[options] questionnaire_odt questionnaire_pdf [additional_questions]\n"
 "\n"
 "\tSetup creates a new survey. It parses the questionnaire to create the data\n"
 "\tmodel. The survey must not exist yet.\n"
 "\n"
 "\tquestionnaire_odt: the questionnaire in odt-format\n"
 "\tquestionnaire_pdf: the questionnaire in pdf-format\n"
-"\tinternetquestions: the questions in the internet (optional)\n"
-"\t"
+"\tinternetquestions: the questions in the internet (optional)"
 msgstr ""
-"questionnaire_odt questionnaire_pdf [additional_questions]\n"
+"[options] questionnaire_odt questionnaire_pdf [additional_questions]\n"
 "\t\n"
-"\tErstellt ein neues Projektverzeichniss. Das Verzeichniss darf noch nicht existieren.\n"
+"\tErstellt ein neues Projektverzeichnis. Das Verzeichnis darf noch nicht existieren.\n"
 "\t\n"
 "\tquestionnaire_odt: Der Fragebogen im ODT-Format\n"
 "\tquestionnaire_pdf: Der Fragebogen im PDF-Format\n"
 "\tinternetquestions: Datei mit zusätzlichen Fragen.\n"
 "\t"
 
-#: ../sdaps/setup/setup.py:39
+#: ../sdaps/setup/__init__.py:47
+msgid "Enable printing of the survey ID (default)."
+msgstr "Ausschalten der Umfrage-ID auf den Bögen. (Standard)"
+
+#: ../sdaps/setup/__init__.py:50
+msgid "Disable printing of the survey ID."
+msgstr "Ausschalten der Umfrage-ID auf den Bögen."
+
+#: ../sdaps/setup/__init__.py:54
+msgid "Enable printing of the questionnaire ID."
+msgstr "Einschalten der Fragebogen-ID auf den Bögen."
+
+#: ../sdaps/setup/__init__.py:57
+msgid "Disable printing of the questionnaire ID (default)."
+msgstr "Ausschalten der Fragebogen-ID auf den Bögen. (Standard)"
+
+#: ../sdaps/setup/setup.py:40
 #: ../sdaps/setuptex/setup.py:40
 msgid "The survey directory already exists"
 msgstr "Das Umfrageverzeichniss existiert bereits."
 
-#: ../sdaps/setup/setup.py:40
-#: ../sdaps/setup/setup.py:46
-#: ../sdaps/setup/setup.py:52
-#: ../sdaps/setup/setup.py:59
+#: ../sdaps/setup/setup.py:41
+#: ../sdaps/setup/setup.py:47
+#: ../sdaps/setup/setup.py:53
+#: ../sdaps/setup/setup.py:60
 #: ../sdaps/setuptex/setup.py:41
 #: ../sdaps/setuptex/setup.py:47
 #: ../sdaps/setuptex/setup.py:54
 msgid "Cancelling setup"
 msgstr "Setup abgebrochen"
 
-#: ../sdaps/setup/setup.py:45
+#: ../sdaps/setup/setup.py:46
 #, python-format
 msgid "Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text"
 msgstr "Unbekanntes Dateiformat (%s). questionnaire_odt muss application/vnd.oasis.opendocument.text sein."
 
-#: ../sdaps/setup/setup.py:51
+#: ../sdaps/setup/setup.py:52
 #, python-format
 msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
 msgstr "Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
 
-#: ../sdaps/setup/setup.py:58
+#: ../sdaps/setup/setup.py:59
 #: ../sdaps/setuptex/setup.py:53
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
 
-#: ../sdaps/setup/setup.py:81
+#: ../sdaps/setup/setup.py:82
 msgid "Error: Caught an Exception while parsing the ODT file. The current state is:"
 msgstr "Fehler: Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der jetzige Zustand ist:"
 
