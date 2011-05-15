@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sh "run-test.sh" "../sdaps.py" "$1"
+sh "run-test.sh" "../sdaps.py"

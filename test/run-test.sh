@@ -10,16 +10,11 @@ else
 	SDAPS="$1"
 fi
 
-# Default project or $1
-if [ "x$2" = "x" ]; then
-	PROJECT="projects/test"
-else
-	PROJECT="$2"
-fi
+PROJECT="projects/test-odt"
 
 # Create projects dir if it does not exist
-if [ ! -e "projects" ]; then
-	mkdir "projects"
+if [ ! -e `dirname $PROJECT` ]; then
+	mkdir -p `dirname $PROJECT`
 fi
 
 # Remove project dir that may exist
@@ -29,7 +24,7 @@ rm -rf "$PROJECT"
 # By disabling the surveyid and enable the questionnaire id we test more
 # unsual code paths, and we don't have a problem because the survey id
 # changed ...
-"$SDAPS" "$PROJECT" setup --print-questionnaire-id --no-print-survey-id "data/debug.odt" "data/debug.pdf" "data/debug.internetquestions"
+"$SDAPS" "$PROJECT" setup --print-questionnaire-id --no-print-survey-id "data/odt/debug.odt" "data/odt/debug.pdf" "data/odt/debug.internetquestions"
 
 # Create a cover page in projects/test/cover.pdf
 "$SDAPS" "$PROJECT" cover
@@ -41,7 +36,7 @@ rm -rf "$PROJECT"
 "$SDAPS" "$PROJECT" ids
 
 # Import the scanned data. The data has to be a multipage 1bpp tif file.
-"$SDAPS" "$PROJECT" add "data/debug.tif"
+"$SDAPS" "$PROJECT" add "data/odt/debug.tif"
 
 # Analyse the image data
 "$SDAPS" "$PROJECT" recognize
@@ -49,3 +44,27 @@ rm -rf "$PROJECT"
 # And finally, create a report with the result
 "$SDAPS" "$PROJECT" report
 
+###########################################################
+# Test Tex 
+###########################################################
+
+PROJECT="projects/test-tex"
+
+# Create projects dir if it does not exist
+if [ ! -e `dirname $PROJECT` ]; then
+	mkdir -p `dirname $PROJECT`
+fi
+
+# Remove project dir that may exist
+rm -rf "$PROJECT"
+
+"$SDAPS" "$PROJECT" setup_tex "data/tex/questionnaire.tex"
+
+# Create a cover page in projects/test/cover.pdf
+"$SDAPS" "$PROJECT" cover
+
+# Create 10 unique sheets that can be printed and handed out
+"$SDAPS" "$PROJECT" stamp
+
+# And finally, create a report with the result
+"$SDAPS" "$PROJECT" report

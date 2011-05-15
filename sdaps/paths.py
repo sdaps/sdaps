@@ -32,6 +32,9 @@ local_run = False
 # required if local_run == True
 build_dir = str()
 
+# required if local_run == True
+source_dir = str()
+
 # required if local_run == False
 prefix = str()
 
@@ -39,7 +42,7 @@ prefix = str()
 def init (local_run_value, package_path) :
 	u'''Initialize path values for sdaps
 	'''
-	global local_run, build_dir, prefix
+	global local_run, build_dir, source_dir, prefix
 
 	# Initialize local_run
 	local_run = local_run_value
@@ -47,6 +50,8 @@ def init (local_run_value, package_path) :
 	base_dir = os.path.split(os.path.abspath(package_path))[0]
 
 	if local_run :
+		source_dir = base_dir
+
 		# Initialize gettext
 		init_gettext(os.path.join(
 		    base_dir,

@@ -62,6 +62,8 @@ analyse the scanned data, and create a report.
                   ('share/sdaps/glade',
                    glob.glob("sdaps/gui/*.glade")
                   ),
+                  ('share/sdaps', 'tex/sdaps.cls'
+                  ),
                   ],
       cmdclass = { "build" : build_extra.build_extra,
                    "build_i18n" :  build_i18n.build_i18n,

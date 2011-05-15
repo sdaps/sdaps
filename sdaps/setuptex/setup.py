@@ -23,6 +23,7 @@ import subprocess
 from sdaps import utils
 from sdaps import model
 from sdaps import log
+from sdaps import paths
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
@@ -61,8 +62,13 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 	os.mkdir(survey.path())
 	try:
 		shutil.copy(questionnaire_tex, survey.path('questionnaire.tex'))
-		# XXX: Not good as is ...
-		shutil.copy('sdaps.cls', survey.path('sdaps.cls'))
+		if paths.local_run :
+			cls_file = os.path.join(paths.source_dir, 'tex', 'sdaps.cls')
+		else :
+			cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'sdaps.cls')
+
+		shutil.copy(cls_file, survey.path('sdaps.cls'))
+
 
 		# Compile the .tex file
 		subprocess.call(['rubber', '--into', survey.path(), '-d', survey.path('questionnaire.tex')])

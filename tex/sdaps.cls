@@ -360,7 +360,10 @@
 %-------------------------------------------------------------------------------
 %                style commands definitions
 %-------------------------------------------------------------------------------
-% symbols used 
+\providecommand{\addinfo}[2]{%
+  \protectedimmediatewrite\sdapsoutfile{#1=#2}%
+}
+
 \providecommand{\checkbox}{%
   \protectedimmediatewrite\sdapsoutfile{Box=Checkbox}%
   \tikz[baseline=0.5mm]{%

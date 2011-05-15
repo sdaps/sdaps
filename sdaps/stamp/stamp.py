@@ -136,7 +136,7 @@ def stamp (survey, count = 0, used_ids = None) :
 	# get number of sheets to create
 	if count :
 		if not survey.defs.print_questionnaire_id :
-			print _("You may not specify the number of sheets for surveys that do not print a quesitonnaire ID.")
+			print _("You may not specify the number of sheets for surveys that do not print a quesitonnaire id.")
 			return 1
 
 		if used_ids :
@@ -153,7 +153,7 @@ def stamp (survey, count = 0, used_ids = None) :
 		random.shuffle(questionnaire_ids)
 	else :
 		if survey.defs.print_questionnaire_id :
-			print _("You needs to specify the number of questionnaires to create when questionnaire are printed IDs.")
+			print _("You need to specify the number of questionnaires to create when questionnaire ids are printed.")
 			return 1
 
 		sheets = 1
