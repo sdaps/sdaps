@@ -28,6 +28,8 @@ from sdaps import defs
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
+warned_multipage_not_correctly_scanned = False
+
 class Sheet (model.buddy.Buddy) :
 
 	__metaclass__ = model.buddy.Register
@@ -138,10 +140,14 @@ class Image (model.buddy.Buddy) :
 			if self.obj.sheet.survey.defs.print_questionnaire_id :
 				pos = self.obj.sheet.survey.defs.get_questionnaire_id_pos()
 
-				self.obj.sheet.questionnaire_id = self.read_codebox(
+				questionnaire_id = self.read_codebox(
 					pos[0], pos[2]
 				)
-				print self.obj.sheet.questionnaire_id
+				if self.obj.sheet.questionnaire_id != 0 and questionnaire_id != self.obj.sheet.questionnaire_id :
+					if not warned_multipage_not_correctly_scanned:
+						warned_multipage_not_correctly_scanned = True
+						print _('You are using a multipage questionnaire, but you have not scanned the pages in the correct order. This means that filtering will not work correctly!')
+				self.obj.sheet_questionnaire_id = questionnaire_id
 			else:
 				self.obj.sheet.questionnaire_id = -1
 

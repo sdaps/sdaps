@@ -1,3 +1,4 @@
  * Allow the user to select whether to print questionnaire/survey ID.
- * Aggregating multipage scans via the questionnaire ID (I think this may
-   work, but don't remember).
+ * Aggregating multipage scans via the questionnaire ID. This can be usefull
+   if you cannot guarantee that multipage questionnaires are scanned in
+   the correct order.

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-15 02:18+0200\n"
-"PO-Revision-Date: 2011-05-15 02:28+0100\n"
+"POT-Creation-Date: 2011-05-15 02:43+0200\n"
+"PO-Revision-Date: 2011-05-15 02:44+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: <>\n"
 "Language: \n"
@@ -281,6 +281,10 @@ msgstr "%s: Seitenzahl wurde nicht erkannt. Überspringe dieses Bild."
 #, python-format
 msgid "%s: Wrong survey_id. Cancelling recognition of that image."
 msgstr "%s: Falsche Umfrage ID. Überspringe dieses Bild."
+
+#: ../sdaps/recognize/buddies.py:145
+msgid "You are using a multipage questionnaire, but you have not scanned the pages in the correct order. This means that filtering will not work correctly!"
+msgstr "Es handelt sich bei dem Fragebogen um einen Mehrseitigen Fragebogen. Die Seiten wurden jedoch nicht in der richtigen Reihenfolge gescanned, weshalb die Filterfunktionen leider nicht korrekt funktionieren."
 
 #: ../sdaps/recognize/__init__.py:34
 msgid ""
