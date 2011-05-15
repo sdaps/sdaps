@@ -29,9 +29,10 @@ _ = ugettext
 
 	Stamp corner marks and questionnaire ids on the questionnaire.
 
-	count: number of unique questionnaire ids you want to create. If you d'ont
-    	specifiy a number, stamp will create one stamped questionnaire without
-        questionnaire id
+	count: number of unique questionnaire ids you want to create.
+	       This is only used if questionnaire ids are supposed to be
+	       printed. This option needs to be specified when creating the
+	       project.
 	used_ids: don't use any id named in this file (pattern = '%i\\n')
 
 	creates stamped_[index].pdf
@@ -47,5 +48,5 @@ def stamp (survey_dir, count = 0, used_ids = None) :
 
 	import stamp
 
-	stamp.stamp(survey, count, used_ids)
+	return stamp.stamp(survey, count, used_ids)
 
