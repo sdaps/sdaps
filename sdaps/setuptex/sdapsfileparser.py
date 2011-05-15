@@ -80,6 +80,10 @@ def parse (survey, boxes) :
 
 		if arg == 'Title':
 			survey.title = value
+		elif arg == 'PrintQuestionnaireId':
+			survey.defs.print_questionnaire_id = bool(int(value))
+		elif arg == 'PrintSurveyId':
+			survey.defs.print_survey_id = bool(int(value))
 		elif arg.startswith(QOBJECT_PREFIX):
 			index, string = get_index_and_string(value)
 			if index:
@@ -102,7 +106,7 @@ def parse (survey, boxes) :
 
 			answer_type = arg[len(ANSWER_PREFIX)+1:]
 
-			qobject.setup.answer(value)		
+			qobject.setup.answer(value)
 		elif arg == BOX:
 			box = boxes.pop(0)
 			# Sanity check, whether we got the correct box type.

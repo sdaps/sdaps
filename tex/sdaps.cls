@@ -34,6 +34,16 @@
 \newif\if@PAGEMARK\@PAGEMARKfalse
 \DeclareOption{pagemark}{\@PAGEMARKtrue}
 
+% Whether sdaps should print the questionnaire id
+\newif\if@PrintQuestionnaireId\@PrintQuestionnaireIdfalse
+\DeclareOption{no_print_questionnaire_id}{\@PrintQuestionnaireIdfalse}
+\DeclareOption{print_questionnaire_id}{\@PrintQuestionnaireIdtrue}
+
+% Whether sdaps should print the questionnaire id
+\newif\if@PrintSurveyId\@PrintSurveyIdtrue
+\DeclareOption{no_print_survey_id}{\@PrintSurveyIdfalse}
+\DeclareOption{print_survey_id}{\@PrintSurveyIdtrue}
+
 % pass unknown options to scrartcl
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
 
@@ -148,32 +158,32 @@
     %---------------------------------------------------------------------------
     \if@PAGEMARK
       \begin{scope}[line width=\elementlinewidth, line join=miter]%
-        \begin{scope}[shift={($(current page.north west) + (10mm, -12mm)$)}]%
+        \begin{scope}[shift={($(current page.north west) + (\edgeleftmargin, -\edgetopmargin)$)}]%
           \draw (0,-\edgelen) -- (0, 0) -- (\edgelen,0);%
           \ifodd \thepage%
-            \draw (3mm, -3mm) rectangle +(\boxsize,-\boxsize);%
+            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
           \else%
-            \fill (3mm, -3mm) rectangle +(\boxsize,-\boxsize);%
+            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
           \fi%
         \end{scope}%
-        \begin{scope}[shift={($(current page.north east) + (-10mm, -12mm)$)}]%
+        \begin{scope}[shift={($(current page.north east) + (-\edgerightmargin, -\edgetopmargin)$)}]%
           \draw (0,-\edgelen) -- (0,0) -- (-\edgelen,0);%
-          \fill (-3mm, -3mm) rectangle +(-\boxsize,-\boxsize);%
+          \fill (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
         \end{scope}%
-        \begin{scope}[shift={($(current page.south west) + (10mm, 12mm)$)}]%
+        \begin{scope}[shift={($(current page.south west) + (\edgeleftmargin, \edgebottommargin)$)}]%
           \draw (0,\edgelen) -- (0, 0) -- (\edgelen,0);%
           \ifodd \thepage%
-            \fill (3mm, 3mm) rectangle +(\boxsize,\boxsize);%
+            \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \else%
-            \draw (3mm, 3mm) rectangle +(\boxsize,\boxsize);%
+            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \fi%
         \end{scope}%
-        \begin{scope}[shift={($(current page.south east) + (-10mm, 12mm)$)}]%
+        \begin{scope}[shift={($(current page.south east) + (-\edgerightmargin, \edgebottommargin)$)}]%
           \draw (0,\edgelen) -- (0mm, 0mm) -- (-\edgelen,0);%
           \ifodd \thepage%
-            \fill (-3mm, 3mm) rectangle +(-\boxsize,\boxsize);%
+            \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \else%
-            \draw (-3mm, 3mm) rectangle +(-\boxsize,\boxsize);%
+            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \fi%
         \end{scope}%
       \end{scope}%
@@ -187,66 +197,75 @@
       \else%
         % questionaire-id
         \begingroup
-          \begin{scope}[line width=\elementlinewidth, shift={(current page.north west)}]%
-            \begin{scope}[shift={($(\questionaireidmsbx, -\questionaireidmsby) + (0, -\codeboxheight)$)}]%
-              \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-              \@tempcnta=\value{questionaireid}%
-              \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-                \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-                {%
-                  \ifodd \@tempcnta%
-                    \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-                  \fi%
-                  \global\divide\@tempcnta by 2
-                }%
+          \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
+            \if@PrintQuestionnaireId%
+              \if@PrintSurveyId%
+                \def\@questionnaire_id_shift{\boxpaddings+\codeboxheight}
+              \else
+                \def\@questionnaire_id_shift{0pt}
+              \fi%
+              \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, \@questionnaire_id_shift)$)}]%
+                \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+                \@tempcnta=\value{questionaireid}%
+                \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+                  \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+                  {%
+                    \ifodd \@tempcnta%
+                      \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+                    \fi%
+                    \global\divide\@tempcnta by 2
+                  }%
+                \end{scope}%
               \end{scope}%
-            \end{scope}%
-            \begin{scope}[shift={($(\questionaireidlsbx, -\questionaireidlsby) + (0, -\codeboxheight)$)}]%
-              \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-              \@tempcnta=\value{questionaireid}%
-              \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-                \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-                {%
-                  \ifodd \@tempcnta%
-                    \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-                  \fi%
-                  \global\divide\@tempcnta by 2
-                }%
+              \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, \@questionnaire_id_shift)$)}]%
+                \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+                \@tempcnta=\value{questionaireid}%
+                \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+                  \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+                  {%
+                    \ifodd \@tempcnta%
+                      \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+                    \fi%
+                    \global\divide\@tempcnta by 2
+                  }%
+                \end{scope}%
               \end{scope}%
-            \end{scope}%
-            \begin{scope}[shift={($(current page.north) + (0, -\questionaireidmsby) + (0, -0.5\codeboxheight)$)}]%
-              \node{\usekomafont{questionaireidfont}Fragebogen-ID: \hexadecimal{questionaireid}};%
-            \end{scope}%
-            % survey-id
-            \begin{scope}[shift={($(\surveyidmsbx, -\surveyidmsby) + (0, -\codeboxheight)$)}]%
-              \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-              \@tempcnta=\value{surveyidmsb}%
-              \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-                \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-                {%
-                  \ifodd \@tempcnta%
-                    \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-                  \fi%
-                  \global\divide\@tempcnta by 2
-                }%
+              \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0 ,\@questionnaire_id_shift) + (0, 0.5\codeboxheight)$)}]%
+                \node{\usekomafont{questionaireidfont}Fragebogen-ID: \hexadecimal{questionaireid}};%
               \end{scope}%
-            \end{scope}%
-            \begin{scope}[shift={($(\surveyidlsbx, -\surveyidlsby) + (0, -\codeboxheight)$)}]%
-              \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-              \@tempcnta=\value{surveyidlsb}%
-              \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-                \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-                {%
-                  \ifodd \@tempcnta%
-                    \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-                  \fi%
-                  \global\divide\@tempcnta by 2
-                }%
+            \fi%
+            \if@PrintSurveyId%
+              % survey-id
+              \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, 0)$)}]%
+                \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+                \@tempcnta=\value{surveyidmsb}%
+                \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+                  \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+                  {%
+                    \ifodd \@tempcnta%
+                      \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+                    \fi%
+                    \global\divide\@tempcnta by 2
+                  }%
+                \end{scope}%
               \end{scope}%
-            \end{scope}%
-            \begin{scope}[shift={($(current page.north) + (0, -\surveyidmsby) + (0, -0.5\codeboxheight)$)}]%
-              \node{\usekomafont{surveyidfont}Umfrage-ID: \hexadecimal{surveyidmsb}\hexadecimal{surveyidlsb}};%
-            \end{scope}%
+              \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, 0)$)}]%
+                \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+                \@tempcnta=\value{surveyidlsb}%
+                \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+                  \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+                  {%
+                    \ifodd \@tempcnta%
+                      \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+                    \fi%
+                    \global\divide\@tempcnta by 2
+                  }%
+                \end{scope}%
+              \end{scope}%
+              \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0, 0.5\codeboxheight)$)}]%
+                \node{\usekomafont{surveyidfont}Umfrage-ID: \hexadecimal{surveyidmsb}\hexadecimal{surveyidlsb}};%
+              \end{scope}%
+            \fi%
           \end{scope}%
         \endgroup
       \fi%
@@ -302,15 +321,26 @@
 \raggedbottom
 \onecolumn
 
-\newlength{\edgesep}
-\setlength{\edgesep}{0.25cm}
+\newlength{\edgeleftmargin}
+\setlength{\edgeleftmargin}{10mm}
+\newlength{\edgerightmargin}
+\setlength{\edgerightmargin}{10mm}
+\newlength{\edgetopmargin}
+\setlength{\edgetopmargin}{12mm}
+\newlength{\edgebottommargin}
+\setlength{\edgebottommargin}{12mm}
 \newlength{\edgelen}
 \setlength{\edgelen}{2.00cm}
 \newlength{\elementlinewidth}
 \setlength{\elementlinewidth}{1.0bp}
 \newlength{\boxsize}
 \setlength{\boxsize}{3.5mm}
+\newlength{\boxpaddings}
+\setlength{\boxpaddings}{3mm}
 \addtolength{\boxsize}{-\elementlinewidth}
+
+\newlength{\cornerboxsize}
+\setlength{\cornerboxsize}{3.5mm}
 
 \newcounter{codeboxlength}
 \setcounter{codeboxlength}{16}
@@ -321,28 +351,12 @@
 
 \newcounter{questionaireid}
 \setcounter{questionaireid}{21845}
-\newlength{\questionaireidmsbx}
-\setlength{\questionaireidmsbx}{19.5mm}
-\newlength{\questionaireidmsby}
-\setlength{\questionaireidmsby}{272.5mm}
-\newlength{\questionaireidlsbx}
-\setlength{\questionaireidlsbx}{134.5mm}
-\newlength{\questionaireidlsby}
-\setlength{\questionaireidlsby}{272.5mm}
 \newkomafont{questionaireidfont}{\ttfamily\textbf}
 
 \newcounter{surveyidmsb}
 \setcounter{surveyidmsb}{52197}
 \newcounter{surveyidlsb}
 \setcounter{surveyidlsb}{39284}
-\newlength{\surveyidmsbx}
-\setlength{\surveyidmsbx}{19.5mm}
-\newlength{\surveyidmsby}
-\setlength{\surveyidmsby}{278.5mm}
-\newlength{\surveyidlsbx}
-\setlength{\surveyidlsbx}{134.5mm}
-\newlength{\surveyidlsby}
-\setlength{\surveyidlsby}{278.5mm}
 \newkomafont{surveyidfont}{\ttfamily\textbf}
 
 
@@ -608,6 +622,16 @@
   \immediate\openout\sdapsoutfile=\jobname.sdaps%
   \protectedimmediatewrite\sdapsoutfile{Author=\@author}
   \protectedimmediatewrite\sdapsoutfile{Title=\@title}
+  \if@PrintQuestionnaireId
+    \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=1}
+  \else
+    \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=0}
+  \fi
+  \if@PrintSurveyId
+    \protectedimmediatewrite\sdapsoutfile{PrintSurveyId=1}
+  \else
+    \protectedimmediatewrite\sdapsoutfile{PrintSurveyId=0}
+  \fi
 }
 
 \AtEndDocument{%
