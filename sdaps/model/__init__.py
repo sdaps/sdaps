@@ -22,13 +22,13 @@ Survey
 ======
 
 survey
-	+-- questionnaire
-	|		+-- qobjects ---------------+
-	|				+-- boxes ----------+
-	+-- sheets                          |
-			+-- data dictionary         |
-			|		+-- data objects <--+
-			+-- images
+    +-- questionnaire
+    |        +-- qobjects ---------------+
+    |                +-- boxes ----------+
+    +-- sheets                           |
+            +-- data dictionary          |
+            |        +-- data objects <--+
+            +-- images
 
 
 The questionnaire tree resembles the structer of the questionnaire and the
