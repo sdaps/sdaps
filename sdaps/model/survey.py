@@ -85,6 +85,13 @@ class Survey (object) :
 
 		for qobject in self.questionnaire.qobjects :
 			qobject.calculate_survey_id(md5)
+
+		for defs_slot in self.defs.__slots__:
+			if isinstance(self.defs.__getattribute__(defs_slot), float) :
+				md5.update(str(round(self.defs.__getattribute__(defs_slot), 1)))
+			else:
+				md5.update(str(self.defs.__getattribute__(defs_slot)))
+
 		self.survey_id = 0
 		# This compresses the md5 hash to a 32 bit unsigned value, by
 		# taking the lower two bits of each byte.
