@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-15 02:43+0200\n"
-"PO-Revision-Date: 2011-05-15 02:44+0100\n"
+"POT-Creation-Date: 2011-05-15 03:40+0200\n"
+"PO-Revision-Date: 2011-05-15 03:41+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: <>\n"
 "Language: \n"
@@ -266,23 +266,23 @@ msgstr[1] "%i Bögen"
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/recognize/buddies.py:69
-#: ../sdaps/recognize/buddies.py:114
+#: ../sdaps/recognize/buddies.py:71
+#: ../sdaps/recognize/buddies.py:116
 #, python-format
 msgid "%s: Matrix not recognized. Cancelling recognition of that image."
 msgstr "%s: Matrix wurde nicht erkannt. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:106
+#: ../sdaps/recognize/buddies.py:108
 #, python-format
 msgid "%s: Page number not recognized. Cancelling recognition of that image."
 msgstr "%s: Seitenzahl wurde nicht erkannt. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:133
+#: ../sdaps/recognize/buddies.py:135
 #, python-format
 msgid "%s: Wrong survey_id. Cancelling recognition of that image."
 msgstr "%s: Falsche Umfrage ID. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:145
+#: ../sdaps/recognize/buddies.py:149
 msgid "You are using a multipage questionnaire, but you have not scanned the pages in the correct order. This means that filtering will not work correctly!"
 msgstr "Es handelt sich bei dem Fragebogen um einen Mehrseitigen Fragebogen. Die Seiten wurden jedoch nicht in der richtigen Reihenfolge gescanned, weshalb die Filterfunktionen leider nicht korrekt funktionieren."
 
@@ -463,10 +463,40 @@ msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
 msgid "Error: Caught an Exception while parsing the ODT file. The current state is:"
 msgstr "Fehler: Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der jetzige Zustand ist:"
 
+#: ../sdaps/setup/buddies.py:59
+#, python-format
+msgid "Warning: Head %(l0)i got no title."
+msgstr "Warnung: Überschrift %(l0)i hat keinen Titel."
+
+#: ../sdaps/setup/buddies.py:72
+#, python-format
+msgid "Warning: %(class)s %(l0)i.%(l1)i got no question."
+msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat keine Frage."
+
 #: ../sdaps/setup/buddies.py:118
 #, python-format
 msgid "Error in question \"%s\""
 msgstr "Fehler in der Frage \"%s\""
+
+#: ../sdaps/setup/buddies.py:121
+#, python-format
+msgid "Warning: %(class)s %(l0)i.%(l1)i got no boxes."
+msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat keine Boxen."
+
+#: ../sdaps/setup/buddies.py:146
+#, python-format
+msgid "Warning: %(class)s %(l0)i.%(l1)i got not exactly five boxes."
+msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat nicht exakt fünf Boxen."
+
+#: ../sdaps/setup/buddies.py:151
+#, python-format
+msgid "Warning: %(class)s %(l0)i.%(l1)i got not exactly two answers."
+msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat nicht exakt fünf Antworten."
+
+#: ../sdaps/setup/buddies.py:173
+#, python-format
+msgid "Warning: %(class)s %(l0)i.%(l1)i got not exactly one box."
+msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat nicht exakt eine Box."
 
 #: ../sdaps/setup/boxesparser.py:118
 #: ../sdaps/setup/boxesparser.py:183

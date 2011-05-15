@@ -56,7 +56,7 @@ class Head (QObject) :
 	
 	def validate (self) :
 		if not self.obj.title :
-			print u'Warning: Head %i got no title.' % self.obj.id[0]
+			print _(u'Warning: Head %(l0)i got no title.') % { 'l0' : self.obj.id[0] }
 
 
 class Question (QObject) :
@@ -69,10 +69,10 @@ class Question (QObject) :
 	
 	def validate (self) :
 		if not self.obj.question :
-			print u'Warning: %s %i.%i got no question.' % (
-				self.obj.__class__.__name__,
-				self.obj.id[0], self.obj.id[1]
-			)
+			print _(u'Warning: %(class)s %(l0)i.%(l1)i got no question.') % {
+				'class' : self.obj.__class__.__name__,
+				'l0' : self.obj.id[0], 'l1' : self.obj.id[1]
+			}
 	
 
 class Choice (Question) :
@@ -118,10 +118,10 @@ class Choice (Question) :
 			raise AssertionError(_("Error in question \"%s\"") % self.obj.question)
 		del self.cache
 		if not self.obj.boxes :
-			print u'Warning: %s %i.%i got no boxes.' % (
-				self.obj.__class__.__name__,
-				self.obj.id[0], self.obj.id[1]
-			)
+			print _(u'Warning: %(class)s %(l0)i.%(l1)i got no boxes.') % {
+				'class' : self.obj.__class__.__name__,
+				'l0' : self.obj.id[0], 'l1' : self.obj.id[1]
+			}
 
 
 class Mark (Question) :
@@ -143,15 +143,15 @@ class Mark (Question) :
 	def validate (self) :
 		Question.validate(self)
 		if not len(self.obj.boxes) == 5 :
-			print u'Warning: %s %i.%i got not exactly five boxes.' % (
-				self.obj.__class__.__name__,
-				self.obj.id[0], self.obj.id[1]
-			)
+			print _(u'Warning: %(class)s %(l0)i.%(l1)i got not exactly five boxes.') % {
+				'class' : self.obj.__class__.__name__,
+				'l0' : self.obj.id[0], 'l1' : self.obj.id[1]
+			}
 		if not len(self.obj.answers) == 2 :
-			print u'Warning: %s %i.%i got not exactly two answers.' % (
-				self.obj.__class__.__name__,
-				self.obj.id[0], self.obj.id[1]
-			)
+			print _(u'Warning: %(class)s %(l0)i.%(l1)i got not exactly two answers.') % {
+				'class' : self.obj.__class__.__name__,
+				'l0' : self.obj.id[0], 'l1' : self.obj.id[1]
+			}
 	
 
 class Text (Question) :
@@ -170,10 +170,10 @@ class Text (Question) :
 	def validate (self) :
 		Question.validate(self)
 		if not len(self.obj.boxes) == 1 :
-			print u'Warning: %s %i.%i got not exactly one box.' % (
-				self.obj.__class__.__name__,
-				self.obj.id[0], self.obj.id[1]
-			)
+			print _(u'Warning: %(class)s %(l0)i.%(l1)i got not exactly one box.') % {
+				'class' : self.obj.__class__.__name__,
+				'l0' : self.obj.id[0], 'l1' : self.obj.id[1]
+			}
 
 
 class Additional_Head (Head) :
