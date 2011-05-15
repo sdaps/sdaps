@@ -40,8 +40,8 @@ if paths.local_run :
 
 from image import *
 
-set_magic_values(defs.image_corner_mark_min_length,
-                 defs.image_corner_mark_max_length,
+set_magic_values(defs.corner_mark_min_length,
+                 defs.corner_mark_max_length,
                  defs.image_line_width,
                  defs.image_line_coverage)
 
