@@ -30,6 +30,12 @@
 #define GET_PIXEL(_pixels, _stride, _x, _y) (((*(guint32*)((char*)(_pixels) + (_stride) * (_y) + (_x) / 32 * 4)) >> ((_x) % 32)) & 0x1)
 #endif
 
+/* Some of the more important Magic Values */
+gint sdaps_line_min_length = 215;
+gint sdaps_line_max_length = 250;
+gint sdaps_line_width = 5;
+gdouble sdaps_line_coverage = 0.65;
+
 cairo_surface_t*
 get_a1_from_tiff (char *filename, gboolean rotated)
 {
@@ -158,8 +164,8 @@ count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint hei
 	return black_pixel;	
 }
 
-#define LINE_WIDTH 5
-#define LINE_COVERAGE 0.65
+#define LINE_WIDTH sdaps_line_width
+#define LINE_COVERAGE sdaps_line_coverage
 
 static gboolean
 follow_line(cairo_surface_t *surface,
@@ -180,7 +186,7 @@ follow_line(cairo_surface_t *surface,
 	gint x, y;
 	gint start_x, start_y;
 	gint end_x, end_y;
-	double length;
+	double length = 0;
 	gint search_length_left;
 
 	/* Large default values to begin with. These may not overflow when added up! */
@@ -606,9 +612,9 @@ calculate_matrix(cairo_surface_t *surface,
                           gdouble mm_height)
 {
 	gint width, height;
-	gint line_width = LINE_WIDTH; /* XXX: Guestimation! 5? */
-	gint line_length = 215; /* XXX: Guestimation! */
-	gint line_max_length = 250; /* XXX: Guestimation! */
+	gint line_width = LINE_WIDTH;
+	gint line_length = sdaps_line_min_length;
+	gint line_max_length = sdaps_line_max_length;
 	gdouble x_topleft, y_topleft;
 	gdouble x_topright, y_topright;
 	gdouble x_bottomleft, y_bottomleft;

@@ -95,7 +95,7 @@ class Image (model.buddy.Buddy) :
 				corner[1] - half_pt,
 				width + pt,
 				height + pt
-			) > 0.7)
+			) > defs.cornerbox_on_coverage)
 			for corner in corner_boxes_positions
 		]
 
@@ -166,7 +166,7 @@ class Image (model.buddy.Buddy) :
 				defs.codebox_step - 2 * defs.codebox_offset,
 				defs.codebox_height - 2 * defs.codebox_offset
 			)
-			if coverage > 0.7 : code += 1
+			if coverage > defs.codebox_on_coverage : code += 1
 		return code
 
 	def calculate_matrix (self) :
@@ -206,7 +206,7 @@ class Image (model.buddy.Buddy) :
 			x, y,
 			width, height)
 
-		tolerance = 1.5
+		tolerance = defs.find_box_corners_tolerance
 		if (abs(x - tl[0]) > tolerance or
 		    abs(y - tl[1]) > tolerance or
 		    abs(x + width - tr[0]) > tolerance or
@@ -292,8 +292,6 @@ class Checkbox (Box) :
 	name = 'recognize'
 	obj_class = model.questionnaire.Checkbox
 
-	BORDER_WIDTH = 0.45
-
 	def recognize (self) :
 		image = self.obj.sheet.images[self.obj.page_number - 1]
 		matrix = image.recognize.correction_matrix(
@@ -307,9 +305,10 @@ class Checkbox (Box) :
 		self.obj.data.width = width
 		self.obj.data.height = height
 
-		coverage = image.recognize.get_coverage(x - self.BORDER_WIDTH, y - self.BORDER_WIDTH, width + 2*self.BORDER_WIDTH, height + 2*self.BORDER_WIDTH)
+		coverage = image.recognize.get_coverage(x - defs.checkbox_border_width, y - defs.checkbox_border_width,
+		                                        width + 2*defs.checkbox_border_width, height + 2*defs.checkbox_border_width)
 		self.obj.data.coverage = coverage
-		self.obj.data.state = 0.32 < coverage < 0.55
+		self.obj.data.state = defs.checkbox_checked_coverage < coverage < defs.checkbox_corrected_coverage
 
 
 class Textbox (Box) :
@@ -412,28 +411,27 @@ class Textbox (Box) :
 		width = self.obj.width
 		height = self.obj.height
 
-		# Always test a 2x2 mm area, so that every pixel is tested 4 times ...
-		step_x = 1.0
-		step_y = 1.0
-		test_width = 2.0
-		test_height = 2.0
+		# Scanning area and stepping
+		step_x = defs.textbox_scan_step_x
+		step_y = defs.textbox_scan_step_x
+		test_width = defs.textbox_scan_width
+		test_height = defs.textbox_scan_height
+
 		# extra_padding is always added to the box side at the end.
-		# It should be large enough so that the bounding box is visible
-		# if the user wrote outside the box
-		extra_padding = 0.5
-		scan_padding = 1.5
+		extra_padding = defs.textbox_extra_padding
+		scan_padding = defs.textbox_scan_uncorrected_padding
 
 		quad = Quadrilateral((x, y), (x + width, y), (x + width, y + height), (x, y + height))
 		try:
 			quad = Quadrilateral(*image.recognize.find_box_corners(x, y, width, height))
 			# Lower padding, as we found the corners and are therefore more acurate
-			scan_padding = 0.3
+			scan_padding = defs.textbox_scan_padding
 		except AssertionError:
 			print "Did not find corners."
 
 		for x, y in quad.iterate(step_x, step_y, test_width, test_height, scan_padding):
 			coverage = image.recognize.get_coverage(x, y, test_width, test_height)
-			if coverage > 0.06:
+			if coverage > defs.textbox_scan_coverage:
 				if not bbox:
 					bbox = [x, y, test_width, test_height]
 				else:
@@ -444,7 +442,8 @@ class Textbox (Box) :
 					bbox[0] = bbox_x
 					bbox[1] = bbox_y
 
-		if bbox and (bbox[2] > 7 or bbox[3] > 7) :
+		if bbox and (bbox[2] > defs.textbox_minimum_writing_width or
+		             bbox[3] > defs.textbox_minimum_writing_height) :
 			# Do not accept very small bounding boxes.
 			self.obj.data.state = True
 

@@ -51,3 +51,61 @@ codebox_height = 3.5 # mm
 # Padding that is ignored when testing the image whether it is 1/0
 codebox_offset = 0.75 # mm
 
+
+# Magic values for recognition
+# The coverage above which a codebox is considered to be a logical 1
+codebox_on_coverage = 0.7
+
+# The coverage above which a cornerbox is considered to be a logical 1
+cornerbox_on_coverage = 0.7
+
+# Tolerance for the text box corner adjustment. If the difference is more than
+# this in mm, the adjusted values will be discarded.
+find_box_corners_tolerance = 1.5
+
+# This is the size in mm that the checkbox will be increased for the coverage check
+checkbox_border_width = 0.45
+# The coverage above which a checkbox is considered to be checked
+checkbox_checked_coverage = 0.32
+# The coverage above a checkbox is considered to be corrected (ie. not checked)
+checkbox_corrected_coverage = 0.55
+
+# The size in mm of the area that is scanned during checking of textboxes. The step
+# is the x/y distance in mm of each checked area. They overlap on purpose.
+textbox_scan_step_x = 1.0
+textbox_scan_step_y = 1.0
+textbox_scan_width = 2.0
+textbox_scan_height = 2.0
+
+# The pixel coverage of the scan area that is required for it to
+# be considered writing.
+textbox_scan_coverage = 0.06
+
+# Minimum size in mm for a textbox to be considered filled in.
+# This is usefull because otherwise small dirt dots will be considered writing.
+textbox_minimum_writing_width = 7
+textbox_minimum_writing_height = 7
+
+# Distance to stay away from the outline in mm so that it will not be detected
+# as handwriting. The "uncorrected" value is used when the corners have not been
+# detected correctly, which should hopefully never happen.
+textbox_scan_padding = 0.3
+textbox_scan_uncorrected_padding = 1.5
+
+# Padding tha will always be added to the textbox size if content has been recognized.
+# This is important because we want the outline to be visible if someone wrote
+# over the outline (so that the reader can see that the software worked correctly).
+textbox_extra_padding = 0.5
+
+# The following values are used when working on the pixel data of the scanned images.
+# The corner_mark min/max length are the minium/maximum lenght in *pixel* that the
+# lines of the corner marks may have.
+image_corner_mark_min_length = 215
+image_corner_mark_max_length = 250
+# The width of the corner mark and textbox lines in pixel in the scanned image.
+image_line_width = 5
+# The coverage that the line needs to have for recognition
+image_line_coverage = 0.65
+
+
+

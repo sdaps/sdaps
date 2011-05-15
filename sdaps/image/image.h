@@ -19,6 +19,12 @@
 #include <glib.h>
 #include <cairo.h>
 
+/* Some of the more important Magic Values */
+extern gint sdaps_line_min_length;
+extern gint sdaps_line_max_length;
+extern gint sdaps_line_width;
+extern gdouble sdaps_line_coverage;
+
 cairo_surface_t*
 get_a1_from_tiff (char *filename, gboolean rotated);
 

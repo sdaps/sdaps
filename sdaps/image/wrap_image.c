@@ -27,6 +27,7 @@ static PyObject *wrap_calculate_correction_matrix(PyObject *self, PyObject *args
 static PyObject *wrap_find_box_corners(PyObject *self, PyObject *args);
 static PyObject *wrap_get_coverage(PyObject *self, PyObject *args);
 static PyObject *wrap_get_pbm(PyObject *self, PyObject *args);
+static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args);
 
 Pycairo_CAPI_t *Pycairo_CAPI;
 
@@ -37,6 +38,7 @@ static PyMethodDef EvaluateMethods[] = {
 	{"find_box_corners",  wrap_find_box_corners, METH_VARARGS, "Tries to find the actuall corners of a box in the milimeter space."},
 	{"get_coverage",  wrap_get_coverage, METH_VARARGS, "Calculates the black coverage in the given area."},
 	{"get_pbm",  wrap_get_pbm, METH_VARARGS, "Returns a string that contains a binary PBM data representation of the cairo A1 surface."},
+	{"set_magic_values",  sdaps_set_magic_values, METH_VARARGS, "Sets some magic values for recognition."},
 	{NULL, NULL, 0, NULL} /* Sentinel */
 };
 
@@ -181,4 +183,12 @@ wrap_get_pbm(PyObject *self, PyObject *args)
 	return result;
 }
 
+static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args)
+{
+	if (!PyArg_ParseTuple(args, "iiid", &sdaps_line_min_length, &sdaps_line_max_length, &sdaps_line_width, &sdaps_line_coverage))
+		return NULL;
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 

@@ -1,6 +1,10 @@
 What to do when things go wrong
 ===============================
 
+In general, you can try to adjust the magic values in defs.py to improve
+recognition and work around errors that you get. If you need to change
+something, pĺease drop us a line.
+
 Matrix could not be recognized
 ------------------------------
 
@@ -12,8 +16,6 @@ Please have a look at the following:
      clean.
    * Check that the resolution is set to 300dpi
    * Check there is no black line at one side
-If this does not help, please send a mail to see if some other constants
-should be adjusted.
 
 Recognition quality is bad
 --------------------------
@@ -21,27 +23,22 @@ Recognition quality is bad
 Load a lot of images into the project, then run
   $ sdaps project_dir boxgallery
 Now look at the PDF file and find threshold values that work well for you.
-The values need to be adjusted in recognize/buddies.py, where there is
-something like:
- 0.32 < coverage < 0.55
-Which is the minimum and maximum value for a checked box.
+Set the correct "checkbox_checked" and "checkbox_corrected" coverages for
+you in defs.py.
 
 
 Text boxes are recognized even though they are empty
 ----------------------------------------------------
 
-There are different ways that this can happen. One thing that I have seen
-happening is that the tolerance that SDAPS uses is not large enough, and it
-thinks that the black frame around the box is actually handwriting. You can
-adjust the padding to work around this. This can be done in
-recognize/buddies.py in the Textbox class. Adjust the "scan_padding" in the
-recognize function.
+This can happen because of dirt on the page or because the scanner is not
+very accurate and the outline is detected as writing.
 
-If you need to adjust scan_padding, please drop us a line!
+If dirt is detected, try to adjust the textbox_scan_* values in defs.py.
 
-If black dots, eg. from a cross on the other side of the paper are detect
-too often, you can try to adjust test_width/test_height and coverage later
-in the function.
+If the outline is detected than probably something worst is going on. You
+can adjust the textbox_*_padding values, or adjusting the image_*_line
+values might also help (as these are used to find the corners of the
+textbox).
 
 If the above does not help
 ==========================
