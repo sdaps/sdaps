@@ -15,11 +15,11 @@ the results.
 Requirements
 ============
 
- * Python (only tested with python 2.5)
+ * Python
  * distutils and distutils-extra
- * GTK+ (for the front end that can be used to control/correct the results)
- * reportlab version 2.1
- * pdftk or pyPdf (pdftk is recommended, as it is much faster)
+ * GTK+ (pygtk) for the front end that can be used to control/correct the results
+ * reportlab
+ * pdftk or pyPdf (pdftk is much faster if you need questionnaire ids)
  * Python Imaging Library (PIL)
  * python-cairo (including development files)
  * libtiff (including development files)
@@ -32,6 +32,14 @@ Installation
 You can install sdaps using "./setup.py install". The C extension will
 be compiled automatically, but of course you have to have all the
 dependencies installed for this to work.
+
+Standalone execution
+====================
+
+As an alternative to installing sdaps it is also supported to run it without
+installation. To do this run "./setup.py build" to build the binary modules
+and translation. After this execute sdaps using the provided "sdaps.py"
+script in the toplevel directory.
 
 Using SDAPS
 ===========
@@ -54,4 +62,6 @@ uses.
 For this a tool called "boxgallery" is provided, which will output a sorted
 list of all checkboxes. With this the threshold that is needed can be
 determined.
+
+See also TROUBLESHOOTING.
 
