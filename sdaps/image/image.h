@@ -23,6 +23,7 @@
 extern gint sdaps_line_min_length;
 extern gint sdaps_line_max_length;
 extern gint sdaps_line_width;
+extern gint sdaps_corner_mark_search_distance;
 extern gdouble sdaps_line_coverage;
 
 cairo_surface_t*

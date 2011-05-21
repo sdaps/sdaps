@@ -37,6 +37,9 @@ corner_mark_length = 20.0 # mm
 corner_mark_min_length = 215 # px
 corner_mark_max_length = 250 # px
 
+# The distance into the image that will be searched for the corner mark.
+# Basically a square area of this size will be searched in each corner.
+corner_mark_search_distance = 600 # px
 
 # Corner Boxes ============================================
 

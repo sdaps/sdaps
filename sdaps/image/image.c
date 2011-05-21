@@ -34,6 +34,7 @@
 gint sdaps_line_min_length = 215;
 gint sdaps_line_max_length = 250;
 gint sdaps_line_width = 5;
+gint sdaps_corner_mark_search_distance = 600;
 gdouble sdaps_line_coverage = 0.65;
 
 cairo_surface_t*
@@ -538,7 +539,7 @@ find_corner_marker(cairo_surface_t *surface,
 	x = x_start + (x_dir * (width / 6 + 1));
 	y = y_start + y_dir;
 	
-	while (!found && (distance < 600)) {
+	while (!found && (distance < sdaps_corner_mark_search_distance)) {
 		distance += 1;
 
 		/* Try searching from the top/bottom. */

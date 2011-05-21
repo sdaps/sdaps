@@ -43,5 +43,6 @@ from image import *
 set_magic_values(defs.corner_mark_min_length,
                  defs.corner_mark_max_length,
                  defs.image_line_width,
+                 defs.corner_mark_search_distance,
                  defs.image_line_coverage)
 

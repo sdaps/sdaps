@@ -185,7 +185,12 @@ wrap_get_pbm(PyObject *self, PyObject *args)
 
 static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args)
 {
-	if (!PyArg_ParseTuple(args, "iiid", &sdaps_line_min_length, &sdaps_line_max_length, &sdaps_line_width, &sdaps_line_coverage))
+	if (!PyArg_ParseTuple(args, "iiiid",
+	                      &sdaps_line_min_length,
+	                      &sdaps_line_max_length,
+	                      &sdaps_line_width,
+	                      &sdaps_corner_mark_search_distance,
+	                      &sdaps_line_coverage))
 		return NULL;
 
 	Py_INCREF(Py_None);
