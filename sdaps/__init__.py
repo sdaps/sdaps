@@ -34,6 +34,7 @@ import sys
 
 import paths
 import script
+import os
 
 from ugettext import ugettext, ungettext
 _ = ugettext
@@ -51,7 +52,15 @@ def sdaps (survey_dir, script_name, *arguments) :
 		return 1
 	return script.scripts[script_name](survey_dir, *arguments)
 
-def doc () :
+def doc (name = "sdaps") :
+	print _('''Usage: %s project_dir command [args]
+
+You need to specify the project_dir for SDAPS to work on. Depending on the
+command this needs to exist, or it will be created automatically.
+
+The following commands and their respective options are available:
+
+''' % name)
 	for script_class in script.scripts.itervalues() :
 		print script_class.func_name, script_class.func_doc
 	return 0
@@ -73,7 +82,7 @@ def main (local_run = False) :
 	import stamp
 
 	if len(sys.argv) < 3 :
-		return doc()
+		return doc(os.path.basename(sys.argv[0]))
 	else :
 		return sdaps(*sys.argv[1:])
 

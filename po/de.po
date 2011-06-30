@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-15 13:03+0200\n"
-"PO-Revision-Date: 2011-05-15 13:06+0100\n"
+"POT-Creation-Date: 2011-06-30 23:04+0200\n"
+"PO-Revision-Date: 2011-06-30 23:06+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: <>\n"
 "Language: \n"
@@ -14,6 +14,31 @@ msgstr ""
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#: ../sdaps/__init__.py:51
+#, python-format
+msgid "Unknown script \"%s\". Aborting."
+msgstr "Unbekanntes script \"%s\". Operation Abgebrochen."
+
+#: ../sdaps/__init__.py:56
+#, python-format
+msgid ""
+"Usage: %s project_dir command [args]\n"
+"\n"
+"You need to specify the project_dir for SDAPS to work on. Depending on the\n"
+"command this needs to exist, or it will be created automatically.\n"
+"\n"
+"The following commands and their respective options are available:\n"
+"\n"
+msgstr ""
+"Aufruf: %s Projektverzeichniss Kommando [Argumente]\n"
+"\n"
+"Es muss ein Projektverzeichniss für SDAPS angegeben werden. Dieses\n"
+"muss entweder bereits existieren, bzw. wird von einigen Kommands automatisch\n"
+"erstellt.\n"
+"\n"
+"Die folgenden Kommands stehen zur verfügung:\n"
+"\n"
 
 #: ../sdaps/add.py:30
 msgid ""
@@ -444,7 +469,7 @@ msgid "Disable printing of the questionnaire ID (default)."
 msgstr "Ausschalten der Fragebogen-ID auf den Bögen. (Standard)"
 
 #: ../sdaps/setup/setup.py:40
-#: ../sdaps/setuptex/setup.py:40
+#: ../sdaps/setuptex/setup.py:41
 msgid "The survey directory already exists"
 msgstr "Das Umfrageverzeichniss existiert bereits."
 
@@ -452,9 +477,9 @@ msgstr "Das Umfrageverzeichniss existiert bereits."
 #: ../sdaps/setup/setup.py:47
 #: ../sdaps/setup/setup.py:53
 #: ../sdaps/setup/setup.py:60
-#: ../sdaps/setuptex/setup.py:41
-#: ../sdaps/setuptex/setup.py:47
-#: ../sdaps/setuptex/setup.py:54
+#: ../sdaps/setuptex/setup.py:42
+#: ../sdaps/setuptex/setup.py:48
+#: ../sdaps/setuptex/setup.py:55
 msgid "Cancelling setup"
 msgstr "Setup abgebrochen"
 
@@ -469,7 +494,7 @@ msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
 msgstr "Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
 
 #: ../sdaps/setup/setup.py:59
-#: ../sdaps/setuptex/setup.py:53
+#: ../sdaps/setuptex/setup.py:54
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
@@ -559,11 +584,11 @@ msgid "Questionnaire-ID: %i"
 msgstr "Fragebogen-ID: %i"
 
 #: ../sdaps/stamp/stamp.py:139
-msgid "You may not specify the number of sheets for surveys that do not print a quesitonnaire ID."
+msgid "You may not specify the number of sheets for surveys that do not print a quesitonnaire id."
 msgstr "Es ist nicht möglich eine Anzahl von Fragebögen anzugeben, wenn die Fragebogen-ID nicht auf den Bogen gedruckt wird."
 
 #: ../sdaps/stamp/stamp.py:156
-msgid "You needs to specify the number of questionnaires to create when questionnaire are printed IDs."
+msgid "You need to specify the number of questionnaires to create when questionnaire ids are printed."
 msgstr "Es notwendig eine Anzahl an Bögen anzugeben, wenn eine Fragebogen-ID auf die Bögen gedruckt wird."
 
 #: ../sdaps/stamp/stamp.py:178
@@ -617,20 +642,20 @@ msgstr "pdftk: Erstelle das fertige PDF."
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
 
-#: ../sdaps/setuptex/setup.py:46
+#: ../sdaps/setuptex/setup.py:47
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex"
 msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
 
-#: ../sdaps/setuptex/setup.py:70
+#: ../sdaps/setuptex/setup.py:76
 msgid "Error running \"rubber -d\" to compile the LaTeX file."
 msgstr "Fehler beim ausführen von \"rubber -d\" um die LaTeX Datei zu kompilieren."
 
-#: ../sdaps/setuptex/setup.py:90
+#: ../sdaps/setuptex/setup.py:96
 msgid "Error: Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr "Fehler: Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der jetzige Zustand ist:"
 
-#: ../sdaps/setuptex/setup.py:116
+#: ../sdaps/setuptex/setup.py:122
 msgid "An error occured in the setup routine, deleting the survey directory again."
 msgstr "Ein Fehler ist während der Herstellung des SDAPS Projekts aufgetreten. Das Umfrageverzeichniss wird wieder gelöscht."
 

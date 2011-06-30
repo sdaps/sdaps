@@ -1,3 +1,4 @@
+sdaps/__init__.py
 sdaps/add.py
 sdaps/boxgallery/__init__.py
 sdaps/cover.py
