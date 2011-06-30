@@ -136,7 +136,7 @@ textbox_extra_padding = 0.5 # mm
 # All lines are 1pt wide (1/72 inch or 25.4/72 mm)
 image_line_width = 5 # px
 # The coverage that the line needs to have for recognition
-image_line_coverage = 0.65
+image_line_coverage = 0.5
 
 
 
