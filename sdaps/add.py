@@ -62,10 +62,10 @@ def add (survey_dir, *files):
 			sheet = model.sheet.Sheet()
 			survey.add_sheet(sheet)
 			for j in range(c) :
-				image = model.sheet.Image()
-				sheet.add_image(image)
-				image.filename = tiff
-				image.tiff_page = c*i+j
+				img = model.sheet.Image()
+				sheet.add_image(img)
+				img.filename = tiff
+				img.tiff_page = c*i+j
 
 		print _('Done')
 
