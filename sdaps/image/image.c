@@ -61,9 +61,9 @@ get_a1_from_tiff (char *filename, gint page, gboolean rotated)
 	TIFFGetField(tiff, TIFFTAG_IMAGELENGTH, &height);
 	t_pixels = g_malloc(width * height *sizeof(uint32));
 	if (!rotated)
-        	TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_TOPLEFT, 0);
+		TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_TOPLEFT, 0);
 	else
-        	TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_BOTRIGHT, 0);
+		TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_BOTRIGHT, 0);
 
 	surface = cairo_image_surface_create(CAIRO_FORMAT_A1, width, height);
 	s_pixels = (guint32*) cairo_image_surface_get_data(surface);
