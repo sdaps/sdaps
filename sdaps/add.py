@@ -65,7 +65,7 @@ def add (survey_dir, *files):
 				image = model.sheet.Image()
 				sheet.add_image(image)
 				image.filename = tiff
-				image.page = c*i+j
+				image.tiff_page = c*i+j
 
 		print _('Done')
 

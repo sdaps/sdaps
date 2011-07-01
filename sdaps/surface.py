@@ -35,7 +35,7 @@ class Image (model.buddy.Buddy) :
 	def load (self) :
 		self.surface = image.get_a1_from_tiff(
 			self.obj.sheet.survey.path(self.obj.filename),
-			self.obj.page,
+			self.obj.tiff_page,
 			self.obj.rotated
 		)
 

@@ -39,6 +39,7 @@ class Image (buddy.Object) :
 	def __init__ (self) :
 		self.sheet = None
 		self.filename = str()
+		self.tiff_page = 0
 		self.rotated = 0
 		self.raw_matrix = (0.0833, 0, 0, 0.0833, 0, 0)
 		self.page_number = 1
