@@ -38,7 +38,7 @@ gint sdaps_corner_mark_search_distance = 600;
 gdouble sdaps_line_coverage = 0.65;
 
 cairo_surface_t*
-get_a1_from_tiff (char *filename, gboolean rotated)
+get_a1_from_tiff (char *filename, gint page, gboolean rotated)
 {
 	TIFF* tiff;
 	cairo_surface_t *surface;
@@ -52,6 +52,9 @@ get_a1_from_tiff (char *filename, gboolean rotated)
 
 	tiff = TIFFOpen(filename, "r");
 	if (tiff == NULL)
+		return NULL;
+
+	if (!TIFFSetDirectory(tiff, page))
 		return NULL;
 
 	TIFFGetField(tiff, TIFFTAG_IMAGEWIDTH, &width);
@@ -84,6 +87,48 @@ get_a1_from_tiff (char *filename, gboolean rotated)
 	cairo_surface_mark_dirty(surface);
 
 	return surface;
+}
+
+gint
+get_tiff_page_count (char *filename)
+{
+	TIFF* tiff;
+	gint pages;
+
+	tiff = TIFFOpen(filename, "r");
+	if (tiff == NULL)
+		return 0;
+
+	pages = TIFFNumberOfDirectories(tiff);
+
+	TIFFClose(tiff);
+
+	return pages;
+}
+
+gboolean
+check_tiff_monochrome (char *filename)
+{
+	TIFF* tiff;
+	gboolean monochrome = TRUE;
+
+	tiff = TIFFOpen(filename, "r");
+
+	do {
+		gint bits_per_sample;
+		TIFFGetField(tiff, TIFFTAG_BITSPERSAMPLE, &bits_per_sample);
+		if (bits_per_sample != 1)
+			monochrome = FALSE;
+	} while (TIFFReadDirectory(tiff) && monochrome);
+
+	if (!TIFFLastDirectory(tiff)) {
+		/* This should never ever happen ... */
+		monochrome = FALSE;
+	}
+
+	TIFFClose(tiff);
+
+	return monochrome;
 }
 
 void

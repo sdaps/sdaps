@@ -68,7 +68,7 @@ class Image (model.buddy.Buddy) :
 		try :
 			self.calculate_matrix()
 		except RecognitionError :
-			print _('%s: Matrix not recognized. Cancelling recognition of that image.') % self.obj.filename
+			print _('%s, %i: Matrix not recognized. Cancelling recognition of that image.') % (self.obj.filename, self.obj.page)
 			raise RecognitionError
 
 		# The coordinates in defs are the center of the line, not the bounding box of the box ...
@@ -105,7 +105,7 @@ class Image (model.buddy.Buddy) :
 			try :
 				self.obj.page_number = defs.corner_boxes.index(corners[::-1]) + 1
 			except ValueError :
-				print _('%s: Page number not recognized. Cancelling recognition of that image.') % self.obj.filename
+				print _('%s, %i: Page number not recognized. Cancelling recognition of that image.') % (self.obj.filename, self.obj.page)
 				raise RecognitionError
 			else :
 				self.obj.rotated = 1
@@ -113,7 +113,7 @@ class Image (model.buddy.Buddy) :
 				try :
 					self.calculate_matrix()
 				except RecognitionError :
-					print _('%s: Matrix not recognized. Cancelling recognition of that image.') % self.obj.filename
+					print _('%s, %i: Matrix not recognized. Cancelling recognition of that image.') % (self.obj.filename, self.obj.page)
 					raise RecognitionError
 		else :
 			self.obj.rotated = 0
@@ -132,7 +132,7 @@ class Image (model.buddy.Buddy) :
 					self.obj.sheet.survey_id
 				)
 				if not self.obj.sheet.survey_id == self.obj.sheet.survey.survey_id :
-					print _('%s: Wrong survey_id. Cancelling recognition of that image.') % self.obj.filename
+					print _('%s, %i: Wrong survey_id. Cancelling recognition of that image.') % (self.obj.filename, self.obj.page)
 					raise RecognitionError
 			else:
 				self.obj.sheet.survey_id = self.obj.sheet.survey.survey_id

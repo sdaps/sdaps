@@ -268,6 +268,7 @@ class Text (platypus.Flowable) :
 		image = box.sheet.images[box.question.page_number - 1]
 
 		self.filename = box.question.questionnaire.survey.path(image.filename)
+		self.page = image.page
 		self.rotated = image.rotated
 
 		mm_to_px = image.matrix.mm_to_px()
@@ -285,12 +286,13 @@ class Text (platypus.Flowable) :
 
 	def draw (self) :
 		if 0 : assert isinstance(self.canv, pdfgen.canvas.Canvas)
-		if (self.filename, self.bbox) in self.cache :
-			img = self.cache[(self.filename, self.bbox)]
+		if (self.filename, self.page, self.bbox) in self.cache :
+			img = self.cache[(self.filename, self.page, self.bbox)]
 		else :
 			img = StringIO.StringIO(image.get_pbm(
 				image.get_a1_from_tiff(
 					self.filename,
+					self.page,
 					self.rotated
 				)
 			))

@@ -27,7 +27,13 @@ extern gint sdaps_corner_mark_search_distance;
 extern gdouble sdaps_line_coverage;
 
 cairo_surface_t*
-get_a1_from_tiff (char *filename, gboolean rotated);
+get_a1_from_tiff (char *filename, gint page, gboolean rotated);
+
+gint
+get_tiff_page_count (char *filename);
+
+gboolean
+check_tiff_monochrome (char *filename);
 
 cairo_matrix_t*
 calculate_matrix(cairo_surface_t *surface, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);

@@ -34,9 +34,10 @@ _ = ugettext
 	files: TIFF-Images containing scanned questionnaires.
 	'''))
 def add (survey_dir, *files):
-	import Image
+	import image
 	import subprocess
 	import sys
+	import shutil
 
 	survey = model.survey.Survey.load(survey_dir)
 
@@ -44,60 +45,27 @@ def add (survey_dir, *files):
 
 		print _('Processing %s') % file
 
-		try :
-			image = Image.open(file)
-		except IOError :
-			print _('Unknown file format. Only TIFF is supported')
-			print _('Processing stopped')
-			continue
+		if not image.check_tiff_monochrome(file):
+			print _('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.' % file);
 
-		if image.format != 'TIFF' :
-			print _('Unknown image file format (%s). Only TIFF is supported') % image.format
-			print _('Processing stopped')
-			continue
+		tiff = survey.new_path('%i.tif')
+		shutil.copyfile(file, tiff)
 
-		if not image.mode == '1' :
-			print _('Wrong data type inside TIFF (%s). It should be black and white data.') % image.mode
-			print _('Processing stopped')
-			continue
+		num_pages = image.get_tiff_page_count(tiff)
 
-		directory = survey.new_path('%i')
-		os.mkdir(directory)
-		try:
-			tiffsplit = subprocess.Popen(
-				['tiffsplit', file, directory + '/'],
-				stdout = subprocess.PIPE, stderr = subprocess.PIPE
-			)
-		except OSError, e:
-			if e.errno == 2:
-				raise AssertionError(_('Could not execute tiffsplit!'))
-			else:
-				raise e
-		stdout, stderr = tiffsplit.communicate()
-
-		for line in stdout.split('\n') :
-			line = line.strip()
-			if line: print line
-
-		for line in stderr.split('\n') :
-			if line.startswith('%s: Warning, incorrect count for field "DateTime"' % file) :
-				continue
-			line = line.strip()
-			if line: print line
-
-		img_list = os.listdir(directory)
-		img_list.sort()
 		c = survey.questionnaire.page_count
-		assert len(img_list) % c == 0
+		assert num_pages % c == 0
 
-		dir = os.path.basename(directory)
-		for i in range(len(img_list) / c) :
+		tiff = os.path.basename(tiff)
+
+		for i in range(num_pages / c) :
 			sheet = model.sheet.Sheet()
 			survey.add_sheet(sheet)
 			for j in range(c) :
 				image = model.sheet.Image()
 				sheet.add_image(image)
-				image.filename = os.path.join(dir, img_list[c*i+j])
+				image.filename = tiff
+				image.page = c*i+j
 
 		print _('Done')
 
