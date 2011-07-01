@@ -61,6 +61,8 @@ class Defs (object) :
 
 class Survey (object) :
 
+	pickled_attrs = set(('sheets', 'defs', 'survey_id', 'questionnaire_ids', 'questionnaire'))
+
 	def __init__ (self) :
 		self.questionnaire = None
 		self.sheets = list()
@@ -101,10 +103,20 @@ class Survey (object) :
 
 	@staticmethod
 	def load (survey_dir) :
+		import ConfigParser
 		file = bz2.BZ2File(os.path.join(survey_dir, 'survey'), 'r')
 		survey = cPickle.load(file)
 		file.close()
 		survey.survey_dir = survey_dir
+
+		config = ConfigParser.SafeConfigParser()
+		config.optionxform = str
+		config.read(os.path.join(survey_dir, 'info'))
+		survey.title = config.get('sdaps', 'title').decode('utf-8')
+		survey.info = dict()
+		for key, value in config.items('info'):
+			survey.info[key.decode('utf-8')] = value.decode('utf-8')
+
 		return survey
 
 	@staticmethod
@@ -114,9 +126,19 @@ class Survey (object) :
 		return survey
 
 	def save (self) :
+		import ConfigParser
 		file = bz2.BZ2File(os.path.join(self.survey_dir, 'survey'), 'w')
 		cPickle.dump(self, file, 2)
 		file.close()
+
+		config = ConfigParser.SafeConfigParser()
+		config.optionxform = str
+		config.add_section('sdaps')
+		config.add_section('info')
+		config.set('sdaps', 'title', self.title.encode('utf-8'))
+		for key, value in self.info.iteritems():
+			config.set('info', key.encode('utf-8'), value.encode('utf-8'))
+		config.write(open(os.path.join(self.survey_dir, 'info'), 'w'))
 
 	def path (self, *path) :
 		return os.path.join(self.survey_dir, *path)
@@ -173,4 +195,13 @@ class Survey (object) :
 		else :
 			raise ValueError
 
+	def __getstate__ (self) :
+		u'''Only pickle attributes that are in the pickled_attrs set.
+		'''
+		dict = self.__dict__.copy()
+		keys = dict.keys()
+		for key in keys :
+			if not key in self.pickled_attrs :
+				del dict[key]
+		return dict
 
