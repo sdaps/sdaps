@@ -113,6 +113,8 @@ check_tiff_monochrome (char *filename)
 	gboolean monochrome = TRUE;
 
 	tiff = TIFFOpen(filename, "r");
+	if (tiff == NULL)
+		return FALSE;
 
 	do {
 		gint bits_per_sample;
