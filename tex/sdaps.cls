@@ -522,12 +522,19 @@
 \newcounter{choiceitems}
 \newcounter{maxchoiceitems}
 \newenvironment{choicequestion}[2][3]{%
-  \offinterlineskip%
   \setcounter{choiceitems}{1}%
   \setcounter{maxchoiceitems}{#1}%
   \question{#2}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Choice=\thesubsection. #2}%
+  % This is broken! What is the correct spacing to subtract?
+  \vspace{-\extrarowheight}\vspace{-\baselinestretch1em}\vspace{-1.2pt}%
   \tabularx{\linewidth}{*{\themaxchoiceitems}{X}}%
+  \global\def\@sdaps@choiceitems@dummy{}%
+  \loop{}%
+  \ifnum\thechoiceitems<\themaxchoiceitems{\addtocounter{choiceitems}{1}} \global\edef\@sdaps@choiceitems@dummy{\@sdaps@choiceitems@dummy &}%
+  \repeat%
+  \@sdaps@choiceitems@dummy\cr\noalign{\vspace{-1em}\vspace{-1.2pt}}% This is wrong, what is the correct size?
+  \setcounter{choiceitems}{1}%
 }{%
   \endtabularx%
 }
