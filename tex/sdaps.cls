@@ -446,14 +446,14 @@
     }%
     \offinterlineskip %
     \hrule width \linewidth height \elementlinewidth %
-    \kern -\elementlinewidth%
+    %\kern -\elementlinewidth%
     \sides %
     \kern-0.5\@tempdima %
     \cleaders\sides\vfill %
     \kern-0.5\@tempdima %
     \nobreak %
     \sides %
-    \kern -\elementlinewidth%
+    %\kern -\elementlinewidth%
     \hrule width \linewidth height \elementlinewidth %
   \endgroup %
   \vspace{\baselineskip}%
@@ -603,13 +603,13 @@
         }%
       }%
       \vrule depth -\@tempdimlower width \elementlinewidth height \@tempdimruleheight %
-      \kern -\elementlinewidth%
+      %\kern -\elementlinewidth%
       \horizontallines%
       \kern-0.5\@tempdima%
       \cleaders\horizontallines\hfill%
       \kern-0.5\@tempdima%
       \horizontallines%
-      \kern -\elementlinewidth%
+      %\kern -\elementlinewidth%
       \vrule depth -\@tempdimlower width \elementlinewidth height \@tempdimruleheight%
     \endgroup%
   }%
