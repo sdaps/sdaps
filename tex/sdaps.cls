@@ -380,7 +380,7 @@
 
 \providecommand{\checkbox}{%
   \protectedimmediatewrite\sdapsoutfile{Box=Checkbox}%
-  \tikz[baseline=0.5mm]{%
+  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
   }%
 }
