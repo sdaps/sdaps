@@ -522,6 +522,7 @@
 \newcounter{choiceitems}
 \newcounter{maxchoiceitems}
 \newenvironment{choicequestion}[2][3]{%
+  \offinterlineskip%
   \setcounter{choiceitems}{1}%
   \setcounter{maxchoiceitems}{#1}%
   \question{#2}%
@@ -531,9 +532,10 @@
   \loop{}%
   \ifnum\thechoiceitems<\themaxchoiceitems{\addtocounter{choiceitems}{1}} \global\edef\@sdaps@choiceitems@dummy{\@sdaps@choiceitems@dummy &}%
   \repeat%
-  \@sdaps@choiceitems@dummy\cr%
-  %This is wrong, what is the correct size?
-  \noalign{\vspace{-\extrarowheight}\vspace{-\baselinestretch1em}\vspace{-1.2pt}}%
+  \@sdaps@choiceitems@dummy%
+   \rule[-1em]{0pt}{3em}% Insert known space (1em below, 2em above the baseline)
+   \cr%
+  \noalign{\vspace{-\extrarowheight}\vspace{-3.0em}}% Subtract known space again.
   \setcounter{choiceitems}{1}%
 }{%
   \endtabularx%
