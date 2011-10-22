@@ -120,6 +120,6 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 		log.logfile.close()
 	except:
 		print _("An error occured in the setup routine, deleting the survey directory again.")
-		shutil.rmtree(survey.path())
+		#shutil.rmtree(survey.path())
 		raise
 
