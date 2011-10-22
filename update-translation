@@ -1,0 +1,5 @@
+#! /bin/sh
+
+cd po
+
+exec intltool-update -r -g sdaps
