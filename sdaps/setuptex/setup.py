@@ -45,8 +45,8 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 	mimetype = utils.mimetype(questionnaire_tex)
 	if mimetype != 'text/x-tex' and mimetype != '':
 		print _('Unknown file type (%s). questionnaire_tex should be of type text/x-tex') % mimetype
-		print _('Cancelling setup')
-		return 1
+		print _('Will keep going, but expect failure!')
+		print
 
 	if additionalqobjects is not None :
 		mimetype = utils.mimetype(additionalqobjects)
