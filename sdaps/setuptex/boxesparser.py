@@ -278,22 +278,23 @@ def parse (questionnaire_pdf) :
 			)
 			boxes.append(box)
 
-	# Sort by order of occurance
-	def sort_cmd(a, b):
-		# does the height overlap?
-		if a.page_number != b.page_number:
-			return a.page_number - b.page_number
-		if a.y > b.y and a.y < b.y + b.height or \
-		   b.y > a.y and b.y < a.y + a.height:
-			if a.x - b.x > 0:
-				return 1
-			else:
-				return -1
-		if a.y - b.y > 0:
-			return 1
-		else:
-			return -1
-	boxes.sort(sort_cmd)
+	# NO sorting. The order in the PDF will be the same as in the .sdaps file!
+	## Sort by order of occurance
+	#def sort_cmd(a, b):
+	#	# does the height overlap?
+	#	if a.page_number != b.page_number:
+	#		return a.page_number - b.page_number
+	#	if a.y >= b.y and a.y <= b.y + b.height or \
+	#	   b.y >= a.y and b.y <= a.y + a.height:
+	#		if a.x - b.x > 0:
+	#			return 1
+	#		else:
+	#			return -1
+	#	if a.y - b.y > 0:
+	#		return 1
+	#	else:
+	#		return -1
+	#boxes.sort(sort_cmd)
 
 	return boxes, page_count
 
