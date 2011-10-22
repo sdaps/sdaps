@@ -39,10 +39,10 @@ parser.set_defaults(print_questionnaire_id=True)
 
 parser.add_option('--copy', action="store_const",
                   help=_('Copy the TIFF into the project directory (default).'),
-                  dest='copy', const=True)
+                  dest='copy', const=True, default=True)
 parser.add_option('--no-copy', action="store_const",
                   help=_('Do not copy the TIFF. Instead reference it with a relative path.'),
-                  dest='copy', const=False)
+                  dest='copy', const=False, default=True)
 
 @script.register
 @script.logfile
