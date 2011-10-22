@@ -144,6 +144,7 @@ def parse (questionnaire_pdf) :
 	doc = pdffile.PDFDocument(questionnaire_pdf)
 
 	boxes = list()
+	textboxes = list()
 
 	page_count = doc.count_pages()
 	assert page_count == 1 or page_count % 2 == 0
@@ -233,7 +234,7 @@ def parse (questionnaire_pdf) :
 				width / mm,
 				height / mm
 			)
-			boxes.append(box)
+			textboxes.append(box)
 
 		matches = textfield_horiz_regexp.finditer(contents)
 		for match in matches:
@@ -276,7 +277,7 @@ def parse (questionnaire_pdf) :
 				width / mm,
 				height / mm
 			)
-			boxes.append(box)
+			textboxes.append(box)
 
 	# NO sorting. The order in the PDF will be the same as in the .sdaps file!
 	## Sort by order of occurance
@@ -296,7 +297,7 @@ def parse (questionnaire_pdf) :
 	#		return -1
 	#boxes.sort(sort_cmd)
 
-	return boxes, page_count
+	return boxes, textboxes, page_count
 
 
  

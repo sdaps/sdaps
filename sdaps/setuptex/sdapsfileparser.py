@@ -30,6 +30,7 @@ from sdaps import model
 QOBJECT_PREFIX = u'QObject'
 ANSWER_PREFIX  = u'Answer'
 BOX  = u'Box'
+TEXTBOX  = u'Textbox'
 
 index_re = re.compile(r'''^(?P<index>(?:[0-9]+\.)+) (?P<string>.*)$''')
 def get_index_and_string(string):
@@ -61,7 +62,7 @@ def latex_to_unicode(string):
 	string, count = re.subn(r'\\IeC {(?P<char>.*?)}', ret_char, string)
 	return string
 
-def parse (survey, boxes) :
+def parse (survey, boxes, textboxes) :
 
 	sdaps_file = open(survey.path('questionnaire.sdaps'))
 	# the file is encoded in ascii format
@@ -108,7 +109,10 @@ def parse (survey, boxes) :
 
 			qobject.setup.answer(value)
 		elif arg == BOX:
-			box = boxes.pop(0)
+			if value == 'Textbox':
+				box = textboxes.pop(0)
+			else:
+				box = boxes.pop(0)
 			# Sanity check, whether we got the correct box type.
 			assert isinstance(box, getattr(model.questionnaire, value))
 

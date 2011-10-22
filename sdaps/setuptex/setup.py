@@ -78,7 +78,7 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 
 		# ----
 		# Parse the box objects into a cache
-		boxes, page_count = boxesparser.parse(survey.path('questionnaire.pdf'))
+		boxes, textboxes, page_count = boxesparser.parse(survey.path('questionnaire.pdf'))
 		survey.questionnaire.page_count = page_count
 
 		# Get the papersize
@@ -91,7 +91,7 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 
 		# Parse qobjects
 		try:
-			sdapsfileparser.parse(survey, boxes)
+			sdapsfileparser.parse(survey, boxes, textboxes)
 		except:
 			print _("Error: Caught an Exception while parsing the SDAPS file. The current state is:")
 			print unicode(survey.questionnaire)
