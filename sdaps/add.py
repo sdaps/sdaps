@@ -63,6 +63,7 @@ def add (survey_dir, *args):
 
 		if not image.check_tiff_monochrome(file):
 			print _('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.' % file);
+			raise AssertionError()
 
 		if options.copy:
 			tiff = survey.new_path('%i.tif')
