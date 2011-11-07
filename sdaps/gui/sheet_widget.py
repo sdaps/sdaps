@@ -62,6 +62,8 @@ class SheetWidget(gtk.DrawingArea):
 		self.connect("set_scroll_adjustments", self.do_set_scroll_adjustments)
 
 		self._update_matrices()
+		self._cs_image = None
+		self._ss_image = None
 
 	def update_state(self):
 		# Cancel any dragging operation
@@ -259,15 +261,22 @@ class SheetWidget(gtk.DrawingArea):
 
 		image = self.provider.image.surface.surface
 
+		if image != self._cs_image or self._ss_image is None:
+			self._cs_image = image
+			target = cr.get_target()
+			self._ss_image = target.create_similar(cairo.CONTENT_COLOR, image.get_width(), image.get_height())
+			subcr = cairo.Context(self._ss_image)
+			subcr.set_source_rgb(1, 1, 1)
+			subcr.paint()
+			subcr.set_source_rgb(0, 0, 0)
+			subcr.mask_surface(image)
+
 		# Draw the image in the background
 		cr.translate(xoffset, yoffset)
 		cr.scale(self._zoom, self._zoom)
-		cr.set_source_rgb(1, 1, 1)
-		cr.rectangle(0, 0, image.get_width(), image.get_height())
-		cr.fill()
 
-		cr.set_source_rgb(0, 0, 0)
-		cr.mask_surface(image)
+		cr.set_source_surface(self._ss_image, 0, 0)
+		cr.paint()
 
 		# Set the matrix _after_ drawing the background pixbuf.
 		cr.set_matrix(self._mm_to_widget_matrix)
