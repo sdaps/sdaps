@@ -117,7 +117,7 @@ check_tiff_monochrome (char *filename)
 		return FALSE;
 
 	do {
-		gint bits_per_sample;
+		uint16 bits_per_sample;
 		TIFFGetField(tiff, TIFFTAG_BITSPERSAMPLE, &bits_per_sample);
 		if (bits_per_sample != 1)
 			monochrome = FALSE;
