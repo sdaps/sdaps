@@ -244,7 +244,7 @@ def parse (questionnaire_pdf) :
 			width = float(match.group('x_last_line')) - float(match.group('x_first_line')) + line_length + line_width
 			line_width = float(match.group('line_width'))
 			height = float(match.group('height')) - line_width
-			y = page_height - float(match.group('y_bottom')) - height
+			y = page_height - float(match.group('y_bottom')) - height - line_width
 			y = y + line_width / 2.0
 
 			# Sanity checks
