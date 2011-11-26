@@ -35,7 +35,7 @@ class DataObject (object) :
 
 	def get_data (self) :
 		if not self.id in self.sheet.data :
-			self.sheet.data[self.id] = getattr(data, self.__class__.__name__)()
+			self.sheet.data[self.id] = getattr(data, self.__class__.__name__)(self)
 		return self.sheet.data[self.id]
 
 	data = property(get_data)

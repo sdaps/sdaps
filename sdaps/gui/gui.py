@@ -170,6 +170,7 @@ class MainWindow(object):
 	def update_page_status(self):
 		combo = self._glade.get_widget("page_number_combo")
 		turned_toggle = self._glade.get_widget("turned_toggle")
+		valid_toggle = self._glade.get_widget("valid_toggle")
 
 		# Update the combobox
 		page_number = self.provider.image.page_number
@@ -188,6 +189,7 @@ class MainWindow(object):
 
 		# Update the toggle
 		turned_toggle.set_active(self.provider.image.rotated)
+		valid_toggle.set_active(self.provider.image.sheet.valid)
 
 	def update_ui(self):
 		# Update the next/prev button states
@@ -246,6 +248,14 @@ class MainWindow(object):
 		if self.provider.image.rotated != rotated :
 			self.provider.image.rotated = rotated
 			self.provider.image.surface.load()
+			self.update_ui()
+		return False
+
+	def valid_toggle_toggled_cb (self, *args):
+		toggle = self._glade.get_widget("valid_toggle")
+		valid = toggle.get_active()
+		if self.provider.image.sheet.valid != valid :
+			self.provider.image.sheet.valid = valid
 			self.update_ui()
 		return False
 

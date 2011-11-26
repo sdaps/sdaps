@@ -19,13 +19,13 @@
 
 class Box (object) :
 	
-	def __init__ (self) :
+	def __init__ (self, parent) :
 		self.state = 0
 		self.coverage = 0
-		self.x = 0
-		self.y = 0
-		self.width = 0
-		self.height = 0
+		self.x = parent.x
+		self.y = parent.y
+		self.width = parent.width
+		self.height = parent.height
 	
 
 class Checkbox (Box) :
@@ -40,5 +40,5 @@ class Textbox (Box) :
 
 class Additional_Mark (object) :
 	
-	def __init__ (self) :
+	def __init__ (self, parent) :
 		self.value = 0
