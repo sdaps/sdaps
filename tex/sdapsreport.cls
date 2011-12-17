@@ -230,7 +230,7 @@
     \pgfmathparse{max(\pgfkeysvalueof{/sdaps/mark/mean}\einheit - %
       \pgfkeysvalueof{/sdaps/mark/stddev}\einheit, \einheit)}
     \pgfmathsetlength\@tempdima{\pgfmathresult}
-    \pgfmathparse{max(\pgfkeysvalueof{/sdaps/mark/mean}\einheit + %
+    \pgfmathparse{min(\pgfkeysvalueof{/sdaps/mark/mean}\einheit + %
       \pgfkeysvalueof{/sdaps/mark/stddev}\einheit, 5.0\einheit)}
     \pgfmathsetlength\@tempdimb{\pgfmathresult}
     \fill[color=sdapsmarkstddevcolor] %Varianz
