@@ -411,8 +411,8 @@
 %-------------------------------------------------------------------------------
 %                structure commands definitions
 %-------------------------------------------------------------------------------
-\renewcommand{\author}[1]{\def\@author{#1}}
-\renewcommand{\title}[1]{\def\@title{#1}}
+\renewcommand{\author}[1]{\def\@author{#1}\protectedimmediatewrite\sdapsoutfile{Author=#1}}
+\renewcommand{\title}[1]{\def\@title{#1}\protectedimmediatewrite\sdapsoutfile{Title=#1}}
 
 \def\question{\subsection}
 
@@ -632,10 +632,6 @@
 % sdaps log
 %-------------------------------------------------------------------------------
 \AtBeginDocument{%
-  \newwrite\sdapsoutfile%
-  \immediate\openout\sdapsoutfile=\jobname.sdaps%
-  \protectedimmediatewrite\sdapsoutfile{Author=\@author}
-  \protectedimmediatewrite\sdapsoutfile{Title=\@title}
   \if@PrintQuestionnaireId
     \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=1}
   \else
@@ -652,5 +648,9 @@
   \protectedimmediatewrite\sdapsoutfile{}
   \immediate\closeout\sdapsoutfile%
 }
+
+\newwrite\sdapsoutfile%
+\immediate\openout\sdapsoutfile=\jobname.sdaps%
+
 
 \endinput
