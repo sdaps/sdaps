@@ -77,6 +77,7 @@ def main (local_run = False) :
 	import info
 	import recognize
 	import report
+	import reporttex
 	import setup
 	import setuptex
 	import stamp

@@ -154,11 +154,11 @@ class Survey (object) :
 
 	sheet = property(get_sheet)
 
-	def iterate (self, function, filter = lambda : True) :
+	def iterate (self, function, filter = lambda : True, *args, **kwargs) :
 		'''call function once for each sheet
 		'''
 		for self.index in range(len(self.sheets)) :
-			if filter() : function()
+			if filter() : function(*args, **kwargs)
 
 	def iterate_progressbar (self, function, filter = lambda : True) :
 		'''call function once for each sheet and display a progressbar
