@@ -113,7 +113,7 @@
 \RequirePackage[dp=1]{siunitx}
 
 % Listen
-\RequirePackage{paralist}
+\RequirePackage{mdwlist}
 
 % Zeichenprogramm
 \RequirePackage{tikz}
@@ -173,7 +173,7 @@
 \newskip\medskipamount   \medskipamount  =6pt  plus 2pt minus 2pt
 \newskip\bigskipamount   \bigskipamount  =12pt plus 4pt minus 4pt
 
-\def\descriptionlabel#1{{\normalfont #1}}
+\setkomafont{descriptionlabel}{\normalfont}
 
 \newcommand{\sectbox}[1]{%
  \noindent\protect\colorbox{sectionbgcolor}{%
@@ -253,11 +253,11 @@
 \newcommand*{\markanswer}{%
   \begin{minipage}[c]{\markdescwidth}
     \pgfkeysvalueof{/sdaps/mark/lower} -- \pgfkeysvalueof{/sdaps/mark/upper}
-    \begin{compactdesc}
+    \begin{description*}
       \item[Antworten:] \pgfkeysvalueof{/sdaps/mark/count}
       \item[Mittelwert:] \num{\pgfkeysvalueof{/sdaps/mark/mean}}
       \item[Standardabweichung:] \num{\pgfkeysvalueof{/sdaps/mark/stddev}}
-    \end{compactdesc}
+    \end{description*}
   \end{minipage}
   \hfill
   \begin{minipage}[c]{\markdiawidth}
