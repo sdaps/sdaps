@@ -61,9 +61,6 @@
 % color
 \RequirePackage{color}
 
-% Symbols (boxes)
-\RequirePackage{amssymb}
-
 % hyperrefs
 \RequirePackage{url}
 \ifpdf
@@ -112,20 +109,11 @@
 \renewcommand\tabularxcolumn[1]{m{#1}}
 \newcolumntype{Y}{>{\raggedleft}X}
 
-% check for draftmode
-\RequirePackage{ifdraft}
-
-% format counter
-\RequirePackage{fmtcount}
-
 % Einheiten
 \RequirePackage[dp=1]{siunitx}
 
 % Listen
 \RequirePackage{paralist}
-
-% KeyValue
-\RequirePackage{pgfkeys}
 
 % Zeichenprogramm
 \RequirePackage{tikz}
