@@ -191,6 +191,46 @@
 \setkomafont{disposition}{\normalfont}
 \addtokomafont{section}{\bfseries\sffamily}
 
+\global\def\@extrainfos{}
+\newcommand{\addextrainfo}[2]{\global\edef\@extrainfos{\@extrainfos #1: & #2 \cr}}%\global\edef\@extrainfos{\@extrainfos #1 & #2 \\}}
+
+\renewcommand*\maketitle[1][1]{
+  \begin{titlepage}%
+    \setcounter{page}{#1}%
+    \null\vfill
+    \begin{center}%
+      \ifx\@subject\@empty \else
+        {\Large \@subject \par}%
+        \vskip 3em
+      \fi
+      {\titlefont\huge \@title\par}%
+      \vskip 3em
+      {\Large \lineskip 0.75em
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+      \vskip 1.5em
+      {\Large \@date \par}%
+    \end{center}
+    \vskip \z@ \@plus3fill
+    \begin{tabular}[t]{rl}%
+      \@extrainfos
+    \end{tabular}%
+  \end{titlepage}%
+  \global\let\maketitle\relax
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\@subject\@empty
+  \global\let\@extrainfos\@empty
+  \global\let\author\relax
+  \global\let\title\relax
+  \global\let\subject\relax
+  \global\let\extrainfos\relax
+  \global\let\date\relax
+  \global\let\and\relax
+}
+
 %-------------------------------------------------------------------------------
 %                structure commands definitions
 %-------------------------------------------------------------------------------
