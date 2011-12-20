@@ -94,9 +94,9 @@ def report (survey, filter, filename = None, small = 0) :
 				author = value
 				continue
 
-			extra_info.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
+			extra_info.append(u'\\addextrainfo{%(key)s}{%(value)s}' % {'key': key, 'value': value})
 
-		extra_info = u'\\newline\n'.join(extra_info)
+		extra_info = u'\n'.join(extra_info)
 		texfile.write(r"""\documentclass{sdapsreport}
 
 	\usepackage[utf8]{inputenc}
@@ -105,12 +105,12 @@ def report (survey, filter, filename = None, small = 0) :
 	\subject{%(title)s}
 	\author{%(author)s}
 
+	\addextrainfo{%(turned_in)s}{%(count)i}
+	%(extra_info)s
+
 	\begin{document}
 
 	\maketitle
-
-	%(turned_in)s: %(count)i
-	%(extra_info)s
 
 	""" % {'turned_in' : _('Turned in Questionnaires'), 'title': survey.title, 'author' : author, 'extra_info' : extra_info, 'count' : survey.questionnaire.calculate.count})
 
@@ -132,4 +132,6 @@ def report (survey, filter, filename = None, small = 0) :
 		shutil.rmtree(tmpdir)
 
 		raise
+
+	shutil.rmtree(tmpdir)
 
