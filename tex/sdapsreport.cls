@@ -10,7 +10,7 @@
 % identification
 %-------------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{sdaps}[2011/01/04%
+\ProvidesClass{sdaps}[2011/12/20%
                       v0.1 Class for SDAPS survey-report]
 
 
