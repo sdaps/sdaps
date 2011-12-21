@@ -147,6 +147,10 @@
 % format counter
 \RequirePackage{fmtcount}
 
+% Translation
+\RequirePackage{translator}
+\usedictionary{translator-sdaps-dictionary}
+
 % Zeichenprogramm
 \RequirePackage{tikz}
 \usetikzlibrary{calc}
@@ -231,7 +235,7 @@
                 \end{scope}%
               \end{scope}%
               \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0 ,\@questionnaire_id_shift) + (0, 0.5\codeboxheight)$)}]%
-                \node{\usekomafont{questionaireidfont}Fragebogen-ID: \hexadecimal{questionaireid}};%
+                \node{\usekomafont{questionaireidfont}\translate{questionaireid}\hexadecimal{questionaireid}};%
               \end{scope}%
             \fi%
             \if@PrintSurveyId%
@@ -263,7 +267,7 @@
                 \end{scope}%
               \end{scope}%
               \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0, 0.5\codeboxheight)$)}]%
-                \node{\usekomafont{surveyidfont}Umfrage-ID: \hexadecimal{surveyidmsb}\hexadecimal{surveyidlsb}};%
+                \node{\usekomafont{surveyidfont}\translate{surveyid}: \hexadecimal{surveyidmsb}\hexadecimal{surveyidlsb}};%
               \end{scope}%
             \fi%
           \end{scope}%
@@ -275,7 +279,7 @@
     %---------------------------------------------------------------------------
     \if@draft %
       \node [rotate=60,scale=10,text opacity=0.2,color=red]%
-      at (current page.center) {\textsc{Entwurf}};%
+      at (current page.center) {\textsc{\translate{draft}}};%
     \fi %
   \end{tikzpicture}%
 }
@@ -289,18 +293,18 @@
 
 \AtBeginDocument{%
   \begin{info}
-    Der Fragebogen wird maschinell erfasst. Bitte mit Kugelschreiber oder nicht zu dickem Filzstift ausf\"ullen.
+    \translate{infotext}
     \begin{minipage}[t]{10em}
       \begin{tabbing}
-        Ankreuzen:\hspace{1em}\=\checkedbox\\
-        Korrigieren:\>\correctedbox
+        \translate{info_cross}:\hspace{1em}\=\checkedbox\\
+        \translate{info_correct}:\>\correctedbox
       \end{tabbing}
     \end{minipage}\hfill
     \setlength\@tempdima{\linewidth}
     \addtolength{\@tempdima}{-12em}
     \begin{minipage}[t]{\@tempdima}
-      Bei Auswahlfeldern d\"urfen mehrere Antworten angekreuzt werden.\\
-      Bei Bewertungsfragen (Skala 1--5) darf nur ein K\"astchen Angekreuzt werden.
+      \translate{info_select}\\
+      \translate{info_mark}
     \end{minipage}\\
   \end{info}
 }

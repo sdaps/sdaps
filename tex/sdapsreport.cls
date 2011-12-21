@@ -115,6 +115,10 @@
 % Listen
 \RequirePackage{mdwlist}
 
+% Translation
+\RequirePackage{translator}
+\usedictionary{translator-sdaps-dictionary}
+
 % Zeichenprogramm
 \RequirePackage{tikz}
 %\usetikzlibrary{calc}
@@ -294,9 +298,9 @@
   \begin{minipage}[c]{\markdescwidth}
     \pgfkeysvalueof{/sdaps/mark/lower} -- \pgfkeysvalueof{/sdaps/mark/upper}
     \begin{description*}
-      \item[Antworten:] \pgfkeysvalueof{/sdaps/mark/count}
-      \item[Mittelwert:] \num{\pgfkeysvalueof{/sdaps/mark/mean}}
-      \item[Standardabweichung:] \num{\pgfkeysvalueof{/sdaps/mark/stddev}}
+      \item[\translate{answers}:] \pgfkeysvalueof{/sdaps/mark/count}
+      \item[\translate{mean}:] \num{\pgfkeysvalueof{/sdaps/mark/mean}}
+      \item[\translate{standard deviation}:] \num{\pgfkeysvalueof{/sdaps/mark/stddev}}
     \end{description*}
   \end{minipage}
   \hfill
