@@ -67,4 +67,4 @@ rm -rf "$PROJECT"
 "$SDAPS" "$PROJECT" stamp
 
 # And finally, create a report with the result
-"$SDAPS" "$PROJECT" report
+"$SDAPS" "$PROJECT" report_tex
