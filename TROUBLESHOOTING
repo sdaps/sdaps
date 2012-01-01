@@ -16,6 +16,9 @@ Please have a look at the following:
      clean.
    * Check that the resolution is set to 300dpi
    * Check there is no black line at one side
+ * Try modifying the magic recognition parameters in defs.py
+   image_line_width and image_line_coverage. However, it is unlikely
+   that this is neccessary.
 
 Recognition quality is bad
 --------------------------
@@ -36,7 +39,7 @@ very accurate and the outline is detected as writing.
 If dirt is detected, try to adjust the textbox_scan_* values in defs.py.
 
 If the outline is detected than probably something worst is going on. You
-can adjust the textbox_*_padding values, or adjusting the image_*_line
+can adjust the textbox_*_padding values, or adjusting the image_line_*
 values might also help (as these are used to find the corners of the
 textbox).
 
