@@ -18,6 +18,7 @@
 
 import os
 import shutil
+import glob
 import subprocess
 
 from sdaps import utils
@@ -62,12 +63,20 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 	os.mkdir(survey.path())
 	try:
 		shutil.copy(questionnaire_tex, survey.path('questionnaire.tex'))
+
+		# Copy class and dictionary files
 		if paths.local_run :
 			cls_file = os.path.join(paths.source_dir, 'tex', 'sdaps.cls')
+			dict_files = os.path.join(paths.source_dir, 'tex', '*.dict')
+			dict_files = glob.glob(dict_files)
 		else :
-			cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'sdaps.cls')
+			cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdaps.cls')
+			dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
+			dict_files = glob.glob(dict_files)
 
-		shutil.copy(cls_file, survey.path('sdaps.cls'))
+		shutil.copyfile(cls_file, survey.path('sdaps.cls'))
+		for dict_file in dict_files:
+			shutil.copyfile(dict_file, survey.path(os.path.basename(dict_file)))
 
 
 		# Compile the .tex file

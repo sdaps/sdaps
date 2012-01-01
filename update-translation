@@ -2,4 +2,6 @@
 
 cd po
 
+intltool-update -m -g sdaps
+
 exec intltool-update -r -g sdaps

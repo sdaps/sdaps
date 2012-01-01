@@ -19,6 +19,7 @@
 import os
 import tempfile
 import shutil
+import glob
 import subprocess
 
 from sdaps import model
@@ -76,32 +77,40 @@ def report (survey, filter, filename = None, small = 0) :
 			tmpdir
 		)
 
-
-		# Copy class
+		# Copy class and dictionary files
 		if paths.local_run :
 			cls_file = os.path.join(paths.source_dir, 'tex', 'sdapsreport.cls')
+			dict_files = os.path.join(paths.source_dir, 'tex', '*.dict')
+			dict_files = glob.glob(dict_files)
 		else :
-			cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'sdapsreport.cls')
-		shutil.copy(cls_file, os.path.join(tmpdir, 'sdapsreport.cls'))
+			cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdapsreport.cls')
+			dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
+			dict_files = glob.glob(dict_files)
+
+		shutil.copyfile(cls_file, os.path.join(tmpdir, 'sdapsreport.cls'))
+		for dict_file in dict_files:
+			shutil.copyfile(dict_file, os.path.join(tmpdir, os.path.basename(dict_file)))
+
 
 		texfile = codecs.open(os.path.join(tmpdir, 'report.tex'), 'w', 'utf-8')
 
-		author = _('Unknown')
+		author = _('author|Unknown').split('|')[-1]
 
 		extra_info = []
 		for key, value in survey.info.iteritems():
 			if key == 'Author':
-				author = value
+				#author = value
 				continue
 
 			extra_info.append(u'\\addextrainfo{%(key)s}{%(value)s}' % {'key': key, 'value': value})
 
 		extra_info = u'\n'.join(extra_info)
-		texfile.write(r"""\documentclass{sdapsreport}
+		texfile.write(r"""\documentclass[%(language)s]{sdapsreport}
 
 	\usepackage[utf8]{inputenc}
+	\usepackage[%(language)s]{babel}
 
-	\title{sdaps Report}
+	\title{%(title)s}
 	\subject{%(title)s}
 	\author{%(author)s}
 
@@ -112,7 +121,13 @@ def report (survey, filter, filename = None, small = 0) :
 
 	\maketitle
 
-	""" % {'turned_in' : _('Turned in Questionnaires'), 'title': survey.title, 'author' : author, 'extra_info' : extra_info, 'count' : survey.questionnaire.calculate.count})
+	""" % {'language' : _('tex language|english').split('|')[-1],
+	       'title' : _(u'sdaps report'),
+	       'turned_in' : _('Turned in Questionnaires'),
+	       'title': survey.title,
+	       'author' : author,
+	       'extra_info' : extra_info,
+	       'count' : survey.questionnaire.calculate.count})
 
 		survey.questionnaire.report.write(texfile, tmpdir)
 
@@ -133,5 +148,5 @@ def report (survey, filter, filename = None, small = 0) :
 
 		raise
 
-	shutil.rmtree(tmpdir)
+	#shutil.rmtree(tmpdir)
 
