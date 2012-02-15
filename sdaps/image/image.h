@@ -29,6 +29,9 @@ extern gdouble sdaps_line_coverage;
 cairo_surface_t*
 get_a1_from_tiff (char *filename, gint page, gboolean rotated);
 
+cairo_surface_t*
+get_rgb24_from_tiff (char *filename, gint page, gboolean rotated);
+
 gint
 get_tiff_page_count (char *filename);
 

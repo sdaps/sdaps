@@ -54,7 +54,7 @@ class Provider (object) :
 		self.images = list()
 		self.survey.iterate(self, filter)
 		self.index = 0
-		self.image.surface.load()
+		self.image.surface.load_rgb()
 		self.survey.goto_sheet(self.image.sheet)
 		#self._surface = None
 
@@ -66,7 +66,7 @@ class Provider (object) :
 		self.index += 1
 		if self.index == len(self.images) :
 			self.index = 0
-		self.image.surface.load()
+		self.image.surface.load_rgb()
 		self.survey.goto_sheet(self.image.sheet)
 
 	def previous (self) : #, skip_valid = 1) :
@@ -74,14 +74,14 @@ class Provider (object) :
 		self.index -= 1
 		if self.index < 0 :
 			self.index = len(self.images) - 1
-		self.image.surface.load()
+		self.image.surface.load_rgb()
 		self.survey.goto_sheet(self.image.sheet)
 
 	def goto (self, index) :
 		if index >= 0 and index < len(self.images):
 			self.image.surface.clean()
 			self.index = index
-			self.image.surface.load()
+			self.image.surface.load_rgb()
 			self.survey.goto_sheet(self.image.sheet)
 
 
@@ -247,7 +247,7 @@ class MainWindow(object):
 		rotated = toggle.get_active()
 		if self.provider.image.rotated != rotated :
 			self.provider.image.rotated = rotated
-			self.provider.image.surface.load()
+			self.provider.image.surface.load_rgb()
 			self.update_ui()
 		return False
 

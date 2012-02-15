@@ -39,6 +39,14 @@ class Image (model.buddy.Buddy) :
 			self.obj.rotated
 		)
 
+	def load_rgb (self) :
+		self.surface_rgb = image.get_rgb24_from_tiff(
+			self.obj.sheet.survey.path(self.obj.filename),
+			self.obj.tiff_page,
+			self.obj.rotated
+		)
+
 	def clean (self) :
 		if hasattr(self, 'surface') : del self.surface
+		if hasattr(self, 'surface_rgb') : del self.surface_rgb
 

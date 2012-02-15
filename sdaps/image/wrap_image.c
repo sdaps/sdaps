@@ -22,6 +22,7 @@
 #include <cairo.h>
 
 static PyObject *wrap_get_a1_from_tiff(PyObject *self, PyObject *args);
+static PyObject *wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args);
 static PyObject *wrap_calculate_matrix(PyObject *self, PyObject *args);
 static PyObject *wrap_calculate_correction_matrix(PyObject *self, PyObject *args);
 static PyObject *wrap_find_box_corners(PyObject *self, PyObject *args);
@@ -35,6 +36,7 @@ Pycairo_CAPI_t *Pycairo_CAPI;
 
 static PyMethodDef EvaluateMethods[] = {
 	{"get_a1_from_tiff",  wrap_get_a1_from_tiff, METH_VARARGS, "Creates a cairo A1 surface from a monochrome tiff file."},
+	{"get_rgb24_from_tiff",  wrap_get_rgb24_from_tiff, METH_VARARGS, "Creates a cairo RGB24 surface from a (monochrome) tiff file."},
 	{"get_tiff_page_count",  wrap_get_tiff_page_count, METH_VARARGS, "Returns the number of pages a multipage tiff contains."},
 	{"check_tiff_monochrome",  wrap_check_tiff_monochrome, METH_VARARGS, "Check whether all pages of the tiff are monochrome."},
 	{"calculate_matrix",  wrap_calculate_matrix, METH_VARARGS, "Calculates the transformation matrix transform the image into the survey coordinate system."},
@@ -81,6 +83,27 @@ wrap_get_a1_from_tiff(PyObject *self, PyObject *args)
 		return NULL;
 	
 	surface = get_a1_from_tiff(filename, page, rotated);
+	
+	if (surface) {
+		return PycairoSurface_FromSurface(surface, NULL);
+	} else {
+		PyErr_SetString(PyExc_AssertionError, "The image surface could not be created! Broken or non 1bit tiff file?");
+		return NULL;
+	}
+}
+
+static PyObject *
+wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args)
+{
+	cairo_surface_t *surface;
+	char *filename = NULL;
+	gboolean rotated;
+	gint page;
+
+	if (!PyArg_ParseTuple(args, "sii", &filename, &page, &rotated))
+		return NULL;
+	
+	surface = get_rgb24_from_tiff(filename, page, rotated);
 	
 	if (surface) {
 		return PycairoSurface_FromSurface(surface, NULL);

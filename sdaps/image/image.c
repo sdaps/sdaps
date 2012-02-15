@@ -89,6 +89,59 @@ get_a1_from_tiff (char *filename, gint page, gboolean rotated)
 	return surface;
 }
 
+cairo_surface_t*
+get_rgb24_from_tiff (char *filename, gint page, gboolean rotated)
+{
+	TIFF* tiff;
+	cairo_surface_t *surface;
+	guint32 *s_pixels;
+	guint32 *t_pixels;
+	guint32 *t_row;
+	int s_stride, t_stride;
+	int width, height;
+
+	int x, y;
+
+	tiff = TIFFOpen(filename, "r");
+	if (tiff == NULL)
+		return NULL;
+
+	if (!TIFFSetDirectory(tiff, page))
+		return NULL;
+
+	TIFFGetField(tiff, TIFFTAG_IMAGEWIDTH, &width);
+	TIFFGetField(tiff, TIFFTAG_IMAGELENGTH, &height);
+	t_pixels = g_malloc(width * height *sizeof(uint32));
+	if (!rotated)
+		TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_TOPLEFT, 0);
+	else
+		TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_BOTRIGHT, 0);
+
+	surface = cairo_image_surface_create(CAIRO_FORMAT_RGB24, width, height);
+	s_pixels = (guint32*) cairo_image_surface_get_data(surface);
+	s_stride = cairo_image_surface_get_stride(surface);
+
+	t_stride = width * sizeof(guint32);
+	t_row = t_pixels;
+
+	for (y = 0; y < height; y++) {
+		guint32 *t_p = t_row;
+
+		for (x = 0; x < width; x++) {
+			*((guint32*) (((guint8*) s_pixels) + 4 * x + y * s_stride)) = (TIFFGetR(*t_p) << 16) | (TIFFGetG(*t_p) << 8) | TIFFGetB(*t_p);
+			t_p = t_p + 1;
+		}
+		t_row = (guint32*) ((char*) t_row + t_stride);
+	}
+
+	g_free(t_pixels);
+	TIFFClose(tiff);
+
+	cairo_surface_mark_dirty(surface);
+
+	return surface;
+}
+
 gint
 get_tiff_page_count (char *filename)
 {

@@ -259,17 +259,15 @@ class SheetWidget(gtk.DrawingArea):
 		cr.rectangle(rect.x, rect.y, rect.width, rect.height)
 		cr.clip()
 
-		image = self.provider.image.surface.surface
+		image = self.provider.image.surface.surface_rgb
 
 		if image != self._cs_image or self._ss_image is None:
 			self._cs_image = image
 			target = cr.get_target()
 			self._ss_image = target.create_similar(cairo.CONTENT_COLOR, image.get_width(), image.get_height())
 			subcr = cairo.Context(self._ss_image)
-			subcr.set_source_rgb(1, 1, 1)
+			subcr.set_source_surface(self._cs_image)
 			subcr.paint()
-			subcr.set_source_rgb(0, 0, 0)
-			subcr.mask_surface(image)
 
 		# Draw the image in the background
 		cr.translate(xoffset, yoffset)
@@ -347,7 +345,7 @@ class SheetWidget(gtk.DrawingArea):
 			raise AssertionError
 
 	def _get_render_width(self):
-		image = self.provider.image.surface.surface
+		image = self.provider.image.surface.surface_rgb
 		if image:
 			width = image.get_width()
 		else:
@@ -356,7 +354,7 @@ class SheetWidget(gtk.DrawingArea):
 		return width
 
 	def _get_render_height(self):
-		image = self.provider.image.surface.surface
+		image = self.provider.image.surface.surface_rgb
 		if image:
 			height = image.get_height()
 		else:
