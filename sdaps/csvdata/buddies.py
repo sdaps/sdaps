@@ -80,15 +80,15 @@ class Choice (model.buddy.Buddy) :
 	obj_class = model.questionnaire.Choice
 
 	def export_header (self) :
-		return ['%i_%i_%i' % box.id for box in self.obj.boxes]
+		return [self.obj.id_csv(box.id) for box in self.obj.boxes]
 
 	def export_data (self) :
-		return dict([('%i_%i_%i' % box.id, '%i' % box.data.state) for box in self.obj.boxes])
+		return dict([(self.obj.id_csv(box.id), '%i' % box.data.state) for box in self.obj.boxes])
 
 	def import_data (self, data) :
 		for box in self.obj.boxes :
-			if '%i_%i_%i' % box.id in data :
-				box.data.state = int(data['%i_%i_%i' % box.id])
+			if self.obj.id_csv(box.id) in data :
+				box.data.state = int(data[self.obj.id_csv(box.id)])
 
 
 class Mark (model.buddy.Buddy) :
@@ -98,14 +98,14 @@ class Mark (model.buddy.Buddy) :
 	obj_class = model.questionnaire.Mark
 
 	def export_header (self) :
-		return ['%i_%i' % self.obj.id]
+		return [self.obj.id_csv()]
 
 	def export_data (self) :
-		return {'%i_%i' % self.obj.id : '%i' % self.obj.get_answer()}
+		return {self.obj.id_csv() : '%i' % self.obj.get_answer()}
 
 	def import_data (self, data) :
-		if '%i_%i' % self.obj.id in data :
-			self.obj.set_answer(int(data['%i_%i' % self.obj.id]))
+		if self.obj.id_csv() in data :
+			self.obj.set_answer(int(data[self.obj.id_csv()]))
 
 
 class Additional_Mark (model.buddy.Buddy) :
@@ -115,12 +115,12 @@ class Additional_Mark (model.buddy.Buddy) :
 	obj_class = model.questionnaire.Additional_Mark
 
 	def export_header (self) :
-		return ['%i_%i' % self.obj.id]
+		return [self.obj.id_csv()]
 
 	def export_data (self) :
-		return {'%i_%i' % self.obj.id : '%i' % self.obj.get_answer()}
+		return {self.obj.id_csv() : '%i' % self.obj.get_answer()}
 
 	def import_data (self, data) :
-		if '%i_%i' % self.obj.id in data :
-			self.obj.set_answer(int(data['%i_%i' % self.obj.id]))
+		if self.obj.id_csv() in data :
+			self.obj.set_answer(int(data[self.obj.id_csv()]))
 

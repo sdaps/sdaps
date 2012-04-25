@@ -117,6 +117,12 @@ class QObject (buddy.Object) :
 		ids = [str(x) for x in self.id]
 		return u'.'.join(ids)
 
+	def id_csv (self, theid=None) :
+		if theid is None:
+			theid = self.id
+		ids = [str(x) for x in self.id]
+		return u'_'.join(ids)
+
 	def id_filter (self) :
 		ids = [str(x) for x in self.id]
 		return u'_'+u'_'.join(ids)
