@@ -85,6 +85,17 @@ def parse (survey) :
 			survey.defs.print_questionnaire_id = bool(int(value))
 		elif arg == 'PrintSurveyId':
 			survey.defs.print_survey_id = bool(int(value))
+		elif arg == 'Pages':
+			survey.questionnaire.page_count = int(value)
+		elif arg == "PageSize":
+			args = value.split(',')
+			args = [arg.strip() for arg in args]
+
+			width, height = [round(float(arg[:-2])/72.27*25.4,3) for arg in args]
+
+			survey.defs.paper_width = width
+			survey.defs.paper_height = height
+
 		elif arg.startswith(QOBJECT_PREFIX):
 			index, string = get_index_and_string(value)
 			if index:
@@ -111,8 +122,7 @@ def parse (survey) :
 		elif arg == BOX:
 			args = value.split(',')
 			args = [arg.strip() for arg in args]
-			print args
-			
+
 			boxtype = args[0]
 			# Convert to mm
 			page = int(args[1])

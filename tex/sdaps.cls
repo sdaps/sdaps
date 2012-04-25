@@ -88,6 +88,9 @@
 % For writing out the page number of boxes
 \RequirePackage{refcount}
 
+% Defines the LastPage label
+\RequirePackage{lastpage}
+
 % pagehooks
 % This is a bit weird. According to the bophook documentation it should be
 % loaded after the hyperref package. However, loading it *before* the hyperref
@@ -454,6 +457,7 @@
   % Both baselineskip and lineskip?
   \question{#2}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Text=\thesubsection. #2} %
+  \label{textbox\thetextboxnum}%
   \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
   \pgfsys@getposition{textboxtop\thetextboxnum}{\@sdaps@textboxtoppos}%
   \pgfpointadd{\@sdaps@textboxtoppos}{%
@@ -468,7 +472,7 @@
     }%
   }%
   \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-  \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \thepage, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height} %
+  \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height} %
   \vspace{-\lineskip}%
   \begingroup %
     \setlength\@tempdima{#1}%
@@ -631,6 +635,7 @@
       %
       \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#3}%
       %
+      \label{textbox\thetextboxnum}%
       \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
       \pgfsys@getposition{textboxleft\thetextboxnum}{\@sdaps@textboxleftpos}%
       \pgfpointadd{\@sdaps@textboxleftpos}{%
@@ -645,7 +650,7 @@
         }%
       }%
       \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-      \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \thepage, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
+      \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
       %
       \def\horizontallines{%
         \hbox{%
@@ -700,6 +705,10 @@
   \else
     \protectedimmediatewrite\sdapsoutfile{PrintSurveyId=0}
   \fi
+  \protectedimmediatewrite\sdapsoutfile{Pages=\getpagerefnumber{LastPage}}
+  \pgfpoint{\paperwidth}{\paperheight}
+  \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}
+  \protectedimmediatewrite\sdapsoutfile{PageSize=\@sdaps@width, \@sdaps@height}
 }
 
 \AtEndDocument{%
