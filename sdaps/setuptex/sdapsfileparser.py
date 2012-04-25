@@ -62,7 +62,7 @@ def latex_to_unicode(string):
 	string, count = re.subn(r'\\IeC {(?P<char>.*?)}', ret_char, string)
 	return string
 
-def parse (survey, boxes, textboxes) :
+def parse (survey) :
 
 	sdaps_file = open(survey.path('questionnaire.sdaps'))
 	# the file is encoded in ascii format
@@ -109,18 +109,25 @@ def parse (survey, boxes, textboxes) :
 
 			qobject.setup.answer(value)
 		elif arg == BOX:
-			if value == 'Textbox':
-				box = textboxes.pop(0)
-			else:
-				box = boxes.pop(0)
-			# Sanity check, whether we got the correct box type.
-			assert isinstance(box, getattr(model.questionnaire, value))
+			args = value.split(',')
+			args = [arg.strip() for arg in args]
+			print args
+			
+			boxtype = args[0]
+			# Convert to mm
+			page = int(args[1])
+			x, y, width, height = [float(arg[:-2])/72.27*25.4 for arg in args[2:]]
+			y = survey.defs.paper_height - y
 
+			if boxtype == 'Textbox':
+				box = model.questionnaire.Textbox()
+			else:
+				box = model.questionnaire.Checkbox()
+
+			box.setup.setup(page, x, y, width, height)
 			qobject.setup.box(box)
 		else:
 			# Falltrough, it is some metadata:
 			survey.info[arg] = value
-
-	assert(len(boxes) == 0)
 
 

@@ -85,6 +85,9 @@
 % Symbols (boxes)
 \RequirePackage{amssymb}
 
+% For writing out the page number of boxes
+\RequirePackage{refcount}
+
 % pagehooks
 % This is a bit weird. According to the bophook documentation it should be
 % loaded after the hyperref package. However, loading it *before* the hyperref
@@ -363,6 +366,11 @@
 \setcounter{surveyidlsb}{39284}
 \newkomafont{surveyidfont}{\ttfamily\textbf}
 
+\newcounter{checkboxnum}
+\setcounter{checkboxnum}{0}
+
+\newcounter{textboxnum}
+\setcounter{textboxnum}{0}
 
 \definecolor{sectionbgcolor}{gray}{0.8}
 \definecolor{sectionfgcolor}{gray}{0.0}
@@ -383,10 +391,19 @@
 }
 
 \providecommand{\checkbox}{%
-  \protectedimmediatewrite\sdapsoutfile{Box=Checkbox}%
+  \mbox{\label{checkbox\thecheckboxnum}\pgfsys@markposition{checkbox\thecheckboxnum}%
+  \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
+  \pgfsys@getposition{checkbox\thecheckboxnum}{\@sdaps@checkboxpos}%
+  \pgfpointadd{\@sdaps@checkboxpos}{%
+    \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0pt}{0.5\boxsize-0.5em+0.5\elementlinewidth + 0.5\elementlinewidth+\boxsize}}%
+  }%
+  \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
+  \pgfpoint{\boxsize+\elementlinewidth}{\boxsize+\elementlinewidth}%
+  \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
+  \protectedimmediatewrite\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width}%
   \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
-  }%
+  }\addtocounter{checkboxnum}{1}}%
 }
 \providecommand{\checkedbox}{%
   \hspace{-2pt}%
@@ -437,7 +454,21 @@
   % Both baselineskip and lineskip?
   \question{#2}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Text=\thesubsection. #2} %
-  \protectedimmediatewrite\sdapsoutfile{Box=Textbox} %
+  \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
+  \pgfsys@getposition{textboxtop\thetextboxnum}{\@sdaps@textboxtoppos}%
+  \pgfpointadd{\@sdaps@textboxtoppos}{%
+    \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0.5\elementlinewidth}{-0.5\elementlinewidth}}%
+  }%
+  \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
+%
+  \pgfsys@getposition{textboxbottom\thetextboxnum}{\@sdaps@textboxbottompos}%
+  \pgfpointadd{\@sdaps@textboxtoppos}{%
+    \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxbottompos}}{
+      \pgfpoint{\linewidth-\elementlinewidth}{-\elementlinewidth}%
+    }%
+  }%
+  \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
+  \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \thepage, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height} %
   \vspace{-\lineskip}%
   \begingroup %
     \setlength\@tempdima{#1}%
@@ -449,6 +480,7 @@
       }%
     }%
     \offinterlineskip %
+    \pgfsys@markposition{textboxtop\thetextboxnum}%
     \hrule width \linewidth height \elementlinewidth %
     %\kern -\elementlinewidth%
     \sides %
@@ -459,6 +491,9 @@
     \sides %
     %\kern -\elementlinewidth%
     \hrule width \linewidth height \elementlinewidth %
+    \pgfsys@markposition{textboxbottom\thetextboxnum}%
+    \addtocounter{textboxnum}{1}%
+    %
   \endgroup %
   \vspace{\baselineskip}%
 }
@@ -580,8 +615,6 @@
       \newdimen\@tempdimruleheight%
       #3~%
       %
-      \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#3}%
-      \protectedimmediatewrite\sdapsoutfile{Box=Textbox}%
       \setlength\@tempdimheight{#1}%
       %
       \setlength\@tempdimlower{0pt}%
@@ -596,6 +629,24 @@
       \advance\@tempdimruleheight by +2.0\elementlinewidth%
       \advance\@tempdimruleheight by \@tempdimlower%
       %
+      \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#3}%
+      %
+      \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
+      \pgfsys@getposition{textboxleft\thetextboxnum}{\@sdaps@textboxleftpos}%
+      \pgfpointadd{\@sdaps@textboxleftpos}{%
+        \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0.5\elementlinewidth}{\@tempdimruleheight-0.5\elementlinewidth}}%
+      }%
+      \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
+      %
+      \pgfsys@getposition{textboxright\thetextboxnum}{\@sdaps@textboxrightpos}%
+      \pgfpointadd{\@sdaps@textboxrightpos}{%
+        \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxleftpos}}{
+          \pgfpoint{-\elementlinewidth}{#1+\elementlinewidth}%
+        }%
+      }%
+      \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
+      \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \thepage, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
+      %
       \def\horizontallines{%
         \hbox{%
           \raise\@tempdimboxlower\vbox{%
@@ -606,6 +657,7 @@
           }%
         }%
       }%
+      \pgfsys@markposition{textboxleft\thetextboxnum}%
       \vrule depth -\@tempdimlower width \elementlinewidth height \@tempdimruleheight %
       %\kern -\elementlinewidth%
       \horizontallines%
@@ -615,6 +667,8 @@
       \horizontallines%
       %\kern -\elementlinewidth%
       \vrule depth -\@tempdimlower width \elementlinewidth height \@tempdimruleheight%
+      \pgfsys@markposition{textboxright\thetextboxnum}%
+      \addtocounter{textboxnum}{1}%
     \endgroup%
   }%
   \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%

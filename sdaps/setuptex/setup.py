@@ -30,7 +30,6 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 from sdaps.setup import buddies
-import boxesparser
 import sdapsfileparser
 from sdaps.setup import additionalparser
 #import metaparser
@@ -85,22 +84,18 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 			print _("Error running \"rubber -d\" to compile the LaTeX file.")
 			raise
 
-		# ----
-		# Parse the box objects into a cache
-		boxes, textboxes, page_count = boxesparser.parse(survey.path('questionnaire.pdf'))
-		survey.questionnaire.page_count = page_count
-
 		# Get the papersize
 		doc = pdffile.PDFDocument(survey.path('questionnaire.pdf'))
 		page = doc.read_page(1)
 		survey.defs.paper_width = abs(page.MediaBox[0] - page.MediaBox[2]) / 72.0 * 25.4
 		survey.defs.paper_height = abs(page.MediaBox[1] - page.MediaBox[3]) / 72.0 * 25.4
+		survey.questionnaire.page_count = doc.count_pages()
 		survey.defs.print_questionnaire_id = False
 		survey.defs.print_survey_id = True
 
 		# Parse qobjects
 		try:
-			sdapsfileparser.parse(survey, boxes, textboxes)
+			sdapsfileparser.parse(survey)
 		except:
 			print _("Error: Caught an Exception while parsing the SDAPS file. The current state is:")
 			print unicode(survey.questionnaire)
