@@ -411,7 +411,6 @@
 \providecommand{\checkedbox}{%
   \hspace{-2pt}%
   \tikz[baseline=0.5mm]{%
-    % Note: This box is *not* detected by the PDF parser later on.
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
     \begin{scope}[decoration={random steps,segment length=4pt,amplitude=1pt}]
       \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\boxsize, \boxsize) + (2pt,2pt)$);%
@@ -571,6 +570,8 @@
   \question{#2}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Choice=\thesubsection. #2}%
   \tabularx{\linewidth}{*{\themaxchoiceitems}{X}}%
+  % We insert dummy elements into each cell, because otherwise there may be
+  % layouting issues.
   \global\def\@sdaps@choiceitems@dummy{}%
   \loop{}%
   \ifnum\thechoiceitems<\themaxchoiceitems{\addtocounter{choiceitems}{1}} \global\edef\@sdaps@choiceitems@dummy{\@sdaps@choiceitems@dummy &}%
