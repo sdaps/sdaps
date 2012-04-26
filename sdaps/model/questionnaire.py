@@ -120,7 +120,7 @@ class QObject (buddy.Object) :
 	def id_csv (self, theid=None) :
 		if theid is None:
 			theid = self.id
-		ids = [str(x) for x in self.id]
+		ids = [str(x) for x in theid]
 		return u'_'.join(ids)
 
 	def id_filter (self) :
