@@ -302,12 +302,16 @@
     \translate{infotext}
     \begin{minipage}[t]{10em}
       \begin{tabbing}
-        \translate{info_cross}:\hspace{1em}\=\checkedbox\\
-        \translate{info_correct}:\>\correctedbox
+        \translate{info_cross}:\\
+        \translate{info_correct}:\
       \end{tabbing}
     \end{minipage}\hfill
+    \begin{minipage}[t]{1.5em}
+      \checkedbox\\
+      \correctedbox
+    \end{minipage}\hfill
     \setlength\@tempdima{\linewidth}
-    \addtolength{\@tempdima}{-12em}
+    \addtolength{\@tempdima}{-13em}
     \begin{minipage}[t]{\@tempdima}
       \translate{info_select}\\
       \translate{info_mark}
