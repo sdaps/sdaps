@@ -373,6 +373,9 @@
 \setcounter{surveyidlsb}{39284}
 \newkomafont{surveyidfont}{\ttfamily\textbf}
 
+\newcounter{choicegroupnumchoices}
+\setcounter{choicegroupnumchoices}{-1}
+
 \newcounter{checkboxnum}
 \setcounter{checkboxnum}{0}
 
@@ -533,6 +536,48 @@
   \origsection{#1}
   \protectedimmediatewrite\sdapsoutfile{}
   \protectedimmediatewrite\sdapsoutfile{QObject-Head=\thesection. #1}
+}
+
+
+\newenvironment{choicegroup}[1]{%
+  \offinterlineskip%
+  \question{#1}%
+  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\thesubsection. #1} %
+  \setcounter{choicegroupnumchoices}{0} %
+  \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{X*{\thechoicegroupnumchoices}{c}}} %
+  \global\def\@sdaps@choicegroup@boxes{} %
+}{%
+  \ifnum\thechoicegroupnumchoices>-1 %
+    % Throw error \@ehb == you have lost some text
+    \PackageError{sdaps}{Got a choicegroup without any choice lines!}\@ehb %
+  \fi %
+  \endtabularx%
+}
+
+\providecommand*{\choiceline}[1]{%
+  \@sdaps@choicegroup@start %
+  \global\def\@sdaps@choicegroup@start{} %
+  % This is not really elegant, couldn't we just check whether choicegroup@start
+  % is empty?
+  \ifnum\thechoicegroupnumchoices>0
+    \\ %
+    \setcounter{choicegroupnumchoices}{-1} %
+  \fi %
+  \protectedimmediatewrite\sdapsoutfile{QObject-Mark=#1}%
+  % First move to the next line (as it is not part of the @start macro)
+  #1 \@sdaps@choicegroup@boxes \\ %
+}
+
+\providecommand*{\groupaddchoice}[1]{%
+  \ifnum\thechoicegroupnumchoices<0
+    % Throw error \@ehb == you have lost some text
+    % Why is this emitted multiple times? And can one create a multiline message?
+    \PackageError{sdaps}{Tried to add a new choice, but not at the beginning of a choicegroup environment!}\@ehb
+  \else
+    \stepcounter{choicegroupnumchoices}%
+    \g@addto@macro{\@sdaps@choicegroup@start}{& #1}%
+    \g@addto@macro{\@sdaps@choicegroup@boxes}{& \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#1} \checkbox}%
+  \fi
 }
 
 
