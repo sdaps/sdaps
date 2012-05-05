@@ -570,7 +570,7 @@
     \\ %
     \setcounter{choicegroupnumchoices}{-1} %
   \fi %
-  \protectedimmediatewrite\sdapsoutfile{QObject-Mark=#1}%
+  \protectedimmediatewrite\sdapsoutfile{QObject-Choice=#1}%
   % First move to the next line (as it is not part of the @start macro)
   #1 \@sdaps@choicegroup@boxes \\ %
 }
