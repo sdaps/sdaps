@@ -2,7 +2,7 @@
 
 \providetranslation{draft}{Entwurf}
 
-\providetranslation{surveyid}{Umfrage-ID}
+\providetranslation{surveyid}{Umfrage-ID:}
 \providetranslation{questionaireid}{Fragebogen-ID:}
 \providetranslation{infotext}{Der Fragebogen wird maschinell erfasst. Bitte mit Kugelschreiber oder nicht zu dickem Filzstift ausf\"ullen.}
 

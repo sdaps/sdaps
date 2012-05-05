@@ -153,6 +153,10 @@
 % format counter
 \RequirePackage{fmtcount}
 
+% Babel (needed for the translator)
+\RequirePackage{babel}
+
+
 % Translation
 \RequirePackage{translator}
 \usedictionary{translator-sdaps-dictionary}
@@ -241,14 +245,15 @@
                 \end{scope}%
               \end{scope}%
               \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0 ,\@questionnaire_id_shift) + (0, 0.5\codeboxheight)$)}]%
-                \node{\usekomafont{questionaireidfont}\translate{questionaireid}\hexadecimal{questionaireid}};%
+                \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexa}{\value{questionaireid}}{16}%
+                \node{\usekomafont{questionaireidfont}{\translate{questionaireid}\@temphexa}};%
               \end{scope}%
             \fi%
             \if@PrintSurveyId%
               % survey-id
               \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, 0)$)}]%
                 \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-                \@tempcnta=\value{surveyidmsb}%
+                \@tempcnta=\value{surveyidmshw}%
                 \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
                   \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
                   {%
@@ -261,7 +266,7 @@
               \end{scope}%
               \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, 0)$)}]%
                 \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-                \@tempcnta=\value{surveyidlsb}%
+                \@tempcnta=\value{surveyidlshw}%
                 \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
                   \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
                   {%
@@ -273,7 +278,9 @@
                 \end{scope}%
               \end{scope}%
               \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0, 0.5\codeboxheight)$)}]%
-                \node{\usekomafont{surveyidfont}\translate{surveyid}: \hexadecimal{surveyidmsb}\hexadecimal{surveyidlsb}};%
+                \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexa}{\value{surveyidlshw}}{16}%
+                \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexb}{\value{surveyidmshw}}{16}%
+                \node{\usekomafont{surveyidfont}{\translate{surveyid} \@temphexb\@temphexa}};%
               \end{scope}%
             \fi%
           \end{scope}%
@@ -367,10 +374,10 @@
 \setcounter{questionaireid}{21845}
 \newkomafont{questionaireidfont}{\ttfamily\textbf}
 
-\newcounter{surveyidmsb}
-\setcounter{surveyidmsb}{52197}
-\newcounter{surveyidlsb}
-\setcounter{surveyidlsb}{39284}
+\newcounter{surveyidmshw}
+\setcounter{surveyidmshw}{52197}
+\newcounter{surveyidlshw}
+\setcounter{surveyidlshw}{39284}
 \newkomafont{surveyidfont}{\ttfamily\textbf}
 
 \newcounter{choicegroupnumchoices}
