@@ -30,9 +30,12 @@
 % enable stamps
 \newif\if@STAMP\@STAMPfalse
 \DeclareOption{stamp}{\@STAMPtrue}
+\DeclareOption{nostamp}{\@STAMPfalse}
+
 % enable pagemarks
 \newif\if@PAGEMARK\@PAGEMARKfalse
 \DeclareOption{pagemark}{\@PAGEMARKtrue}
+\DeclareOption{nopagemark}{\@PAGEMARKfalse}
 
 % Whether sdaps should print the questionnaire id
 \newif\if@PrintQuestionnaireId\@PrintQuestionnaireIdfalse
@@ -47,12 +50,16 @@
 % pass unknown options to scrartcl
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
 
+\newif\if@sdaps@draft
+\@sdaps@drafttrue
+
+\DeclareOption{final}{\@sdaps@draftfalse}
+
 % execute default options
-\ExecuteOptions{10pt,final}
+\ExecuteOptions{10pt}
 
 % process given options
 \ProcessOptions\relax
-
 
 %-------------------------------------------------------------------------------
 % load base-class
@@ -146,9 +153,6 @@
 % display content vertical centered
 \renewcommand\tabularxcolumn[1]{m{#1}}
 \newcolumntype{Y}{>{\raggedleft}X}
-
-% check for draftmode
-\RequirePackage{ifdraft}
 
 % format counter
 \RequirePackage{fmtcount}
@@ -288,9 +292,9 @@
       \fi%
     \fi
     %---------------------------------------------------------------------------
-    % watermark for draftmode
+    % watermark for non final mode
     %---------------------------------------------------------------------------
-    \if@draft %
+    \if@sdaps@draft %
       \node [rotate=60,scale=10,text opacity=0.2,color=red]%
       at (current page.center) {\textsc{\translate{draft}}};%
     \fi %
@@ -391,6 +395,9 @@
 
 \definecolor{sectionbgcolor}{gray}{0.8}
 \definecolor{sectionfgcolor}{gray}{0.0}
+
+% Execute sdaps.opt file to allow SDAPS to override any options
+\InputIfFileExists{sdaps.opt}{}{}
 
 \long\def \protectedimmediatewrite#1#2{%
   \begingroup

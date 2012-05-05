@@ -59,6 +59,15 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 	os.mkdir(survey.path())
 	try:
 		shutil.copy(questionnaire_tex, survey.path('questionnaire.tex'))
+		# Create the sdaps.final file.
+		latex_override = open(survey.path('sdaps.opt'), 'w')
+		latex_override.write('% This file exists to force the latex document into "final" mode.\n')
+		latex_override.write('% It is parsed after the setup phase of the SDAPS class.\n\n')
+		latex_override.write('\\@STAMPfalse\n')
+		latex_override.write('\\@PAGEMARKfalse\n')
+		latex_override.write('\\@sdaps@draftfalse\n')
+		latex_override.close()
+		
 
 		# Copy class and dictionary files
 		if paths.local_run :
@@ -76,7 +85,7 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 
 
 		# Compile the .tex file
-		subprocess.call(['rubber', '--into', survey.path(), '-d', survey.path('questionnaire.tex')])
+		subprocess.call(['rubber', '--into', survey.path(), '-df', survey.path('questionnaire.tex')])
 		if not os.path.exists(survey.path('questionnaire.pdf')):
 			print _("Error running \"rubber -d\" to compile the LaTeX file.")
 			raise
