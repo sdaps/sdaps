@@ -135,18 +135,22 @@ def report (survey, filter, filename = None, small = 0) :
 	\end{document}
 	""")
 
-		subprocess.call(['rubber', '--into', tmpdir, '-d', os.path.join(tmpdir, 'report.tex')])
+		print _("Running pdflatex now twice to generate the report.")
+		# First run in draftmode, no need to generate a PDF
+		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', tmpdir, os.path.join(tmpdir, 'report.tex')])
+		# And again, without the draft mode
+		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', tmpdir, os.path.join(tmpdir, 'report.tex')])
+
 		if not os.path.exists(os.path.join(tmpdir, 'report.pdf')):
-			print _("Error running \"rubber -d\" to compile the LaTeX file.")
-			raise
+			print _("Error running \"pdflatex\" to compile the LaTeX file.")
+			raise AssertionError('PDF file not generated')
 
 		shutil.move(os.path.join(tmpdir, 'report.pdf'), filename)
 
 	except:
-		print _("An occured during creation of the report.")
-		shutil.rmtree(tmpdir)
+		print _("An occured during creation of the report. Temporary files left in '%s'." % tmpdir)
 
 		raise
 
-	#shutil.rmtree(tmpdir)
+	shutil.rmtree(tmpdir)
 

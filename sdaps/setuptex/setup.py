@@ -63,9 +63,15 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 		latex_override = open(survey.path('sdaps.opt'), 'w')
 		latex_override.write('% This file exists to force the latex document into "final" mode.\n')
 		latex_override.write('% It is parsed after the setup phase of the SDAPS class.\n\n')
-		latex_override.write('\\@STAMPfalse\n')
-		latex_override.write('\\@PAGEMARKfalse\n')
+		latex_override.write('\\@STAMPtrue\n')
+		latex_override.write('\\@PAGEMARKtrue\n\n')
+		latex_override.write('% We turn of draft mode if questionnaire IDs are not printed.\n')
+		latex_override.write('% Otherwise we turn it on explicitly so that noboday has wrong ideas.\n')
+		latex_override.write('\\if@PrintQuestionnaireId\n')
+		latex_override.write('\\@sdaps@drafttrue\n')
+		latex_override.write('\\else\n')
 		latex_override.write('\\@sdaps@draftfalse\n')
+		latex_override.write('\\fi\n')
 		latex_override.close()
 		
 
@@ -84,11 +90,14 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 			shutil.copyfile(dict_file, survey.path(os.path.basename(dict_file)))
 
 
-		# Compile the .tex file
-		subprocess.call(['rubber', '--into', survey.path(), '-df', survey.path('questionnaire.tex')])
+		print _("Running pdflatex now twice to generate the questionnaire.")
+		# First run in draftmode, no need to generate a PDF
+		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')])
+		# And again, without the draft mode
+		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')])
 		if not os.path.exists(survey.path('questionnaire.pdf')):
-			print _("Error running \"rubber -d\" to compile the LaTeX file.")
-			raise
+			print _("Error running \"pdflatex\" to compile the LaTeX file.")
+			raise AssertionError('PDF file not generated')
 
 		survey.defs.print_questionnaire_id = False
 		survey.defs.print_survey_id = True
@@ -96,12 +105,12 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 		# Parse qobjects
 		try:
 			sdapsfileparser.parse(survey)
-		except:
+		except Exception, e:
 			print _("Error: Caught an Exception while parsing the SDAPS file. The current state is:")
 			print unicode(survey.questionnaire)
 			print "------------------------------------"
 
-			raise
+			raise e
 
 		# Parse additionalqobjects
 		if additionalqobjects :
@@ -123,7 +132,6 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 		survey.save()
 		log.logfile.close()
 	except:
-		print _("An error occured in the setup routine, deleting the survey directory again.")
-		shutil.rmtree(survey.path())
+		print _("An error occured in the setup routine. The survey directory still exists. You can for example check the questionnaire.log file for LaTeX compile errors.")
 		raise
 
