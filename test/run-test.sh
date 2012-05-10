@@ -45,10 +45,10 @@ rm -rf "$PROJECT"
 "$SDAPS" "$PROJECT" report
 
 ###########################################################
-# Test Tex 
+# Test Tex with IDs
 ###########################################################
 
-PROJECT="projects/test-tex"
+PROJECT="projects/test-tex-ids"
 
 # Create projects dir if it does not exist
 if [ ! -e `dirname $PROJECT` ]; then
@@ -58,12 +58,37 @@ fi
 # Remove project dir that may exist
 rm -rf "$PROJECT"
 
-"$SDAPS" "$PROJECT" setup_tex "data/tex/questionnaire.tex"
+"$SDAPS" "$PROJECT" setup_tex "data/tex/questionnaire_with_ids.tex"
 
 # Create a cover page in projects/test/cover.pdf
 "$SDAPS" "$PROJECT" cover
 
 # Create 10 unique sheets that can be printed and handed out
+"$SDAPS" "$PROJECT" stamp 10
+
+# And finally, create a report with the result
+"$SDAPS" "$PROJECT" report_tex
+
+###########################################################
+# Test Tex without IDs
+###########################################################
+
+PROJECT="projects/test-tex-no-ids"
+
+# Create projects dir if it does not exist
+if [ ! -e `dirname $PROJECT` ]; then
+	mkdir -p `dirname $PROJECT`
+fi
+
+# Remove project dir that may exist
+rm -rf "$PROJECT"
+
+"$SDAPS" "$PROJECT" setup_tex "data/tex/questionnaire_without_ids.tex"
+
+# Create a cover page in projects/test/cover.pdf
+"$SDAPS" "$PROJECT" cover
+
+# Run stamp, not neccessary
 "$SDAPS" "$PROJECT" stamp
 
 # And finally, create a report with the result
