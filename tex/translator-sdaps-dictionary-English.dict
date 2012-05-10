@@ -3,7 +3,7 @@
 \providetranslation{draft}{Draft}
 
 \providetranslation{surveyid}{Survey-ID:}
-\providetranslation{questionaireid}{Questionnaire-ID:}
+\providetranslation{questionnaireid}{Questionnaire-ID:}
 \providetranslation{infotext}{This questionnaire is automatically read by a computer program. Please use a pen for filling in your answers.}
 
 \providetranslation{info_cross}{Check}

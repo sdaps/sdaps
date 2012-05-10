@@ -127,8 +127,8 @@
     \hypersetup{%
       pdfauthor     = \@author,%
       pdftitle      = \@title,%
-      pdfsubject    = sdaps questionaire \@title,%
-      pdfkeywords   = sdaps questionaire \@title%
+      pdfsubject    = sdaps questionnaire \@title,%
+      pdfkeywords   = sdaps questionnaire \@title%
     }%
   }%
 }
@@ -213,7 +213,7 @@
       \ifodd \thepage%
         \relax%
       \else%
-        % questionaire-id
+        % questionnaire-id
         \begingroup
           \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
             \if@PrintQuestionnaireId%
@@ -224,7 +224,7 @@
               \fi%
               \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, \@questionnaire_id_shift)$)}]%
                 \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-                \@tempcnta=\value{questionaireid}%
+                \@tempcnta=\value{questionnaireid}%
                 \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
                   \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
                   {%
@@ -237,7 +237,7 @@
               \end{scope}%
               \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, \@questionnaire_id_shift)$)}]%
                 \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-                \@tempcnta=\value{questionaireid}%
+                \@tempcnta=\value{questionnaireid}%
                 \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
                   \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
                   {%
@@ -249,8 +249,8 @@
                 \end{scope}%
               \end{scope}%
               \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0 ,\@questionnaire_id_shift) + (0, 0.5\codeboxheight)$)}]%
-                \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexa}{\value{questionaireid}}{16}%
-                \node{\usekomafont{questionaireidfont}{\translate{questionaireid}\@temphexa}};%
+                \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexa}{\value{questionnaireid}}{16}%
+                \node{\usekomafont{questionnaireidfont}{\translate{questionnaireid}\@temphexa}};%
               \end{scope}%
             \fi%
             \if@PrintSurveyId%
@@ -374,9 +374,9 @@
 \newlength{\codeboxheight}
 \setlength{\codeboxheight}{3.5mm}
 
-\newcounter{questionaireid}
-\setcounter{questionaireid}{21845}
-\newkomafont{questionaireidfont}{\ttfamily\textbf}
+\newcounter{questionnaireid}
+\setcounter{questionnaireid}{21845}
+\newkomafont{questionnaireidfont}{\ttfamily\textbf}
 
 \newcounter{surveyidmshw}
 \setcounter{surveyidmshw}{52197}
