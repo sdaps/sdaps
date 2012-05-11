@@ -37,6 +37,12 @@ gint sdaps_line_width = 5;
 gint sdaps_corner_mark_search_distance = 600;
 gdouble sdaps_line_coverage = 0.65;
 
+void
+disable_libtiff_warnings (void)
+{
+	TIFFSetWarningHandler(NULL);
+}
+
 cairo_surface_t*
 get_a1_from_tiff (char *filename, gint page, gboolean rotated)
 {

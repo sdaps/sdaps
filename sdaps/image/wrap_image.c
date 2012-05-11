@@ -68,6 +68,9 @@ initimage(void)
 		return;
 
 	m = Py_InitModule("image", EvaluateMethods);
+
+	/* supress warnings from libtiff. */
+	disable_libtiff_warnings ();
 }
 
 

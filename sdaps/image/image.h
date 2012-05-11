@@ -26,6 +26,9 @@ extern gint sdaps_line_width;
 extern gint sdaps_corner_mark_search_distance;
 extern gdouble sdaps_line_coverage;
 
+void
+disable_libtiff_warnings (void);
+
 cairo_surface_t*
 get_a1_from_tiff (char *filename, gint page, gboolean rotated);
 
