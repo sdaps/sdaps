@@ -98,6 +98,9 @@
 % Defines the LastPage label
 \RequirePackage{lastpage}
 
+% Environment creation that gets the body as a macro
+\RequirePackage{environ}
+
 % pagehooks
 % This is a bit weird. According to the bophook documentation it should be
 % loaded after the hyperref package. However, loading it *before* the hyperref
@@ -169,7 +172,86 @@
 \RequirePackage{tikz}
 \usetikzlibrary{calc}
 \usetikzlibrary{decorations.pathmorphing}
-\AtBeginPage{%
+
+\def\@sdaps@STAMP{%
+  \begingroup
+    \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
+      \if@PrintQuestionnaireId%
+        \if@PrintSurveyId%
+          \def\@questionnaire_id_shift{\boxpaddings+\codeboxheight}
+        \else
+          \def\@questionnaire_id_shift{0pt}
+        \fi%
+        \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, \@questionnaire_id_shift)$)}]%
+          \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+          \@tempcnta=\value{questionnaireid}%
+          \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+            \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+            {%
+              \ifodd \@tempcnta%
+                \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+              \fi%
+              \global\divide\@tempcnta by 2
+            }%
+          \end{scope}%
+        \end{scope}%
+        \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, \@questionnaire_id_shift)$)}]%
+          \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+          \@tempcnta=\value{questionnaireid}%
+          \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+            \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+            {%
+              \ifodd \@tempcnta%
+                \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+              \fi%
+              \global\divide\@tempcnta by 2
+            }%
+          \end{scope}%
+        \end{scope}%
+        \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0 ,\@questionnaire_id_shift) + (0, 0.5\codeboxheight)$)}]%
+          \pgfmathsetbasenumberlength{5}\pgfmathdectoBase{\@temphexa}{\value{questionnaireid}}{10}%
+          \node{\usekomafont{questionnaireidfont}{\translate{questionnaireid} \@temphexa}};%
+        \end{scope}%
+      \fi%
+      \if@PrintSurveyId%
+        % survey-id
+        \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, 0)$)}]%
+          \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+          \@tempcnta=\value{surveyidmshw}%
+          \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+            \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+            {%
+              \ifodd \@tempcnta%
+                \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+              \fi%
+              \global\divide\@tempcnta by 2
+            }%
+          \end{scope}%
+        \end{scope}%
+        \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, 0)$)}]%
+          \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+          \@tempcnta=\value{surveyidlshw}%
+          \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+            \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+            {%
+              \ifodd \@tempcnta%
+                \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+              \fi%
+              \global\divide\@tempcnta by 2
+            }%
+          \end{scope}%
+        \end{scope}%
+        \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0, 0.5\codeboxheight)$)}]%
+          \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexa}{\value{surveyidlshw}}{16}%
+          \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexb}{\value{surveyidmshw}}{16}%
+          \node{\usekomafont{surveyidfont}{\translate{surveyid} \@temphexb\@temphexa}};%
+        \end{scope}%
+      \fi%
+    \end{scope}%
+  \endgroup
+}
+
+\PageLayout{%
   \begin{tikzpicture}[remember picture,overlay]%
     %---------------------------------------------------------------------------
     % pagemark
@@ -211,84 +293,13 @@
     %---------------------------------------------------------------------------
     \if@STAMP
       \ifodd \thepage%
-        \relax%
+        \if@forceSTAMP%
+          % Stamp on the last page, even if it is odd
+          \@sdaps@STAMP
+        \fi
       \else%
         % questionnaire-id
-        \begingroup
-          \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
-            \if@PrintQuestionnaireId%
-              \if@PrintSurveyId%
-                \def\@questionnaire_id_shift{\boxpaddings+\codeboxheight}
-              \else
-                \def\@questionnaire_id_shift{0pt}
-              \fi%
-              \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, \@questionnaire_id_shift)$)}]%
-                \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-                \@tempcnta=\value{questionnaireid}%
-                \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-                  \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-                  {%
-                    \ifodd \@tempcnta%
-                      \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-                    \fi%
-                    \global\divide\@tempcnta by 2
-                  }%
-                \end{scope}%
-              \end{scope}%
-              \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, \@questionnaire_id_shift)$)}]%
-                \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-                \@tempcnta=\value{questionnaireid}%
-                \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-                  \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-                  {%
-                    \ifodd \@tempcnta%
-                      \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-                    \fi%
-                    \global\divide\@tempcnta by 2
-                  }%
-                \end{scope}%
-              \end{scope}%
-              \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0 ,\@questionnaire_id_shift) + (0, 0.5\codeboxheight)$)}]%
-                \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexa}{\value{questionnaireid}}{16}%
-                \node{\usekomafont{questionnaireidfont}{\translate{questionnaireid}\@temphexa}};%
-              \end{scope}%
-            \fi%
-            \if@PrintSurveyId%
-              % survey-id
-              \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, 0)$)}]%
-                \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-                \@tempcnta=\value{surveyidmshw}%
-                \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-                  \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-                  {%
-                    \ifodd \@tempcnta%
-                      \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-                    \fi%
-                    \global\divide\@tempcnta by 2
-                  }%
-                \end{scope}%
-              \end{scope}%
-              \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, 0)$)}]%
-                \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-                \@tempcnta=\value{surveyidlshw}%
-                \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-                  \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-                  {%
-                    \ifodd \@tempcnta%
-                      \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-                    \fi%
-                    \global\divide\@tempcnta by 2
-                  }%
-                \end{scope}%
-              \end{scope}%
-              \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0, 0.5\codeboxheight)$)}]%
-                \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexa}{\value{surveyidlshw}}{16}%
-                \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexb}{\value{surveyidmshw}}{16}%
-                \node{\usekomafont{surveyidfont}{\translate{surveyid} \@temphexb\@temphexa}};%
-              \end{scope}%
-            \fi%
-          \end{scope}%
-        \endgroup
+        \@sdaps@STAMP
       \fi%
     \fi
     %---------------------------------------------------------------------------
@@ -308,27 +319,63 @@
 \newcounter{question}
 \newlength{\boxheight}
 
-\AtBeginDocument{%
-  \begin{info}
-    \translate{infotext}
-    \begin{minipage}[t]{10em}
-      \begin{tabbing}
-        \translate{info_cross}:\\
-        \translate{info_correct}:\
-      \end{tabbing}
-    \end{minipage}\hfill
-    \begin{minipage}[t]{1.5em}
-      \checkedbox\\
-      \correctedbox
-    \end{minipage}\hfill
-    \setlength\@tempdima{\linewidth}
-    \addtolength{\@tempdima}{-13em}
-    \begin{minipage}[t]{\@tempdima}
-      \translate{info_select}\\
-      \translate{info_mark}
-    \end{minipage}\\
-  \end{info}
+\NewEnviron{questionnaire}{%
+  \if@PrintQuestionnaireId
+    \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=1}
+  \else
+    \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=0}
+  \fi
+  \if@PrintSurveyId
+    \protectedimmediatewrite\sdapsoutfile{PrintSurveyId=1}
+  \else
+    \protectedimmediatewrite\sdapsoutfile{PrintSurveyId=0}
+  \fi
+  \protectedimmediatewrite\sdapsoutfile{Pages=\getpagerefnumber{LastPage}}
+  \pgfpoint{\paperwidth}{\paperheight}
+  \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}
+  \protectedimmediatewrite\sdapsoutfile{PageSize=\@sdaps@width, \@sdaps@height}
+  %
+  \foreach \qid in \questionnaireids{%
+    \@forceSTAMPfalse
+    \setcounter{page}{1}
+    \setcounter{questionnaireid}{\qid}
+    \setcounter{section}{0}
+
+    \begin{info}
+      \translate{infotext}
+      \begin{minipage}[t]{10em}
+        \begin{tabbing}
+          \translate{info_cross}:\\
+          \translate{info_correct}:\
+        \end{tabbing}
+      \end{minipage}\hfill
+      \begin{minipage}[t]{1.5em}
+        \checkedbox\\
+        \correctedbox
+      \end{minipage}\hfill
+      \setlength\@tempdima{\linewidth}
+      \addtolength{\@tempdima}{-13em}
+      \begin{minipage}[t]{\@tempdima}
+        \translate{info_select}\\
+        \translate{info_mark}
+      \end{minipage}\\
+    \end{info}
+
+    \BODY
+
+    % Force a stamp on the next last page of the questionnaire
+    \@forceSTAMPtrue
+
+    \clearpage
+
+    \protectedimmediatewrite\sdapsoutfile{}
+    % Just close the file here so nothing is written anymore ...
+    % It would be good to also redefine the protectedimmediatewrite macro,
+    % but not sure how that can be done.
+    \immediate\closeout\sdapsoutfile%
+  }
 }
+
 
 %-------------------------------------------------------------------------------
 %                class definition
@@ -345,6 +392,8 @@
 \pagenumbering{arabic}
 \raggedbottom
 \onecolumn
+
+\newif\if@forceSTAMP\@forceSTAMPfalse
 
 \newlength{\edgeleftmargin}
 \setlength{\edgeleftmargin}{10mm}
@@ -373,6 +422,9 @@
 \setlength{\codeboxstep}{3.5mm}
 \newlength{\codeboxheight}
 \setlength{\codeboxheight}{3.5mm}
+
+% we need one to consume in the for loop
+\def\questionnaireids{21845}
 
 \newcounter{questionnaireid}
 \setcounter{questionnaireid}{21845}
@@ -673,14 +725,15 @@
   }
 }
 
+% We need to declare them outside, they seem to be leaked or something like that
+\newdimen\@tempdimlower%
+\newdimen\@tempdimboxlower%
+\newdimen\@tempdimheight%
+\newdimen\@tempdimruleheight%
 \providecommand{\choiceitemtext}[3]{%
   \multicolumn{#2}{l}{%
     \addtocounter{choiceitems}{#2}%
     \begingroup%
-      \newdimen\@tempdimlower%
-      \newdimen\@tempdimboxlower%
-      \newdimen\@tempdimheight%
-      \newdimen\@tempdimruleheight%
       #3~%
       %
       \setlength\@tempdimheight{#1}%
@@ -758,27 +811,6 @@
 %-------------------------------------------------------------------------------
 % sdaps log
 %-------------------------------------------------------------------------------
-\AtBeginDocument{%
-  \if@PrintQuestionnaireId
-    \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=1}
-  \else
-    \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=0}
-  \fi
-  \if@PrintSurveyId
-    \protectedimmediatewrite\sdapsoutfile{PrintSurveyId=1}
-  \else
-    \protectedimmediatewrite\sdapsoutfile{PrintSurveyId=0}
-  \fi
-  \protectedimmediatewrite\sdapsoutfile{Pages=\getpagerefnumber{LastPage}}
-  \pgfpoint{\paperwidth}{\paperheight}
-  \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}
-  \protectedimmediatewrite\sdapsoutfile{PageSize=\@sdaps@width, \@sdaps@height}
-}
-
-\AtEndDocument{%
-  \protectedimmediatewrite\sdapsoutfile{}
-  \immediate\closeout\sdapsoutfile%
-}
 
 \newwrite\sdapsoutfile%
 \immediate\openout\sdapsoutfile=\jobname.sdaps%
