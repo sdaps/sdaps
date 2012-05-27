@@ -30,7 +30,7 @@ mm = cm * 0.1
 # TODO Documentation for these values
 # (min, max)
 TEXTBOX_WIDTH = (6.0 * cm, 20.0 * cm)
-TEXTBOX_HEIGHT = (0.8 * cm, 20.0 * cm)
+TEXTBOX_HEIGHT = (0.6 * cm, 20.0 * cm)
 CHECKBOX_SIZE = (3.4 * mm, 3.6 * mm)
 LINE_SIZE = (0.0 * mm, 0.5 * mm)
 
