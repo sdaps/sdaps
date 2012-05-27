@@ -38,8 +38,8 @@ _ = ugettext
 	Attention: This script overwrites all data, including manual changes made
 		with the gui!
 	'''))
-def recognize (survey_dir) :
+def recognize (survey_dir, *args) :
 	survey = model.survey.Survey.load(survey_dir)
 	import recognize
-	recognize.recognize(survey)
+	recognize.recognize(survey, *args)
 
