@@ -59,8 +59,8 @@ analyse the scanned data, and create a report.
                    ['sdaps/image/wrap_image.c', 'sdaps/image/image.c'],
                    **pkgconfig('pycairo', 'cairo' ,'glib-2.0', libraries=['tiff']))],
       data_files=[
-                  ('share/sdaps/glade',
-                   glob.glob("sdaps/gui/*.glade")
+                  ('share/sdaps/ui',
+                   glob.glob("sdaps/gui/*.ui")
                   ),
                   ('share/sdaps/tex', ('tex/sdaps.cls',)
                   ),

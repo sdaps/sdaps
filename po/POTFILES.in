@@ -5,7 +5,7 @@ sdaps/cover.py
 sdaps/csvdata/__init__.py
 sdaps/gui/gui.py
 sdaps/gui/__init__.py
-sdaps/gui/main_window.glade
+sdaps/gui/main_window.ui
 sdaps/ids.py
 sdaps/info.py
 sdaps/model/survey.py

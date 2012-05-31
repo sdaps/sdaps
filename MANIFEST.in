@@ -2,7 +2,7 @@ include MANIFEST.in
 include README
 include TODO
 include COPYING
-recursive-include sdaps *.py *.glade *.c *.h
+recursive-include sdaps *.py *.ui *.c *.h
 recursive-include po *.pot POTFILES POTFILES.in *.po
 include test/run-test.sh
 recursive-include test/data *.internetquestions *.odt *.pdf *.tif

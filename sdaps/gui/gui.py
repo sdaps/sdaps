@@ -16,9 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gobject
-import gtk
-import gtk.glade
+from gi.repository import GObject
+from gi.repository import Gtk
+from gi.repository import Gdk
 import os
 import time
 import sys
@@ -94,29 +94,31 @@ class MainWindow(object):
 		self.provider = provider
 
 		self._load_image = 0
+		self._builder = Gtk.Builder()
 		if paths.local_run :
-			self._glade = gtk.glade.XML(
-			    os.path.join(os.path.dirname(__file__), 'main_window.glade'))
+			self._builder.add_from_file(
+			    os.path.join(os.path.dirname(__file__), 'main_window.ui'))
 		else :
-			self._glade = gtk.glade.XML(
+			self._builder.add_from_file(
 			    os.path.join(
 			        paths.prefix,
-			        'share', 'sdaps', 'glade', 'main_window.glade'))
+			        'share', 'sdaps', 'ui', 'main_window.ui'))
 
-		self._window = self._glade.get_widget("main_window")
-		self._glade.signal_autoconnect(self)
+		self._window = self._builder.get_object("main_window")
+		self._builder.connect_signals(self)
 		self._window.maximize()
 
-		scrolled_window = self._glade.get_widget("sheet_scrolled_window")
+		scrolled_window = self._builder.get_object("sheet_scrolled_window")
 		self.sheet = SheetWidget(self.provider)
+		self.sheet.show()
 		scrolled_window.add(self.sheet)
 
-		combo = self._glade.get_widget("page_number_combo")
-		cell = gtk.CellRendererText()
+		combo = self._builder.get_object("page_number_combo")
+		cell = Gtk.CellRendererText()
 		combo.pack_start(cell, True)
 		combo.add_attribute(cell, 'text', 0)
 
-		store = gtk.ListStore(gobject.TYPE_STRING, gobject.TYPE_INT)
+		store = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_INT)
 		for i in range(self.provider.survey.questionnaire.page_count) :
 			store.append(row = (
 			    ungettext("Page %i", "Page %i", i + 1) % (i + 1), i + 1))
@@ -128,7 +130,7 @@ class MainWindow(object):
 		# So the buttons are insensitive
 		self.update_ui()
 
-	def on_zoom_in_toolbutton_clicked(self, *args):
+	def zoom_in(self, *args):
 		cur_zoom = self.sheet.props.zoom
 		try:
 			i = zoom_steps.index(cur_zoom)
@@ -138,7 +140,7 @@ class MainWindow(object):
 		except:
 			self.sheet.props.zoom = 1.0
 
-	def on_zoom_out_toolbutton_clicked(self, *args):
+	def zoom_out(self, *args):
 		cur_zoom = self.sheet.props.zoom
 		try:
 			i = zoom_steps.index(cur_zoom)
@@ -153,14 +155,14 @@ class MainWindow(object):
 
 	def show_about_dialog(self, *args):
 		if not self.about_dialog:
-			self.about_dialog = gtk.AboutDialog()
+			self.about_dialog = Gtk.AboutDialog()
 			self.about_dialog.set_name("SDAPS")
 			self.about_dialog.set_version("") #XXX: Version?
 			self.about_dialog.set_authors([u"Benjamin Berg <benjamin@sipsolution.net>", u"Christoph Simon <christoph.simon@gmx.eu>"])
 			self.about_dialog.set_copyright(_(u"Copyright © 2007-2008 Benjamin Berg, Christoph Simon"))
 			self.about_dialog.set_license(_(u"GPL Version 3, 29 June 2007"))
 			self.about_dialog.set_comments(_(u"Scripts for data acquisition with paper based surveys"))
-			self.about_dialog.set_default_response(gtk.RESPONSE_CANCEL)
+			self.about_dialog.set_default_response(Gtk.ResponseType.CANCEL)
 
 		self.about_dialog.run()
 		self.about_dialog.hide()
@@ -168,9 +170,9 @@ class MainWindow(object):
 		return True
 
 	def update_page_status(self):
-		combo = self._glade.get_widget("page_number_combo")
-		turned_toggle = self._glade.get_widget("turned_toggle")
-		valid_toggle = self._glade.get_widget("valid_toggle")
+		combo = self._builder.get_object("page_number_combo")
+		turned_toggle = self._builder.get_object("turned_toggle")
+		valid_toggle = self._builder.get_object("valid_toggle")
 
 		# Update the combobox
 		page_number = self.provider.image.page_number
@@ -193,14 +195,14 @@ class MainWindow(object):
 
 	def update_ui(self):
 		# Update the next/prev button states
-		#next_button = self._glade.get_widget("forward_toolbutton")
-		#prev_button = self._glade.get_widget("backward_toolbutton")
+		#next_button = self._builder.get_object("forward_toolbutton")
+		#prev_button = self._builder.get_object("backward_toolbutton")
 
 		#next_button.set_sensitive(True)
 		#prev_button.set_sensitive(True)
 
-		position_label = self._glade.get_widget("position_label")
-		page_spin = self._glade.get_widget("page_spin")
+		position_label = self._builder.get_object("position_label")
+		page_spin = self._builder.get_object("page_spin")
 		position_label.set_text(_(u" of %i") % len(self.provider.images))
 		#position_label.props.sensitive = True
 		page_spin.set_range(1, len(self.provider.images))
@@ -229,12 +231,12 @@ class MainWindow(object):
 		return True
 
 	def page_spin_value_changed_cb (self, *args):
-		page_spin = self._glade.get_widget("page_spin")
+		page_spin = self._builder.get_object("page_spin")
 		page = page_spin.get_value() - 1
 		self.go_to_page(page)
 
 	def page_number_combo_changed_cb (self, *args):
-		combo = self._glade.get_widget("page_number_combo")
+		combo = self._builder.get_object("page_number_combo")
 		active = combo.get_active_iter()
 		page_number = combo.get_model().get(active, 1)[0]
 		if self.provider.image.page_number != page_number:
@@ -243,7 +245,7 @@ class MainWindow(object):
 			return False
 
 	def turned_toggle_toggled_cb (self, *args):
-		toggle = self._glade.get_widget("turned_toggle")
+		toggle = self._builder.get_object("turned_toggle")
 		rotated = toggle.get_active()
 		if self.provider.image.rotated != rotated :
 			self.provider.image.rotated = rotated
@@ -252,7 +254,7 @@ class MainWindow(object):
 		return False
 
 	def valid_toggle_toggled_cb (self, *args):
-		toggle = self._glade.get_widget("valid_toggle")
+		toggle = self._builder.get_object("valid_toggle")
 		valid = toggle.get_active()
 		if self.provider.image.sheet.valid != valid :
 			self.provider.image.sheet.valid = valid
@@ -260,8 +262,8 @@ class MainWindow(object):
 		return False
 
 	def toggle_fullscreen(self, *args):
-		flags = self._window.window.get_state()
-		if flags & gtk.gdk.WINDOW_STATE_FULLSCREEN:
+		flags = self._window.get_window().get_state()
+		if flags & Gdk.WindowState.FULLSCREEN:
 			self._window.unfullscreen()
 		else:
 			self._window.fullscreen()
@@ -275,14 +277,14 @@ class MainWindow(object):
 		# Go to the next when Enter or Tab is pressed
 		# XXX: In openeva we supported a Verified flag, that would
 		#      be set if Enter is pressed.
-		if event.keyval == gtk.gdk.keyval_from_name("Return"):
-			if event.state & gtk.gdk.SHIFT_MASK:
+		if event.keyval == Gdk.keyval_from_name("Return"):
+			if event.state & Gdk.ModifierType.SHIFT_MASK:
 				self.go_to_previous_page()
 			else:
 				self.go_to_next_page()
 			return True
-		elif event.keyval == gtk.gdk.keyval_from_name("Tab"):
-			if event.state & gtk.gdk.SHIFT_MASK:
+		elif event.keyval == Gdk.keyval_from_name("Tab"):
+			if event.state & Gdk.ModifierType.SHIFT_MASK:
 				self.go_to_previous_page()
 			else:
 				self.go_to_next_page()
@@ -292,26 +294,26 @@ class MainWindow(object):
 
 	def quit_application(self, *args):
 		if not self.close_dialog:
-			self.close_dialog = gtk.MessageDialog(parent=self._window, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_WARNING)
-			self.close_dialog.add_buttons(_(u"Close without saving"), gtk.RESPONSE_CLOSE, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK)
+			self.close_dialog = Gtk.MessageDialog(parent=self._window, flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.WARNING)
+			self.close_dialog.add_buttons(_(u"Close without saving"), Gtk.ResponseType.CLOSE, Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
 			self.close_dialog.set_markup(_(u"<b>Save the project before closing?</b>\n\nIf you do not save you may loose data."))
-			self.close_dialog.set_default_response(gtk.RESPONSE_CANCEL)
+			self.close_dialog.set_default_response(Gtk.ResponseType.CANCEL)
 
 		response = self.close_dialog.run()
 		self.close_dialog.hide()
 
-		if response == gtk.RESPONSE_CLOSE:
-			gtk.main_quit()
+		if response == Gtk.ResponseType.CLOSE:
+			Gtk.main_quit()
 			return False
-		elif response == gtk.RESPONSE_OK:
+		elif response == Gtk.ResponseType.OK:
 			self.save_project()
-			gtk.main_quit()
+			Gtk.main_quit()
 			return False
 		else:
 			return True
 
 	def run(self):
-		self._window.show_all()
-		gtk.main()
+		self._window.show()
+		Gtk.main()
 
 

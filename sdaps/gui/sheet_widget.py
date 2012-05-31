@@ -17,9 +17,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import math
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
+from gi.repository import Gdk
 import cairo
-import gobject
 from sdaps import utils
 import copy
 import os
@@ -30,21 +31,20 @@ from sdaps import model
 from sdaps import matrix
 
 
-class SheetWidget(gtk.DrawingArea):
+class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 	__gtype_name__ = "SDAPSSheetWidget"
 
-	__gproperties__ = {
-		'zoom'          : (float, None, None, 0.001, 1024.0, 1.0,
-						   gobject.PARAM_READWRITE),
-	}
-
 	def __init__(self, provider) :
-		gtk.DrawingArea.__init__(self)
-		self.add_events(gtk.gdk.BUTTON_PRESS_MASK | gtk.gdk.BUTTON_RELEASE_MASK|
-						gtk.gdk.MOTION_NOTIFY | gtk.gdk.SCROLL |
-						gtk.gdk.KEY_PRESS_MASK)
+		Gtk.DrawingArea.__init__(self)
+		self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON_RELEASE_MASK|
+						Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.BUTTON_MOTION_MASK |
+						Gdk.EventMask.SCROLL_MASK | Gdk.EventMask.SMOOTH_SCROLL_MASK |
+						Gdk.EventMask.KEY_PRESS_MASK)
+
 		self.hadj = None
 		self.vadj = None
+		self._hadj_value_changed_cb_id = None
+		self._vadj_value_changed_cb_id = None
 
 		self.provider = provider
 
@@ -55,11 +55,6 @@ class SheetWidget(gtk.DrawingArea):
 		self._zoom = 1.0
 
 		self.props.can_focus = True
-
-		gobject.signal_new('set_scroll_adjustments', SheetWidget,
-						   gobject.SIGNAL_NO_HOOKS, None, (gtk.Adjustment, gtk.Adjustment))
-		self.set_set_scroll_adjustments_signal("set_scroll_adjustments")
-		self.connect("set_scroll_adjustments", self.do_set_scroll_adjustments)
 
 		self._update_matrices()
 		self._cs_image = None
@@ -75,9 +70,9 @@ class SheetWidget(gtk.DrawingArea):
 		xoffset = 0
 		yoffset = 0
 		if self.hadj:
-			xoffset = int(self.hadj.value)
+			xoffset = int(self.hadj.props.value)
 		if self.vadj:
-			yoffset = int(self.vadj.value)
+			yoffset = int(self.vadj.props.value)
 
 		m = cairo.Matrix(self._zoom, 0,
 		                 0, self._zoom,
@@ -115,26 +110,15 @@ class SheetWidget(gtk.DrawingArea):
 
 		self.queue_draw_area(x, y, width, height)
 
-	def do_set_scroll_adjustments(dummy, self, hadj, vadj):
-		self.hadj = hadj
-		self.vadj = vadj
-
-		if hadj:
-			hadj.connect('value-changed', self._adjustment_changed_cb)
-			self._old_scroll_x = hadj.value
-		if vadj:
-			vadj.connect('value-changed', self._adjustment_changed_cb)
-			self._old_scroll_y = vadj.value
-		return True
-
 	def _adjustment_changed_cb(self, adjustment):
-		dx = int(self._old_scroll_x) - int(self.hadj.value)
-		dy = int(self._old_scroll_y) - int(self.vadj.value)
+		dx = int(self._old_scroll_x) - int(self.hadj.props.value)
+		dy = int(self._old_scroll_y) - int(self.vadj.props.value)
 
-		self.window.scroll(dx, dy)
+		if self.get_window() is not None:
+			self.get_window().scroll(dx, dy)
 
-		self._old_scroll_x = self.hadj.value
-		self._old_scroll_y = self.vadj.value
+		self._old_scroll_x = self.hadj.props.value
+		self._old_scroll_y = self.vadj.props.value
 
 		# Update the transformation matrices
 		self._update_matrices ()
@@ -147,8 +131,8 @@ class SheetWidget(gtk.DrawingArea):
 		if event.button == 2:
 			self._drag_start_x = event.x
 			self._drag_start_y = event.y
-			cursor = gtk.gdk.Cursor(gtk.gdk.HAND2)
-			self.window.set_cursor(cursor)
+			cursor = Gdk.Cursor(Gdk.CursorType.HAND2)
+			self.get_window().set_cursor(cursor)
 			return True
 
 		# button 1
@@ -178,7 +162,7 @@ class SheetWidget(gtk.DrawingArea):
 		if event.button != 1 and event.button != 2:
 			return False
 
-		self.window.set_cursor(None)
+		self.get_window().set_cursor(None)
 
 		if event.button == 1:
 			self._edge_drag_active = False
@@ -186,7 +170,7 @@ class SheetWidget(gtk.DrawingArea):
 		return True
 
 	def do_motion_notify_event(self, event):
-		if event.state & gtk.gdk.BUTTON2_MASK:
+		if event.state & Gdk.ModifierType.BUTTON2_MASK:
 			x = int(event.x)
 			y = int(event.y)
 
@@ -194,19 +178,19 @@ class SheetWidget(gtk.DrawingArea):
 			dy = self._drag_start_y - y
 
 			if self.hadj:
-				value = self.hadj.value + dx
-				value = min(value, self.hadj.upper - self.hadj.page_size)
+				value = self.hadj.props.value + dx
+				value = min(value, self.hadj.props.upper - self.hadj.props.page_size)
 				self.hadj.set_value(value)
 			if self.vadj:
-				value = self.vadj.value + dy
-				value = min(value, self.vadj.upper - self.vadj.page_size)
+				value = self.vadj.props.value + dy
+				value = min(value, self.vadj.props.upper - self.vadj.props.page_size)
 				self.vadj.set_value(value)
 
 			self._drag_start_x = event.x
 			self._drag_start_y = event.y
 
 			return True
-		elif event.state & gtk.gdk.BUTTON1_MASK:
+		elif event.state & Gdk.ModifierType.BUTTON1_MASK:
 			if self._edge_drag_active:
 				mm_x, mm_y = self._widget_to_mm_matrix.transform_point(event.x, event.y)
 
@@ -217,47 +201,48 @@ class SheetWidget(gtk.DrawingArea):
 
 		return False
 
+	def do_get_request_mode(self):
+		return Gtk.SizeRequestMode.CONSTANT_SIZE
 
-	def do_size_request(self, requisition):
-		requisition[0] = self._render_width
-		requisition[1] = self._render_height
-
-		if self.hadj:
-			self.hadj.props.upper = self._render_width
+	def do_get_preferred_height(self):
 		if self.vadj:
 			self.vadj.props.upper = self._render_height
-		self.queue_draw()
+
+		return 300, self._render_height
+
+	def do_get_preferred_width(self):
+		if self.hadj:
+			self.hadj.props.upper = self._render_width
+
+		return 300, self._render_width
 
 	def do_size_allocate(self, allocation):
+		# WTF? Why does this happen?
+		if allocation.x < 0 or allocation.y < 0:
+			GObject.idle_add(self.queue_resize)
+
 		if self.hadj:
-			self.hadj.page_size = allocation.width
-			self.hadj.page_increment = allocation.width * 0.9
-			self.hadj.step_increment = allocation.width * 0.1
+			self.hadj.props.page_size = min(self._render_width, allocation.width)
+			if self.hadj.props.value > self._render_width - allocation.width:
+				self.hadj.props.value = self._render_width - allocation.width
+			self.hadj.props.page_increment = allocation.width * 0.9
+			self.hadj.props.step_increment = allocation.width * 0.1
 		if self.vadj:
-			self.vadj.page_size = allocation.height
-			self.vadj.page_increment = allocation.height * 0.9
-			self.vadj.step_increment = allocation.height * 0.1
+			self.vadj.props.page_size = min(self._render_height, allocation.height)
+			if self.vadj.props.value > self._render_height - allocation.height:
+				self.vadj.props.value = self._render_height - allocation.height
+			self.vadj.props.page_increment = allocation.height * 0.9
+			self.vadj.props.step_increment = allocation.height * 0.1
 
 		self._update_matrices ()
 
-		gtk.DrawingArea.do_size_allocate(self, allocation)
+		Gtk.DrawingArea.do_size_allocate(self, allocation)
 
-	def do_expose_event(self, event):
-		cr = event.window.cairo_create()
-		cr = gtk.gdk.CairoContext(cr)
-
-		event.window.clear()
+	def do_draw(self, cr):
+		#event.window.clear()
 		# For the image
-		xoffset = -int(self.hadj.value)
-		yoffset = -int(self.vadj.value)
-
-		# In theory we could get the region of the ExposeEvent, and only
-		# draw on that area. The same goes for the image blitting.
-		# However, pygtk does not expose the region attribute :-(
-		#cr.region(event.region)
-		rect = event.area
-		cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-		cr.clip()
+		xoffset = -int(self.hadj.props.value)
+		yoffset = -int(self.vadj.props.value)
 
 		image = self.provider.image.surface.surface_rgb
 
@@ -307,42 +292,29 @@ class SheetWidget(gtk.DrawingArea):
 
 	def do_key_press_event(self, event):
 		if self.vadj:
-			if event.keyval == gtk.gdk.keyval_from_name("Up"):
-				value = self.vadj.value - self.vadj.step_increment
-				value = min(value, self.vadj.upper - self.vadj.page_size)
-				self.vadj.set_value(value)
+			if event.keyval == Gdk.keyval_from_name("Up"):
+				value = self.vadj.props.value - self.vadj.props.step_increment
+				value = min(value, self.vadj.props.upper - self.vadj.props.page_size)
+				self.vadj.props.set_value(value)
 				return True
-			if event.keyval == gtk.gdk.keyval_from_name("Down"):
-				value = self.vadj.value + self.vadj.step_increment
-				value = min(value, self.vadj.upper - self.vadj.page_size)
-				self.vadj.set_value(value)
+			if event.keyval == Gdk.keyval_from_name("Down"):
+				value = self.vadj.props.value + self.vadj.props.step_increment
+				value = min(value, self.vadj.props.upper - self.vadj.props.page_size)
+				self.vadj.props.set_value(value)
 				return True
 
 		if self.hadj:
-			if event.keyval == gtk.gdk.keyval_from_name("Left"):
-				value = self.hadj.value - self.hadj.step_increment
-				value = min(value, self.hadj.upper - self.hadj.page_size)
+			if event.keyval == Gdk.keyval_from_name("Left"):
+				value = self.hadj.props.value - self.hadj.props.step_increment
+				value = min(value, self.hadj.props.upper - self.hadj.props.page_size)
 				self.hadj.set_value(value)
 				return True
-			if event.keyval == gtk.gdk.keyval_from_name("Right"):
-				value = self.hadj.value + self.hadj.step_increment
-				value = min(value, self.hadj.upper - self.hadj.page_size)
+			if event.keyval == Gdk.keyval_from_name("Right"):
+				value = self.hadj.props.value + self.hadj.props.step_increment
+				value = min(value, self.hadj.props.upper - self.hadj.props.page_size)
 				self.hadj.set_value(value)
 				return True
 		return False
-
-	def do_set_property(self, pspec, value):
-		if pspec.name == 'zoom':
-			self._zoom = value
-			self.queue_resize()
-		else:
-			raise AssertionError
-
-	def do_get_property(self, pspec):
-		if pspec.name == 'zoom':
-			return self._zoom
-		else:
-			raise AssertionError
 
 	def _get_render_width(self):
 		image = self.provider.image.surface.surface_rgb
@@ -366,5 +338,58 @@ class SheetWidget(gtk.DrawingArea):
 	_render_width = property(_get_render_width)
 	_render_height = property(_get_render_height)
 
+
+	def get_hscroll_policy(self):
+		# Does not matter, we don't support natural sizes
+		return Gtk.ScrollablePolicy.NATURAL
+	hscroll_policy = GObject.property(get_hscroll_policy, type=Gtk.ScrollablePolicy, default=Gtk.ScrollablePolicy.NATURAL)
+
+	def get_vscroll_policy(self):
+		# Does not matter, we don't support natural sizes
+		return Gtk.ScrollablePolicy.NATURAL
+	vscroll_policy = GObject.property(get_vscroll_policy, type=Gtk.ScrollablePolicy, default=Gtk.ScrollablePolicy.NATURAL)
+
+
+	def get_vadjustment(self):
+		return self.vadj
+
+	def set_vadjustment(self, value):
+		if self._vadj_value_changed_cb_id is not None:
+			self.vadj.disconnect(self._vadj_value_changed_cb_id)
+			self._vadj_value_changed_cb_id = None
+		self.vadj = value
+
+		if self.vadj is not None:
+			self._vadj_value_changed_cb_id = self.vadj.connect('value-changed', self._adjustment_changed_cb)
+
+		self._update_matrices()
+
+	vadjustment = GObject.property(get_vadjustment, set_vadjustment, type=Gtk.Adjustment)
+
+
+	def get_hadjustment(self):
+		return self.hadj
+
+	def set_hadjustment(self, value):
+		if self._hadj_value_changed_cb_id is not None:
+			self.hadj.disconnect(self._hadj_value_changed_cb_id)
+			self._hadj_value_changed_cb_id = None
+		self.hadj = value
+
+		if self.hadj is not None:
+			self._hadj_value_changed_cb_id = self.hadj.connect('value-changed', self._adjustment_changed_cb)
+
+		self._update_matrices()
+
+	hadjustment = GObject.property(get_hadjustment, set_hadjustment, type=Gtk.Adjustment)
+
+	def set_zoom(self, value):
+		self._zoom = value
+		self.queue_resize()
+
+	def get_zoom(self):
+		return self._zoom
+
+	zoom = GObject.property(get_zoom, set_zoom, float, minimum=0.001, maximum=1024.0, default=1.0)
 
 
