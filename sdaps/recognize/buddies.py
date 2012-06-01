@@ -36,11 +36,11 @@ class Sheet (model.buddy.Buddy) :
 	name = 'recognize'
 	obj_class = model.sheet.Sheet
 
-	def recognize (self, no_warn=False) :
+	def recognize (self) :
 		self.obj.valid = 1
 		try :
 			for image in self.obj.images :
-				image.recognize.recognize(no_warn)
+				image.recognize.recognize()
 		except RecognitionError :
 			self.obj.valid = 0
 			raise
@@ -62,7 +62,7 @@ class Image (model.buddy.Buddy) :
 	name = 'recognize'
 	obj_class = model.sheet.Image
 
-	def recognize (self, no_warn=False) :
+	def recognize (self) :
 		self.obj.rotated = 0
 		self.obj.surface.load()
 		try :
@@ -131,7 +131,7 @@ class Image (model.buddy.Buddy) :
 					pos[1], pos[2],
 					self.obj.sheet.survey_id
 				)
-				if False: #not self.obj.sheet.survey_id == self.obj.sheet.survey.survey_id :
+				if not self.obj.sheet.survey_id == self.obj.sheet.survey.survey_id :
 					print _('%s, %i: Wrong survey_id. Cancelling recognition of that image.') % (self.obj.filename, self.obj.tiff_page)
 					raise RecognitionError
 			else:
@@ -143,11 +143,8 @@ class Image (model.buddy.Buddy) :
 				questionnaire_id = self.read_codebox(
 					pos[0], pos[2]
 				)
-				# Attach the information to the image object.
-				self.obj.questionnaire_id = questionnaire_id
-
 				if self.obj.sheet.questionnaire_id != 0 and questionnaire_id != self.obj.sheet.questionnaire_id :
-					if not no_warn and not warned_multipage_not_correctly_scanned:
+					if not warned_multipage_not_correctly_scanned:
 						warned_multipage_not_correctly_scanned = True
 						print _('You are using a multipage questionnaire, but you have not scanned the pages in the correct order. This means that filtering will not work correctly!')
 				self.obj.sheet_questionnaire_id = questionnaire_id
@@ -228,14 +225,6 @@ class Questionnaire (model.buddy.Buddy) :
 	__metaclass__ = model.buddy.Register
 	name = 'recognize'
 	obj_class = model.questionnaire.Questionnaire
-
-	def read_questionnaire_ids (self):
-		try:
-			self.obj.sheet.recognize.recognize();
-		except RecognitionError :
-			pass
-
-		self.obj.sheet.recognize.clean()
 
 	def recognize (self) :
 		# recognize image
