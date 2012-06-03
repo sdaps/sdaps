@@ -113,6 +113,8 @@ class MainWindow(object):
 		self.sheet.show()
 		scrolled_window.add(self.sheet)
 
+		self.sheet.connect('key-press-event', self.sheet_view_key_press)
+
 		combo = self._builder.get_object("page_number_combo")
 		cell = Gtk.CellRendererText()
 		combo.pack_start(cell, True)
@@ -273,7 +275,7 @@ class MainWindow(object):
 		self.provider.survey.save()
 		return True
 
-	def window_key_press(self, window, event):
+	def sheet_view_key_press(self, window, event):
 		# Go to the next when Enter or Tab is pressed
 		# XXX: In openeva we supported a Verified flag, that would
 		#      be set if Enter is pressed.
@@ -283,7 +285,7 @@ class MainWindow(object):
 			else:
 				self.go_to_next_page()
 			return True
-		elif event.keyval == Gdk.keyval_from_name("Tab"):
+		elif event.keyval == Gdk.KEY_Tab or event.keyval == Gdk.KEY_KP_Tab or event.keyval == Gdk.KEY_ISO_Left_Tab:
 			if event.state & Gdk.ModifierType.SHIFT_MASK:
 				self.go_to_previous_page()
 			else:

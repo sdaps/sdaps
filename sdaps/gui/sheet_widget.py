@@ -295,12 +295,12 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 			if event.keyval == Gdk.keyval_from_name("Up"):
 				value = self.vadj.props.value - self.vadj.props.step_increment
 				value = min(value, self.vadj.props.upper - self.vadj.props.page_size)
-				self.vadj.props.set_value(value)
+				self.vadj.set_value(value)
 				return True
 			if event.keyval == Gdk.keyval_from_name("Down"):
 				value = self.vadj.props.value + self.vadj.props.step_increment
 				value = min(value, self.vadj.props.upper - self.vadj.props.page_size)
-				self.vadj.props.set_value(value)
+				self.vadj.set_value(value)
 				return True
 
 		if self.hadj:
