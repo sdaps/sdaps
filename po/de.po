@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-27 16:50+0200\n"
-"PO-Revision-Date: 2012-05-27 16:54+0200\n"
+"POT-Creation-Date: 2012-06-03 11:41+0200\n"
+"PO-Revision-Date: 2012-06-03 11:44+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -162,35 +162,35 @@ msgstr ""
 msgid "Unknown command"
 msgstr "Unbekannter Befehl"
 
-#: ../sdaps/gui/gui.py:122
+#: ../sdaps/gui/gui.py:124
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Seite %i"
 msgstr[1] "Seite %i"
 
-#: ../sdaps/gui/gui.py:160
+#: ../sdaps/gui/gui.py:162
 msgid "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
 msgstr "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
 
-#: ../sdaps/gui/gui.py:161
+#: ../sdaps/gui/gui.py:163
 msgid "GPL Version 3, 29 June 2007"
 msgstr "GPL Version 3, 29 Juni 2007"
 
-#: ../sdaps/gui/gui.py:162
+#: ../sdaps/gui/gui.py:164
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "SDAPS - Scripts zum auswerten von Papier basierten Umfragen"
 
-#: ../sdaps/gui/gui.py:204
+#: ../sdaps/gui/gui.py:206
 #, python-format
 msgid " of %i"
 msgstr " von %i"
 
-#: ../sdaps/gui/gui.py:296
+#: ../sdaps/gui/gui.py:298
 msgid "Close without saving"
 msgstr "Beenden ohne zu Speichern"
 
-#: ../sdaps/gui/gui.py:297
+#: ../sdaps/gui/gui.py:299
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -216,23 +216,63 @@ msgstr ""
 "\tfilter: Ein Filter Ausdruck, um nur bestimmte Bögen anzuzeigen\n"
 "\t"
 
-#: ../sdaps/gui/main_window.glade.h:1
+#: ../sdaps/gui/main_window.ui.h:1
+msgid "Forward"
+msgstr "Nächste Seite"
+
+#: ../sdaps/gui/main_window.ui.h:2
+msgid "Previous"
+msgstr "Vorherige Seite"
+
+#: ../sdaps/gui/main_window.ui.h:3
+msgid "Zoom In"
+msgstr "Vergrößern"
+
+#: ../sdaps/gui/main_window.ui.h:4
+msgid "Zoom Out"
+msgstr "Verkleinern"
+
+#: ../sdaps/gui/main_window.ui.h:5
+msgid "SDAPS"
+msgstr "SDAPS"
+
+#: ../sdaps/gui/main_window.ui.h:6
 msgid "_File"
 msgstr "_Datei"
 
-#: ../sdaps/gui/main_window.glade.h:2
+#: ../sdaps/gui/main_window.ui.h:7
 msgid "_View"
 msgstr "_Ansicht"
 
-#: ../sdaps/gui/main_window.glade.h:3
+#: ../sdaps/gui/main_window.ui.h:8
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: ../sdaps/gui/main_window.glade.h:4
+#: ../sdaps/gui/main_window.ui.h:9
+msgid "toolbutton1"
+msgstr "toolbutton1"
+
+#: ../sdaps/gui/main_window.ui.h:10
+msgid "toolbutton2"
+msgstr "toolbutton2"
+
+#: ../sdaps/gui/main_window.ui.h:11
+msgid "toolbutton4"
+msgstr "toolbutton4"
+
+#: ../sdaps/gui/main_window.ui.h:12
+msgid "toolbutton5"
+msgstr "toolbutton5"
+
+#: ../sdaps/gui/main_window.ui.h:13
+msgid "toolbutton7"
+msgstr "toolbutton7"
+
+#: ../sdaps/gui/main_window.ui.h:14
 msgid "Page Rotated"
 msgstr "Seite Gedreht"
 
-#: ../sdaps/gui/main_window.glade.h:5
+#: ../sdaps/gui/main_window.ui.h:15
 msgid "Sheet Valid (all pages)"
 msgstr "Ausgefüllter Bogen"
 
@@ -281,14 +321,14 @@ msgstr ""
 msgid "Existing fields: %s"
 msgstr "Definierte Felder: %s"
 
-#: ../sdaps/model/survey.py:168
+#: ../sdaps/model/survey.py:166
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:178
+#: ../sdaps/model/survey.py:176
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
@@ -304,13 +344,12 @@ msgid ""
 "%s, %i: Page number not recognized. Cancelling recognition of that image."
 msgstr "%s, %i: Seitenzahl wurde nicht erkannt. Überspringe dieses Bild."
 
-#. not self.obj.sheet.survey_id == self.obj.sheet.survey.survey_id :
 #: ../sdaps/recognize/buddies.py:135
 #, python-format
 msgid "%s, %i: Wrong survey_id. Cancelling recognition of that image."
 msgstr "%s, %i: Falsche Umfrage ID. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:152
+#: ../sdaps/recognize/buddies.py:149
 msgid ""
 "You are using a multipage questionnaire, but you have not scanned the pages "
 "in the correct order. This means that filtering will not work correctly!"
@@ -608,6 +647,97 @@ msgstr ""
 "Es notwendig eine Anzahl an Bögen anzugeben, wenn eine Fragebogen-ID auf die "
 "Bögen gedruckt wird."
 
+#: ../sdaps/stamp/generic.py:34
+#, python-format
+msgid "Survey-ID: %i"
+msgstr "Umfrage-ID: %i"
+
+#: ../sdaps/stamp/generic.py:47
+#, python-format
+msgid "Questionnaire-ID: %i"
+msgstr "Fragebogen-ID: %i"
+
+#: ../sdaps/stamp/generic.py:134
+msgid ""
+"You need to have either pdftk or pyPdf installed. pdftk is the faster method."
+msgstr ""
+"Sie müssen entweder pdtk oder pyPdf installiert haben.pdftk ist die "
+"schnellere Metode."
+
+#. bottomup = False => (0, 0) is the upper left corner
+#: ../sdaps/stamp/generic.py:146
+#, python-format
+msgid "Creating stamp PDF for %i sheet"
+msgid_plural "Creating stamp PDF for %i sheets"
+msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
+msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
+
+#: ../sdaps/stamp/generic.py:167 ../sdaps/stamp/generic.py:267
+#, python-format
+msgid "%i sheet; %f seconds per sheet"
+msgid_plural "%i sheet; %f seconds per sheet"
+msgstr[0] "%i Bogen; %f Sekunden pro Bogen"
+msgstr[1] "%i Bögen; %f Sekunden pro Bogen"
+
+#. Merge using pdftk
+#: ../sdaps/stamp/generic.py:176
+msgid "Stamping using pdftk"
+msgstr "Stempele mit Hilfe von pdftk."
+
+#: ../sdaps/stamp/generic.py:180
+#, python-format
+msgid "pdftk: Splitting out page %d of each sheet."
+msgid_plural "pdftk: Splitting out page %d of each sheet."
+msgstr[0] "pdftk: Extrahier die %d Seite aus dem Stempel."
+msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
+
+#: ../sdaps/stamp/generic.py:194
+msgid "pdftk: Splitting the questionnaire for watermarking."
+msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens"
+
+#: ../sdaps/stamp/generic.py:200
+#, python-format
+msgid "pdftk: Watermarking page %d of all sheets."
+msgid_plural "pdftk: Watermarking page %d of all sheets."
+msgstr[0] "pdftk: Stempele die Seite %d."
+msgstr[1] "pdftk: Stempele die Seite %d."
+
+#: ../sdaps/stamp/generic.py:218
+msgid "pdftk: Assembling everything into the final PDF."
+msgstr "pdftk: Erstelle das fertige PDF."
+
+#: ../sdaps/stamp/generic.py:253
+msgid "Stamping using pyPdf. For faster stamping, install pdftk."
+msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
+
+#: ../sdaps/stamp/latex.py:21
+msgid ""
+"There should be no need to stamp a SDAPS Project that uses LaTeX and does "
+"not have different questionnaire IDs printed on each sheet.\n"
+"I am going to do so anyways."
+msgstr ""
+"Es sollte nicht notwendig sein ein SDAPS-Projekt welches LaTeX verwendet und "
+"keine Fragebogen IDs hat zu stempeln.\n"
+"Die gewünschte Aktion wird dennoch durchgeführt."
+
+#: ../sdaps/stamp/latex.py:51
+msgid "Running pdflatex now twice to generate the stamped questionnaire."
+msgstr ""
+"Führe pdflatex zwei mal aus um den gestempelten Fragebogen zu erstellen."
+
+#: ../sdaps/stamp/latex.py:57 ../sdaps/setuptex/setup.py:99
+#: ../sdaps/reporttex/report.py:145
+msgid "Error running \"pdflatex\" to compile the LaTeX file."
+msgstr ""
+"Fehler beim ausführen von \"pdflatex\" um die LaTeX Datei zu kompilieren."
+
+#: ../sdaps/stamp/latex.py:63 ../sdaps/reporttex/report.py:151
+#, python-format
+msgid "An occured during creation of the report. Temporary files left in '%s'."
+msgstr ""
+"Es ist ein Fehler beim erstellen des Reports aufgetreten. Temporäre Dateien "
+"wurden in '%s' belassen."
+
 #: ../sdaps/setuptex/__init__.py:32
 msgid ""
 "questionnaire_tex [additional_questions]\n"
@@ -642,11 +772,6 @@ msgstr "Versuche trotzdem fortzusetzten."
 #: ../sdaps/setuptex/setup.py:93
 msgid "Running pdflatex now twice to generate the questionnaire."
 msgstr "Führe pdflatex zwei mal aus um den Fragebogen zu erstellen."
-
-#: ../sdaps/setuptex/setup.py:99 ../sdaps/reporttex/report.py:145
-msgid "Error running \"pdflatex\" to compile the LaTeX file."
-msgstr ""
-"Fehler beim ausführen von \"pdflatex\" um die LaTeX Datei zu kompilieren."
 
 #: ../sdaps/setuptex/setup.py:109
 msgid ""
@@ -706,58 +831,6 @@ msgstr "ngerman"
 #: ../sdaps/reporttex/report.py:138
 msgid "Running pdflatex now twice to generate the report."
 msgstr "Führe pdflatex zwei mal aus um den Report zu erstellen."
-
-#: ../sdaps/reporttex/report.py:151
-#, python-format
-msgid "An occured during creation of the report. Temporary files left in '%s'."
-msgstr ""
-"Es ist ein Fehler beim erstellen des Reports aufgetreten. Temporäre Dateien "
-"wurden in '%s' belassen."
-
-#~ msgid "Survey-ID: %i"
-#~ msgstr "Umfrage-ID: %i"
-
-#~ msgid "Questionnaire-ID: %i"
-#~ msgstr "Fragebogen-ID: %i"
-
-#~ msgid ""
-#~ "You need to have either pdftk or pyPdf installed. pdftk is the faster "
-#~ "method."
-#~ msgstr ""
-#~ "Sie müssen entweder pdtk oder pyPdf installiert haben.pdftk ist die "
-#~ "schnellere Metode."
-
-#~ msgid "Creating stamp PDF for %i sheet"
-#~ msgid_plural "Creating stamp PDF for %i sheets"
-#~ msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
-#~ msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
-
-#~ msgid "%i sheet; %f seconds per sheet"
-#~ msgid_plural "%i sheet; %f seconds per sheet"
-#~ msgstr[0] "%i Bogen; %f Sekunden pro Bogen"
-#~ msgstr[1] "%i Bögen; %f Sekunden pro Bogen"
-
-#~ msgid "Stamping using pdftk"
-#~ msgstr "Stempele mit Hilfe von pdftk."
-
-#~ msgid "pdftk: Splitting out page %d of each sheet."
-#~ msgid_plural "pdftk: Splitting out page %d of each sheet."
-#~ msgstr[0] "pdftk: Extrahier die %d Seite aus dem Stempel."
-#~ msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
-
-#~ msgid "pdftk: Splitting the questionnaire for watermarking."
-#~ msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens"
-
-#~ msgid "pdftk: Watermarking page %d of all sheets."
-#~ msgid_plural "pdftk: Watermarking page %d of all sheets."
-#~ msgstr[0] "pdftk: Stempele die Seite %d."
-#~ msgstr[1] "pdftk: Stempele die Seite %d."
-
-#~ msgid "pdftk: Assembling everything into the final PDF."
-#~ msgstr "pdftk: Erstelle das fertige PDF."
-
-#~ msgid "Stamping using pyPdf. For faster stamping, install pdftk."
-#~ msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
 
 #~ msgid ""
 #~ "An error occured in the setup routine, deleting the survey directory "

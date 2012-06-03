@@ -5,7 +5,7 @@ sdaps/cover.py
 sdaps/csvdata/__init__.py
 sdaps/gui/gui.py
 sdaps/gui/__init__.py
-sdaps/gui/main_window.ui
+[type: gettext/glade] sdaps/gui/main_window.ui
 sdaps/ids.py
 sdaps/info.py
 sdaps/model/survey.py
@@ -20,6 +20,8 @@ sdaps/setup/buddies.py
 sdaps/setup/boxesparser.py
 sdaps/stamp/__init__.py
 sdaps/stamp/stamp.py
+sdaps/stamp/generic.py
+sdaps/stamp/latex.py
 sdaps/setuptex/__init__.py
 sdaps/setuptex/setup.py
 sdaps/reporttex/__init__.py
