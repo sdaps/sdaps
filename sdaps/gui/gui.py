@@ -286,6 +286,10 @@ class MainWindow(object):
 				self.go_to_next_page()
 			return True
 		elif event.keyval == Gdk.KEY_Tab or event.keyval == Gdk.KEY_KP_Tab or event.keyval == Gdk.KEY_ISO_Left_Tab:
+			# Allow tabbing out with Ctrl
+			if event.state & Gdk.ModifierType.CONTROL_MASK:
+				return False
+
 			if event.state & Gdk.ModifierType.SHIFT_MASK:
 				self.go_to_previous_page()
 			else:
