@@ -17,7 +17,8 @@ Requirements
 
  * Python
  * distutils and distutils-extra
- * GTK+ (pygtk) for the front end that can be used to control/correct the results
+ * GTK+ and gobject introspection for the front end that can be used
+   to control/correct the results
  * reportlab
  * pdftk or pyPdf (pdftk is much faster if you need questionnaire ids)
  * Python Imaging Library (PIL)
