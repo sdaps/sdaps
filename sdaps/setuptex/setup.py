@@ -33,6 +33,24 @@ from sdaps.setup import buddies
 import sdapsfileparser
 from sdaps.setup import additionalparser
 
+def write_latex_override_file(survey):
+	# Create the sdaps.opt file.
+	latex_override = open(survey.path('sdaps.opt'), 'w')
+	latex_override.write('% This file exists to force the latex document into "final" mode.\n')
+	latex_override.write('% It is parsed after the setup phase of the SDAPS class.\n\n')
+	latex_override.write('\\@STAMPtrue\n')
+	latex_override.write('\\@PAGEMARKtrue\n\n')
+	latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2**16)))
+	latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2**16)))
+	latex_override.write('% We turn of draft mode if questionnaire IDs are not printed.\n')
+	latex_override.write('% Otherwise we turn it on explicitly so that noboday has wrong ideas.\n')
+	latex_override.write('\\if@PrintQuestionnaireId\n')
+	latex_override.write('\\@sdaps@drafttrue\n')
+	latex_override.write('\\else\n')
+	latex_override.write('\\@sdaps@draftfalse\n')
+	latex_override.write('\\fi\n')
+	latex_override.close()
+
 def setup (survey, questionnaire_tex, additionalqobjects = None) :
 	if os.access(survey.path(), os.F_OK) :
 		print _('The survey directory already exists')
@@ -59,21 +77,8 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 	os.mkdir(survey.path())
 	try:
 		shutil.copy(questionnaire_tex, survey.path('questionnaire.tex'))
-		# Create the sdaps.final file.
-		latex_override = open(survey.path('sdaps.opt'), 'w')
-		latex_override.write('% This file exists to force the latex document into "final" mode.\n')
-		latex_override.write('% It is parsed after the setup phase of the SDAPS class.\n\n')
-		latex_override.write('\\@STAMPtrue\n')
-		latex_override.write('\\@PAGEMARKtrue\n\n')
-		latex_override.write('% We turn of draft mode if questionnaire IDs are not printed.\n')
-		latex_override.write('% Otherwise we turn it on explicitly so that noboday has wrong ideas.\n')
-		latex_override.write('\\if@PrintQuestionnaireId\n')
-		latex_override.write('\\@sdaps@drafttrue\n')
-		latex_override.write('\\else\n')
-		latex_override.write('\\@sdaps@draftfalse\n')
-		latex_override.write('\\fi\n')
-		latex_override.close()
-		
+
+		write_latex_override_file(survey)
 
 		# Copy class and dictionary files
 		if paths.local_run :
@@ -118,6 +123,18 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 
 		# Last but not least calculate the survey id
 		survey.calculate_survey_id()
+
+		# We need to now rebuild everything so that the correct ID is at the bottom
+		write_latex_override_file(survey)
+
+		print _("Running pdflatex now twice to generate the questionnaire.")
+		# First run in draftmode, no need to generate a PDF
+		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')])
+		# And again, without the draft mode
+		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')])
+		if not os.path.exists(survey.path('questionnaire.pdf')):
+			print _("Error running \"pdflatex\" to compile the LaTeX file.")
+			raise AssertionError('PDF file not generated')
 
 		# Print the result
 		print survey.title

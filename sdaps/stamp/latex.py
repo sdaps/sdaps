@@ -41,6 +41,8 @@ def create_stamp_pdf(survey, questionnaire_ids):
 		latex_override = open(os.path.join(tmpdir, 'sdaps.opt'), 'w')
 		latex_override.write('% This file exists to force the latex document into "final" mode.\n')
 		latex_override.write('% It is parsed after the setup phase of the SDAPS class.\n\n')
+		latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2**16)))
+		latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2**16)))
 		latex_override.write('\\@STAMPtrue\n')
 		latex_override.write('\\@PAGEMARKtrue\n')
 		latex_override.write('\\@sdaps@draftfalse\n')
