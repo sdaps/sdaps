@@ -133,60 +133,100 @@ def parse (questionnaire_pdf) :
 							rect.height / mm
 						)
 				elif len(obj.subpaths) == 1 and isinstance(obj.subpaths[0], pdfpath.Subpath):
-					# OOo 3.x draws the box using a move + 4 lines + close.	
 					if box is None:
 						continue
 
-					if len(obj.subpaths[0].contents) != 6:
+					# OOo 3.x draws the box using a move + 4 lines + close.	
+					if len(obj.subpaths[0].contents) == 6:
 						# 5 subpaths, m,l,l,l,l,c
-						continue
 
-					point = obj.subpaths[0].contents[0]
-					if not isinstance(point, pdfpath.Move):
-						continue
-					point = point.point
-					if not (point.x / mm - box.x < 0.0001 and (height - point.y) / mm - box.y < 0.0001):
-						continue
+						point = obj.subpaths[0].contents[0]
+						if not isinstance(point, pdfpath.Move):
+							continue
+						point = point.point
+						if not (point.x / mm - box.x < 0.0001 and (height - point.y) / mm - box.y < 0.0001):
+							continue
 
-					point = obj.subpaths[0].contents[1]
-					if not isinstance(point, pdfpath.Line):
-						continue
-					point = point.point2
-					if not (point.x / mm - box.x < 0.0001 and (height - point.y) / mm - box.y - box.height < 0.0001):
-						continue
+						point = obj.subpaths[0].contents[1]
+						if not isinstance(point, pdfpath.Line):
+							continue
+						point = point.point2
+						if not (point.x / mm - box.x < 0.0001 and (height - point.y) / mm - box.y - box.height < 0.0001):
+							continue
 
-					point = obj.subpaths[0].contents[2]
-					if not isinstance(point, pdfpath.Line):
-						continue
-					point = point.point2
-					if not (point.x / mm - box.x - box.width < 0.0001 and (height - point.y) / mm - box.y - box.height < 0.0001):
-						continue
+						point = obj.subpaths[0].contents[2]
+						if not isinstance(point, pdfpath.Line):
+							continue
+						point = point.point2
+						if not (point.x / mm - box.x - box.width < 0.0001 and (height - point.y) / mm - box.y - box.height < 0.0001):
+							continue
 
-					point = obj.subpaths[0].contents[3]
-					if not isinstance(point, pdfpath.Line):
-						continue
-					point = point.point2
-					if not (point.x / mm - box.x - box.width < 0.0001 and (height - point.y) / mm - box.y < 0.0001):
-						continue
-					point = obj.subpaths[0].contents[4]
-					if not isinstance(point, pdfpath.Line):
-						continue
-					point = point.point2
+						point = obj.subpaths[0].contents[3]
+						if not isinstance(point, pdfpath.Line):
+							continue
+						point = point.point2
+						if not (point.x / mm - box.x - box.width < 0.0001 and (height - point.y) / mm - box.y < 0.0001):
+							continue
+						point = obj.subpaths[0].contents[4]
+						if not isinstance(point, pdfpath.Line):
+							continue
+						point = point.point2
 
-					if not (point.x / mm - box.x < 0.0001 and (height - point.y) / mm - box.y - box.height < 0.0001):
-						continue
+						if not (point.x / mm - box.x < 0.0001 and (height - point.y) / mm - box.y - box.height < 0.0001):
+							continue
 
-					if not isinstance(obj.subpaths[0].contents[5], pdfpath.Close):
-						continue
+						if not isinstance(obj.subpaths[0].contents[5], pdfpath.Close):
+							continue
 
-					if isinstance(box, DummyBox):
-						print _("Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: %.1f).") % \
-							(box.page, box.x, box.y, box.width, box.height)
-					else:
-						boxes.append(box)
-					box = None
+						if isinstance(box, DummyBox):
+							print _("Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: %.1f).") % \
+								(box.page, box.x, box.y, box.width, box.height)
+						else:
+							boxes.append(box)
+						box = None
 
-	
+					# LibreOffice 3.5 draws the border as four trapezoids, with a 45degree angle in between, then filling it
+					elif len(obj.subpaths[0].contents) == 8:
+						# 8 subpaths, m,l,l,l,l,l,l,h
+						# The angled corners have 3 points, instead of two, whoever thought of that ...
+						# We just check that all points are inside the rectangle here
+						x_min = 99999
+						y_min = 99999
+						x_max = -99999
+						y_max = -99999
+						for point in obj.subpaths[0].contents:
+							if isinstance(point, pdfpath.Close):
+								continue
+
+							if isinstance(point, pdfpath.Line):
+								point = point.point2
+							else:
+								point = point.point
+
+							x_min = min(x_min, point.x)
+							y_min = min(y_min, point.y)
+
+							x_max = max(x_max, point.x)
+							y_max = max(y_max, point.y)
+
+						_width = x_max - x_min
+						_height = y_max - y_min
+
+						if _width == 1:
+							if abs(_height - box.height*mm) < 0.0001:
+								box_linecount += 1
+						elif _height == 1:
+							if abs(_width - box.width*mm) < 0.0001:
+								box_linecount += 1
+						else:
+							box = None
+							box_linecount = 0
+
+						if box_linecount == 4:
+							boxes.append(box)
+							box = None
+							box_linecount = 0
+
 	return boxes, page_count
 
 
