@@ -45,6 +45,22 @@ rm -rf "$PROJECT"
 "$SDAPS" "$PROJECT" report
 
 ###########################################################
+# LibreOffice 3.5 PDF export
+###########################################################
+
+PROJECT="projects/test-odt-lo35"
+
+# Remove project dir that may exist
+rm -rf "$PROJECT"
+
+# Setup the test project, using the data in "data"
+# By disabling the surveyid and enable the questionnaire id we test more
+# unsual code paths, and we don't have a problem because the survey id
+# changed ...
+"$SDAPS" "$PROJECT" setup "data/odt-3/debug.odt" "data/odt-3/debug.pdf" "data/odt-3/debug.internetquestions"
+
+
+###########################################################
 # Test Tex with IDs
 ###########################################################
 
