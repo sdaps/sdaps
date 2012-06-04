@@ -99,7 +99,7 @@ def report (survey, filter, filename = None, small = 0) :
 		extra_info = []
 		for key, value in survey.info.iteritems():
 			if key == 'Author':
-				#author = value
+				author = value
 				continue
 
 			extra_info.append(u'\\addextrainfo{%(key)s}{%(value)s}' % {'key': key, 'value': value})
