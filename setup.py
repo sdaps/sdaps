@@ -31,7 +31,7 @@ setup(name='sdaps',
       description='Scripts for data acquisition with paper based surveys',
       url='http://sdaps.sipsolutions.net',
       author='Benjamin Berg, Christoph Simon',
-      author_email='benjamin@sipsolutions.net, christoph.simon@gmx.eu',
+      author_email='benjamin@sipsolutions.net, post@christoph-simon.eu',
       license='GPL-3',
       long_description="""
 SDAPS is a tool to carry out paper based surveys. You can create machine

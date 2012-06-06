@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2007-2008, Christoph Simon <christoph.simon@gmx.eu>
+# Copyright (C) 2007-2008, Christoph Simon <post@christoph-simon.eu>
 # Copyright (C) 2007-2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -158,12 +158,18 @@ class MainWindow(object):
 	def show_about_dialog(self, *args):
 		if not self.about_dialog:
 			self.about_dialog = Gtk.AboutDialog()
-			self.about_dialog.set_name("SDAPS")
-			self.about_dialog.set_version("") #XXX: Version?
-			self.about_dialog.set_authors([u"Benjamin Berg <benjamin@sipsolution.net>", u"Christoph Simon <christoph.simon@gmx.eu>"])
-			self.about_dialog.set_copyright(_(u"Copyright © 2007-2008 Benjamin Berg, Christoph Simon"))
-			self.about_dialog.set_license(_(u"GPL Version 3, 29 June 2007"))
+			self.about_dialog.set_program_name("SDAPS")
+			#self.about_dialog.set_version("")
+			self.about_dialog.set_authors(
+				[u"Benjamin Berg <benjamin@sipsolution.net>",
+				 u"Ferdinand Schwenk <ferdisdot@gmail.com>",
+				 u"Christoph Simon <post@christoph-simon.eu>",
+				 u"Tobias Simon <tobsimon@googlemail.com>"])
+			self.about_dialog.set_copyright(_(u"Copyright © 2007-2012 The SDAPS Authors"))
+			self.about_dialog.set_license_type(Gtk.License.GPL_3_0)
 			self.about_dialog.set_comments(_(u"Scripts for data acquisition with paper based surveys"))
+			self.about_dialog.set_website(_(u"http://sdaps.sipsolutions.net"))
+			self.about_dialog.set_translator_credits(_("translator-credits"))
 			self.about_dialog.set_default_response(Gtk.ResponseType.CANCEL)
 
 		self.about_dialog.run()

@@ -1,5 +1,5 @@
 /* SDAPS
- * Copyright (C) 2008  Christoph Simon <christoph.simon@gmx.eu>
+ * Copyright (C) 2008  Christoph Simon <post@christoph-simon.eu>
  * Copyright (C) 2008  Benjamin Berg <benjamin@sipsolutions.net>
  *
  * This program is free software: you can redistribute it and/or modify
