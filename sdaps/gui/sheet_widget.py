@@ -36,10 +36,15 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
 	def __init__(self, provider) :
 		Gtk.DrawingArea.__init__(self)
-		self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON_RELEASE_MASK|
-						Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.BUTTON_MOTION_MASK |
-						Gdk.EventMask.SCROLL_MASK | Gdk.EventMask.SMOOTH_SCROLL_MASK |
-						Gdk.EventMask.KEY_PRESS_MASK)
+		events = Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON_RELEASE_MASK | \
+			Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.BUTTON_MOTION_MASK | \
+			Gdk.EventMask.SCROLL_MASK | Gdk.EventMask.KEY_PRESS_MASK
+		try:
+			events = events | Gdk.EventMask.SMOOTH_SCROLL_MASK
+		except AttributeError:
+			# Does only work for GTK+ >=3.4
+			pass
+		self.add_events(events)
 
 		self.hadj = None
 		self.vadj = None
