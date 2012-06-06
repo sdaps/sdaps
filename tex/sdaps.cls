@@ -260,7 +260,7 @@
       \begin{scope}[line width=\elementlinewidth, line join=miter]%
         \begin{scope}[shift={($(current page.north west) + (\edgeleftmargin, -\edgetopmargin)$)}]%
           \draw (0,-\edgelen) -- (0, 0) -- (\edgelen,0);%
-          \ifcase\page%
+          \ifcase\thepage%
             % Case 0
             \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
           \or%
@@ -288,86 +288,86 @@
         \end{scope}%
         \begin{scope}[shift={($(current page.north east) + (-\edgerightmargin, -\edgetopmargin)$)}]%
           \draw (0,-\edgelen) -- (0,0) -- (-\edgelen,0);%
-          \ifcase\page%
+          \ifcase\thepage%
             % Case 0
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
           \or%
             % Case 1
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \fill (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
           \or%
             % Case 2
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \fill (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
           \or%
             % Case 3
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
           \or%
             % Case 4
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
           \or%
             % Case 5
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
           \or%
             % Case 6
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
           \else%
             % Optional
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
           \fi%
         \end{scope}%
         \begin{scope}[shift={($(current page.south west) + (\edgeleftmargin, \edgebottommargin)$)}]%
           \draw (0,\edgelen) -- (0, 0) -- (\edgelen,0);%
-          \ifcase\page%
+          \ifcase\thepage%
             % Case 0
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 1
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 2
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 3
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 4
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 5
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 6
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \else%
             % Optional
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
           \fi%
         \end{scope}%
         \begin{scope}[shift={($(current page.south east) + (-\edgerightmargin, \edgebottommargin)$)}]%
           \draw (0,\edgelen) -- (0mm, 0mm) -- (-\edgelen,0);%
-          \ifcase\page%
+          \ifcase\thepage%
             % Case 0
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 1
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 2
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 3
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 4
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 5
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \or%
             % Case 6
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \else%
             % Optional
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
           \fi%
         \end{scope}%
       \end{scope}%
