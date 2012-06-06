@@ -10,8 +10,8 @@
 % identification
 %-------------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{sdaps}[2011/12/20%
-                      v0.1 Class for SDAPS survey-report]
+\ProvidesClass{sdapsreport}[2011/12/20%
+                            v0.1 Class for SDAPS survey-report]
 
 
 %-------------------------------------------------------------------------------
@@ -73,7 +73,7 @@
   baseurl       = http://,%
   pdfborder     = 0 0 0,%
   pdfpagemode   = UseNone,%
-  pdfcreator    = \LaTeX{} with `sdaps' class,%
+  pdfcreator    = \LaTeX{} with `sdapsreport' class,%
   pdfproducer   = \LaTeX{}
 }
 \AtEndOfClass{%
