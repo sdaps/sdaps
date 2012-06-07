@@ -79,10 +79,10 @@ def fill_page(cr, mm_to_pt, checkboxes):
 
 def boxgallery (survey):
 	survey.questionnaire.boxgallery.init()
-	survey.iterate(survey.questionnaire.boxgallery.get_checkbox_images)
+	survey.iterate_progressbar(survey.questionnaire.boxgallery.get_checkbox_images)
 	checkboxes = survey.questionnaire.boxgallery.checkboxes
 	survey.questionnaire.boxgallery.clean()
-	
+
 	checkboxes.sort(key = lambda x: x[0])
 
 	# Hardcode 300dpi
