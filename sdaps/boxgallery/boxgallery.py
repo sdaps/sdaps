@@ -17,8 +17,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cairo
-import pango
-import pangocairo
+from gi.repository import Pango
+from gi.repository import PangoCairo
 
 import buddies
 
@@ -45,16 +45,16 @@ def paint_box(cr, mm_to_pt, x, y, box):
 	
 	cr.move_to(tmp_x, tmp_y)
 
-	layout = cr.create_layout()
+	layout = PangoCairo.create_layout(cr)
 	layout.set_markup(t)
-	font = pango.FontDescription("serif 6")
+	font = Pango.FontDescription("serif 6")
 	layout.set_font_description(font)
-	
-	cr.show_layout(layout)
-	
+
+	PangoCairo.show_layout(cr, layout)
+
 
 	cr.restore()
-	
+
 
 def fill_page(cr, mm_to_pt, checkboxes):
 	y = 15
@@ -93,7 +93,6 @@ def boxgallery (survey):
 	page = 1
 	pdf = cairo.PDFSurface(survey.path('boxgallery.pdf'), 595, 842)
 	cr = cairo.Context(pdf)
-	cr = pangocairo.CairoContext(cr)
 	
 	while len(checkboxes) > 0:
 		fill_page(cr, mm_to_pt, checkboxes)
