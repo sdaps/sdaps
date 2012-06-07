@@ -109,15 +109,16 @@ class Checkbox (model.buddy.Buddy):
 		    self.obj.data.width + 2*border, self.obj.data.height + 2*border)
 
 		dest = cairo.ImageSurface(
-		    cairo.FORMAT_RGB24, int(px_width), int(px_height))
+		    cairo.FORMAT_A1, int(px_width), int(px_height))
 		src = image.surface.surface
 
 		cr = cairo.Context(dest)
-		cr.set_source_rgb(1, 1, 1)
+		cr.set_source_surface(src, -px_x, -px_y)
+		cr.set_operator(cairo.OPERATOR_SOURCE)
 		cr.paint()
 
-		cr.set_source_rgb(0, 0, 0)
-		cr.mask_surface(src, -px_x, -px_y)
+		del cr
+		dest.flush()
 
 		return (self.obj.data.coverage, dest)
 

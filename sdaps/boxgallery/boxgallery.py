@@ -27,17 +27,12 @@ def paint_box(cr, mm_to_pt, x, y, box):
 	cr.save()
 	cr.set_matrix(mm_to_pt)
 	cr.translate(x, y)
-	
-	pattern = cairo.SurfacePattern(box[1])
-	# 300dpi
-	m = cairo.Matrix()
-	m.scale(300.0/25.4, 300.0/25.4)
-	pattern.set_matrix(m)
-	pattern.set_filter(cairo.FILTER_FAST)
 
-	cr.set_source(pattern)
-	cr.paint()
-	
+	cr.scale(25.4/300.0, 25.4/300.0)
+
+	cr.set_source_rgb(0, 0, 0)
+	cr.mask_surface(box[1], 0, 0)
+
 	cr.restore()
 
 	cr.save()
