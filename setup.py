@@ -47,6 +47,7 @@ analyse the scanned data, and create a report.
                 'sdaps.recognize',
                 'sdaps.stamp',
                 'sdaps.report',
+                'sdaps.reporttex',
                 'sdaps.setup.pdftools',
                 'sdaps.setup',
                 'sdaps.setuptex'

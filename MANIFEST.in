@@ -6,3 +6,4 @@ recursive-include sdaps *.py *.ui *.c *.h
 recursive-include po *.pot POTFILES POTFILES.in *.po
 include test/run-test.sh
 recursive-include test/data *.internetquestions *.odt *.pdf *.tif
+recursive-include test/data *.tex
