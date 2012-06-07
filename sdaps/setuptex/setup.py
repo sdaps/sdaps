@@ -97,9 +97,9 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 
 		print _("Running pdflatex now twice to generate the questionnaire.")
 		# First run in draftmode, no need to generate a PDF
-		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')])
+		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')], cwd=survey.path())
 		# And again, without the draft mode
-		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')])
+		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')], cwd=survey.path())
 		if not os.path.exists(survey.path('questionnaire.pdf')):
 			print _("Error running \"pdflatex\" to compile the LaTeX file.")
 			raise AssertionError('PDF file not generated')
@@ -129,9 +129,9 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 
 		print _("Running pdflatex now twice to generate the questionnaire.")
 		# First run in draftmode, no need to generate a PDF
-		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')])
+		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')], cwd=survey.path())
 		# And again, without the draft mode
-		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')])
+		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', survey.path(), survey.path('questionnaire.tex')], cwd=survey.path())
 		if not os.path.exists(survey.path('questionnaire.pdf')):
 			print _("Error running \"pdflatex\" to compile the LaTeX file.")
 			raise AssertionError('PDF file not generated')
