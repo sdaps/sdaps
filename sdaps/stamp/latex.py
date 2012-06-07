@@ -52,9 +52,9 @@ def create_stamp_pdf(survey, questionnaire_ids):
 
 		print _("Running pdflatex now twice to generate the stamped questionnaire.")
 		# First run in draftmode, no need to generate a PDF
-		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', tmpdir, os.path.join(tmpdir, 'questionnaire.tex')], cwd=tmpdir)
+		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', os.path.join(tmpdir, 'questionnaire.tex')], cwd=tmpdir)
 		# And again, without the draft mode
-		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', '-output-directory', tmpdir, os.path.join(tmpdir, 'questionnaire.tex')], cwd=tmpdir)
+		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', os.path.join(tmpdir, 'questionnaire.tex')], cwd=tmpdir)
 		if not os.path.exists(os.path.join(tmpdir, 'questionnaire.pdf')):
 			print _("Error running \"pdflatex\" to compile the LaTeX file.")
 			raise AssertionError('PDF file not generated')
