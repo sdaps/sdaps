@@ -47,12 +47,14 @@ def gui (survey, *filter) :
 
 class Provider (object) :
 
-	image = property(lambda self: self.images[self.index])
+	def __init__ (self, survey, filter, by_quality=False) :
+		self._by_quality = by_quality
 
-	def __init__ (self, survey, filter) :
 		self.survey = survey
 		self.images = list()
+		self.qualities = list()
 		self.survey.iterate(self, filter)
+		self.qualities.sort(reverse=False)
 		self.index = 0
 		self.image.surface.load_rgb()
 		self.survey.goto_sheet(self.image.sheet)
@@ -60,6 +62,9 @@ class Provider (object) :
 
 	def __call__ (self) :
 		self.images.extend(list(self.survey.sheet.images))
+		# Insert each image of the sheet into the qualities array
+		for i in xrange(len(self.survey.sheet.images)):
+			self.qualities.append((self.survey.sheet.quality, len(self.qualities)))
 
 	def next (self) : #, skip_valid = 1) :
 		self.image.surface.clean()
@@ -83,6 +88,19 @@ class Provider (object) :
 			self.index = index
 			self.image.surface.load_rgb()
 			self.survey.goto_sheet(self.image.sheet)
+
+	def set_sort_by_quality(self, value):
+		self.image.surface.clean()
+		self._by_quality = value
+		self.image.surface.load_rgb()
+
+	def get_image(self):
+		if self._by_quality:
+			return self.images[self.qualities[self.index][1]]
+		else:
+			return self.images[self.index]
+
+	image = property(get_image)
 
 
 class MainWindow(object):
@@ -210,8 +228,10 @@ class MainWindow(object):
 		#prev_button.set_sensitive(True)
 
 		position_label = self._builder.get_object("position_label")
+		quality_label = self._builder.get_object("quality_label")
 		page_spin = self._builder.get_object("page_spin")
 		position_label.set_text(_(u" of %i") % len(self.provider.images))
+		quality_label.set_text(_(u"Recognition Quality: %.2f") % self.provider.image.sheet.quality)
 		#position_label.props.sensitive = True
 		page_spin.set_range(1, len(self.provider.images))
 		page_spin.set_value(self.provider.index + 1)
@@ -267,6 +287,12 @@ class MainWindow(object):
 		if self.provider.image.sheet.valid != valid :
 			self.provider.image.sheet.valid = valid
 			self.update_ui()
+		return False
+
+	def quality_sort_toggle_toggled_cb (self, *args):
+		toggle = self._builder.get_object("quality_sort_toggle")
+		self.provider.set_sort_by_quality(toggle.get_active())
+		self.update_ui()
 		return False
 
 	def toggle_fullscreen(self, *args):
