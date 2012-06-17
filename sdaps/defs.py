@@ -115,13 +115,13 @@ textbox_scan_coverage = 0.06
 
 # Minimum size in mm for a textbox to be considered filled in.
 # This is usefull because otherwise small dirt dots will be considered writing.
-textbox_minimum_writing_width = 7 # mm
-textbox_minimum_writing_height = 7 # mm
+textbox_minimum_writing_width = 5 # mm
+textbox_minimum_writing_height = 5 # mm
 
 # Distance to stay away from the outline in mm so that it will not be detected
 # as handwriting. The "uncorrected" value is used when the corners have not been
 # detected correctly, which should hopefully never happen.
-textbox_scan_padding = 0.3 # mm
+textbox_scan_padding = 0.5 # mm
 textbox_scan_uncorrected_padding = 1.5 # mm
 
 # Padding tha will always be added to the textbox size if content has been recognized.

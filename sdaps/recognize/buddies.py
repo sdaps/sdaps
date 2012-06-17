@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cairo
-import random
+import math
 
 from sdaps import model
 from sdaps import matrix
@@ -355,33 +355,73 @@ class Textbox (Box) :
 					y += step_y
 
 			def iterate_outline(self, step_x, step_y, test_width, test_height, padding):
-				x = self.left
-				while x + test_width < self.right:
-					y = self.y0 + self.m0 * (x - self.x0)
-					yield x, y
+				# Top
+				x, y = self.x0, self.y0
+				x += padding
+				y += padding
 
-					y = self.y2 + self.m2 * (x - self.x2)
-					yield x, y
+				dest_x = self.x1 - padding - test_width
+				dest_y = self.y1 + padding
 
-					x += step_x
+				dist_x = dest_x - x
+				dist_y = dest_y - y
 
-				y = self.top
-				while y + test_width < self.bottom:
-					x = self.x1 + self.m1 * (y - self.y1)
-					yield x, y
-
-					x = self.x3 + self.m3 * (y - self.y3)
-					yield x, y
-
-					y += step_y
+				length = math.sqrt(dist_x**2 + dist_y**2)
+				for step in xrange(int(length / step_x)):
+					yield x + dist_x * step / (length / step_x), y + dist_y * step / (length / step_x)
+				yield dest_x, dest_y
 
 
+				# Bottom
+				x, y = self.x3, self.y3
+				x = x + padding
+				y = y - padding - test_height
 
-			def iterate_all(self, step_x, step_y, test_width, test_height, padding):
-				for x, y in self.iterate_bb(step_x, step_y, test_width, test_height, padding):
-					yield x, y
-				for x, y in self.iterate_outline(step_x, step_y, test_width, test_height, padding):
-					yield x, y
+				dest_x = self.x2 - padding - test_width
+				dest_y = self.y2 - padding - test_height
+
+				dist_x = dest_x - x
+				dist_y = dest_y - y
+
+				length = math.sqrt(dist_x**2 + dist_y**2)
+				for step in xrange(int(length / step_x)):
+					yield x + dist_x * step / (length / step_x), y + dist_y * step / (length / step_x)
+				yield dest_x, dest_y
+
+
+				# Left
+				x, y = self.x0, self.y0
+				x += padding
+				y += padding
+
+				dest_x = self.x3 + padding
+				dest_y = self.y3 - padding - test_height
+
+				dist_x = dest_x - x
+				dist_y = dest_y - y
+
+				length = math.sqrt(dist_x**2 + dist_y**2)
+				for step in xrange(int(length / step_y)):
+					yield x + dist_x * step / (length / step_y), y + dist_y * step / (length / step_y)
+				yield dest_x, dest_y
+
+
+				# Right
+				x, y = self.x1, self.y1
+				x = x - padding - test_width
+				y = y + padding
+
+				dest_x = self.x2 - padding - test_width
+				dest_y = self.y2 - padding - test_height
+
+				dist_x = dest_x - x
+				dist_y = dest_y - y
+
+				length = math.sqrt(dist_x**2 + dist_y**2)
+				for step in xrange(int(length / step_y)):
+					yield x + dist_x * step / (length / step_y), y + dist_y * step / (length / step_y)
+				yield dest_x, dest_y
+
 
 			def iterate(self, step_x, step_y, test_width, test_height, padding):
 				for x, y in self.iterate_bb(step_x, step_y, test_width, test_height, padding):
@@ -401,6 +441,9 @@ class Textbox (Box) :
 					if not lx + padding < x:
 						continue
 
+					yield x, y
+
+				for x, y in self.iterate_outline(step_x, step_y, test_width, test_height, padding):
 					yield x, y
 
 		bbox = None
