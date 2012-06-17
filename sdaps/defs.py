@@ -62,7 +62,7 @@ corner_box_height = 3.5 # mm
 corner_box_padding = 3 # mm
 
 # The coverage above which a cornerbox is considered to be a logical 1
-cornerbox_on_coverage = 0.7
+cornerbox_on_coverage = 0.6
 
 
 # Codebox =================================================
@@ -136,7 +136,7 @@ textbox_extra_padding = 0.5 # mm
 # All lines are 1pt wide (1/72 inch or 25.4/72 mm)
 image_line_width = 5 # px
 # The coverage that the line needs to have for recognition
-image_line_coverage = 0.5
+image_line_coverage = 0.35
 
 
 
