@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-03 11:41+0200\n"
-"PO-Revision-Date: 2012-06-03 11:44+0200\n"
+"POT-Creation-Date: 2012-06-17 22:17+0200\n"
+"PO-Revision-Date: 2012-06-17 22:20+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -162,35 +162,44 @@ msgstr ""
 msgid "Unknown command"
 msgstr "Unbekannter Befehl"
 
-#: ../sdaps/gui/gui.py:124
+#: ../sdaps/gui/gui.py:144
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Seite %i"
 msgstr[1] "Seite %i"
 
-#: ../sdaps/gui/gui.py:162
-msgid "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
-msgstr "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
+#: ../sdaps/gui/gui.py:186
+msgid "Copyright © 2007-2012 The SDAPS Authors"
+msgstr "Copyright © 2007-2012 The SDAPS Authors"
 
-#: ../sdaps/gui/gui.py:163
-msgid "GPL Version 3, 29 June 2007"
-msgstr "GPL Version 3, 29 Juni 2007"
-
-#: ../sdaps/gui/gui.py:164
+#: ../sdaps/gui/gui.py:188
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "SDAPS - Scripts zum auswerten von Papier basierten Umfragen"
 
-#: ../sdaps/gui/gui.py:206
+#: ../sdaps/gui/gui.py:189
+msgid "http://sdaps.sipsolutions.net"
+msgstr "http://sdaps.sipsolutions.net"
+
+#: ../sdaps/gui/gui.py:190
+msgid "translator-credits"
+msgstr "Benjamin Berg"
+
+#: ../sdaps/gui/gui.py:233
 #, python-format
 msgid " of %i"
 msgstr " von %i"
 
-#: ../sdaps/gui/gui.py:298
+#: ../sdaps/gui/gui.py:234
+#, python-format
+msgid "Recognition Quality: %.2f"
+msgstr "Erkennungsqualität: %.2f"
+
+#: ../sdaps/gui/gui.py:336
 msgid "Close without saving"
 msgstr "Beenden ohne zu Speichern"
 
-#: ../sdaps/gui/gui.py:299
+#: ../sdaps/gui/gui.py:337
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -276,6 +285,14 @@ msgstr "Seite Gedreht"
 msgid "Sheet Valid (all pages)"
 msgstr "Ausgefüllter Bogen"
 
+#: ../sdaps/gui/main_window.ui.h:16
+msgid "Sort by Quality"
+msgstr "Nach Qualität sortieren"
+
+#: ../sdaps/gui/main_window.ui.h:17
+msgid "label"
+msgstr "Sollte niemals sichtbar sein."
+
 #: ../sdaps/ids.py:28
 #, python-format
 msgid ""
@@ -333,23 +350,23 @@ msgstr[1] "%i Bögen"
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/recognize/buddies.py:71 ../sdaps/recognize/buddies.py:116
+#: ../sdaps/recognize/buddies.py:73 ../sdaps/recognize/buddies.py:118
 #, python-format
 msgid "%s, %i: Matrix not recognized. Cancelling recognition of that image."
 msgstr "%s, %i: Matrix wurde nicht erkannt. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:108
+#: ../sdaps/recognize/buddies.py:110
 #, python-format
 msgid ""
 "%s, %i: Page number not recognized. Cancelling recognition of that image."
 msgstr "%s, %i: Seitenzahl wurde nicht erkannt. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:135
+#: ../sdaps/recognize/buddies.py:137
 #, python-format
 msgid "%s, %i: Wrong survey_id. Cancelling recognition of that image."
 msgstr "%s, %i: Falsche Umfrage ID. Überspringe dieses Bild."
 
-#: ../sdaps/recognize/buddies.py:149
+#: ../sdaps/recognize/buddies.py:151
 msgid ""
 "You are using a multipage questionnaire, but you have not scanned the pages "
 "in the correct order. This means that filtering will not work correctly!"
@@ -520,13 +537,13 @@ msgstr "Einschalten der Fragebogen-ID auf den Bögen."
 msgid "Disable printing of the questionnaire ID (default)."
 msgstr "Ausschalten der Fragebogen-ID auf den Bögen. (Standard)"
 
-#: ../sdaps/setup/setup.py:40 ../sdaps/setuptex/setup.py:38
+#: ../sdaps/setup/setup.py:40 ../sdaps/setuptex/setup.py:56
 msgid "The survey directory already exists"
 msgstr "Das Umfrageverzeichniss existiert bereits."
 
 #: ../sdaps/setup/setup.py:41 ../sdaps/setup/setup.py:47
 #: ../sdaps/setup/setup.py:53 ../sdaps/setup/setup.py:60
-#: ../sdaps/setuptex/setup.py:39 ../sdaps/setuptex/setup.py:52
+#: ../sdaps/setuptex/setup.py:57 ../sdaps/setuptex/setup.py:70
 msgid "Cancelling setup"
 msgstr "Setup abgebrochen"
 
@@ -545,7 +562,7 @@ msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
 msgstr ""
 "Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
 
-#: ../sdaps/setup/setup.py:59 ../sdaps/setuptex/setup.py:51
+#: ../sdaps/setup/setup.py:59 ../sdaps/setuptex/setup.py:69
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
@@ -592,7 +609,7 @@ msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat nicht exakt fünf Antworten."
 msgid "Warning: %(class)s %(l0)i.%(l1)i got not exactly one box."
 msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat nicht exakt eine Box."
 
-#: ../sdaps/setup/boxesparser.py:118 ../sdaps/setup/boxesparser.py:183
+#: ../sdaps/setup/boxesparser.py:118 ../sdaps/setup/boxesparser.py:182
 #, python-format
 msgid ""
 "Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: "
@@ -720,18 +737,18 @@ msgstr ""
 "keine Fragebogen IDs hat zu stempeln.\n"
 "Die gewünschte Aktion wird dennoch durchgeführt."
 
-#: ../sdaps/stamp/latex.py:51
+#: ../sdaps/stamp/latex.py:53
 msgid "Running pdflatex now twice to generate the stamped questionnaire."
 msgstr ""
 "Führe pdflatex zwei mal aus um den gestempelten Fragebogen zu erstellen."
 
-#: ../sdaps/stamp/latex.py:57 ../sdaps/setuptex/setup.py:99
-#: ../sdaps/reporttex/report.py:145
+#: ../sdaps/stamp/latex.py:59 ../sdaps/setuptex/setup.py:104
+#: ../sdaps/setuptex/setup.py:136 ../sdaps/reporttex/report.py:145
 msgid "Error running \"pdflatex\" to compile the LaTeX file."
 msgstr ""
 "Fehler beim ausführen von \"pdflatex\" um die LaTeX Datei zu kompilieren."
 
-#: ../sdaps/stamp/latex.py:63 ../sdaps/reporttex/report.py:151
+#: ../sdaps/stamp/latex.py:65 ../sdaps/reporttex/report.py:151
 #, python-format
 msgid "An occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
@@ -760,20 +777,20 @@ msgstr ""
 "\tadditional_questions: Datei mit zusätzlichen Fragen.\n"
 "\t"
 
-#: ../sdaps/setuptex/setup.py:44
+#: ../sdaps/setuptex/setup.py:62
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex"
 msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
 
-#: ../sdaps/setuptex/setup.py:45
+#: ../sdaps/setuptex/setup.py:63
 msgid "Will keep going, but expect failure!"
 msgstr "Versuche trotzdem fortzusetzten."
 
-#: ../sdaps/setuptex/setup.py:93
+#: ../sdaps/setuptex/setup.py:98 ../sdaps/setuptex/setup.py:130
 msgid "Running pdflatex now twice to generate the questionnaire."
 msgstr "Führe pdflatex zwei mal aus um den Fragebogen zu erstellen."
 
-#: ../sdaps/setuptex/setup.py:109
+#: ../sdaps/setuptex/setup.py:114
 msgid ""
 "Error: Caught an Exception while parsing the SDAPS file. The current state "
 "is:"
@@ -781,7 +798,7 @@ msgstr ""
 "Fehler: Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der "
 "jetzige Zustand ist:"
 
-#: ../sdaps/setuptex/setup.py:135
+#: ../sdaps/setuptex/setup.py:152
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "
@@ -831,6 +848,17 @@ msgstr "ngerman"
 #: ../sdaps/reporttex/report.py:138
 msgid "Running pdflatex now twice to generate the report."
 msgstr "Führe pdflatex zwei mal aus um den Report zu erstellen."
+
+#: ../sdaps/boxgallery/boxgallery.py:99
+#, python-format
+msgid "Rendering boxgallery for metric \"%s\"."
+msgstr "Erstelle Überblick über die Boxen sortiert nach der Metrik \"%s\"."
+
+#~ msgid "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
+#~ msgstr "Copyright © 2007-2008 Benjamin Berg, Christoph Simon"
+
+#~ msgid "GPL Version 3, 29 June 2007"
+#~ msgstr "GPL Version 3, 29 Juni 2007"
 
 #~ msgid ""
 #~ "An error occured in the setup routine, deleting the survey directory "
