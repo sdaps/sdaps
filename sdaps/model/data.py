@@ -21,7 +21,8 @@ class Box (object) :
 	
 	def __init__ (self, parent) :
 		self.state = 0
-		self.coverage = 0
+		self.metrics = dict()
+		self.quality = 1
 		self.x = parent.x
 		self.y = parent.y
 		self.width = parent.width

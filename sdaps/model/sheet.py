@@ -28,6 +28,7 @@ class Sheet (buddy.Object) :
 		self.survey_id = 0
 		self.questionnaire_id = 0
 		self.valid = 1
+		self.quality = 1
 	
 	def add_image (self, image) :
 		self.images.append(image)

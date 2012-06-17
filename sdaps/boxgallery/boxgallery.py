@@ -20,10 +20,13 @@ import cairo
 from gi.repository import Pango
 from gi.repository import PangoCairo
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
+
 import buddies
+import copy
 
-
-def paint_box(cr, mm_to_pt, x, y, box):
+def paint_box(cr, mm_to_pt, x, y, box, key):
 	cr.save()
 	cr.set_matrix(mm_to_pt)
 	cr.translate(x, y)
@@ -31,7 +34,7 @@ def paint_box(cr, mm_to_pt, x, y, box):
 	cr.scale(25.4/300.0, 25.4/300.0)
 
 	cr.set_source_rgb(0, 0, 0)
-	cr.mask_surface(box[1], 0, 0)
+	cr.mask_surface(box[2], 0, 0)
 
 	cr.restore()
 
@@ -41,8 +44,13 @@ def paint_box(cr, mm_to_pt, x, y, box):
 	tmp_width, tmp_height = mm_to_pt.transform_distance(8, 13)
 
 	tmp_x, tmp_y = mm_to_pt.transform_point(x, y + 8.0)
-	t = "%.2f" % box[0]
-	
+	# Print bold if detected ON
+	value = box[1][key] if box[1].has_key(key) else -1
+	if box[0]:
+		t = "<b>%.2f</b>" % value
+	else:
+		t = "%.2f" % value
+
 	cr.move_to(tmp_x, tmp_y)
 
 	layout = PangoCairo.create_layout(cr)
@@ -56,7 +64,7 @@ def paint_box(cr, mm_to_pt, x, y, box):
 	cr.restore()
 
 
-def fill_page(cr, mm_to_pt, checkboxes):
+def fill_page(cr, mm_to_pt, checkboxes, key):
 	y = 15
 	y_step = 13
 	x_step = 10
@@ -71,7 +79,7 @@ def fill_page(cr, mm_to_pt, checkboxes):
 				return
 			box = checkboxes.pop(0)
 			
-			paint_box(cr, mm_to_pt, x, y, box)
+			paint_box(cr, mm_to_pt, x, y, box, key)
 
 			x += x_step
 		y += y_step
@@ -83,24 +91,31 @@ def boxgallery (survey):
 	checkboxes = survey.questionnaire.boxgallery.checkboxes
 	survey.questionnaire.boxgallery.clean()
 
-	checkboxes.sort(key = lambda x: x[0])
+	keys = set()
+	for checkbox in checkboxes:
+		keys = keys.union(checkbox[1].iterkeys())
 
-	# Hardcode 300dpi
-	# Hardcode the mm size:
-	# 3.5 + 0.4mm = 3.9mm
-	mm_to_pt = cairo.Matrix(72.0/25.4, 0, 0, 72.0/25.4, 0, 0)
+	for key in keys:
+		print _("Rendering boxgallery for metric \"%s\"." % key)
+		draw_list = copy.copy(checkboxes)
+		draw_list.sort(key = lambda x: x[1][key] if x[1].has_key(key) else 0)
+
+		# Hardcode 300dpi
+		# Hardcode the mm size:
+		# 3.5 + 0.4mm = 3.9mm
+		mm_to_pt = cairo.Matrix(72.0/25.4, 0, 0, 72.0/25.4, 0, 0)
 	
-	page = 1
-	pdf = cairo.PDFSurface(survey.path('boxgallery.pdf'), 595, 842)
-	cr = cairo.Context(pdf)
-	
-	while len(checkboxes) > 0:
-		fill_page(cr, mm_to_pt, checkboxes)
-		cr.show_page()
-		pdf.flush()
+		page = 1
+		pdf = cairo.PDFSurface(survey.path('boxgallery-%s.pdf' % key), 595, 842)
+		cr = cairo.Context(pdf)
+
+		while len(draw_list) > 0:
+			fill_page(cr, mm_to_pt, draw_list, key)
+			cr.show_page()
+			pdf.flush()
 		
-		page += 1
+			page += 1
 	
-	del pdf
-	del cr
+		del pdf
+		del cr
 

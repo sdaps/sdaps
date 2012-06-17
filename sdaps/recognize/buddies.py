@@ -28,6 +28,8 @@ from sdaps import defs
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
+pt_to_mm = 25.4 / 72.0
+
 warned_multipage_not_correctly_scanned = False
 
 class Sheet (model.buddy.Buddy) :
@@ -191,6 +193,22 @@ class Image (model.buddy.Buddy) :
 			x, y, width, height
 		)
 
+	def get_coverage_without_lines (self, x, y, width, height, line_width, line_count) :
+		return image.get_coverage_without_lines(
+			self.obj.surface.surface,
+			self.matrix,
+			x, y, width, height,
+			line_width, line_count
+		)
+
+	def get_white_area_count (self, x, y, width, height, min_size, max_size) :
+		return image.get_white_area_count(
+			self.obj.surface.surface,
+			self.matrix,
+			x, y, width, height,
+			min_size, max_size
+		)
+
 	def correction_matrix(self, x, y, width, height):
 		return image.calculate_correction_matrix(
 			self.obj.surface.surface,
@@ -231,11 +249,17 @@ class Questionnaire (model.buddy.Buddy) :
 		try :
 			self.obj.sheet.recognize.recognize()
 		except RecognitionError :
-			pass
+			self.obj.sheet.quality = 0
 		else :
 			# iterate over qobjects
 			for qobject in self.obj.qobjects :
 				qobject.recognize.recognize()
+
+			quality = 1
+			for qobject in self.obj.qobjects :
+				quality = min(quality, qobject.recognize.get_quality())
+			self.obj.sheet.quality = quality
+
 		# clean up
 		self.obj.sheet.recognize.clean()
 
@@ -249,6 +273,8 @@ class QObject (model.buddy.Buddy) :
 	def recognize (self) :
 		pass
 
+	def get_quality (self):
+		return 1
 
 class Question (model.buddy.Buddy) :
 
@@ -261,6 +287,11 @@ class Question (model.buddy.Buddy) :
 		for box in self.obj.boxes :
 			box.recognize.recognize()
 
+	def get_quality (self):
+		result = 1
+		for box in self.obj.boxes :
+			result = min(result, box.data.quality)
+		return result
 
 #class Choice (Question) :
 
@@ -305,10 +336,41 @@ class Checkbox (Box) :
 		self.obj.data.width = width
 		self.obj.data.height = height
 
-		coverage = image.recognize.get_coverage(x - defs.checkbox_border_width, y - defs.checkbox_border_width,
-		                                        width + 2*defs.checkbox_border_width, height + 2*defs.checkbox_border_width)
-		self.obj.data.coverage = coverage
-		self.obj.data.state = defs.checkbox_checked_coverage < coverage < defs.checkbox_corrected_coverage
+		coverage = image.recognize.get_coverage(
+		    x + 1.5*pt_to_mm, y + 1.5*pt_to_mm,
+		    width - 3*pt_to_mm, height - 3*pt_to_mm)
+		self.obj.data.metrics['coverage'] = coverage
+
+		# Remove 3 lines with width 1.2pt (about 5px).
+		coverage = image.recognize.get_coverage_without_lines(
+		    x + 1.5*pt_to_mm, y + 1.5*pt_to_mm,
+		    width - 3*pt_to_mm, height - 3*pt_to_mm,
+		    1.2 * 25.4 / 72.0, 3)
+		self.obj.data.metrics['cov-lines-removed'] = coverage
+
+		count, coverage = image.recognize.get_white_area_count(
+		    x + 1.5*pt_to_mm, y + 1.5*pt_to_mm,
+		    width - 3*pt_to_mm, height - 3*pt_to_mm,
+		    0.05, 1.0)
+		self.obj.data.metrics['cov-min-size'] = coverage
+
+		state = 0
+		quality = -1
+		# Iterate the ranges
+		for metric, value in self.obj.data.metrics.iteritems():
+			metric = defs.checkbox_metrics[metric]
+
+			for lower, upper in zip(metric[:-1], metric[1:]):
+				if value >= lower[0] and value < upper[0]:
+					# Interpolate quality value
+					metric_quality = lower[2] + (upper[2] - lower[2]) * (value - lower[0]) / (upper[0] - lower[0])
+
+					if metric_quality > quality:
+						state = lower[1]
+						quality = metric_quality
+
+		self.obj.data.state = state
+		self.obj.data.quality = quality
 
 
 class Textbox (Box) :

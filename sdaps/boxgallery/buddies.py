@@ -51,10 +51,11 @@ class Questionnaire (model.buddy.Buddy) :
 		del self.checkboxes
 
 	def get_checkbox_images (self) :
-		self.obj.survey.sheet.boxgallery.load()
-		for qobject in self.obj.qobjects:
-			self.checkboxes.extend(qobject.boxgallery.get_checkbox_images())
-		self.obj.survey.sheet.boxgallery.clean()
+		if self.obj.survey.sheet.valid:
+			self.obj.survey.sheet.boxgallery.load()
+			for qobject in self.obj.qobjects:
+				self.checkboxes.extend(qobject.boxgallery.get_checkbox_images())
+			self.obj.survey.sheet.boxgallery.clean()
 
 
 class QObject (model.buddy.Buddy) :
@@ -120,7 +121,7 @@ class Checkbox (model.buddy.Buddy):
 		del cr
 		dest.flush()
 
-		return (self.obj.data.coverage, dest)
+		return (self.obj.data.state, self.obj.data.metrics, dest)
 
 
 
