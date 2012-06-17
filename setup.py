@@ -57,7 +57,7 @@ analyse the scanned data, and create a report.
                'bin/sdaps',
                ],
       ext_modules=[Extension('sdaps.image.image',
-                   ['sdaps/image/wrap_image.c', 'sdaps/image/image.c'],
+                   ['sdaps/image/wrap_image.c', 'sdaps/image/image.c', 'sdaps/image/transform.c'],
                    **pkgconfig('pycairo', 'cairo' ,'glib-2.0', libraries=['tiff']))],
       data_files=[
                   ('share/sdaps/ui',

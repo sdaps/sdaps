@@ -21,14 +21,7 @@
 #include "image.h"
 #include <string.h>
 #include <math.h>
-
-#if G_BYTE_ORDER == G_BIG_ENDIAN
-#define SET_PIXEL(_pixels, _stride, _x, _y, _value) *(guint32*)((char*)(_pixels) + (_stride) * (_y) + (_x) / 32 * 4) = (*(guint32*)((char*)(_pixels) + (_stride) * (_y) + (_x) / 32 * 4) & (0xffffffff ^ (1 << (31 - (_x) % 32)))) | ((!!(_value)) << (31 - (_x) % 32))
-#define GET_PIXEL(_pixels, _stride, _x, _y) (((*(guint32*)((char*)(_pixels) + (_stride) * (_y) + (_x) / 32 * 4)) >> (31 - (_x) % 32)) & 0x1)
-#else
-#define SET_PIXEL(_pixels, _stride, _x, _y, _value) *(guint32*)((char*)(_pixels) + (_stride) * (_y) + (_x) / 32 * 4) = (*(guint32*)((char*)(_pixels) + (_stride) * (_y) + (_x) / 32 * 4) & (0xffffffff ^ (1 << ((_x) % 32)))) | ((!!(_value)) << ((_x) % 32))
-#define GET_PIXEL(_pixels, _stride, _x, _y) (((*(guint32*)((char*)(_pixels) + (_stride) * (_y) + (_x) / 32 * 4)) >> ((_x) % 32)) & 0x1)
-#endif
+#include "transform.h"
 
 /* Some of the more important Magic Values */
 gint sdaps_line_min_length = 215;
@@ -53,6 +46,7 @@ get_a1_from_tiff (char *filename, gint page, gboolean rotated)
 	guint32 *t_row;
 	int s_stride, t_stride;
 	int width, height;
+	BARREL_VARS
 
 	int x, y;
 
@@ -80,10 +74,13 @@ get_a1_from_tiff (char *filename, gint page, gboolean rotated)
 
 	for (y = 0; y < height; y++) {
 		guint32 *t_p = t_row;
+		BARREL_START_ROW((char*)s_pixels + y * s_stride)
 		for (x = 0; x < width; x++) {
-			SET_PIXEL(s_pixels, s_stride, x, y, !(TIFFGetR(*t_p) >> 7));
+			BARREL_STORE_BIT(!(TIFFGetR(*t_p) >> 7));
+			/* SET_PIXEL(s_pixels, s_stride, x, y, !(TIFFGetR(*t_p) >> 7)); */
 			t_p = t_p + 1;
 		}
+		BARREL_FLUSH
 		t_row = (guint32*) ((char*) t_row + t_stride);
 	}
 
@@ -231,44 +228,6 @@ get_pbm(cairo_surface_t *surface, void **data, int *length)
 			*(d_pixel + y*d_stride + x / 8) |= (GET_PIXEL(s_pixel, s_stride, x, y)) << (7 - x % 8);
 		}	
 	}
-}
-
-static gint
-count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint height)
-{
-	guint32 *pixels;
-	int stride;
-	int x_pos, y_pos;
-	int img_width, img_height;
-	int black_pixel = 0;
-
-	pixels = (guint32*) cairo_image_surface_get_data(surface);
-	img_width = cairo_image_surface_get_width(surface);
-	img_height = cairo_image_surface_get_height(surface);
-	stride = cairo_image_surface_get_stride(surface);
-
-	if (y < 0) {
-		height += y;
-		y = 0;
-	}
-	if (x < 0) {
-		width += x;
-		x = 0;
-	}
-	if (x + width > img_width) {
-		width = img_width - x;
-	}
-	if (y + height > img_height) {
-		height = img_height - y;
-	}
-
-	for (y_pos = y; y_pos < y + height; y_pos++) {
-		for (x_pos = x; x_pos < x + width; x_pos++) {
-			black_pixel += GET_PIXEL(pixels, stride, x_pos, y_pos);
-		}
-	}
-
-	return black_pixel;	
 }
 
 #define LINE_WIDTH sdaps_line_width
@@ -791,7 +750,7 @@ calculate_correction_matrix(cairo_surface_t  *surface,
 	gint px_x, px_y, px_width, px_height;
 	cairo_matrix_t inverse;
 	cairo_matrix_t *result = NULL;
-	gint test_dist = 10;
+	gint test_dist;
 	gint line_width = LINE_WIDTH;
 	gint x_offset, y_offset;
 	gint x_cov;
@@ -817,8 +776,9 @@ calculate_correction_matrix(cairo_surface_t  *surface,
 	px_width = tmp_x + 0.5;
 	px_height = tmp_y + 0.5;
 
+	test_dist = MIN(px_width, px_height) / 2;
+
 	/* Top */
-	
 	for (x_offset = -test_dist; x_offset <= test_dist; x_offset++) {
 		for (y_offset = -test_dist; y_offset <= test_dist; y_offset++) {
 			gint new_cov;
@@ -907,17 +867,17 @@ find_box_corners(cairo_surface_t  *surface,
 
 	cairo_matrix_transform_distance(matrix, &px_width, &px_height);
 
-	line_length = MIN(10*line_width, MIN(px_width, px_height));
+	line_length = MIN(10*line_width, MIN(px_width, px_height)) - line_width;
 	line_max_length = MAX(10*line_width, MAX(px_width, px_height)) + 5*line_width;
 	/* We have the corner pixel positions, now try to find them. */
 
-	if (!find_corner_marker(surface, px_x1 - 5*line_width, px_y1 - 5*line_width, 1, 1, line_width, line_length, line_max_length, &px_x1, &px_y1))
+	if (!find_corner_marker(surface, px_x1 - 4*line_width, px_y1 - 4*line_width, 1, 1, line_width, line_length, line_max_length, &px_x1, &px_y1))
 		return FALSE;
-	if (!find_corner_marker(surface, px_x2 + 5*line_width, px_y2 - 5*line_width, -1, 1, line_width, line_length, line_max_length, &px_x2, &px_y2))
+	if (!find_corner_marker(surface, px_x2 + 4*line_width, px_y2 - 4*line_width, -1, 1, line_width, line_length, line_max_length, &px_x2, &px_y2))
 		return FALSE;
-	if (!find_corner_marker(surface, px_x3 + 5*line_width, px_y3 + 5*line_width, -1, -1, line_width, line_length, line_max_length, &px_x3, &px_y3))
+	if (!find_corner_marker(surface, px_x3 + 4*line_width, px_y3 + 4*line_width, -1, -1, line_width, line_length, line_max_length, &px_x3, &px_y3))
 		return FALSE;
-	if (!find_corner_marker(surface, px_x4 - 5*line_width, px_y4 + 5*line_width, 1, -1, line_width, line_length, line_max_length, &px_x4, &px_y4))
+	if (!find_corner_marker(surface, px_x4 - 4*line_width, px_y4 + 4*line_width, 1, -1, line_width, line_length, line_max_length, &px_x4, &px_y4))
 		return FALSE;
 
 	/* Found the corners, convert them back and return. */
@@ -940,11 +900,11 @@ find_box_corners(cairo_surface_t  *surface,
 
 float
 get_coverage(cairo_surface_t *surface,
-               cairo_matrix_t  *matrix,
-               gdouble          mm_x,
-               gdouble          mm_y,
-               gdouble          mm_width,
-               gdouble          mm_height)
+             cairo_matrix_t  *matrix,
+             gdouble          mm_x,
+             gdouble          mm_y,
+             gdouble          mm_width,
+             gdouble          mm_height)
 {
 	gint x, y, width, height;
 	gdouble tmp_x, tmp_y;
@@ -965,7 +925,129 @@ get_coverage(cairo_surface_t *surface,
 
 	black = count_black_pixel(surface, x, y, width, height);
 	all = width * height;
-	
+
 	return black / (double) all;
 }
+
+/* First removes the number of lines, and then calculates the coverage of what
+ * is left. */
+gdouble
+get_coverage_without_lines(cairo_surface_t *surface,
+                           cairo_matrix_t  *matrix,
+                           gdouble          mm_x,
+                           gdouble          mm_y,
+                           gdouble          mm_width,
+                           gdouble          mm_height,
+                           gdouble          line_width,
+                           gint             line_count)
+{
+	cairo_surface_t *tmp_surface;
+	gint x, y, width, height;
+	gdouble tmp_x, tmp_y;
+	gdouble result;
+	gint i, all;
+
+	/* Transform to pixel. */
+	tmp_x = mm_x;
+	tmp_y = mm_y;
+	cairo_matrix_transform_point(matrix, &tmp_x, &tmp_y);
+	x = tmp_x;
+	y = tmp_y;
+
+	tmp_x = mm_width;
+	tmp_y = mm_height;
+	cairo_matrix_transform_distance(matrix, &tmp_x, &tmp_y);
+	width = tmp_x;
+	height = tmp_y;
+
+	/* Transform line width to pixel space. */
+	tmp_x = line_width;
+	tmp_y = line_width;
+	cairo_matrix_transform_distance(matrix, &tmp_x, &tmp_y);
+	line_width = MAX(tmp_x, tmp_y);
+
+	all = width * height;
+
+	tmp_surface = surface_copy_partial(surface, x, y, width, height);
+
+#if 0
+	/* Something like this could be used to filter the image first.
+	 * Obviously, for that to work, the size of the surface needs to be
+	 * adjusted accordingly. */
+	kfill_modified(tmp_surface, 5);
+
+	cr = cairo_create(tmp_surface);
+	cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
+	cairo_rectangle(cr, 0, 0, width+4, height+4);
+	cairo_rectangle(cr, 2, 2, width, height);
+	cairo_set_source_rgba(cr, 0, 0, 0, 0);
+	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+	cairo_fill(cr);
+	cairo_destroy(cr);
+	cairo_surface_flush(tmp_surface);
+#endif
+
+	/* Remove the requested number of lines. */
+	for (i = 0; i < line_count; i++)
+		remove_maximum_line(tmp_surface, line_width);
+
+	result = count_black_pixel(tmp_surface, 0, 0, width, height) / (gdouble) all;
+
+	cairo_surface_destroy(tmp_surface);
+
+	return result;
+}
+
+guint
+get_white_area_count(cairo_surface_t *surface,
+                     cairo_matrix_t  *matrix,
+                     gdouble          mm_x,
+                     gdouble          mm_y,
+                     gdouble          mm_width,
+                     gdouble          mm_height,
+                     gdouble          min_size,
+                     gdouble          max_size,
+                     gdouble         *filled_area)
+{
+	cairo_surface_t *tmp_surface;
+	gint x, y, width, height;
+	gdouble tmp_x, tmp_y;
+	guint result = 0;
+	guint min_size_px;
+	guint max_size_px;
+
+	/* Transform to pixel. */
+	tmp_x = mm_x;
+	tmp_y = mm_y;
+	cairo_matrix_transform_point(matrix, &tmp_x, &tmp_y);
+	x = tmp_x;
+	y = tmp_y;
+
+	tmp_x = mm_width;
+	tmp_y = mm_height;
+	cairo_matrix_transform_distance(matrix, &tmp_x, &tmp_y);
+	width = tmp_x;
+	height = tmp_y;
+
+	min_size_px = width * height * min_size;
+	max_size_px = width * height * max_size;
+
+	tmp_surface = surface_copy_partial(surface, x, y, width, height);
+	*filled_area = 0;
+
+	for (y = 0; y < height; y++) {
+		for (x = 0; x < width; x++) {
+			guint area = flood_fill(tmp_surface, x, y, 0);
+			if ((area >= min_size_px) && (area <= max_size_px)) {
+				result += 1;
+				*filled_area += area / ((gdouble) width * height);
+			}
+		}
+	}
+
+	cairo_surface_destroy(tmp_surface);
+
+	return result;
+}
+
 
