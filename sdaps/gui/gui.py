@@ -66,7 +66,7 @@ class Provider (object) :
 		for i in xrange(len(self.survey.sheet.images)):
 			self.qualities.append((self.survey.sheet.quality, len(self.qualities)))
 
-	def next (self) : #, skip_valid = 1) :
+	def next (self) :
 		self.image.surface.clean()
 		self.index += 1
 		if self.index == len(self.images) :
@@ -74,7 +74,7 @@ class Provider (object) :
 		self.image.surface.load_rgb()
 		self.survey.goto_sheet(self.image.sheet)
 
-	def previous (self) : #, skip_valid = 1) :
+	def previous (self) :
 		self.image.surface.clean()
 		self.index -= 1
 		if self.index < 0 :
@@ -310,9 +310,10 @@ class MainWindow(object):
 
 	def sheet_view_key_press(self, window, event):
 		# Go to the next when Enter or Tab is pressed
-		# XXX: In openeva we supported a Verified flag, that would
-		#      be set if Enter is pressed.
 		if event.keyval == Gdk.keyval_from_name("Return"):
+			# Set sheet to valid if Return is used for switching.
+			self.provider.image.sheet.valid = True
+
 			if event.state & Gdk.ModifierType.SHIFT_MASK:
 				self.go_to_previous_page()
 			else:
