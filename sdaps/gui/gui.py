@@ -93,6 +93,7 @@ class Provider (object) :
 		self.image.surface.clean()
 		self._by_quality = value
 		self.image.surface.load_rgb()
+		self.survey.goto_sheet(self.image.sheet)
 
 	def get_image(self):
 		if self._by_quality:
