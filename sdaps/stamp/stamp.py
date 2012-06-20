@@ -44,9 +44,9 @@ def stamp (survey, count = 0, used_ids = None) :
 		min = max - 50000
 		questionnaire_ids = range(min, max)
 
-		# Remove any idea that has already been used.
+		# Remove any id that has already been used.
 		for id in survey.questionnaire_ids :
-			questionnaire_ids[id] = 0
+			questionnaire_ids[id-min] = 0
 		questionnaire_ids = [id for id in questionnaire_ids if id > min]
 		random.shuffle(questionnaire_ids)
 		questionnaire_ids = questionnaire_ids[:sheets]
