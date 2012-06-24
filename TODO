@@ -1,12 +1,3 @@
  * Aggregating multipage scans via the questionnaire ID. This can be usefull
    if you cannot guarantee that multipage questionnaires are scanned in
    the correct order.
- * Check that the correct pages are in a questionnaire (and not page one
-   twice for example)
- * Improve detection when different scanners/printers are used in one
-   project. The following possibilities come to mind:
-   * Analyse a complete questionnaire at a time, to compare checkboxes.
-   * Somehow remove the outline of the checkboxes at analysis time.
-   * Use a line detection algorithm to detect crosses.
- * Calculate a recognition quality factor. This can be used for manual
-   corrections for example.
