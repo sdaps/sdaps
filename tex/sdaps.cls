@@ -461,10 +461,10 @@
           % questionnaire-id
           \@sdaps@STAMP
         \fi%
+      \else
+        % Always stamp in simplex mode
+        \@sdaps@STAMP
       \fi
-    \else
-      % Always stamp in simplex mode
-      \@sdaps@STAMP
     \fi
     %---------------------------------------------------------------------------
     % watermark for non final mode
