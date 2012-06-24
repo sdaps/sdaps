@@ -57,7 +57,9 @@ rm -rf "$PROJECT"
 # By disabling the surveyid and enable the questionnaire id we test more
 # unsual code paths, and we don't have a problem because the survey id
 # changed ...
-"$SDAPS" "$PROJECT" setup "data/odt-3/debug.odt" "data/odt-3/debug.pdf" "data/odt-3/debug.internetquestions"
+# Also test code128 style for ODT support
+"$SDAPS" "$PROJECT" setup --style="code128" --global-id="SDAPS!" --print-questionnaire-id "data/odt-3/debug.odt" "data/odt-3/debug.pdf" "data/odt-3/debug.internetquestions"
+"$SDAPS" "$PROJECT" stamp 5
 
 
 ###########################################################
@@ -81,6 +83,12 @@ rm -rf "$PROJECT"
 
 # Create 10 unique sheets that can be printed and handed out
 "$SDAPS" "$PROJECT" stamp 10
+
+# Add dummy tiff
+"$SDAPS" "$PROJECT" add "data/tex/test_with_ids.tif"
+
+# Recognize the empty image (ie. the barcodes)
+"$SDAPS" "$PROJECT" recognize
 
 # And finally, create a report with the result
 "$SDAPS" "$PROJECT" report_tex

@@ -25,8 +25,9 @@ class Sheet (buddy.Object) :
 		self.survey = None
 		self.data = dict()
 		self.images = list()
-		self.survey_id = 0
-		self.questionnaire_id = 0
+		self.survey_id = None
+		self.questionnaire_id = None
+		self.global_id = None
 		self.valid = 1
 		self.quality = 1
 	

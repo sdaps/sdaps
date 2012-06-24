@@ -75,6 +75,12 @@ def setup (survey, options, questionnaire_odt, questionnaire_pdf, additionalqobj
 	survey.defs.print_questionnaire_id = options.print_questionnaire_id
 	survey.defs.print_survey_id = options.print_survey_id
 
+	survey.defs.style = options.style
+	# Force simplex if page count is one.
+	survey.defs.duplex = False if page_count == 1 else options.duplex
+
+	survey.global_id = options.global_id
+
 	# Parse qobjects
 	try:
 		qobjectsparser.parse(survey, questionnaire_odt, boxes)

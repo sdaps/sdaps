@@ -42,6 +42,7 @@ def write_latex_override_file(survey):
 	latex_override.write('\\@PAGEMARKtrue\n\n')
 	latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2**16)))
 	latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2**16)))
+	latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
 	latex_override.write('% We turn of draft mode if questionnaire IDs are not printed.\n')
 	latex_override.write('% Otherwise we turn it on explicitly so that noboday has wrong ideas.\n')
 	latex_override.write('\\if@PrintQuestionnaireId\n')
@@ -83,14 +84,17 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 		# Copy class and dictionary files
 		if paths.local_run :
 			cls_file = os.path.join(paths.source_dir, 'tex', 'sdaps.cls')
+			code128_file = os.path.join(paths.source_dir, 'tex', 'code128.tex')
 			dict_files = os.path.join(paths.source_dir, 'tex', '*.dict')
 			dict_files = glob.glob(dict_files)
 		else :
 			cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdaps.cls')
+			code128_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'code128.tex')
 			dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
 			dict_files = glob.glob(dict_files)
 
 		shutil.copyfile(cls_file, survey.path('sdaps.cls'))
+		shutil.copyfile(code128_file, survey.path('code128.tex'))
 		for dict_file in dict_files:
 			shutil.copyfile(dict_file, survey.path(os.path.basename(dict_file)))
 

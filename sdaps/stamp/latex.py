@@ -26,11 +26,13 @@ def create_stamp_pdf(survey, questionnaire_ids):
 	try:
 		# Copy class and dictionary files
 		tex_file = survey.path('questionnaire.tex')
+		code128_file = survey.path('code128.tex')
 		cls_file = survey.path('sdaps.cls')
 		dict_files = survey.path('*.dict')
 		dict_files = glob.glob(dict_files)
 
 		shutil.copyfile(tex_file, os.path.join(tmpdir, 'questionnaire.tex'))
+		shutil.copyfile(code128_file, os.path.join(tmpdir, 'code128.tex'))
 		shutil.copyfile(cls_file, os.path.join(tmpdir, 'sdaps.cls'))
 		for dict_file in dict_files:
 			shutil.copyfile(dict_file, os.path.join(tmpdir, os.path.basename(dict_file)))
@@ -43,6 +45,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
 		latex_override.write('% It is parsed after the setup phase of the SDAPS class.\n\n')
 		latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2**16)))
 		latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2**16)))
+		latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
 		latex_override.write('\\@STAMPtrue\n')
 		latex_override.write('\\@PAGEMARKtrue\n')
 		latex_override.write('\\@sdaps@draftfalse\n')

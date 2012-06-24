@@ -24,6 +24,7 @@ from sdaps import matrix
 from sdaps import surface
 from sdaps import image
 from sdaps import defs
+from sdaps.utils import RecognitionError
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
@@ -39,23 +40,245 @@ class Sheet (model.buddy.Buddy) :
 	obj_class = model.sheet.Sheet
 
 	def recognize (self) :
+		global warned_multipage_not_correctly_scanned
+
 		self.obj.valid = 1
-		try :
-			for image in self.obj.images :
-				image.recognize.recognize()
-		except RecognitionError :
-			self.obj.valid = 0
-			raise
+
+		duplex_mode = self.obj.survey.defs.duplex
+
+		# Load all images of this sheet
+		for image in self.obj.images :
+			image.rotated = 0
+			image.surface.load()
+
+		failed_pages = set()
+
+		# Matrix recognition for all of them
+		for page, image in enumerate(self.obj.images) :
+			try :
+				image.recognize.calculate_matrix()
+			except RecognitionError :
+				print _('%s, %i: Matrix not recognized.') % (image.filename, image.tiff_page)
+				failed_pages.add(page)
+
+		# Rotation for all of them
+		for page, image in enumerate(self.obj.images) :
+			if page in failed_pages:
+				image.rotated = None
+				continue
+
+			try :
+				# This may set the rotation to "None" for unknown
+				image.recognize.calculate_rotation()
+			except RecognitionError :
+				print _('%s, %i: Rotation not found.') % (image.filename, image.tiff_page)
+				failed_pages.add(page)
+
+		# In simplex mode, all rotations have to be there now,
+		# in duplex mode we may need to copy them over from the other page.
+		if duplex_mode:
+			i = 0
+			while i < len(self.obj.images):
+				# Try to recover the page rotation
+				failed = (i in failed_pages or i+1 in failed_pages)
+
+				first = self.obj.images[i]
+				second = self.obj.images[i+1]
+
+				if first.rotated is None and second.rotated is None:
+					# Whoa, that should not happen.
+					if not failed:
+						print _("Neither %s, %i or %s, %i has a known rotation!" %
+								(first.filename, first.tiff_page, second.filename, second.tiff_page))
+						failed_pages.add(i)
+						failed_pages.add(i+1)
+				elif first.rotated is None:
+					first.rotated = second.rotated
+				elif second.rotated is None:
+					second.rotated = first.rotated
+				elif first.rotated != second.rotated:
+					if not failed:
+						print _("Found inconsistency. %s, %i and %s, %i should have the same rotation, but don't!" %
+								(first.filename, first.tiff_page, second.filename, second.tiff_page))
+						failed_pages.add(i)
+						failed_pages.add(i+1)
+
+				i += 2
+
+		# Reload any image that is rotated.
+		for image in self.obj.images :
+			if image.rotated:
+				image.surface.load()
+				# And redo the whole matrix stuff ...
+				# XXX: It would be better to manipulate the matrix instead.
+				try :
+					image.recognize.calculate_matrix()
+				except RecognitionError :
+					print _('%s, %i: Matrix not recognized (again).') % (image.filename, image.tiff_page)
+					failed_pages.add(page)
+
+		############
+		# At this point we can extract the page numbers and IDs as neccessary.
+		############
+
+		# Figure out the page numbers
+		# ***************************
+		for page, image in enumerate(self.obj.images) :
+			if page in failed_pages:
+				continue
+
+			try :
+				# This may set the page_number to "None" for unknown
+				image.recognize.calculate_page_number()
+			except RecognitionError :
+				print _('%s, %i: Could not get page number.') % (image.filename, image.tiff_page)
+				image.page_number = None
+				failed_pages.add(page)
+
+		if duplex_mode:
+			i = 0
+			while i < len(self.obj.images):
+				# We try to recover at least the page number of failed pages
+				# this way.
+				failed = (i in failed_pages or i+1 in failed_pages)
+
+				first = self.obj.images[i]
+				second = self.obj.images[i+1]
+
+				if first.page_number is None and second.page_number is None:
+					if not failed:
+						# Whoa, that should not happen.
+						print _("Neither %s, %i or %s, %i has a known page number!" %
+								(first.filename, first.tiff_page, second.filename, second.tiff_page))
+						failed_pages.add(i)
+						failed_pages.add(i+1)
+				elif first.page_number is None:
+					# One based, odd -> +1, even -> -1
+					first.page_number = second.page_number - 1 + 2*(second.page_number % 2)
+				elif second.page_number is None:
+					second.page_number = first.page_number - 1 + 2*(first.page_number % 2)
+				elif first.page_number != (second.page_number - 1 + 2*(second.page_number % 2)):
+					if not failed:
+						print _("Images %s, %i and %s, %i do not have consecutive page numbers!" %
+								(first.filename, first.tiff_page, second.filename, second.tiff_page))
+
+						print first.page_number, second.page_number
+						failed_pages.add(i)
+						failed_pages.add(i+1)
+
+				i += 2
+
+
+		# Check that every page has a non None value, and each page exists once.
+		pages = set()
+		for i, image in enumerate(self.obj.images) :
+			if image.page_number is None:
+				print _("No page number for page %s, %i exists." % (image.filename, image.tiff_page))
+				failed_pages.add(i)
+				continue
+
+			if image.page_number in pages:
+				print _("Page number for page %s, %i already used by another image." % (image.filename, image.tiff_page))
+				failed_pages.add(i)
+				continue
+
+			if image.page_number <= 0 or image.page_number > self.obj.survey.questionnaire.page_count:
+				print _("Page number %i for page %s, %i is out of range." % (image.page_number, image.filename, image.tiff_page))
+				failed_pages.add(i)
+				continue
+
+			pages.add(image.page_number)
+
+
+		# Figure out the suvey ID if neccessary
+		# *************************************
+		if self.obj.survey.defs.print_survey_id:
+			survey_ids = []
+
+			for page, image in enumerate(self.obj.images) :
+				try :
+					if not duplex_mode or image.page_number % 2 == 0:
+						survey_ids.append((image, image.recognize.get_survey_id()))
+				except RecognitionError :
+					print _('%s, %i: Could not read survey ID, but should be able to.') % (image.filename, image.tiff_page)
+					failed_pages.add(page)
+
+			if len(survey_ids) == 0:
+				self.obj.survey_id = -1
+				self.obj.valid = 0
+			else:
+				# Do they all agree?
+				self.obj.survey_id = survey_ids[0][1]
+
+				for image, id in survey_ids:
+					if self.obj.survey_id != id:
+						if not warned_multipage_not_correctly_scanned:
+							print _("Got different IDs on different pages for one sheet!")
+							warned_multipage_not_correctly_scanned = True
+
+			if self.obj.survey_id != self.obj.survey.survey_id:
+				# Broken survey ID ...
+				print _("Got a wrong survey ID (%s, %s)! It is %i, but should be %i." % (survey_ids[0][0].filename, survey_ids[0][0].tiff_page, self.obj.survey_id, self.obj.survey.survey_id))
+				self.obj.valid = 0
+
+		# Figure out the questionnaire ID if neccessary
+		# *********************************************
+		if self.obj.survey.defs.print_questionnaire_id:
+			questionnaire_ids = []
+
+			for page, image in enumerate(self.obj.images) :
+				try :
+					if not duplex_mode or image.page_number % 2 == 0:
+						questionnaire_ids.append((image, image.recognize.get_questionnaire_id()))
+				except RecognitionError :
+					print _('%s, %i: Could not read questionnaire ID, but should be able to.') % (image.filename, image.tiff_page)
+					failed_pages.add(page)
+
+			if len(questionnaire_ids) == 0:
+				self.obj.questionnaire_id = -1
+				self.obj.valid = 0
+			else:
+				# Do they all agree?
+				self.obj.questionnaire_id = questionnaire_ids[0][1]
+				for image, id in questionnaire_ids:
+					if self.obj.questionnaire_id != id:
+						if not warned_multipage_not_correctly_scanned:
+							print _("Got different IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this!")
+							warned_multipage_not_correctly_scanned = True
+
+		# Try to load the global ID. If it does not exist we will get None, if
+		# it does, then it will be non-None. We don't care much about it
+		# internally anyways.
+		# However, we do want to ensure that it is the same everywhere if it
+		# can be read in.
+		# *********************************************
+		global_id = None
+		for page, image in enumerate(self.obj.images) :
+			try :
+				if not duplex_mode or image.page_number % 2 == 0:
+					id = image.recognize.get_global_id()
+					if id is not None:
+						if global_id is not None:
+							if global_id != id:
+								print _('%s, %i: Global ID is different to an earlier page.') % (image.filename, image.tiff_page)
+						else:
+							global_id = id
+			except RecognitionError :
+				pass
+		self.obj.global_id = global_id
+
 		self.obj.images.sort(key = lambda image : image.page_number)
+		# Done
+		if failed_pages:
+			self.obj.valid = 0
+			# TODO: Not raise an error, but try to recognize the checkboxes.
+			# For this the checkboxes need to ensure they are working on the
+			# correct page though.
+			raise RecognitionError
 
 	def clean (self) :
 		for image in self.obj.images :
 			image.recognize.clean()
-
-
-class RecognitionError (Exception) :
-
-	pass
 
 
 class Image (model.buddy.Buddy) :
@@ -64,94 +287,32 @@ class Image (model.buddy.Buddy) :
 	name = 'recognize'
 	obj_class = model.sheet.Image
 
-	def recognize (self) :
-		self.obj.rotated = 0
-		self.obj.surface.load()
-		try :
-			self.calculate_matrix()
-		except RecognitionError :
-			print _('%s, %i: Matrix not recognized. Cancelling recognition of that image.') % (self.obj.filename, self.obj.tiff_page)
-			raise RecognitionError
+	def __init__ (self, *args):
+		model.buddy.Buddy.__init__(self, *args)
 
-		# The coordinates in defs are the center of the line, not the bounding box of the box ...
-		# Its a bug im stamp
-		# So we need to adjust them
-		half_pt = 0.5 / 72.0 * 25.4
-		pt = 1.0 / 72.0 * 25.4
+		if self.obj.sheet.survey.defs.style == "classic":
+			import classic as style_funcs
+		elif self.obj.sheet.survey.defs.style == "code128":
+			import code128 as style_funcs
+		else:
+			raise AssertionError
 
-		width = defs.corner_box_width
-		height = defs.corner_box_height
-		padding = defs.corner_box_padding
-		survey = self.obj.sheet.survey
-		corner_boxes_positions = [
-			(defs.corner_mark_left + padding, defs.corner_mark_top + padding),
-			(survey.defs.paper_width - defs.corner_mark_right - padding - width, defs.corner_mark_top + padding),
-			(defs.corner_mark_left + padding, survey.defs.paper_height - defs.corner_mark_bottom - padding - height),
-			(survey.defs.paper_width - defs.corner_mark_right - padding - width,
-			 survey.defs.paper_height - defs.corner_mark_bottom - padding - height)
-		]
-		corners = [
-			int(image.get_coverage(
-				self.obj.surface.surface, self.matrix,
-				corner[0] - half_pt,
-				corner[1] - half_pt,
-				width + pt,
-				height + pt
-			) > defs.cornerbox_on_coverage)
-			for corner in corner_boxes_positions
-		]
+		self.style_funcs = style_funcs
 
-		try :
-			self.obj.page_number = defs.corner_boxes.index(corners) + 1
-		except ValueError :
-			try :
-				self.obj.page_number = defs.corner_boxes.index(corners[::-1]) + 1
-			except ValueError :
-				print _('%s, %i: Page number not recognized. Cancelling recognition of that image.') % (self.obj.filename, self.obj.tiff_page)
-				raise RecognitionError
-			else :
-				self.obj.rotated = 1
-				self.obj.surface.load()
-				try :
-					self.calculate_matrix()
-				except RecognitionError :
-					print _('%s, %i: Matrix not recognized. Cancelling recognition of that image.') % (self.obj.filename, self.obj.tiff_page)
-					raise RecognitionError
-		else :
-			self.obj.rotated = 0
+	def calculate_rotation (self):
+		self.obj.rotated = self.style_funcs.get_page_rotation(self)
 
-		if self.obj.page_number % 2 == 0 or \
-		   self.obj.sheet.survey.questionnaire.page_count == 1 :
-			# read ids if they are printed on the page
-			if self.obj.sheet.survey.defs.print_survey_id :
-				pos = self.obj.sheet.survey.defs.get_survey_id_pos()
+	def calculate_page_number (self):
+		self.obj.page_number = self.style_funcs.get_page_number(self)
 
-				self.obj.sheet.survey_id = self.read_codebox(
-					pos[0], pos[2]
-				)
-				self.obj.sheet.survey_id = self.read_codebox(
-					pos[1], pos[2],
-					self.obj.sheet.survey_id
-				)
-				if not self.obj.sheet.survey_id == self.obj.sheet.survey.survey_id :
-					print _('%s, %i: Wrong survey_id. Cancelling recognition of that image.') % (self.obj.filename, self.obj.tiff_page)
-					raise RecognitionError
-			else:
-				self.obj.sheet.survey_id = self.obj.sheet.survey.survey_id
+	def get_survey_id (self):
+		return self.style_funcs.get_survey_id(self)
 
-			if self.obj.sheet.survey.defs.print_questionnaire_id :
-				pos = self.obj.sheet.survey.defs.get_questionnaire_id_pos()
+	def get_questionnaire_id (self):
+		return self.style_funcs.get_questionnaire_id(self)
 
-				questionnaire_id = self.read_codebox(
-					pos[0], pos[2]
-				)
-				if self.obj.sheet.questionnaire_id != 0 and questionnaire_id != self.obj.sheet.questionnaire_id :
-					if not warned_multipage_not_correctly_scanned:
-						warned_multipage_not_correctly_scanned = True
-						print _('You are using a multipage questionnaire, but you have not scanned the pages in the correct order. This means that filtering will not work correctly!')
-				self.obj.sheet_questionnaire_id = questionnaire_id
-			else:
-				self.obj.sheet.questionnaire_id = -1
+	def get_global_id (self):
+		return self.style_funcs.get_global_id(self)
 
 	def clean (self) :
 		self.obj.surface.clean()
@@ -160,9 +321,7 @@ class Image (model.buddy.Buddy) :
 	def read_codebox (self, x, y, code = 0) :
 		for i in range(defs.codebox_length) :
 			code <<= 1
-			coverage = image.get_coverage(
-				self.obj.surface.surface,
-				self.matrix,
+			coverage = self.get_coverage(
 				x + (i * defs.codebox_step) + defs.codebox_offset,
 				y + defs.codebox_offset,
 				defs.codebox_step - 2 * defs.codebox_offset,

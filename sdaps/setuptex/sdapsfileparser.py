@@ -87,6 +87,16 @@ def parse (survey) :
 			survey.defs.print_survey_id = bool(int(value))
 		elif arg == 'Pages':
 			survey.questionnaire.page_count = int(value)
+		elif arg == 'GlobalID':
+			survey.global_id = value
+		elif arg == 'GlobalIDLabel':
+			# Ignore for now
+			pass
+		elif arg == 'Duplex':
+			survey.defs.duplex = (value == "True")
+		elif arg == 'Style':
+			survey.defs.style = value
+			assert survey.defs.style in model.survey.valid_styles
 		elif arg == "PageSize":
 			args = value.split(',')
 			args = [arg.strip() for arg in args]
@@ -140,4 +150,7 @@ def parse (survey) :
 			# Falltrough, it is some metadata:
 			survey.info[arg] = value
 
+	# Force duplex of for one page questionnaires
+	if survey.questionnaire.page_count == 1:
+		survey.defs.duplex = False
 

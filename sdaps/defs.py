@@ -85,6 +85,15 @@ codebox_text_baseline_shift = 3 # mm
 # The coverage above which a codebox is considered to be a logical 1
 codebox_on_coverage = 0.7
 
+# Code 128 Barcodes =======================================
+
+code128_barwidth = 0.33 # mm. This is 0.93pt or 3.89px after scanning
+code128_height = 6.5 # pt (5 mm)
+code128_hpad = 6.5 #mm
+code128_vpad = 4.02 #mm
+
+code128_text_font = 'Courier'
+code128_text_font_size = 9 # pt
 
 # Checkbox ================================================
 

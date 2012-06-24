@@ -12,6 +12,8 @@ import tempfile
 import shutil
 
 import reportlab.pdfgen.canvas
+from reportlab.graphics import renderPDF
+from reportlab.graphics.barcode import createBarcodeDrawing
 from reportlab.lib import units
 
 from sdaps import log
@@ -112,6 +114,106 @@ def draw_corner_boxes (survey, canvas, page) :
 		x, y = corner_boxes_positions[i]
 		canvas.rect(x * mm,  y * mm, width * mm, height * mm, fill = corners[page][i])
 
+
+# CODE 128 support
+
+def draw_code128_questionnaire_id(canvas, survey, id):
+	barcode_value = "%d" % (id)
+	barcode = createBarcodeDrawing("Code128",
+	    value=barcode_value,
+	    barWidth=defs.code128_barwidth / 25.4 * 72.0,
+	    height=defs.code128_height / 25.4 * 72.0,
+	    quiet=False)
+
+	y = survey.defs.paper_height - defs.corner_mark_bottom
+	x = defs.corner_mark_left
+
+	barcode_y = y - defs.code128_vpad - defs.code128_height
+	barcode_x = x + defs.code128_hpad
+
+	# The barcode should be flush left.
+	barcode_x = barcode_x
+
+	renderPDF.draw(barcode, canvas, barcode_x*mm, barcode_y*mm)
+
+	# Label
+	text_x = barcode_x + barcode.width / mm / 2.0
+	text_y = barcode_y + defs.code128_height + 1 + defs.code128_text_font_size / 72.0 * 25.4 / 2.0
+
+	canvas.saveState()
+	canvas.setFont(defs.code128_text_font, defs.code128_text_font_size)
+	canvas.drawCentredString(text_x * mm, text_y * mm, barcode_value)
+	canvas.restoreState()
+
+def draw_code128_global_id(canvas, survey):
+	if survey.global_id is None:
+		raise AssertionError
+
+	# Only allow ascii
+	barcode_value = survey.global_id.encode('ascii')
+
+	barcode = createBarcodeDrawing("Code128",
+	    value=barcode_value,
+	    barWidth=defs.code128_barwidth / 25.4 * 72.0,
+	    height=defs.code128_height / 25.4 * 72.0,
+	    quiet=False)
+
+	y = survey.defs.paper_height - defs.corner_mark_bottom
+	x = (survey.defs.paper_width - defs.corner_mark_right + defs.corner_mark_left) / 2
+
+	barcode_y = y - defs.code128_vpad - defs.code128_height
+	barcode_x = x
+
+	# Center
+	barcode_x = barcode_x - barcode.width / mm / 2.0
+
+	renderPDF.draw(barcode, canvas, barcode_x*mm, barcode_y*mm)
+
+	# Label
+	text_x = barcode_x + barcode.width / mm / 2.0
+	text_y = barcode_y + defs.code128_height + 1 + defs.code128_text_font_size / 72.0 * 25.4 / 2.0
+
+	canvas.saveState()
+	canvas.setFont(defs.code128_text_font, defs.code128_text_font_size)
+	canvas.drawCentredString(text_x * mm, text_y * mm, barcode_value)
+	canvas.restoreState()
+
+
+def draw_code128_sdaps_info(canvas, survey, page):
+	# The page number is one based here already
+	# The survey_id is a 32bit number, which means we need
+	# 10 decimal digits to encode it, then we need to encode the
+	# the page with at least 3 digits (just in case someone is insane enough
+	# to have a questionnaire with more than 99 pages.
+	# So use 10+4 digits
+
+	barcode_value = "%010d%04d" % (survey.survey_id, page)
+	barcode = createBarcodeDrawing("Code128",
+	    value=barcode_value,
+	    barWidth=defs.code128_barwidth / 25.4 * 72.0,
+	    height=defs.code128_height / 25.4 * 72.0,
+	    quiet=False)
+
+	y = survey.defs.paper_height - defs.corner_mark_bottom
+	x = survey.defs.paper_width - defs.corner_mark_right
+
+	barcode_y = y - defs.code128_vpad - defs.code128_height
+	barcode_x = x - defs.code128_hpad
+
+	# The barcode should be flush left.
+	barcode_x = barcode_x - barcode.width / mm
+
+	renderPDF.draw(barcode, canvas, barcode_x*mm, barcode_y*mm)
+
+	# Label
+	text_x = barcode_x + barcode.width / mm / 2.0
+	text_y = barcode_y + defs.code128_height + 1 + defs.code128_text_font_size / 72.0 * 25.4 / 2.0
+
+	canvas.saveState()
+	canvas.setFont(defs.code128_text_font, defs.code128_text_font_size)
+	canvas.drawCentredString(text_x * mm, text_y * mm, barcode_value)
+	canvas.restoreState()
+
 def create_stamp_pdf(survey, questionnaire_ids):
 	sheets = 1 if questionnaire_ids is None else len(questionnaire_ids)
 
@@ -147,18 +249,39 @@ def create_stamp_pdf(survey, questionnaire_ids):
 	log.progressbar.start(sheets)
 	for i in range(sheets) :
 		for j in range(questionnaire_length) :
-			draw_corner_marks(survey, canvas)
-			draw_corner_boxes(survey, canvas, j)
-			if j % 2 or questionnaire_length == 1:
-				if questionnaire_ids :
-					if j == 1 or questionnaire_length == 1 :
-						# Only read a new ID for the first page.
-						id = questionnaire_ids.pop()
-						survey.questionnaire_ids.append(id)
-					draw_questionnaire_id(canvas, survey, id)
+			if survey.defs.style == "classic":
+				draw_corner_marks(survey, canvas)
+				draw_corner_boxes(survey, canvas, j)
+				if not survey.defs.duplex or j % 2:
+					if questionnaire_ids :
+						if j == 1 or questionnaire_length == 1 :
+							# Only read a new ID for the first page.
+							id = questionnaire_ids.pop()
+							survey.questionnaire_ids.append(id)
+						draw_questionnaire_id(canvas, survey, id)
 
-				if survey.defs.print_survey_id:
-					draw_survey_id(canvas, survey)
+					if survey.defs.print_survey_id:
+						draw_survey_id(canvas, survey)
+			elif survey.defs.style == "code128":
+				draw_corner_marks(survey, canvas)
+
+				if not survey.defs.duplex or j % 2:
+					if questionnaire_ids :
+						if j == 1 or questionnaire_length == 1 :
+							# Only read a new ID for the first page.
+							id = questionnaire_ids.pop()
+							survey.questionnaire_ids.append(id)
+						draw_code128_questionnaire_id(canvas, survey, id)
+
+					# Survey ID has to be printed in CODE128 mode, because it
+					# contains the page number and rotation.
+					draw_code128_sdaps_info(canvas, survey, j+1)
+
+					if survey.global_id is not None:
+						draw_code128_global_id(canvas, survey)
+			else:
+				raise AssertionError()
+
 			canvas.showPage()
 		log.progressbar.update(i + 1)
 

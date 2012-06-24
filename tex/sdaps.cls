@@ -15,6 +15,8 @@
 \ProvidesClass{sdaps}[2011/01/04%
                       v0.1 Class for composing questionairs for SDAPS]
 
+% Load scrbase for keyval support
+\RequirePackage{scrkbase}
 
 %-------------------------------------------------------------------------------
 % debugging
@@ -50,16 +52,48 @@
 % pass unknown options to scrartcl
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
 
-\newif\if@sdaps@draft
-\@sdaps@drafttrue
-
+\newif\if@sdaps@draft\@sdaps@drafttrue
 \DeclareOption{final}{\@sdaps@draftfalse}
+
+\newif\if@style@classic\@style@classictrue
+\newif\if@style@codecxxviii\@style@codecxxviiifalse
+
+\DefineFamily{SDAPS}
+\DefineFamilyMember{SDAPS}
+\DefineFamilyKey{SDAPS}{style}[classic]%
+{%
+  \KOMA@set@ncmdkey{style}{@tempa}{%
+    {classic}{0},%
+    {code128}{1}%
+  }{#1}%
+  \ifcase \@tempa\relax
+    \@style@classictrue
+    \@style@codecxxviiifalse
+  \or
+    \@style@classicfalse%
+    \@style@codecxxviiitrue%
+  \fi
+}
+
+% If it is empty, it will not be printed out
+\def\globalid{}
+\def\globalidlabel{}
+
+\DefineFamilyKey{SDAPS}{globalid}[]%
+{%
+  \def\globalid{#1} %
+}
+
+\DefineFamilyKey{SDAPS}{globalidlabel}[]%
+{%
+  \def\globalidlabel{#1} %
+}
 
 % execute default options
 \ExecuteOptions{10pt}
 
 % process given options
-\ProcessOptions\relax
+\FamilyProcessOptions{SDAPS}\relax
 
 %-------------------------------------------------------------------------------
 % load base-class
@@ -171,82 +205,114 @@
 % Zeichenprogramm
 \RequirePackage{tikz}
 \usetikzlibrary{calc}
+\usetikzlibrary{positioning}
 \usetikzlibrary{decorations.pathmorphing}
+
+% Code 128 implementation in plain TeX
+\include{code128}
 
 \def\@sdaps@STAMP{%
   \begingroup
     \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
-      \if@PrintQuestionnaireId%
-        \if@PrintSurveyId%
-          \def\@questionnaire_id_shift{\boxpaddings+\codeboxheight}
-        \else
-          \def\@questionnaire_id_shift{0pt}
+      \if@style@codecxxviii
+        \if@PrintQuestionnaireId
+          \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (\barcodehpad, \barcodevpad)$)}]%
+            \node(barcode)[anchor=south west,outer sep=0,inner sep=0]{\X=\barcodebarwidth\bcorr=\barcodebcorr\barheight=\barcodeheight\expandafter\code\expandafter{\the\value{questionnaireid}}};%
+            \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\the\value{questionnaireid}};%
+          \end{scope}
+        \fi
+
+        % We unconditionally print this barcode, it is required for the recognition
+        % process.
+        \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-\barcodehpad, \barcodevpad)$)}]%
+          \pgfmathsetbasenumberlength{4}%
+          \pgfmathdectobase{\paddedpage}{\thepage}{10}% Yes, padding to 4 chars the hard way
+          \edef\barcodechars{\surveyid\paddedpage}%
+          \node(barcode)[anchor=south east,outer sep=0,inner sep=0]{\X=\barcodebarwidth\bcorr=\barcodebcorr\barheight=\barcodeheight\expandafter\code\expandafter{\barcodechars}};%
+          \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\surveyid\,\paddedpage};%
+        \end{scope}
+
+        \ifstr{\globalid}{}{}{
+          \begin{scope}[shift={($(\paperwidth/2-\edgerightmargin/2+\edgeleftmargin/2, 0) + (0, \edgebottommargin) + (0, \barcodevpad)$)}]%
+            \node(barcode)[anchor=south,outer sep=0,inner sep=0]{\X=\barcodebarwidth\bcorr=\barcodebcorr\barheight=\barcodeheight\expandafter\code\expandafter{\globalid}};%
+            \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\ifstr{\globalidlabel}{}{\globalid}{\globalidlabel}};%
+          \end{scope}
+        }
+      \fi
+
+      \if@style@classic
+        \if@PrintQuestionnaireId%
+          \if@PrintSurveyId%
+            \def\@questionnaire_id_shift{\boxpaddings+\codeboxheight}
+          \else
+            \def\@questionnaire_id_shift{0pt}
+          \fi%
+          \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, \@questionnaire_id_shift)$)}]%
+            \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+            \@tempcnta=\value{questionnaireid}%
+            \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+              \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+              {%
+                \ifodd \@tempcnta%
+                  \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+                \fi%
+                \global\divide\@tempcnta by 2
+              }%
+            \end{scope}%
+          \end{scope}%
+          \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, \@questionnaire_id_shift)$)}]%
+            \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+            \@tempcnta=\value{questionnaireid}%
+            \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+              \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+              {%
+                \ifodd \@tempcnta%
+                  \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+                \fi%
+                \global\divide\@tempcnta by 2
+              }%
+            \end{scope}%
+          \end{scope}%
+          \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0 ,\@questionnaire_id_shift) + (0, 0.5\codeboxheight)$)}]%
+            \pgfmathsetbasenumberlength{5}\pgfmathdectoBase{\@temphexa}{\value{questionnaireid}}{10}%
+            \node{\usekomafont{questionnaireidfont}{\translate{questionnaireid} \@temphexa}};%
+          \end{scope}%
         \fi%
-        \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, \@questionnaire_id_shift)$)}]%
-          \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-          \@tempcnta=\value{questionnaireid}%
-          \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-            \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-            {%
-              \ifodd \@tempcnta%
-                \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-              \fi%
-              \global\divide\@tempcnta by 2
-            }%
+        \if@PrintSurveyId%
+          % survey-id
+          \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, 0)$)}]%
+            \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+            \@tempcnta=\value{surveyidmshw}%
+            \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+              \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+              {%
+                \ifodd \@tempcnta%
+                  \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+                \fi%
+                \global\divide\@tempcnta by 2
+              }%
+            \end{scope}%
           \end{scope}%
-        \end{scope}%
-        \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, \@questionnaire_id_shift)$)}]%
-          \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-          \@tempcnta=\value{questionnaireid}%
-          \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-            \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-            {%
-              \ifodd \@tempcnta%
-                \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-              \fi%
-              \global\divide\@tempcnta by 2
-            }%
+          \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, 0)$)}]%
+            \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
+            \@tempcnta=\value{surveyidlshw}%
+            \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
+              \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
+              {%
+                \ifodd \@tempcnta%
+                  \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
+                \fi%
+                \global\divide\@tempcnta by 2
+              }%
+            \end{scope}%
           \end{scope}%
-        \end{scope}%
-        \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0 ,\@questionnaire_id_shift) + (0, 0.5\codeboxheight)$)}]%
-          \pgfmathsetbasenumberlength{5}\pgfmathdectoBase{\@temphexa}{\value{questionnaireid}}{10}%
-          \node{\usekomafont{questionnaireidfont}{\translate{questionnaireid} \@temphexa}};%
-        \end{scope}%
-      \fi%
-      \if@PrintSurveyId%
-        % survey-id
-        \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (2*\boxpaddings, \boxpaddings) + (\cornerboxsize, 0)$)}]%
-          \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-          \@tempcnta=\value{surveyidmshw}%
-          \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-            \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-            {%
-              \ifodd \@tempcnta%
-                \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-              \fi%
-              \global\divide\@tempcnta by 2
-            }%
+          \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0, 0.5\codeboxheight)$)}]%
+            \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexa}{\value{surveyidlshw}}{16}%
+            \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexb}{\value{surveyidmshw}}{16}%
+            \node{\usekomafont{surveyidfont}{\translate{surveyid} \@temphexb\@temphexa}};%
           \end{scope}%
-        \end{scope}%
-        \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-2*\boxpaddings, \boxpaddings) + (-\thecodeboxlength\codeboxstep, 0) + (-\cornerboxsize, 0)$)}]%
-          \draw (0, 0) rectangle (\thecodeboxlength\codeboxstep, \codeboxheight);%
-          \@tempcnta=\value{surveyidlshw}%
-          \begin{scope}[shift={(\thecodeboxlength\codeboxstep, 0)}]%
-            \foreach \x in {0,...,\numexpr\thecodeboxlength-1\relax}%
-            {%
-              \ifodd \@tempcnta%
-                \draw[fill] (-\x\codeboxstep, 0) rectangle +(-\codeboxstep, \codeboxheight);%
-              \fi%
-              \global\divide\@tempcnta by 2
-            }%
-          \end{scope}%
-        \end{scope}%
-        \begin{scope}[shift={($(current page.south) + (0, \edgebottommargin) + (0, \boxpaddings) + (0, 0.5\codeboxheight)$)}]%
-          \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexa}{\value{surveyidlshw}}{16}%
-          \pgfmathsetbasenumberlength{4}\pgfmathdectoBase{\@temphexb}{\value{surveyidmshw}}{16}%
-          \node{\usekomafont{surveyidfont}{\translate{surveyid} \@temphexb\@temphexa}};%
-        \end{scope}%
-      \fi%
+        \fi%
+      \fi
     \end{scope}%
   \endgroup
 }
@@ -260,114 +326,122 @@
       \begin{scope}[line width=\elementlinewidth, line join=miter]%
         \begin{scope}[shift={($(current page.north west) + (\edgeleftmargin, -\edgetopmargin)$)}]%
           \draw (0,-\edgelen) -- (0, 0) -- (\edgelen,0);%
-          \ifcase\thepage%
-            % Case 0
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 1
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 2
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 3
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 4
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 5
-            \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 6
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
-          \else%
-            % Optional
-            \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+          \if@style@classic%
+            \ifcase\thepage%
+              % Case 0
+              \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 1
+              \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 2
+              \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 3
+              \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 4
+              \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 5
+              \fill (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 6
+              \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \else%
+              % Optional
+              \draw (\boxpaddings, -\boxpaddings) rectangle +(\cornerboxsize,-\cornerboxsize);%
+            \fi%
           \fi%
         \end{scope}%
         \begin{scope}[shift={($(current page.north east) + (-\edgerightmargin, -\edgetopmargin)$)}]%
           \draw (0,-\edgelen) -- (0,0) -- (-\edgelen,0);%
-          \ifcase\thepage%
-            % Case 0
-            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 1
-            \fill (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 2
-            \fill (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 3
-            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 4
-            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 5
-            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
-          \or%
-            % Case 6
-            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
-          \else%
-            % Optional
-            \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
+          \if@style@classic%
+            \ifcase\thepage%
+              % Case 0
+              \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 1
+              \fill (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 2
+              \fill (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 3
+              \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 4
+              \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 5
+              \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
+            \or%
+              % Case 6
+              \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
+            \else%
+              % Optional
+              \draw (-\boxpaddings, -\boxpaddings) rectangle +(-\cornerboxsize,-\cornerboxsize);%
+            \fi%
           \fi%
         \end{scope}%
         \begin{scope}[shift={($(current page.south west) + (\edgeleftmargin, \edgebottommargin)$)}]%
           \draw (0,\edgelen) -- (0, 0) -- (\edgelen,0);%
-          \ifcase\thepage%
-            % Case 0
-            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 1
-            \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 2
-            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 3
-            \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 4
-            \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 5
-            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 6
-            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
-          \else%
-            % Optional
-            \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
+          \if@style@classic%
+            \ifcase\thepage%
+              % Case 0
+              \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 1
+              \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 2
+              \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 3
+              \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 4
+              \fill (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 5
+              \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 6
+              \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
+            \else%
+              % Optional
+              \draw (\boxpaddings, \boxpaddings) rectangle +(\cornerboxsize,\cornerboxsize);%
+            \fi%
           \fi%
         \end{scope}%
         \begin{scope}[shift={($(current page.south east) + (-\edgerightmargin, \edgebottommargin)$)}]%
           \draw (0,\edgelen) -- (0mm, 0mm) -- (-\edgelen,0);%
-          \ifcase\thepage%
-            % Case 0
-            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 1
-            \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 2
-            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 3
-            \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 4
-            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 5
-            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
-          \or%
-            % Case 6
-            \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
-          \else%
-            % Optional
-            \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
+          \if@style@classic%
+            \ifcase\thepage%
+              % Case 0
+              \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 1
+              \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 2
+              \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 3
+              \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 4
+              \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 5
+              \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
+            \or%
+              % Case 6
+              \fill (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
+            \else%
+              % Optional
+              \draw (-\boxpaddings, \boxpaddings) rectangle +(-\cornerboxsize,\cornerboxsize);%
+            \fi%
           \fi%
         \end{scope}%
       \end{scope}%
@@ -376,15 +450,21 @@
     % stamp
     %---------------------------------------------------------------------------
     \if@STAMP
-      \ifodd \thepage%
-        \if@forceSTAMP%
-          % Stamp on the last page, even if it is odd
+      \if@twoside
+        \ifodd \thepage%
+          \if@forceSTAMP%
+            % Stamp on the last page, even if it is odd
+            % This is simply a convenience to allow duplex for one paged documents
+            \@sdaps@STAMP
+          \fi
+        \else%
+          % questionnaire-id
           \@sdaps@STAMP
-        \fi
-      \else%
-        % questionnaire-id
-        \@sdaps@STAMP
-      \fi%
+        \fi%
+      \fi
+    \else
+      % Always stamp in simplex mode
+      \@sdaps@STAMP
     \fi
     %---------------------------------------------------------------------------
     % watermark for non final mode
@@ -418,6 +498,20 @@
   \pgfpoint{\paperwidth}{\paperheight}
   \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}
   \protectedimmediatewrite\sdapsoutfile{PageSize=\@sdaps@width, \@sdaps@height}
+  \if@twoside
+    \protectedimmediatewrite\sdapsoutfile{Duplex=True}
+  \else
+    \protectedimmediatewrite\sdapsoutfile{Duplex=False}
+  \fi
+  % Only one can be true ...
+  \if@style@classic
+    \protectedimmediatewrite\sdapsoutfile{Style=classic}
+  \fi
+  \if@style@codecxxviii
+    \protectedimmediatewrite\sdapsoutfile{Style=code128}
+  \fi
+  \protectedimmediatewrite\sdapsoutfile{GlobalID=\globalid}
+  \protectedimmediatewrite\sdapsoutfile{GlobalIDLabel=\globalidlabel}
   %
   \foreach \qid in \questionnaireids{%
     \@forceSTAMPfalse
@@ -497,9 +591,12 @@
 \setlength{\boxpaddings}{3mm}
 \addtolength{\boxsize}{-\elementlinewidth}
 
+% Settings for cornerboxes (used in classic style)
+
 \newlength{\cornerboxsize}
 \setlength{\cornerboxsize}{3.5mm}
 
+% Settings for codeboxes (used in classic style)
 \newcounter{codeboxlength}
 \setcounter{codeboxlength}{16}
 \newlength{\codeboxstep}
@@ -507,9 +604,36 @@
 \newlength{\codeboxheight}
 \setlength{\codeboxheight}{3.5mm}
 
+% Settings for code128 barcodes (used in code128 style, who would have thought?)
+\newlength{\barcodeheight}
+\setlength{\barcodeheight}{6.5mm}
+% This is the same as the default
+\newlength{\barcodebarwidth}
+\setlength{\barcodebarwidth}{0.33mm}
+% Same as default. Barwidth is decreased for printing by this value.
+\newlength{\barcodebcorr}
+\setlength{\barcodebcorr}{0.020mm}
+
+% The padding on the left/right of a barcode. This is the distance that the
+% barcodes will be printed from the cornermarks
+% Choosen to be the same as the barcode height. Note that the Code-128
+% standard requires a quiet zone of max(10*modulesize, ~6.4mm).
+\newlength{\barcodehpad}
+\setlength{\barcodehpad}{6.5mm}
+
+% This needs to be smaller than 6.5mm because otherwise the content is too close.
+% We set it so that it forms a golden ratio 6.5mm*(sqrt(5/4)-0.5). This means
+% we have about 4.5mm padding to the content.
+\newlength{\barcodevpad}
+\setlength{\barcodevpad}{4.02mm}
+
+\newkomafont{barcodefont}{\ttfamily\footnotesize}
+
 % we need one to consume in the for loop
 \def\questionnaireids{21845}
 
+% TODO: We could support arbitrary IDs in code128 mode, maybe get rid of
+% this counter, or add a macro for the id and simply not use it in code128 mode?
 \newcounter{questionnaireid}
 \setcounter{questionnaireid}{21845}
 \newkomafont{questionnaireidfont}{\ttfamily\textbf}
@@ -518,6 +642,7 @@
 \setcounter{surveyidmshw}{52197}
 \newcounter{surveyidlshw}
 \setcounter{surveyidlshw}{39284}
+\def\surveyid{3420821876}
 \newkomafont{surveyidfont}{\ttfamily\textbf}
 
 \newcounter{choicegroupnumchoices}

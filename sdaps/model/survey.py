@@ -26,12 +26,16 @@ from sdaps import log
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
+valid_styles = ['classic', 'code128']
+
 # Force a certain set of options using slots
 class Defs (object) :
 	__slots__ = ['paper_width', 'paper_height', 'print_questionnaire_id',
-	             'print_survey_id']
+	             'print_survey_id', 'style', 'duplex']
 
 	def get_survey_id_pos(self):
+		assert(self.style == 'classic')
+
 		y_pos = self.paper_height - defs.corner_mark_bottom - defs.corner_box_padding
 		y_pos -= defs.codebox_height
 
@@ -49,6 +53,8 @@ class Defs (object) :
 		return msb_box_x, lsb_box_x, y_pos, text_x_pos, text_y_pos
 
 	def get_questionnaire_id_pos(self):
+		assert(self.style == 'classic')
+
 		msb_box_x, lsb_box_x, y_pos, text_x_pos, text_y_pos = self.get_survey_id_pos()
 
 		if self.print_survey_id:
@@ -69,6 +75,7 @@ class Survey (object) :
 		self.title = unicode()
 		self.info = dict()
 		self.survey_id = 0
+		self.global_id = None
 		self.questionnaire_ids = list()
 		self.index = 0
 		self.defs = Defs()
@@ -113,6 +120,10 @@ class Survey (object) :
 		config.optionxform = str
 		config.read(os.path.join(survey_dir, 'info'))
 		survey.title = config.get('sdaps', 'title').decode('utf-8')
+		survey.global_id = config.get('sdaps', 'global_id').decode('utf-8')
+		if survey.global_id == '' or survey.global_id == 'None':
+			survey.global_id = None
+
 		survey.info = dict()
 		for key, value in config.items('info'):
 			survey.info[key.decode('utf-8')] = value.decode('utf-8')
@@ -131,13 +142,33 @@ class Survey (object) :
 		cPickle.dump(self, file, 2)
 		file.close()
 
-		config = ConfigParser.SafeConfigParser()
+		# Hack to include comments. Set allow_no_value here, and add keys
+		# with a '#' in the front and no value.
+		config = ConfigParser.SafeConfigParser(allow_no_value=True)
 		config.optionxform = str
 		config.add_section('sdaps')
 		config.add_section('info')
+		config.add_section('defs')
+		config.add_section('questionnaire')
 		config.set('sdaps', 'title', self.title.encode('utf-8'))
+		if self.global_id is not None:
+			config.set('sdaps', 'global_id', self.global_id.encode('utf-8'))
+		else:
+			config.set('sdaps', 'global_id', '')
+
 		for key, value in self.info.iteritems():
 			config.set('info', key.encode('utf-8'), value.encode('utf-8'))
+
+		config.set('defs', '# These values are not read back, they exist for information only!')
+		for attr in self.defs.__slots__:
+			config.set('defs', attr, str(getattr(self.defs, attr)).encode('utf-8'))
+
+		config.set('questionnaire', '# These values are not read back, they exist for information only!')
+		config.set('questionnaire', 'page_count', str(self.questionnaire.page_count))
+		# Put the survey ID into "questionnaire". This seems sane even though
+		# it is not stored there internally..
+		config.set('questionnaire', 'survey_id', str(self.survey_id))
+
 		config.write(open(os.path.join(self.survey_dir, 'info'), 'w'))
 
 	def path (self, *path) :

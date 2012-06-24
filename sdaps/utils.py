@@ -33,3 +33,9 @@ def mimetype (filename) :
 	return stdout
 
 
+# Exceptions
+class RecognitionError (Exception) :
+
+	pass
+
+
