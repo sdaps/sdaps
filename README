@@ -3,11 +3,16 @@ SDAPS
 
 This Program can be used to carry out paper based surveys.
 
-The questinaire is designed using OpenOffice.org and then exported to PDF.
-SDAPS then uses both the ODT document and the PDF file to figure out what
-questions are asked, and where checkboxes and freeform fields are placed.
+The questionnaire is designed using either OpenOffice/LibreOffice and then
+exported to PDF. SDAPS then uses both the ODT document and the PDF file
+to figure out what questions are asked, and where checkboxes and freeform
+fields are placed.
+Another great way to use SDAPS is together with its LaTeX class. It allows
+you to create questionnaires very easily and is tightly integrated into the
+SDAPS main program.
+
 After this, the program can create an arbitrary number of (unique)
-questinaires that can be printed and handed out. After being filled out, you
+questionnaires that can be printed and handed out. After being filled out, you
 just scan them in, let sdaps run over them, and let it create a report with
 the results.
 
@@ -26,6 +31,7 @@ Requirements
  * libtiff (including development files)
  * python development files
  * pkg-config
+ * python-zbar for "code128" style.
 
 Installation
 ============
@@ -50,6 +56,11 @@ Also check the website http://sdaps.sipsolutions.net for some examples.
 
 Quality of the recognition
 ==========================
+
+NOTE: This is not up to date anymore. There have been changes to the
+algorithm that make SDAPS more robust. The parameters currently used are
+only a very rough estimation. They likely can be tweaked to yield better
+results.
 
 The quality of the recognition of SDAPS is quite good. The algorithm just
 tests for how much black is in the area of the box. This works pretty good,
