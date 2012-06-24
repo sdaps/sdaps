@@ -95,7 +95,16 @@ class Survey (object) :
 		for qobject in self.questionnaire.qobjects :
 			qobject.calculate_survey_id(md5)
 
-		for defs_slot in self.defs.__slots__:
+		# TODO: Remove compatibility feature at some point
+		# Keep backward compatibility by not hashing "style" and "duplex" if
+		# they are both set to their default value
+		def_items_to_hash = list(self.defs.__slots__)
+		if self.defs.style == 'classic' and \
+		   self.defs.duplex == True or self.questionnaire.page_count == 1:
+			def_items_to_hash.remove('style')
+			def_items_to_hash.remove('duplex')
+
+		for defs_slot in def_items_to_hash:
 			if isinstance(self.defs.__getattribute__(defs_slot), float) :
 				md5.update(str(round(self.defs.__getattribute__(defs_slot), 1)))
 			else:
@@ -116,12 +125,22 @@ class Survey (object) :
 		file.close()
 		survey.survey_dir = survey_dir
 
+		# TODO: Remove compatibility feature at some point
+		if not hasattr(survey.defs, 'style'):
+			survey.defs.style = 'classic'
+			survey.defs.duplex = (survey.questionnaire.page_count > 1)
+
 		config = ConfigParser.SafeConfigParser()
 		config.optionxform = str
 		config.read(os.path.join(survey_dir, 'info'))
 		survey.title = config.get('sdaps', 'title').decode('utf-8')
-		survey.global_id = config.get('sdaps', 'global_id').decode('utf-8')
-		if survey.global_id == '' or survey.global_id == 'None':
+
+		# TODO: Remove compatibility feature at some point
+		if config.has_option('sdaps', 'global_id'):
+			survey.global_id = config.get('sdaps', 'global_id').decode('utf-8')
+			if survey.global_id == '' or survey.global_id == 'None':
+				survey.global_id = None
+		else:
 			survey.global_id = None
 
 		survey.info = dict()
