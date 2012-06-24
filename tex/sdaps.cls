@@ -484,7 +484,7 @@
 \newcounter{question}
 \newlength{\boxheight}
 
-\NewEnviron{questionnaire}{%
+\NewEnviron{questionnaire}[1][]{
   \if@PrintQuestionnaireId
     \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=1}
   \else
@@ -520,25 +520,27 @@
     \setcounter{questionnaireid}{\qid}
     \setcounter{section}{0}
 
-    \begin{info}
-      \translate{infotext}
-      \begin{minipage}[t]{10em}
-        \begin{tabbing}
-          \translate{info_cross}:\\
-          \translate{info_correct}:\
-        \end{tabbing}
-      \end{minipage}\hfill
-      \begin{minipage}[t]{1.5em}
-        \checkedbox\\
-        \correctedbox
-      \end{minipage}\hfill
-      \setlength\@tempdima{\linewidth}
-      \addtolength{\@tempdima}{-13em}
-      \begin{minipage}[t]{\@tempdima}
-        \translate{info_select}\\
-        \translate{info_mark}
-      \end{minipage}\\
-    \end{info}
+    \ifstr{#1}{noinfo}{}{
+      \begin{info}
+        \translate{infotext}
+        \begin{minipage}[t]{10em}
+          \begin{tabbing}
+            \translate{info_cross}:\\
+            \translate{info_correct}:\
+          \end{tabbing}
+        \end{minipage}\hfill
+        \begin{minipage}[t]{1.5em}
+          \checkedbox\\
+          \correctedbox
+        \end{minipage}\hfill
+        \setlength\@tempdima{\linewidth}
+        \addtolength{\@tempdima}{-13em}
+        \begin{minipage}[t]{\@tempdima}
+          \translate{info_select}\\
+          \translate{info_mark}
+        \end{minipage}\\
+      \end{info}
+    }
 
     \BODY
 
