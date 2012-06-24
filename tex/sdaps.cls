@@ -27,8 +27,6 @@
 %-------------------------------------------------------------------------------
 % option processing
 %-------------------------------------------------------------------------------
-% ignore oneside
-\DeclareOption{oneside}{\OptionNotNeeded}
 % enable stamps
 \newif\if@STAMP\@STAMPfalse
 \DeclareOption{stamp}{\@STAMPtrue}
@@ -89,8 +87,11 @@
   \def\globalidlabel{#1} %
 }
 
-% execute default options
-\ExecuteOptions{10pt}
+% Set default options for scrartcl. Is this done correctly?
+\PassOptionsToClass{headings=small}{scrartcl}
+\PassOptionsToClass{twoside}{scrartcl}
+% Well, I don't think that this worked in the past ...
+%\PassOptionsToClass{10pt}{scrartcl}
 
 % process given options
 \FamilyProcessOptions{SDAPS}\relax
@@ -98,7 +99,7 @@
 %-------------------------------------------------------------------------------
 % load base-class
 %-------------------------------------------------------------------------------
-\LoadClass[a4paper,twoside,headings=small]{scrartcl}
+\LoadClass{scrartcl}
 
 
 %-------------------------------------------------------------------------------
