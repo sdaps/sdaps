@@ -213,12 +213,12 @@ class Sheet (model.buddy.Buddy) :
 				for image, id in survey_ids:
 					if self.obj.survey_id != id:
 						if not warned_multipage_not_correctly_scanned:
-							print _("Got different IDs on different pages for one sheet!")
+							print _("Got different Survey-IDs on different pages for one sheet!")
 							warned_multipage_not_correctly_scanned = True
 
 			if self.obj.survey_id != self.obj.survey.survey_id:
 				# Broken survey ID ...
-				print _("Got a wrong survey ID (%s, %s)! It is %i, but should be %i." % (survey_ids[0][0].filename, survey_ids[0][0].tiff_page, self.obj.survey_id, self.obj.survey.survey_id))
+				print _("Got a wrong survey ID (%s, %i)! It is %i, but should be %i." % (survey_ids[0][0].filename, survey_ids[0][0].tiff_page, self.obj.survey_id, self.obj.survey.survey_id))
 				self.obj.valid = 0
 
 		# Figure out the questionnaire ID if neccessary
@@ -243,7 +243,7 @@ class Sheet (model.buddy.Buddy) :
 				for image, id in questionnaire_ids:
 					if self.obj.questionnaire_id != id:
 						if not warned_multipage_not_correctly_scanned:
-							print _("Got different IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this!")
+							print _("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this!")
 							warned_multipage_not_correctly_scanned = True
 
 		# Try to load the global ID. If it does not exist we will get None, if
