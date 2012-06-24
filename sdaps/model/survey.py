@@ -245,6 +245,19 @@ class Survey (object) :
 		else :
 			raise ValueError
 
+	def check_settings (self):
+		u'''Do sanity checks on the different settings.'''
+
+		if self.defs.duplex and self.questionnaire.page_count % 2 != 0:
+			print _("A questionnaire that is printed in duplex needs an even amount of pages!")
+			return False
+
+		if self.defs.style == 'classic' and self.questionnaire.page_count > 6:
+			print _("The 'classic' style only supports a maximum of six pages! Use the 'code128' style if you require more pages.")
+			return False
+
+		return True
+
 	def __getstate__ (self) :
 		u'''Only pickle attributes that are in the pickled_attrs set.
 		'''

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-24 18:42+0200\n"
-"PO-Revision-Date: 2012-06-24 18:48+0200\n"
+"POT-Creation-Date: 2012-06-24 21:42+0200\n"
+"PO-Revision-Date: 2012-06-24 21:44+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -338,17 +338,32 @@ msgstr ""
 msgid "Existing fields: %s"
 msgstr "Definierte Felder: %s"
 
-#: ../sdaps/model/survey.py:197
+#: ../sdaps/model/survey.py:216
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:207
+#: ../sdaps/model/survey.py:226
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
+
+#: ../sdaps/model/survey.py:252
+msgid ""
+"A questionnaire that is printed in duplex needs an even amount of pages!"
+msgstr ""
+"Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
+"Anzahl von Seiten haben!"
+
+#: ../sdaps/model/survey.py:256
+msgid ""
+"The 'classic' style only supports a maximum of six pages! Use the 'code128' "
+"style if you require more pages."
+msgstr ""
+"Der Stil 'classic' kann nur mit bis zu sechs Seiten umgehen. Für mehr Seiten "
+"kann der 'code128' Stil benutzt werden."
 
 #: ../sdaps/recognize/buddies.py:61
 #, python-format
@@ -688,6 +703,14 @@ msgstr ""
 "Fehler: Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der "
 "jetzige Zustand ist:"
 
+#: ../sdaps/setup/setup.py:105 ../sdaps/setuptex/setup.py:132
+msgid ""
+"Some combination of options and project properties do not work. Aborted "
+"Setup."
+msgstr ""
+"Setup abgebrochen, da einige Optionen und Projekteigenschaften so nicht "
+"funktionieren."
+
 #: ../sdaps/setup/buddies.py:59
 #, python-format
 msgid "Warning: Head %(l0)i got no title."
@@ -857,7 +880,7 @@ msgstr ""
 "Führe pdflatex zwei mal aus um den gestempelten Fragebogen zu erstellen."
 
 #: ../sdaps/stamp/latex.py:62 ../sdaps/setuptex/setup.py:108
-#: ../sdaps/setuptex/setup.py:140 ../sdaps/reporttex/report.py:145
+#: ../sdaps/setuptex/setup.py:145 ../sdaps/reporttex/report.py:145
 msgid "Error running \"pdflatex\" to compile the LaTeX file."
 msgstr ""
 "Fehler beim ausführen von \"pdflatex\" um die LaTeX Datei zu kompilieren."
@@ -900,7 +923,7 @@ msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
 msgid "Will keep going, but expect failure!"
 msgstr "Versuche trotzdem fortzusetzten."
 
-#: ../sdaps/setuptex/setup.py:102 ../sdaps/setuptex/setup.py:134
+#: ../sdaps/setuptex/setup.py:102 ../sdaps/setuptex/setup.py:139
 msgid "Running pdflatex now twice to generate the questionnaire."
 msgstr "Führe pdflatex zwei mal aus um den Fragebogen zu erstellen."
 
@@ -912,7 +935,7 @@ msgstr ""
 "Fehler: Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der "
 "jetzige Zustand ist:"
 
-#: ../sdaps/setuptex/setup.py:156
+#: ../sdaps/setuptex/setup.py:161
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "

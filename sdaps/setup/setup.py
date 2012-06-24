@@ -101,6 +101,10 @@ def setup (survey, options, questionnaire_odt, questionnaire_pdf, additionalqobj
 	# Last but not least calculate the survey id
 	survey.calculate_survey_id()
 
+	if not survey.check_settings():
+		print _("Some combination of options and project properties do not work. Aborted Setup.")
+		return 1
+
 	# Print the result
 	print survey.title
 

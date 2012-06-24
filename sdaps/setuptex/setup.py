@@ -128,6 +128,11 @@ def setup (survey, questionnaire_tex, additionalqobjects = None) :
 		# Last but not least calculate the survey id
 		survey.calculate_survey_id()
 
+		if not survey.check_settings():
+			print _("Some combination of options and project properties do not work. Aborted Setup.")
+			shutil.rmtree(survey.path())
+			return 1
+
 		# We need to now rebuild everything so that the correct ID is at the bottom
 		write_latex_override_file(survey)
 
