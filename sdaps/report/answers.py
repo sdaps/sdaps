@@ -26,6 +26,7 @@ from reportlab.lib import units
 from reportlab.lib import pagesizes
 from reportlab.lib import enums
 from reportlab.lib import colors
+from xml.sax.saxutils import escape
 
 from sdaps import template
 from sdaps import model
@@ -77,7 +78,7 @@ class Choice (platypus.Flowable) :
 			stylesheet_name = 'Right_Highlight'
 		else :
 			stylesheet_name = 'Right'
-		self.answer = platypus.Paragraph(answer.replace('<', '\\<'), stylesheet[stylesheet_name])
+		self.answer = platypus.Paragraph(escape(answer), stylesheet[stylesheet_name])
 		self.value = platypus.Paragraph(
 			u'%.2f %%' % (value * 100), stylesheet[stylesheet_name]
 		)
@@ -177,7 +178,7 @@ class Mark (platypus.Flowable) :
 		else :
 			stylesheet_name = 'Normal'
 
-		self.answers_paragraph = platypus.Paragraph(u' - '.join(answers), stylesheet[stylesheet_name])
+		self.answers_paragraph = platypus.Paragraph(escape(u' - '.join(answers)), stylesheet[stylesheet_name])
 		self.count_paragraph = platypus.Paragraph(_(u'Answers: %i') % self.count, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
 		self.mean_paragraph = platypus.Paragraph(_(u'Mean: %.2f') % self.mean, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])
 		self.stdd_paragraph = platypus.Paragraph(_(u'Standard Deviation: %.2f') % self.standard_derivation, stylesheet['Normal'])# if not significant else stylesheet['Normal_Highlight'])

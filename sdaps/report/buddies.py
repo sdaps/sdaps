@@ -27,6 +27,8 @@ from sdaps import clifilter
 from sdaps import template
 from sdaps import model
 
+from xml.sax.saxutils import escape
+
 import flowables
 import answers
 
@@ -115,7 +117,7 @@ class Head (QObject) :
 	def story (self) :
 		return [
 			platypus.Paragraph(
-		        u'%s %s' % (self.obj.id_str(), self.obj.title),
+		        u'%s %s' % (self.obj.id_str(), escape(self.obj.title)),
 		        stylesheet['Head'])]
 
 
@@ -129,7 +131,7 @@ class Question (QObject) :
 		return [
 			platypus.Paragraph(
 		        u'%s %s' % (
-		            self.obj.id_str(), self.obj.question),
+		            self.obj.id_str(), escape(self.obj.question)),
 		        stylesheet['Question'])]
 
 
