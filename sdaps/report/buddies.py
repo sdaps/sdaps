@@ -77,8 +77,25 @@ class Questionnaire (model.buddy.Buddy) :
 	def story (self) :
 		story = list()
 		# iterate over qobjects
+		keeptogether_list = []
 		for qobject in self.obj.qobjects :
-			story.extend(list(qobject.report.story()))
+			new, keeptogether = qobject.report.story()
+			new = list(new)
+
+			if len(new) == 0:
+				continue
+
+			if keeptogether:
+				keeptogether_list.extend(new)
+			else:
+				if len(keeptogether_list):
+					keeptogether_list.append(new.pop(0))
+					story.append(platypus.KeepTogether(keeptogether_list))
+					keeptogether_list = []
+
+				story.extend(new)
+
+		story.extend(keeptogether_list)
 		return story
 
 	def filters (self) :
@@ -102,7 +119,7 @@ class QObject (model.buddy.Buddy) :
 		pass
 
 	def story (self) :
-		return []
+		return [], False
 
 	def filters (self) :
 		return []
@@ -118,7 +135,7 @@ class Head (QObject) :
 		return [
 			platypus.Paragraph(
 		        u'%s %s' % (self.obj.id_str(), escape(self.obj.title)),
-		        stylesheet['Head'])]
+		        stylesheet['Head'])], True
 
 
 class Question (QObject) :
@@ -132,7 +149,7 @@ class Question (QObject) :
 			platypus.Paragraph(
 		        u'%s %s' % (
 		            self.obj.id_str(), escape(self.obj.question)),
-		        stylesheet['Question'])]
+		        stylesheet['Question'])], True
 
 
 class Choice (Question) :
@@ -153,7 +170,7 @@ class Choice (Question) :
 					self.text.append(answers.Text(box))
 
 	def story (self) :
-		story = Question.story(self)
+		story, tmp = Question.story(self)
 		if self.obj.calculate.count :
 			for box in self.obj.boxes :
 				story.append(
@@ -167,7 +184,7 @@ class Choice (Question) :
 			if len(self.text) > 0 :
 				story.append(platypus.Spacer(0, 3 * mm))
 				story.extend(self.text)
-		return story
+		return story, False
 
 	def filters (self) :
 		for box in self.obj.boxes :
@@ -181,7 +198,7 @@ class Mark (Question) :
 	obj_class = model.questionnaire.Mark
 
 	def story (self) :
-		story = Question.story(self)
+		story, tmp = Question.story(self)
 		if self.obj.calculate.count :
 			story.append(answers.Mark(
 				self.obj.calculate.values.values(),
@@ -191,7 +208,7 @@ class Mark (Question) :
 			    self.obj.calculate.count,
 			    self.obj.calculate.significant))
 			story = [platypus.KeepTogether(story)]
-		return story
+		return story, False
 
 	def filters (self) :
 		for x in range(6) :
@@ -215,13 +232,13 @@ class Text (Question) :
 					self.text.append(answers.Text(box))
 
 	def story (self) :
-		story = Question.story(self)
+		story, tmp = Question.story(self)
 		if len(self.text) > 0 :
 			story.append(self.text[0])
 			story = [platypus.KeepTogether(story)]
 		if len(self.text) > 1 :
 			story.extend(self.text[1:])
-		return story
+		return story, False
 
 
 class Additional_FilterHistogram (Question) :
@@ -231,7 +248,7 @@ class Additional_FilterHistogram (Question) :
 	obj_class = model.questionnaire.Additional_FilterHistogram
 
 	def story (self) :
-		story = Question.story(self)
+		story, tmp = Question.story(self)
 		if self.obj.calculate.count :
 			for i in range(len(self.obj.calculate.values)) :
 				story.append(
@@ -242,4 +259,4 @@ class Additional_FilterHistogram (Question) :
 					)
 				)
 			story = [platypus.KeepTogether(story)]
-		return story
+		return story, False
