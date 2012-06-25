@@ -54,7 +54,7 @@ def paint_box(cr, mm_to_pt, x, y, box, key):
 	cr.move_to(tmp_x, tmp_y)
 
 	layout = PangoCairo.create_layout(cr)
-	layout.set_markup(t)
+	layout.set_markup(t, -1)
 	font = Pango.FontDescription("serif 6")
 	layout.set_font_description(font)
 
