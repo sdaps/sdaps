@@ -61,8 +61,10 @@ command this needs to exist, or it will be created automatically.
 The following commands and their respective options are available:
 
 ''' % name)
-	for script_class in script.scripts.itervalues() :
-		print script_class.func_name, script_class.func_doc
+	scripts = script.scripts.keys()
+	scripts.sort()
+	for key in scripts :
+		print script.scripts[key].func_name, script.scripts[key].func_doc
 	return 0
 
 def main (local_run = False) :
