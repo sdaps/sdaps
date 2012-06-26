@@ -670,6 +670,21 @@
   \endgroup
 }
 
+%common font settings
+\newkomafont{questionfont}{}
+\newkomafont{choicefont}{}
+%singlemark
+\newkomafont{singlemarkquestionfont}{\usekomafont{questionfont}}
+\newkomafont{singlemarkchoicefont}{\usekomafont{choicefont}}
+%markgroup
+\newkomafont{marklinequestionfont}{\usekomafont{questionfont}}
+\newkomafont{marklinechoicefont}{\usekomafont{choicefont}}
+%choicequestion
+\newkomafont{choiceitemfont}{\usekomafont{choicefont}}
+%choicegroup
+\newkomafont{choicegroupchoicefont}{\usekomafont{questionfont}}
+\newkomafont{choicegrouplinefont}{\usekomafont{choicefont}}
+
 
 %-------------------------------------------------------------------------------
 %                style commands definitions
@@ -843,7 +858,7 @@
   \fi %
   \protectedimmediatewrite\sdapsoutfile{QObject-Choice=#1}%
   % First move to the next line (as it is not part of the @start macro)
-  #1 \@sdaps@choicegroup@boxes \\ %
+  {\usekomafont{choicegrouplinefont}#1} \@sdaps@choicegroup@boxes \\ %
 }
 
 \providecommand*{\groupaddchoice}[1]{%
@@ -853,7 +868,7 @@
     \PackageError{sdaps}{Tried to add a new choice, but not at the beginning of a choicegroup environment!}\@ehb
   \else
     \stepcounter{choicegroupnumchoices}%
-    \g@addto@macro{\@sdaps@choicegroup@start}{& #1}%
+    \g@addto@macro{\@sdaps@choicegroup@start}{& {\usekomafont{choicegroupchoicefont}#1}}%
     \g@addto@macro{\@sdaps@choicegroup@boxes}{& \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#1} \checkbox}%
   \fi
 }
@@ -872,7 +887,7 @@
   \protectedimmediatewrite\sdapsoutfile{QObject-Mark=#1}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
-  #1 & #2 & \checkbox & \checkbox & \checkbox & \checkbox & \checkbox & #3\\%
+  {\usekomafont{marklinequestionfont}#1} & {\usekomafont{marklinechoicefont}#2} & \checkbox & \checkbox & \checkbox & \checkbox & \checkbox & {\usekomafont{marklinechoicefont}#3}\\%
 }
 
 %\providecommand*{\singlemark}[3]{\begin{markquestion}{#1}\markline{}{#2}{#3}\end{markquestion}}
@@ -884,7 +899,7 @@
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
   %\offinterlineskip%
   \begin{tabularx}{\linewidth}{Y*{5}{c}X}%
-    #2 & \checkbox & \checkbox & \checkbox & \checkbox & \checkbox & #3%
+    {\usekomafont{singlemarkchoicefont}#2} & \checkbox & \checkbox & \checkbox & \checkbox & \checkbox & {\usekomafont{singlemarkchoicefont}#3}%
   \end{tabularx}%
 }
 
@@ -916,10 +931,10 @@
   \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#1}%
   \ifthenelse{\thechoiceitems=\themaxchoiceitems}{%
     \setcounter{choiceitems}{1}%
-    \checkbox~#1 \\%
+    \checkbox~{\usekomafont{choiceitemfont}#1} \\%
   }{%
     \addtocounter{choiceitems}{1}%
-    \checkbox~#1 &%
+    \checkbox~{\usekomafont{choiceitemfont}#1} &%
   }%
 }
 
@@ -927,7 +942,7 @@
   \multicolumn{#1}{l}{%
     \addtocounter{choiceitems}{#1}%
     \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#2}%
-    \checkbox~#2%
+    \checkbox~{\usekomafont{choiceitemfont}#2}%
   }
   \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%
     \setcounter{choiceitems}{1}%
@@ -946,7 +961,7 @@
   \multicolumn{#2}{l}{%
     \addtocounter{choiceitems}{#2}%
     \begingroup%
-      #3~%
+      {\usekomafont{choiceitemfont}#3}~%
       %
       \setlength\@tempdimheight{#1}%
       %
