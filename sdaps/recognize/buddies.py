@@ -197,7 +197,7 @@ class Sheet(model.buddy.Buddy):
 
             for page, image in enumerate(self.obj.images):
                 try:
-                    if not duplex_mode or image.page_number % 2 == 0:
+                    if not duplex_mode or (image.page_number is not None and image.page_number % 2 == 0):
                         survey_ids.append((image, image.recognize.get_survey_id()))
                 except RecognitionError:
                     print _('%s, %i: Could not read survey ID, but should be able to.') % \
@@ -233,7 +233,7 @@ class Sheet(model.buddy.Buddy):
 
             for page, image in enumerate(self.obj.images):
                 try:
-                    if not duplex_mode or image.page_number % 2 == 0:
+                    if not duplex_mode or (image.page_number is not None and image.page_number % 2 == 0):
                         questionnaire_ids.append((image, image.recognize.get_questionnaire_id()))
                 except RecognitionError:
                     print _('%s, %i: Could not read questionnaire ID, but should be able to.') % \
