@@ -107,7 +107,7 @@ class Sheet(model.buddy.Buddy):
                 i += 2
 
         # Reload any image that is rotated.
-        for image in self.obj.images:
+        for page, image in enumerate(self.obj.images):
             if image.rotated:
                 image.surface.load()
                 # And redo the whole matrix stuff ...
@@ -261,7 +261,7 @@ class Sheet(model.buddy.Buddy):
         global_id = None
         for page, image in enumerate(self.obj.images):
             try:
-                if not duplex_mode or image.page_number % 2 == 0:
+                if not duplex_mode or (image.page_number is not None and image.page_number % 2 == 0):
                     id = image.recognize.get_global_id()
                     if id is not None:
                         if global_id is not None:
