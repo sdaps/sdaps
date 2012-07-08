@@ -69,9 +69,11 @@ The following commands and their respective options are available:''' % name)
         print script.scripts[key].func_name, script.scripts[key].func_doc
     return 0
 
+def init(local_run=False):
+    paths.init(local_run, __path__[0])
 
 def main(local_run=False):
-    paths.init(local_run, __path__[0])
+    init(local_run)
 
     import add
     import boxgallery
