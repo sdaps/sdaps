@@ -163,7 +163,6 @@ class Sheet(model.buddy.Buddy):
                         print _("Images %s, %i and %s, %i do not have consecutive page numbers!" %
                                 (first.filename, first.tiff_page, second.filename, second.tiff_page))
 
-                        print first.page_number, second.page_number
                         failed_pages.add(i)
                         failed_pages.add(i + 1)
 
