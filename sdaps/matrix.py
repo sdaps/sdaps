@@ -33,6 +33,7 @@ Warning: The correct values are only available after "recognize" has been run!
 import cairo
 
 import model
+import surface
 
 
 class Image(model.buddy.Buddy):
@@ -47,5 +48,29 @@ class Image(model.buddy.Buddy):
         return matrix
 
     def px_to_mm(self):
-        return cairo.Matrix(*self.obj.raw_matrix)
+        if self.obj.raw_matrix is not None:
+            return cairo.Matrix(*self.obj.raw_matrix)
+        else:
+            # Return a dummy matrix ... that maps the image to the page size
+            surface = self.obj.surface.load_uncached()
+
+            width = surface.get_width()
+            height = surface.get_height()
+
+            matrix = cairo.Matrix()
+
+            matrix.scale(1.0 / width, 1.0 / height)
+            matrix.scale(self.obj.sheet.survey.defs.paper_width, self.obj.sheet.survey.defs.paper_height)
+
+            return matrix
+
+    def matrix_valid(self):
+        return self.obj.raw_matrix != None
+
+    def set_px_to_mm(self, matrix):
+        if matrix is not None:
+            self.obj.raw_matrix = tuple(matrix)
+        else:
+            self.obj.raw_matrix = None
+
 

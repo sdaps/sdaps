@@ -46,6 +46,15 @@ class Image(model.buddy.Buddy):
             self.obj.rotated
         )
 
+    def load_uncached(self):
+        if hasattr(self, 'surface'):
+            return self.surface
+        else:
+            return image.get_a1_from_tiff(
+                self.obj.sheet.survey.path(self.obj.filename),
+                self.obj.tiff_page,
+                self.obj.rotated)
+
     def clean(self):
         if hasattr(self, 'surface'):
             del self.surface

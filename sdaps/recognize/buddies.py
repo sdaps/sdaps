@@ -274,14 +274,9 @@ class Sheet(model.buddy.Buddy):
                 pass
         self.obj.global_id = global_id
 
-        self.obj.images.sort(key=lambda image: image.page_number)
         # Done
         if failed_pages:
             self.obj.valid = 0
-            # TODO: Not raise an error, but try to recognize the checkboxes.
-            # For this the checkboxes need to ensure they are working on the
-            # correct page though.
-            raise RecognitionError
 
     def clean(self):
         for image in self.obj.images:
@@ -335,10 +330,11 @@ class Image(model.buddy.Buddy):
                 self.obj.sheet.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom,
             )
         except AssertionError:
-            self.matrix = self.obj.matrix.mm_to_px()
+            self.obj.matrix.set_px_to_mm(None)
+            self.matrix = None
             raise RecognitionError
         else:
-            self.obj.raw_matrix = tuple(matrix)
+            self.obj.matrix.set_px_to_mm(matrix)
             self.matrix = self.obj.matrix.mm_to_px()
 
     def get_coverage(self, x, y, width, height):
@@ -480,7 +476,12 @@ class Checkbox(Box):
     obj_class = model.questionnaire.Checkbox
 
     def recognize(self):
-        image = self.obj.sheet.images[self.obj.page_number - 1]
+        image = self.obj.sheet.get_page_image(self.obj.page_number)
+
+        if image is None or image.recognize.matrix is None:
+            self.obj.sheet.valid = 0
+            return
+
         matrix = image.recognize.correction_matrix(
             self.obj.x, self.obj.y,
             self.obj.width, self.obj.height
@@ -661,7 +662,11 @@ class Textbox(Box):
                     yield x, y
 
         bbox = None
-        image = self.obj.sheet.images[self.obj.page_number - 1]
+        image = self.obj.sheet.get_page_image(self.obj.page_number)
+
+        if image is None or image.recognize.matrix is None:
+            self.obj.sheet.valid = 0
+            return
 
         x = self.obj.x
         y = self.obj.y

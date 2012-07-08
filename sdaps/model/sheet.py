@@ -35,6 +35,14 @@ class Sheet(buddy.Object):
         self.images.append(image)
         image.sheet = self
 
+    def get_page_image(self, page):
+        # Simply return the image for the requested page.
+        # Note: We return the first one we find; this means in the error case
+        #       that a page exists twice, we return the first one.
+        for image in self.images:
+            if image.page_number == page:
+                return image
+        return None
 
 class Image(buddy.Object):
 
@@ -43,6 +51,6 @@ class Image(buddy.Object):
         self.filename = str()
         self.tiff_page = 0
         self.rotated = 0
-        self.raw_matrix = (0.0833, 0, 0, 0.0833, 0, 0)
+        self.raw_matrix = None
         self.page_number = None
 
