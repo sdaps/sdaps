@@ -32,7 +32,7 @@ _ = ugettext
 @script.logfile
 @script.doc(_(u'''[filter...]
 
-    Launch a gui. You can view and alter the(recognized) answers with it.
+    Launch a gui. You can view and alter the (recognized) answers with it.
 
     filter: filter expression to select the sheets to display
     '''))

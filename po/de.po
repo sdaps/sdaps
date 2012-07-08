@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-08 16:31+0200\n"
-"PO-Revision-Date: 2012-07-08 16:31+0200\n"
+"POT-Creation-Date: 2012-07-08 22:05+0200\n"
+"PO-Revision-Date: 2012-07-08 22:07+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -31,8 +31,7 @@ msgid ""
 "You need to specify the project_dir for SDAPS to work on. Depending on the\n"
 "command this needs to exist, or it will be created automatically.\n"
 "\n"
-"The following commands and their respective options are available:\n"
-"\n"
+"The following commands and their respective options are available:"
 msgstr ""
 "Aufruf: %s Projektverzeichniss Kommando [Argumente]\n"
 "\n"
@@ -41,8 +40,7 @@ msgstr ""
 "automatisch\n"
 "erstellt.\n"
 "\n"
-"Die folgenden Kommands stehen zur verfügung:\n"
-"\n"
+"Die folgenden Kommands stehen zur verfügung:"
 
 #: ../sdaps/add.py:28
 msgid ""
@@ -211,7 +209,7 @@ msgstr ""
 msgid ""
 "[filter...]\n"
 "\n"
-"    Launch a gui. You can view and alter the(recognized) answers with it.\n"
+"    Launch a gui. You can view and alter the (recognized) answers with it.\n"
 "\n"
 "    filter: filter expression to select the sheets to display\n"
 "    "
@@ -409,47 +407,47 @@ msgstr "Weder %s, %i noch %s, %i haben eine bekannte Seitenzahl."
 msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
 msgstr "Die Bilder %s, %i und %s, %i besitzten nicht konsekutive Seitenzahlen!"
 
-#: ../sdaps/recognize/buddies.py:176
+#: ../sdaps/recognize/buddies.py:175
 #, python-format
 msgid "No page number for page %s, %i exists."
 msgstr "Es existiert keine Seitenzahl für Seite %s, %i."
 
-#: ../sdaps/recognize/buddies.py:181
+#: ../sdaps/recognize/buddies.py:180
 #, python-format
 msgid "Page number for page %s, %i already used by another image."
 msgstr "Seitenzahl für Seite %s, %i wurde schon einem anderen Bild zugewiesen."
 
-#: ../sdaps/recognize/buddies.py:187
+#: ../sdaps/recognize/buddies.py:186
 #, python-format
 msgid "Page number %i for page %s, %i is out of range."
 msgstr "Seitenzahl %i für Seite %s, %i ist außerhalb des erlaubten Bereichs."
 
-#: ../sdaps/recognize/buddies.py:204
+#: ../sdaps/recognize/buddies.py:203
 #, python-format
 msgid "%s, %i: Could not read survey ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Umfrage-ID nicht einlesen. Dies sollte aber möglich sein."
 
-#: ../sdaps/recognize/buddies.py:218
+#: ../sdaps/recognize/buddies.py:217
 msgid "Got different Survey-IDs on different pages for one sheet!"
 msgstr ""
 "Unterschiedliche Umfrage-IDs in Seiten die einem Fragebogen zugeordnet sind!"
 
 #. Broken survey ID ...
-#: ../sdaps/recognize/buddies.py:223
+#: ../sdaps/recognize/buddies.py:222
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %i, but should be %i."
 msgstr ""
 "Falsche Umfrage-ID auf Seite (%s, %i)! Die ID ist %i sollte aber %i sein."
 
-#: ../sdaps/recognize/buddies.py:240
+#: ../sdaps/recognize/buddies.py:239
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Fragebogen-ID nicht lesen. Dies sollte jedoch möglich "
 "sein."
 
-#: ../sdaps/recognize/buddies.py:253
+#: ../sdaps/recognize/buddies.py:252
 msgid ""
 "Got different Questionnaire-IDs on different pages for in at least one "
 "sheet! Do *NOT* try to use filters on this!"
@@ -457,7 +455,7 @@ msgstr ""
 "Unterschiedliche Fragebogen-ID auf unterschiedlichen Seiten. Die Erkennung "
 "wird funktionieren, die zuordnung der Daten ist jedoch Falsch!"
 
-#: ../sdaps/recognize/buddies.py:270
+#: ../sdaps/recognize/buddies.py:269
 #, python-format
 msgid "%s, %i: Global ID is different to an earlier page."
 msgstr "%s, %i: Die Globale-ID ist anders als auf einer der vorherigen Seiten."
@@ -499,7 +497,7 @@ msgstr "Standardabweichung: %.2f"
 msgid ""
 "[filter...]\n"
 "\n"
-"    Report generates a basic report which shows for every question(if "
+"    Report generates a basic report which shows for every question (if "
 "appropriate)\n"
 "        - the histogramm\n"
 "        - the mean\n"
@@ -528,12 +526,12 @@ msgstr ""
 msgid ""
 "[filter...]\n"
 "\n"
-"    Stats generates a report for every filter condition(not compounded)\n"
+"    Stats generates a report for every filter condition (not compounded)\n"
 "\n"
 "    filter: filter expression to select the sheets to appear in the "
 "reference report\n"
 "\n"
-"    creates report_[index].pdf(the reference report)\n"
+"    creates report_[index].pdf (the reference report)\n"
 "    creates report_[index]_[index] description.pdf\n"
 "    "
 msgstr ""
@@ -552,7 +550,7 @@ msgstr ""
 msgid ""
 "[filter...]\n"
 "\n"
-"    Smallreport generates a basic report which shows for every question(if "
+"    Smallreport generates a basic report which shows for every question (if "
 "appropriate)\n"
 "        - the histogramm\n"
 "        - the mean\n"
@@ -774,10 +772,12 @@ msgstr ""
 "\n"
 "    count: Die Anzahl an eindeutigen Fragebögen die erstellt werden soll\n"
 "           Dies wird nur verwendet, wenn eindeutige Fragebogen IDs auf jeden "
-"Bogen\t       gedruckt werden sollen. Diese Option muss beim Anlegen des "
+"Bogen\n"
+"           gedruckt werden sollen. Diese Option muss beim Anlegen des "
 "Projekts\n"
-"           angegeben werden.\tused_ids: Datei mit Fragebogen IDs die schon "
-"benutzt wurden (Muster = '%i\\n')\n"
+"           angegeben werden.\n"
+"    used_ids: Datei mit Fragebogen IDs die schon benutzt wurden (Muster = '%i"
+"\\n')\n"
 "\n"
 "    Erstellt: stamped_[index].pdf\n"
 "    "

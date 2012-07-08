@@ -59,11 +59,12 @@ def doc(name="sdaps"):
 You need to specify the project_dir for SDAPS to work on. Depending on the
 command this needs to exist, or it will be created automatically.
 
-The following commands and their respective options are available:
-
-''' % name)
+The following commands and their respective options are available:''' % name)
     scripts = script.scripts.keys()
     scripts.sort()
+    for key in scripts:
+        print '     * %s' % key
+    print
     for key in scripts:
         print script.scripts[key].func_name, script.scripts[key].func_doc
     return 0

@@ -31,7 +31,7 @@ _ = ugettext
 @script.logfile
 @script.doc(_(u'''[filter...]
 
-    Report generates a basic report which shows for every question(if appropriate)
+    Report generates a basic report which shows for every question (if appropriate)
         - the histogramm
         - the mean
         - the standard derivation
@@ -51,11 +51,11 @@ def report(survey_dir, *filter):
 @script.logfile
 @script.doc(_(u'''[filter...]
 
-    Stats generates a report for every filter condition(not compounded)
+    Stats generates a report for every filter condition (not compounded)
 
     filter: filter expression to select the sheets to appear in the reference report
 
-    creates report_[index].pdf(the reference report)
+    creates report_[index].pdf (the reference report)
     creates report_[index]_[index] description.pdf
     '''))
 def stats(survey_dir, *filter):
@@ -68,7 +68,7 @@ def stats(survey_dir, *filter):
 @script.logfile
 @script.doc(_(u'''[filter...]
 
-    Smallreport generates a basic report which shows for every question(if appropriate)
+    Smallreport generates a basic report which shows for every question (if appropriate)
         - the histogramm
         - the mean
         - the standard derivation
