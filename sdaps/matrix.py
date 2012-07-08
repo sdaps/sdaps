@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 u"""
 The matrix module adds support to find out the rotation matrix for a scanned
-page. After loading the (cairo) matrixes can be accessed via two functions:
+page. After loading the(cairo) matrixes can be accessed via two functions:
 
   model.sheet.Image.matrix.mm_to_px() and
   model.sheet.Image.matrix.px_to_mm()
@@ -35,17 +35,17 @@ import cairo
 import model
 
 
-class Image (model.buddy.Buddy) :
+class Image(model.buddy.Buddy):
 
-	__metaclass__ = model.buddy.Register
-	name = 'matrix'
-	obj_class = model.sheet.Image
+    __metaclass__ = model.buddy.Register
+    name = 'matrix'
+    obj_class = model.sheet.Image
 
-	def mm_to_px (self) :
-		matrix = self.px_to_mm()
-		matrix.invert()
-		return matrix
+    def mm_to_px(self):
+        matrix = self.px_to_mm()
+        matrix.invert()
+        return matrix
 
-	def px_to_mm (self) :
-		return cairo.Matrix(*self.obj.raw_matrix)
+    def px_to_mm(self):
+        return cairo.Matrix(*self.obj.raw_matrix)
 

@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,18 +47,18 @@ corner_mark_search_distance = 600 # px
 # the page number and rotation can be derived from the information.
 # Order: top left, top right, bottom left, bottom right
 corner_boxes = [
-	[0, 1, 1, 1],
-	[1, 1, 0, 0],
-	[1, 0, 1, 1],
-	[1, 0, 1, 0],
-	[1, 0, 0, 0],
-	[0, 0, 0, 1],
+    [0, 1, 1, 1],
+    [1, 1, 0, 0],
+    [1, 0, 1, 1],
+    [1, 0, 1, 0],
+    [1, 0, 0, 0],
+    [0, 0, 0, 1],
 ]
 
-# Size of the corner boxes (measured from the center of the line)
+# Size of the corner boxes(measured from the center of the line)
 corner_box_width = 3.5 # mm
 corner_box_height = 3.5 # mm
-# Distance from the corner marker (and also the distance to the codebox)
+# Distance from the corner marker(and also the distance to the codebox)
 corner_box_padding = 3 # mm
 
 # The coverage above which a cornerbox is considered to be a logical 1
@@ -88,9 +88,9 @@ codebox_on_coverage = 0.7
 # Code 128 Barcodes =======================================
 
 code128_barwidth = 0.33 # mm. This is 0.93pt or 3.89px after scanning
-code128_height = 6.5 # pt (5 mm)
-code128_hpad = 6.5 #mm
-code128_vpad = 4.02 #mm
+code128_height = 6.5 # pt(5 mm)
+code128_hpad = 6.5 # mm
+code128_vpad = 4.02 # mm
 
 code128_text_font = 'Courier'
 code128_text_font_size = 9 # pt
@@ -104,10 +104,10 @@ checkbox_metrics = {}
 # It works by searching the interval that we are in, and doing
 # a linear interpolation.
 # At state changes the point should be inserted twice.
-# The touple is (metric, state, quality). To disable one you can just
+# The touple is(metric, state, quality). To disable one you can just
 # insert two dummy points with zero quality. To try and find better
 # values have a look at the output of "boxgallery". Any suggestions
-# for improvements (also algorithmic wise) are always welcome!
+# for improvements(also algorithmic wise) are always welcome!
 checkbox_metrics['coverage'] = \
     [(0, 0, 1.0), (0.02, 0, 0.9), (0.03, 0, 0.5), (0.03, 1, 0.5),
      (0.09, 1, 1.0), (0.4, 1, 1.0), (0.5, 1, 0.2), (0.5, 0, 0.2),
@@ -150,14 +150,14 @@ textbox_scan_uncorrected_padding = 1.5 # mm
 
 # Padding tha will always be added to the textbox size if content has been recognized.
 # This is important because we want the outline to be visible if someone wrote
-# over the outline (so that the reader can see that the software worked correctly).
+# over the outline(so that the reader can see that the software worked correctly).
 textbox_extra_padding = 0.5 # mm
 
 
 # Image ===================================================
 
 # The width of the lines in the scanned image.
-# All lines are 1pt wide (1/72 inch or 25.4/72 mm)
+# All lines are 1pt wide(1/72 inch or 25.4/72 mm)
 image_line_width = 5 # px
 # The coverage that the line needs to have for recognition
 image_line_coverage = 0.35

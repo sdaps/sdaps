@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, 2011, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, 2011, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,121 +36,125 @@ import buddies
 import codecs
 
 
-def report (survey, filter, filename = None, small = 0) :
-	assert isinstance(survey, model.survey.Survey)
+def report(survey, filter, filename=None, small=0):
+    assert isinstance(survey, model.survey.Survey)
 
-	# compile clifilter
-	filter = clifilter.clifilter(survey, *filter)
+    # compile clifilter
+    filter = clifilter.clifilter(survey, *filter)
 
-	# First: calculate buddies
+    # First: calculate buddies
 
-	# init buddies
-	survey.questionnaire.calculate.init()
+    # init buddies
+    survey.questionnaire.calculate.init()
 
-	# iterate over sheets
-	survey.iterate(
-		survey.questionnaire.calculate.read,
-		lambda : survey.sheet.valid and filter()
-	)
+    # iterate over sheets
+    survey.iterate(
+        survey.questionnaire.calculate.read,
+        lambda: survey.sheet.valid and filter()
+    )
 
-	# do calculations
-	survey.questionnaire.calculate.calculate()
+    # do calculations
+    survey.questionnaire.calculate.calculate()
 
+    # Second: report buddies
 
-	# Second: report buddies
+    # init buddies
+    survey.questionnaire.report.init(small)
 
-	# init buddies
-	survey.questionnaire.report.init(small)
+    # Filename of output
+    if filename is None:
+        filename = survey.new_path('report_%i.pdf')
 
-	# Filename of output
-	if filename is None :
-		filename = survey.new_path('report_%i.pdf')
+    # Temporary directory for TeX files.
+    tmpdir = tempfile.mkdtemp()
 
-	# Temporary directory for TeX files.
-	tmpdir = tempfile.mkdtemp()
+    try:
+        # iterate over sheets
+        survey.iterate(
+            survey.questionnaire.report.report,
+            lambda: survey.sheet.valid and filter(),
+            tmpdir
+        )
 
-	try:
-		# iterate over sheets
-		survey.iterate(
-			survey.questionnaire.report.report,
-			lambda : survey.sheet.valid and filter(),
-			tmpdir
-		)
+        # Copy class and dictionary files
+        if paths.local_run:
+            cls_file = os.path.join(paths.source_dir, 'tex', 'sdapsreport.cls')
+            dict_files = os.path.join(paths.source_dir, 'tex', '*.dict')
+            dict_files = glob.glob(dict_files)
+        else:
+            cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdapsreport.cls')
+            dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
+            dict_files = glob.glob(dict_files)
 
-		# Copy class and dictionary files
-		if paths.local_run :
-			cls_file = os.path.join(paths.source_dir, 'tex', 'sdapsreport.cls')
-			dict_files = os.path.join(paths.source_dir, 'tex', '*.dict')
-			dict_files = glob.glob(dict_files)
-		else :
-			cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdapsreport.cls')
-			dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
-			dict_files = glob.glob(dict_files)
+        shutil.copyfile(cls_file, os.path.join(tmpdir, 'sdapsreport.cls'))
+        for dict_file in dict_files:
+            shutil.copyfile(dict_file, os.path.join(tmpdir, os.path.basename(dict_file)))
 
-		shutil.copyfile(cls_file, os.path.join(tmpdir, 'sdapsreport.cls'))
-		for dict_file in dict_files:
-			shutil.copyfile(dict_file, os.path.join(tmpdir, os.path.basename(dict_file)))
+        texfile = codecs.open(os.path.join(tmpdir, 'report.tex'), 'w', 'utf-8')
 
+        author = _('author|Unknown').split('|')[-1]
 
-		texfile = codecs.open(os.path.join(tmpdir, 'report.tex'), 'w', 'utf-8')
+        extra_info = []
+        for key, value in survey.info.iteritems():
+            if key == 'Author':
+                author = value
+                continue
 
-		author = _('author|Unknown').split('|')[-1]
+            extra_info.append(u'\\addextrainfo{%(key)s}{%(value)s}' % {'key': key, 'value': value})
 
-		extra_info = []
-		for key, value in survey.info.iteritems():
-			if key == 'Author':
-				author = value
-				continue
+        extra_info = u'\n'.join(extra_info)
+        texfile.write(r"""\documentclass[%(language)s]{sdapsreport}
 
-			extra_info.append(u'\\addextrainfo{%(key)s}{%(value)s}' % {'key': key, 'value': value})
+    \usepackage[utf8]{inputenc}
+    \usepackage[%(language)s]{babel}
 
-		extra_info = u'\n'.join(extra_info)
-		texfile.write(r"""\documentclass[%(language)s]{sdapsreport}
+    \title{%(title)s}
+    \subject{%(title)s}
+    \author{%(author)s}
 
-	\usepackage[utf8]{inputenc}
-	\usepackage[%(language)s]{babel}
+    \addextrainfo{%(turned_in)s}{%(count)i}
+    %(extra_info)s
 
-	\title{%(title)s}
-	\subject{%(title)s}
-	\author{%(author)s}
+    \begin{document}
 
-	\addextrainfo{%(turned_in)s}{%(count)i}
-	%(extra_info)s
+    \maketitle
 
-	\begin{document}
+    """ % {'language': _('tex language|english').split('|')[-1],
+           'title': _(u'sdaps report'),
+           'turned_in': _('Turned in Questionnaires'),
+           'title': survey.title,
+           'author': author,
+           'extra_info': extra_info,
+           'count': survey.questionnaire.calculate.count})
 
-	\maketitle
+        survey.questionnaire.report.write(texfile, tmpdir)
 
-	""" % {'language' : _('tex language|english').split('|')[-1],
-	       'title' : _(u'sdaps report'),
-	       'turned_in' : _('Turned in Questionnaires'),
-	       'title': survey.title,
-	       'author' : author,
-	       'extra_info' : extra_info,
-	       'count' : survey.questionnaire.calculate.count})
+        texfile.write(r"""
+    \end{document}
+    """)
 
-		survey.questionnaire.report.write(texfile, tmpdir)
+        print _("Running pdflatex now twice to generate the report.")
+        # First run in draftmode, no need to generate a PDF
+        subprocess.call(['pdflatex', '-draftmode', '-halt-on-error',
+                         '-interaction', 'batchmode',
+                         os.path.join(tmpdir, 'report.tex')],
+                        cwd=tmpdir)
+        # And again, without the draft mode
+        subprocess.call(['pdflatex', '-halt-on-error', '-interaction',
+                         'batchmode',
+                         os.path.join(tmpdir, 'report.tex')],
+                        cwd=tmpdir)
 
-		texfile.write(r"""
-	\end{document}
-	""")
+        if not os.path.exists(os.path.join(tmpdir, 'report.pdf')):
+            print _("Error running \"pdflatex\" to compile the LaTeX file.")
+            raise AssertionError('PDF file not generated')
 
-		print _("Running pdflatex now twice to generate the report.")
-		# First run in draftmode, no need to generate a PDF
-		subprocess.call(['pdflatex', '-draftmode', '-halt-on-error', '-interaction', 'batchmode', os.path.join(tmpdir, 'report.tex')], cwd=tmpdir)
-		# And again, without the draft mode
-		subprocess.call(['pdflatex', '-halt-on-error', '-interaction', 'batchmode', os.path.join(tmpdir, 'report.tex')], cwd=tmpdir)
+        shutil.move(os.path.join(tmpdir, 'report.pdf'), filename)
 
-		if not os.path.exists(os.path.join(tmpdir, 'report.pdf')):
-			print _("Error running \"pdflatex\" to compile the LaTeX file.")
-			raise AssertionError('PDF file not generated')
+    except:
+        print _("An occured during creation of the report. Temporary files left in '%s'." % tmpdir)
 
-		shutil.move(os.path.join(tmpdir, 'report.pdf'), filename)
+        raise
 
-	except:
-		print _("An occured during creation of the report. Temporary files left in '%s'." % tmpdir)
-
-		raise
-
-	shutil.rmtree(tmpdir)
+    shutil.rmtree(tmpdir)
 

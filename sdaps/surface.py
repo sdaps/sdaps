@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,27 +26,29 @@ import model
 import image
 
 
-class Image (model.buddy.Buddy) :
+class Image(model.buddy.Buddy):
 
-	__metaclass__ = model.buddy.Register
-	name = 'surface'
-	obj_class = model.sheet.Image
+    __metaclass__ = model.buddy.Register
+    name = 'surface'
+    obj_class = model.sheet.Image
 
-	def load (self) :
-		self.surface = image.get_a1_from_tiff(
-			self.obj.sheet.survey.path(self.obj.filename),
-			self.obj.tiff_page,
-			self.obj.rotated
-		)
+    def load(self):
+        self.surface = image.get_a1_from_tiff(
+            self.obj.sheet.survey.path(self.obj.filename),
+            self.obj.tiff_page,
+            self.obj.rotated
+        )
 
-	def load_rgb (self) :
-		self.surface_rgb = image.get_rgb24_from_tiff(
-			self.obj.sheet.survey.path(self.obj.filename),
-			self.obj.tiff_page,
-			self.obj.rotated
-		)
+    def load_rgb(self):
+        self.surface_rgb = image.get_rgb24_from_tiff(
+            self.obj.sheet.survey.path(self.obj.filename),
+            self.obj.tiff_page,
+            self.obj.rotated
+        )
 
-	def clean (self) :
-		if hasattr(self, 'surface') : del self.surface
-		if hasattr(self, 'surface_rgb') : del self.surface_rgb
+    def clean(self):
+        if hasattr(self, 'surface'):
+            del self.surface
+        if hasattr(self, 'surface_rgb'):
+            del self.surface_rgb
 

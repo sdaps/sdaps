@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@ import os
 from pkg_resources import get_build_platform
 from distutils.sysconfig import get_python_version
 
-import gettext, locale
+import gettext
+import locale
 
 
 local_run = False
@@ -39,55 +40,55 @@ source_dir = str()
 prefix = str()
 
 
-def init (local_run_value, package_path) :
-	u'''Initialize path values for sdaps
-	'''
-	global local_run, build_dir, source_dir, prefix
+def init(local_run_value, package_path):
+    u'''Initialize path values for sdaps
+    '''
+    global local_run, build_dir, source_dir, prefix
 
-	# Initialize local_run
-	local_run = local_run_value
+    # Initialize local_run
+    local_run = local_run_value
 
-	base_dir = os.path.split(os.path.abspath(package_path))[0]
+    base_dir = os.path.split(os.path.abspath(package_path))[0]
 
-	if local_run :
-		source_dir = base_dir
+    if local_run:
+        source_dir = base_dir
 
-		# Initialize gettext
-		init_gettext(os.path.join(
-		    base_dir,
-		    'build',
-		    'mo'))
-		# Initialize build_dir
-		build_dir = os.path.join(
-		    base_dir,
-		    'build', 'lib.%s-%s' % (get_build_platform(), get_python_version()),
-		    'sdaps')
-	else :
-		# Initialize prefix
-		# Gehe von base_dir aus solange nach oben, bis path/share/sdaps
-		# existiert
-		path = base_dir
-		while True :
-			new_path = os.path.split(path)[0]
-			assert not path == new_path # Wir wären oben angekommen
-			path = new_path
-			if os.path.exists(os.path.join(path, 'share', 'sdaps')) :
-				prefix = path
-				break
-		# Initialize gettext
-		init_gettext(os.path.join(prefix, 'share', 'locale'))
+        # Initialize gettext
+        init_gettext(os.path.join(
+            base_dir,
+            'build',
+            'mo'))
+        # Initialize build_dir
+        build_dir = os.path.join(
+            base_dir,
+            'build', 'lib.%s-%s' % (get_build_platform(), get_python_version()),
+            'sdaps')
+    else:
+        # Initialize prefix
+        # Gehe von base_dir aus solange nach oben, bis path/share/sdaps
+        # existiert
+        path = base_dir
+        while True:
+            new_path = os.path.split(path)[0]
+            assert not path == new_path # Wir wären oben angekommen
+            path = new_path
+            if os.path.exists(os.path.join(path, 'share', 'sdaps')):
+                prefix = path
+                break
+        # Initialize gettext
+        init_gettext(os.path.join(prefix, 'share', 'locale'))
 
 
-def init_gettext (locale_dir) :
-	u'''Initialize gettext.
+def init_gettext(locale_dir):
+    u'''Initialize gettext.
 
-	Tell it, where to find the translation files.
-	'''
-	gettext.bindtextdomain('sdaps', locale_dir)
-	if hasattr(gettext, 'bind_textdomain_codeset'):
-		gettext.bind_textdomain_codeset('sdaps','UTF-8')
-		gettext.textdomain('sdaps')
-		locale.bindtextdomain('sdaps', locale_dir)
-	if hasattr(locale, 'bind_textdomain_codeset'):
-		locale.bind_textdomain_codeset('sdaps','UTF-8')
-		locale.textdomain('sdaps')
+    Tell it, where to find the translation files.
+    '''
+    gettext.bindtextdomain('sdaps', locale_dir)
+    if hasattr(gettext, 'bind_textdomain_codeset'):
+        gettext.bind_textdomain_codeset('sdaps', 'UTF-8')
+        gettext.textdomain('sdaps')
+        locale.bindtextdomain('sdaps', locale_dir)
+    if hasattr(locale, 'bind_textdomain_codeset'):
+        locale.bind_textdomain_codeset('sdaps', 'UTF-8')
+        locale.textdomain('sdaps')

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,11 +30,11 @@ from sdaps import paths
 from sdaps import defs
 
 
-if paths.local_run :
+if paths.local_run:
     # image.so liegt in build_dir/image/
     __path__.append(os.path.join(paths.build_dir, 'image'))
 
-# Wenn ein installiertes sdaps ausgeführt wird (local_run == False), liegt
+# Wenn ein installiertes sdaps ausgeführt wird(local_run == False), liegt
 # image.so im selben Verzeichnis wie diese Datei
 
 

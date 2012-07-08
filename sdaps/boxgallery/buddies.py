@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,105 +23,105 @@ from sdaps import surface
 from sdaps import matrix
 
 
-class Sheet (model.buddy.Buddy) :
+class Sheet(model.buddy.Buddy):
 
-	__metaclass__ = model.buddy.Register
-	name = 'boxgallery'
-	obj_class = model.sheet.Sheet
+    __metaclass__ = model.buddy.Register
+    name = 'boxgallery'
+    obj_class = model.sheet.Sheet
 
-	def load (self) :
-		for image in self.obj.images :
-			image.surface.load()
+    def load(self):
+        for image in self.obj.images:
+            image.surface.load()
 
-	def clean (self) :
-		for image in self.obj.images :
-			image.surface.clean()
-
-
-class Questionnaire (model.buddy.Buddy) :
-
-	__metaclass__ = model.buddy.Register
-	name = 'boxgallery'
-	obj_class = model.questionnaire.Questionnaire
-
-	def init (self) :
-		self.checkboxes = list()
-
-	def clean (self) :
-		del self.checkboxes
-
-	def get_checkbox_images (self) :
-		if self.obj.survey.sheet.valid:
-			self.obj.survey.sheet.boxgallery.load()
-			for qobject in self.obj.qobjects:
-				self.checkboxes.extend(qobject.boxgallery.get_checkbox_images())
-			self.obj.survey.sheet.boxgallery.clean()
+    def clean(self):
+        for image in self.obj.images:
+            image.surface.clean()
 
 
-class QObject (model.buddy.Buddy) :
+class Questionnaire(model.buddy.Buddy):
 
-	__metaclass__ = model.buddy.Register
-	name = 'boxgallery'
-	obj_class = model.questionnaire.QObject
+    __metaclass__ = model.buddy.Register
+    name = 'boxgallery'
+    obj_class = model.questionnaire.Questionnaire
 
-	def get_checkbox_images (self) :
-		return []
+    def init(self):
+        self.checkboxes = list()
 
+    def clean(self):
+        del self.checkboxes
 
-class Question (QObject) :
-
-	__metaclass__ = model.buddy.Register
-	name = 'boxgallery'
-	obj_class = model.questionnaire.Question
-
-	def get_checkbox_images (self) :
-		boxes = []
-
-		for box in self.obj.boxes:
-			new_box = box.boxgallery.get_checkbox_image()
-			if new_box:
-				boxes.append(new_box)
-		return boxes
+    def get_checkbox_images(self):
+        if self.obj.survey.sheet.valid:
+            self.obj.survey.sheet.boxgallery.load()
+            for qobject in self.obj.qobjects:
+                self.checkboxes.extend(qobject.boxgallery.get_checkbox_images())
+            self.obj.survey.sheet.boxgallery.clean()
 
 
-class Box (model.buddy.Buddy):
-	__metaclass__ = model.buddy.Register
-	name = 'boxgallery'
-	obj_class = model.questionnaire.Box
+class QObject(model.buddy.Buddy):
 
-	def get_checkbox_image (self):
-		return None
+    __metaclass__ = model.buddy.Register
+    name = 'boxgallery'
+    obj_class = model.questionnaire.QObject
+
+    def get_checkbox_images(self):
+        return []
 
 
-class Checkbox (model.buddy.Buddy):
-	__metaclass__ = model.buddy.Register
-	name = 'boxgallery'
-	obj_class = model.questionnaire.Checkbox
+class Question(QObject):
 
-	def get_checkbox_image (self):
-		image = self.obj.sheet.images[self.obj.page_number - 1]
+    __metaclass__ = model.buddy.Register
+    name = 'boxgallery'
+    obj_class = model.questionnaire.Question
 
-		border = 1.5
-		mm_to_px = image.matrix.mm_to_px()
+    def get_checkbox_images(self):
+        boxes = []
 
-		px_x, px_y = mm_to_px.transform_point(
-		    self.obj.data.x - border, self.obj.data.y - border)
-		px_width, px_height = mm_to_px.transform_distance(
-		    self.obj.data.width + 2*border, self.obj.data.height + 2*border)
+        for box in self.obj.boxes:
+            new_box = box.boxgallery.get_checkbox_image()
+            if new_box:
+                boxes.append(new_box)
+        return boxes
 
-		dest = cairo.ImageSurface(
-		    cairo.FORMAT_A1, int(px_width), int(px_height))
-		src = image.surface.surface
 
-		cr = cairo.Context(dest)
-		cr.set_source_surface(src, -px_x, -px_y)
-		cr.set_operator(cairo.OPERATOR_SOURCE)
-		cr.paint()
+class Box(model.buddy.Buddy):
+    __metaclass__ = model.buddy.Register
+    name = 'boxgallery'
+    obj_class = model.questionnaire.Box
 
-		del cr
-		dest.flush()
+    def get_checkbox_image(self):
+        return None
 
-		return (self.obj.data.state, self.obj.data.metrics, dest)
+
+class Checkbox(model.buddy.Buddy):
+    __metaclass__ = model.buddy.Register
+    name = 'boxgallery'
+    obj_class = model.questionnaire.Checkbox
+
+    def get_checkbox_image(self):
+        image = self.obj.sheet.images[self.obj.page_number - 1]
+
+        border = 1.5
+        mm_to_px = image.matrix.mm_to_px()
+
+        px_x, px_y = mm_to_px.transform_point(
+            self.obj.data.x - border, self.obj.data.y - border)
+        px_width, px_height = mm_to_px.transform_distance(
+            self.obj.data.width + 2 * border, self.obj.data.height + 2 * border)
+
+        dest = cairo.ImageSurface(
+            cairo.FORMAT_A1, int(px_width), int(px_height))
+        src = image.surface.surface
+
+        cr = cairo.Context(dest)
+        cr.set_source_surface(src, -px_x, -px_y)
+        cr.set_operator(cairo.OPERATOR_SOURCE)
+        cr.paint()
+
+        del cr
+        dest.flush()
+
+        return(self.obj.data.state, self.obj.data.metrics, dest)
 
 
 

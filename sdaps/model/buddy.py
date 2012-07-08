@@ -1,16 +1,16 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or   
+# the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -18,74 +18,76 @@
 
 u'''
 
-	sdaps - scripts for data acquisition with paper based surveys
+    sdaps - scripts for data acquisition with paper based surveys
 
-	model/buddy - Registration center for buddies
+    model/buddy - Registration center for buddies
 
 
 Defining a buddy
 ================
 
-	from sdaps import model
-	
-	class QObject (model.buddy.Buddy) :
-		
-		__metaclass__ = model.buddy.Register
-		obj_class = object class
-		name = 'my_buddy'
-	
-	The buddy will be available as object.my_buddy
-	
-	Inside buddy class, the object is available as self.obj
+    from sdaps import model
+
+    class QObject(model.buddy.Buddy):
+
+        __metaclass__ = model.buddy.Register
+        obj_class = object class
+        name = 'my_buddy'
+
+    The buddy will be available as object.my_buddy
+
+    Inside buddy class, the object is available as self.obj
 
 '''
 
-class Object (object) :
-	u'''class which can have buddies'''
 
-	def get_buddy (self, name) :
-		if not hasattr(self, '_%s_object_' % name) :
-			setattr(self, '_%s_object_' % name, getattr(self, '_%s_class_' % name)(self))
-		return getattr(self, '_%s_object_' % name)
-	
-	def __getstate__ (self) :
-		u'''do not pickle buddy instances.
-		buddy classes are class attributes, which are not pickled.
-		'''
-		dict = self.__dict__.copy()
-		keys = dict.keys()
-		for key in keys :
-			if key.endswith('_object_') :
-				del dict[key]
-		return dict
+class Object(object):
+    u'''class which can have buddies'''
 
+    def get_buddy(self, name):
+        if not hasattr(self, '_%s_object_' % name):
+            setattr(self, '_%s_object_' % name, getattr(self, '_%s_class_' % name)(self))
+        return getattr(self, '_%s_object_' % name)
 
-class Register (type) :
-	u'''metaclass to register the class as a buddy'''
-	
-	def __init__ (cls, name, bases, dict) :
-		type.__init__(cls, name, bases, dict)
-		assert issubclass(cls.obj_class, Object)
-		setattr(
-			cls.obj_class,
-			'_%s_class_' % cls.name,
-			cls
-		)
-		setattr(
-			cls.obj_class,
-			cls.name,
-			property(lambda self: self.get_buddy(cls.name))
-		)
+    def __getstate__(self):
+        u'''do not pickle buddy instances.
+        buddy classes are class attributes, which are not pickled.
+        '''
+        dict = self.__dict__.copy()
+        keys = dict.keys()
+        for key in keys:
+            if key.endswith('_object_'):
+                del dict[key]
+        return dict
 
 
-class Buddy (object) :
-	u'''base class for buddies'''
-	
-	__metaclass__ = Register
-	obj_class = Object
-	name = 'my_buddy'
+class Register(type):
+    u'''metaclass to register the class as a buddy'''
 
-	def __init__ (self, obj) :
-		if 0 : assert isinstance(obj, self.obj_class)
-		self.obj = obj
+    def __init__(cls, name, bases, dict):
+        type.__init__(cls, name, bases, dict)
+        assert issubclass(cls.obj_class, Object)
+        setattr(
+            cls.obj_class,
+            '_%s_class_' % cls.name,
+            cls
+        )
+        setattr(
+            cls.obj_class,
+            cls.name,
+            property(lambda self: self.get_buddy(cls.name))
+        )
+
+
+class Buddy(object):
+    u'''base class for buddies'''
+
+    __metaclass__ = Register
+    obj_class = Object
+    name = 'my_buddy'
+
+    def __init__(self, obj):
+        if 0:
+            assert isinstance(obj, self.obj_class)
+        self.obj = obj
 

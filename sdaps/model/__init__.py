@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ survey
 
 The questionnaire tree resembles the structer of the questionnaire and the
 internal structure of the programm. It is set up by the setup script and not
-altered (much) later.
+altered(much) later.
 
 The sheets tree holds the data of the answered questionnaires. The sheet
 objects are created while the scanned images are added to the project.
@@ -43,7 +43,7 @@ Iterating through sheets and jumping
 
 Survey provides a function iterate. It iterates through the sheets and calls a
 function for each. Inside this function, the sheet is accessible through
-survey.sheet (a property, pointing to the actual sheet)
+survey.sheet(a property, pointing to the actual sheet)
 The functions goto_something jump the survey.sheet pointer to the specified
 sheet.
 

@@ -23,7 +23,9 @@ regexp = re.compile(r'^\\DeclareUnicodeCharacter\{(?P<unicode>[0-9a-fA-F]{4})\}\
 
 mapping = []
 for match in regexp.finditer(data):
-    mapping.append('''\tu\'%s\' : u\'\\u%s\'''' % (match.group('str').replace('\\', '\\\\').replace('\'', '\\\''), match.group('unicode')))
+    mapping.append('''\tu\'%s\': u\'\\u%s\'''' %
+                   (match.group('str').replace('\\', '\\\\').replace('\'', '\\\''),
+                    match.group('unicode')))
 
 output.write('''#This file is auto generated from the latex unicode mapping.
 

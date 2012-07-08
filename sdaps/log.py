@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,93 +25,93 @@ import time
 import StringIO
 
 
-class Copier (object) :
-	'''copy all data going through the pipe into a logfile'''
+class Copier(object):
+    '''copy all data going through the pipe into a logfile'''
 
-	def __init__ (self, pipe, logfile) :
-		self.pipe = pipe
-		self.logfile = logfile
+    def __init__(self, pipe, logfile):
+        self.pipe = pipe
+        self.logfile = logfile
 
-	def write (self, data) :
-		self.pipe.write(data)
-		self.logfile.write(data)
-
-
-class Wiper (object) :
-	'''wipe out the progressbar before forwarding data through the pipe'''
-
-	def __init__ (self, pipe, progressbar) :
-		self.pipe = pipe
-		self.progressbar = progressbar
-
-	def write (self, data) :
-		if self.progressbar.visible :
-			self.pipe.write(' ' * 80)
-			self.pipe.write('\r')
-			self.progressbar.visible = 0
-		self.pipe.write(data)
+    def write(self, data):
+        self.pipe.write(data)
+        self.logfile.write(data)
 
 
-class Encoder (object) :
-	'''Encode data going through the pipe to utf8'''
+class Wiper(object):
+    '''wipe out the progressbar before forwarding data through the pipe'''
 
-	def __init__ (self, pipe) :
-		self.pipe = pipe
+    def __init__(self, pipe, progressbar):
+        self.pipe = pipe
+        self.progressbar = progressbar
 
-	def write (self, data) :
-		self.pipe.write(data.encode('utf8'))
-
-	def close (self) :
-		self.pipe.close()
-
-
-class Logfile (object) :
-
-	def __init__ (self) :
-		self.logfile = StringIO.StringIO()
-
-	def write (self, data) :
-		self.logfile.write(data)
-
-	def open (self, filename) :
-		logfile = Encoder(file(filename, 'a'))
-		logfile.write(self.logfile.getvalue())
-		self.logfile = logfile
-
-	def close (self) :
-		self.logfile.close()
-		self.logfile = StringIO.StringIO()
+    def write(self, data):
+        if self.progressbar.visible:
+            self.pipe.write(' ' * 80)
+            self.pipe.write('\r')
+            self.progressbar.visible = 0
+        self.pipe.write(data)
 
 
-class ProgressBar (object) :
+class Encoder(object):
+    '''Encode data going through the pipe to utf8'''
 
-	def __init__ (self, pipe) :
-		self.pipe = pipe
-		self.visible = 0
+    def __init__(self, pipe):
+        self.pipe = pipe
 
-	def start (self, max_value) :
-		self.max_value = max_value
-		self.start_time = time.time()
-		self.update(0)
+    def write(self, data):
+        self.pipe.write(data.encode('utf8'))
 
-	def update (self, value) :
-		progress = float(value) / float(self.max_value)
-		self.elapsed_time = time.time() - self.start_time
-		self.pipe.write('|')
-		self.pipe.write(('#' * int(round(progress * 64))).ljust(64))
-		self.pipe.write('| ')
-		self.pipe.write(('%i%% ' % int(round(progress * 100))).rjust(5))
-		if progress == 0 :
-			self.pipe.write('--:--:--')
-		elif progress == 1 :
-			self.pipe.write(time.strftime('%H:%M:%S', time.gmtime(self.elapsed_time)))
-			self.pipe.write('\n')
-		else :
-			remaining_time = self.elapsed_time * (1 / progress - 1)
-			self.pipe.write(time.strftime('%H:%M:%S', time.gmtime(remaining_time)))
-		self.pipe.write('\r')
-		self.pipe.flush()
-		self.visible = 1
+    def close(self):
+        self.pipe.close()
+
+
+class Logfile(object):
+
+    def __init__(self):
+        self.logfile = StringIO.StringIO()
+
+    def write(self, data):
+        self.logfile.write(data)
+
+    def open(self, filename):
+        logfile = Encoder(file(filename, 'a'))
+        logfile.write(self.logfile.getvalue())
+        self.logfile = logfile
+
+    def close(self):
+        self.logfile.close()
+        self.logfile = StringIO.StringIO()
+
+
+class ProgressBar(object):
+
+    def __init__(self, pipe):
+        self.pipe = pipe
+        self.visible = 0
+
+    def start(self, max_value):
+        self.max_value = max_value
+        self.start_time = time.time()
+        self.update(0)
+
+    def update(self, value):
+        progress = float(value) / float(self.max_value)
+        self.elapsed_time = time.time() - self.start_time
+        self.pipe.write('|')
+        self.pipe.write(('#' * int(round(progress * 64))).ljust(64))
+        self.pipe.write('| ')
+        self.pipe.write(('%i%% ' % int(round(progress * 100))).rjust(5))
+        if progress == 0:
+            self.pipe.write('--:--:--')
+        elif progress == 1:
+            self.pipe.write(time.strftime('%H:%M:%S', time.gmtime(self.elapsed_time)))
+            self.pipe.write('\n')
+        else:
+            remaining_time = self.elapsed_time * (1 / progress - 1)
+            self.pipe.write(time.strftime('%H:%M:%S', time.gmtime(remaining_time)))
+        self.pipe.write('\r')
+        self.pipe.flush()
+        self.visible = 1
 
 
 progressbar = ProgressBar(sys.stdout)

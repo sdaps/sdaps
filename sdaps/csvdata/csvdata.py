@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,30 +24,30 @@ from sdaps import model
 import buddies
 
 
-def csvdata_export (survey, *filter) :
-	# compile clifilter
-	filter = clifilter.clifilter(survey, *filter)
+def csvdata_export(survey, *filter):
+    # compile clifilter
+    filter = clifilter.clifilter(survey, *filter)
 
-	# export
-	survey.questionnaire.csvdata.export_header()
+    # export
+    survey.questionnaire.csvdata.export_header()
 
-	survey.iterate(
-		survey.questionnaire.csvdata.export_data,
-		filter,
-	)
+    survey.iterate(
+        survey.questionnaire.csvdata.export_data,
+        filter,
+    )
 
-	survey.questionnaire.csvdata.export_finish()
+    survey.questionnaire.csvdata.export_finish()
 
 
-def csvdata_import (survey, filename) :
-	csvfile = file(filename, 'r')
-	csvreader = csv.DictReader(csvfile)
+def csvdata_import(survey, filename):
+    csvfile = file(filename, 'r')
+    csvreader = csv.DictReader(csvfile)
 
-	for data in csvreader :
-		survey.questionnaire.csvdata.import_data(data)
+    for data in csvreader:
+        survey.questionnaire.csvdata.import_data(data)
 
-	csvfile.close()
+    csvfile.close()
 
-	survey.save()
+    survey.save()
 
 

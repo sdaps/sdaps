@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,13 +33,13 @@ _ = ugettext
 @script.logfile
 @script.doc(_(u'''
 
-	Recognize all added sheets.
+    Recognize all added sheets.
 
-	Attention: This script overwrites all data, including manual changes made
-		with the gui!
-	'''))
-def recognize (survey_dir) :
-	survey = model.survey.Survey.load(survey_dir)
-	import recognize
-	recognize.recognize(survey)
+    Attention: This script overwrites all data, including manual changes made
+        with the gui!
+    '''))
+def recognize(survey_dir):
+    survey = model.survey.Survey.load(survey_dir)
+    import recognize
+    recognize.recognize(survey)
 

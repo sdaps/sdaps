@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2010, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2010, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,15 +31,15 @@ _ = ugettext
 @script.register
 @script.doc(_(u'''questionnaire_tex [additional_questions]
 
-	Setup creates a new survey. It compiles the TeX file, and parses the 
-	output to create the data model.
-	The survey must not exist yet.
+    Setup creates a new survey. It compiles the TeX file, and parses the
+    output to create the data model.
+    The survey must not exist yet.
 
-	questionnaire_tex: the questionnaire in TeX-format
-	additional_questions: the questions in the internet (optional)
-	'''))
-def setup_tex (survey_dir, questionnaire_odt, additional_questions = None) :
-	survey = model.survey.Survey.new(survey_dir)
-	import setup
-	setup.setup(survey, questionnaire_odt, additional_questions)
+    questionnaire_tex: the questionnaire in TeX-format
+    additional_questions: the questions in the internet(optional)
+    '''))
+def setup_tex(survey_dir, questionnaire_odt, additional_questions=None):
+    survey = model.survey.Survey.new(survey_dir)
+    import setup
+    setup.setup(survey, questionnaire_odt, additional_questions)
 

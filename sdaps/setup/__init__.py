@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,14 +28,14 @@ import optparse
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
-usage=_("""[options] questionnaire_odt questionnaire_pdf [additional_questions]
+usage = _("""[options] questionnaire_odt questionnaire_pdf [additional_questions]
 
-	Setup creates a new survey. It parses the questionnaire to create the data
-	model. The survey must not exist yet.
+    Setup creates a new survey. It parses the questionnaire to create the data
+    model. The survey must not exist yet.
 
-	questionnaire_odt: the questionnaire in odt-format
-	questionnaire_pdf: the questionnaire in pdf-format
-	internetquestions: the questions in the internet (optional)""")
+    questionnaire_odt: the questionnaire in odt-format
+    questionnaire_pdf: the questionnaire in pdf-format
+    internetquestions: the questions in the internet(optional)""")
 
 # Stupid bugger always adds a "Usage:" string that we do not want.
 parser = optparse.OptionParser(usage=optparse.SUPPRESS_USAGE)
@@ -76,30 +76,31 @@ parser.add_option('--simplex', action="store_false",
                   help=_('Use simplex mode. IDs are printed on each page. You need a simplex scan currently!'),
                   dest='duplex')
 
+
 @script.register
 @script.doc(usage + '\n\n\t' + '\n\t'.join(parser.format_help().split('\n')))
-def setup (survey_dir, *args) :
-	survey = model.survey.Survey.new(survey_dir)
+def setup(survey_dir, *args):
+    survey = model.survey.Survey.new(survey_dir)
 
-	(options, arguments) = parser.parse_args(list(args))
+    (options, arguments) = parser.parse_args(list(args))
 
-	if not len(arguments) in [2, 3]:
-		# Print our documentation string
-		print setup.func_doc
-		return 1
+    if not len(arguments) in [2, 3]:
+        # Print our documentation string
+        print setup.func_doc
+        return 1
 
-	# Cleanup of options.
-	if options.global_id == '':
-		options.global_id = None
+    # Cleanup of options.
+    if options.global_id == '':
+        options.global_id = None
 
-	options.style = options.style.lower()
+    options.style = options.style.lower()
 
-	if not options.style in model.survey.valid_styles:
-		print >>sys.stderr, _("You selected an unsupported style '%s'.\nValid choices are:") % options.style
-		for style in model.valid_styles:
-			print >>sys.stderr, " * %s" % style
-		sys.exit(1)
+    if not options.style in model.survey.valid_styles:
+        print >>sys.stderr, _("You selected an unsupported style '%s'.\nValid choices are:") % options.style
+        for style in model.valid_styles:
+            print >>sys.stderr, " * %s" % style
+        sys.exit(1)
 
-	import setup
-	setup.setup(survey, options, *arguments)
+    import setup
+    setup.setup(survey, options, *arguments)
 

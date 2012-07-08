@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,32 +22,33 @@ on the command line of sdaps. Using this it is for example possible to create
 a report that only contains a subset of all filled out sheets.
 """
 
-class Locals (object) :
 
-	def __init__ (self, survey) :
-		self.survey = survey
-		self.qobjects = dict([
-			(qobject.id_filter(), qobject)
-			for qobject in self.survey.questionnaire.qobjects
-		])
+class Locals(object):
 
-	def __getitem__ (self, key) :
-		if key in self.qobjects :
-			return self.qobjects[key].get_answer()
-		elif key == 'valid' :
-			return self.survey.sheet.valid
-		else :
-			raise KeyError
+    def __init__(self, survey):
+        self.survey = survey
+        self.qobjects = dict([
+            (qobject.id_filter(), qobject)
+            for qobject in self.survey.questionnaire.qobjects
+        ])
+
+    def __getitem__(self, key):
+        if key in self.qobjects:
+            return self.qobjects[key].get_answer()
+        elif key == 'valid':
+            return self.survey.sheet.valid
+        else:
+            raise KeyError
 
 
-def clifilter (survey, *expression) :
-	expression = u' '.join([x.decode('utf-8') for x in expression]).strip()
+def clifilter(survey, *expression):
+    expression = u' '.join([x.decode('utf-8') for x in expression]).strip()
 
-	if not expression :
-		return lambda : True
+    if not expression:
+        return lambda: True
 
-	exp = compile(expression, '<string>', 'eval')
-	globals = __builtins__
-	locals = Locals(survey)
-	return lambda : eval(exp, globals, locals)
+    exp = compile(expression, '<string>', 'eval')
+    globals = __builtins__
+    locals = Locals(survey)
+    return lambda: eval(exp, globals, locals)
 

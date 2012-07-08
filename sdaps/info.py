@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,27 +27,27 @@ _ = ugettext
 @script.logfile
 @script.doc(_(u'''[field [content]]
 
-	Alter metadata.
+    Alter metadata.
 
-	field: name of the field you whish to alter
-	content: the new content for that field or empty if you want to delete the
-		field.
+    field: name of the field you whish to alter
+    content: the new content for that field or empty if you want to delete the
+        field.
 
-	With no arguments, info will print a list of existing fields.
-	'''))
-def info (survey_dir, field = None, content = None) :
-	survey = model.survey.Survey.load(survey_dir)
+    With no arguments, info will print a list of existing fields.
+    '''))
+def info(survey_dir, field=None, content=None):
+    survey = model.survey.Survey.load(survey_dir)
 
-	if field :
-		field = field.decode('utf-8').strip()
-		if content :
-			content = content.decode('utf-8').strip()
-			survey.info[field] = content
-			print '%s = %s' % (field, content)
-		else :
-			del survey.info[field]
-	else :
-		print _(u'Existing fields: %s') % (u', '.join(survey.info.keys()))
+    if field:
+        field = field.decode('utf-8').strip()
+        if content:
+            content = content.decode('utf-8').strip()
+            survey.info[field] = content
+            print '%s = %s' % (field, content)
+        else:
+            del survey.info[field]
+    else:
+        print _(u'Existing fields: %s') % (u', '.join(survey.info.keys()))
 
-	survey.save()
+    survey.save()
 

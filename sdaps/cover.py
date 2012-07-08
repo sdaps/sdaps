@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,28 +27,28 @@ _ = ugettext
 @script.logfile
 @script.doc(_(u'''
 
-	The cover is a title page for the pile of questionnaires.
+    The cover is a title page for the pile of questionnaires.
 
-	creates cover.odf
-	'''))
-def cover (survey_dir) :
-	import template
+    creates cover.odf
+    '''))
+def cover(survey_dir):
+    import template
 
-	survey = model.survey.Survey.load(survey_dir)
+    survey = model.survey.Survey.load(survey_dir)
 
-	story = template.story_title(survey)
-	subject = []
-	for key, value in survey.info.iteritems():
-		subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
-	subject = u'\n'.join(subject)
+    story = template.story_title(survey)
+    subject = []
+    for key, value in survey.info.iteritems():
+        subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
+    subject = u'\n'.join(subject)
 
-	doc = template.DocTemplate(
-		survey.path('cover.pdf'),
-		_(u'sdaps questionnaire'),
-		{
-			'title' : survey.title,
-			'subject' : subject
-		}
-	)
-	doc.build(story)
+    doc = template.DocTemplate(
+        survey.path('cover.pdf'),
+        _(u'sdaps questionnaire'),
+        {
+            'title': survey.title,
+            'subject': subject
+        }
+    )
+    doc.build(story)
 

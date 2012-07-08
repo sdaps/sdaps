@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 u'''
 This module defines some decorators, helping to implement sdaps-scripts.
-To register a function as a sdaps-script (callable from the command line), use
+To register a function as a sdaps-script(callable from the command line), use
 @register
 '''
 
@@ -29,54 +29,55 @@ import log
 
 scripts = dict()
 
-def register (function) :
-	u'''decorator to register a function as a script.
 
-	sdaps will be able to call a registerd script.
+def register(function):
+    u'''decorator to register a function as a script.
 
-	@register
-	def function (survey, *args, **kwargs) :
-		pass
+    sdaps will be able to call a registerd script.
 
-	'''
-	scripts[function.func_name] = function
-	return function
+    @register
+    def function(survey, *args, **kwargs):
+        pass
 
-
-def doc (docstring) :
-	u'''decorator to add a docstring to a function.
-
-	When using normal Python docstring syntax, gettext can not find it to
-	translate it. Using @doc, you can pass your docstring through _() to make it
-	translatable.
-
-	@doc(_(u'docstring'))
-	def function (*args, **kwargs) :
-		pass
-
-	'''
-	def decorator (function) :
-		function.func_doc = docstring
-		return function
-	return decorator
+    '''
+    scripts[function.func_name] = function
+    return function
 
 
-def logfile (function) :
-	u'''open the logfile when running the function and close it afterwards.
+def doc(docstring):
+    u'''decorator to add a docstring to a function.
 
-	@logfile
-	def function (survey_dir, *args, **kwargs) :
-		pass
+    When using normal Python docstring syntax, gettext can not find it to
+    translate it. Using @doc, you can pass your docstring through _() to make it
+    translatable.
 
-	@logfile will open survey_dir/log as a logfile when function is called and
-	close it, when function finishes.
-	'''
-	def decorated_function (survey_dir, *args, **kwargs) :
-		log.logfile.open(os.path.join(survey_dir, 'log'))
-		function(survey_dir, *args, **kwargs)
-		log.logfile.close()
-	decorated_function.func_name = function.func_name
-	decorated_function.func_doc = function.func_doc
-	return decorated_function
+    @doc(_(u'docstring'))
+    def function(*args, **kwargs):
+        pass
+
+    '''
+    def decorator(function):
+        function.func_doc = docstring
+        return function
+    return decorator
+
+
+def logfile(function):
+    u'''open the logfile when running the function and close it afterwards.
+
+    @logfile
+    def function(survey_dir, *args, **kwargs):
+        pass
+
+    @logfile will open survey_dir/log as a logfile when function is called and
+    close it, when function finishes.
+    '''
+    def decorated_function(survey_dir, *args, **kwargs):
+        log.logfile.open(os.path.join(survey_dir, 'log'))
+        function(survey_dir, *args, **kwargs)
+        log.logfile.close()
+    decorated_function.func_name = function.func_name
+    decorated_function.func_doc = function.func_doc
+    return decorated_function
 
 

@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, 2011, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, 2011, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,18 +31,18 @@ _ = ugettext
 @script.logfile
 @script.doc(_(u'''[filter...]
 
-	Report generates a basic report using latex which shows for every question (if appropriate)
-		- the histogramm
-		- the mean
-		- the standard derivation
-		- all handwritten comments
+    Report generates a basic report using latex which shows for every question(if appropriate)
+        - the histogramm
+        - the mean
+        - the standard derivation
+        - all handwritten comments
 
-	filter: filter expression to select the sheets to appear in the report
+    filter: filter expression to select the sheets to appear in the report
 
-	creates report_[index].pdf
-	'''))
-def report_tex (survey_dir, *filter) :
-	survey = model.survey.Survey.load(survey_dir)
-	import report
-	report.report(survey, filter)
+    creates report_[index].pdf
+    '''))
+def report_tex(survey_dir, *filter):
+    survey = model.survey.Survey.load(survey_dir)
+    import report
+    report.report(survey, filter)
 

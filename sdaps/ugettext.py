@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,15 +19,16 @@
 import gettext
 
 
-def ugettext (string) :
-	u'''gettext for unicode objects
-	'''
-	return gettext.gettext(string.encode('UTF-8')).decode('UTF-8')
+def ugettext(string):
+    u'''gettext for unicode objects
+    '''
+    return gettext.gettext(string.encode('UTF-8')).decode('UTF-8')
 
-def ungettext (singular, plural, n) :
-	u'''ngettext for unicode objects
-	'''
-	return gettext.ngettext(
-	    singular.encode('UTF-8'),
-	    plural.encode('UTF-8'),
-	    n).decode('UTF-8')
+
+def ungettext(singular, plural, n):
+    u'''ngettext for unicode objects
+    '''
+    return gettext.ngettext(
+        singular.encode('UTF-8'),
+        plural.encode('UTF-8'),
+        n).decode('UTF-8')

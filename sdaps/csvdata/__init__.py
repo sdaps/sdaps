@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright (C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,26 +31,26 @@ _ = ugettext
 @script.logfile
 @script.doc(_(u'''export [filter...]
 
-	Export to csv
+    Export to csv
 
-	filter: filter expression to select the sheets to export
+    filter: filter expression to select the sheets to export
 
-	creates data_[index].csv
+    creates data_[index].csv
 
 
 csvdata import filename
 
-	Import from csv
+    Import from csv
 
-	filename: file to read from
-	'''))
-def csvdata (survey_dir, command, *args) :
-	survey = model.survey.Survey.load(survey_dir)
-	import csvdata
-	if command == 'export' :
-		csvdata.csvdata_export(survey, *args)
-	elif command == 'import' :
-		csvdata.csvdata_import(survey, *args)
-	else :
-		print _('Unknown command')
+    filename: file to read from
+    '''))
+def csvdata(survey_dir, command, *args):
+    survey = model.survey.Survey.load(survey_dir)
+    import csvdata
+    if command == 'export':
+        csvdata.csvdata_export(survey, *args)
+    elif command == 'import':
+        csvdata.csvdata_import(survey, *args)
+    else:
+        print _('Unknown command')
 

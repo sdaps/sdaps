@@ -1,10 +1,10 @@
 # pdftools - A library of classes for parsing and rendering PDF documents.
-# Copyright (C) 2001-2008 by David Boddie
+# Copyright(C) 2001-2008 by David Boddie
 # 
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
+# version 2 of the License, or(at your option) any later version.
 # 
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,4 +23,4 @@ Initialisation for the pdftools package.
 
 __all__ = ["pdfdefs", "pdffile", "pdfpath", "pdftext"]
 __version__ = "0.37"
-version = '%s (Tuesday 22nd April 2008)' % __version__
+version = '%s(Tuesday 22nd April 2008)' % __version__
