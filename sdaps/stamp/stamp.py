@@ -23,6 +23,7 @@ import sys
 import math
 
 from sdaps import model
+from sdaps import log
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
@@ -33,7 +34,7 @@ def stamp(survey, count=0, used_ids=None):
     # get number of sheets to create
     if count:
         if not survey.defs.print_questionnaire_id:
-            print _("You may not specify the number of sheets for surveys that do not print a quesitonnaire id.")
+            log.error(_("You may not specify the number of sheets for surveys that do not print a quesitonnaire id."))
             return 1
 
         if used_ids:
@@ -53,7 +54,7 @@ def stamp(survey, count=0, used_ids=None):
         questionnaire_ids = questionnaire_ids[:sheets]
     else:
         if survey.defs.print_questionnaire_id:
-            print _("You need to specify the number of questionnaires to create when questionnaire ids are printed.")
+            log.error(_("You need to specify the number of questionnaires to create when questionnaire ids are printed."))
             return 1
 
         sheets = 1

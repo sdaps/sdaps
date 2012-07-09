@@ -37,27 +37,23 @@ from pdftools import pdffile
 def setup(survey, options, questionnaire_odt, questionnaire_pdf, additionalqobjects=None):
 
     if os.access(survey.path(), os.F_OK):
-        print _('The survey directory already exists')
-        print _('Cancelling setup')
+        log.error(_('The survey directory already exists'))
         return 1
 
     mimetype = utils.mimetype(questionnaire_odt)
     if mimetype != 'application/vnd.oasis.opendocument.text' and mimetype != '':
-        print _('Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text') % mimetype
-        print _('Cancelling setup')
+        log.error(_('Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text') % mimetype)
         return 1
 
     mimetype = utils.mimetype(questionnaire_pdf)
     if mimetype != 'application/pdf' and mimetype != '':
-        print _('Unknown file type (%s). questionnaire_pdf should be application/pdf') % mimetype
-        print _('Cancelling setup')
+        log.error(_('Unknown file type (%s). questionnaire_pdf should be application/pdf') % mimetype)
         return 1
 
     if additionalqobjects is not None:
         mimetype = utils.mimetype(additionalqobjects)
         if mimetype != 'text/plain' and mimetype != '':
-            print _('Unknown file type (%s). additionalqobjects should be text/plain') % mimetype
-            print _('Cancelling setup')
+            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain') % mimetype)
             return 1
 
     # Add the new questionnaire
@@ -85,7 +81,7 @@ def setup(survey, options, questionnaire_odt, questionnaire_pdf, additionalqobje
     try:
         qobjectsparser.parse(survey, questionnaire_odt, boxes)
     except:
-        print _("Error: Caught an Exception while parsing the ODT file. The current state is:")
+        log.error(_("Caught an Exception while parsing the ODT file. The current state is:"))
         print unicode(survey.questionnaire)
         print "------------------------------------"
 
@@ -102,7 +98,7 @@ def setup(survey, options, questionnaire_odt, questionnaire_pdf, additionalqobje
     survey.calculate_survey_id()
 
     if not survey.check_settings():
-        print _("Some combination of options and project properties do not work. Aborted Setup.")
+        log.error(_("Some combination of options and project properties do not work. Aborted Setup."))
         return 1
 
     # Print the result

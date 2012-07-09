@@ -88,6 +88,8 @@ class Survey(object):
     def add_sheet(self, sheet):
         self.sheets.append(sheet)
         sheet.survey = self
+        # Select the newly added sheet
+        self.index = len(self.sheets) - 1
 
     def calculate_survey_id(self):
         import hashlib

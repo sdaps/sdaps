@@ -247,7 +247,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
         try:
             import pyPdf
         except:
-            print >>sys.stderr, _(u'You need to have either pdftk or pyPdf installed. pdftk is the faster method.')
+            log.error(_(u'You need to have either pdftk or pyPdf installed. pdftk is the faster method.'))
             sys.exit(1)
 
     # Write the "stamp" out to tmp.pdf if are using pdftk.

@@ -50,7 +50,6 @@ def get_page_number(image):
 
     if rotated:
         # This may never happen
-        print "Yikes"
         raise RecognitionError
     return page_number
 

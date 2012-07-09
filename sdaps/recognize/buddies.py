@@ -25,6 +25,7 @@ from sdaps import surface
 from sdaps import image
 from sdaps import defs
 from sdaps.utils import RecognitionError
+from sdaps import log
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
@@ -59,7 +60,7 @@ class Sheet(model.buddy.Buddy):
             try:
                 image.recognize.calculate_matrix()
             except RecognitionError:
-                print _('%s, %i: Matrix not recognized.') % (image.filename, image.tiff_page)
+                log.warn(_('%s, %i: Matrix not recognized.') % (image.filename, image.tiff_page))
                 failed_pages.add(page)
 
         # Rotation for all of them
@@ -72,7 +73,7 @@ class Sheet(model.buddy.Buddy):
                 # This may set the rotation to "None" for unknown
                 image.recognize.calculate_rotation()
             except RecognitionError:
-                print _('%s, %i: Rotation not found.') % (image.filename, image.tiff_page)
+                log.warn(_('%s, %i: Rotation not found.') % (image.filename, image.tiff_page))
                 failed_pages.add(page)
 
         # In simplex mode, all rotations have to be there now,
@@ -89,8 +90,8 @@ class Sheet(model.buddy.Buddy):
                 if first.rotated is None and second.rotated is None:
                     # Whoa, that should not happen.
                     if not failed:
-                        print _("Neither %s, %i or %s, %i has a known rotation!" %
-                                (first.filename, first.tiff_page, second.filename, second.tiff_page))
+                        log.warn(_("Neither %s, %i or %s, %i has a known rotation!" %
+                                 (first.filename, first.tiff_page, second.filename, second.tiff_page)))
                         failed_pages.add(i)
                         failed_pages.add(i + 1)
                 elif first.rotated is None:
@@ -99,8 +100,8 @@ class Sheet(model.buddy.Buddy):
                     second.rotated = first.rotated
                 elif first.rotated != second.rotated:
                     if not failed:
-                        print _("Found inconsistency. %s, %i and %s, %i should have the same rotation, but don't!" %
-                                (first.filename, first.tiff_page, second.filename, second.tiff_page))
+                        log.warn(_("Found inconsistency. %s, %i and %s, %i should have the same rotation, but don't!" %
+                                 (first.filename, first.tiff_page, second.filename, second.tiff_page)))
                         failed_pages.add(i)
                         failed_pages.add(i + 1)
 
@@ -115,7 +116,7 @@ class Sheet(model.buddy.Buddy):
                 try:
                     image.recognize.calculate_matrix()
                 except RecognitionError:
-                    print _('%s, %i: Matrix not recognized (again).') % (image.filename, image.tiff_page)
+                    log.warn(_('%s, %i: Matrix not recognized (again).') % (image.filename, image.tiff_page))
                     failed_pages.add(page)
 
         ############
@@ -132,7 +133,7 @@ class Sheet(model.buddy.Buddy):
                 # This may set the page_number to "None" for unknown
                 image.recognize.calculate_page_number()
             except RecognitionError:
-                print _('%s, %i: Could not get page number.') % (image.filename, image.tiff_page)
+                log.warn(_('%s, %i: Could not get page number.') % (image.filename, image.tiff_page))
                 image.page_number = None
                 failed_pages.add(page)
 
@@ -149,8 +150,8 @@ class Sheet(model.buddy.Buddy):
                 if first.page_number is None and second.page_number is None:
                     if not failed:
                         # Whoa, that should not happen.
-                        print _("Neither %s, %i or %s, %i has a known page number!" %
-                                (first.filename, first.tiff_page, second.filename, second.tiff_page))
+                        log.warn(_("Neither %s, %i or %s, %i has a known page number!" %
+                                 (first.filename, first.tiff_page, second.filename, second.tiff_page)))
                         failed_pages.add(i)
                         failed_pages.add(i + 1)
                 elif first.page_number is None:
@@ -160,8 +161,8 @@ class Sheet(model.buddy.Buddy):
                     second.page_number = first.page_number - 1 + 2 * (first.page_number % 2)
                 elif first.page_number != (second.page_number - 1 + 2 * (second.page_number % 2)):
                     if not failed:
-                        print _("Images %s, %i and %s, %i do not have consecutive page numbers!" %
-                                (first.filename, first.tiff_page, second.filename, second.tiff_page))
+                        log.warn(_("Images %s, %i and %s, %i do not have consecutive page numbers!" %
+                                 (first.filename, first.tiff_page, second.filename, second.tiff_page)))
 
                         failed_pages.add(i)
                         failed_pages.add(i + 1)
@@ -172,19 +173,19 @@ class Sheet(model.buddy.Buddy):
         pages = set()
         for i, image in enumerate(self.obj.images):
             if image.page_number is None:
-                print _("No page number for page %s, %i exists." % (image.filename, image.tiff_page))
+                log.warn(_("No page number for page %s, %i exists." % (image.filename, image.tiff_page)))
                 failed_pages.add(i)
                 continue
 
             if image.page_number in pages:
-                print _("Page number for page %s, %i already used by another image.") % \
-                        (image.filename, image.tiff_page)
+                log.warn(_("Page number for page %s, %i already used by another image.") %
+                         (image.filename, image.tiff_page))
                 failed_pages.add(i)
                 continue
 
             if image.page_number <= 0 or image.page_number > self.obj.survey.questionnaire.page_count:
-                print _("Page number %i for page %s, %i is out of range.") % \
-                        (image.page_number, image.filename, image.tiff_page)
+                log.warn(_("Page number %i for page %s, %i is out of range.") %
+                         (image.page_number, image.filename, image.tiff_page))
                 failed_pages.add(i)
                 continue
 
@@ -200,8 +201,8 @@ class Sheet(model.buddy.Buddy):
                     if not duplex_mode or (image.page_number is not None and image.page_number % 2 == 0):
                         survey_ids.append((image, image.recognize.get_survey_id()))
                 except RecognitionError:
-                    print _('%s, %i: Could not read survey ID, but should be able to.') % \
-                            (image.filename, image.tiff_page)
+                    log.warn(_('%s, %i: Could not read survey ID, but should be able to.') %
+                             (image.filename, image.tiff_page))
                     failed_pages.add(page)
 
             if len(survey_ids) == 0:
@@ -214,16 +215,16 @@ class Sheet(model.buddy.Buddy):
                 for image, id in survey_ids:
                     if self.obj.survey_id != id:
                         if not warned_multipage_not_correctly_scanned:
-                            print _("Got different Survey-IDs on different pages for one sheet!")
+                            log.warn(_("Got different Survey-IDs on different pages for one sheet!"))
                             warned_multipage_not_correctly_scanned = True
 
             if self.obj.survey_id != self.obj.survey.survey_id:
                 # Broken survey ID ...
-                print _("Got a wrong survey ID (%s, %i)! It is %i, but should be %i.") % \
-                        (survey_ids[0][0].filename,
-                         survey_ids[0][0].tiff_page,
-                         self.obj.survey_id,
-                         self.obj.survey.survey_id)
+                log.warn(_("Got a wrong survey ID (%s, %i)! It is %i, but should be %i.") % \
+                         (survey_ids[0][0].filename,
+                          survey_ids[0][0].tiff_page,
+                          self.obj.survey_id,
+                          self.obj.survey.survey_id))
                 self.obj.valid = 0
 
         # Figure out the questionnaire ID if neccessary
@@ -236,8 +237,8 @@ class Sheet(model.buddy.Buddy):
                     if not duplex_mode or (image.page_number is not None and image.page_number % 2 == 0):
                         questionnaire_ids.append((image, image.recognize.get_questionnaire_id()))
                 except RecognitionError:
-                    print _('%s, %i: Could not read questionnaire ID, but should be able to.') % \
-                            (image.filename, image.tiff_page)
+                    log.warn(_('%s, %i: Could not read questionnaire ID, but should be able to.') % \
+                             (image.filename, image.tiff_page))
                     failed_pages.add(page)
 
             if len(questionnaire_ids) == 0:
@@ -249,7 +250,7 @@ class Sheet(model.buddy.Buddy):
                 for image, id in questionnaire_ids:
                     if self.obj.questionnaire_id != id:
                         if not warned_multipage_not_correctly_scanned:
-                            print _("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this!")
+                            log.warn(_("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this!"))
                             warned_multipage_not_correctly_scanned = True
 
         # Try to load the global ID. If it does not exist we will get None, if
@@ -266,8 +267,8 @@ class Sheet(model.buddy.Buddy):
                     if id is not None:
                         if global_id is not None:
                             if global_id != id:
-                                print _('%s, %i: Global ID is different to an earlier page.') % \
-                                        (image.filename, image.tiff_page)
+                                log.warn(_('%s, %i: Global ID is different to an earlier page.') % \
+                                         (image.filename, image.tiff_page))
                         else:
                             global_id = id
             except RecognitionError:

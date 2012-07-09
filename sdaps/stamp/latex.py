@@ -18,7 +18,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
     filename = survey.new_path('stamped_%i.pdf')
 
     if questionnaire_ids is None:
-        print _("There should be no need to stamp a SDAPS Project that uses LaTeX and does not have different questionnaire IDs printed on each sheet.\nI am going to do so anyways.")
+        log.warn(_("There should be no need to stamp a SDAPS Project that uses LaTeX and does not have different questionnaire IDs printed on each sheet.\nI am going to do so anyways."))
 
     # Temporary directory for TeX files.
     tmpdir = tempfile.mkdtemp()
@@ -65,13 +65,13 @@ def create_stamp_pdf(survey, questionnaire_ids):
                          os.path.join(tmpdir, 'questionnaire.tex')],
                         cwd=tmpdir)
         if not os.path.exists(os.path.join(tmpdir, 'questionnaire.pdf')):
-            print _("Error running \"pdflatex\" to compile the LaTeX file.")
+            log.error(_("Error running \"pdflatex\" to compile the LaTeX file."))
             raise AssertionError('PDF file not generated')
 
         shutil.move(os.path.join(tmpdir, 'questionnaire.pdf'), filename)
 
     except:
-        print _("An occured during creation of the report. Temporary files left in '%s'." % tmpdir)
+        log.error(_("An error occured during creation of the report. Temporary files left in '%s'." % tmpdir))
 
         raise
 

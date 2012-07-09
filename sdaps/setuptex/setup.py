@@ -56,21 +56,18 @@ def write_latex_override_file(survey):
 
 def setup(survey, questionnaire_tex, additionalqobjects=None):
     if os.access(survey.path(), os.F_OK):
-        print _('The survey directory already exists')
-        print _('Cancelling setup')
+        log.error(_('The survey directory already exists'))
         return 1
 
     mimetype = utils.mimetype(questionnaire_tex)
     if mimetype != 'text/x-tex' and mimetype != '':
-        print _('Unknown file type (%s). questionnaire_tex should be of type text/x-tex') % mimetype
-        print _('Will keep going, but expect failure!')
-        print
+        log.warn(_('Unknown file type (%s). questionnaire_tex should be of type text/x-tex') % mimetype)
+        log.warn(_('Will keep going, but expect failure!'))
 
     if additionalqobjects is not None:
         mimetype = utils.mimetype(additionalqobjects)
         if mimetype != 'text/plain' and mimetype != '':
-            print _('Unknown file type (%s). additionalqobjects should be text/plain') % mimetype
-            print _('Cancelling setup')
+            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain') % mimetype)
             return 1
 
     # Add the new questionnaire
@@ -120,9 +117,9 @@ def setup(survey, questionnaire_tex, additionalqobjects=None):
         try:
             sdapsfileparser.parse(survey)
         except Exception, e:
-            print _("Error: Caught an Exception while parsing the SDAPS file. The current state is:")
-            print unicode(survey.questionnaire)
-            print "------------------------------------"
+            log.error(_("Caught an Exception while parsing the SDAPS file. The current state is:"))
+            print >>sys.stderr, unicode(survey.questionnaire)
+            print >>sys.stderr, "------------------------------------"
 
             raise e
 
@@ -134,7 +131,7 @@ def setup(survey, questionnaire_tex, additionalqobjects=None):
         survey.calculate_survey_id()
 
         if not survey.check_settings():
-            print _("Some combination of options and project properties do not work. Aborted Setup.")
+            log.error(_("Some combination of options and project properties do not work. Aborted Setup."))
             shutil.rmtree(survey.path())
             return 1
 
@@ -151,7 +148,7 @@ def setup(survey, questionnaire_tex, additionalqobjects=None):
                          'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         if not os.path.exists(survey.path('questionnaire.pdf')):
-            print _("Error running \"pdflatex\" to compile the LaTeX file.")
+            log.error(_("Error running \"pdflatex\" to compile the LaTeX file."))
             raise AssertionError('PDF file not generated')
 
         # Print the result
@@ -167,6 +164,6 @@ def setup(survey, questionnaire_tex, additionalqobjects=None):
         survey.save()
         log.logfile.close()
     except:
-        print _("An error occured in the setup routine. The survey directory still exists. You can for example check the questionnaire.log file for LaTeX compile errors.")
+        log.error(_("An error occured in the setup routine. The survey directory still exists. You can for example check the questionnaire.log file for LaTeX compile errors."))
         raise
 

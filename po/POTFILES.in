@@ -1,5 +1,6 @@
 sdaps/__init__.py
 sdaps/add.py
+sdaps/log.py
 sdaps/boxgallery/__init__.py
 sdaps/cover.py
 sdaps/csvdata/__init__.py

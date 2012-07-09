@@ -24,6 +24,17 @@ import sys
 import time
 import StringIO
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
+
+
+def warn(msg):
+    sys.stderr.write(_('Warning: ') + msg + '\n')
+
+
+def error(msg):
+    sys.stderr.write(_('Error: ') + msg + '\n')
+
 
 class Copier(object):
     '''copy all data going through the pipe into a logfile'''

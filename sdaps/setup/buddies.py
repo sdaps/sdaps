@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from sdaps import model
+from sdaps import log
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
@@ -57,7 +58,7 @@ class Head(QObject):
 
     def validate(self):
         if not self.obj.title:
-            print _(u'Warning: Head %(l0)i got no title.') % {'l0': self.obj.id[0]}
+            log.warn(_(u'Head %(l0)i got no title.') % {'l0': self.obj.id[0]})
 
 
 class Question(QObject):
@@ -70,10 +71,10 @@ class Question(QObject):
 
     def validate(self):
         if not self.obj.question:
-            print _(u'Warning: %(class)s %(l0)i.%(l1)i got no question.') % {
+            log.warn(_(u'%(class)s %(l0)i.%(l1)i got no question.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
-            }
+            })
 
 
 class Choice(Question):
@@ -119,10 +120,10 @@ class Choice(Question):
             raise AssertionError(_("Error in question \"%s\"") % self.obj.question)
         del self.cache
         if not self.obj.boxes:
-            print _(u'Warning: %(class)s %(l0)i.%(l1)i got no boxes.') % {
+            log.warn(_(u'%(class)s %(l0)i.%(l1)i got no boxes.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
-            }
+            })
 
 
 class Mark(Question):
@@ -144,15 +145,15 @@ class Mark(Question):
     def validate(self):
         Question.validate(self)
         if not len(self.obj.boxes) == 5:
-            print _(u'Warning: %(class)s %(l0)i.%(l1)i got not exactly five boxes.') % {
+            log.warn(_(u'%(class)s %(l0)i.%(l1)i got not exactly five boxes.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
-            }
+            })
         if not len(self.obj.answers) == 2:
-            print _(u'Warning: %(class)s %(l0)i.%(l1)i got not exactly two answers.') % {
+            log.warn(_(u'%(class)s %(l0)i.%(l1)i got not exactly two answers.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
-            }
+            })
 
 
 class Text(Question):
@@ -171,10 +172,10 @@ class Text(Question):
     def validate(self):
         Question.validate(self)
         if not len(self.obj.boxes) == 1:
-            print _(u'Warning: %(class)s %(l0)i.%(l1)i got not exactly one box.') % {
+            log.warn(_(u'%(class)s %(l0)i.%(l1)i got not exactly one box.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
-            }
+            })
 
 
 class Additional_Head(Head):

@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from sdaps import log
 import xml.sax
 import zipfile
 import re
@@ -23,8 +24,7 @@ try:
     from latexmap import mapping
 except ImportError:
     mapping = {}
-    print >>sys.stderr, \
-        _(u'The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).')
+    log.warning(_(u'The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).'))
 
 from sdaps import model
 

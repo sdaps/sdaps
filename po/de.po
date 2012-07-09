@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-08 22:05+0200\n"
-"PO-Revision-Date: 2012-07-08 22:07+0200\n"
+"POT-Creation-Date: 2012-07-09 19:40+0200\n"
+"PO-Revision-Date: 2012-07-09 19:41+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -83,6 +83,14 @@ msgstr ""
 #: ../sdaps/add.py:94
 msgid "Done"
 msgstr "Fertig"
+
+#: ../sdaps/log.py:32
+msgid "Warning: "
+msgstr "Warnung: "
+
+#: ../sdaps/log.py:36
+msgid "Error: "
+msgstr "Fehler: "
 
 #: ../sdaps/boxgallery/__init__.py:33
 msgid ""
@@ -335,26 +343,26 @@ msgstr ""
 msgid "Existing fields: %s"
 msgstr "Definierte Felder: %s"
 
-#: ../sdaps/model/survey.py:219
+#: ../sdaps/model/survey.py:221
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:230
+#: ../sdaps/model/survey.py:232
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/model/survey.py:256
+#: ../sdaps/model/survey.py:258
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
 "Anzahl von Seiten haben!"
 
-#: ../sdaps/model/survey.py:260
+#: ../sdaps/model/survey.py:262
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -362,22 +370,22 @@ msgstr ""
 "Der Stil 'classic' kann nur mit bis zu sechs Seiten umgehen. Für mehr Seiten "
 "kann der 'code128' Stil benutzt werden."
 
-#: ../sdaps/recognize/buddies.py:62
+#: ../sdaps/recognize/buddies.py:63
 #, python-format
 msgid "%s, %i: Matrix not recognized."
 msgstr "%s, %i: Matrix wurde nicht erkannt."
 
-#: ../sdaps/recognize/buddies.py:75
+#: ../sdaps/recognize/buddies.py:76
 #, python-format
 msgid "%s, %i: Rotation not found."
 msgstr "%s, %i: Drehung wurde nicht erkannt."
 
-#: ../sdaps/recognize/buddies.py:92
+#: ../sdaps/recognize/buddies.py:93
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known rotation!"
 msgstr "Weder %s, %i noch %s, %i hat eine bekannte Drehung!"
 
-#: ../sdaps/recognize/buddies.py:102
+#: ../sdaps/recognize/buddies.py:103
 #, python-format
 msgid ""
 "Found inconsistency. %s, %i and %s, %i should have the same rotation, but "
@@ -386,68 +394,68 @@ msgstr ""
 "%s, %i und %s, %i sollten die gleiche Drehung haben, diese stimmt jedoch "
 "nicht überein!"
 
-#: ../sdaps/recognize/buddies.py:118
+#: ../sdaps/recognize/buddies.py:119
 #, python-format
 msgid "%s, %i: Matrix not recognized (again)."
 msgstr "%s, %i: Matrix nicht erkannt (nach Drehung)"
 
-#: ../sdaps/recognize/buddies.py:135
+#: ../sdaps/recognize/buddies.py:136
 #, python-format
 msgid "%s, %i: Could not get page number."
 msgstr "%s, %i: Seitenzahl konnte nicht gelesen werden."
 
 #. Whoa, that should not happen.
-#: ../sdaps/recognize/buddies.py:152
+#: ../sdaps/recognize/buddies.py:153
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known page number!"
 msgstr "Weder %s, %i noch %s, %i haben eine bekannte Seitenzahl."
 
-#: ../sdaps/recognize/buddies.py:163
+#: ../sdaps/recognize/buddies.py:164
 #, python-format
 msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
 msgstr "Die Bilder %s, %i und %s, %i besitzten nicht konsekutive Seitenzahlen!"
 
-#: ../sdaps/recognize/buddies.py:175
+#: ../sdaps/recognize/buddies.py:176
 #, python-format
 msgid "No page number for page %s, %i exists."
 msgstr "Es existiert keine Seitenzahl für Seite %s, %i."
 
-#: ../sdaps/recognize/buddies.py:180
+#: ../sdaps/recognize/buddies.py:181
 #, python-format
 msgid "Page number for page %s, %i already used by another image."
 msgstr "Seitenzahl für Seite %s, %i wurde schon einem anderen Bild zugewiesen."
 
-#: ../sdaps/recognize/buddies.py:186
+#: ../sdaps/recognize/buddies.py:187
 #, python-format
 msgid "Page number %i for page %s, %i is out of range."
 msgstr "Seitenzahl %i für Seite %s, %i ist außerhalb des erlaubten Bereichs."
 
-#: ../sdaps/recognize/buddies.py:203
+#: ../sdaps/recognize/buddies.py:204
 #, python-format
 msgid "%s, %i: Could not read survey ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Umfrage-ID nicht einlesen. Dies sollte aber möglich sein."
 
-#: ../sdaps/recognize/buddies.py:217
+#: ../sdaps/recognize/buddies.py:218
 msgid "Got different Survey-IDs on different pages for one sheet!"
 msgstr ""
 "Unterschiedliche Umfrage-IDs in Seiten die einem Fragebogen zugeordnet sind!"
 
 #. Broken survey ID ...
-#: ../sdaps/recognize/buddies.py:222
+#: ../sdaps/recognize/buddies.py:223
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %i, but should be %i."
 msgstr ""
 "Falsche Umfrage-ID auf Seite (%s, %i)! Die ID ist %i sollte aber %i sein."
 
-#: ../sdaps/recognize/buddies.py:239
+#: ../sdaps/recognize/buddies.py:240
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Fragebogen-ID nicht lesen. Dies sollte jedoch möglich "
 "sein."
 
-#: ../sdaps/recognize/buddies.py:252
+#: ../sdaps/recognize/buddies.py:253
 msgid ""
 "Got different Questionnaire-IDs on different pages for in at least one "
 "sheet! Do *NOT* try to use filters on this!"
@@ -455,7 +463,7 @@ msgstr ""
 "Unterschiedliche Fragebogen-ID auf unterschiedlichen Seiten. Die Erkennung "
 "wird funktionieren, die zuordnung der Daten ist jedoch Falsch!"
 
-#: ../sdaps/recognize/buddies.py:269
+#: ../sdaps/recognize/buddies.py:270
 #, python-format
 msgid "%s, %i: Global ID is different to an earlier page."
 msgstr "%s, %i: Die Globale-ID ist anders als auf einer der vorherigen Seiten."
@@ -665,13 +673,7 @@ msgstr ""
 msgid "The survey directory already exists"
 msgstr "Das Umfrageverzeichniss existiert bereits."
 
-#: ../sdaps/setup/setup.py:41 ../sdaps/setup/setup.py:47
-#: ../sdaps/setup/setup.py:53 ../sdaps/setup/setup.py:60
-#: ../sdaps/setuptex/setup.py:60 ../sdaps/setuptex/setup.py:73
-msgid "Cancelling setup"
-msgstr "Setup abgebrochen"
-
-#: ../sdaps/setup/setup.py:46
+#: ../sdaps/setup/setup.py:45
 #, python-format
 msgid ""
 "Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
@@ -680,25 +682,24 @@ msgstr ""
 "Unbekanntes Dateiformat (%s). questionnaire_odt muss application/vnd.oasis."
 "opendocument.text sein."
 
-#: ../sdaps/setup/setup.py:52
+#: ../sdaps/setup/setup.py:50
 #, python-format
 msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
 msgstr ""
 "Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
 
-#: ../sdaps/setup/setup.py:59 ../sdaps/setuptex/setup.py:72
+#: ../sdaps/setup/setup.py:56 ../sdaps/setuptex/setup.py:70
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
 
-#: ../sdaps/setup/setup.py:88
-msgid ""
-"Error: Caught an Exception while parsing the ODT file. The current state is:"
+#: ../sdaps/setup/setup.py:84
+msgid "Caught an Exception while parsing the ODT file. The current state is:"
 msgstr ""
-"Fehler: Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der "
-"jetzige Zustand ist:"
+"Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
+"Zustand ist:"
 
-#: ../sdaps/setup/setup.py:105 ../sdaps/setuptex/setup.py:137
+#: ../sdaps/setup/setup.py:101 ../sdaps/setuptex/setup.py:134
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
@@ -706,40 +707,40 @@ msgstr ""
 "Setup abgebrochen, da einige Optionen und Projekteigenschaften so nicht "
 "funktionieren."
 
-#: ../sdaps/setup/buddies.py:60
+#: ../sdaps/setup/buddies.py:61
 #, python-format
-msgid "Warning: Head %(l0)i got no title."
-msgstr "Warnung: Überschrift %(l0)i hat keinen Titel."
+msgid "Head %(l0)i got no title."
+msgstr "Überschrift %(l0)i hat keinen Titel."
 
-#: ../sdaps/setup/buddies.py:73
+#: ../sdaps/setup/buddies.py:74
 #, python-format
-msgid "Warning: %(class)s %(l0)i.%(l1)i got no question."
-msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat keine Frage."
+msgid "%(class)s %(l0)i.%(l1)i got no question."
+msgstr "%(class)s %(l0)i.%(l1)i hat keine Frage."
 
-#: ../sdaps/setup/buddies.py:119
+#: ../sdaps/setup/buddies.py:120
 #, python-format
 msgid "Error in question \"%s\""
 msgstr "Fehler in der Frage \"%s\""
 
-#: ../sdaps/setup/buddies.py:122
+#: ../sdaps/setup/buddies.py:123
 #, python-format
-msgid "Warning: %(class)s %(l0)i.%(l1)i got no boxes."
-msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat keine Boxen."
+msgid "%(class)s %(l0)i.%(l1)i got no boxes."
+msgstr "%(class)s %(l0)i.%(l1)i hat keine Boxen."
 
-#: ../sdaps/setup/buddies.py:147
+#: ../sdaps/setup/buddies.py:148
 #, python-format
-msgid "Warning: %(class)s %(l0)i.%(l1)i got not exactly five boxes."
-msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat nicht exakt fünf Boxen."
+msgid "%(class)s %(l0)i.%(l1)i got not exactly five boxes."
+msgstr "%(class)s %(l0)i.%(l1)i hat nicht exakt fünf Boxen."
 
-#: ../sdaps/setup/buddies.py:152
+#: ../sdaps/setup/buddies.py:153
 #, python-format
-msgid "Warning: %(class)s %(l0)i.%(l1)i got not exactly two answers."
-msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat nicht exakt fünf Antworten."
+msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
+msgstr "%(class)s %(l0)i.%(l1)i hat nicht exakt fünf Antworten."
 
-#: ../sdaps/setup/buddies.py:174
+#: ../sdaps/setup/buddies.py:175
 #, python-format
-msgid "Warning: %(class)s %(l0)i.%(l1)i got not exactly one box."
-msgstr "Warnung: %(class)s %(l0)i.%(l1)i hat nicht exakt eine Box."
+msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
+msgstr "%(class)s %(l0)i.%(l1)i hat nicht exakt eine Box."
 
 #: ../sdaps/setup/boxesparser.py:121 ../sdaps/setup/boxesparser.py:190
 #, python-format
@@ -782,7 +783,7 @@ msgstr ""
 "    Erstellt: stamped_[index].pdf\n"
 "    "
 
-#: ../sdaps/stamp/stamp.py:36
+#: ../sdaps/stamp/stamp.py:37
 msgid ""
 "You may not specify the number of sheets for surveys that do not print a "
 "quesitonnaire id."
@@ -790,7 +791,7 @@ msgstr ""
 "Es ist nicht möglich eine Anzahl von Fragebögen anzugeben, wenn die "
 "Fragebogen-ID nicht auf den Bogen gedruckt wird."
 
-#: ../sdaps/stamp/stamp.py:56
+#: ../sdaps/stamp/stamp.py:57
 msgid ""
 "You need to specify the number of questionnaires to create when "
 "questionnaire ids are printed."
@@ -876,15 +877,16 @@ msgid "Running pdflatex now twice to generate the stamped questionnaire."
 msgstr ""
 "Führe pdflatex zwei mal aus um den gestempelten Fragebogen zu erstellen."
 
-#: ../sdaps/stamp/latex.py:68 ../sdaps/setuptex/setup.py:113
-#: ../sdaps/setuptex/setup.py:154 ../sdaps/reporttex/report.py:149
+#: ../sdaps/stamp/latex.py:68 ../sdaps/setuptex/setup.py:110
+#: ../sdaps/setuptex/setup.py:151 ../sdaps/reporttex/report.py:149
 msgid "Error running \"pdflatex\" to compile the LaTeX file."
 msgstr ""
 "Fehler beim ausführen von \"pdflatex\" um die LaTeX Datei zu kompilieren."
 
-#: ../sdaps/stamp/latex.py:74 ../sdaps/reporttex/report.py:155
+#: ../sdaps/stamp/latex.py:74
 #, python-format
-msgid "An occured during creation of the report. Temporary files left in '%s'."
+msgid ""
+"An error occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
 "Es ist ein Fehler beim erstellen des Reports aufgetreten. Temporäre Dateien "
 "wurden in '%s' belassen."
@@ -911,28 +913,26 @@ msgstr ""
 "    additional_questions: Datei mit zusätzlichen Fragen.\n"
 "    "
 
-#: ../sdaps/setuptex/setup.py:65
+#: ../sdaps/setuptex/setup.py:64
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex"
 msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
 
-#: ../sdaps/setuptex/setup.py:66
+#: ../sdaps/setuptex/setup.py:65
 msgid "Will keep going, but expect failure!"
 msgstr "Versuche trotzdem fortzusetzten."
 
-#: ../sdaps/setuptex/setup.py:103 ../sdaps/setuptex/setup.py:144
+#: ../sdaps/setuptex/setup.py:100 ../sdaps/setuptex/setup.py:141
 msgid "Running pdflatex now twice to generate the questionnaire."
 msgstr "Führe pdflatex zwei mal aus um den Fragebogen zu erstellen."
 
-#: ../sdaps/setuptex/setup.py:123
-msgid ""
-"Error: Caught an Exception while parsing the SDAPS file. The current state "
-"is:"
+#: ../sdaps/setuptex/setup.py:120
+msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
-"Fehler: Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der "
-"jetzige Zustand ist:"
+"Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
+"Zustand ist:"
 
-#: ../sdaps/setuptex/setup.py:170
+#: ../sdaps/setuptex/setup.py:167
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "
@@ -983,10 +983,20 @@ msgstr "ngerman"
 msgid "Running pdflatex now twice to generate the report."
 msgstr "Führe pdflatex zwei mal aus um den Report zu erstellen."
 
+#: ../sdaps/reporttex/report.py:155
+#, python-format
+msgid "An occured during creation of the report. Temporary files left in '%s'."
+msgstr ""
+"Es ist ein Fehler beim erstellen des Reports aufgetreten. Temporäre Dateien "
+"wurden in '%s' belassen."
+
 #: ../sdaps/boxgallery/boxgallery.py:99
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr "Erstelle Überblick über die Boxen sortiert nach der Metrik \"%s\"."
+
+#~ msgid "Cancelling setup"
+#~ msgstr "Setup abgebrochen"
 
 #~ msgid ""
 #~ "%s, %i: Page number not recognized. Cancelling recognition of that image."
