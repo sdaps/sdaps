@@ -140,6 +140,7 @@ class MainWindow(object):
         combo.add_attribute(cell, 'text', 0)
 
         store = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_INT)
+        store.append(row=(_("Page|Invalid").split('|')[-1], -1))
         for i in range(self.provider.survey.questionnaire.page_count):
             store.append(row=(
                 ungettext("Page %i", "Page %i", i + 1) % (i + 1), i + 1))
@@ -202,7 +203,10 @@ class MainWindow(object):
         valid_toggle = self._builder.get_object("valid_toggle")
 
         # Update the combobox
-        page_number = self.provider.image.page_number
+        if self.provider.image.survey_id == self.provider.survey.survey_id:
+            page_number = self.provider.image.page_number
+        else:
+            page_number = -1
 
         # Find the page_number in the model
         model = combo.get_model()
@@ -269,7 +273,12 @@ class MainWindow(object):
         active = combo.get_active_iter()
         page_number = combo.get_model().get(active, 1)[0]
         if self.provider.image.page_number != page_number:
-            self.provider.image.page_number = page_number
+            if page_number != -1:
+                self.provider.image.page_number = page_number
+                self.provider.image.survey_id = self.provider.survey.survey_id
+            else:
+                self.provider.image.page_number = None
+                self.provider.image.survey_id = None
             self.update_ui()
             return False
 
@@ -287,6 +296,8 @@ class MainWindow(object):
         valid = toggle.get_active()
         if self.provider.image.sheet.valid != valid:
             self.provider.image.sheet.valid = valid
+            if valid:
+                self.provider.image.sheet.survey_id = self.provider.survey_id
             self.update_ui()
         return False
 

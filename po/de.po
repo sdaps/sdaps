@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-09 19:40+0200\n"
-"PO-Revision-Date: 2012-07-09 19:41+0200\n"
+"POT-Creation-Date: 2012-07-09 20:58+0200\n"
+"PO-Revision-Date: 2012-07-09 20:58+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -167,44 +167,48 @@ msgstr ""
 msgid "Unknown command"
 msgstr "Unbekannter Befehl"
 
-#: ../sdaps/gui/gui.py:145
+#: ../sdaps/gui/gui.py:143
+msgid "Page|Invalid"
+msgstr "Ungültig"
+
+#: ../sdaps/gui/gui.py:146
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Seite %i"
 msgstr[1] "Seite %i"
 
-#: ../sdaps/gui/gui.py:187
+#: ../sdaps/gui/gui.py:188
 msgid "Copyright © 2007-2012 The SDAPS Authors"
 msgstr "Copyright © 2007-2012 The SDAPS Authors"
 
-#: ../sdaps/gui/gui.py:189
+#: ../sdaps/gui/gui.py:190
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "SDAPS - Scripts zum auswerten von Papier basierten Umfragen"
 
-#: ../sdaps/gui/gui.py:190
+#: ../sdaps/gui/gui.py:191
 msgid "http://sdaps.sipsolutions.net"
 msgstr "http://sdaps.sipsolutions.net"
 
-#: ../sdaps/gui/gui.py:191
+#: ../sdaps/gui/gui.py:192
 msgid "translator-credits"
 msgstr "Benjamin Berg"
 
-#: ../sdaps/gui/gui.py:234
+#: ../sdaps/gui/gui.py:238
 #, python-format
 msgid " of %i"
 msgstr " von %i"
 
-#: ../sdaps/gui/gui.py:235
+#: ../sdaps/gui/gui.py:239
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr "Erkennungsqualität: %.2f"
 
-#: ../sdaps/gui/gui.py:342
+#: ../sdaps/gui/gui.py:353
 msgid "Close without saving"
 msgstr "Beenden ohne zu Speichern"
 
-#: ../sdaps/gui/gui.py:346
+#: ../sdaps/gui/gui.py:357
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -430,32 +434,32 @@ msgstr "Seitenzahl für Seite %s, %i wurde schon einem anderen Bild zugewiesen."
 msgid "Page number %i for page %s, %i is out of range."
 msgstr "Seitenzahl %i für Seite %s, %i ist außerhalb des erlaubten Bereichs."
 
-#: ../sdaps/recognize/buddies.py:204
+#: ../sdaps/recognize/buddies.py:202
 #, python-format
 msgid "%s, %i: Could not read survey ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Umfrage-ID nicht einlesen. Dies sollte aber möglich sein."
 
-#: ../sdaps/recognize/buddies.py:218
+#: ../sdaps/recognize/buddies.py:214
 msgid "Got different Survey-IDs on different pages for one sheet!"
 msgstr ""
 "Unterschiedliche Umfrage-IDs in Seiten die einem Fragebogen zugeordnet sind!"
 
 #. Broken survey ID ...
-#: ../sdaps/recognize/buddies.py:223
+#: ../sdaps/recognize/buddies.py:219
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %i, but should be %i."
 msgstr ""
 "Falsche Umfrage-ID auf Seite (%s, %i)! Die ID ist %i sollte aber %i sein."
 
-#: ../sdaps/recognize/buddies.py:240
+#: ../sdaps/recognize/buddies.py:241
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Fragebogen-ID nicht lesen. Dies sollte jedoch möglich "
 "sein."
 
-#: ../sdaps/recognize/buddies.py:253
+#: ../sdaps/recognize/buddies.py:251
 msgid ""
 "Got different Questionnaire-IDs on different pages for in at least one "
 "sheet! Do *NOT* try to use filters on this!"
@@ -463,7 +467,7 @@ msgstr ""
 "Unterschiedliche Fragebogen-ID auf unterschiedlichen Seiten. Die Erkennung "
 "wird funktionieren, die zuordnung der Daten ist jedoch Falsch!"
 
-#: ../sdaps/recognize/buddies.py:270
+#: ../sdaps/recognize/buddies.py:273
 #, python-format
 msgid "%s, %i: Global ID is different to an earlier page."
 msgstr "%s, %i: Die Globale-ID ist anders als auf einer der vorherigen Seiten."
