@@ -194,38 +194,39 @@ class Sheet(model.buddy.Buddy):
         # Figure out the suvey ID if neccessary
         # *************************************
         if self.obj.survey.defs.print_survey_id:
-            survey_ids = []
-
             for page, image in enumerate(self.obj.images):
                 try:
                     if not duplex_mode or (image.page_number is not None and image.page_number % 2 == 0):
-                        survey_ids.append((image, image.recognize.get_survey_id()))
+                        image.recognize.calculate_survey_id()
                 except RecognitionError:
                     log.warn(_('%s, %i: Could not read survey ID, but should be able to.') %
                              (image.filename, image.tiff_page))
                     failed_pages.add(page)
 
-            if len(survey_ids) == 0:
-                self.obj.survey_id = -1
-                self.obj.valid = 0
-            else:
-                # Do they all agree?
-                self.obj.survey_id = survey_ids[0][1]
+            self.duplex_copy_image_attr(failed_pages, "survey_id")
 
-                for image, id in survey_ids:
-                    if self.obj.survey_id != id:
-                        if not warned_multipage_not_correctly_scanned:
-                            log.warn(_("Got different Survey-IDs on different pages for one sheet!"))
-                            warned_multipage_not_correctly_scanned = True
+            # Simply use the survey ID from the first image globally
+            self.obj.survey_id = self.obj.images[0].survey_id
+
+            for image in self.obj.images:
+                if self.obj.survey_id != image.survey_id:
+                    if not warned_multipage_not_correctly_scanned:
+                        log.warn(_("Got different Survey-IDs on different pages for one sheet!"))
+                        warned_multipage_not_correctly_scanned = True
 
             if self.obj.survey_id != self.obj.survey.survey_id:
                 # Broken survey ID ...
-                log.warn(_("Got a wrong survey ID (%s, %i)! It is %i, but should be %i.") % \
-                         (survey_ids[0][0].filename,
-                          survey_ids[0][0].tiff_page,
+                log.warn(_("Got a wrong survey ID (%s, %i)! It is %i, but should be %i.") %
+                         (self.obj.images[0].filename,
+                          self.obj.images[0].tiff_page,
                           self.obj.survey_id,
                           self.obj.survey.survey_id))
                 self.obj.valid = 0
+        else:
+            # Assume that the data is from the correct survey
+            self.obj.survey_id = self.obj.survey.survey_id
+            for image in self.obj.images:
+                image.survey_id = self.obj.survey.survey_id
 
         # Figure out the questionnaire ID if neccessary
         # *********************************************
@@ -235,23 +236,20 @@ class Sheet(model.buddy.Buddy):
             for page, image in enumerate(self.obj.images):
                 try:
                     if not duplex_mode or (image.page_number is not None and image.page_number % 2 == 0):
-                        questionnaire_ids.append((image, image.recognize.get_questionnaire_id()))
+                        image.recognize.calculate_questionnaire_id()
                 except RecognitionError:
                     log.warn(_('%s, %i: Could not read questionnaire ID, but should be able to.') % \
                              (image.filename, image.tiff_page))
                     failed_pages.add(page)
 
-            if len(questionnaire_ids) == 0:
-                self.obj.questionnaire_id = -1
-                self.obj.valid = 0
-            else:
-                # Do they all agree?
-                self.obj.questionnaire_id = questionnaire_ids[0][1]
-                for image, id in questionnaire_ids:
-                    if self.obj.questionnaire_id != id:
-                        if not warned_multipage_not_correctly_scanned:
-                            log.warn(_("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this!"))
-                            warned_multipage_not_correctly_scanned = True
+            self.duplex_copy_image_attr(failed_pages, "questionnaire_id")
+
+            self.obj.questionnaire_id = self.obj.images[0].questionnaire_id
+            for image in self.obj.images:
+                if self.obj.questionnaire_id != image.questionnaire_id:
+                    if not warned_multipage_not_correctly_scanned:
+                        log.warn(_("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this!"))
+                        warned_multipage_not_correctly_scanned = True
 
         # Try to load the global ID. If it does not exist we will get None, if
         # it does, then it will be non-None. We don't care much about it
@@ -259,21 +257,21 @@ class Sheet(model.buddy.Buddy):
         # However, we do want to ensure that it is the same everywhere if it
         # can be read in.
         # *********************************************
-        global_id = None
         for page, image in enumerate(self.obj.images):
             try:
                 if not duplex_mode or (image.page_number is not None and image.page_number % 2 == 0):
-                    id = image.recognize.get_global_id()
-                    if id is not None:
-                        if global_id is not None:
-                            if global_id != id:
-                                log.warn(_('%s, %i: Global ID is different to an earlier page.') % \
-                                         (image.filename, image.tiff_page))
-                        else:
-                            global_id = id
+                    image.recognize.calculate_global_id()
             except RecognitionError:
                 pass
-        self.obj.global_id = global_id
+
+        self.duplex_copy_image_attr(failed_pages, "global_id")
+
+        self.obj.global_id = self.obj.images[0].global_id
+
+        for image in self.obj.images:
+            if self.obj.questionnaire_id != image.questionnaire_id:
+                log.warn(_('%s, %i: Global ID is different to an earlier page.') % \
+                         (image.filename, image.tiff_page))
 
         # Done
         if failed_pages:
@@ -282,6 +280,32 @@ class Sheet(model.buddy.Buddy):
     def clean(self):
         for image in self.obj.images:
             image.recognize.clean()
+
+    def duplex_copy_image_attr(self, failed_pages, attr):
+        u"""If in duplex mode, this function will copy the given attribute
+        from the image that defines it over to the one that does not.
+        ie. if the attribute is None in one and differently in the other image
+        it is copied.
+        
+        """
+
+        i = 0
+        while i < len(self.obj.images):
+            failed = (i in failed_pages or i + 1 in failed_pages)
+
+            first = self.obj.images[i]
+            second = self.obj.images[i + 1]
+
+            if getattr(first, attr) is None and getattr(second, attr) is None:
+                # Nothing to do ...
+                pass
+            elif getattr(first, attr) is None:
+                setattr(first, attr, getattr(second, attr))
+            elif getattr(second, attr) is None:
+                setattr(second, attr, getattr(first, attr))
+
+            i += 2
+
 
 
 class Image(model.buddy.Buddy):
@@ -308,14 +332,14 @@ class Image(model.buddy.Buddy):
     def calculate_page_number(self):
         self.obj.page_number = self.style_funcs.get_page_number(self)
 
-    def get_survey_id(self):
-        return self.style_funcs.get_survey_id(self)
+    def calculate_survey_id(self):
+        self.obj.survey_id = self.style_funcs.get_survey_id(self)
 
-    def get_questionnaire_id(self):
-        return self.style_funcs.get_questionnaire_id(self)
+    def calculate_questionnaire_id(self):
+        self.obj.questionnaire_id = self.style_funcs.get_questionnaire_id(self)
 
-    def get_global_id(self):
-        return self.style_funcs.get_global_id(self)
+    def calculate_global_id(self):
+        self.obj.global_id = self.style_funcs.get_global_id(self)
 
     def clean(self):
         self.obj.surface.clean()
