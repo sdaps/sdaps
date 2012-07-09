@@ -32,7 +32,7 @@ img_counter = 0
 
 def output_image(box, tmpdir):
     global img_counter
-    img = box.sheet.images[box.question.page_number - 1]
+    img = box.sheet.get_page_image(box.question.page_number)
 
     filename = box.question.questionnaire.survey.path(img.filename)
 

@@ -278,7 +278,7 @@ class Text(platypus.Flowable):
         assert isinstance(box, model.questionnaire.Textbox)
         assert box.data.state
 
-        image = box.sheet.images[box.question.page_number - 1]
+        image = box.sheet.get_page_image(box.question.page_number)
 
         self.filename = box.question.questionnaire.survey.path(image.filename)
         self.tiff_page = image.tiff_page

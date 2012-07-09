@@ -99,7 +99,7 @@ class Checkbox(model.buddy.Buddy):
     obj_class = model.questionnaire.Checkbox
 
     def get_checkbox_image(self):
-        image = self.obj.sheet.images[self.obj.page_number - 1]
+        image = self.obj.sheet.get_page_image(self.obj.page_number)
 
         border = 1.5
         mm_to_px = image.matrix.mm_to_px()
