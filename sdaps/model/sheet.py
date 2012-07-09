@@ -40,7 +40,7 @@ class Sheet(buddy.Object):
         # Note: We return the first one we find; this means in the error case
         #       that a page exists twice, we return the first one.
         for image in self.images:
-            if image.page_number == page:
+            if image.page_number == page and image.survey_id == self.survey.survey_id:
                 return image
         return None
 
@@ -53,4 +53,7 @@ class Image(buddy.Object):
         self.rotated = 0
         self.raw_matrix = None
         self.page_number = None
+        self.survey_id = None
+        self.global_id = None
+        self.questionnaire_id = None
 
