@@ -63,7 +63,9 @@ analyse the scanned data, and create a report.
                   ('share/sdaps/ui',
                    glob.glob("sdaps/gui/*.ui")
                   ),
-                  ('share/sdaps/tex', ('tex/sdaps.cls',)
+                  ('share/sdaps/tex', glob.glob('tex/*.cls')
+                  ),
+                  ('share/sdaps/tex', glob.glob('tex/*.tex')
                   ),
                   ('share/sdaps/tex', glob.glob("tex/*.dict")
                   ),
