@@ -21,7 +21,8 @@ u'''data model for sdaps
 Survey
 ======
 
-survey
+survey ::
+
     +-- questionnaire
     |        +-- qobjects ---------------+
     |                +-- boxes ----------+

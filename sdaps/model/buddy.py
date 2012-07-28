@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 u'''
-
     sdaps - scripts for data acquisition with paper based surveys
 
     model/buddy - Registration center for buddies

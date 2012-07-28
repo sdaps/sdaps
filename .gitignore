@@ -11,3 +11,4 @@ doc-pak
 description-pak
 sdaps_*.deb
 backup-*sdaps.tgz
+_build

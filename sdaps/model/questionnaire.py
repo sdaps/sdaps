@@ -291,8 +291,10 @@ class Additional_FilterHistogram(Question, DataObject):
 
 class Box(buddy.Object, DataObject):
     '''
-    Identification: id of the parent and value of the box
-        id ==(major, minor, value)
+    Identification: id of the parent and value of the box ::
+
+        id == (major, minor, value)
+
     Reference: survey.questionnaire.qobjects[i].boxes[j]
     Parent: self.question
     '''

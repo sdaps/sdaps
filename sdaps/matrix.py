@@ -73,4 +73,6 @@ class Image(model.buddy.Buddy):
         else:
             self.obj.raw_matrix = None
 
+class Test(object):
+    test = Image
 

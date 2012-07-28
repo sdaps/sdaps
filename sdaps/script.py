@@ -23,6 +23,7 @@ To register a function as a sdaps-script(callable from the command line), use
 '''
 
 import os
+import functools
 
 import log
 
@@ -35,9 +36,9 @@ def register(function):
 
     sdaps will be able to call a registerd script.
 
-    @register
-    def function(survey, *args, **kwargs):
-        pass
+    >>> @register
+    >>> def function(survey, *args, **kwargs):
+    >>>     pass
 
     '''
     scripts[function.func_name] = function
@@ -51,9 +52,9 @@ def doc(docstring):
     translate it. Using @doc, you can pass your docstring through _() to make it
     translatable.
 
-    @doc(_(u'docstring'))
-    def function(*args, **kwargs):
-        pass
+    >>> @doc(_(u'docstring'))
+    >>> def function(*args, **kwargs):
+    >>>    pass
 
     '''
     def decorator(function):
@@ -65,9 +66,9 @@ def doc(docstring):
 def logfile(function):
     u'''open the logfile when running the function and close it afterwards.
 
-    @logfile
-    def function(survey_dir, *args, **kwargs):
-        pass
+    >>> @logfile
+    >>> def function(survey_dir, *args, **kwargs):
+    >>>     pass
 
     @logfile will open survey_dir/log as a logfile when function is called and
     close it, when function finishes.
@@ -76,8 +77,9 @@ def logfile(function):
         log.logfile.open(os.path.join(survey_dir, 'log'))
         function(survey_dir, *args, **kwargs)
         log.logfile.close()
-    decorated_function.func_name = function.func_name
-    decorated_function.func_doc = function.func_doc
+
+    functools.update_wrapper(decorated_function, function)
+
     return decorated_function
 
 

@@ -95,3 +95,8 @@ def main(local_run=False):
         return sdaps(*sys.argv[1:])
 
 
+# Guess whether documentation is generated, if it is
+# setup for local run.
+if 'sphinx' in sys.argv[0]:
+    paths.init(True, os.path.join(sys.path[0], 'sdaps'))
+
