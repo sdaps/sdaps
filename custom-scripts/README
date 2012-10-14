@@ -1,0 +1,48 @@
+These are examples of what can be done by using the SDAPS modules
+directly. This may be useful for specialized use cases, where one
+wants a custom behaviour.
+
+Note that these scripts do use internal APIs that may change in
+the future. That said, these it may also make sense to simplify
+them or add the functionallity that they provide into the main
+program or a separate scripting interface.
+I guess this is a political problem about whether the internal
+APIs should be consumable by end users or not.
+
+
+There are currently two scripts that work on image data. Both of
+them will not modify the SDAPS project that they are exected
+on, but instead only output information about the scanned data.
+
+sdaps-identify.py
+-----------------
+
+Arguments: SDAPS project and one or more tif files.
+
+Returns:
+ For each set of images basic information is printed. This
+ contains the IDs, information about rotation and the
+ transformation matrix.
+
+This returns the basic data about each image. It does not
+contain data from checkboxes, and SDAPS should usually output
+the correct information even if it is for a different survey.
+
+
+sdaps-recognize.py
+------------------
+
+Arguments: SDAPS project and one or more tif files.
+
+Returns:
+ A flat representation of all the values of checkboxes for each
+ questionnaire.
+ For each checkbox you get the following values:
+  GlobalID, SurveyID, QuestionnaireID, Checkbox Identifier, Checkbox State, Recognition Quality
+
+This script runs the recognition and dumps much of the internal
+data out to stdout. Note that raw image data (from freeform text
+fields) is currently ignored.
+Code could easily be added which dumps these out to PNG files, or even
+base64 encoded strings if required.
+
