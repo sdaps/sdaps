@@ -183,7 +183,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'SDAPS.tex', u'SDAPS Documentation',
+  ('sdaps', 'SDAPS.tex', u'SDAPS Documentation',
    u'Benjamin Berg, Christoph Simon', 'manual'),
 ]
 
@@ -213,7 +213,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'sdaps', u'SDAPS Documentation',
+    ('sdaps', 'sdaps', u'SDAPS Documentation',
      [u'Benjamin Berg, Christoph Simon'], 1)
 ]
 
@@ -227,7 +227,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'SDAPS', u'SDAPS Documentation',
+  ('sdaps', 'SDAPS', u'SDAPS Documentation',
    u'Benjamin Berg, Christoph Simon', 'SDAPS', 'One line description of project.',
    'Miscellaneous'),
 ]
