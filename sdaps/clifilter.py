@@ -35,8 +35,8 @@ class Locals(object):
     def __getitem__(self, key):
         if key in self.qobjects:
             return self.qobjects[key].get_answer()
-        elif key == 'valid':
-            return self.survey.sheet.valid
+        elif key in ['survey_id', 'questionnaire_id', 'global_id', 'valid', 'quality']:
+            return getattr(self.survey.sheet, key)
         else:
             raise KeyError
 
