@@ -28,17 +28,23 @@ import sys
 
 from sdaps import paths
 from sdaps import defs
+from sdaps import log
 
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
 
 if paths.local_run:
     # image.so liegt in build_dir/image/
     __path__.append(os.path.join(paths.build_dir, 'image'))
 
-# Wenn ein installiertes sdaps ausgeführt wird(local_run == False), liegt
-# image.so im selben Verzeichnis wie diese Datei
+# If SDAPS is installed, then the image.so file is in the current directory.
+# Simply importing it without changes to the paths will work.
 
-
-from image import *
+try:
+    from image import *
+except ImportError:
+    log.error(_("It appears you have not build the C extension. Please run \"./setup.py build\" in the toplevel directory."))
+    sys.exit(1)
 
 set_magic_values(defs.corner_mark_min_length,
                  defs.corner_mark_max_length,

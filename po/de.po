@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-09 20:58+0200\n"
-"PO-Revision-Date: 2012-07-09 20:58+0200\n"
+"POT-Creation-Date: 2012-10-26 12:48+0200\n"
+"PO-Revision-Date: 2012-10-26 12:49+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -17,6 +17,7 @@ msgstr ""
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Gtranslator 2.91.5\n"
 
 #: ../sdaps/__init__.py:51
 #, python-format
@@ -319,6 +320,14 @@ msgstr ""
 "    Erstellt ids_[index]\n"
 "    "
 
+#: ../sdaps/image/__init__.py:46
+msgid ""
+"It appears you have not build the C extension. Please run \"./setup.py build"
+"\" in the toplevel directory."
+msgstr ""
+"Die C Bibliothek steht nicht zur verfügung. Bitte führen Sie \"./setup.by "
+"build\" im obersten Verzeichniss aus um die Bibliothek zu bauen."
+
 #: ../sdaps/info.py:28
 msgid ""
 "[field [content]]\n"
@@ -347,26 +356,26 @@ msgstr ""
 msgid "Existing fields: %s"
 msgstr "Definierte Felder: %s"
 
-#: ../sdaps/model/survey.py:221
+#: ../sdaps/model/survey.py:230
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:232
+#: ../sdaps/model/survey.py:241
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/model/survey.py:258
+#: ../sdaps/model/survey.py:267
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
 "Anzahl von Seiten haben!"
 
-#: ../sdaps/model/survey.py:262
+#: ../sdaps/model/survey.py:271
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."

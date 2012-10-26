@@ -8,6 +8,7 @@ sdaps/gui/gui.py
 sdaps/gui/__init__.py
 [type: gettext/glade] sdaps/gui/main_window.ui
 sdaps/ids.py
+sdaps/image/__init__.py
 sdaps/info.py
 sdaps/model/survey.py
 sdaps/recognize/buddies.py
