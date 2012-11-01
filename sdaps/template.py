@@ -142,17 +142,18 @@ def story_title(survey, info=dict()):
     ]
 
     keys = survey.info.keys()
-    keys.sort()
-    table = [
-        [
-            platypus.Paragraph(unicode(key), stylesheet['Normal']),
-            platypus.Paragraph(unicode(survey.info[key]), stylesheet['Normal'])
+    if keys:
+        keys.sort()
+        table = [
+            [
+                platypus.Paragraph(unicode(key), stylesheet['Normal']),
+                platypus.Paragraph(unicode(survey.info[key]), stylesheet['Normal'])
+            ]
+            for key in keys
         ]
-        for key in keys
-    ]
-    story += [
-        platypus.Table(table, colWidths=(50 * mm, None)),
-    ]
+        story += [
+            platypus.Table(table, colWidths=(50 * mm, None)),
+        ]
     if info:
         story += [
             platypus.Spacer(0, 10 * mm)
