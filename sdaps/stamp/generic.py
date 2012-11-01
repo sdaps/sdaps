@@ -129,7 +129,8 @@ def draw_corner_boxes(survey, canvas, page):
 # CODE 128 support
 
 def draw_code128_questionnaire_id(canvas, survey, id):
-    barcode_value = "%d" % (id)
+    # Only supports ascii for now (see also defs.py)
+    barcode_value = unicode(id).encode('ascii')
     barcode = createBarcodeDrawing("Code128",
                                    value=barcode_value,
                                    barWidth=defs.code128_barwidth / 25.4 * 72.0,

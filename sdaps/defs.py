@@ -163,4 +163,6 @@ image_line_width = 5 # px
 image_line_coverage = 0.35
 
 
+# Allowed characters in code 128 barcodes (only ascii for now)
+c128_chars = [chr(i) for i in xrange(32, 127)] #+ [u'È', u'É', u'Ê', u'Ë', u'Ì', u'Í', u'Î', u'Ï', u'Ð', u'Ñ', u'Ò', u'Ó']
 

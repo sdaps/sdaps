@@ -19,6 +19,7 @@
 import bz2
 import cPickle
 import os
+import sys
 from sdaps import defs
 
 from sdaps import log
@@ -272,6 +273,24 @@ class Survey(object):
             return False
 
         return True
+
+    def validate_questionnaire_id(self, qid):
+        if self.defs.style == "classic":
+            # The ID needs to be an integer
+            try:
+                return int(qid)
+            except ValueError:
+                log.error(_("IDs need to be integers in \"classic\" style!"))
+                sys.exit(1)
+        elif self.defs.style == "code128":
+            # Check each character for validity
+            for c in unicode(qid):
+                if not c in defs.c128_chars:
+                    log.error(_("Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!") % (c, qid))
+                    sys.exit(1)
+            return qid
+        else:
+            AssertionError()
 
     def __getstate__(self):
         u'''Only pickle attributes that are in the pickled_attrs set.
