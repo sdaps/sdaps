@@ -28,18 +28,16 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-@script.register
-@script.doc(_(u'''questionnaire_tex [additional_questions]
+parser = script.subparsers.add_parser("setup_tex",
+    help=_("Create a new survey using a LaTeX document."))
 
-    Setup creates a new survey. It compiles the TeX file, and parses the
-    output to create the data model.
-    The survey must not exist yet.
+parser.add_argument('questionnaire.tex')
+parser.add_argument('additional_questions', nargs='?')
 
-    questionnaire_tex: the questionnaire in TeX-format
-    additional_questions: the questions in the internet(optional)
-    '''))
-def setup_tex(survey_dir, questionnaire_odt, additional_questions=None):
-    survey = model.survey.Survey.new(survey_dir)
+def setup_tex(cmdline):
+    survey = model.survey.Survey.new(cmdline['project'])
     import setup
-    setup.setup(survey, questionnaire_odt, additional_questions)
+    setup.setup(survey, cmdline)
+
+parser.set_defaults(func=setup_tex)
 

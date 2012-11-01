@@ -25,19 +25,17 @@ _ = ugettext
 
 @script.register
 @script.logfile
-@script.doc(_(u'''[pattern = '%i\\n']
+@script.doc(_(u'''
 
     Write a list containing all questionnaire ids.
 
     creates ids_[index]
     '''))
-def ids(survey_dir, pattern='%i\n'):
+def ids(survey_dir):
     survey = model.survey.Survey.load(survey_dir)
-
-    pattern = pattern.decode('utf-8')
 
     ids = file(survey.new_path('ids_%i'), 'w')
     for id in survey.questionnaire_ids:
-        ids.write((pattern % id).encode('utf-8'))
+        ids.write(unicode(id).encode('utf-8'))
     ids.close()
 

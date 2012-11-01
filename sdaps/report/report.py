@@ -36,7 +36,7 @@ def report(survey, filter, filename=None, small=0):
     assert isinstance(survey, model.survey.Survey)
 
     # compile clifilter
-    filter = clifilter.clifilter(survey, *filter)
+    filter = clifilter.clifilter(survey, filter)
 
     # First: calculate buddies
 
@@ -91,16 +91,24 @@ def report(survey, filter, filename=None, small=0):
     doc.build(story)
 
 
-def stats(survey, filter):
-    # do a report
-    report(survey, filter)
+def stats(survey, filter, filename=None, small=0):
+    if filename is None:
+        filename = survey.new_path('report_%i.pdf')
 
-    # save reference
+    # do a report
+    report(survey, filter, filename=filename, small=small)
+
+    # save reference (to highlight large differences)
     survey.questionnaire.calculate.reference()
 
     # do a report for every filter
-    for i, filter in enumerate(survey.questionnaire.report.filters()):
+    for i, subfilter in enumerate(survey.questionnaire.report.filters()):
+        if filter is None:
+            filt = subfilter
+        else:
+            filt = "(%s) and (%s)" % (filter, subfilter)
         report(
-            survey, [filter],
-            filename='%s_%i %s.pdf' % (filename.split('.')[0], i, filter))
+            survey, filt,
+            filename='%s_%i %s.pdf' % (filename.split('.')[0], i, subfilter),
+            small=small)
 

@@ -27,40 +27,8 @@ import functools
 
 import log
 
-
-scripts = dict()
-
-
-def register(function):
-    u'''decorator to register a function as a script.
-
-    sdaps will be able to call a registerd script.
-
-    >>> @register
-    >>> def function(survey, *args, **kwargs):
-    >>>     pass
-
-    '''
-    scripts[function.func_name] = function
-    return function
-
-
-def doc(docstring):
-    u'''decorator to add a docstring to a function.
-
-    When using normal Python docstring syntax, gettext can not find it to
-    translate it. Using @doc, you can pass your docstring through _() to make it
-    translatable.
-
-    >>> @doc(_(u'docstring'))
-    >>> def function(*args, **kwargs):
-    >>>    pass
-
-    '''
-    def decorator(function):
-        function.func_doc = docstring
-        return function
-    return decorator
+parser = None # Initilized from the main file.
+subparsers = None
 
 
 def logfile(function):
@@ -73,9 +41,9 @@ def logfile(function):
     @logfile will open survey_dir/log as a logfile when function is called and
     close it, when function finishes.
     '''
-    def decorated_function(survey_dir, *args, **kwargs):
-        log.logfile.open(os.path.join(survey_dir, 'log'))
-        function(survey_dir, *args, **kwargs)
+    def decorated_function(cmdline):
+        log.logfile.open(os.path.join(cmdline['project'], 'log'))
+        function(cmdline)
         log.logfile.close()
 
     functools.update_wrapper(decorated_function, function)

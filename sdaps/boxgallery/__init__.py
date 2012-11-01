@@ -28,16 +28,13 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-@script.register
+parser = script.subparsers.add_parser("boxgallery",
+    help=_("Create PDFs with boxes sorted by the detection heuristics."))
+
 @script.logfile
-@script.doc(_(u'''
-
-    The boxgallery shows a list of all boxes, sorted by their coverage.
-
-    creates boxgallery.pdf
-    '''))
-def boxgallery(survey_dir):
-    survey = model.survey.Survey.load(survey_dir)
+def boxgallery(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
     import boxgallery
     boxgallery.boxgallery(survey)
 
+parser.set_defaults(func=boxgallery)

@@ -54,10 +54,13 @@ def write_latex_override_file(survey):
     latex_override.close()
 
 
-def setup(survey, questionnaire_tex, additionalqobjects=None):
+def setup(survey, cmdline):
     if os.access(survey.path(), os.F_OK):
         log.error(_('The survey directory already exists'))
         return 1
+
+    questionnaire_tex = cmdline['questionnaire.tex']
+    additionalqobjects = cmdline['additional_questions']
 
     mimetype = utils.mimetype(questionnaire_tex)
     if mimetype != 'text/x-tex' and mimetype != '':

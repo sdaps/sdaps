@@ -26,62 +26,42 @@ from sdaps import script
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
+parser = script.subparsers.add_parser("report",
+    help=_("Create a PDF report."))
 
-@script.register
+parser.add_argument('-f', '--filter',
+    help=_("Filter to only export a partial dataset."))
+parser.add_argument('--all-filters',
+    help=_("Create a filtered report for every checkbox."),
+    action="store_true")
+parser.add_argument('-s', '--short',
+    help=_("Short format (without freeform text fields)."),
+    action="store_const",
+    const="short",
+    dest="format")
+parser.add_argument('-l', '--long',
+    help=_("Detailed output. (default)"),
+    dest="format",
+    action="store_const",
+    const="long",
+    default="long")
+parser.add_argument('-o', '--output',
+    help=_("Filename to store the data to (default: report_%%i.pdf)"))
+
 @script.logfile
-@script.doc(_(u'''[filter...]
-
-    Report generates a basic report which shows for every question (if appropriate)
-        - the histogramm
-        - the mean
-        - the standard derivation
-        - all handwritten comments
-
-    filter: filter expression to select the sheets to appear in the report
-
-    creates report_[index].pdf
-    '''))
-def report(survey_dir, *filter):
-    survey = model.survey.Survey.load(survey_dir)
+def report(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
     import report
-    report.report(survey, filter)
 
+    if cmdline['format'] == 'short':
+        small = 1
+    else:
+        small = 0
 
-@script.register
-@script.logfile
-@script.doc(_(u'''[filter...]
+    if cmdline['all_filters']:
+        report.stats(survey, cmdline['filter'], cmdline['output'], small)
+    else:
+        report.report(survey, cmdline['filter'], cmdline['output'], small)
 
-    Stats generates a report for every filter condition (not compounded)
-
-    filter: filter expression to select the sheets to appear in the reference report
-
-    creates report_[index].pdf (the reference report)
-    creates report_[index]_[index] description.pdf
-    '''))
-def stats(survey_dir, *filter):
-    survey = model.survey.Survey.load(survey_dir)
-    import report
-    report.stats(survey, filter)
-
-
-@script.register
-@script.logfile
-@script.doc(_(u'''[filter...]
-
-    Smallreport generates a basic report which shows for every question (if appropriate)
-        - the histogramm
-        - the mean
-        - the standard derivation
-    It does not contain any handwritten comment
-
-    filter: filter expression to select the sheets to appear in the report
-
-    creates report_[index].pdf
-    '''))
-def smallreport(survey_dir, *filter):
-    survey = model.survey.Survey.load(survey_dir)
-    import report
-    report.report(survey, filter, small=1)
-
-
+parser.set_defaults(func=report)
 

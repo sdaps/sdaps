@@ -22,31 +22,26 @@ from sdaps import script
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
+parser = script.subparsers.add_parser("stamp",
+    help=_("Add marks for automatic processing."))
 
-@script.register
+parser.add_argument('-r', '--random',
+    metavar="N",
+    help=_("If using questionnaire IDs, create N questionnaires with randomized IDs."),
+    type=int)
+parser.add_argument('-f', '--file',
+    help=_("If using questionnaire IDs, create questionnaires from the IDs read from the specified file."))
+
+parser.add_argument('-o', '--output',
+    help=_("Filename to store the data to (default: stamp_%%i.pdf)"))
+
 @script.logfile
-@script.doc(_(u'''[count [used_ids]]
-
-    Stamp corner marks and questionnaire ids on the questionnaire.
-
-    count: number of unique questionnaire ids you want to create.
-           This is only used if questionnaire ids are supposed to be
-           printed. This option needs to be specified when creating the
-           project.
-    used_ids: don't use any id named in this file(pattern = '%i\\n')
-
-    creates stamped_[index].pdf
-    '''))
-def stamp(survey_dir, count=0, used_ids=None):
-    survey = model.survey.Survey.load(survey_dir)
-
-    if count != 0:
-        count = count.decode('utf-8')
-    count = int(count)
-    if used_ids is not None:
-        used_ids = used_ids.decode('utf-8')
+def stamp(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
 
     import stamp
 
-    return stamp.stamp(survey, count, used_ids)
+    return stamp.stamp(survey, cmdline)
+
+parser.set_defaults(func=stamp)
 

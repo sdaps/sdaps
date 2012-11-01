@@ -29,17 +29,14 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-@script.register
+parser = script.subparsers.add_parser("recognize",
+    help=_("Run the optical mark recognition."))
+
 @script.logfile
-@script.doc(_(u'''
-
-    Recognize all added sheets.
-
-    Attention: This script overwrites all data, including manual changes made
-        with the gui!
-    '''))
-def recognize(survey_dir):
-    survey = model.survey.Survey.load(survey_dir)
+def recognize(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
     import recognize
     recognize.recognize(survey)
+
+parser.set_defaults(func=recognize)
 

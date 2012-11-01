@@ -23,18 +23,14 @@ from ugettext import ugettext, ungettext
 _ = ugettext
 
 
-@script.register
+parser = script.subparsers.add_parser("cover",
+    help=_("Create a cover for the questionnaires."))
+
 @script.logfile
-@script.doc(_(u'''
-
-    The cover is a title page for the pile of questionnaires.
-
-    creates cover.odf
-    '''))
-def cover(survey_dir):
+def cover(cmdline):
     import template
 
-    survey = model.survey.Survey.load(survey_dir)
+    survey = model.survey.Survey.load(cmdline['project'])
 
     story = template.story_title(survey)
     subject = []
@@ -51,4 +47,6 @@ def cover(survey_dir):
         }
     )
     doc.build(story)
+
+parser.set_defaults(func=cover)
 

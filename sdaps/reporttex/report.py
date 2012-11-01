@@ -40,7 +40,7 @@ def report(survey, filter, filename=None, small=0):
     assert isinstance(survey, model.survey.Survey)
 
     # compile clifilter
-    filter = clifilter.clifilter(survey, *filter)
+    filter = clifilter.clifilter(survey, filter)
 
     # First: calculate buddies
 
