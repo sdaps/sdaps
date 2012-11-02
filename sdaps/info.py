@@ -32,6 +32,7 @@ parser.add_argument('key',
     help=_("The key to display or modify. Don't specify for a list of keys."))
 
 parser.add_argument('-s', '--set',
+    metavar="VALUE",
     help=_("Set the given key to this value."))
 
 parser.add_argument('-d', '--delete',
