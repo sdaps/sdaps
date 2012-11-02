@@ -59,7 +59,7 @@ def main(local_run=False):
     import cover
     import csvdata
     import gui
-    #import ids
+    import ids
     #import info
     import recognize
     import report
