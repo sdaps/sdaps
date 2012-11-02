@@ -31,6 +31,9 @@ parser.add_argument('-r', '--random',
     type=int)
 parser.add_argument('-f', '--file',
     help=_("If using questionnaire IDs, create questionnaires from the IDs read from the specified file."))
+parser.add_argument('--existing',
+    action="store_true",
+    help=_("If using questionnaire IDs, create questionnaires for all stored IDs."))
 
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: stamp_%%i.pdf)"))

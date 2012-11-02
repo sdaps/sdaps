@@ -33,12 +33,14 @@ _ = ugettext
 def stamp(survey, cmdline):
     # copy questionnaire_ids
     # get number of sheets to create
-    if cmdline['file'] or cmdline['random']:
+    if cmdline['file'] or cmdline['random'] or cmdline['existing']:
         if not survey.defs.print_questionnaire_id:
             log.error(_("You may not specify the number of sheets for surveys that do not print a quesitonnaire id."))
             return 1
 
-        if cmdline['file']:
+        if cmdline['existing']:
+            questionnaire_ids = survey.questionnaire_ids
+        elif cmdline['file']:
             if cmdline['file'] == '-':
                 fd = sys.stdin
             else:
