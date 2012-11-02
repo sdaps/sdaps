@@ -71,7 +71,6 @@ def main(local_run=False):
     cmdline = script.parser.parse_args()
     cmdline = vars(cmdline)
 
-    # Assume the script is at pos 2 ...
     print '-'*78
     print '- SDAPS -- %s' % cmdline['func'].__name__
     print '-'*78
