@@ -60,7 +60,7 @@ def main(local_run=False):
     import csvdata
     import gui
     import ids
-    #import info
+    import info
     import recognize
     import report
     import reporttex
@@ -71,9 +71,9 @@ def main(local_run=False):
     cmdline = script.parser.parse_args()
     cmdline = vars(cmdline)
 
-    print '-'*78
-    print '- SDAPS -- %s' % cmdline['func'].__name__
-    print '-'*78
+    log.interactive('-'*78 + '\n')
+    log.interactive(('- SDAPS -- %s' % cmdline['func'].__name__) + '\n')
+    log.interactive('-'*78 + '\n')
 
     cmdline['func'](cmdline)
 

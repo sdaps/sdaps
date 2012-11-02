@@ -35,6 +35,13 @@ def warn(msg):
 def error(msg):
     sys.stderr.write(_('Error: ') + msg + '\n')
 
+def interactive(msg):
+    """Only forward the message to stdout if it is a terminal."""
+    if hasattr(sys.stdout, "interactive"):
+        sys.stdout.interactive(msg)
+    else:
+        if sys.stdout.isatty():
+            sys.stdout.write(msg)
 
 class Copier(object):
     '''copy all data going through the pipe into a logfile'''
@@ -47,6 +54,13 @@ class Copier(object):
         self.pipe.write(data)
         self.logfile.write(data)
 
+    def interactive(self, data):
+        if self.pipe.isatty():
+            self.pipe.write(data)
+        self.logfile.write(data)
+
+    def isatty(self):
+        return self.pipe.isatty()
 
 class Wiper(object):
     '''wipe out the progressbar before forwarding data through the pipe'''
@@ -62,6 +76,8 @@ class Wiper(object):
             self.progressbar.visible = 0
         self.pipe.write(data)
 
+    def isatty(self):
+        return self.pipe.isatty()
 
 class Encoder(object):
     '''Encode data going through the pipe to utf8'''
@@ -74,6 +90,9 @@ class Encoder(object):
 
     def close(self):
         self.pipe.close()
+
+    def isatty(self):
+        return self.pipe.isatty()
 
 
 class Logfile(object):
@@ -93,6 +112,8 @@ class Logfile(object):
         self.logfile.close()
         self.logfile = StringIO.StringIO()
 
+    def isatty(self):
+        return False
 
 class ProgressBar(object):
 
@@ -106,6 +127,10 @@ class ProgressBar(object):
         self.update(0)
 
     def update(self, value):
+        # Don't display anything if the output is a pipe
+        if not self.pipe.isatty():
+            return
+
         progress = float(value) / float(self.max_value)
         self.elapsed_time = time.time() - self.start_time
         self.pipe.write('|')
@@ -124,6 +149,8 @@ class ProgressBar(object):
         self.pipe.flush()
         self.visible = 1
 
+    def isatty(self):
+        return self.pipe.isatty()
 
 progressbar = ProgressBar(sys.stdout)
 logfile = Logfile()
