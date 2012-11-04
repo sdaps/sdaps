@@ -30,11 +30,18 @@ _ = ugettext
 
 
 parser = script.subparsers.add_parser("setup",
-    help=_("Create a new survey using an ODT document."))
+    help=_("Create a new survey using an ODT document."),
+    description=_("""Create a new surevey from an ODT document. The PDF export
+    of the file needs to be specified at the same time. SDAPS will import
+    metadata (properties) and the title from the ODT document."""))
 
-parser.add_argument('questionnaire.odt')
-parser.add_argument('questionnaire.pdf')
-parser.add_argument('additional_questions', nargs='?')
+parser.add_argument('questionnaire.odt',
+    help=_("The ODT Document"))
+parser.add_argument('questionnaire.pdf',
+    help=_("PDF export of the ODT document"))
+parser.add_argument('additional_questions',
+    nargs='?',
+    help=_("Additional questions that are not part of the questionnaire."))
 
 parser.set_defaults(print_survey_id=True)
 parser.set_defaults(print_questionnaire_id=True)
@@ -79,7 +86,7 @@ parser.add_argument('--simplex',
     help=_('Use simplex mode. IDs are printed on each page. You need a simplex scan currently!'),
     dest='duplex')
 
-
+@script.connect(parser)
 def setup(cmdline):
     survey = model.survey.Survey.new(cmdline['project'])
 
@@ -90,5 +97,4 @@ def setup(cmdline):
     import setup
     setup.setup(survey, cmdline)
 
-parser.set_defaults(func=setup)
 

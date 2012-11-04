@@ -25,11 +25,15 @@ _ = ugettext
 
 
 parser = script.subparsers.add_parser("info",
-    help=_("Display and modify metadata of project."))
+    help=_("Display and modify metadata of project."),
+    description=_("""This command lets you modify the metadata of the SDAPS
+    project. You can modify, add and remove arbitrary keys that will be printed
+    on the report. The only key that always exist is "title".
+    If no key is given then a list of defined keys is printed."""))
 
 parser.add_argument('key',
     nargs="?",
-    help=_("The key to display or modify. Don't specify for a list of keys."))
+    help=_("The key to display or modify."))
 
 parser.add_argument('-s', '--set',
     metavar="VALUE",
@@ -39,6 +43,8 @@ parser.add_argument('-d', '--delete',
     action="store_true",
     help=_("Delete the key and value pair."))
 
+
+@script.connect(parser)
 @script.logfile
 def info(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
@@ -66,5 +72,4 @@ def info(cmdline):
 
     survey.save()
 
-parser.set_defaults(func=info)
 

@@ -27,7 +27,9 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 parser = script.subparsers.add_parser("report",
-    help=_("Create a PDF report."))
+    help=_("Create a PDF report."),
+    description=_("""This command creates a PDF report using reportlab that
+    contains statistics and if selected the freeform fields."""))
 
 parser.add_argument('-f', '--filter',
     help=_("Filter to only export a partial dataset."))
@@ -48,6 +50,7 @@ parser.add_argument('-l', '--long',
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: report_%%i.pdf)"))
 
+@script.connect(parser)
 @script.logfile
 def report(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
@@ -63,5 +66,4 @@ def report(cmdline):
     else:
         report.report(survey, cmdline['filter'], cmdline['output'], small)
 
-parser.set_defaults(func=report)
 

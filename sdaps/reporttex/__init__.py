@@ -27,18 +27,20 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 parser = script.subparsers.add_parser("report_tex",
-    help=_("Create a PDF report using LaTeX."))
+    help=_("Create a PDF report using LaTeX."),
+    description=_("""This command creates a PDF report using LaTeX that
+    contains statistics and freeform fields."""))
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: report_%%i.pdf)"))
 
 parser.add_argument('-f', '--filter',
     help=_("Filter to only export a partial dataset."))
 
+@script.connect(parser)
 @script.logfile
 def report_tex(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import report
     report.report(survey, cmdline['output'], cmdline['filter'])
 
-parser.set_defaults(func=report_tex)
 

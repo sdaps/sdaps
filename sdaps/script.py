@@ -30,6 +30,38 @@ import log
 parser = None # Initilized from the main file.
 subparsers = None
 
+def doc(docstring):
+    u'''decorator to add a docstring to a function.
+
+    When using normal Python docstring syntax it cannot be generated
+    dynamically. Using this one can for example add translations.
+
+    >>> @doc(_(u'docstring'))
+    >>> def function(*args, **kwargs):
+    >>>    pass
+    '''
+
+    def decorator(function):
+        function.func_doc = docstring
+        return function
+    return decorator
+
+def connect(parser, name=None):
+
+    def decorator(function):
+        # Use the function name as a fallback, it should be the same usually.
+        if name is None:
+            local_name = function.__name__
+        else:
+            local_name = name
+
+        parser.set_defaults(_func=function, _name=local_name)
+
+        function.func_doc = parser.format_help()
+
+        return function
+
+    return decorator
 
 def logfile(function):
     u'''open the logfile when running the function and close it afterwards.

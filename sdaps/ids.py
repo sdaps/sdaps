@@ -23,13 +23,18 @@ from ugettext import ugettext, ungettext
 _ = ugettext
 
 parser = script.subparsers.add_parser("ids",
-    help=_("Export and import questionnaire IDs."))
+    help=_("Export and import questionnaire IDs."),
+    description=_("""This command can be used to import and export questionnaire
+    IDs. It only makes sense in projects where such an ID is printed on the
+    questionnaire. Note that you can also add IDs by using the stamp command,
+    which will give you the PDF at the same time."""))
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: ids_%%i)"))
 parser.add_argument('-a', '--add',
     metavar="FILE",
     help=_("Add IDs to the internal list from the specified file."))
 
+@script.connect(parser)
 @script.logfile
 def ids(cmdline):
     survey = model.survey.Survey.load(survey_dir)
@@ -68,5 +73,4 @@ def ids(cmdline):
             ids.write(unicode(id).encode('utf-8'))
         ids.close()
 
-parser.set_defaults(func=ids)
 

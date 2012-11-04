@@ -24,8 +24,13 @@ _ = ugettext
 
 
 parser = script.subparsers.add_parser("cover",
-    help=_("Create a cover for the questionnaires."))
+    help=_("Create a cover for the questionnaires."),
+    description=_("""This command creates a cover page for questionnaires. All
+    the metadata of the survey will be printed on the page."""))
+parser.add_argument('-o', '--output',
+    help=_("Filename to store the data to (default: cover_%%i.pdf)"))
 
+@script.connect(parser)
 @script.logfile
 def cover(cmdline):
     import template
@@ -38,8 +43,13 @@ def cover(cmdline):
         subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
     subject = u'\n'.join(subject)
 
+    if cmdline['output']:
+        filename = cmdline['output']
+    else:
+        filename = survey.new_path('cover_%i.pdf')
+
     doc = template.DocTemplate(
-        survey.path('cover.pdf'),
+        filename,
         _(u'sdaps questionnaire'),
         {
             'title': survey.title,
@@ -48,5 +58,4 @@ def cover(cmdline):
     )
     doc.build(story)
 
-parser.set_defaults(func=cover)
 

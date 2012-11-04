@@ -26,7 +26,11 @@ _ = ugettext
 
 
 parser = script.subparsers.add_parser("add",
-    help=_("Add scanned questionnaires to the survey."))
+    help=_("Add scanned questionnaires to the survey."),
+    description=_("""This command is used to add scanned images to the survey.
+    The image data needs to be a (multipage) 300dpi monochrome TIFF file. You
+    may choose not to copy the data into the project directory. In that case
+    the data will be referenced using a relative path."""))
 
 parser.add_argument('--copy',
     help=_("Copy the files into the directory (default)"),
@@ -42,6 +46,7 @@ parser.add_argument('images',
     help=_("A number of TIFF image files."),
     nargs='+')
 
+@script.connect(parser)
 @script.logfile
 def add(cmdline):
     import image
@@ -87,7 +92,4 @@ def add(cmdline):
         print _('Done')
 
     survey.save()
-
-parser.set_defaults(func=add)
-
 

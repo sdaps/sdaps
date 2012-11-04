@@ -72,10 +72,10 @@ def main(local_run=False):
     cmdline = vars(cmdline)
 
     log.interactive('-'*78 + '\n')
-    log.interactive(('- SDAPS -- %s' % cmdline['func'].__name__) + '\n')
+    log.interactive(('- SDAPS -- %s' % cmdline['_name']) + '\n')
     log.interactive('-'*78 + '\n')
 
-    cmdline['func'](cmdline)
+    cmdline['_func'](cmdline)
 
 
 

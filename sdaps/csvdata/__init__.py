@@ -28,7 +28,12 @@ _ = ugettext
 
 
 parser = script.subparsers.add_parser("csv",
-    help=_("Import or export data to/from CSV files."))
+    help=_("Import or export data to/from CSV files."),
+    description=_("""Import or export data to/from a CSV file. The first line
+    is a header which defines questionnaire_id and global_id, and a column
+    for each checkbox and textfield. Note that the import is currently very
+    limited, as you need to specifiy the questionnaire ID to select the sheet
+    which should be updated."""))
 
 subparser = parser.add_subparsers()
 
@@ -44,6 +49,7 @@ import_.add_argument('file',
     help=_("The file to import."))
 import_.set_defaults(direction='import')
 
+@script.connect(parser)
 @script.logfile
 def csvdata(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
@@ -55,5 +61,4 @@ def csvdata(cmdline):
     else:
         raise AssertionError
 
-parser.set_defaults(func=csvdata)
 

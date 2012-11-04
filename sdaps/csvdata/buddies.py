@@ -28,7 +28,7 @@ class Questionnaire(model.buddy.Buddy):
     obj_class = model.questionnaire.Questionnaire
 
     def export_header(self):
-        header = ['questionnaire_id']
+        header = ['questionnaire_id, global_id']
         for qobject in self.obj.qobjects:
             header.extend(qobject.csvdata.export_header())
         self.file = file(self.obj.survey.new_path('data_%i.csv'), 'w')
@@ -36,7 +36,8 @@ class Questionnaire(model.buddy.Buddy):
         self.csv.writerow(dict([(value, value) for value in header]))
 
     def export_data(self):
-        data = {'questionnaire_id': str(self.obj.sheet.questionnaire_id)}
+        data = {'questionnaire_id': unicode(self.obj.sheet.questionnaire_id),
+            'global_id': unicode(self.obj.sheet.questionnaire_id)}
         for qobject in self.obj.qobjects:
             data.update(qobject.csvdata.export_data())
         self.csv.writerow(data)

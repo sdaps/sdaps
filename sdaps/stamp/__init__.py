@@ -23,7 +23,10 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 parser = script.subparsers.add_parser("stamp",
-    help=_("Add marks for automatic processing."))
+    help=_("Add marks for automatic processing."),
+    description=_("""This command creates the printable document. Depending on
+    the projects setting you are required to specifiy a source for questionnaire
+    IDs."""))
 
 parser.add_argument('-r', '--random',
     metavar="N",
@@ -38,6 +41,7 @@ parser.add_argument('--existing',
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: stamp_%%i.pdf)"))
 
+@script.connect(parser)
 @script.logfile
 def stamp(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
@@ -46,5 +50,4 @@ def stamp(cmdline):
 
     return stamp.stamp(survey, cmdline)
 
-parser.set_defaults(func=stamp)
 

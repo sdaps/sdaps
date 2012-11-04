@@ -29,16 +29,19 @@ _ = ugettext
 
 
 parser = script.subparsers.add_parser("gui",
-    help=_("Launch a gui. You can view and alter the (recognized) answers with it."))
+    help=_("Launch a gui. You can view and alter the (recognized) answers with it."),
+    description=_("""This command launches a graphical user interface that can
+    be used to correct answer. You need to run "recognize" before using it.
+    """))
 
 parser.add_argument('-f', '--filter',
     help=_("Filter to only show a partial dataset."))
 
+@script.connect(parser)
 @script.logfile
 def gui(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import gui
     gui.gui(survey, cmdline)
 
-parser.set_defaults(func=gui)
 

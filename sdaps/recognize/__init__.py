@@ -30,13 +30,16 @@ _ = ugettext
 
 
 parser = script.subparsers.add_parser("recognize",
-    help=_("Run the optical mark recognition."))
+    help=_("Run the optical mark recognition."),
+    description=_("""Iterates over all images and runs the optical mark
+    recognition. It will reevaluate sheets even if "recognize" has already
+    run or manual changes were made."""))
 
+@script.connect(parser)
 @script.logfile
 def recognize(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import recognize
     recognize.recognize(survey)
 
-parser.set_defaults(func=recognize)
 

@@ -29,15 +29,21 @@ _ = ugettext
 
 
 parser = script.subparsers.add_parser("setup_tex",
-    help=_("Create a new survey using a LaTeX document."))
+    help=_("Create a new survey using a LaTeX document."),
+    description=_("""Create a new survey from a LaTeX document. You need to
+    be using the SDAPS class. All the metadata and options for the project
+    can be set inside the LaTeX document."""))
 
-parser.add_argument('questionnaire.tex')
-parser.add_argument('additional_questions', nargs='?')
+parser.add_argument('questionnaire.tex',
+    help=_("The LaTeX Document"))
+parser.add_argument('additional_questions',
+    nargs='?',
+    help=_("Additional questions that are not part of the questionnaire."))
 
+@script.connect(parser)
 def setup_tex(cmdline):
     survey = model.survey.Survey.new(cmdline['project'])
     import setup
     setup.setup(survey, cmdline)
 
-parser.set_defaults(func=setup_tex)
 
