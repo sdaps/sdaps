@@ -41,7 +41,7 @@ usage = _("""[options] questionnaire_odt questionnaire_pdf [additional_questions
 parser = optparse.OptionParser(usage=optparse.SUPPRESS_USAGE)
 
 parser.set_defaults(print_survey_id=True)
-parser.set_defaults(print_questionnaire_id=True)
+parser.set_defaults(print_questionnaire_id=False)
 parser.set_defaults(style="classic")
 parser.set_defaults(global_id="")
 parser.set_defaults(duplex=True)
