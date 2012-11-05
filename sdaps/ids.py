@@ -37,7 +37,7 @@ parser.add_argument('-a', '--add',
 @script.connect(parser)
 @script.logfile
 def ids(cmdline):
-    survey = model.survey.Survey.load(survey_dir)
+    survey = model.survey.Survey.load(cmdline['project'])
 
     if cmdline['add']:
         if cmdline['add'] == '-':
@@ -71,6 +71,7 @@ def ids(cmdline):
 
         for id in survey.questionnaire_ids:
             ids.write(unicode(id).encode('utf-8'))
+            ids.write('\n')
         ids.close()
 
 

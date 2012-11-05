@@ -60,6 +60,8 @@ rm -rf "$PROJECT"
 # Also test code128 style for ODT support
 "$SDAPS" "$PROJECT" setup --style="code128" --global-id="SDAPS!" --print-questionnaire-id "data/odt-3/debug.odt" "data/odt-3/debug.pdf" "data/odt-3/debug.internetquestions"
 "$SDAPS" "$PROJECT" stamp --file "data/odt-3/questionnaire_ids"
+"$SDAPS" "$PROJECT" ids -o "$PROJECT/ids"
+diff "data/odt-3/questionnaire_ids" "$PROJECT/ids"
 
 
 ###########################################################
