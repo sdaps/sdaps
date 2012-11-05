@@ -22,7 +22,9 @@ import gettext
 def ugettext(string):
     u'''gettext for unicode objects
     '''
-    return gettext.gettext(string.encode('UTF-8')).decode('UTF-8')
+    translation = gettext.gettext(string.encode('UTF-8')).decode('UTF-8')
+
+    return translation.split('|', 1)[-1]
 
 
 def ungettext(singular, plural, n):

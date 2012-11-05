@@ -140,7 +140,7 @@ class MainWindow(object):
         combo.add_attribute(cell, 'text', 0)
 
         store = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_INT)
-        store.append(row=(_("Page|Invalid").split('|')[-1], -1))
+        store.append(row=(_("Page|Invalid"), -1))
         for i in range(self.provider.survey.questionnaire.page_count):
             store.append(row=(
                 ungettext("Page %i", "Page %i", i + 1) % (i + 1), i + 1))

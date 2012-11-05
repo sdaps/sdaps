@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-26 12:48+0200\n"
-"PO-Revision-Date: 2012-10-26 12:49+0200\n"
+"POT-Creation-Date: 2012-11-05 14:53+0100\n"
+"PO-Revision-Date: 2012-11-05 15:20+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -19,60 +19,55 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Gtranslator 2.91.5\n"
 
-#: ../sdaps/__init__.py:51
-#, python-format
-msgid "Unknown script \"%s\". Aborting."
-msgstr "Unbekanntes script \"%s\". Operation Abgebrochen."
+#: ../sdaps/__init__.py:50
+msgid "SDAPS -- Paper based survey tool."
+msgstr "SDAPS -- Werkzeug für Umfragen mit Fragebögen aus Papier."
 
-#: ../sdaps/__init__.py:57
-#, python-format
+#: ../sdaps/__init__.py:54
+msgid "project directory|The SDAPS project."
+msgstr "Das SDAPS Projekt."
+
+#: ../sdaps/__init__.py:55
+msgid "command list|Commands:"
+msgstr "Kommandos:"
+
+#: ../sdaps/add.py:29
+msgid "Add scanned questionnaires to the survey."
+msgstr "Hinzufügen von gescannten Fragebögen."
+
+#: ../sdaps/add.py:30
 msgid ""
-"Usage: %s project_dir command [args]\n"
-"\n"
-"You need to specify the project_dir for SDAPS to work on. Depending on the\n"
-"command this needs to exist, or it will be created automatically.\n"
-"\n"
-"The following commands and their respective options are available:"
+"This command is used to add scanned images to the survey.\n"
+"    The image data needs to be a (multipage) 300dpi monochrome TIFF file. "
+"You\n"
+"    may choose not to copy the data into the project directory. In that "
+"case\n"
+"    the data will be referenced using a relative path."
 msgstr ""
-"Aufruf: %s Projektverzeichniss Kommando [Argumente]\n"
-"\n"
-"Es muss ein Projektverzeichniss für SDAPS angegeben werden. Dieses\n"
-"muss entweder bereits existieren, bzw. wird von einigen Kommands "
-"automatisch\n"
-"erstellt.\n"
-"\n"
-"Die folgenden Kommands stehen zur verfügung:"
+"Dieser Befehl wird benutzt um gescannte Bilder zu der Umfrage hinzuzufügen. "
+"Die Bilder müss als eine (mehrseitige) 300dpi monochromes TIFF Datei "
+"übergeben werden. Es ist möglich auszuwählen, dass die Datei nicht in das "
+"Projektverzeichniss kopiert wird. In diesem Fall wird ein zum "
+"Projektverzeichniss relativer Pfad gespeichert."
 
-#: ../sdaps/add.py:28
-msgid ""
-"[options] files\n"
-"\n"
-"    Add scanned questionnaires to the survey.\n"
-"\n"
-"    file: TIFF-Images containing scanned questionnaires."
-msgstr ""
-"[Optionen] dateien\n"
-"    \n"
-"    Fügt eingescannte Daten zum Projekt hinzu.\n"
-"\n"
-"    dateien: TIFF-Bilder mit den gescannten Daten"
-
-#: ../sdaps/add.py:41
-msgid "Copy the TIFF into the project directory (default)."
+#: ../sdaps/add.py:36
+msgid "Copy the files into the directory (default)"
 msgstr "Kopier das TIFF-Bild in das Projektverzeichniss (Standard)."
 
-#: ../sdaps/add.py:44
-msgid "Do not copy the TIFF. Instead reference it with a relative path."
-msgstr ""
-"Kopier nicht das TIFF-Bild in das Projektverzeichniss. Stattdessen wird das "
-"Bild mit einem relativen Pfad referenziert."
+#: ../sdaps/add.py:41
+msgid "Do not copy the files into the directory"
+msgstr "Speichere einen relativen Pfad zum Bild."
 
-#: ../sdaps/add.py:63
+#: ../sdaps/add.py:46
+msgid "A number of TIFF image files."
+msgstr "Ein oder mehere TIFF Dateien."
+
+#: ../sdaps/add.py:61
 #, python-format
 msgid "Processing %s"
 msgstr "Beartbeite %s"
 
-#: ../sdaps/add.py:66
+#: ../sdaps/add.py:64
 #, python-format
 msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
@@ -81,7 +76,7 @@ msgstr ""
 "Ungültige Eingabedatei %s. Ein (mehrseitiges) monochromes TIFF-Bild muss "
 "angegeben werden."
 
-#: ../sdaps/add.py:94
+#: ../sdaps/add.py:92
 msgid "Done"
 msgstr "Fertig"
 
@@ -93,80 +88,86 @@ msgstr "Warnung: "
 msgid "Error: "
 msgstr "Fehler: "
 
-#: ../sdaps/boxgallery/__init__.py:33
+#: ../sdaps/boxgallery/__init__.py:31
+msgid "Create PDFs with boxes sorted by the detection heuristics."
+msgstr "Erstellt ein PDF mit den Kästchen um die Heuristiken zu bewerten."
+
+#: ../sdaps/boxgallery/__init__.py:32
 msgid ""
-"\n"
-"\n"
-"    The boxgallery shows a list of all boxes, sorted by their coverage.\n"
-"\n"
-"    creates boxgallery.pdf\n"
-"    "
+"SDAPS uses multiple heuristics to detect determine the\n"
+"    state of checkboxes. There is a list for each heuristic giving the "
+"expected\n"
+"    state and the quality of the value (see defs.py). Using this command a "
+"PDF\n"
+"    will be created for each of the heuristics so that one can adjust the\n"
+"    values."
 msgstr ""
-"\n"
-"\n"
-"    Schneidet alle Checkboxen aus allen eingescannten Seiten heraus.\n"
-"\n"
-"    Erstellt boxgallery.pdf\n"
-"    "
+"SDAPS benutzt mehrere Heuristiken um den Status der Ankreuzfelder zu "
+"erkennen. Diese\n"
+"werden über eine Liste (siehe defs.py) einem Zustand und einer Qualität "
+"zugeordner. Mit\n"
+"hilfe von diesem Kommando können PDFs erstellt werden um die Heuristiken zu "
+"bewerten und\n"
+"die Zuordnung anzupassen."
+
+#: ../sdaps/cover.py:27
+msgid "Create a cover for the questionnaires."
+msgstr "Erstellt ein Deckblatt für die Fragebögen."
 
 #: ../sdaps/cover.py:28
 msgid ""
-"\n"
-"\n"
-"    The cover is a title page for the pile of questionnaires.\n"
-"\n"
-"    creates cover.odf\n"
-"    "
+"This command creates a cover page for questionnaires. All\n"
+"    the metadata of the survey will be printed on the page."
 msgstr ""
-"\n"
-"\n"
-"    Erstellt eine Titelseite für die Fragebögen.\n"
-"\n"
-"    Erstellt cover.odf\n"
-"    "
+"Dieses Kommando erstellt ein Deckblatt für die Fragebögen. Dies ist\n"
+"eine Zusammenfassung der Metainformationen zu der Umfrage."
+
+#: ../sdaps/cover.py:31
+#, python-format
+msgid "Filename to store the data to (default: cover_%%i.pdf)"
+msgstr "Ausgabedatei (Standard: cover_%%i.pdf)"
 
 #
-#: ../sdaps/cover.py:47
+#: ../sdaps/cover.py:53
 msgid "sdaps questionnaire"
 msgstr "sdaps Fragebögen"
 
+#: ../sdaps/csvdata/__init__.py:31
+msgid "Import or export data to/from CSV files."
+msgstr "Importieren oder exportieren von Daten im CSV Format."
+
 #: ../sdaps/csvdata/__init__.py:32
 msgid ""
-"export [filter...]\n"
-"\n"
-"    Export to csv\n"
-"\n"
-"    filter: filter expression to select the sheets to export\n"
-"\n"
-"    creates data_[index].csv\n"
-"\n"
-"\n"
-"csvdata import filename\n"
-"\n"
-"    Import from csv\n"
-"\n"
-"    filename: file to read from\n"
-"    "
+"Import or export data to/from a CSV file. The first line\n"
+"    is a header which defines questionnaire_id and global_id, and a column\n"
+"    for each checkbox and textfield. Note that the import is currently very\n"
+"    limited, as you need to specifiy the questionnaire ID to select the "
+"sheet\n"
+"    which should be updated."
 msgstr ""
-"export [filter...]\n"
-"\n"
-"    CSV Export\n"
-"\n"
-"    filter: Filter um nur einen Teil der Bögen zu exportieren\n"
-"\n"
-"    Erstellt data_[index].csv\n"
-"\n"
-"\n"
-"csvdata import Dateiname\n"
-"\n"
-"    Importiert Daten aus einer CSV Datei\n"
-"\n"
-"    Dateiname: file to read from\n"
-"    "
+"Dieser Befehl ermöglicht den Import und Export der Daten im CSV Format. "
+"Dabei\n"
+"ist die erste Zeile eine Kopfzeile, die angibt, welche Werte in der Spalte\n"
+"gespeichert werden. Der Import kann derzeit nur im Zusammenhang mit der "
+"Fragebogen-ID\n"
+"benutzt werden."
 
-#: ../sdaps/csvdata/__init__.py:55
-msgid "Unknown command"
-msgstr "Unbekannter Befehl"
+#: ../sdaps/csvdata/__init__.py:41
+msgid "Export data to CSV file."
+msgstr "Daten im CSV Format exportieren."
+
+#: ../sdaps/csvdata/__init__.py:43 ../sdaps/report/__init__.py:35
+#: ../sdaps/reporttex/__init__.py:37
+msgid "Filter to only export a partial dataset."
+msgstr "Filter um nur eine Teilmenge der Daten zu exportieren."
+
+#: ../sdaps/csvdata/__init__.py:47
+msgid "Import data to from a CSV file."
+msgstr "Daten aus einer CSV Datei importieren."
+
+#: ../sdaps/csvdata/__init__.py:49
+msgid "The file to import."
+msgstr "Die zu importierende Datei."
 
 #: ../sdaps/gui/gui.py:143
 msgid "Page|Invalid"
@@ -218,22 +219,24 @@ msgstr ""
 "<b>Beenden ohne zu Speichern?</b>\n"
 "Wenn Sie nicht speichern, kann es zu Datenverlust kommen."
 
+#: ../sdaps/gui/__init__.py:32
+msgid "Launch a gui. You can view and alter the (recognized) answers with it."
+msgstr "Startet eine Grafische Oberfläche zur Korrektur."
+
 #: ../sdaps/gui/__init__.py:33
 msgid ""
-"[filter...]\n"
-"\n"
-"    Launch a gui. You can view and alter the (recognized) answers with it.\n"
-"\n"
-"    filter: filter expression to select the sheets to display\n"
+"This command launches a graphical user interface that can\n"
+"    be used to correct answer. You need to run \"recognize\" before using "
+"it.\n"
 "    "
 msgstr ""
-"[filter...]\n"
-"    \n"
-"    Startet eine Grafische Oberfläche, mit der die erkannten Antworten "
-"betrachtet und korrigiert werden können.\n"
-"\n"
-"    filter: Ein Filter Ausdruck, um nur bestimmte Bögen anzuzeigen\n"
-"    "
+"Dieser Befehl startet eine Grafische Oberfläche, mit der es\n"
+"möglich ist Erkennungsfehler zu korrigieren. Bevor dieser Befehl\n"
+"benutzt wird muss der \"recognize\" Schritt schon erfolgt sein."
+
+#: ../sdaps/gui/__init__.py:38
+msgid "Filter to only show a partial dataset."
+msgstr "Filter um nur einen Teil der Bögen anzuzeigen."
 
 #: ../sdaps/gui/main_window.ui.h:1
 msgid "Forward"
@@ -303,22 +306,33 @@ msgstr "Nach Qualität sortieren"
 msgid "label"
 msgstr "Sollte niemals sichtbar sein."
 
-#: ../sdaps/ids.py:28
-#, python-format
+#: ../sdaps/ids.py:26
+msgid "Export and import questionnaire IDs."
+msgstr "Export und Import der Fragebogen-IDs."
+
+#: ../sdaps/ids.py:27
 msgid ""
-"[pattern = '%i\\n']\n"
-"\n"
-"    Write a list containing all questionnaire ids.\n"
-"\n"
-"    creates ids_[index]\n"
-"    "
+"This command can be used to import and export questionnaire\n"
+"    IDs. It only makes sense in projects where such an ID is printed on the\n"
+"    questionnaire. Note that you can also add IDs by using the stamp "
+"command,\n"
+"    which will give you the PDF at the same time."
 msgstr ""
-"[pattern = '%i\\n']\n"
-"\n"
-"    Schreibt eine Liste mit alle Fragebogen IDs.\n"
-"\n"
-"    Erstellt ids_[index]\n"
-"    "
+"Dieses Kommando kann dafür benutzt werden Fragebogen-IDs zu importieren\n"
+"und exportieren. Dies ist nur bei Projekten sinnvoll, bei denen auch eine\n"
+"eindeutige Fragebogen-ID auf den Fragebogen gedruckt wird.\n"
+"Es ist auch möglich Fragebogen-IDs mit dem \"stamp\" Befehl hinzuzufügen, in "
+"dem\n"
+"Fall wird gleichzeitig auch das druckbare PDF erstellt."
+
+#: ../sdaps/ids.py:32
+#, python-format
+msgid "Filename to store the data to (default: ids_%%i)"
+msgstr "Ausgabedatei (Standard: ids_%%i)"
+
+#: ../sdaps/ids.py:35
+msgid "Add IDs to the internal list from the specified file."
+msgstr "Fügt die IDs aus der Angegebenen Datei hinzu."
 
 #: ../sdaps/image/__init__.py:46
 msgid ""
@@ -329,59 +343,75 @@ msgstr ""
 "build\" im obersten Verzeichniss aus um die Bibliothek zu bauen."
 
 #: ../sdaps/info.py:28
+msgid "Display and modify metadata of project."
+msgstr "Metadaten des Projekts anzeigen und verändern."
+
+#: ../sdaps/info.py:29
 msgid ""
-"[field [content]]\n"
-"\n"
-"    Alter metadata.\n"
-"\n"
-"    field: name of the field you whish to alter\n"
-"    content: the new content for that field or empty if you want to delete "
-"the\n"
-"        field.\n"
-"\n"
-"    With no arguments, info will print a list of existing fields.\n"
-"    "
+"This command lets you modify the metadata of the SDAPS\n"
+"    project. You can modify, add and remove arbitrary keys that will be "
+"printed\n"
+"    on the report. The only key that always exist is \"title\".\n"
+"    If no key is given then a list of defined keys is printed."
 msgstr ""
-"[field [content]]\n"
-"\n"
-"    Metadata Editor.\n"
-"\n"
-"    field: Das Feld, dass verändert werden soll.\n"
-"    content: Der neue Inhalt des Feldes. Wenn dies übersprungen\n"
-"             wird, dann fragt SDAPS nach.\n"
-"    "
+"Dieses Kommando ermöglicht es die Metadaten des SDAPS Projekts zu\n"
+"verändern. Es ist möglich beliebige Schlüssel zu verändern, hinzuzufügen\n"
+"oder zu löschen. Lediglich der Schlüssel \"title\" ist immer vorhanden.\n"
+"In dem Fall das kein Schlüssel angegeben wird, gibt dieses Kommando eine "
+"Liste\n"
+"aller definierten Schlüssel aus."
 
-#: ../sdaps/info.py:50
-#, python-format
-msgid "Existing fields: %s"
-msgstr "Definierte Felder: %s"
+#: ../sdaps/info.py:36
+msgid "The key to display or modify."
+msgstr "Der Schlüssel der angezeigt oder geändert werden soll."
 
-#: ../sdaps/model/survey.py:230
+#: ../sdaps/info.py:40
+msgid "Set the given key to this value."
+msgstr "Neuer Wert für den Schlüssel."
+
+#: ../sdaps/info.py:44
+msgid "Delete the key and value pair."
+msgstr "Den angegebenen Schlüssel und Wert löschen."
+
+#: ../sdaps/info.py:68
+msgid "Existing fields:\n"
+msgstr "Definierte Felder:\n"
+
+#: ../sdaps/model/survey.py:231
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:241
+#: ../sdaps/model/survey.py:242
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/model/survey.py:267
+#: ../sdaps/model/survey.py:268
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
 "Anzahl von Seiten haben!"
 
-#: ../sdaps/model/survey.py:271
+#: ../sdaps/model/survey.py:272
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
 msgstr ""
 "Der Stil 'classic' kann nur mit bis zu sechs Seiten umgehen. Für mehr Seiten "
 "kann der 'code128' Stil benutzt werden."
+
+#: ../sdaps/model/survey.py:283
+msgid "IDs need to be integers in \"classic\" style!"
+msgstr "IDs müssen im \"classic\" Stil ganze Zahlen sein!"
+
+#: ../sdaps/model/survey.py:289
+#, python-format
+msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
+msgstr "Ungültiges Zeichen %s in der Fragebogen ID \"%s\" im \"code128\" Stil!"
 
 #: ../sdaps/recognize/buddies.py:63
 #, python-format
@@ -481,23 +511,20 @@ msgstr ""
 msgid "%s, %i: Global ID is different to an earlier page."
 msgstr "%s, %i: Die Globale-ID ist anders als auf einer der vorherigen Seiten."
 
+#: ../sdaps/recognize/__init__.py:33
+msgid "Run the optical mark recognition."
+msgstr "Führt die automatische Erkennung durch."
+
 #: ../sdaps/recognize/__init__.py:34
 msgid ""
-"\n"
-"\n"
-"    Recognize all added sheets.\n"
-"\n"
-"    Attention: This script overwrites all data, including manual changes "
-"made\n"
-"        with the gui!\n"
-"    "
+"Iterates over all images and runs the optical mark\n"
+"    recognition. It will reevaluate sheets even if \"recognize\" has "
+"already\n"
+"    run or manual changes were made."
 msgstr ""
-"\n"
-"\n"
-"    Lässt den Erkennungsalgorithmus über die gescannten Daten laufen.\n"
-"\n"
-"    Achtung: Dieses Script überschreibt alle vorherigen Änderungen!\n"
-"    "
+"Dieser Befehl für den Erkenner für alle im Projekt vorhandenen\n"
+"Bilder durch. Hierbei werden auch manuelle Änderungen\n"
+"wieder zurückgesetzt!"
 
 #: ../sdaps/report/answers.py:185
 #, python-format
@@ -514,87 +541,35 @@ msgstr "Mittelwert: %.2f"
 msgid "Standard Deviation: %.2f"
 msgstr "Standardabweichung: %.2f"
 
-#: ../sdaps/report/__init__.py:32
-msgid ""
-"[filter...]\n"
-"\n"
-"    Report generates a basic report which shows for every question (if "
-"appropriate)\n"
-"        - the histogramm\n"
-"        - the mean\n"
-"        - the standard derivation\n"
-"        - all handwritten comments\n"
-"\n"
-"    filter: filter expression to select the sheets to appear in the report\n"
-"\n"
-"    creates report_[index].pdf\n"
-"    "
-msgstr ""
-"[filter...]\n"
-"    \n"
-"    Erstellt einen Report in PDF Form. In dem Report enthalten sind:\n"
-"        - Histogram\n"
-"        - Durchschnittswert\n"
-"        - Standardabweichung\n"
-"        - Alle handgeschriebenen Kommentare\n"
-"\n"
-"    filter: Filter Ausdruck, um nur bestimmte Bögen auszuwerten.\n"
-"\n"
-"    Erstellt report_[index].pdf\n"
-"    "
+#: ../sdaps/report/__init__.py:30
+msgid "Create a PDF report."
+msgstr "Erstellt einen PDF Report."
 
-#: ../sdaps/report/__init__.py:52
+#: ../sdaps/report/__init__.py:31
 msgid ""
-"[filter...]\n"
-"\n"
-"    Stats generates a report for every filter condition (not compounded)\n"
-"\n"
-"    filter: filter expression to select the sheets to appear in the "
-"reference report\n"
-"\n"
-"    creates report_[index].pdf (the reference report)\n"
-"    creates report_[index]_[index] description.pdf\n"
-"    "
+"This command creates a PDF report using reportlab that\n"
+"    contains statistics and if selected the freeform fields."
 msgstr ""
-"[filter...]\n"
-"\n"
-"    Erstellt einen Report für alle möglichen Filter Kombinationen.\n"
-"    (nicht zusammengesetzt)\n"
-"\n"
-"    filter: Filter Ausdruck, für den referenz Report.\n"
-"\n"
-"    Erstellt report_[index].pdf (Referenz Report)\n"
-"    Erstellt report_[index]_[index] description.pdf\n"
-"    "
+"Dieses Kommando erstellt ein PDF Report mit Hilfe von reportlab.\n"
+"Dieser Report enthält Statistiken zu jeder Frage und je nach Einstellung\n"
+"die Freitextfelder."
 
-#: ../sdaps/report/__init__.py:69
-msgid ""
-"[filter...]\n"
-"\n"
-"    Smallreport generates a basic report which shows for every question (if "
-"appropriate)\n"
-"        - the histogramm\n"
-"        - the mean\n"
-"        - the standard derivation\n"
-"    It does not contain any handwritten comment\n"
-"\n"
-"    filter: filter expression to select the sheets to appear in the report\n"
-"\n"
-"    creates report_[index].pdf\n"
-"    "
-msgstr ""
-"[filter...]\n"
-"\n"
-"    Smallreport erstellt einen Report, der die folgenden Daten enthält:\n"
-"        - Histogram\n"
-"        - Durchschnitt\n"
-"        - Standardabweichung\n"
-"    Der Report enthält keine handschriftlichen Kommentare.\n"
-"\n"
-"    filter: Filter Ausdruck, um nur bestimmte Bögen auszuwerten.\n"
-"\n"
-"    Erstellt report_[index].pdf\n"
-"    "
+#: ../sdaps/report/__init__.py:37
+msgid "Create a filtered report for every checkbox."
+msgstr "Erstellt zu jedem Kästchen einen gefilterten Report."
+
+#: ../sdaps/report/__init__.py:40
+msgid "Short format (without freeform text fields)."
+msgstr "Kurzversion (ohne Freitextfelder)."
+
+#: ../sdaps/report/__init__.py:45
+msgid "Detailed output. (default)"
+msgstr "Langversion (Standard)"
+
+#: ../sdaps/report/__init__.py:51 ../sdaps/reporttex/__init__.py:34
+#, python-format
+msgid "Filename to store the data to (default: report_%%i.pdf)"
+msgstr "Ausgabedatei (Standard: report_%%i.pdf)"
 
 #: ../sdaps/report/report.py:70 ../sdaps/reporttex/report.py:124
 msgid "Turned in Questionnaires"
@@ -604,52 +579,57 @@ msgstr "Abgegebene Fragebögen"
 msgid "sdaps report"
 msgstr "sdaps Report"
 
-#: ../sdaps/setup/__init__.py:31
-msgid ""
-"[options] questionnaire_odt questionnaire_pdf [additional_questions]\n"
-"\n"
-"    Setup creates a new survey. It parses the questionnaire to create the "
-"data\n"
-"    model. The survey must not exist yet.\n"
-"\n"
-"    questionnaire_odt: the questionnaire in odt-format\n"
-"    questionnaire_pdf: the questionnaire in pdf-format\n"
-"    internetquestions: the questions in the internet(optional)"
-msgstr ""
-"[options] questionnaire_odt questionnaire_pdf [additional_questions]\n"
-"\n"
-"    Erstellt ein neues Projektverzeichnis. Das Verzeichnis darf noch nicht "
-"existieren.\n"
-"\n"
-"    questionnaire_odt: Der Fragebogen im ODT-Format\n"
-"    questionnaire_pdf: Der Fragebogen im PDF-Format\n"
-"    internetquestions: Datei mit zusätzlichen Fragen."
+#: ../sdaps/setup/__init__.py:33
+msgid "Create a new survey using an ODT document."
+msgstr "Erstellt eine neue Umfrage aus einem ODT Dokument."
 
-#: ../sdaps/setup/__init__.py:50
+#: ../sdaps/setup/__init__.py:34
+msgid ""
+"Create a new surevey from an ODT document. The PDF export\n"
+"    of the file needs to be specified at the same time. SDAPS will import\n"
+"    metadata (properties) and the title from the ODT document."
+msgstr ""
+"Dieser Befehl erstellt eine neue Umfrage aus einem ODT Dokument. Der\n"
+"PDF export des Dokuments muss auch angegeben werden. SDAPS importiert\n"
+"auch die Metadaten und den Titel des ODT Dokuments."
+
+#: ../sdaps/setup/__init__.py:39
+msgid "The ODT Document"
+msgstr "Das ODT Dokument."
+
+#: ../sdaps/setup/__init__.py:41
+msgid "PDF export of the ODT document"
+msgstr "PDF Export des ODT Dokuments."
+
+#: ../sdaps/setup/__init__.py:44 ../sdaps/setuptex/__init__.py:41
+msgid "Additional questions that are not part of the questionnaire."
+msgstr "Weitere Fragen die nicht Teil des Fragebogens sind."
+
+#: ../sdaps/setup/__init__.py:53
 msgid "Enable printing of the survey ID (default)."
 msgstr "Ausschalten der Umfrage-ID auf den Bögen. (Standard)"
 
-#: ../sdaps/setup/__init__.py:53
+#: ../sdaps/setup/__init__.py:57
 msgid "Disable printing of the survey ID."
 msgstr "Ausschalten der Umfrage-ID auf den Bögen."
 
-#: ../sdaps/setup/__init__.py:57
+#: ../sdaps/setup/__init__.py:62
 msgid "Enable printing of the questionnaire ID."
 msgstr "Einschalten der Fragebogen-ID auf den Bögen."
 
-#: ../sdaps/setup/__init__.py:60
+#: ../sdaps/setup/__init__.py:66
 msgid "Disable printing of the questionnaire ID (default)."
 msgstr "Ausschalten der Fragebogen-ID auf den Bögen. (Standard)"
 
-#: ../sdaps/setup/__init__.py:64
+#: ../sdaps/setup/__init__.py:70
 msgid ""
-"Set an additional global ID for tracking. This can can not be used in the "
+"Set an additional global ID for tracking. This can can only be used in the "
 "\"code128\" style."
 msgstr ""
 "Setzt eine zusätzliche Globale-ID die auf die Bögen gedruckt wird. Dies "
 "funktioniert nur im \"code128\" Stil."
 
-#: ../sdaps/setup/__init__.py:68
+#: ../sdaps/setup/__init__.py:75
 msgid ""
 "The stamping style to use. Should be either \"classic\" or \"code128\". Use "
 "\"code128\" for more features."
@@ -657,7 +637,7 @@ msgstr ""
 "Der Stil der zum Stempeln verwendet wird. Muss entweder \"classic\" oder "
 "\"code128\" sein. \"code128\" hat mehr features."
 
-#: ../sdaps/setup/__init__.py:72
+#: ../sdaps/setup/__init__.py:81
 msgid ""
 "Use duplex mode (ie. only print the IDs on the back side). Requires a "
 "mulitple of two pages."
@@ -665,7 +645,7 @@ msgstr ""
 "Druckmodus auf Duplex einstellen. Die Umfrage muss eine grade Anzahl von "
 "Seiten besitzen."
 
-#: ../sdaps/setup/__init__.py:76
+#: ../sdaps/setup/__init__.py:86
 msgid ""
 "Use simplex mode. IDs are printed on each page. You need a simplex scan "
 "currently!"
@@ -673,20 +653,11 @@ msgstr ""
 "Druckmodus auf Simplex einstellen. Vorsicht: Es muss derzeit auch simplex "
 "gescannt werden!"
 
-#: ../sdaps/setup/__init__.py:99
-#, python-format
-msgid ""
-"You selected an unsupported style '%s'.\n"
-"Valid choices are:"
-msgstr ""
-"Der von ihnen gewählte Stil '%s' existiert nicht.\n"
-"Stile die zur Verfügung stehen:"
-
 #: ../sdaps/setup/setup.py:40 ../sdaps/setuptex/setup.py:59
 msgid "The survey directory already exists"
 msgstr "Das Umfrageverzeichniss existiert bereits."
 
-#: ../sdaps/setup/setup.py:45
+#: ../sdaps/setup/setup.py:49
 #, python-format
 msgid ""
 "Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
@@ -695,24 +666,24 @@ msgstr ""
 "Unbekanntes Dateiformat (%s). questionnaire_odt muss application/vnd.oasis."
 "opendocument.text sein."
 
-#: ../sdaps/setup/setup.py:50
+#: ../sdaps/setup/setup.py:54
 #, python-format
 msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
 msgstr ""
 "Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
 
-#: ../sdaps/setup/setup.py:56 ../sdaps/setuptex/setup.py:70
+#: ../sdaps/setup/setup.py:60 ../sdaps/setuptex/setup.py:73
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
 
-#: ../sdaps/setup/setup.py:84
+#: ../sdaps/setup/setup.py:88
 msgid "Caught an Exception while parsing the ODT file. The current state is:"
 msgstr ""
 "Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
 "Zustand ist:"
 
-#: ../sdaps/setup/setup.py:101 ../sdaps/setuptex/setup.py:134
+#: ../sdaps/setup/setup.py:105 ../sdaps/setuptex/setup.py:137
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
@@ -764,39 +735,47 @@ msgstr ""
 "Warnung: Ignoriere Box (Seite: %i, x: %.1f, y: %.1f, width: %.1f, height: "
 "%.1f)."
 
-#: ../sdaps/stamp/__init__.py:28
-#, python-format
-msgid ""
-"[count [used_ids]]\n"
-"\n"
-"    Stamp corner marks and questionnaire ids on the questionnaire.\n"
-"\n"
-"    count: number of unique questionnaire ids you want to create.\n"
-"           This is only used if questionnaire ids are supposed to be\n"
-"           printed. This option needs to be specified when creating the\n"
-"           project.\n"
-"    used_ids: don't use any id named in this file(pattern = '%i\\n')\n"
-"\n"
-"    creates stamped_[index].pdf\n"
-"    "
-msgstr ""
-"[count [used_ids]]\n"
-"\n"
-"    Stempelt Eckmarker und IDs auf den Fragebogen.\n"
-"\n"
-"    count: Die Anzahl an eindeutigen Fragebögen die erstellt werden soll\n"
-"           Dies wird nur verwendet, wenn eindeutige Fragebogen IDs auf jeden "
-"Bogen\n"
-"           gedruckt werden sollen. Diese Option muss beim Anlegen des "
-"Projekts\n"
-"           angegeben werden.\n"
-"    used_ids: Datei mit Fragebogen IDs die schon benutzt wurden (Muster = '%i"
-"\\n')\n"
-"\n"
-"    Erstellt: stamped_[index].pdf\n"
-"    "
+#: ../sdaps/stamp/__init__.py:26
+msgid "Add marks for automatic processing."
+msgstr "Fügt Markierungen für den Erkenner hinzu."
 
-#: ../sdaps/stamp/stamp.py:37
+#: ../sdaps/stamp/__init__.py:27
+msgid ""
+"This command creates the printable document. Depending on\n"
+"    the projects setting you are required to specifiy a source for "
+"questionnaire\n"
+"    IDs."
+msgstr ""
+"Dieses Kommando erstellt den Druckbaren Fragebogen. Je nach Einstellung\n"
+"muss noch eine Quelle für (eindeutige) Fragebogen-IDs mit angegeben werden."
+
+#: ../sdaps/stamp/__init__.py:33
+msgid ""
+"If using questionnaire IDs, create N questionnaires with randomized IDs."
+msgstr ""
+"Wenn Fragebogen-IDs genutzt werden, dann erstelle N Fragebögen mit "
+"zufälliger Nummer."
+
+#: ../sdaps/stamp/__init__.py:36
+msgid ""
+"If using questionnaire IDs, create questionnaires from the IDs read from the "
+"specified file."
+msgstr ""
+"Wenn Fragebogen-IDs genutzt werden, dann lese die IDs aus der angegeben "
+"Datei."
+
+#: ../sdaps/stamp/__init__.py:39
+msgid "If using questionnaire IDs, create questionnaires for all stored IDs."
+msgstr ""
+"Wenn Fragebogen-IDs genutzt werden, dann erstelle Fragebögen für alle schon "
+"gespeicherten IDs."
+
+#: ../sdaps/stamp/__init__.py:42
+#, python-format
+msgid "Filename to store the data to (default: stamp_%%i.pdf)"
+msgstr "Ausgabedatei (default: stamp_%%i.pdf)"
+
+#: ../sdaps/stamp/stamp.py:38
 msgid ""
 "You may not specify the number of sheets for surveys that do not print a "
 "quesitonnaire id."
@@ -804,13 +783,13 @@ msgstr ""
 "Es ist nicht möglich eine Anzahl von Fragebögen anzugeben, wenn die "
 "Fragebogen-ID nicht auf den Bogen gedruckt wird."
 
-#: ../sdaps/stamp/stamp.py:57
+#: ../sdaps/stamp/stamp.py:76
 msgid ""
-"You need to specify the number of questionnaires to create when "
-"questionnaire ids are printed."
+"Questionnaire IDs are required, use --random to create random ones or "
+"specify some using --file."
 msgstr ""
-"Es notwendig eine Anzahl an Bögen anzugeben, wenn eine Fragebogen-ID auf die "
-"Bögen gedruckt wird."
+"Es werden Fragebogen-IDs benötigt. Bitte benutzen sie eine der "
+"entsprechenden Optionen."
 
 #: ../sdaps/stamp/generic.py:36
 #, python-format
@@ -822,7 +801,7 @@ msgstr "Umfrage-ID: %i"
 msgid "Questionnaire-ID: %i"
 msgstr "Fragebogen-ID: %i"
 
-#: ../sdaps/stamp/generic.py:250
+#: ../sdaps/stamp/generic.py:251
 msgid ""
 "You need to have either pdftk or pyPdf installed. pdftk is the faster method."
 msgstr ""
@@ -830,14 +809,14 @@ msgstr ""
 "schnellere Metode."
 
 #. bottomup = False =>(0, 0) is the upper left corner
-#: ../sdaps/stamp/generic.py:266
+#: ../sdaps/stamp/generic.py:267
 #, python-format
 msgid "Creating stamp PDF for %i sheet"
 msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
 msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
 
-#: ../sdaps/stamp/generic.py:308 ../sdaps/stamp/generic.py:419
+#: ../sdaps/stamp/generic.py:309 ../sdaps/stamp/generic.py:420
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
@@ -845,33 +824,33 @@ msgstr[0] "%i Bogen; %f Sekunden pro Bogen"
 msgstr[1] "%i Bögen; %f Sekunden pro Bogen"
 
 #. Merge using pdftk
-#: ../sdaps/stamp/generic.py:317
+#: ../sdaps/stamp/generic.py:318
 msgid "Stamping using pdftk"
 msgstr "Stempele mit Hilfe von pdftk."
 
-#: ../sdaps/stamp/generic.py:321
+#: ../sdaps/stamp/generic.py:322
 #, python-format
 msgid "pdftk: Splitting out page %d of each sheet."
 msgid_plural "pdftk: Splitting out page %d of each sheet."
 msgstr[0] "pdftk: Extrahier die %d Seite aus dem Stempel."
 msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
 
-#: ../sdaps/stamp/generic.py:335
+#: ../sdaps/stamp/generic.py:336
 msgid "pdftk: Splitting the questionnaire for watermarking."
 msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens"
 
-#: ../sdaps/stamp/generic.py:345
+#: ../sdaps/stamp/generic.py:346
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
 msgstr[0] "pdftk: Stempele die Seite %d."
 msgstr[1] "pdftk: Stempele die Seite %d."
 
-#: ../sdaps/stamp/generic.py:368
+#: ../sdaps/stamp/generic.py:369
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr "pdftk: Erstelle das fertige PDF."
 
-#: ../sdaps/stamp/generic.py:405
+#: ../sdaps/stamp/generic.py:406
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
 
@@ -890,8 +869,8 @@ msgid "Running pdflatex now twice to generate the stamped questionnaire."
 msgstr ""
 "Führe pdflatex zwei mal aus um den gestempelten Fragebogen zu erstellen."
 
-#: ../sdaps/stamp/latex.py:68 ../sdaps/setuptex/setup.py:110
-#: ../sdaps/setuptex/setup.py:151 ../sdaps/reporttex/report.py:149
+#: ../sdaps/stamp/latex.py:68 ../sdaps/setuptex/setup.py:113
+#: ../sdaps/setuptex/setup.py:154 ../sdaps/reporttex/report.py:149
 msgid "Error running \"pdflatex\" to compile the LaTeX file."
 msgstr ""
 "Fehler beim ausführen von \"pdflatex\" um die LaTeX Datei zu kompilieren."
@@ -905,47 +884,44 @@ msgstr ""
 "wurden in '%s' belassen."
 
 #: ../sdaps/setuptex/__init__.py:32
-msgid ""
-"questionnaire_tex [additional_questions]\n"
-"\n"
-"    Setup creates a new survey. It compiles the TeX file, and parses the\n"
-"    output to create the data model.\n"
-"    The survey must not exist yet.\n"
-"\n"
-"    questionnaire_tex: the questionnaire in TeX-format\n"
-"    additional_questions: the questions in the internet(optional)\n"
-"    "
-msgstr ""
-"questionnaire_tex questionnaire_tex [additional_questions]\n"
-"\n"
-"    Erstellt ein neues Projektverzeichnis. Die TeX Datei wird automatisch "
-"kompiliert.\n"
-"    Das Verzeichnis darf noch nicht existieren.\n"
-"\n"
-"    questionnaire_tex: Der Fragebogen im LaTeX-Format\n"
-"    additional_questions: Datei mit zusätzlichen Fragen.\n"
-"    "
+msgid "Create a new survey using a LaTeX document."
+msgstr "Erstellt eine neue Umfrage aus einem LaTeX Dokument."
 
-#: ../sdaps/setuptex/setup.py:64
+#: ../sdaps/setuptex/__init__.py:33
+msgid ""
+"Create a new survey from a LaTeX document. You need to\n"
+"    be using the SDAPS class. All the metadata and options for the project\n"
+"    can be set inside the LaTeX document."
+msgstr ""
+"Dieses Kommando erstellt eine neue Umfrage aus einem LaTeX Dokument. Das\n"
+"Dokument muss die SDAPS Klasse verwenden. Die Metadaten und andere "
+"einstellungen\n"
+"für das Projekt werden im LaTeX Dokument gesetzt."
+
+#: ../sdaps/setuptex/__init__.py:38
+msgid "The LaTeX Document"
+msgstr "Das LaTeX Dokument."
+
+#: ../sdaps/setuptex/setup.py:67
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex"
 msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
 
-#: ../sdaps/setuptex/setup.py:65
+#: ../sdaps/setuptex/setup.py:68
 msgid "Will keep going, but expect failure!"
 msgstr "Versuche trotzdem fortzusetzten."
 
-#: ../sdaps/setuptex/setup.py:100 ../sdaps/setuptex/setup.py:141
+#: ../sdaps/setuptex/setup.py:103 ../sdaps/setuptex/setup.py:144
 msgid "Running pdflatex now twice to generate the questionnaire."
 msgstr "Führe pdflatex zwei mal aus um den Fragebogen zu erstellen."
 
-#: ../sdaps/setuptex/setup.py:120
+#: ../sdaps/setuptex/setup.py:123
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
 "Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
 "Zustand ist:"
 
-#: ../sdaps/setuptex/setup.py:167
+#: ../sdaps/setuptex/setup.py:170
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "
@@ -955,34 +931,17 @@ msgstr ""
 "Projektverzeichniss existiert noch, es ist daher möglich z.B. in die "
 "questionnaire.log auf LaTeX Fehler zu untersuchen."
 
-#: ../sdaps/reporttex/__init__.py:32
+#: ../sdaps/reporttex/__init__.py:30
+msgid "Create a PDF report using LaTeX."
+msgstr "Erstellt ein PDF Report mit LaTeX"
+
+#: ../sdaps/reporttex/__init__.py:31
 msgid ""
-"[filter...]\n"
-"\n"
-"    Report generates a basic report using latex which shows for every "
-"question(if appropriate)\n"
-"        - the histogramm\n"
-"        - the mean\n"
-"        - the standard derivation\n"
-"        - all handwritten comments\n"
-"\n"
-"    filter: filter expression to select the sheets to appear in the report\n"
-"\n"
-"    creates report_[index].pdf\n"
-"    "
+"This command creates a PDF report using LaTeX that\n"
+"    contains statistics and freeform fields."
 msgstr ""
-"[filter...]\n"
-"    \n"
-"    Erstellt einen Report in PDF Form. In dem Report enthalten sind:\n"
-"        - Histogram\n"
-"        - Durchschnittswert\n"
-"        - Standardabweichung\n"
-"        - Alle handgeschriebenen Kommentare\n"
-"\n"
-"    filter: Filter Ausdruck, um nur bestimmte Bögen auszuwerten.\n"
-"\n"
-"    Erstellt report_[index].pdf\n"
-"    "
+"Dieses Kommando erstellt ein PDF report mit LaTeX. Der Report enthält\n"
+"Statistiken und die Freitextfelder."
 
 #: ../sdaps/reporttex/report.py:95
 msgid "author|Unknown"
@@ -1007,6 +966,363 @@ msgstr ""
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr "Erstelle Überblick über die Boxen sortiert nach der Metrik \"%s\"."
+
+#~ msgid "Commands:"
+#~ msgstr "Kommandos:"
+
+#~ msgid "Unknown script \"%s\". Aborting."
+#~ msgstr "Unbekanntes script \"%s\". Operation Abgebrochen."
+
+#~ msgid ""
+#~ "Usage: %s project_dir command [args]\n"
+#~ "\n"
+#~ "You need to specify the project_dir for SDAPS to work on. Depending on "
+#~ "the\n"
+#~ "command this needs to exist, or it will be created automatically.\n"
+#~ "\n"
+#~ "The following commands and their respective options are available:"
+#~ msgstr ""
+#~ "Aufruf: %s Projektverzeichniss Kommando [Argumente]\n"
+#~ "\n"
+#~ "Es muss ein Projektverzeichniss für SDAPS angegeben werden. Dieses\n"
+#~ "muss entweder bereits existieren, bzw. wird von einigen Kommands "
+#~ "automatisch\n"
+#~ "erstellt.\n"
+#~ "\n"
+#~ "Die folgenden Kommands stehen zur verfügung:"
+
+#~ msgid ""
+#~ "[options] files\n"
+#~ "\n"
+#~ "    Add scanned questionnaires to the survey.\n"
+#~ "\n"
+#~ "    file: TIFF-Images containing scanned questionnaires."
+#~ msgstr ""
+#~ "[Optionen] dateien\n"
+#~ "    \n"
+#~ "    Fügt eingescannte Daten zum Projekt hinzu.\n"
+#~ "\n"
+#~ "    dateien: TIFF-Bilder mit den gescannten Daten"
+
+#~ msgid "Do not copy the TIFF. Instead reference it with a relative path."
+#~ msgstr ""
+#~ "Kopier nicht das TIFF-Bild in das Projektverzeichniss. Stattdessen wird "
+#~ "das Bild mit einem relativen Pfad referenziert."
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "    The boxgallery shows a list of all boxes, sorted by their coverage.\n"
+#~ "\n"
+#~ "    creates boxgallery.pdf\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "    Schneidet alle Checkboxen aus allen eingescannten Seiten heraus.\n"
+#~ "\n"
+#~ "    Erstellt boxgallery.pdf\n"
+#~ "    "
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "    The cover is a title page for the pile of questionnaires.\n"
+#~ "\n"
+#~ "    creates cover.odf\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "    Erstellt eine Titelseite für die Fragebögen.\n"
+#~ "\n"
+#~ "    Erstellt cover.odf\n"
+#~ "    "
+
+#~ msgid ""
+#~ "export [filter...]\n"
+#~ "\n"
+#~ "    Export to csv\n"
+#~ "\n"
+#~ "    filter: filter expression to select the sheets to export\n"
+#~ "\n"
+#~ "    creates data_[index].csv\n"
+#~ "\n"
+#~ "\n"
+#~ "csvdata import filename\n"
+#~ "\n"
+#~ "    Import from csv\n"
+#~ "\n"
+#~ "    filename: file to read from\n"
+#~ "    "
+#~ msgstr ""
+#~ "export [filter...]\n"
+#~ "\n"
+#~ "    CSV Export\n"
+#~ "\n"
+#~ "    filter: Filter um nur einen Teil der Bögen zu exportieren\n"
+#~ "\n"
+#~ "    Erstellt data_[index].csv\n"
+#~ "\n"
+#~ "\n"
+#~ "csvdata import Dateiname\n"
+#~ "\n"
+#~ "    Importiert Daten aus einer CSV Datei\n"
+#~ "\n"
+#~ "    Dateiname: file to read from\n"
+#~ "    "
+
+#~ msgid "Unknown command"
+#~ msgstr "Unbekannter Befehl"
+
+#~ msgid ""
+#~ "[pattern = '%i\\n']\n"
+#~ "\n"
+#~ "    Write a list containing all questionnaire ids.\n"
+#~ "\n"
+#~ "    creates ids_[index]\n"
+#~ "    "
+#~ msgstr ""
+#~ "[pattern = '%i\\n']\n"
+#~ "\n"
+#~ "    Schreibt eine Liste mit alle Fragebogen IDs.\n"
+#~ "\n"
+#~ "    Erstellt ids_[index]\n"
+#~ "    "
+
+#~ msgid ""
+#~ "[field [content]]\n"
+#~ "\n"
+#~ "    Alter metadata.\n"
+#~ "\n"
+#~ "    field: name of the field you whish to alter\n"
+#~ "    content: the new content for that field or empty if you want to "
+#~ "delete the\n"
+#~ "        field.\n"
+#~ "\n"
+#~ "    With no arguments, info will print a list of existing fields.\n"
+#~ "    "
+#~ msgstr ""
+#~ "[field [content]]\n"
+#~ "\n"
+#~ "    Metadata Editor.\n"
+#~ "\n"
+#~ "    field: Das Feld, dass verändert werden soll.\n"
+#~ "    content: Der neue Inhalt des Feldes. Wenn dies übersprungen\n"
+#~ "             wird, dann fragt SDAPS nach.\n"
+#~ "    "
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "    Recognize all added sheets.\n"
+#~ "\n"
+#~ "    Attention: This script overwrites all data, including manual changes "
+#~ "made\n"
+#~ "        with the gui!\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "    Lässt den Erkennungsalgorithmus über die gescannten Daten laufen.\n"
+#~ "\n"
+#~ "    Achtung: Dieses Script überschreibt alle vorherigen Änderungen!\n"
+#~ "    "
+
+#~ msgid ""
+#~ "[filter...]\n"
+#~ "\n"
+#~ "    Report generates a basic report which shows for every question (if "
+#~ "appropriate)\n"
+#~ "        - the histogramm\n"
+#~ "        - the mean\n"
+#~ "        - the standard derivation\n"
+#~ "        - all handwritten comments\n"
+#~ "\n"
+#~ "    filter: filter expression to select the sheets to appear in the "
+#~ "report\n"
+#~ "\n"
+#~ "    creates report_[index].pdf\n"
+#~ "    "
+#~ msgstr ""
+#~ "[filter...]\n"
+#~ "    \n"
+#~ "    Erstellt einen Report in PDF Form. In dem Report enthalten sind:\n"
+#~ "        - Histogram\n"
+#~ "        - Durchschnittswert\n"
+#~ "        - Standardabweichung\n"
+#~ "        - Alle handgeschriebenen Kommentare\n"
+#~ "\n"
+#~ "    filter: Filter Ausdruck, um nur bestimmte Bögen auszuwerten.\n"
+#~ "\n"
+#~ "    Erstellt report_[index].pdf\n"
+#~ "    "
+
+#~ msgid ""
+#~ "[filter...]\n"
+#~ "\n"
+#~ "    Stats generates a report for every filter condition (not compounded)\n"
+#~ "\n"
+#~ "    filter: filter expression to select the sheets to appear in the "
+#~ "reference report\n"
+#~ "\n"
+#~ "    creates report_[index].pdf (the reference report)\n"
+#~ "    creates report_[index]_[index] description.pdf\n"
+#~ "    "
+#~ msgstr ""
+#~ "[filter...]\n"
+#~ "\n"
+#~ "    Erstellt einen Report für alle möglichen Filter Kombinationen.\n"
+#~ "    (nicht zusammengesetzt)\n"
+#~ "\n"
+#~ "    filter: Filter Ausdruck, für den referenz Report.\n"
+#~ "\n"
+#~ "    Erstellt report_[index].pdf (Referenz Report)\n"
+#~ "    Erstellt report_[index]_[index] description.pdf\n"
+#~ "    "
+
+#~ msgid ""
+#~ "[filter...]\n"
+#~ "\n"
+#~ "    Smallreport generates a basic report which shows for every question "
+#~ "(if appropriate)\n"
+#~ "        - the histogramm\n"
+#~ "        - the mean\n"
+#~ "        - the standard derivation\n"
+#~ "    It does not contain any handwritten comment\n"
+#~ "\n"
+#~ "    filter: filter expression to select the sheets to appear in the "
+#~ "report\n"
+#~ "\n"
+#~ "    creates report_[index].pdf\n"
+#~ "    "
+#~ msgstr ""
+#~ "[filter...]\n"
+#~ "\n"
+#~ "    Smallreport erstellt einen Report, der die folgenden Daten enthält:\n"
+#~ "        - Histogram\n"
+#~ "        - Durchschnitt\n"
+#~ "        - Standardabweichung\n"
+#~ "    Der Report enthält keine handschriftlichen Kommentare.\n"
+#~ "\n"
+#~ "    filter: Filter Ausdruck, um nur bestimmte Bögen auszuwerten.\n"
+#~ "\n"
+#~ "    Erstellt report_[index].pdf\n"
+#~ "    "
+
+#~ msgid ""
+#~ "[options] questionnaire_odt questionnaire_pdf [additional_questions]\n"
+#~ "\n"
+#~ "    Setup creates a new survey. It parses the questionnaire to create the "
+#~ "data\n"
+#~ "    model. The survey must not exist yet.\n"
+#~ "\n"
+#~ "    questionnaire_odt: the questionnaire in odt-format\n"
+#~ "    questionnaire_pdf: the questionnaire in pdf-format\n"
+#~ "    internetquestions: the questions in the internet(optional)"
+#~ msgstr ""
+#~ "[options] questionnaire_odt questionnaire_pdf [additional_questions]\n"
+#~ "\n"
+#~ "    Erstellt ein neues Projektverzeichnis. Das Verzeichnis darf noch "
+#~ "nicht existieren.\n"
+#~ "\n"
+#~ "    questionnaire_odt: Der Fragebogen im ODT-Format\n"
+#~ "    questionnaire_pdf: Der Fragebogen im PDF-Format\n"
+#~ "    internetquestions: Datei mit zusätzlichen Fragen."
+
+#~ msgid ""
+#~ "You selected an unsupported style '%s'.\n"
+#~ "Valid choices are:"
+#~ msgstr ""
+#~ "Der von ihnen gewählte Stil '%s' existiert nicht.\n"
+#~ "Stile die zur Verfügung stehen:"
+
+#~ msgid ""
+#~ "[count [used_ids]]\n"
+#~ "\n"
+#~ "    Stamp corner marks and questionnaire ids on the questionnaire.\n"
+#~ "\n"
+#~ "    count: number of unique questionnaire ids you want to create.\n"
+#~ "           This is only used if questionnaire ids are supposed to be\n"
+#~ "           printed. This option needs to be specified when creating the\n"
+#~ "           project.\n"
+#~ "    used_ids: don't use any id named in this file(pattern = '%i\\n')\n"
+#~ "\n"
+#~ "    creates stamped_[index].pdf\n"
+#~ "    "
+#~ msgstr ""
+#~ "[count [used_ids]]\n"
+#~ "\n"
+#~ "    Stempelt Eckmarker und IDs auf den Fragebogen.\n"
+#~ "\n"
+#~ "    count: Die Anzahl an eindeutigen Fragebögen die erstellt werden soll\n"
+#~ "           Dies wird nur verwendet, wenn eindeutige Fragebogen IDs auf "
+#~ "jeden Bogen\n"
+#~ "           gedruckt werden sollen. Diese Option muss beim Anlegen des "
+#~ "Projekts\n"
+#~ "           angegeben werden.\n"
+#~ "    used_ids: Datei mit Fragebogen IDs die schon benutzt wurden (Muster = "
+#~ "'%i\\n')\n"
+#~ "\n"
+#~ "    Erstellt: stamped_[index].pdf\n"
+#~ "    "
+
+#~ msgid ""
+#~ "You need to specify the number of questionnaires to create when "
+#~ "questionnaire ids are printed."
+#~ msgstr ""
+#~ "Es notwendig eine Anzahl an Bögen anzugeben, wenn eine Fragebogen-ID auf "
+#~ "die Bögen gedruckt wird."
+
+#~ msgid ""
+#~ "questionnaire_tex [additional_questions]\n"
+#~ "\n"
+#~ "    Setup creates a new survey. It compiles the TeX file, and parses the\n"
+#~ "    output to create the data model.\n"
+#~ "    The survey must not exist yet.\n"
+#~ "\n"
+#~ "    questionnaire_tex: the questionnaire in TeX-format\n"
+#~ "    additional_questions: the questions in the internet(optional)\n"
+#~ "    "
+#~ msgstr ""
+#~ "questionnaire_tex questionnaire_tex [additional_questions]\n"
+#~ "\n"
+#~ "    Erstellt ein neues Projektverzeichnis. Die TeX Datei wird automatisch "
+#~ "kompiliert.\n"
+#~ "    Das Verzeichnis darf noch nicht existieren.\n"
+#~ "\n"
+#~ "    questionnaire_tex: Der Fragebogen im LaTeX-Format\n"
+#~ "    additional_questions: Datei mit zusätzlichen Fragen.\n"
+#~ "    "
+
+#~ msgid ""
+#~ "[filter...]\n"
+#~ "\n"
+#~ "    Report generates a basic report using latex which shows for every "
+#~ "question(if appropriate)\n"
+#~ "        - the histogramm\n"
+#~ "        - the mean\n"
+#~ "        - the standard derivation\n"
+#~ "        - all handwritten comments\n"
+#~ "\n"
+#~ "    filter: filter expression to select the sheets to appear in the "
+#~ "report\n"
+#~ "\n"
+#~ "    creates report_[index].pdf\n"
+#~ "    "
+#~ msgstr ""
+#~ "[filter...]\n"
+#~ "    \n"
+#~ "    Erstellt einen Report in PDF Form. In dem Report enthalten sind:\n"
+#~ "        - Histogram\n"
+#~ "        - Durchschnittswert\n"
+#~ "        - Standardabweichung\n"
+#~ "        - Alle handgeschriebenen Kommentare\n"
+#~ "\n"
+#~ "    filter: Filter Ausdruck, um nur bestimmte Bögen auszuwerten.\n"
+#~ "\n"
+#~ "    Erstellt report_[index].pdf\n"
+#~ "    "
 
 #~ msgid "Cancelling setup"
 #~ msgstr "Setup abgebrochen"
