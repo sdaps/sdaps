@@ -44,7 +44,7 @@ parser.add_argument('additional_questions',
     help=_("Additional questions that are not part of the questionnaire."))
 
 parser.set_defaults(print_survey_id=True)
-parser.set_defaults(print_questionnaire_id=True)
+parser.set_defaults(print_questionnaire_id=False)
 parser.set_defaults(global_id="")
 parser.set_defaults(duplex=True)
 
