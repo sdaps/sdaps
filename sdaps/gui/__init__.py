@@ -28,16 +28,20 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-@script.register
+parser = script.subparsers.add_parser("gui",
+    help=_("Launch a gui. You can view and alter the (recognized) answers with it."),
+    description=_("""This command launches a graphical user interface that can
+    be used to correct answer. You need to run "recognize" before using it.
+    """))
+
+parser.add_argument('-f', '--filter',
+    help=_("Filter to only show a partial dataset."))
+
+@script.connect(parser)
 @script.logfile
-@script.doc(_(u'''[filter...]
-
-    Launch a gui. You can view and alter the (recognized) answers with it.
-
-    filter: filter expression to select the sheets to display
-    '''))
-def gui(survey_dir, *filter):
-    survey = model.survey.Survey.load(survey_dir)
+def gui(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
     import gui
-    gui.gui(survey, *filter)
+    gui.gui(survey, cmdline)
+
 

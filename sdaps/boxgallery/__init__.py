@@ -27,17 +27,19 @@ from sdaps import script
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
+parser = script.subparsers.add_parser("boxgallery",
+    help=_("Create PDFs with boxes sorted by the detection heuristics."),
+    description=_("""SDAPS uses multiple heuristics to detect determine the
+    state of checkboxes. There is a list for each heuristic giving the expected
+    state and the quality of the value (see defs.py). Using this command a PDF
+    will be created for each of the heuristics so that one can adjust the
+    values."""))
 
-@script.register
+@script.connect(parser)
 @script.logfile
-@script.doc(_(u'''
-
-    The boxgallery shows a list of all boxes, sorted by their coverage.
-
-    creates boxgallery.pdf
-    '''))
-def boxgallery(survey_dir):
-    survey = model.survey.Survey.load(survey_dir)
+def boxgallery(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
     import boxgallery
     boxgallery.boxgallery(survey)
+
 

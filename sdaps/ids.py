@@ -22,22 +22,56 @@ import script
 from ugettext import ugettext, ungettext
 _ = ugettext
 
+parser = script.subparsers.add_parser("ids",
+    help=_("Export and import questionnaire IDs."),
+    description=_("""This command can be used to import and export questionnaire
+    IDs. It only makes sense in projects where such an ID is printed on the
+    questionnaire. Note that you can also add IDs by using the stamp command,
+    which will give you the PDF at the same time."""))
+parser.add_argument('-o', '--output',
+    help=_("Filename to store the data to (default: ids_%%i)"))
+parser.add_argument('-a', '--add',
+    metavar="FILE",
+    help=_("Add IDs to the internal list from the specified file."))
 
-@script.register
+@script.connect(parser)
 @script.logfile
-@script.doc(_(u'''[pattern = '%i\\n']
+def ids(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
 
-    Write a list containing all questionnaire ids.
+    if cmdline['add']:
+        if cmdline['add'] == '-':
+            ids = sys.stdin
+        else:
+            ids = open(cmdline['add'], 'r')
 
-    creates ids_[index]
-    '''))
-def ids(survey_dir, pattern='%i\n'):
-    survey = model.survey.Survey.load(survey_dir)
+        to_add = []
+        for line in ids.readlines():
+            # Skip empty lines
+            if line == "":
+                continue
 
-    pattern = pattern.decode('utf-8')
+            line = line.decode('utf-8')
+            line = line.strip('\r\n')
+            to_add.append(survey.validate_questionnaire_id(line))
 
-    ids = file(survey.new_path('ids_%i'), 'w')
-    for id in survey.questionnaire_ids:
-        ids.write((pattern % id).encode('utf-8'))
-    ids.close()
+        survey.questionnaire_ids += to_add
+        survey.save()
+
+    else:
+        if cmdline['output']:
+            if cmdline['output'] == '-':
+                ids = sys.stdout
+            else:
+                filename = cmdline['output']
+                ids = file(filename, 'w')
+        else:
+            filename = survey.new_path('ids_%i')
+            ids = file(filename, 'w')
+
+        for id in survey.questionnaire_ids:
+            ids.write(unicode(id).encode('utf-8'))
+            ids.write('\n')
+        ids.close()
+
 

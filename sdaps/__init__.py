@@ -35,45 +35,24 @@ import sys
 import paths
 import script
 import os
+import argparse
 
 from ugettext import ugettext, ungettext
 _ = ugettext
 
-
-def sdaps(survey_dir, script_name, *arguments):
-    print '-' * 80
-    print
-    print 'sdaps', script_name
-    print
-    print '-' * 80
-
-    if not script_name in script.scripts:
-        print _(u'''Unknown script "%s". Aborting.''') % script_name
-        return 1
-    return script.scripts[script_name](survey_dir, *arguments)
-
-
-def doc(name="sdaps"):
-    print _('''Usage: %s project_dir command [args]
-
-You need to specify the project_dir for SDAPS to work on. Depending on the
-command this needs to exist, or it will be created automatically.
-
-The following commands and their respective options are available:''' % name)
-    scripts = script.scripts.keys()
-    scripts.sort()
-    for key in scripts:
-        print '     * %s' % key
-    print
-    for key in scripts:
-        print script.scripts[key].func_name, script.scripts[key].func_doc
-    return 0
 
 def init(local_run=False):
     paths.init(local_run, __path__[0])
 
 def main(local_run=False):
     init(local_run)
+
+    description = _("SDAPS -- Paper based survey tool.")
+    epilog = None
+    script.parser = argparse.ArgumentParser(description=description, epilog=epilog)
+
+    script.parser.add_argument('project', type=str, help=_("project directory|The SDAPS project."))
+    script.subparsers = script.parser.add_subparsers(help=_("command list|Commands:"))
 
     import add
     import boxgallery
@@ -89,10 +68,16 @@ def main(local_run=False):
     import setuptex
     import stamp
 
-    if len(sys.argv) < 3:
-        return doc(os.path.basename(sys.argv[0]))
-    else:
-        return sdaps(*sys.argv[1:])
+    cmdline = script.parser.parse_args()
+    cmdline = vars(cmdline)
+
+    log.interactive('-'*78 + '\n')
+    log.interactive(('- SDAPS -- %s' % cmdline['_name']) + '\n')
+    log.interactive('-'*78 + '\n')
+
+    cmdline['_func'](cmdline)
+
+
 
 
 # Guess whether documentation is generated, if it is

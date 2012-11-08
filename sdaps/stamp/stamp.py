@@ -21,6 +21,7 @@ import random
 import os
 import sys
 import math
+import codecs
 
 from sdaps import model
 from sdaps import log
@@ -29,35 +30,52 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-def stamp(survey, count=0, used_ids=None):
+def stamp(survey, cmdline):
     # copy questionnaire_ids
     # get number of sheets to create
-    if count:
+    if cmdline['file'] or cmdline['random'] or cmdline['existing']:
         if not survey.defs.print_questionnaire_id:
             log.error(_("You may not specify the number of sheets for surveys that do not print a quesitonnaire id."))
             return 1
 
-        if used_ids:
-            used_ids = file(used_ids, 'r')
-            survey.questionnaire_ids.extend([int(id) for id in used_ids.readlines()])
-            used_ids.close()
-        sheets = count
-        max = pow(2, 16)
-        min = max - 50000
-        questionnaire_ids = range(min, max)
+        if cmdline['existing']:
+            questionnaire_ids = survey.questionnaire_ids
+        elif cmdline['file']:
+            if cmdline['file'] == '-':
+                fd = sys.stdin
+            else:
+                fd = codecs.open(cmdline['file'], 'r', encoding="utf-8")
 
-        # Remove any id that has already been used.
-        for id in survey.questionnaire_ids:
-            questionnaire_ids[id - min] = 0
-        questionnaire_ids = [id for id in questionnaire_ids if id > min]
-        random.shuffle(questionnaire_ids)
-        questionnaire_ids = questionnaire_ids[:sheets]
+            questionnaire_ids = list()
+            for line in fd.readlines():
+                # Only strip newline/linefeed not spaces
+                line = line.strip('\n\r')
+
+                # Skip empty lines
+                if line == "":
+                    continue
+
+                questionnaire_ids.append(survey.validate_questionnaire_id(line))
+        else:
+            # Create random IDs
+            max = pow(2, 16)
+            min = max - 50000
+            questionnaire_ids = range(min, max)
+
+            # Remove any id that has already been used.
+            for id in survey.questionnaire_ids:
+                if type(id) != int:
+                    continue
+                questionnaire_ids[id - min] = 0
+
+            questionnaire_ids = [id for id in questionnaire_ids if id > min]
+            random.shuffle(questionnaire_ids)
+            questionnaire_ids = questionnaire_ids[:cmdline['random']]
     else:
         if survey.defs.print_questionnaire_id:
-            log.error(_("You need to specify the number of questionnaires to create when questionnaire ids are printed."))
+            log.error(_("Questionnaire IDs are required, use --random to create random ones or specify some using --file."))
             return 1
 
-        sheets = 1
         questionnaire_ids = None
 
     if os.path.exists(survey.path('questionnaire.tex')):

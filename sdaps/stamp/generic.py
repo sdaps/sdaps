@@ -129,7 +129,8 @@ def draw_corner_boxes(survey, canvas, page):
 # CODE 128 support
 
 def draw_code128_questionnaire_id(canvas, survey, id):
-    barcode_value = "%d" % (id)
+    # Only supports ascii for now (see also defs.py)
+    barcode_value = unicode(id).encode('ascii')
     barcode = createBarcodeDrawing("Code128",
                                    value=barcode_value,
                                    barWidth=defs.code128_barwidth / 25.4 * 72.0,
@@ -274,7 +275,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
                     if questionnaire_ids:
                         if j == 1 or questionnaire_length == 1:
                             # Only read a new ID for the first page.
-                            id = questionnaire_ids.pop()
+                            id = questionnaire_ids.pop(0)
                             survey.questionnaire_ids.append(id)
                         draw_questionnaire_id(canvas, survey, id)
 
@@ -287,7 +288,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
                     if questionnaire_ids:
                         if j == 1 or questionnaire_length == 1:
                             # Only read a new ID for the first page.
-                            id = questionnaire_ids.pop()
+                            id = questionnaire_ids.pop(0)
                             survey.questionnaire_ids.append(id)
                         draw_code128_questionnaire_id(canvas, survey, id)
 

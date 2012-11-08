@@ -18,36 +18,58 @@
 
 import model
 import script
+import log
 
 from ugettext import ugettext, ungettext
 _ = ugettext
 
 
-@script.register
+parser = script.subparsers.add_parser("info",
+    help=_("Display and modify metadata of project."),
+    description=_("""This command lets you modify the metadata of the SDAPS
+    project. You can modify, add and remove arbitrary keys that will be printed
+    on the report. The only key that always exist is "title".
+    If no key is given then a list of defined keys is printed."""))
+
+parser.add_argument('key',
+    nargs="?",
+    help=_("The key to display or modify."))
+
+parser.add_argument('-s', '--set',
+    metavar="VALUE",
+    help=_("Set the given key to this value."))
+
+parser.add_argument('-d', '--delete',
+    action="store_true",
+    help=_("Delete the key and value pair."))
+
+
+@script.connect(parser)
 @script.logfile
-@script.doc(_(u'''[field [content]]
+def info(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
 
-    Alter metadata.
-
-    field: name of the field you whish to alter
-    content: the new content for that field or empty if you want to delete the
-        field.
-
-    With no arguments, info will print a list of existing fields.
-    '''))
-def info(survey_dir, field=None, content=None):
-    survey = model.survey.Survey.load(survey_dir)
-
-    if field:
-        field = field.decode('utf-8').strip()
-        if content:
-            content = content.decode('utf-8').strip()
-            survey.info[field] = content
-            print '%s = %s' % (field, content)
+    if cmdline['key']:
+        key = cmdline['key'].decode('utf-8').strip()
+        if cmdline['set']:
+            value = cmdline['set'].decode('utf-8').strip()
+            if key == "title":
+                survey.title = value
+            else:
+                survey.info[key] = value
+        elif cmdline['delete']:
+            del survey.info[key]
         else:
-            del survey.info[field]
+            if key == "title":
+                print survey.title
+            else:
+                print survey.info[key]
     else:
-        print _(u'Existing fields: %s') % (u', '.join(survey.info.keys()))
+        log.interactive(_(u'Existing fields:\n'))
+        print "title"
+        for key in survey.info.keys():
+            print key
 
     survey.save()
+
 

@@ -41,10 +41,8 @@ class Locals(object):
             raise KeyError
 
 
-def clifilter(survey, *expression):
-    expression = u' '.join([x.decode('utf-8') for x in expression]).strip()
-
-    if not expression:
+def clifilter(survey, expression):
+    if expression is None or expression.strip() == '':
         return lambda: True
 
     exp = compile(expression, '<string>', 'eval')

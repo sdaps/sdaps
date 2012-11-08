@@ -23,18 +23,19 @@ from ugettext import ugettext, ungettext
 _ = ugettext
 
 
-@script.register
+parser = script.subparsers.add_parser("cover",
+    help=_("Create a cover for the questionnaires."),
+    description=_("""This command creates a cover page for questionnaires. All
+    the metadata of the survey will be printed on the page."""))
+parser.add_argument('-o', '--output',
+    help=_("Filename to store the data to (default: cover_%%i.pdf)"))
+
+@script.connect(parser)
 @script.logfile
-@script.doc(_(u'''
-
-    The cover is a title page for the pile of questionnaires.
-
-    creates cover.odf
-    '''))
-def cover(survey_dir):
+def cover(cmdline):
     import template
 
-    survey = model.survey.Survey.load(survey_dir)
+    survey = model.survey.Survey.load(cmdline['project'])
 
     story = template.story_title(survey)
     subject = []
@@ -42,8 +43,13 @@ def cover(survey_dir):
         subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
     subject = u'\n'.join(subject)
 
+    if cmdline['output']:
+        filename = cmdline['output']
+    else:
+        filename = survey.new_path('cover_%i.pdf')
+
     doc = template.DocTemplate(
-        survey.path('cover.pdf'),
+        filename,
         _(u'sdaps questionnaire'),
         {
             'title': survey.title,
@@ -51,4 +57,5 @@ def cover(survey_dir):
         }
     )
     doc.build(story)
+
 

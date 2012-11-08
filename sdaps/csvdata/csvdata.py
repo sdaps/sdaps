@@ -24,9 +24,9 @@ from sdaps import model
 import buddies
 
 
-def csvdata_export(survey, *filter):
+def csvdata_export(survey, cmdline):
     # compile clifilter
-    filter = clifilter.clifilter(survey, *filter)
+    filter = clifilter.clifilter(survey, cmdline['filter'])
 
     # export
     survey.questionnaire.csvdata.export_header()
@@ -39,8 +39,8 @@ def csvdata_export(survey, *filter):
     survey.questionnaire.csvdata.export_finish()
 
 
-def csvdata_import(survey, filename):
-    csvfile = file(filename, 'r')
+def csvdata_import(survey, cmdline):
+    csvfile = file(cmdline['file'], 'r')
     csvreader = csv.DictReader(csvfile)
 
     for data in csvreader:

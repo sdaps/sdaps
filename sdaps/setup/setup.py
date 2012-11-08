@@ -34,11 +34,15 @@ import metaparser
 from pdftools import pdffile
 
 
-def setup(survey, options, questionnaire_odt, questionnaire_pdf, additionalqobjects=None):
+def setup(survey, cmdline):
 
     if os.access(survey.path(), os.F_OK):
         log.error(_('The survey directory already exists'))
         return 1
+
+    questionnaire_odt = cmdline['questionnaire.odt']
+    questionnaire_pdf = cmdline['questionnaire.pdf']
+    additionalqobjects = cmdline['additional_questions']
 
     mimetype = utils.mimetype(questionnaire_odt)
     if mimetype != 'application/vnd.oasis.opendocument.text' and mimetype != '':
@@ -68,14 +72,14 @@ def setup(survey, options, questionnaire_odt, questionnaire_pdf, additionalqobje
     page = doc.read_page(1)
     survey.defs.paper_width = abs(page.MediaBox[0] - page.MediaBox[2]) / 72.0 * 25.4
     survey.defs.paper_height = abs(page.MediaBox[1] - page.MediaBox[3]) / 72.0 * 25.4
-    survey.defs.print_questionnaire_id = options.print_questionnaire_id
-    survey.defs.print_survey_id = options.print_survey_id
+    survey.defs.print_questionnaire_id = cmdline['print_questionnaire_id']
+    survey.defs.print_survey_id = cmdline['print_survey_id']
 
-    survey.defs.style = options.style
+    survey.defs.style = cmdline['style']
     # Force simplex if page count is one.
-    survey.defs.duplex = False if page_count == 1 else options.duplex
+    survey.defs.duplex = False if page_count == 1 else cmdline['duplex']
 
-    survey.global_id = options.global_id
+    survey.global_id = cmdline['global_id']
 
     # Parse qobjects
     try:

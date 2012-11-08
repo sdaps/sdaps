@@ -40,8 +40,8 @@ zoom_steps = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
               1.25, 1.5, 2.0, 2.5, 3.0]
 
 
-def gui(survey, *filter):
-    filter = clifilter.clifilter(survey, *filter)
+def gui(survey, cmdline):
+    filter = clifilter.clifilter(survey, cmdline['filter'])
     MainWindow(Provider(survey, filter)).run()
 
 
@@ -140,7 +140,7 @@ class MainWindow(object):
         combo.add_attribute(cell, 'text', 0)
 
         store = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_INT)
-        store.append(row=(_("Page|Invalid").split('|')[-1], -1))
+        store.append(row=(_("Page|Invalid"), -1))
         for i in range(self.provider.survey.questionnaire.page_count):
             store.append(row=(
                 ungettext("Page %i", "Page %i", i + 1) % (i + 1), i + 1))

@@ -40,7 +40,7 @@ def report(survey, filter, filename=None, small=0):
     assert isinstance(survey, model.survey.Survey)
 
     # compile clifilter
-    filter = clifilter.clifilter(survey, *filter)
+    filter = clifilter.clifilter(survey, filter)
 
     # First: calculate buddies
 
@@ -92,7 +92,7 @@ def report(survey, filter, filename=None, small=0):
 
         texfile = codecs.open(os.path.join(tmpdir, 'report.tex'), 'w', 'utf-8')
 
-        author = _('author|Unknown').split('|')[-1]
+        author = _('author|Unknown')
 
         extra_info = []
         for key, value in survey.info.iteritems():
@@ -119,7 +119,7 @@ def report(survey, filter, filename=None, small=0):
 
     \maketitle
 
-    """ % {'language': _('tex language|english').split('|')[-1],
+    """ % {'language': _('tex language|english'),
            'title': _(u'sdaps report'),
            'turned_in': _('Turned in Questionnaires'),
            'title': survey.title,

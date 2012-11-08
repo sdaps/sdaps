@@ -27,30 +27,38 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-@script.register
+parser = script.subparsers.add_parser("csv",
+    help=_("Import or export data to/from CSV files."),
+    description=_("""Import or export data to/from a CSV file. The first line
+    is a header which defines questionnaire_id and global_id, and a column
+    for each checkbox and textfield. Note that the import is currently very
+    limited, as you need to specifiy the questionnaire ID to select the sheet
+    which should be updated."""))
+
+subparser = parser.add_subparsers()
+
+export = subparser.add_parser('export',
+    help=_("Export data to CSV file."))
+export.add_argument('-f', '--filter',
+    help=_("Filter to only export a partial dataset."))
+export.set_defaults(direction='export')
+
+import_ = subparser.add_parser('import',
+    help=_("Import data to from a CSV file."))
+import_.add_argument('file',
+    help=_("The file to import."))
+import_.set_defaults(direction='import')
+
+@script.connect(parser)
 @script.logfile
-@script.doc(_(u'''export [filter...]
-
-    Export to csv
-
-    filter: filter expression to select the sheets to export
-
-    creates data_[index].csv
-
-
-csvdata import filename
-
-    Import from csv
-
-    filename: file to read from
-    '''))
-def csvdata(survey_dir, command, *args):
-    survey = model.survey.Survey.load(survey_dir)
+def csvdata(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
     import csvdata
-    if command == 'export':
-        csvdata.csvdata_export(survey, *args)
-    elif command == 'import':
-        csvdata.csvdata_import(survey, *args)
+    if cmdline['direction'] == 'export':
+        csvdata.csvdata_export(survey, cmdline)
+    elif cmdline['direction'] == 'import':
+        csvdata.csvdata_import(survey, cmdline)
     else:
-        print _('Unknown command')
+        raise AssertionError
+
 

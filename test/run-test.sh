@@ -24,16 +24,16 @@ rm -rf "$PROJECT"
 # By disabling the surveyid and enable the questionnaire id we test more
 # unsual code paths, and we don't have a problem because the survey id
 # changed ...
-"$SDAPS" "$PROJECT" setup --print-questionnaire-id --no-print-survey-id "data/odt/debug.odt" "data/odt/debug.pdf" "data/odt/debug.internetquestions"
+"$SDAPS" "$PROJECT" setup --style=classic --print-questionnaire-id --no-print-survey-id "data/odt/debug.odt" "data/odt/debug.pdf" "data/odt/debug.internetquestions"
 
 # Create a cover page in projects/test/cover.pdf
 "$SDAPS" "$PROJECT" cover
 
 # Create 10 unique sheets that can be printed and handed out
-"$SDAPS" "$PROJECT" stamp 10
+"$SDAPS" "$PROJECT" stamp --random 10
 
 # Dumps a list of all the questionaire IDs (ie. the ids of each of the 10 sheets)
-"$SDAPS" "$PROJECT" ids
+#"$SDAPS" "$PROJECT" ids
 
 # Import the scanned data. The data has to be a multipage 1bpp tif file.
 "$SDAPS" "$PROJECT" add "data/odt/debug.tif"
@@ -59,7 +59,9 @@ rm -rf "$PROJECT"
 # changed ...
 # Also test code128 style for ODT support
 "$SDAPS" "$PROJECT" setup --style="code128" --global-id="SDAPS!" --print-questionnaire-id "data/odt-3/debug.odt" "data/odt-3/debug.pdf" "data/odt-3/debug.internetquestions"
-"$SDAPS" "$PROJECT" stamp 5
+"$SDAPS" "$PROJECT" stamp --file "data/odt-3/questionnaire_ids"
+"$SDAPS" "$PROJECT" ids -o "$PROJECT/ids"
+diff "data/odt-3/questionnaire_ids" "$PROJECT/ids"
 
 
 ###########################################################
@@ -82,7 +84,7 @@ rm -rf "$PROJECT"
 "$SDAPS" "$PROJECT" cover
 
 # Create 10 unique sheets that can be printed and handed out
-"$SDAPS" "$PROJECT" stamp 10
+"$SDAPS" "$PROJECT" stamp --random 10
 
 # Add dummy tiff
 "$SDAPS" "$PROJECT" add "data/tex/test_with_ids.tif"
