@@ -693,7 +693,12 @@
   \protectedimmediatewrite\sdapsoutfile{#1=#2}%
 }
 
-\providecommand{\checkbox}{%
+\providecommand{\checkbox}{\@ifstar
+    \checkboxStar%
+    \checkboxNoStar%
+}
+
+\providecommand{\checkboxNoStar}{%
   \mbox{\label{checkbox\thecheckboxnum}\pgfsys@markposition{checkbox\thecheckboxnum}%
   \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
   \pgfsys@getposition{checkbox\thecheckboxnum}{\@sdaps@checkboxpos}%
@@ -707,6 +712,11 @@
   \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
   }\addtocounter{checkboxnum}{1}}%
+}
+\providecommand{\checkboxStar}{%
+  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
+    \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
+  }%
 }
 \providecommand{\checkedbox}{%
   \hspace{-2pt}%
@@ -751,11 +761,15 @@
   \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em}%
 }
 
-% commands 
-\providecommand{\textbox}[2]{%
+% commands
+\providecommand{\textbox}{\@ifstar
+    {\sdaps@textbox{}}%
+    {\sdaps@textbox{\cleaders\sides\vfill}}%
+}
+\providecommand{\sdaps@textbox}[3]{%
   % Both baselineskip and lineskip?
-  \question{#2}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Text=\thesubsection. #2} %
+  \question{#3}%
+  \protectedimmediatewrite\sdapsoutfile{QObject-Text=\thesubsection. #3} %
   \label{textbox\thetextboxnum}%
   \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
   \pgfsys@getposition{textboxtop\thetextboxnum}{\@sdaps@textboxtoppos}%
@@ -774,7 +788,7 @@
   \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height} %
   \vspace{-\lineskip}%
   \begingroup %
-    \setlength\@tempdima{#1}%
+    \setlength\@tempdima{#2}%
     \def\sides{%
       \hbox to\linewidth {%
         \vrule depth 0pt height \@tempdima width \elementlinewidth %
@@ -788,7 +802,7 @@
     %\kern -\elementlinewidth%
     \sides %
     \kern-0.5\@tempdima %
-    \cleaders\sides\vfill %
+    #1 %
     \kern-0.5\@tempdima %
     \nobreak %
     \sides %
