@@ -90,7 +90,9 @@ class Questionnaire(model.buddy.Buddy):
             else:
                 if len(keeptogether_list):
                     keeptogether_list.append(new.pop(0))
-                    story.append(platypus.KeepTogether(keeptogether_list))
+                    # maxheight needs to be set so that platypus does not insert
+                    # a pagebreak before each heading.
+                    story.append(platypus.KeepTogether(keeptogether_list, 10000))
                     keeptogether_list = []
 
                 story.extend(new)
