@@ -53,12 +53,12 @@
 \newif\if@sdaps@draft\@sdaps@drafttrue
 \DeclareOption{final}{\@sdaps@draftfalse}
 
-\newif\if@style@classic\@style@classictrue
-\newif\if@style@codecxxviii\@style@codecxxviiifalse
+\newif\if@style@classic\@style@classicfalse
+\newif\if@style@codecxxviii\@style@codecxxviiitrue
 
 \DefineFamily{SDAPS}
 \DefineFamilyMember{SDAPS}
-\DefineFamilyKey{SDAPS}{style}[classic]%
+\DefineFamilyKey{SDAPS}{style}[code128]%
 {%
   \KOMA@set@ncmdkey{style}{@tempa}{%
     {classic}{0},%
