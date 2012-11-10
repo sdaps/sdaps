@@ -901,7 +901,7 @@
   \protectedimmediatewrite\sdapsoutfile{QObject-Mark=#1}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
-  {\usekomafont{marklinequestionfont}#1} & {\usekomafont{marklinechoicefont}#2} & \checkbox & \checkbox & \checkbox & \checkbox & \checkbox & {\usekomafont{marklinechoicefont}#3}\\%
+  {\usekomafont{marklinequestionfont}#1} & {\usekomafont{marklinechoicefont}#2} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}#3}\\%
 }
 
 %\providecommand*{\singlemark}[3]{\begin{markquestion}{#1}\markline{}{#2}{#3}\end{markquestion}}
@@ -913,7 +913,7 @@
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
   %\offinterlineskip%
   \begin{tabularx}{\linewidth}{Y*{5}{c}X}%
-    {\usekomafont{singlemarkchoicefont}#2} & \checkbox & \checkbox & \checkbox & \checkbox & \checkbox & {\usekomafont{singlemarkchoicefont}#3}%
+    {\usekomafont{singlemarkchoicefont}#2} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}#3}%
   \end{tabularx}%
 }
 
@@ -945,10 +945,10 @@
   \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#1}%
   \ifthenelse{\thechoiceitems=\themaxchoiceitems}{%
     \setcounter{choiceitems}{1}%
-    \checkbox~{\usekomafont{choiceitemfont}#1} \\%
+    {\usekomafont{choiceitemfont}\checkbox~#1} \\%
   }{%
     \addtocounter{choiceitems}{1}%
-    \checkbox~{\usekomafont{choiceitemfont}#1} &%
+    {\usekomafont{choiceitemfont}\checkbox~#1} &%
   }%
 }
 
@@ -956,7 +956,7 @@
   \multicolumn{#1}{l}{%
     \addtocounter{choiceitems}{#1}%
     \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#2}%
-    \checkbox~{\usekomafont{choiceitemfont}#2}%
+    {\usekomafont{choiceitemfont}\checkbox~#2}%
   }
   \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%
     \setcounter{choiceitems}{1}%
