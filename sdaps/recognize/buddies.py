@@ -216,7 +216,7 @@ class Sheet(model.buddy.Buddy):
 
             if self.obj.survey_id != self.obj.survey.survey_id:
                 # Broken survey ID ...
-                log.warn(_("Got a wrong survey ID (%s, %i)! It is %i, but should be %i.") %
+                log.warn(_("Got a wrong survey ID (%s, %i)! It is %s, but should be %i.") %
                          (self.obj.images[0].filename,
                           self.obj.images[0].tiff_page,
                           self.obj.survey_id,

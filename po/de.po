@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 14:53+0100\n"
-"PO-Revision-Date: 2012-11-05 15:20+0100\n"
+"POT-Creation-Date: 2012-11-10 22:04+0100\n"
+"PO-Revision-Date: 2012-11-10 22:04+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -487,9 +487,9 @@ msgstr ""
 #. Broken survey ID ...
 #: ../sdaps/recognize/buddies.py:219
 #, python-format
-msgid "Got a wrong survey ID (%s, %i)! It is %i, but should be %i."
+msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
 msgstr ""
-"Falsche Umfrage-ID auf Seite (%s, %i)! Die ID ist %i sollte aber %i sein."
+"Falsche Umfrage-ID auf Seite (%s, %i)! Die ID ist %s sollte aber %i sein."
 
 #: ../sdaps/recognize/buddies.py:241
 #, python-format
@@ -653,7 +653,7 @@ msgstr ""
 "Druckmodus auf Simplex einstellen. Vorsicht: Es muss derzeit auch simplex "
 "gescannt werden!"
 
-#: ../sdaps/setup/setup.py:40 ../sdaps/setuptex/setup.py:59
+#: ../sdaps/setup/setup.py:40 ../sdaps/setuptex/setup.py:60
 msgid "The survey directory already exists"
 msgstr "Das Umfrageverzeichniss existiert bereits."
 
@@ -672,7 +672,7 @@ msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
 msgstr ""
 "Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
 
-#: ../sdaps/setup/setup.py:60 ../sdaps/setuptex/setup.py:73
+#: ../sdaps/setup/setup.py:60 ../sdaps/setuptex/setup.py:74
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain"
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
@@ -683,7 +683,7 @@ msgstr ""
 "Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
 "Zustand ist:"
 
-#: ../sdaps/setup/setup.py:105 ../sdaps/setuptex/setup.py:137
+#: ../sdaps/setup/setup.py:105 ../sdaps/setuptex/setup.py:138
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
@@ -869,8 +869,8 @@ msgid "Running pdflatex now twice to generate the stamped questionnaire."
 msgstr ""
 "Führe pdflatex zwei mal aus um den gestempelten Fragebogen zu erstellen."
 
-#: ../sdaps/stamp/latex.py:68 ../sdaps/setuptex/setup.py:113
-#: ../sdaps/setuptex/setup.py:154 ../sdaps/reporttex/report.py:149
+#: ../sdaps/stamp/latex.py:68 ../sdaps/setuptex/setup.py:114
+#: ../sdaps/setuptex/setup.py:155 ../sdaps/reporttex/report.py:149
 msgid "Error running \"pdflatex\" to compile the LaTeX file."
 msgstr ""
 "Fehler beim ausführen von \"pdflatex\" um die LaTeX Datei zu kompilieren."
@@ -902,26 +902,26 @@ msgstr ""
 msgid "The LaTeX Document"
 msgstr "Das LaTeX Dokument."
 
-#: ../sdaps/setuptex/setup.py:67
+#: ../sdaps/setuptex/setup.py:68
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex"
 msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
 
-#: ../sdaps/setuptex/setup.py:68
+#: ../sdaps/setuptex/setup.py:69
 msgid "Will keep going, but expect failure!"
 msgstr "Versuche trotzdem fortzusetzten."
 
-#: ../sdaps/setuptex/setup.py:103 ../sdaps/setuptex/setup.py:144
+#: ../sdaps/setuptex/setup.py:104 ../sdaps/setuptex/setup.py:145
 msgid "Running pdflatex now twice to generate the questionnaire."
 msgstr "Führe pdflatex zwei mal aus um den Fragebogen zu erstellen."
 
-#: ../sdaps/setuptex/setup.py:123
+#: ../sdaps/setuptex/setup.py:124
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
 "Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
 "Zustand ist:"
 
-#: ../sdaps/setuptex/setup.py:170
+#: ../sdaps/setuptex/setup.py:171
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "
