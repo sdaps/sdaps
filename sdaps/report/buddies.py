@@ -91,7 +91,6 @@ class Questionnaire(model.buddy.Buddy):
                 if len(keeptogether_list):
                     add = new.pop(0)
                     if isinstance(add, platypus.KeepTogether):
-                        print add._content
                         keeptogether_list.extend(add._content)
                     else:
                         keeptogether_list.append(add)
