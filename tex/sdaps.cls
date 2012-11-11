@@ -522,23 +522,11 @@
 
     \ifstr{#1}{noinfo}{}{
       \begin{info}
-        \translate{infotext}
-        \begin{minipage}[t]{10em}
-          \begin{tabbing}
-            \translate{info_cross}:\\
-            \translate{info_correct}:\
-          \end{tabbing}
-        \end{minipage}\hfill
-        \begin{minipage}[t]{1.5em}
-          \checkedbox\\
-          \correctedbox
-        \end{minipage}\hfill
-        \setlength\@tempdima{\linewidth}
-        \addtolength{\@tempdima}{-13em}
-        \begin{minipage}[t]{\@tempdima}
-          \translate{info_select}\\
-          \translate{info_mark}
-        \end{minipage}\\
+        \translate{infotext}\\
+        \begin{tabularx}{\textwidth}{llcX}
+          \translate{info_cross}: & \checkedbox &\quad & \translate{info_select} \\
+          \translate{info_correct}: & \correctedbox & & \translate{info_mark} \\
+        \end{tabularx}
       \end{info}
     }
 
@@ -720,7 +708,7 @@
 }
 \providecommand{\checkedbox}{%
   \hspace{-2pt}%
-  \tikz[baseline=0.5mm]{%
+  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
     \begin{scope}[decoration={random steps,segment length=4pt,amplitude=1pt}]
       \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\boxsize, \boxsize) + (2pt,2pt)$);%
@@ -729,7 +717,12 @@
   }%
 }
 \providecommand{\correctedbox}{%
-  \tikz[baseline=0.5mm]{%
+  \hspace{-2pt}%
+  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
+    \begin{scope}[decoration={random steps,segment length=4pt,amplitude=1pt}]
+      \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\boxsize, \boxsize) + (2pt,2pt)$);%
+      \draw[line width=\elementlinewidth, decorate] ($(0, \boxsize) + (-2pt,2pt)$)-- ($(\boxsize, 0) + (2pt,-2pt)$);%
+    \end{scope}
     \fill[line width=\elementlinewidth] (0, 0) rectangle +(\boxsize, \boxsize);%
   }%
 }
