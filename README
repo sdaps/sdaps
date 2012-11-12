@@ -20,7 +20,7 @@ the results.
 Requirements
 ============
 
- * Python
+ * Python 2.7
  * distutils and distutils-extra
  * GTK+ and gobject introspection for the front end that can be used
    to control/correct the results
@@ -68,12 +68,6 @@ not checking or filling out the boxes correctly. For example:
 As you can see, most of the errors arise from the possibility to correct
 wrong marks by filling out checkboxes. SDAPS tries to be smart about this
 by using different heuristics to detect the case, but it is not foolproof.
-
-If you want to analyse the heuristics you can run the tool "boxgallery"
-which creates a PDF for every heuristic, showing the returned value. Boxes
-with a bold label are considered checked by SDAPS.
-You can adjust the criteria by changing the checkbox_metrics dictionary in
-defs.py.
 
 Suggestions on how to decrease the error rate are of course welcome.
 

@@ -167,13 +167,7 @@ class Survey(object):
 
         # Hack to include comments. Set allow_no_value here, and add keys
         # with a '#' in the front and no value.
-        # This is only supported in python 2.7 and above.
-        try:
-            config = ConfigParser.SafeConfigParser(allow_no_value=True)
-            comments = True
-        except TypeError:
-            config = ConfigParser.SafeConfigParser()
-            comments = False
+        config = ConfigParser.SafeConfigParser(allow_no_value=True)
             
         config.optionxform = str
         config.add_section('sdaps')
@@ -189,13 +183,11 @@ class Survey(object):
         for key, value in self.info.iteritems():
             config.set('info', key.encode('utf-8'), value.encode('utf-8'))
 
-        if comments:
-            config.set('defs', '# These values are not read back, they exist for information only!')
+        config.set('defs', '# These values are not read back, they exist for information only!')
         for attr in self.defs.__slots__:
             config.set('defs', attr, str(getattr(self.defs, attr)).encode('utf-8'))
 
-        if comments:
-            config.set('questionnaire', '# These values are not read back, they exist for information only!')
+        config.set('questionnaire', '# These values are not read back, they exist for information only!')
         config.set('questionnaire', 'page_count', str(self.questionnaire.page_count))
         # Put the survey ID into "questionnaire". This seems sane even though
         # it is not stored there internally..
