@@ -57,25 +57,38 @@ Also check the website http://sdaps.sipsolutions.net for some examples.
 Quality of the recognition
 ==========================
 
-NOTE: This is not up to date anymore. There have been changes to the
-algorithm that make SDAPS more robust. The parameters currently used are
-only a very rough estimation. They likely can be tweaked to yield better
-results.
+The quality of the recognition in SDAPS is quite good in my experience.
+There is a certain amount of wrong detections, that mostly arise from people
+not checking or filling out the boxes correctly. For example:
+ * The cross is not inside the checkbox, but next to it
+ * People cross the same box multiple times
+ * People use very thick pens
+ * Filling out is not done properly
 
-The quality of the recognition of SDAPS is quite good. The algorithm just
-tests for how much black is in the area of the box. This works pretty good,
-with only a few mistakes in corner cases.
-That said, this is based on results that the authors of this software had.
-To achive these, we had our scanner set configured in a way that meant that
-pretty much all pens or pencils turned out nice black. If you want to use
-this software it is likely that you need to have a look at your scanners
-options to find usable ones, and to also adjust the magic values that SDAPS
-uses.
-For this a tool called "boxgallery" is provided, which will output a sorted
-list of all checkboxes. With this the threshold that is needed can be
-determined.
+As you can see, most of the errors arise from the possibility to correct
+wrong marks by filling out checkboxes. SDAPS tries to be smart about this
+by using different heuristics to detect the case, but it is not foolproof.
 
-See also TROUBLESHOOTING.
+If you want to analyse the heuristics you can run the tool "boxgallery"
+which creates a PDF for every heuristic, showing the returned value. Boxes
+with a bold label are considered checked by SDAPS.
+You can adjust the criteria by changing the checkbox_metrics dictionary in
+defs.py.
+
+Suggestions on how to decrease the error rate are of course welcome.
+
+Matrix Errors
+-------------
+
+It can happen that SDAPS is not able to calculate the transformation matrix
+which transforms the pixel space of the image into the mm coordinate system
+used internally. If this happens the affected pages cannot be further
+analysed.
+It is usually possible to manually correct them using the GUI, but that can
+be quite tedious.
+
+See also TROUBLESHOOTING for some more information.
+
 
 Printing
 ========
