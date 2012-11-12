@@ -83,10 +83,3 @@ be quite tedious.
 
 See also TROUBLESHOOTING for some more information.
 
-
-Printing
-========
-
-See above. The algorithm is quite susceptable to changes in the black level
-(or line width). For this reason, it is currently highly recommended to use
-only one printer (and scanner).
