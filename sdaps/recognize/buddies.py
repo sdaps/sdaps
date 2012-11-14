@@ -289,6 +289,9 @@ class Sheet(model.buddy.Buddy):
         
         """
 
+        if not self.obj.survey.defs.duplex:
+            return
+
         i = 0
         while i < len(self.obj.images):
             failed = (i in failed_pages or i + 1 in failed_pages)
