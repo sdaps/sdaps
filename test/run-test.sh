@@ -41,6 +41,9 @@ rm -rf "$PROJECT"
 # Analyse the image data
 "$SDAPS" "$PROJECT" recognize
 
+# Export to CSV
+"$SDAPS" "$PROJECT" csv export
+
 # And finally, create a report with the result
 "$SDAPS" "$PROJECT" report
 
