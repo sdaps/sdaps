@@ -47,13 +47,6 @@ def init(local_run=False):
 def main(local_run=False):
     init(local_run)
 
-    description = _("SDAPS -- Paper based survey tool.")
-    epilog = None
-    script.parser = argparse.ArgumentParser(description=description, epilog=epilog)
-
-    script.parser.add_argument('project', type=str, help=_("project directory|The SDAPS project."))
-    script.subparsers = script.parser.add_subparsers(help=_("command list|Commands:"))
-
     import add
     import boxgallery
     import cover

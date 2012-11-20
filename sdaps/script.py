@@ -22,14 +22,30 @@ To register a function as a sdaps-script(callable from the command line), use
 @register
 '''
 
+import sys
 import os
 import functools
+import argparse
 
 import log
+from sdaps.ugettext import ugettext, ungettext
+_ = ugettext
 
-parser = None # Initilized from the main file.
-subparsers = None
+# Create parser
 
+if "sphinx" in sys.argv[0]:
+    prog = "sdaps"
+else:
+    prog = None
+
+description = _("SDAPS -- Paper based survey tool.")
+epilog = None
+parser = argparse.ArgumentParser(description=description, epilog=epilog, prog=prog)
+
+parser.add_argument('project', type=str, help=_("project directory|The SDAPS project."))
+subparsers = parser.add_subparsers(help=_("command list|Commands:"))
+                    
+                    
 def doc(docstring):
     u'''decorator to add a docstring to a function.
 
