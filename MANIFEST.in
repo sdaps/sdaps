@@ -1,6 +1,5 @@
 include MANIFEST.in
 include README
-include TODO
 include COPYING
 recursive-include sdaps *.py *.ui *.c *.h
 recursive-include po *.pot POTFILES POTFILES.in *.po
