@@ -1,15 +1,15 @@
 sdaps/__init__.py
-sdaps/add.py
+sdaps/add/__init__.py
 sdaps/log.py
 sdaps/boxgallery/__init__.py
-sdaps/cover.py
+sdaps/cover/__init__.py
 sdaps/csvdata/__init__.py
 sdaps/gui/gui.py
 sdaps/gui/__init__.py
 [type: gettext/glade] sdaps/gui/main_window.ui
-sdaps/ids.py
+sdaps/ids/__init__.py
 sdaps/image/__init__.py
-sdaps/info.py
+sdaps/info/__init__.py
 sdaps/model/survey.py
 sdaps/recognize/buddies.py
 sdaps/recognize/__init__.py
