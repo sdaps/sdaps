@@ -120,5 +120,11 @@ rm -rf "$PROJECT"
 # Run stamp, not neccessary
 "$SDAPS" "$PROJECT" stamp
 
+# Dump some infos
+"$SDAPS" "$PROJECT" info
+"$SDAPS" "$PROJECT" info title
+"$SDAPS" "$PROJECT" info --set title "asdf"
+
 # And finally, create a report with the result
 "$SDAPS" "$PROJECT" report_tex
+

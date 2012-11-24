@@ -18,10 +18,10 @@
 
 import os
 
-import model
-import script
+from sdaps import model
+from sdaps import script
 
-from ugettext import ugettext, ungettext
+from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 
@@ -49,7 +49,7 @@ parser.add_argument('images',
 @script.connect(parser)
 @script.logfile
 def add(cmdline):
-    import image
+    from sdaps import image
     import subprocess
     import sys
     import shutil

@@ -16,11 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import model
-import script
-import log
+from sdaps import model
+from sdaps import script
+from sdaps import log
 
-from ugettext import ugettext, ungettext
+from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 

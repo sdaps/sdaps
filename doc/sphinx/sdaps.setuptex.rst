@@ -9,6 +9,14 @@ setuptex Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`create-latexmap` Module
+-----------------------------
+
+.. automodule:: sdaps.setuptex.create-latexmap
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`latexmap` Module
 ----------------------
 

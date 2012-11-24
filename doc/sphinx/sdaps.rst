@@ -9,14 +9,6 @@ sdaps Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`add` Module
------------------
-
-.. automodule:: sdaps.add
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`barcode` Module
 ---------------------
 
@@ -41,34 +33,10 @@ sdaps Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`cover` Module
--------------------
-
-.. automodule:: sdaps.cover
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`defs` Module
 ------------------
 
 .. automodule:: sdaps.defs
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`ids` Module
------------------
-
-.. automodule:: sdaps.ids
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`info` Module
-------------------
-
-.. automodule:: sdaps.info
     :members:
     :undoc-members:
     :show-inheritance:
@@ -142,10 +110,14 @@ Subpackages
 
 .. toctree::
 
+    sdaps.add
     sdaps.boxgallery
+    sdaps.cover
     sdaps.csvdata
     sdaps.gui
+    sdaps.ids
     sdaps.image
+    sdaps.info
     sdaps.model
     sdaps.recognize
     sdaps.report

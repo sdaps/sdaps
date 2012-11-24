@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import model
-import script
+from sdaps import model
+from sdaps import script
 
-from ugettext import ugettext, ungettext
+from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 
@@ -33,7 +33,7 @@ parser.add_argument('-o', '--output',
 @script.connect(parser)
 @script.logfile
 def cover(cmdline):
-    import template
+    from sdaps import template
 
     survey = model.survey.Survey.load(cmdline['project'])
 
