@@ -51,7 +51,7 @@ script in the toplevel directory.
 Using SDAPS
 ===========
 
-Please run sdaps without arguments after installing it for a list of commands.
+Please run sdaps with "--help" after installing it for a list of commands.
 Also check the website http://sdaps.sipsolutions.net for some examples.
 
 Quality of the recognition
