@@ -117,6 +117,10 @@ def get_pagenumber_and_rotation(image):
     half_pt = 0.5 / 72.0 * 25.4
     pt = 1.0 / 72.0 * 25.4
 
+    # Check whether there is a valid transformation matrix. If not simply return.
+    if image.obj.matrix.mm_to_px(False) is None:
+        return
+
     width = defs.corner_box_width
     height = defs.corner_box_height
     padding = defs.corner_box_padding

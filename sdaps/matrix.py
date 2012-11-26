@@ -42,15 +42,16 @@ class Image(model.buddy.Buddy):
     name = 'matrix'
     obj_class = model.sheet.Image
 
-    def mm_to_px(self):
-        matrix = self.px_to_mm()
-        matrix.invert()
+    def mm_to_px(self, fallback=True):
+        matrix = self.px_to_mm(fallback)
+        if matrix is not None:
+            matrix.invert()
         return matrix
 
-    def px_to_mm(self):
+    def px_to_mm(self, fallback=True):
         if self.obj.raw_matrix is not None:
             return cairo.Matrix(*self.obj.raw_matrix)
-        else:
+        elif fallback:
             # Return a dummy matrix ... that maps the image to the page size
             surface = self.obj.surface.load_uncached()
 
@@ -63,6 +64,8 @@ class Image(model.buddy.Buddy):
             matrix.scale(self.obj.sheet.survey.defs.paper_width, self.obj.sheet.survey.defs.paper_height)
 
             return matrix
+        else:
+            return None
 
     def matrix_valid(self):
         return self.obj.raw_matrix != None

@@ -65,10 +65,6 @@ class Sheet(model.buddy.Buddy):
 
         # Rotation for all of them
         for page, image in enumerate(self.obj.images):
-            if page in failed_pages:
-                image.rotated = None
-                continue
-
             try:
                 # This may set the rotation to "None" for unknown
                 image.recognize.calculate_rotation()
@@ -126,9 +122,6 @@ class Sheet(model.buddy.Buddy):
         # Figure out the page numbers
         # ***************************
         for page, image in enumerate(self.obj.images):
-            if page in failed_pages:
-                continue
-
             try:
                 # This may set the page_number to "None" for unknown
                 image.recognize.calculate_page_number()
