@@ -61,19 +61,21 @@ def add(cmdline):
         print _('Processing %s') % file
 
         if not image.check_tiff_monochrome(file):
-            print _('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.' % file)
+            print _('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.') % (file,)
             raise AssertionError()
+
+        num_pages = image.get_tiff_page_count(file)
+
+        c = survey.questionnaire.page_count
+        if num_pages % c != 0:
+            print _('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c)
+            continue
 
         if cmdline['copy']:
             tiff = survey.new_path('%i.tif')
             shutil.copyfile(file, tiff)
         else:
             tiff = file
-
-        num_pages = image.get_tiff_page_count(tiff)
-
-        c = survey.questionnaire.page_count
-        assert num_pages % c == 0
 
         if cmdline['copy']:
             tiff = os.path.basename(tiff)
