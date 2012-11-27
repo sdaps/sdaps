@@ -34,6 +34,7 @@ import cairo
 
 import model
 import surface
+import defs
 
 
 class Image(model.buddy.Buddy):
@@ -60,6 +61,7 @@ class Image(model.buddy.Buddy):
 
             matrix = cairo.Matrix()
 
+            matrix.translate(defs.corner_mark_top, defs.corner_mark_left)
             matrix.scale(1.0 / width, 1.0 / height)
             matrix.scale(self.obj.sheet.survey.defs.paper_width, self.obj.sheet.survey.defs.paper_height)
 
