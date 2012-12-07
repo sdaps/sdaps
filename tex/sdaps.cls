@@ -212,6 +212,18 @@
 % Code 128 implementation in plain TeX
 \include{code128}
 
+% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=isitanum
+\def\IsInteger#1{%
+  TT\fi
+  \begingroup \lccode`\-=`\0 \lccode`+=`\0
+    \lccode`\1=`\0 \lccode`\2=`\0 \lccode`\3=`\0
+    \lccode`\4=`\0 \lccode`\5=`\0 \lccode`\6=`\0
+    \lccode`\7=`\0 \lccode`\8=`\0 \lccode`\9=`\0
+  \lowercase{\endgroup
+    \expandafter\ifx\expandafter\delimiter
+    \romannumeral0\string#1}\delimiter
+}
+
 \def\@sdaps@STAMP{%
   \begingroup
     \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
@@ -517,7 +529,11 @@
   \foreach \qid in \questionnaireids{%
     \@forceSTAMPfalse
     \setcounter{page}{1}
-    \setcounter{questionnaireid}{\qid}
+    \if\IsInteger{\qid}%
+      \setcounter{questionnaireid}{\qid}%
+    \else%
+      \setcounter{questionnaireid}{0}%
+    \fi%
     \setcounter{section}{0}
 
     \ifstr{#1}{noinfo}{}{
@@ -621,7 +637,7 @@
 \newkomafont{barcodefont}{\ttfamily\footnotesize}
 
 % we need one to consume in the for loop
-\def\questionnaireids{21845}
+\def\questionnaireids{NONE}
 
 % TODO: We could support arbitrary IDs in code128 mode, maybe get rid of
 % this counter, or add a macro for the id and simply not use it in code128 mode?
