@@ -19,6 +19,8 @@
 from sdaps import model
 from sdaps import script
 
+import sys
+
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
