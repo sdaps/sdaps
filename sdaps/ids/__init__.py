@@ -74,6 +74,8 @@ def ids(cmdline):
         for id in survey.questionnaire_ids:
             ids.write(unicode(id).encode('utf-8'))
             ids.write('\n')
-        ids.close()
+
+        if ids != sys.stdout:
+            ids.close()
 
 
