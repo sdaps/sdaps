@@ -54,6 +54,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
         latex_override.close()
 
         print _("Running pdflatex now twice to generate the stamped questionnaire.")
+        os.environ['TEXINPUTS'] = ':' + os.path.abspath(survey.path())
         # First run in draftmode, no need to generate a PDF
         subprocess.call(['pdflatex', '-draftmode', '-halt-on-error',
                          '-interaction', 'batchmode',
