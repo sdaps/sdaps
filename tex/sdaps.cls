@@ -230,8 +230,8 @@
       \if@style@codecxxviii
         \if@PrintQuestionnaireId
           \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (\barcodehpad, \barcodevpad)$)}]%
-            \node(barcode)[anchor=south west,outer sep=0,inner sep=0]{\X=\barcodebarwidth\bcorr=\barcodebcorr\barheight=\barcodeheight\expandafter\code\expandafter{\the\value{questionnaireid}}};%
-            \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\the\value{questionnaireid}};%
+            \node(barcode)[anchor=south west,outer sep=0,inner sep=0]{\X=\barcodebarwidth\bcorr=\barcodebcorr\barheight=\barcodeheight\expandafter\code\expandafter{\qid}};%
+            \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\qid};%
           \end{scope}
         \fi
 
