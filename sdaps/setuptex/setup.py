@@ -101,6 +101,9 @@ def setup(survey, cmdline):
         for dict_file in dict_files:
             shutil.copyfile(dict_file, survey.path(os.path.basename(dict_file)))
 
+        for add_file in cmdline['add']:
+            shutil.copyfile(add_file, survey.path(os.path.basename(add_file)))
+
         print _("Running pdflatex now twice to generate the questionnaire.")
         # First run in draftmode, no need to generate a PDF
         subprocess.call(['pdflatex', '-draftmode', '-halt-on-error',
