@@ -88,7 +88,7 @@ def init_gettext(locale_dir):
     if hasattr(gettext, 'bind_textdomain_codeset'):
         gettext.bind_textdomain_codeset('sdaps', 'UTF-8')
         gettext.textdomain('sdaps')
-        locale.bindtextdomain('sdaps', locale_dir)
     if hasattr(locale, 'bind_textdomain_codeset'):
+        locale.bindtextdomain('sdaps', locale_dir)
         locale.bind_textdomain_codeset('sdaps', 'UTF-8')
         locale.textdomain('sdaps')
