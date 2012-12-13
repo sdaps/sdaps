@@ -38,7 +38,7 @@ parser.add_argument('questionnaire.tex',
     help=_("The LaTeX Document"))
 parser.add_argument('-a', '--add',
     help=_("Additional files that are required by the LaTeX document and need to be copied into the project directory."),
-    nargs='+')
+    action='append', default=[])
 parser.add_argument('additional_questions',
     nargs='?',
     help=_("Additional questions that are not part of the questionnaire."))
