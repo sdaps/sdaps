@@ -771,7 +771,7 @@
 \providecommand{\sdaps@textbox}[3]{%
   % Both baselineskip and lineskip?
   \question{#3}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Text=\thesubsection. #3} %
+  \protectedimmediatewrite\sdapsoutfile{QObject-Text=\arabic{section}.\arabic{subsection}. #3} %
   \label{textbox\thetextboxnum}%
   \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
   \pgfsys@getposition{textboxtop\thetextboxnum}{\@sdaps@textboxtoppos}%
@@ -844,14 +844,14 @@
 \renewcommand{\section}[1]{%
   \origsection{#1}
   \protectedimmediatewrite\sdapsoutfile{}
-  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\thesection. #1}
+  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}. #1}
 }
 
 
 \newenvironment{choicegroup}[1]{%
   \offinterlineskip%
   \question{#1}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\thesubsection. #1} %
+  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1} %
   \setcounter{choicegroupnumchoices}{0} %
   \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{X*{\thechoicegroupnumchoices}{c}}} %
   \global\def\@sdaps@choicegroup@boxes{} %
@@ -893,7 +893,7 @@
 \newenvironment{markgroup}[1]{%
   \offinterlineskip%
   \question{#1}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\thesubsection. #1}
+  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1}
   \tabularx{\linewidth}{Xr*{5}{c}l}
 }{%
   \endtabularx%
@@ -910,7 +910,7 @@
 
 \providecommand*{\singlemark}[3]{%
   \question{#1}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Mark=\thesubsection. #1}%
+  \protectedimmediatewrite\sdapsoutfile{QObject-Mark=\arabic{section}.\arabic{subsection}. #1}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
   %\offinterlineskip%
@@ -926,7 +926,7 @@
   \setcounter{choiceitems}{1}%
   \setcounter{maxchoiceitems}{#1}%
   \question{#2}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Choice=\thesubsection. #2}%
+  \protectedimmediatewrite\sdapsoutfile{QObject-Choice=\arabic{section}.\arabic{subsection}. #2}%
   \tabularx{\linewidth}{*{\themaxchoiceitems}{X}}%
   % We insert dummy elements into each cell, because otherwise there may be
   % layouting issues.
