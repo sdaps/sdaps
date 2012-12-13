@@ -28,6 +28,7 @@ from sdaps import clifilter
 from sdaps import template
 from sdaps import matrix
 from sdaps import paths
+from sdaps import defs
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
@@ -133,20 +134,19 @@ def report(survey, filter, filename=None, small=0):
     \end{document}
     """)
 
-        print _("Running pdflatex now twice to generate the report.")
-        # First run in draftmode, no need to generate a PDF
-        subprocess.call(['pdflatex', '-draftmode', '-halt-on-error',
+        print _("Running %s now twice to generate the report.") % defs.latex_engine
+        subprocess.call([defs.latex_engine, '-halt-on-error',
                          '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'report.tex')],
                         cwd=tmpdir)
-        # And again, without the draft mode
-        subprocess.call(['pdflatex', '-halt-on-error', '-interaction',
-                         'batchmode',
+        # And again
+        subprocess.call([defs.latex_engine, '-halt-on-error',
+                         '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'report.tex')],
                         cwd=tmpdir)
 
         if not os.path.exists(os.path.join(tmpdir, 'report.pdf')):
-            print _("Error running \"pdflatex\" to compile the LaTeX file.")
+            print _("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine
             raise AssertionError('PDF file not generated')
 
         shutil.move(os.path.join(tmpdir, 'report.pdf'), filename)

@@ -26,6 +26,7 @@ from sdaps import utils
 from sdaps import model
 from sdaps import log
 from sdaps import paths
+from sdaps import defs
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
@@ -104,17 +105,16 @@ def setup(survey, cmdline):
         for add_file in cmdline['add']:
             shutil.copyfile(add_file, survey.path(os.path.basename(add_file)))
 
-        print _("Running pdflatex now twice to generate the questionnaire.")
-        # First run in draftmode, no need to generate a PDF
-        subprocess.call(['pdflatex', '-draftmode', '-halt-on-error',
+        print _("Running %s now twice to generate the questionnaire.") % defs.latex_engine
+        subprocess.call([defs.latex_engine, '-halt-on-error',
                          '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         # And again, without the draft mode
-        subprocess.call(['pdflatex', '-halt-on-error', '-interaction',
-                         'batchmode', 'questionnaire.tex'],
+        subprocess.call([defs.latex_engine, '-halt-on-error',
+                         '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         if not os.path.exists(survey.path('questionnaire.pdf')):
-            print _("Error running \"pdflatex\" to compile the LaTeX file.")
+            print _("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine
             raise AssertionError('PDF file not generated')
 
         survey.defs.print_questionnaire_id = False
@@ -144,18 +144,17 @@ def setup(survey, cmdline):
 
         # We need to now rebuild everything so that the correct ID is at the bottom
         write_latex_override_file(survey)
-
-        print _("Running pdflatex now twice to generate the questionnaire.")
-        # First run in draftmode, no need to generate a PDF
-        subprocess.call(['pdflatex', '-draftmode', '-halt-on-error',
+        print _("Running %s now twice to generate the questionnaire.") % defs.latex_engine
+        os.remove(survey.path('questionnaire.pdf'))
+        subprocess.call([defs.latex_engine, '-halt-on-error',
                          '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         # And again, without the draft mode
-        subprocess.call(['pdflatex', '-halt-on-error', '-interaction',
-                         'batchmode', 'questionnaire.tex'],
+        subprocess.call([defs.latex_engine, '-halt-on-error',
+                         '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         if not os.path.exists(survey.path('questionnaire.pdf')):
-            log.error(_("Error running \"pdflatex\" to compile the LaTeX file."))
+            print _("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine
             raise AssertionError('PDF file not generated')
 
         # Print the result

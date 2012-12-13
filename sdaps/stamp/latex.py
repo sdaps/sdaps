@@ -7,6 +7,7 @@ import shutil
 
 from sdaps import log
 from sdaps import paths
+from sdaps import defs
 import glob
 
 from sdaps.ugettext import ugettext, ungettext
@@ -53,20 +54,19 @@ def create_stamp_pdf(survey, questionnaire_ids):
             latex_override.write('\def\questionnaireids{%s}\n' % ','.join([str(id) for id in questionnaire_ids]))
         latex_override.close()
 
-        print _("Running pdflatex now twice to generate the stamped questionnaire.")
+        print _("Running %s now twice to generate the stamped questionnaire.") % defs.latex_engine
         os.environ['TEXINPUTS'] = ':' + os.path.abspath(survey.path())
-        # First run in draftmode, no need to generate a PDF
-        subprocess.call(['pdflatex', '-draftmode', '-halt-on-error',
+        subprocess.call([defs.latex_engine, '-halt-on-error',
                          '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'questionnaire.tex')],
                         cwd=tmpdir)
-        # And again, without the draft mode
-        subprocess.call(['pdflatex', '-halt-on-error', '-interaction',
-                         'batchmode',
+        # And again
+        subprocess.call([defs.latex_engine, '-halt-on-error',
+                         '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'questionnaire.tex')],
                         cwd=tmpdir)
         if not os.path.exists(os.path.join(tmpdir, 'questionnaire.pdf')):
-            log.error(_("Error running \"pdflatex\" to compile the LaTeX file."))
+            log.error(_("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine)
             raise AssertionError('PDF file not generated')
 
         shutil.move(os.path.join(tmpdir, 'questionnaire.pdf'), filename)

@@ -1,5 +1,9 @@
 \documentclass[pdf, print_questionnaire_id, globalid=SDAPS, ngerman, stamp, pagemark]{sdaps}
-\usepackage[utf8]{inputenc}
+\usepackage{ifxetex}
+\ifxetex
+\else
+  \usepackage[utf8]{inputenc}
+\fi
 \usepackage{ulem}
 \usepackage{babel}
 
