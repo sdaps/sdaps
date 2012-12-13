@@ -70,7 +70,7 @@ def parse(survey):
 
     sdaps_file = open(survey.path('questionnaire.sdaps'))
     # the file is encoded in ascii format
-    sdaps_data = sdaps_file.read().decode('ascii')
+    sdaps_data = sdaps_file.read().decode('utf8')
     qobject = None
     auto_numbering_id = (0,)
 
