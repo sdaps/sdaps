@@ -749,7 +749,7 @@
 \renewcommand{\author}[1]{\def\@author{#1}\protectedimmediatewrite\sdapsoutfile{Author=#1}}
 \renewcommand{\title}[1]{\def\@title{#1}\protectedimmediatewrite\sdapsoutfile{Title=#1}}
 
-\def\question{\subsection}
+\def\question#1{\subsection{\usekomafont{questionfont}#1}}
 
 % http://mrunix.de/forums/showthread.php?t=59943
 \newenvironment{info}{%
