@@ -115,9 +115,6 @@
 % ifthen package
 \RequirePackage{ifthen}
 
-% ifpdf package
-\RequirePackage{ifpdf}
-
 % fontenc package
 \RequirePackage[T1]{fontenc}
 
@@ -147,11 +144,7 @@
 
 % hyperrefs
 \RequirePackage{url}
-\ifpdf
-  \RequirePackage[pdftex,]{hyperref}
-\else
-  \RequirePackage[dvips]{hyperref}
-\fi
+\RequirePackage[driverfallback=dvips]{hyperref}
 \hypersetup{%
   breaklinks,%
   baseurl       = http://,%
@@ -172,10 +165,7 @@
 }
 
 % graphics
-\ifpdf
-  \RequirePackage[pdftex]{graphicx}
-\else
-  \RequirePackage[dvips]{graphicx}\fi
+\RequirePackage{graphicx}
 
 % headers and footers
 \usepackage{scrpage2}
