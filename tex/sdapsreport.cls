@@ -63,11 +63,7 @@
 
 % hyperrefs
 \RequirePackage{url}
-\ifpdf
-  \RequirePackage[pdftex,]{hyperref}
-\else
-  \RequirePackage[dvips]{hyperref}
-\fi
+\RequirePackage[driverfallback=dvips]{hyperref}
 \hypersetup{%
   breaklinks,%
   baseurl       = http://,%
@@ -88,11 +84,7 @@
 }
 
 % graphics
-\ifpdf
-  \RequirePackage[pdftex]{graphicx}
-\else
-  \RequirePackage[dvips]{graphicx}
-\fi
+\RequirePackage{graphicx}
 
 % headers and footers
 \usepackage{scrpage2}

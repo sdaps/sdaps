@@ -106,7 +106,11 @@ def report(survey, filter, filename=None, small=0):
         extra_info = u'\n'.join(extra_info)
         texfile.write(r"""\documentclass[%(language)s]{sdapsreport}
 
-    \usepackage[utf8]{inputenc}
+    \usepackage{ifxetex}
+    \ifxetex
+    \else
+      \usepackage[utf8]{inputenc}
+    \fi
     \usepackage[%(language)s]{babel}
 
     \title{%(title)s}
