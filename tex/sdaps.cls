@@ -214,6 +214,8 @@
     \romannumeral0\string#1}\delimiter
 }
 
+\def\forceLR#1{\ifx\textLR\undefined#1\else\textLR{#1}\fi}
+
 \def\@sdaps@STAMP{%
   \begingroup
     \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
@@ -693,6 +695,7 @@
 }
 
 \providecommand{\checkboxNoStar}{%
+  \forceLR{%
   \mbox{\label{checkbox\thecheckboxnum}\pgfsys@markposition{checkbox\thecheckboxnum}%
   \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
   \pgfsys@getposition{checkbox\thecheckboxnum}{\@sdaps@checkboxpos}%
@@ -706,7 +709,7 @@
   \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
   }\addtocounter{checkboxnum}{1}}%
-}
+}}
 \providecommand{\checkboxStar}{%
   \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
