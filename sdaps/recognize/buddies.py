@@ -339,8 +339,6 @@ class Image(model.buddy.Buddy):
 
     def clean(self):
         self.obj.surface.clean()
-        if hasattr(self, 'matrix'):
-            del self.matrix
 
     def calculate_matrix(self):
         try:
@@ -353,11 +351,9 @@ class Image(model.buddy.Buddy):
             )
         except AssertionError:
             self.obj.matrix.set_px_to_mm(None)
-            self.matrix = None
             raise RecognitionError
         else:
             self.obj.matrix.set_px_to_mm(matrix)
-            self.matrix = self.obj.matrix.mm_to_px()
 
     def get_coverage(self, x, y, width, height):
         return image.get_coverage(
@@ -410,6 +406,9 @@ class Image(model.buddy.Buddy):
             raise AssertionError("The found values differ too much from where the box should be.")
         return tl, tr, br, bl
 
+    @property
+    def matrix(self):
+        return self.obj.matrix.mm_to_px()
 
 class Questionnaire(model.buddy.Buddy):
 
