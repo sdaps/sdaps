@@ -35,7 +35,11 @@ def paint_box(cr, mm_to_pt, x, y, box, key):
     cr.scale(25.4 / 300.0, 25.4 / 300.0)
 
     cr.set_source_rgb(0, 0, 0)
-    cr.mask_surface(box[2], 0, 0)
+    cr.mask_surface(box[2][0], 0, 0)
+
+    if box[3] and key in box[3] and box[3][key] is not None:
+        cr.set_source_surface(box[3][key][0], box[3][key][1] - box[2][1], box[3][key][2] - box[2][2])
+        cr.paint()
 
     cr.restore()
 
@@ -85,8 +89,13 @@ def fill_page(cr, mm_to_pt, checkboxes, key):
         y += y_step
 
 
-def boxgallery(survey):
-    survey.questionnaire.boxgallery.init()
+def boxgallery(survey, debugrecognition):
+    # Enable debug image creation in the C module
+    if debugrecognition:
+        from sdaps import image
+        image.enable_debug_surface_creation(True)
+
+    survey.questionnaire.boxgallery.init(debugrecognition)
     survey.iterate_progressbar(survey.questionnaire.boxgallery.get_checkbox_images)
     checkboxes = survey.questionnaire.boxgallery.checkboxes
     survey.questionnaire.boxgallery.clean()

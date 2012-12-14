@@ -35,11 +35,21 @@ parser = script.subparsers.add_parser("boxgallery",
     will be created for each of the heuristics so that one can adjust the
     values."""))
 
+parser.add_argument('--debugrecognition',
+    action="store_true",
+    help=_('Reruns part of the recognition process and retrieves debug images from this step.'),
+    default=False)
+
 @script.connect(parser)
 @script.logfile
 def boxgallery(cmdline):
+
+    # We need to load the buddies before the survey is loaded.
+    if cmdline['debugrecognition']:
+        from sdaps.recognize import buddies
+
     survey = model.survey.Survey.load(cmdline['project'])
     import boxgallery
-    boxgallery.boxgallery(survey)
+    boxgallery.boxgallery(survey, cmdline['debugrecognition'])
 
 

@@ -44,8 +44,9 @@ class Questionnaire(model.buddy.Buddy):
     name = 'boxgallery'
     obj_class = model.questionnaire.Questionnaire
 
-    def init(self):
+    def init(self, debugrecognition):
         self.checkboxes = list()
+        self.debugrecognition = debugrecognition
 
     def clean(self):
         del self.checkboxes
@@ -54,7 +55,7 @@ class Questionnaire(model.buddy.Buddy):
         if self.obj.survey.sheet.valid:
             self.obj.survey.sheet.boxgallery.load()
             for qobject in self.obj.qobjects:
-                self.checkboxes.extend(qobject.boxgallery.get_checkbox_images())
+                self.checkboxes.extend(qobject.boxgallery.get_checkbox_images(self.debugrecognition))
             self.obj.survey.sheet.boxgallery.clean()
 
 
@@ -64,7 +65,7 @@ class QObject(model.buddy.Buddy):
     name = 'boxgallery'
     obj_class = model.questionnaire.QObject
 
-    def get_checkbox_images(self):
+    def get_checkbox_images(self, debugrecognition):
         return []
 
 
@@ -74,11 +75,11 @@ class Question(QObject):
     name = 'boxgallery'
     obj_class = model.questionnaire.Question
 
-    def get_checkbox_images(self):
+    def get_checkbox_images(self, debugrecognition):
         boxes = []
 
         for box in self.obj.boxes:
-            new_box = box.boxgallery.get_checkbox_image()
+            new_box = box.boxgallery.get_checkbox_image(debugrecognition)
             if new_box:
                 boxes.append(new_box)
         return boxes
@@ -89,7 +90,7 @@ class Box(model.buddy.Buddy):
     name = 'boxgallery'
     obj_class = model.questionnaire.Box
 
-    def get_checkbox_image(self):
+    def get_checkbox_image(self, debugrecognition):
         return None
 
 
@@ -98,7 +99,7 @@ class Checkbox(model.buddy.Buddy):
     name = 'boxgallery'
     obj_class = model.questionnaire.Checkbox
 
-    def get_checkbox_image(self):
+    def get_checkbox_image(self, debugrecognition):
         image = self.obj.sheet.get_page_image(self.obj.page_number)
 
         border = 1.5
@@ -106,6 +107,7 @@ class Checkbox(model.buddy.Buddy):
 
         px_x, px_y = mm_to_px.transform_point(
             self.obj.data.x - border, self.obj.data.y - border)
+        px_x, px_y = int(px_x), int(px_y)
         px_width, px_height = mm_to_px.transform_distance(
             self.obj.data.width + 2 * border, self.obj.data.height + 2 * border)
 
@@ -121,7 +123,14 @@ class Checkbox(model.buddy.Buddy):
         del cr
         dest.flush()
 
-        return(self.obj.data.state, self.obj.data.metrics, dest)
+        debug = {}
+        if debugrecognition:
+            # Run the recognition for this checkbox
+            self.obj.recognize.recognize()
+
+            debug = self.obj.recognize.debug
+
+        return (self.obj.data.state, self.obj.data.metrics, (dest, px_x, px_y), debug)
 
 
 
