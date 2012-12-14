@@ -497,13 +497,13 @@ class Checkbox(Box):
     obj_class = model.questionnaire.Checkbox
 
     def recognize(self):
-        image = self.obj.sheet.get_page_image(self.obj.page_number)
+        img = self.obj.sheet.get_page_image(self.obj.page_number)
 
-        if image is None or image.recognize.matrix is None:
+        if img is None or img.recognize.matrix is None:
             self.obj.sheet.valid = 0
             return
 
-        matrix = image.recognize.correction_matrix(
+        matrix = img.recognize.correction_matrix(
             self.obj.x, self.obj.y,
             self.obj.width, self.obj.height
         )
@@ -514,23 +514,30 @@ class Checkbox(Box):
         self.obj.data.width = width
         self.obj.data.height = height
 
-        coverage = image.recognize.get_coverage(
+        # The debug struct will be filled in if debugging is enabled in the
+        # C library. This is done by the boxgallery script currently.
+        self.debug = {}
+
+        coverage = img.recognize.get_coverage(
             x + 1.5 * pt_to_mm, y + 1.5 * pt_to_mm,
             width - 3 * pt_to_mm, height - 3 * pt_to_mm)
         self.obj.data.metrics['coverage'] = coverage
+        self.debug['coverage'] = image.get_debug_surface()
 
         # Remove 3 lines with width 1.2pt(about 5px).
-        coverage = image.recognize.get_coverage_without_lines(
+        coverage = img.recognize.get_coverage_without_lines(
             x + 1.5 * pt_to_mm, y + 1.5 * pt_to_mm,
             width - 3 * pt_to_mm, height - 3 * pt_to_mm,
             1.2 * 25.4 / 72.0, 3)
         self.obj.data.metrics['cov-lines-removed'] = coverage
+        self.debug['cov-lines-removed'] = image.get_debug_surface()
 
-        count, coverage = image.recognize.get_white_area_count(
+        count, coverage = img.recognize.get_white_area_count(
             x + 1.5 * pt_to_mm, y + 1.5 * pt_to_mm,
             width - 3 * pt_to_mm, height - 3 * pt_to_mm,
             0.05, 1.0)
         self.obj.data.metrics['cov-min-size'] = coverage
+        self.debug['cov-min-size'] = image.get_debug_surface()
 
         state = 0
         quality = -1
