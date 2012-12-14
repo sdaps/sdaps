@@ -20,10 +20,10 @@
 #include <cairo.h>
 
 /* Some of the more important Magic Values */
-extern gint sdaps_line_min_length;
-extern gint sdaps_line_max_length;
-extern gint sdaps_line_width;
-extern gint sdaps_corner_mark_search_distance;
+extern gdouble sdaps_line_min_length;
+extern gdouble sdaps_line_max_length;
+extern gdouble sdaps_line_width;
+extern gdouble sdaps_corner_mark_search_distance;
 extern gdouble sdaps_line_coverage;
 
 void
@@ -42,7 +42,7 @@ gboolean
 check_tiff_monochrome (char *filename);
 
 cairo_matrix_t*
-calculate_matrix(cairo_surface_t *surface, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);
+calculate_matrix(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);
 
 cairo_matrix_t*
 calculate_correction_matrix(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);

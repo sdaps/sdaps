@@ -33,13 +33,13 @@ corner_mark_top = 12.0 # mm
 corner_mark_bottom = 12.0 # mm
 corner_mark_length = 20.0 # mm
 
-# Length in pixel of the corner marks in the scanned image
-corner_mark_min_length = 215 # px
-corner_mark_max_length = 250 # px
+# Length in mm of the corner marks in the scanned image
+corner_mark_min_length = 18 # mm
+corner_mark_max_length = 22 # mm
 
 # The distance into the image that will be searched for the corner mark.
 # Basically a square area of this size will be searched in each corner.
-corner_mark_search_distance = 600 # px
+corner_mark_search_distance = 50 # mm
 
 # Corner Boxes ============================================
 
@@ -158,7 +158,7 @@ textbox_extra_padding = 0.5 # mm
 
 # The width of the lines in the scanned image.
 # All lines are 1pt wide(1/72 inch or 25.4/72 mm)
-image_line_width = 5 # px
+image_line_width = 24.4/72. # mm
 # The coverage that the line needs to have for recognition
 image_line_coverage = 0.35
 

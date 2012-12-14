@@ -157,13 +157,14 @@ static PyObject *
 wrap_calculate_matrix(PyObject *self, PyObject *args)
 {
 	PycairoSurface *py_surface;
+	PycairoMatrix *py_matrix;
 	cairo_matrix_t *matrix;
 	float mm_x, mm_y, mm_width, mm_height;
 	
-	if (!PyArg_ParseTuple(args, "O!ffff", &PycairoImageSurface_Type, &py_surface, &mm_x, &mm_y, &mm_width, &mm_height))
+	if (!PyArg_ParseTuple(args, "O!O!ffff", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
 	
-	matrix = calculate_matrix(py_surface->surface, mm_x, mm_y, mm_width, mm_height);
+	matrix = calculate_matrix(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
 
 	if (matrix) {
 		return PycairoMatrix_FromMatrix(matrix);
@@ -289,7 +290,7 @@ wrap_get_pbm(PyObject *self, PyObject *args)
 
 static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args)
 {
-	if (!PyArg_ParseTuple(args, "iiiid",
+	if (!PyArg_ParseTuple(args, "ddddd",
 	                      &sdaps_line_min_length,
 	                      &sdaps_line_max_length,
 	                      &sdaps_line_width,

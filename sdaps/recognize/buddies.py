@@ -346,6 +346,7 @@ class Image(model.buddy.Buddy):
         try:
             matrix = image.calculate_matrix(
                 self.obj.surface.surface,
+                self.obj.matrix.mm_to_px(),
                 defs.corner_mark_left, defs.corner_mark_top,
                 self.obj.sheet.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right,
                 self.obj.sheet.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom,

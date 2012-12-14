@@ -24,10 +24,10 @@
 #include "transform.h"
 
 /* Some of the more important Magic Values */
-gint sdaps_line_min_length = 215;
-gint sdaps_line_max_length = 250;
-gint sdaps_line_width = 5;
-gint sdaps_corner_mark_search_distance = 600;
+gdouble sdaps_line_min_length = 20-2;
+gdouble sdaps_line_max_length = 20+2;
+gdouble sdaps_line_width = 1/72*25.4;
+gdouble sdaps_corner_mark_search_distance = 50;
 gdouble sdaps_line_coverage = 0.65;
 
 void
@@ -230,8 +230,18 @@ get_pbm(cairo_surface_t *surface, void **data, int *length)
 	}
 }
 
-#define LINE_WIDTH sdaps_line_width
 #define LINE_COVERAGE sdaps_line_coverage
+
+static gint
+transform_distance_to_pixel(cairo_matrix_t *matrix, gdouble distance)
+{
+	gdouble dx, dy;
+
+	dx = distance;
+	dy = distance;
+	cairo_matrix_transform_distance(matrix, &dx, &dy);
+	return (gint) ceil(MAX(dx, dy));
+}
 
 static gboolean
 follow_line(cairo_surface_t *surface,
@@ -586,6 +596,7 @@ find_corner_marker(cairo_surface_t *surface,
                    gint             y_start,
                    gint             x_dir,
                    gint             y_dir,
+                   gint             search_distance,
                    gint             line_width,
                    gint             line_length,
                    gint             line_max_length,
@@ -604,7 +615,7 @@ find_corner_marker(cairo_surface_t *surface,
 	x = x_start + (x_dir * (width / 6 + 1));
 	y = y_start + y_dir;
 	
-	while (!found && (distance < sdaps_corner_mark_search_distance)) {
+	while (!found && (distance < search_distance)) {
 		distance += 1;
 
 		/* Try searching from the top/bottom. */
@@ -672,15 +683,16 @@ find_corner_marker(cairo_surface_t *surface,
  *****************************************************************************/
 cairo_matrix_t*
 calculate_matrix(cairo_surface_t *surface,
-                          gdouble mm_x,
-                          gdouble mm_y,
-                          gdouble mm_width,
-                          gdouble mm_height)
+                 cairo_matrix_t *matrix,
+                 gdouble mm_x,
+                 gdouble mm_y,
+                 gdouble mm_width,
+                 gdouble mm_height)
 {
 	gint width, height;
-	gint line_width = LINE_WIDTH;
-	gint line_length = sdaps_line_min_length;
-	gint line_max_length = sdaps_line_max_length;
+	gint line_width;
+	gint line_length;
+	gint line_max_length;
 	gdouble x_topleft, y_topleft;
 	gdouble x_topright, y_topright;
 	gdouble x_bottomleft, y_bottomleft;
@@ -688,18 +700,24 @@ calculate_matrix(cairo_surface_t *surface,
 	gdouble x_center, y_center;
 	gdouble dx, dy;
 	gdouble length_squared;
+	gint search_distance;
 	cairo_matrix_t *result;
+
+	line_width = transform_distance_to_pixel(matrix, sdaps_line_width);
+	line_length = transform_distance_to_pixel(matrix, sdaps_line_min_length);
+	line_max_length = transform_distance_to_pixel(matrix, sdaps_line_max_length);
+	search_distance = transform_distance_to_pixel(matrix, sdaps_corner_mark_search_distance);
 
 	width = cairo_image_surface_get_width (surface);
 	height = cairo_image_surface_get_height (surface);
 
-	if (!find_corner_marker(surface, 0, 0, 1, 1, line_width, line_length, line_max_length, &x_topleft, &y_topleft))
+	if (!find_corner_marker(surface, 0, 0, 1, 1, search_distance, line_width, line_length, line_max_length, &x_topleft, &y_topleft))
 		return NULL;
-	if (!find_corner_marker(surface, width - 1, 0, -1, 1, line_width, line_length, line_max_length, &x_topright, &y_topright))
+	if (!find_corner_marker(surface, width - 1, 0, -1, 1, search_distance, line_width, line_length, line_max_length, &x_topright, &y_topright))
 		return NULL;
-	if (!find_corner_marker(surface, 0, height - 1, 1, -1, line_width, line_length, line_max_length, &x_bottomleft, &y_bottomleft))
+	if (!find_corner_marker(surface, 0, height - 1, 1, -1, search_distance, line_width, line_length, line_max_length, &x_bottomleft, &y_bottomleft))
 		return NULL;
-	if (!find_corner_marker(surface, width - 1, height - 1,-1, -1, line_width, line_length, line_max_length, &x_bottomright, &y_bottomright))
+	if (!find_corner_marker(surface, width - 1, height - 1,-1, -1, search_distance, line_width, line_length, line_max_length, &x_bottomright, &y_bottomright))
 		return NULL;
 
 	/* Corners are known, now calculate the matrix. */
@@ -751,12 +769,14 @@ calculate_correction_matrix(cairo_surface_t  *surface,
 	cairo_matrix_t inverse;
 	cairo_matrix_t *result = NULL;
 	gint test_dist;
-	gint line_width = LINE_WIDTH;
+	gint line_width;
 	gint x_offset, y_offset;
 	gint x_cov;
 	gint y_cov;
 	gint coverage = 0;
-	
+
+	line_width = transform_distance_to_pixel(matrix, sdaps_line_width);
+
 	inverse = *matrix;
 	cairo_matrix_invert(&inverse);
 	
@@ -840,9 +860,12 @@ find_box_corners(cairo_surface_t  *surface,
 	cairo_matrix_t inverse;
 	gdouble px_x1, px_y1, px_x2, px_y2, px_x3, px_y3, px_x4, px_y4;
 	gdouble px_width, px_height;
-	gint line_width = LINE_WIDTH;
+	gint line_width;
 	gint line_length;
 	gint line_max_length;
+	gint search_distance;
+
+	line_width = transform_distance_to_pixel(matrix, sdaps_line_width);
 
 	inverse = *matrix;
 	cairo_matrix_invert(&inverse);
@@ -869,15 +892,16 @@ find_box_corners(cairo_surface_t  *surface,
 
 	line_length = MIN(10*line_width, MIN(px_width, px_height)) - line_width;
 	line_max_length = MAX(10*line_width, MAX(px_width, px_height)) + 5*line_width;
+	search_distance = line_length;
 	/* We have the corner pixel positions, now try to find them. */
 
-	if (!find_corner_marker(surface, px_x1 - 4*line_width, px_y1 - 4*line_width, 1, 1, line_width, line_length, line_max_length, &px_x1, &px_y1))
+	if (!find_corner_marker(surface, px_x1 - 4*line_width, px_y1 - 4*line_width, 1, 1, search_distance, line_width, line_length, line_max_length, &px_x1, &px_y1))
 		return FALSE;
-	if (!find_corner_marker(surface, px_x2 + 4*line_width, px_y2 - 4*line_width, -1, 1, line_width, line_length, line_max_length, &px_x2, &px_y2))
+	if (!find_corner_marker(surface, px_x2 + 4*line_width, px_y2 - 4*line_width, -1, 1, search_distance, line_width, line_length, line_max_length, &px_x2, &px_y2))
 		return FALSE;
-	if (!find_corner_marker(surface, px_x3 + 4*line_width, px_y3 + 4*line_width, -1, -1, line_width, line_length, line_max_length, &px_x3, &px_y3))
+	if (!find_corner_marker(surface, px_x3 + 4*line_width, px_y3 + 4*line_width, -1, -1, search_distance, line_width, line_length, line_max_length, &px_x3, &px_y3))
 		return FALSE;
-	if (!find_corner_marker(surface, px_x4 - 4*line_width, px_y4 + 4*line_width, 1, -1, line_width, line_length, line_max_length, &px_x4, &px_y4))
+	if (!find_corner_marker(surface, px_x4 - 4*line_width, px_y4 + 4*line_width, 1, -1, search_distance, line_width, line_length, line_max_length, &px_x4, &px_y4))
 		return FALSE;
 
 	/* Found the corners, convert them back and return. */
