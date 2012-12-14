@@ -26,6 +26,11 @@ extern gdouble sdaps_line_width;
 extern gdouble sdaps_corner_mark_search_distance;
 extern gdouble sdaps_line_coverage;
 
+extern gboolean sdaps_create_debug_surface;
+extern gint sdaps_debug_surface_ox;
+extern gint sdaps_debug_surface_oy;
+extern cairo_surface_t *sdaps_debug_surface;
+
 void
 disable_libtiff_warnings (void);
 

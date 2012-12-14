@@ -26,7 +26,7 @@ surface_copy_partial(cairo_surface_t *surface, int x, int y, int width, int heig
 	cairo_surface_t *result;
 	cairo_t *cr;
 
-	result = cairo_image_surface_create(CAIRO_FORMAT_A1, width, height);
+	result = cairo_image_surface_create(cairo_image_surface_get_format(surface), width, height);
 	cr = cairo_create(result);
 
 	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
@@ -352,11 +352,23 @@ kfill_modified(cairo_surface_t* surface, gint k)
 }
 #endif
 
+static void
+mark_pixel(cairo_surface_t *debug_surf, gint x, gint y)
+{
+	cairo_t *cr;
+
+	cr = cairo_create(debug_surf);
+	cairo_set_source_rgba(cr, 1, 0, 0, 0.5);
+	cairo_rectangle(cr, x-0.5, y-0.5, 1, 1);
+	cairo_fill(cr);
+	cairo_destroy(cr);
+}
+
 /* XXX: This needs rather a lot of stack space ...
  * TODO: Rewrite in a saner and faster way.
  * Returns the size of the filled area. */
 guint
-flood_fill(cairo_surface_t *surface, gint x, gint y, gint orig_color)
+flood_fill(cairo_surface_t *surface, cairo_surface_t *debug_surf, gint x, gint y, gint orig_color)
 {
 	guint img_width, img_height;
 	guint stride;
@@ -387,10 +399,13 @@ flood_fill(cairo_surface_t *surface, gint x, gint y, gint orig_color)
 
 	result = 1;
 
-	result += flood_fill(surface, x+1, y, orig_color);
-	result += flood_fill(surface, x, y+1, orig_color);
-	result += flood_fill(surface, x-1, y, orig_color);
-	result += flood_fill(surface, x, y-1, orig_color);
+	result += flood_fill(surface, debug_surf, x+1, y, orig_color);
+	result += flood_fill(surface, debug_surf, x, y+1, orig_color);
+	result += flood_fill(surface, debug_surf, x-1, y, orig_color);
+	result += flood_fill(surface, debug_surf, x, y-1, orig_color);
+
+	if (debug_surf != NULL)
+		mark_pixel(debug_surf, x, y);
 
 	return result;
 }
@@ -507,22 +522,46 @@ hough_transform(cairo_surface_t *surface, guint angle_bins, guint distance_bins,
 	return result;
 }
 
-void
-remove_maximum_line(cairo_surface_t *surface, gdouble width)
+static void
+remove_line(cairo_surface_t *surface, gdouble width, gdouble r_max, gdouble phi_max, gboolean debug)
 {
 	guint img_width, img_height;
+	cairo_t *cr;
+
+	img_width = cairo_image_surface_get_width(surface);
+	img_height = cairo_image_surface_get_height(surface);
+
+	cr = cairo_create(surface);
+	cairo_set_line_cap(cr, CAIRO_LINE_CAP_SQUARE);
+	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+	if (!debug) {
+		cairo_set_source_rgba(cr, 0, 0, 0, 0);
+	} else {
+		cairo_set_source_rgba(cr, 1, 0, 0, 0.5);
+	}
+	cairo_set_line_width(cr, width);
+	if (sin(phi_max) > 0.1) {
+		cairo_move_to(cr, 0, r_max / sin(phi_max));
+		cairo_line_to(cr, img_width, (r_max - img_width * cos(phi_max)) / sin(phi_max));
+	} else {
+		cairo_move_to(cr, r_max / cos(phi_max), 0);
+		cairo_line_to(cr, (r_max - img_height * sin(phi_max)) / cos(phi_max), img_height);
+	}
+	cairo_stroke(cr);
+	cairo_destroy(cr);
+}
+
+void
+remove_maximum_line(cairo_surface_t *surface, cairo_surface_t *debug_surf, gdouble width)
+{
 	int r, phi;
 	gdouble r_max, phi_max, maximum;
-	cairo_t *cr;
 	hough_data *hough = hough_transform(surface, 60, 30, width / 2.0);
 
 	/* Shut up the compiler*/
 	r_max = 0;
 	phi_max = 0;
 	maximum = -1;
-
-	img_width = cairo_image_surface_get_width(surface);
-	img_height = cairo_image_surface_get_height(surface);
 
 	/* Find global maximum. */
 	for (phi = 0; phi < hough->angle_bins; phi++) {
@@ -537,20 +576,9 @@ remove_maximum_line(cairo_surface_t *surface, gdouble width)
 		}
 	}
 
-	cr = cairo_create(surface);
-	cairo_set_line_cap(cr, CAIRO_LINE_CAP_SQUARE);
-	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
-	cairo_set_source_rgba(cr, 0, 0, 0, 0);
-	cairo_set_line_width(cr, width);
-	if (sin(phi_max) > 0.1) {
-		cairo_move_to(cr, 0, r_max / sin(phi_max));
-		cairo_line_to(cr, img_width, (r_max - img_width * cos(phi_max)) / sin(phi_max));
-	} else {
-		cairo_move_to(cr, r_max / cos(phi_max), 0);
-		cairo_line_to(cr, (r_max - img_height * sin(phi_max)) / cos(phi_max), img_height);
-	}
-	cairo_stroke(cr);
-	cairo_destroy(cr);
+	remove_line(surface, width, r_max, phi_max, FALSE);
+	if (debug_surf != NULL)
+		remove_line(debug_surf, width, r_max, phi_max, TRUE);
 
 	g_free(hough->data);
 	g_free(hough);

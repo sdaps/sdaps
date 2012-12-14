@@ -31,6 +31,8 @@ static PyObject *wrap_get_coverage_without_lines(PyObject *self, PyObject *args)
 static PyObject *wrap_get_white_area_count(PyObject *self, PyObject *args);
 static PyObject *wrap_get_pbm(PyObject *self, PyObject *args);
 static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args);
+static PyObject *enable_debug_surface_creation(PyObject *self, PyObject *args);
+static PyObject *get_debug_surface(PyObject *self, PyObject *args);
 static PyObject *wrap_get_tiff_page_count(PyObject *self, PyObject *args);
 static PyObject *wrap_check_tiff_monochrome(PyObject *self, PyObject *args);
 
@@ -49,6 +51,8 @@ static PyMethodDef EvaluateMethods[] = {
 	{"get_white_area_count",  wrap_get_white_area_count, METH_VARARGS, "Returns the number and overall size of white areas that are larger than the given percentage of the overall size."},
 	{"get_pbm",  wrap_get_pbm, METH_VARARGS, "Returns a string that contains a binary PBM data representation of the cairo A1 surface."},
 	{"set_magic_values",  sdaps_set_magic_values, METH_VARARGS, "Sets some magic values for recognition."},
+	{"enable_debug_surface_creation",  enable_debug_surface_creation, METH_VARARGS, "Sets whether debug images should be created."},
+	{"get_debug_surface",  get_debug_surface, METH_VARARGS, "Returns the last created debug surface. Call immediately after a function that may create such a surface."},
 	{NULL, NULL, 0, NULL} /* Sentinel */
 };
 
@@ -300,5 +304,32 @@ static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args)
 
 	Py_INCREF(Py_None);
 	return Py_None;
+}
+
+static PyObject *enable_debug_surface_creation(PyObject *self, PyObject *args)
+{
+	if (!PyArg_ParseTuple(args, "i",
+	                      &sdaps_create_debug_surface))
+		return NULL;
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+static PyObject *get_debug_surface(PyObject *self, PyObject *args)
+{
+	if (!PyArg_ParseTuple(args, ""))
+		return NULL;
+
+	if ((!sdaps_create_debug_surface) || (sdaps_debug_surface == NULL)) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	} else {
+		cairo_surface_reference(sdaps_debug_surface);
+		return Py_BuildValue("Nii",
+		                     PycairoSurface_FromSurface(sdaps_debug_surface, NULL),
+		                     sdaps_debug_surface_ox,
+		                     sdaps_debug_surface_oy);
+	}
 }
 

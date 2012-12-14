@@ -30,6 +30,47 @@ gdouble sdaps_line_width = 1/72*25.4;
 gdouble sdaps_corner_mark_search_distance = 50;
 gdouble sdaps_line_coverage = 0.65;
 
+gboolean sdaps_create_debug_surface = FALSE;
+gint sdaps_debug_surface_ox;
+gint sdaps_debug_surface_oy;
+cairo_surface_t *sdaps_debug_surface = NULL;
+
+cairo_surface_t*
+debug_surface_clear()
+{
+	if (sdaps_debug_surface != NULL) {
+		cairo_surface_destroy(sdaps_debug_surface);
+		sdaps_debug_surface = NULL;
+	}
+}
+
+cairo_surface_t*
+debug_surface_create(gint x, gint y, gint width, gint height, gdouble r, gdouble g, gdouble b, gdouble a)
+{
+	cairo_t* cr;
+
+	debug_surface_clear();
+
+	if (!sdaps_create_debug_surface)
+		return NULL;
+
+	sdaps_debug_surface_ox = x;
+	sdaps_debug_surface_oy = y;
+
+	sdaps_debug_surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+
+	cr = cairo_create (sdaps_debug_surface);
+	cairo_set_source_rgba (cr, r, g, b, a);
+	cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+	cairo_paint (cr);
+	cairo_destroy (cr);
+
+	cairo_surface_flush (sdaps_debug_surface);
+
+	return sdaps_debug_surface;
+}
+
+
 void
 disable_libtiff_warnings (void)
 {
@@ -950,6 +991,17 @@ get_coverage(cairo_surface_t *surface,
 	black = count_black_pixel(surface, x, y, width, height);
 	all = width * height;
 
+	if (sdaps_create_debug_surface) {
+		cairo_surface_t *surf = debug_surface_create(x, y, width, height, 0, 0, 0, 0);
+		cairo_t *cr = cairo_create(surf);
+
+		cairo_set_source_rgba(cr, 1, 0, 0, 0.5);
+		cairo_paint(cr);
+
+		cairo_destroy(cr);
+		cairo_surface_flush(surf);
+	}
+
 	return black / (double) all;
 }
 
@@ -966,6 +1018,7 @@ get_coverage_without_lines(cairo_surface_t *surface,
                            gint             line_count)
 {
 	cairo_surface_t *tmp_surface;
+	cairo_surface_t *debug_surf;
 	gint x, y, width, height;
 	gdouble tmp_x, tmp_y;
 	gdouble result;
@@ -993,6 +1046,7 @@ get_coverage_without_lines(cairo_surface_t *surface,
 	all = width * height;
 
 	tmp_surface = surface_copy_partial(surface, x, y, width, height);
+	debug_surf = debug_surface_create(x, y, width, height, 0, 0, 1, 0.5);
 
 #if 0
 	/* Something like this could be used to filter the image first.
@@ -1013,7 +1067,7 @@ get_coverage_without_lines(cairo_surface_t *surface,
 
 	/* Remove the requested number of lines. */
 	for (i = 0; i < line_count; i++)
-		remove_maximum_line(tmp_surface, line_width);
+		remove_maximum_line(tmp_surface, debug_surf, line_width);
 
 	result = count_black_pixel(tmp_surface, 0, 0, width, height) / (gdouble) all;
 
@@ -1034,6 +1088,9 @@ get_white_area_count(cairo_surface_t *surface,
                      gdouble         *filled_area)
 {
 	cairo_surface_t *tmp_surface;
+	cairo_surface_t *backup_surface;
+	cairo_surface_t *debug_surf;
+	cairo_t *backup_cr;
 	gint x, y, width, height;
 	gdouble tmp_x, tmp_y;
 	guint result = 0;
@@ -1056,17 +1113,39 @@ get_white_area_count(cairo_surface_t *surface,
 	min_size_px = width * height * min_size;
 	max_size_px = width * height * max_size;
 
+	/* Debug images */
 	tmp_surface = surface_copy_partial(surface, x, y, width, height);
+	debug_surf = debug_surface_create(x, y, width, height, 0, 0, 1, 0.5);
+	if (debug_surf != NULL) {
+		backup_surface = surface_copy(tmp_surface);
+		backup_cr = cairo_create(backup_surface);
+		cairo_set_operator(backup_cr, CAIRO_OPERATOR_SOURCE);
+	}
+
 	*filled_area = 0;
 
 	for (y = 0; y < height; y++) {
 		for (x = 0; x < width; x++) {
-			guint area = flood_fill(tmp_surface, x, y, 0);
+			if (debug_surf != NULL) {
+				cairo_set_source_surface(backup_cr, tmp_surface, 0, 0);
+				cairo_paint(backup_cr);
+			}
+
+			guint area = flood_fill(tmp_surface, NULL, x, y, 0);
 			if ((area >= min_size_px) && (area <= max_size_px)) {
 				result += 1;
 				*filled_area += area / ((gdouble) width * height);
+
+				/* Flood fill again, this time also mark the area on the debug surface. */
+				if (debug_surf)
+					flood_fill(backup_surface, debug_surf, x, y, 0);
 			}
 		}
+	}
+
+	if (debug_surf != NULL) {
+		cairo_surface_destroy (backup_surface);
+		cairo_destroy (backup_cr);
 	}
 
 	cairo_surface_destroy(tmp_surface);
