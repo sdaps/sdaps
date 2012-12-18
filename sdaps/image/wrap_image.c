@@ -35,6 +35,7 @@ static PyObject *enable_debug_surface_creation(PyObject *self, PyObject *args);
 static PyObject *get_debug_surface(PyObject *self, PyObject *args);
 static PyObject *wrap_get_tiff_page_count(PyObject *self, PyObject *args);
 static PyObject *wrap_check_tiff_monochrome(PyObject *self, PyObject *args);
+static PyObject *wrap_kfill_modified(PyObject *self, PyObject *args);
 
 Pycairo_CAPI_t *Pycairo_CAPI;
 
@@ -53,6 +54,7 @@ static PyMethodDef EvaluateMethods[] = {
 	{"set_magic_values",  sdaps_set_magic_values, METH_VARARGS, "Sets some magic values for recognition."},
 	{"enable_debug_surface_creation",  enable_debug_surface_creation, METH_VARARGS, "Sets whether debug images should be created."},
 	{"get_debug_surface",  get_debug_surface, METH_VARARGS, "Returns the last created debug surface. Call immediately after a function that may create such a surface."},
+	{"kfill_modified",  wrap_kfill_modified, METH_VARARGS, "Run the modified KFill algorithm over the given A1 surface."},
 	{NULL, NULL, 0, NULL} /* Sentinel */
 };
 
@@ -331,5 +333,26 @@ static PyObject *get_debug_surface(PyObject *self, PyObject *args)
 		                     sdaps_debug_surface_ox,
 		                     sdaps_debug_surface_oy);
 	}
+}
+
+
+static PyObject *
+wrap_kfill_modified(PyObject *self, PyObject *args)
+{
+	PycairoSurface *py_surface;
+	gint k;
+
+	if (!PyArg_ParseTuple(args, "O!i", &PycairoImageSurface_Type, &py_surface, &k))
+		return NULL;
+
+	if (cairo_image_surface_get_format (py_surface->surface) != CAIRO_FORMAT_A1) {
+		PyErr_SetString(PyExc_AssertionError, "This function only works with A1 surfaces currently!");
+		return NULL;
+	}
+
+	kfill_modified(py_surface->surface, k);
+
+	Py_INCREF(Py_None);
+	return Py_None;
 }
 

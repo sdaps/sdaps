@@ -51,10 +51,10 @@ a1_surface_write_to_png(cairo_surface_t* surface, gchar* filename);
 
 void
 thinzs_np(cairo_surface_t *surface);
+#endif
 
 void
 kfill_modified(cairo_surface_t* surface, gint k);
-#endif
 
 guint
 flood_fill(cairo_surface_t *surface, cairo_surface_t *debug_surf, gint x, gint y, gint orig_color);

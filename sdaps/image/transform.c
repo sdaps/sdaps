@@ -217,6 +217,7 @@ thinzs_np(cairo_surface_t *surface)
 
 	cairo_surface_mark_dirty(surface);
 }
+#endif
 
 
 /* The following is an adaption from gamera. It is a modified
@@ -350,7 +351,6 @@ kfill_modified(cairo_surface_t* surface, gint k)
 		}
 	}
 }
-#endif
 
 static void
 mark_pixel(cairo_surface_t *debug_surf, gint x, gint y)

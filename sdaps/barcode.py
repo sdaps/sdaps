@@ -24,6 +24,7 @@ _ = ugettext
 
 import cairo
 import zbar
+from sdaps import image
 
 
 def read_barcode(surface, matrix, x, y, width, height, btype="CODE128"):
@@ -43,6 +44,16 @@ def read_barcode(surface, matrix, x, y, width, height, btype="CODE128"):
     # be good ... hopefully
     width = width - width % 4 + 4
 
+    # a1 surface for kfill algorithm
+    a1_surface = cairo.ImageSurface(cairo.FORMAT_A1, width, height)
+
+    cr = cairo.Context(a1_surface)
+    cr.set_operator(cairo.OPERATOR_SOURCE)
+    cr.set_source_surface(surface, -x, -y)
+    cr.paint()
+
+    image.kfill_modified(a1_surface, 4)
+
     # zbar does not understand A1, but it can handle 8bit greyscale ...
     # We create an inverted A8 mask for zbar, which is the same as a greyscale
     # image.
@@ -52,10 +63,8 @@ def read_barcode(surface, matrix, x, y, width, height, btype="CODE128"):
     cr.set_source_rgba(1, 1, 1, 1)
     cr.set_operator(cairo.OPERATOR_SOURCE)
     cr.paint()
-
-    # This should do the trick
     cr.set_source_rgba(0, 0, 0, 0)
-    cr.mask_surface(surface, -x, -y)
+    cr.mask_surface(a1_surface, 0, 0)
 
     del cr
     a8_surface.flush()
@@ -84,6 +93,18 @@ def read_barcode(surface, matrix, x, y, width, height, btype="CODE128"):
         if symbol.quality > result_quality:
             result = symbol.data
             result_quality = symbol.quality
+
+
+    # The following can be used to look at the images
+    #rgb_surface = cairo.ImageSurface(cairo.FORMAT_RGB24, width, height)
+    #cr = cairo.Context(rgb_surface)
+    #cr.set_source_rgba(1, 1, 1, 1)
+    #cr.set_operator(cairo.OPERATOR_SOURCE)
+    #cr.paint()
+    #cr.set_source_rgba(0, 0, 0, 0)
+    #cr.mask_surface(a1_surface, 0, 0)
+    #rgb_surface.write_to_png("/tmp/barcode-%03i.png" % barcode)
+    #barcode += 1
 
     return result
 
