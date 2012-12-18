@@ -35,7 +35,7 @@ def stamp(survey, cmdline):
     # get number of sheets to create
     if cmdline['file'] or cmdline['random'] or cmdline['existing']:
         if not survey.defs.print_questionnaire_id:
-            log.error(_("You may not specify the number of sheets for surveys that do not print a quesitonnaire id."))
+            log.error(_("You may not specify the number of sheets for surveys that do not print a questionnaire id."))
             return 1
 
         if cmdline['existing']:
