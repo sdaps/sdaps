@@ -221,7 +221,7 @@ class MainWindow(object):
                 iter = model.iter_next(iter)
 
         # Update the toggle
-        turned_toggle.set_active(self.provider.image.rotated)
+        turned_toggle.set_active(self.provider.image.rotated or False)
         valid_toggle.set_active(self.provider.image.sheet.valid)
 
     def update_ui(self):
