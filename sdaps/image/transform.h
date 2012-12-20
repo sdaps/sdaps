@@ -93,6 +93,8 @@ count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint hei
 		width += x;
 		x = 0;
 	}
+	if ((width <= 0) || (height <= 0))
+		return 0;
 	if (x + width > img_width) {
 		width = img_width - x;
 	}
