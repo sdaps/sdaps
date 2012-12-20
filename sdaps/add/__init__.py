@@ -32,6 +32,10 @@ parser = script.subparsers.add_parser("add",
     may choose not to copy the data into the project directory. In that case
     the data will be referenced using a relative path."""))
 
+parser.add_argument('--force',
+    help=_("Force adding the images even if the page count is wrong (only use if you know what you are doing)."),
+    action="store_true",
+    default=False)
 parser.add_argument('--copy',
     help=_("Copy the files into the directory (default)"),
     dest="copy",
@@ -67,7 +71,7 @@ def add(cmdline):
         num_pages = image.get_tiff_page_count(file)
 
         c = survey.questionnaire.page_count
-        if num_pages % c != 0:
+        if num_pages % c != 0 and not cmdline['force']:
             print _('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c)
             continue
 
@@ -82,14 +86,15 @@ def add(cmdline):
         else:
             tiff = os.path.relpath(os.path.abspath(tiff), survey.survey_dir)
 
-        for i in range(num_pages / c):
+        pages = range(num_pages)
+        while len(pages) > 0:
             sheet = model.sheet.Sheet()
             survey.add_sheet(sheet)
-            for j in range(c):
+            while len(pages) > 0 and len(sheet.images) < c:
                 img = model.sheet.Image()
                 sheet.add_image(img)
                 img.filename = tiff
-                img.tiff_page = c * i + j
+                img.tiff_page = pages.pop(0)
 
         print _('Done')
 
