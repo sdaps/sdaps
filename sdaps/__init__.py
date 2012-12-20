@@ -55,6 +55,7 @@ def main(local_run=False):
     import ids
     import info
     import recognize
+    import reorder
     import report
     import reporttex
     import setup
