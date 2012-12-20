@@ -28,7 +28,7 @@ def reorder(survey):
        need to care about that here!
     """
 
-    # First, go over all sheets and figure out which ones need to reordering.
+    # First, go over all sheets and figure out which ones need reordering.
     # For every sheet that isn't quite right, we extract the images, and delete
     # the sheet.
     # The images are put into a dictionnary using the questionnaire ID.

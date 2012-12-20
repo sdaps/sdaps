@@ -241,7 +241,7 @@ class Sheet(model.buddy.Buddy):
             for image in self.obj.images:
                 if self.obj.questionnaire_id != image.questionnaire_id:
                     if not warned_multipage_not_correctly_scanned:
-                        log.warn(_("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this! You have to run a \"reorder\" step for this to properly!"))
+                        log.warn(_("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this! You have to run a \"reorder\" step for this to work properly!"))
                         warned_multipage_not_correctly_scanned = True
 
         # Try to load the global ID. If it does not exist we will get None, if
