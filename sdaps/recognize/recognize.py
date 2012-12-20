@@ -26,3 +26,8 @@ def recognize(survey):
     survey.iterate_progressbar(survey.questionnaire.recognize.recognize)
     survey.save()
 
+def identify(survey):
+    # iterate over sheets
+    survey.iterate_progressbar(survey.questionnaire.recognize.identify)
+    survey.save()
+

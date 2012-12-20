@@ -241,7 +241,7 @@ class Sheet(model.buddy.Buddy):
             for image in self.obj.images:
                 if self.obj.questionnaire_id != image.questionnaire_id:
                     if not warned_multipage_not_correctly_scanned:
-                        log.warn(_("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this!"))
+                        log.warn(_("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this! You have to run a \"reorder\" step for this to properly!"))
                         warned_multipage_not_correctly_scanned = True
 
         # Try to load the global ID. If it does not exist we will get None, if
@@ -416,13 +416,25 @@ class Questionnaire(model.buddy.Buddy):
     name = 'recognize'
     obj_class = model.questionnaire.Questionnaire
 
-    def recognize(self):
+    def identify(self, clean=True):
         # recognize image
         try:
             self.obj.sheet.recognize.recognize()
+            result = True
         except RecognitionError:
             self.obj.sheet.quality = 0
-        else:
+            result = False
+
+        # clean up
+        if clean:
+            self.obj.sheet.recognize.clean()
+
+        return result
+
+    def recognize(self):
+        # recognize image
+        res = self.identify(clean=False)
+        if res:
             # iterate over qobjects
             for qobject in self.obj.qobjects:
                 qobject.recognize.recognize()

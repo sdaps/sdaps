@@ -35,11 +35,19 @@ parser = script.subparsers.add_parser("recognize",
     recognition. It will reevaluate sheets even if "recognize" has already
     run or manual changes were made."""))
 
+parser.add_argument('--identify',
+    help=_("Only identify the page properties, but don't recognize the checkbox states."),
+    action="store_true",
+    default=False)
+
 @script.connect(parser)
 @script.logfile
 def recognize(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import recognize
-    recognize.recognize(survey)
+    if cmdline['identify']:
+        recognize.identify(survey)
+    else:
+        recognize.recognize(survey)
 
 
