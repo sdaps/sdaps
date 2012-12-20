@@ -262,7 +262,7 @@ class Sheet(model.buddy.Buddy):
         self.obj.global_id = self.obj.images[0].global_id
 
         for image in self.obj.images:
-            if self.obj.questionnaire_id != image.questionnaire_id:
+            if self.obj.global_id != image.global_id:
                 log.warn(_('%s, %i: Global ID is different to an earlier page.') % \
                          (image.filename, image.tiff_page))
 
