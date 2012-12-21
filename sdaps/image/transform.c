@@ -587,3 +587,104 @@ remove_maximum_line(cairo_surface_t *surface, cairo_surface_t *debug_surf, gdoub
 }
 
 
+/* Generic pixel routines */
+gint
+count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint height)
+{
+	guint32 *pixels;
+	guint stride;
+	guint img_width, img_height;
+
+	pixels = (guint32*) cairo_image_surface_get_data(surface);
+	img_width = cairo_image_surface_get_width(surface);
+	img_height = cairo_image_surface_get_height(surface);
+	stride = cairo_image_surface_get_stride(surface);
+
+	if (y < 0) {
+		height += y;
+		y = 0;
+	}
+	if (x < 0) {
+		width += x;
+		x = 0;
+	}
+	if ((width <= 0) || (height <= 0))
+		return 0;
+	if (x + width > img_width) {
+		width = img_width - x;
+	}
+	if (y + height > img_height) {
+		height = img_height - y;
+	}
+
+	return count_black_pixel_unchecked(pixels, stride, x, y, width, height);
+}
+
+gint
+count_black_pixel_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height)
+{
+	static guint8 bitcount[256];
+	static table_initialized = FALSE;
+	guint x_pos, y_pos;
+	guint black_pixel = 0;
+
+	if (G_UNLIKELY(!table_initialized)) {
+		int i;
+
+		for (i = 0; i < 256; i++) {
+			int j;
+			bitcount[i] = 0;
+			for (j = i; j; j = j >> 1) {
+				bitcount[i] += j & 0x1;
+			}
+		}
+		table_initialized = TRUE;
+	}
+
+	for (y_pos = y; y_pos < y + height; y_pos++) {
+#define COUNT_WORD(x) bitcount[(x) & 0xff] + bitcount[((x) >> 8) & 0xff] + bitcount[((x) >> 16) & 0xff] + bitcount[((x) >> 24) & 0xff]
+
+		guint32 start_mask;
+		guint32 end_mask;
+		int start;
+		int end;
+		int pos;
+
+#if G_BYTE_ORDER == G_BIG_ENDIAN
+		start_mask = (1 << (x & 0x1f)) - 1;
+		end_mask = -(1 << ((x + width) & 0x1f));
+#else
+		start_mask = -(1 << (x & 0x1f));
+		end_mask = (1 << ((x + width) & 0x1f)) - 1;
+#endif
+		start = x >> 5;
+		end = (x + width) >> 5;
+
+		if (start == end) {
+			black_pixel += COUNT_WORD(pixels[start + y_pos * stride / 4] & start_mask & end_mask);
+		} else {
+			black_pixel += COUNT_WORD(pixels[start + y_pos * stride / 4] & start_mask);
+			for (pos = start + 1; pos < end; pos++) {
+				black_pixel += COUNT_WORD(pixels[pos + y_pos * stride / 4]);
+			}
+			black_pixel += COUNT_WORD(pixels[end + y_pos * stride / 4] & end_mask);
+		}
+
+#undef COUNT_WORD
+	}
+
+	return black_pixel;
+}
+
+void
+set_pixels_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height, int value)
+{
+	guint x_pos, y_pos;
+
+	for (y_pos = y; y_pos < y + height; y_pos++) {
+		for (x_pos = x; x_pos < x + width; x_pos++) {
+			SET_PIXEL(pixels, stride, x_pos, y_pos, value);
+		}
+	}
+}
+
