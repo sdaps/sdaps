@@ -272,7 +272,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
                 draw_corner_marks(survey, canvas)
                 draw_corner_boxes(survey, canvas, j)
                 if not survey.defs.duplex or j % 2:
-                    if questionnaire_ids:
+                    if questionnaire_ids is not None:
                         if j == 1 or questionnaire_length == 1:
                             # Only read a new ID for the first page.
                             id = questionnaire_ids.pop(0)
@@ -285,7 +285,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
                 draw_corner_marks(survey, canvas)
 
                 if not survey.defs.duplex or j % 2:
-                    if questionnaire_ids:
+                    if questionnaire_ids is not None:
                         if j == 1 or questionnaire_length == 1:
                             # Only read a new ID for the first page.
                             id = questionnaire_ids.pop(0)
