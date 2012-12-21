@@ -39,6 +39,10 @@ def reorder(survey):
         for image in sheet.images:
             if sheet.questionnaire_id != image.questionnaire_id:
                 broken = True
+        # Also consider incomplete sets broken, so that hopefully the will
+        # be filled up with the correct page.
+        if len(sheet.images) != survey.questionnaire.page_count:
+            broken = True
 
         if broken:
             # Drop from the list of sheets
