@@ -37,21 +37,25 @@ _ = ugettext
 def get_page_rotation(image):
     # Returns page rotation or "None" if it cannot be retrieved
 
-    rotated, page_number = get_pagenumber_and_rotation(image)
+    res = get_pagenumber_and_rotation(image)
+    if res is None:
+        return None
 
-    return rotated
+    return res[0]
 
 
 def get_page_number(image):
     # Returns page number or "None" if it cannot be retrieved
     # Returns page number rotation or "None" if it cannot be retrieved
 
-    rotated, page_number = get_pagenumber_and_rotation(image)
-
-    if rotated:
-        # This may never happen
+    res = get_pagenumber_and_rotation(image)
+    if res is None:
+        return None
+    # The page may not be rotated at this point
+    if res[0]:
         raise RecognitionError
-    return page_number
+
+    return res[1]
 
 
 def get_survey_id(image):
