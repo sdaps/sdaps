@@ -191,6 +191,8 @@ class Sheet(model.buddy.Buddy):
                 try:
                     if not duplex_mode or (image.page_number is not None and image.page_number % 2 == 0):
                         image.recognize.calculate_survey_id()
+                    else:
+                        image.survey_id = None
                 except RecognitionError:
                     log.warn(_('%s, %i: Could not read survey ID, but should be able to.') %
                              (image.filename, image.tiff_page))
