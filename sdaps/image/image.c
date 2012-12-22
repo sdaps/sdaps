@@ -743,6 +743,14 @@ calculate_matrix(cairo_surface_t *surface,
 	gdouble length_squared;
 	gint search_distance;
 	cairo_matrix_t *result;
+	gint found_corners = 4;
+	enum {
+		CORNER_NONE,
+		CORNER_TOP_LEFT,
+		CORNER_TOP_RIGHT,
+		CORNER_BOTTOM_LEFT,
+		CORNER_BOTTOM_RIGHT
+	} missing_corner = CORNER_NONE;
 
 	line_width = transform_distance_to_pixel(matrix, sdaps_line_width);
 	line_length = transform_distance_to_pixel(matrix, sdaps_line_min_length);
@@ -752,18 +760,47 @@ calculate_matrix(cairo_surface_t *surface,
 	width = cairo_image_surface_get_width (surface);
 	height = cairo_image_surface_get_height (surface);
 
-	if (!find_corner_marker(surface, 0, 0, 1, 1, search_distance, line_width, line_length, line_max_length, &x_topleft, &y_topleft))
-		return NULL;
-	if (!find_corner_marker(surface, width - 1, 0, -1, 1, search_distance, line_width, line_length, line_max_length, &x_topright, &y_topright))
-		return NULL;
-	if (!find_corner_marker(surface, 0, height - 1, 1, -1, search_distance, line_width, line_length, line_max_length, &x_bottomleft, &y_bottomleft))
-		return NULL;
-	if (!find_corner_marker(surface, width - 1, height - 1,-1, -1, search_distance, line_width, line_length, line_max_length, &x_bottomright, &y_bottomright))
+	if (!find_corner_marker(surface, 0, 0, 1, 1, search_distance, line_width, line_length, line_max_length, &x_topleft, &y_topleft)) {
+		found_corners -= 1;
+		missing_corner = CORNER_TOP_LEFT;
+	}
+	if (!find_corner_marker(surface, width - 1, 0, -1, 1, search_distance, line_width, line_length, line_max_length, &x_topright, &y_topright)) {
+		found_corners -= 1;
+		missing_corner = CORNER_TOP_RIGHT;
+	}
+	if (!find_corner_marker(surface, 0, height - 1, 1, -1, search_distance, line_width, line_length, line_max_length, &x_bottomleft, &y_bottomleft)) {
+		found_corners -= 1;
+		missing_corner = CORNER_BOTTOM_LEFT;
+	}
+	if (!find_corner_marker(surface, width - 1, height - 1,-1, -1, search_distance, line_width, line_length, line_max_length, &x_bottomright, &y_bottomright)) {
+		found_corners -= 1;
+		missing_corner = CORNER_BOTTOM_RIGHT;
+	}
+
+	if (found_corners < 3)
 		return NULL;
 
 	/* Corners are known, now calculate the matrix. */
-	
+
 	result = g_malloc(sizeof(cairo_matrix_t));
+
+	/* Simply calculate the missing corner, that seems easier to write down. */
+	if (missing_corner == CORNER_TOP_LEFT) {
+		x_topleft = x_bottomleft - x_bottomright + x_topright;
+		y_topleft = y_topright - y_bottomright + y_bottomleft;
+	}
+	if (missing_corner == CORNER_TOP_RIGHT) {
+		x_topright = x_bottomright - x_bottomleft + x_topleft;
+		y_topright = y_topleft - y_bottomleft + y_bottomright;
+	}
+	if (missing_corner == CORNER_BOTTOM_LEFT) {
+		x_bottomleft = x_topleft - x_topright + x_bottomright;
+		y_bottomleft = y_bottomright - y_topright + y_topleft;
+	}
+	if (missing_corner == CORNER_BOTTOM_RIGHT) {
+		x_bottomright = x_topright - x_topleft + x_bottomleft;
+		y_bottomright = y_bottomleft - y_topleft + y_topright;
+	}
 
 	/* X-Axis *********************/
 	dx = ((x_topright - x_topleft) + (x_bottomright - x_bottomleft)) / 2.0;
