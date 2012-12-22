@@ -35,7 +35,7 @@ def stamp(survey, cmdline):
     # get number of sheets to create
     if cmdline['file'] or cmdline['random'] or cmdline['existing']:
         if not survey.defs.print_questionnaire_id:
-            log.error(_("You may not specify the number of sheets for surveys that do not print a questionnaire id."))
+            log.error(_("You may not specify the number of sheets for this survey. All questionnaires will be identical as the survey has been configured to not use questionnaire IDs for each sheet."))
             return 1
 
         if cmdline['existing']:
@@ -73,7 +73,7 @@ def stamp(survey, cmdline):
             questionnaire_ids = questionnaire_ids[:cmdline['random']]
     else:
         if survey.defs.print_questionnaire_id:
-            log.error(_("Questionnaire IDs are required, use --random to create random ones or specify some using --file."))
+            log.error(_("This survey has been configured to use questionnaire IDs. Each questionnaire will be unique. You need to use on of the options to add new IDs or use the existing ones."))
             return 1
 
         questionnaire_ids = None
