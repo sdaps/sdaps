@@ -36,7 +36,7 @@ import sdapsfileparser
 from sdaps.setup import additionalparser
 
 
-def write_latex_override_file(survey):
+def write_latex_override_file(survey, draft=False):
     # Create the sdaps.opt file.
     latex_override = open(survey.path('sdaps.opt'), 'w')
     latex_override.write('% This file exists to force the latex document into "final" mode.\n')
@@ -46,13 +46,17 @@ def write_latex_override_file(survey):
     latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2 ** 16)))
     latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2 ** 16)))
     latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
-    latex_override.write('% We turn of draft mode if questionnaire IDs are not printed.\n')
-    latex_override.write('% Otherwise we turn it on explicitly so that noboday has wrong ideas.\n')
-    latex_override.write('\\if@PrintQuestionnaireId\n')
-    latex_override.write('\\@sdaps@drafttrue\n')
-    latex_override.write('\\else\n')
-    latex_override.write('\\@sdaps@draftfalse\n')
-    latex_override.write('\\fi\n')
+    if not draft:
+        latex_override.write('% We turn of draft mode if questionnaire IDs are not printed.\n')
+        latex_override.write('% Otherwise we turn it on explicitly so that noboday has wrong ideas.\n')
+        latex_override.write('\\if@PrintQuestionnaireId\n')
+        latex_override.write('\\@sdaps@drafttrue\n')
+        latex_override.write('\\else\n')
+        latex_override.write('\\@sdaps@draftfalse\n')
+        latex_override.write('\\fi\n')
+    else:
+        latex_override.write('% Turn on draft mode on first compile (this should only be temporary).\n')
+        latex_override.write('\\@sdaps@drafttrue\n')
     latex_override.close()
 
 
@@ -83,7 +87,7 @@ def setup(survey, cmdline):
     try:
         shutil.copy(questionnaire_tex, survey.path('questionnaire.tex'))
 
-        write_latex_override_file(survey)
+        write_latex_override_file(survey, draft=True)
 
         # Copy class and dictionary files
         if paths.local_run:
