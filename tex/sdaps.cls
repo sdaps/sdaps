@@ -218,8 +218,6 @@
   \ifcat_\ifnum0<0#1 _\else A\fi
 }
 
-\def\forceLR#1{\ifx\textLR\undefined#1\else\textLR{#1}\fi}
-
 \def\@sdaps@STAMP{%
   \begingroup
     \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
@@ -699,21 +697,23 @@
 }
 
 \providecommand{\checkboxNoStar}{%
-  \forceLR{%
-  \mbox{\label{checkbox\thecheckboxnum}\pgfsys@markposition{checkbox\thecheckboxnum}%
-  \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
-  \pgfsys@getposition{checkbox\thecheckboxnum}{\@sdaps@checkboxpos}%
-  \pgfpointadd{\@sdaps@checkboxpos}{%
-    \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0pt}{0.5\boxsize-0.5em+0.5\elementlinewidth + 0.5\elementlinewidth+\boxsize}}%
-  }%
-  \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
-  \pgfpoint{\boxsize+\elementlinewidth}{\boxsize+\elementlinewidth}%
-  \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-  \protectedimmediatewrite\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width}%
-  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
+  \mbox{%
+  \label{checkbox\thecheckboxnum}%
+  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth,remember picture]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
-  }\addtocounter{checkboxnum}{1}}%
-}}
+%
+    \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
+    \pgfsys@getposition{\pgfpictureid}{\@sdaps@checkboxpos}%
+    \pgfpointadd{\@sdaps@checkboxpos}{%
+      \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{0.5\boxsize-0.5em+0.5\elementlinewidth + \boxsize+\elementlinewidth}}%
+    }%
+    \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
+    \pgfpoint{\boxsize+\elementlinewidth}{\boxsize+\elementlinewidth}%
+    \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
+    \protectedimmediatewrite\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width}%
+  }%
+  \addtocounter{checkboxnum}{1}}%
+}
 \providecommand{\checkboxStar}{%
   \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
     \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
