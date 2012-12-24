@@ -71,21 +71,15 @@ while images:
 
     sheet.recognize.recognize()
 
-    if sheet.survey_id is None:
-        print "Nothing recognized"
-        for img in sheet.images:
-            print img.orig_name, img.tiff_page
-        continue
-
-    print 'Survey-ID:', sheet.survey_id
-    print 'Global-ID:', sheet.global_id
-    print 'Questionnaire-ID:', sheet.questionnaire_id
     for img in sheet.images:
         print img.orig_name, img.tiff_page
         print '\tPage:', img.page_number
         print '\tRotated:', img.rotated
-        print '\tMatrix:', img.raw_matrix
-    print
+        print '\tMatrix (px to mm):', img.raw_matrix
+        print '\tSurvey-ID:', sheet.survey_id
+        print '\tGlobal-ID:', sheet.global_id
+        print '\tQuestionnaire-ID:', sheet.questionnaire_id
+        print
 
 # And, we simply quit, ie. we don't save the survey
 
