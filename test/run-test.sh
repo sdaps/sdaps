@@ -128,3 +128,13 @@ rm -rf "$PROJECT"
 # And finally, create a report with the result
 "$SDAPS" "$PROJECT" report_tex
 
+
+###########################################################
+# Compare info files
+###########################################################
+
+for i in data/info_files/*; do
+  name=`basename "$i"`
+  diff "$i" "projects/$name/info"
+done
+

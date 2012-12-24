@@ -1,0 +1,22 @@
+[sdaps]
+title = Testfragebogen \textlatin  {\LaTeX  }
+global_id = SDAPS
+
+[info]
+Umfrage = Testfragebogen
+Author = Someone
+
+[defs]
+# These values are not read back, they exist for information only!
+paper_width = 210.0
+paper_height = 297.0
+print_questionnaire_id = True
+print_survey_id = True
+style = code128
+duplex = True
+
+[questionnaire]
+# These values are not read back, they exist for information only!
+page_count = 2
+survey_id = 168693827
+
