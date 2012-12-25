@@ -53,10 +53,7 @@ class Image(model.buddy.Buddy):
             return cairo.Matrix(*self.obj.raw_matrix)
         elif fallback:
             # Return a dummy matrix ... that maps the image to the page size
-            surface = self.obj.surface.load_uncached()
-
-            width = surface.get_width()
-            height = surface.get_height()
+            width, height = self.obj.surface.get_size()
 
             matrix = cairo.Matrix()
 

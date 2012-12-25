@@ -55,6 +55,14 @@ class Image(model.buddy.Buddy):
                 self.obj.tiff_page,
                 self.obj.rotated)
 
+    def get_size(self):
+        # Load uncached does not check the rgb surface
+        if hasattr(self, 'surface_rgb'):
+            s = self.surface_rgb
+        else:
+            s = self.load_uncached()
+        return s.get_width(), s.get_height()
+
     def clean(self):
         if hasattr(self, 'surface'):
             del self.surface
