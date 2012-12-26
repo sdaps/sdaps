@@ -705,7 +705,7 @@
     \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
     \pgfsys@getposition{\pgfpictureid}{\@sdaps@checkboxpos}%
     \pgfpointadd{\@sdaps@checkboxpos}{%
-      \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{0.5\boxsize-0.5em+0.5\elementlinewidth + \boxsize+\elementlinewidth}}%
+      \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{-{max(0ex, 0.5\boxsize-1ex+0.5\elementlinewidth)} + \boxsize + 0.5\elementlinewidth}}%
     }%
     \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
     \pgfpoint{\boxsize+\elementlinewidth}{\boxsize+\elementlinewidth}%
