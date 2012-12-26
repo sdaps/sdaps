@@ -699,8 +699,8 @@
 \providecommand{\checkboxNoStar}{%
   \mbox{%
   \label{checkbox\thecheckboxnum}%
-  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth,remember picture]{%
-    \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
+  \tikz[baseline={max(0ex, 0.5\boxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+    \draw[line width=\elementlinewidth] (0.5\elementlinewidth, 0) rectangle +(\boxsize, \boxsize);%
 %
     \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
     \pgfsys@getposition{\pgfpictureid}{\@sdaps@checkboxpos}%
