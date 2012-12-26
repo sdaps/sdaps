@@ -776,14 +776,14 @@
   \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
   \pgfsys@getposition{textboxtop\thetextboxnum}{\@sdaps@textboxtoppos}%
   \pgfpointadd{\@sdaps@textboxtoppos}{%
-    \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0.5\elementlinewidth}{-0.5\elementlinewidth}}%
+    \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{0}}%
   }%
   \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
 %
   \pgfsys@getposition{textboxbottom\thetextboxnum}{\@sdaps@textboxbottompos}%
   \pgfpointadd{\@sdaps@textboxtoppos}{%
     \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxbottompos}}{
-      \pgfpoint{\linewidth-\elementlinewidth}{-\elementlinewidth}%
+      \pgfpoint{\linewidth}{0}%
     }%
   }%
   \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
@@ -999,14 +999,14 @@
       \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
       \pgfsys@getposition{textboxleft\thetextboxnum}{\@sdaps@textboxleftpos}%
       \pgfpointadd{\@sdaps@textboxleftpos}{%
-        \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0.5\elementlinewidth}{\@tempdimruleheight-0.5\elementlinewidth}}%
+        \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{\@tempdimruleheight}}%
       }%
       \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
       %
       \pgfsys@getposition{textboxright\thetextboxnum}{\@sdaps@textboxrightpos}%
       \pgfpointadd{\@sdaps@textboxrightpos}{%
         \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxleftpos}}{
-          \pgfpoint{-\elementlinewidth}{#1+\elementlinewidth}%
+          \pgfpoint{0}{#1+2\elementlinewidth}%
         }%
       }%
       \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
