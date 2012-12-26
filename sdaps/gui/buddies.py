@@ -22,7 +22,7 @@ from sdaps import model
 from sdaps import defs
 
 
-LINE_WIDTH = 0.2
+LINE_WIDTH = 25.4/72
 MIN_FREETEXT_SIZE = 4.0
 
 _LEFT = 1
