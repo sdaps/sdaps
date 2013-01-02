@@ -49,6 +49,7 @@ analyse the scanned data, and create a report.
                 'sdaps.info',
                 'sdaps.model',
                 'sdaps.recognize',
+                'sdaps.reorder',
                 'sdaps.stamp',
                 'sdaps.report',
                 'sdaps.reporttex',
