@@ -56,12 +56,12 @@ def create_stamp_pdf(survey, questionnaire_ids):
 
         print _("Running %s now twice to generate the stamped questionnaire.") % defs.latex_engine
         os.environ['TEXINPUTS'] = ':' + os.path.abspath(survey.path())
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine,
                          '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'questionnaire.tex')],
                         cwd=tmpdir)
         # And again
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine,
                          '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'questionnaire.tex')],
                         cwd=tmpdir)
