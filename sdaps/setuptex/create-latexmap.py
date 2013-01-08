@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 
 u"""
 This file generates the latexmap.py file which is needed
