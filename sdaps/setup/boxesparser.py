@@ -221,13 +221,17 @@ def parse(questionnaire_pdf):
                         _width = x_max - x_min
                         _height = y_max - y_min
 
-                        if _width == 1:
+                        # The tolerance needs to be this high. At least
+                        # LO 3.5.1.2 on MacOSX is 0.1 pt off for one of the
+                        # border thicknesses.
+                        if abs(_width - 1) < 0.1001:
                             if abs(_height - box.height * mm) < 0.0001:
                                 box_linecount += 1
-                        elif _height == 1:
+                        elif abs(_height - 1) < 0.1001:
                             if abs(_width - box.width * mm) < 0.0001:
                                 box_linecount += 1
                         else:
+                            print "outa here"
                             box = None
                             box_linecount = 0
 
