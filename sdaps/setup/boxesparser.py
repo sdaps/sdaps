@@ -231,7 +231,6 @@ def parse(questionnaire_pdf):
                             if abs(_width - box.width * mm) < 0.0001:
                                 box_linecount += 1
                         else:
-                            print "outa here"
                             box = None
                             box_linecount = 0
 
