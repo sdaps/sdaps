@@ -33,6 +33,10 @@ class Image(model.buddy.Buddy):
     obj_class = model.sheet.Image
 
     def load(self):
+        """Load the A1 cairo surface, which is accessible using the surface
+        attribute.
+        :py:meth`clean` needs to be called when the surface is
+        no longer needed."""
         self.surface = image.get_a1_from_tiff(
             self.obj.sheet.survey.path(self.obj.filename),
             self.obj.tiff_page,
@@ -40,6 +44,10 @@ class Image(model.buddy.Buddy):
         )
 
     def load_rgb(self):
+        """Load the RGB24 cairo surface, which is accessible using the
+        surface_rgb attribute.
+        :py:meth:`clean` needs to be called when the surface is
+        no longer needed."""
         self.surface_rgb = image.get_rgb24_from_tiff(
             self.obj.sheet.survey.path(self.obj.filename),
             self.obj.tiff_page,
@@ -47,6 +55,8 @@ class Image(model.buddy.Buddy):
         )
 
     def load_uncached(self):
+        """Load the A1 surface and directly return it. It will not be cached,
+        so using this function may result repeated reloads from file."""
         if hasattr(self, 'surface'):
             return self.surface
         else:
@@ -56,6 +66,9 @@ class Image(model.buddy.Buddy):
                 self.obj.rotated)
 
     def get_size(self):
+        """Read the size of the surface. If the surface is already loaded, it
+        will read the size from that. If it is not loaded, an uncached load will
+        be done, which may be rather slow."""
         # Load uncached does not check the rgb surface
         if hasattr(self, 'surface_rgb'):
             s = self.surface_rgb
@@ -64,6 +77,8 @@ class Image(model.buddy.Buddy):
         return s.get_width(), s.get_height()
 
     def clean(self):
+        """Call when you are done handling a specific sheet to free any cached
+        cairo surface."""
         if hasattr(self, 'surface'):
             del self.surface
         if hasattr(self, 'surface_rgb'):

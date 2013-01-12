@@ -18,6 +18,11 @@
 
 u'''
 This module alters sys.stdout and sys.stderr to copy all output into a logfile.
+
+Note that some magic is done when the output stream is not a tty. In that
+case the progress bar and messages done using the :py:meth:`interactive`
+function will be suppressed. The reason to do this is to allow commands to
+output data to `sys.stdout`.
 '''
 
 import sys

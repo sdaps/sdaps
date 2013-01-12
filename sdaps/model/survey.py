@@ -93,6 +93,10 @@ class Survey(object):
         self.index = len(self.sheets) - 1
 
     def calculate_survey_id(self):
+        u"""Calculate the unique survey ID from the surveys settings and boxes.
+
+        The ID only includes the boxes positions, which means that simple typo
+        fixes will not change the ID most of the time."""
         import hashlib
         md5 = hashlib.new('md5')
 

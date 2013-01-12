@@ -111,6 +111,7 @@ Subpackages
 .. toctree::
 
     sdaps.add
+    sdaps.annotate
     sdaps.boxgallery
     sdaps.cover
     sdaps.csvdata
@@ -120,6 +121,7 @@ Subpackages
     sdaps.info
     sdaps.model
     sdaps.recognize
+    sdaps.reorder
     sdaps.report
     sdaps.reporttex
     sdaps.setup

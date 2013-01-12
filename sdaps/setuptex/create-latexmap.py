@@ -29,6 +29,7 @@ for match in regexp.finditer(data):
 
 output.write('''#This file is auto generated from the latex unicode mapping.
 
+#: Mapping from LaTeX commands to unicode characters.
 mapping = {
 ''')
 

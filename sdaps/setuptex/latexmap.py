@@ -1,5 +1,6 @@
 #This file is auto generated from the latex unicode mapping.
 
+#: Mapping from LaTeX commands to unicode characters.
 mapping = {
     u'\\textexclamdown': u'\u00A1',
     u'\\textcent': u'\u00A2',

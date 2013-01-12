@@ -25,7 +25,9 @@ page. After loading the(cairo) matrixes can be accessed via two functions:
 
 The return value of mm_to_px() can be used to convert milimeter values to pixel
 on the scanned page. px_to_mm() returns the inverse matrix to convert on page
-pixels to milimiter values of the original document.
+pixels to millimeter values of the original document.
+
+Both the millimeter and pixel spaces start at the top left corner of the page.
 
 Warning: The correct values are only available after "recognize" has been run!
 """
@@ -43,12 +45,18 @@ class Image(model.buddy.Buddy):
     obj_class = model.sheet.Image
 
     def mm_to_px(self, fallback=True):
+        u"""Return the matrix to convert mm to pixel space. If no matrix
+        information is available and `fallback` is set to `True` then a matrix
+        will be calculated from the size of the image."""
         matrix = self.px_to_mm(fallback)
         if matrix is not None:
             matrix.invert()
         return matrix
 
     def px_to_mm(self, fallback=True):
+        u"""Return the matrix to convert pixel to mm space. If no matrix
+        information is available and `fallback` is set to `True` then a matrix
+        will be calculated from the size of the image."""
         if self.obj.raw_matrix is not None:
             return cairo.Matrix(*self.obj.raw_matrix)
         elif fallback:
@@ -65,9 +73,13 @@ class Image(model.buddy.Buddy):
             return None
 
     def matrix_valid(self):
+        u"""Checks whether the proper transformation matrix is known."""
         return self.obj.raw_matrix != None
 
     def set_px_to_mm(self, matrix):
+        u"""Set the stored matrix for the image. You need to pass in the pixel
+        to mm space conversion matrix. Unsetting can be done by passing `None`.
+        """
         if matrix is not None:
             self.obj.raw_matrix = tuple(matrix)
         else:

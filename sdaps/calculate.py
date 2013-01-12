@@ -16,6 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+u"""This module contains buddy objects to calculate statistics from the data.
+
+It is possible to search for large changes between different filters by calling
+the "reference" function after a calculation. After this the significant boolean
+will be set for new calculations (with different filters) if there is a large
+deviation from the old value."""
+
 import math
 
 from sdaps import model

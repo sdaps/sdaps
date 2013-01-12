@@ -45,6 +45,8 @@ def init(local_run=False):
     paths.init(local_run, __path__[0])
 
 def main(local_run=False):
+    u"""The main SDAPS interface routine. It initilizes all modules, parses
+    the command line and passes control over to the selected function."""
     init(local_run)
 
     import add
@@ -70,7 +72,6 @@ def main(local_run=False):
     log.interactive('-'*78 + '\n')
 
     cmdline['_func'](cmdline)
-
 
 
 

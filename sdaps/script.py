@@ -63,6 +63,17 @@ def doc(docstring):
     return decorator
 
 def connect(parser, name=None):
+    u'''decorator to connect an already prepared parser to call into a function.
+
+    This function initilizes the _func and _name properties for the parser to
+    the given function, and its name. It also sets the functions docstring to
+    be the parsers help. This way the help string appears in the sphinx
+    documentation for the function.
+
+    >>> @script.connect(parser)
+    >>> def add(cmdline):
+    >>>     pass
+    '''
 
     def decorator(function):
         # Use the function name as a fallback, it should be the same usually.
