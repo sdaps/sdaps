@@ -50,6 +50,7 @@ def main(local_run=False):
     init(local_run)
 
     import add
+    import annotate
     import boxgallery
     import cover
     import csvdata

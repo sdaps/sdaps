@@ -32,6 +32,7 @@ Requirements
  * python development files
  * pkg-config
  * python-zbar for "code128" style.
+ * Poppler (with gobject introspection) for the "annotate" debug utility
 
 Installation
 ============

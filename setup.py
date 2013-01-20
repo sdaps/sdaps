@@ -40,6 +40,7 @@ analyse the scanned data, and create a report.
 """,
       packages=['sdaps',
                 'sdaps.add',
+                'sdaps.annotate',
                 'sdaps.boxgallery',
                 'sdaps.cover',
                 'sdaps.csvdata',
