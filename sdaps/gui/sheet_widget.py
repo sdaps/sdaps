@@ -69,6 +69,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         # Cancel any dragging operation
         self._edge_drag_active = False
         self._update_matrices()
+        self.queue_resize()
         self.queue_draw()
 
     def _update_matrices(self):
