@@ -95,8 +95,10 @@ get_a1_from_tiff (char *filename, gint page, gboolean rotated)
 	if (tiff == NULL)
 		return NULL;
 
-	if (!TIFFSetDirectory(tiff, page))
+	if (!TIFFSetDirectory(tiff, page)) {
+		TIFFClose(tiff);
 		return NULL;
+	}
 
 	TIFFGetField(tiff, TIFFTAG_IMAGEWIDTH, &width);
 	TIFFGetField(tiff, TIFFTAG_IMAGELENGTH, &height);
@@ -150,8 +152,10 @@ get_rgb24_from_tiff (char *filename, gint page, gboolean rotated)
 	if (tiff == NULL)
 		return NULL;
 
-	if (!TIFFSetDirectory(tiff, page))
+	if (!TIFFSetDirectory(tiff, page)) {
+		TIFFClose(tiff);
 		return NULL;
+	}
 
 	TIFFGetField(tiff, TIFFTAG_IMAGEWIDTH, &width);
 	TIFFGetField(tiff, TIFFTAG_IMAGELENGTH, &height);
