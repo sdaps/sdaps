@@ -410,7 +410,7 @@ class Image(model.buddy.Buddy):
 
     @property
     def matrix(self):
-        return self.obj.matrix.mm_to_px()
+        return self.obj.matrix.mm_to_px(fallback=False)
 
 class Questionnaire(model.buddy.Buddy):
 
