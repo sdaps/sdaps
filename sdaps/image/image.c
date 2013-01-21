@@ -208,6 +208,44 @@ get_tiff_page_count (char *filename)
 }
 
 gboolean
+get_tiff_resolution (char *filename, gint page, gdouble *xresolution, gdouble *yresolution)
+{
+	TIFF* tiff;
+	gint pages;
+	float xres = 0.0;
+	float yres = 0.0;
+	uint16 unit = RESUNIT_NONE;
+
+	tiff = TIFFOpen(filename, "r");
+	if (tiff == NULL)
+		return FALSE;
+
+	if (!TIFFSetDirectory(tiff, page)) {
+		TIFFClose(tiff);
+		return FALSE;
+	}
+
+	TIFFGetField(tiff, TIFFTAG_XRESOLUTION, &xres);
+	TIFFGetField(tiff, TIFFTAG_YRESOLUTION, &yres);
+	TIFFGetField(tiff, TIFFTAG_RESOLUTIONUNIT, &unit);
+
+	if (unit == RESUNIT_CENTIMETER) {
+		*xresolution = xres / 10.0;
+		*yresolution = yres / 10.0;
+	} else if (unit == RESUNIT_INCH) {
+		*xresolution = xres / 25.4;
+		*yresolution = yres / 25.4;
+	} else {
+		/* Nothing good, pass back zeros */
+		*xresolution = 0;
+		*yresolution = 0;
+	}
+
+	TIFFClose(tiff);
+	return TRUE;
+}
+
+gboolean
 check_tiff_monochrome (char *filename)
 {
 	TIFF* tiff;

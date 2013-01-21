@@ -34,8 +34,9 @@ Warning: The correct values are only available after "recognize" has been run!
 
 import cairo
 
-import model
-import surface
+from sdaps import model
+from sdaps import surface
+from sdaps import image
 
 
 class Image(model.buddy.Buddy):
@@ -62,11 +63,25 @@ class Image(model.buddy.Buddy):
         elif fallback:
             # Return a dummy matrix ... that maps the image to the page size
             width, height = self.obj.surface.get_size()
+            xres, yres = image.get_tiff_resolution(
+                self.obj.sheet.survey.path(self.obj.filename),
+                self.obj.tiff_page)
+
+            if xres != 0 and yres != 0:
+                xres = width / self.obj.sheet.survey.defs.paper_width
+                yres = height / self.obj.sheet.survey.defs.paper_height
+
+            scan_width = width / xres
+            scan_height = height / yres
+
+            dx = (scan_width - self.obj.sheet.survey.defs.paper_width) / 2.0
+            dy = (scan_height - self.obj.sheet.survey.defs.paper_height) / 2.0
 
             matrix = cairo.Matrix()
 
-            matrix.scale(1.0 / width, 1.0 / height)
-            matrix.scale(self.obj.sheet.survey.defs.paper_width, self.obj.sheet.survey.defs.paper_height)
+            # Center the image
+            matrix.translate(dx, dy)
+            matrix.scale(1.0 / xres, 1.0 / yres)
 
             return matrix
         else:

@@ -34,6 +34,7 @@ static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args);
 static PyObject *enable_debug_surface_creation(PyObject *self, PyObject *args);
 static PyObject *get_debug_surface(PyObject *self, PyObject *args);
 static PyObject *wrap_get_tiff_page_count(PyObject *self, PyObject *args);
+static PyObject *wrap_get_tiff_resolution(PyObject *self, PyObject *args);
 static PyObject *wrap_check_tiff_monochrome(PyObject *self, PyObject *args);
 static PyObject *wrap_kfill_modified(PyObject *self, PyObject *args);
 
@@ -43,6 +44,7 @@ static PyMethodDef EvaluateMethods[] = {
 	{"get_a1_from_tiff",  wrap_get_a1_from_tiff, METH_VARARGS, "Creates a cairo A1 surface from a monochrome tiff file."},
 	{"get_rgb24_from_tiff",  wrap_get_rgb24_from_tiff, METH_VARARGS, "Creates a cairo RGB24 surface from a (monochrome) tiff file."},
 	{"get_tiff_page_count",  wrap_get_tiff_page_count, METH_VARARGS, "Returns the number of pages a multipage tiff contains."},
+	{"get_tiff_resolution", wrap_get_tiff_resolution, METH_VARARGS, "Retrieves the resolution from the given page of the tiff file (in dots per mm)."},
 	{"check_tiff_monochrome",  wrap_check_tiff_monochrome, METH_VARARGS, "Check whether all pages of the tiff are monochrome."},
 	{"calculate_matrix",  wrap_calculate_matrix, METH_VARARGS, "Calculates the transformation matrix transform the image into the survey coordinate system."},
 	{"calculate_correction_matrix",  wrap_calculate_correction_matrix, METH_VARARGS, "Calculates a corrected transformation matrix for the box at the given position (argument should be the bounding box)."},
@@ -141,6 +143,24 @@ wrap_get_tiff_page_count(PyObject *self, PyObject *args)
 		return Py_BuildValue("i", pages);
 	} else {
 		PyErr_SetString(PyExc_AssertionError, "Could not retrieve the page count of the tiff image.");
+		return NULL;
+	}
+}
+
+static PyObject *
+wrap_get_tiff_resolution(PyObject *self, PyObject *args)
+{
+	char *filename = NULL;
+	gint page;
+	gdouble xresolution, yresolution;
+
+	if (!PyArg_ParseTuple(args, "si", &filename, &page))
+		return NULL;
+
+	if (get_tiff_resolution(filename, page, &xresolution, &yresolution)) {
+		return Py_BuildValue("dd", xresolution, yresolution);
+	} else {
+		PyErr_SetString(PyExc_AssertionError, "Could not retrieve the resolution for the tiff file and page.");
 		return NULL;
 	}
 }

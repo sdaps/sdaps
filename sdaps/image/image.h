@@ -44,6 +44,9 @@ gint
 get_tiff_page_count (char *filename);
 
 gboolean
+get_tiff_resolution (char *filename, gint page, gdouble *xresolution, gdouble *yresolution);
+
+gboolean
 check_tiff_monochrome (char *filename);
 
 cairo_matrix_t*
