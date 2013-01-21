@@ -40,7 +40,7 @@ class Image(model.buddy.Buddy):
         self.surface = image.get_a1_from_tiff(
             self.obj.sheet.survey.path(self.obj.filename),
             self.obj.tiff_page,
-            self.obj.rotated
+            True if self.obj.rotated else False
         )
 
     def load_rgb(self):
@@ -51,7 +51,7 @@ class Image(model.buddy.Buddy):
         self.surface_rgb = image.get_rgb24_from_tiff(
             self.obj.sheet.survey.path(self.obj.filename),
             self.obj.tiff_page,
-            self.obj.rotated
+            True if self.obj.rotated else False
         )
 
     def load_uncached(self):
@@ -63,7 +63,7 @@ class Image(model.buddy.Buddy):
             return image.get_a1_from_tiff(
                 self.obj.sheet.survey.path(self.obj.filename),
                 self.obj.tiff_page,
-                self.obj.rotated)
+                True if self.obj.rotated else False)
 
     def get_size(self):
         """Read the size of the surface. If the surface is already loaded, it
