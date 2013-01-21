@@ -67,15 +67,15 @@ class Image(model.buddy.Buddy):
                 self.obj.sheet.survey.path(self.obj.filename),
                 self.obj.tiff_page)
 
-            if xres != 0 and yres != 0:
+            if xres == 0 or yres == 0:
                 xres = width / self.obj.sheet.survey.defs.paper_width
                 yres = height / self.obj.sheet.survey.defs.paper_height
 
             scan_width = width / xres
             scan_height = height / yres
 
-            dx = (scan_width - self.obj.sheet.survey.defs.paper_width) / 2.0
-            dy = (scan_height - self.obj.sheet.survey.defs.paper_height) / 2.0
+            dx = (self.obj.sheet.survey.defs.paper_width - scan_width) / 2.0
+            dy = (self.obj.sheet.survey.defs.paper_height - scan_height) / 2.0
 
             matrix = cairo.Matrix()
 
