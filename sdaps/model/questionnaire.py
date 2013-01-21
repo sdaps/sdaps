@@ -316,6 +316,10 @@ class Box(buddy.Object, DataObject):
         self.id = self.question.id + (self.value,)
         return self.value
 
+    def id_str(self):
+        ids = [str(x) for x in self.id]
+        return u'.'.join(ids)
+
     def get_sheet(self):
         return self.question.sheet
 
