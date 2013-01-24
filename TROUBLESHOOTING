@@ -20,10 +20,6 @@ Please have a look at the following:
    image_line_width and image_line_coverage. However, it is unlikely
    that this is neccessary.
 
-Note that currently SDAPS requires all four corner markers, so things fall
-apart if one edge is missing. In theory three corners are enough to get a
-good estimation, so SDAPS can be fixed to do just that.
-
 Recognition quality is bad
 --------------------------
 
