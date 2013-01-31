@@ -276,7 +276,6 @@ def create_stamp_pdf(survey, questionnaire_ids):
                         if j == 1 or questionnaire_length == 1:
                             # Only read a new ID for the first page.
                             id = questionnaire_ids.pop(0)
-                            survey.questionnaire_ids.append(id)
                         draw_questionnaire_id(canvas, survey, id)
 
                     if survey.defs.print_survey_id:
@@ -289,7 +288,6 @@ def create_stamp_pdf(survey, questionnaire_ids):
                         if j == 1 or questionnaire_length == 1:
                             # Only read a new ID for the first page.
                             id = questionnaire_ids.pop(0)
-                            survey.questionnaire_ids.append(id)
                         draw_code128_questionnaire_id(canvas, survey, id)
 
                     # Survey ID has to be printed in CODE128 mode, because it
