@@ -78,14 +78,15 @@ def stamp(survey, cmdline):
 
         questionnaire_ids = None
 
+    if questionnaire_ids is not None:
+        survey.questionnaire_ids.extend(questionnaire_ids)
+
     if os.path.exists(survey.path('questionnaire.tex')):
         # use the LaTeX stamper
         from sdaps.stamp.latex import create_stamp_pdf
     else:
         from sdaps.stamp.generic import create_stamp_pdf
-    create_stamp_pdf(survey, questionnaire_ids[:])
-
-    survey.questionnaire_ids.extend(questionnaire_ids)
+    create_stamp_pdf(survey, questionnaire_ids)
 
     survey.save()
 
