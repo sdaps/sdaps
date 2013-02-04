@@ -99,6 +99,25 @@ rm -rf "$PROJECT"
 "$SDAPS" "$PROJECT" report_tex
 
 ###########################################################
+# Test Tex with IDs (classic mode)
+###########################################################
+
+PROJECT="projects/test-tex-classic"
+
+# Create projects dir if it does not exist
+if [ ! -e `dirname $PROJECT` ]; then
+	mkdir -p `dirname $PROJECT`
+fi
+
+# Remove project dir that may exist
+rm -rf "$PROJECT"
+
+"$SDAPS" "$PROJECT" setup_tex "data/tex/questionnaire_classic.tex"
+
+# Create 10 unique sheets that can be printed and handed out
+"$SDAPS" "$PROJECT" stamp --random 10
+
+###########################################################
 # Test Tex without IDs
 ###########################################################
 

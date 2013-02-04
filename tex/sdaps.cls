@@ -203,15 +203,9 @@
 \include{code128}
 
 % http://www.tex.ac.uk/cgi-bin/texfaq2html?label=isitanum
-\def\IsInteger#1{%
+\def\IsPositive#1{%
   TT\fi
-  \begingroup \lccode`\-=`\0 \lccode`+=`\0
-    \lccode`\1=`\0 \lccode`\2=`\0 \lccode`\3=`\0
-    \lccode`\4=`\0 \lccode`\5=`\0 \lccode`\6=`\0
-    \lccode`\7=`\0 \lccode`\8=`\0 \lccode`\9=`\0
-  \lowercase{\endgroup
-    \expandafter\ifx\expandafter\delimiter
-    \romannumeral0\string#1}\delimiter
+  \ifcat_\ifnum0<0#1 _\else A\fi
 }
 
 \def\forceLR#1{\ifx\textLR\undefined#1\else\textLR{#1}\fi}
@@ -521,7 +515,7 @@
   \foreach \qid in \questionnaireids{%
     \@forceSTAMPfalse
     \setcounter{page}{1}
-    \if\IsInteger{\qid}%
+    \if\IsPositive{\qid}%
       \setcounter{questionnaireid}{\qid}%
     \else%
       \setcounter{questionnaireid}{0}%
