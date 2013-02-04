@@ -139,12 +139,12 @@ def report(survey, filter, filename=None, small=0):
     """)
 
         print _("Running %s now twice to generate the report.") % defs.latex_engine
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine,
                          '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'report.tex')],
                         cwd=tmpdir)
         # And again
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine,
                          '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'report.tex')],
                         cwd=tmpdir)
