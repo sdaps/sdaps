@@ -86,8 +86,12 @@ rm -rf "$PROJECT"
 # Create a cover page in projects/test/cover.pdf
 "$SDAPS" "$PROJECT" cover
 
-# Create 10 unique sheets that can be printed and handed out
-"$SDAPS" "$PROJECT" stamp --random 10
+# Create sheets with some given IDs
+"$SDAPS" "$PROJECT" stamp -f "data/tex/code128_test_ids"
+"$SDAPS" "$PROJECT" ids -o "$PROJECT/ids"
+diff "data/tex/code128_test_ids" "$PROJECT/ids"
+
+
 
 # Add dummy tiff
 "$SDAPS" "$PROJECT" add "data/tex/test_with_ids.tif"

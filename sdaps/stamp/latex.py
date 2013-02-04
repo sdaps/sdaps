@@ -51,7 +51,8 @@ def create_stamp_pdf(survey, questionnaire_ids):
         latex_override.write('\\@PAGEMARKtrue\n')
         latex_override.write('\\@sdaps@draftfalse\n')
         if questionnaire_ids is not None:
-            latex_override.write('\def\questionnaireids{%s}\n' % ','.join([str(id) for id in questionnaire_ids]))
+            quoted_ids = [str(id).replace('{', '\\{').replace('}', '\\}') for id in questionnaire_ids]
+            latex_override.write('\def\questionnaireids{{%s}}\n' % '},{'.join(quoted_ids))
         latex_override.close()
 
         print _("Running %s now twice to generate the stamped questionnaire.") % defs.latex_engine
