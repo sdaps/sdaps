@@ -37,7 +37,7 @@ class Questionnaire(model.buddy.Buddy):
 
     def export_data(self):
         data = {'questionnaire_id': unicode(self.obj.sheet.questionnaire_id),
-            'global_id': unicode(self.obj.sheet.questionnaire_id)}
+            'global_id': unicode(self.obj.sheet.global_id)}
         for qobject in self.obj.qobjects:
             data.update(qobject.csvdata.export_data())
         self.csv.writerow(data)
