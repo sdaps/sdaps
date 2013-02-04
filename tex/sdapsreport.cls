@@ -63,7 +63,7 @@
 
 % hyperrefs
 \RequirePackage{url}
-\RequirePackage[driverfallback=dvips]{hyperref}
+\RequirePackage{hyperref}
 \hypersetup{%
   breaklinks,%
   baseurl       = http://,%
