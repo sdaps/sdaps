@@ -48,6 +48,11 @@ def stamp(cmdline):
 
     import stamp
 
-    return stamp.stamp(survey, cmdline)
+    if cmdline['output'] is None:
+        output = survey.new_path('stamped_%i.pdf')
+    else:
+        output = cmdline['output']
+
+    return stamp.stamp(survey, output, cmdline)
 
 

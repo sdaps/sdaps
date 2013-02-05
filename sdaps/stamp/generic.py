@@ -229,7 +229,7 @@ def draw_code128_sdaps_info(canvas, survey, page):
     canvas.restoreState()
 
 
-def create_stamp_pdf(survey, questionnaire_ids):
+def create_stamp_pdf(survey, output_filename, questionnaire_ids):
     sheets = 1 if questionnaire_ids is None else len(questionnaire_ids)
 
     questionnaire_length = survey.questionnaire.page_count
@@ -369,7 +369,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
 
         subprocess.call(['pdftk', os.path.join(tmp_dir, 'final.pdf'),
                          'update_info', os.path.join(tmp_dir, 'doc_data.txt'),
-                         'output', survey.new_path('stamped_%i.pdf')])
+                         'output', output_filename])
 
         # Remove tmp.pdf
         os.unlink(survey.path('tmp.pdf'))
@@ -413,7 +413,7 @@ def create_stamp_pdf(survey, questionnaire_ids):
                 stamped.addPage(s)
             log.progressbar.update(i + 1)
 
-        stamped.write(open(survey.new_path('stamped_%i.pdf'), 'wb'))
+        stamped.write(open(output_filename, 'wb'))
 
         print ungettext(u'%i sheet; %f seconds per sheet', u'%i sheet; %f seconds per sheet',
                         log.progressbar.max_value) % (

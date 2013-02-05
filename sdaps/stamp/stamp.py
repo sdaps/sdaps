@@ -30,7 +30,7 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-def stamp(survey, cmdline):
+def stamp(survey, output_filename, cmdline):
     # copy questionnaire_ids
     # get number of sheets to create
     if cmdline['file'] or cmdline['random'] or cmdline['existing']:
@@ -86,7 +86,8 @@ def stamp(survey, cmdline):
         from sdaps.stamp.latex import create_stamp_pdf
     else:
         from sdaps.stamp.generic import create_stamp_pdf
-    create_stamp_pdf(survey, questionnaire_ids)
+
+    create_stamp_pdf(survey, output_filename, questionnaire_ids)
 
     survey.save()
 
