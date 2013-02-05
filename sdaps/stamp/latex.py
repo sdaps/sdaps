@@ -13,6 +13,8 @@ import glob
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
+def tex_quote_braces(string):
+    return string.replace('{', '\\{').replace('}', '\\}')
 
 def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
@@ -45,11 +47,12 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2 ** 16)))
         latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2 ** 16)))
         latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
+        latex_override.write('\def\globalid{%s}\n' % (tex_quote_braces(survey.global_id)))
         latex_override.write('\\@STAMPtrue\n')
         latex_override.write('\\@PAGEMARKtrue\n')
         latex_override.write('\\@sdaps@draftfalse\n')
         if questionnaire_ids is not None:
-            quoted_ids = [str(id).replace('{', '\\{').replace('}', '\\}') for id in questionnaire_ids]
+            quoted_ids = [tex_quote_braces(str(id)) for id in questionnaire_ids]
             latex_override.write('\def\questionnaireids{{%s}}\n' % '},{'.join(quoted_ids))
         latex_override.close()
 
