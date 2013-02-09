@@ -145,6 +145,10 @@ class Survey(object):
         # Run any upgrade routine (if necessary)
         survey.upgrade()
 
+        survey.questionnaire.reinit_state()
+        for sheet in survey.sheets:
+            sheet.reinit_state()
+
         return survey
 
     @staticmethod

@@ -65,12 +65,23 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         self._cs_image = None
         self._ss_image = None
 
+        self.provider.survey.questionnaire.connect_data_changed(self.partial_update)
+
     def update_state(self):
         # Cancel any dragging operation
         self._edge_drag_active = False
         self._update_matrices()
         self.queue_resize()
         self.queue_draw()
+
+    def partial_update(self, questionnaire, qobj, obj, name, old_value):
+        if not isinstance(obj, model.data.Box):
+            return
+
+        if self.provider.image.page_number != qobj.page_number:
+            return
+
+        self.invalidate_area(obj.x, obj.y, obj.width, obj.height)
 
     def _update_matrices(self):
         xoffset = 0
@@ -160,7 +171,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
         if box is not None:
             box.data.state = not box.data.state
-            self.invalidate_area(box.data.x, box.data.y, box.data.width, box.data.height)
+
             return True
 
     def do_button_release_event(self, event):

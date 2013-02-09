@@ -37,6 +37,7 @@ _ = ugettext
 
 from sheet_widget import SheetWidget
 import buddies
+import widget_buddies
 
 
 zoom_steps = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
@@ -153,6 +154,11 @@ class MainWindow(object):
         self.sheet.show()
         scrolled_window.add(self.sheet)
 
+        data_viewport = self._builder.get_object("data_view")
+        widgets = provider.survey.questionnaire.widget.create_widget()
+        widgets.show_all()
+        data_viewport.add(widgets)
+
         self.sheet.connect('key-press-event', self.sheet_view_key_press)
 
         combo = self._builder.get_object("page_number_combo")
@@ -264,6 +270,8 @@ class MainWindow(object):
 
         self.update_page_status()
         self.sheet.update_state()
+
+        self.provider.survey.questionnaire.widget.sync_state()
 
     def go_to_previous_page(self, *args):
         self.provider.previous()
