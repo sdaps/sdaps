@@ -47,7 +47,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2 ** 16)))
         latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2 ** 16)))
         latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
-        latex_override.write('\def\globalid{%s}\n' % (tex_quote_braces(survey.global_id)))
+        latex_override.write('\def\globalid{%s}\n' % (tex_quote_braces(survey.global_id)) if survey.global_id is not None else '')
         latex_override.write('\\@STAMPtrue\n')
         latex_override.write('\\@PAGEMARKtrue\n')
         latex_override.write('\\@sdaps@draftfalse\n')
