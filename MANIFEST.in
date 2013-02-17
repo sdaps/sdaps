@@ -8,3 +8,4 @@ include test/run-test.sh
 include test/run-test-locally.sh
 recursive-include test/data *.internetquestions *.odt *.pdf *.tif
 recursive-include test/data *.tex questionnaire_ids
+include test/data/tex/code128_test_ids
