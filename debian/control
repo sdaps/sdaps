@@ -1,0 +1,24 @@
+Source: sdaps
+Maintainer: Benjamin Berg <benjamin@sipsolutions.net>
+Section: python
+Priority: optional
+X-Python-Version: >= 2.7
+Build-Depends: python2.7, python2.7-dev, libtiff4-dev | libtiff5-dev,
+ python-distutils-extra, python-cairo-dev, libcairo2-dev,
+ libglib2.0-dev, debhelper (>= 7.4.3)
+Standards-Version: 3.9.4
+
+Package: sdaps
+Architecture: any
+Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends},
+ python2.7-cairo, python2.7-gi, python2.7-imaging,
+ python-reportlab, python-zbar, python-gi-cairo
+Recommends: gir1.2-gtk-3.0 | gir1.0-gtk-3.0, texlive, texlive-latex-extra,
+ texlive-latex-recommended, pgf, latex-beamer, pdftk | python2.7-pdf
+Suggests: gir1.2-poppler-0.18
+Description: Scripts for data acquisition with paper based surveys
+ .
+ SDAPS is a tool to carry out paper based surveys. You can create machine
+ readable questionnaires using OpenOffice.org. It also provides the tools to later
+ analyse the scanned data, and create a report.
+ .
