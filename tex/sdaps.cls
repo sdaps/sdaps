@@ -567,9 +567,12 @@
 \setlength{\parskip}{0pt}
 \setlength\columnsep{10\p@}
 \setlength\columnseprule{0\p@}
+% Redefine the spacings for \subsection ie. \questions.
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0pt}{1.5ex \@plus 1.5ex \@minus 0.25ex}{1ex}{}}
 \pagestyle{scrheadings}
 \pagenumbering{arabic}
 \raggedbottom
+%\flushbottom
 \onecolumn
 
 \newif\if@forceSTAMP\@forceSTAMPfalse
@@ -802,17 +805,19 @@
         \vrule depth 0pt width \elementlinewidth%
       }%
     }%
-    \offinterlineskip %
     \pgfsys@markposition{textboxtop\thetextboxnum}%
     \hrule width \linewidth height \elementlinewidth %
-    %\kern -\elementlinewidth%
+    \nobreak%
     \sides %
+    \nobreak%
     \kern-0.5\@tempdima %
+    \nobreak%
     #1 %
+    \nobreak%
     \kern-0.5\@tempdima %
-    \nobreak %
+    \nobreak%
     \sides %
-    %\kern -\elementlinewidth%
+    \nobreak%
     \hrule width \linewidth height \elementlinewidth %
     \pgfsys@markposition{textboxbottom\thetextboxnum}%
     \addtocounter{textboxnum}{1}%
@@ -853,7 +858,6 @@
 
 
 \newenvironment{choicegroup}[1]{%
-  \offinterlineskip%
   \question{#1}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1} %
   \setcounter{choicegroupnumchoices}{0} %
@@ -895,7 +899,6 @@
 
 
 \newenvironment{markgroup}[1]{%
-  \offinterlineskip%
   \question{#1}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1}
   \tabularx{\linewidth}{Xr*{5}{c}l}
@@ -917,7 +920,6 @@
   \protectedimmediatewrite\sdapsoutfile{QObject-Mark=\arabic{section}.\arabic{subsection}. #1}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
-  %\offinterlineskip%
   \begin{tabularx}{\linewidth}{Y*{5}{c}X}%
     {\usekomafont{singlemarkchoicefont}#2} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}#3}%
   \end{tabularx}%
@@ -926,7 +928,6 @@
 \newcounter{choiceitems}
 \newcounter{maxchoiceitems}
 \newenvironment{choicequestion}[2][3]{%
-  \offinterlineskip%
   \setcounter{choiceitems}{1}%
   \setcounter{maxchoiceitems}{#1}%
   \question{#2}%
