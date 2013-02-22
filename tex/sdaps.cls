@@ -133,14 +133,11 @@
 % Environment creation that gets the body as a macro
 \RequirePackage{environ}
 
-% pagehooks
-% This is a bit weird. According to the bophook documentation it should be
-% loaded after the hyperref package. However, loading it *before* the hyperref
-% package fixes a warning, and everything keeps working correctly.
-% From the documentation:
-%  The hyperref package does a lot of modification to the LaTeX kernel. Prepare
-%  for the case that it is loaded. Note that it has to be loaded prior to bophook!
-\RequirePackage{bophook}
+% headers and footers
+\usepackage{scrpage2}
+\clearscrheadings
+  \chead[\@author\\\@title]{\@author\\\@title}
+\pagestyle{scrheadings}
 
 % hyperrefs
 \RequirePackage{url}
@@ -153,25 +150,9 @@
   pdfcreator    = \LaTeX{} with `sdaps' class,%
   pdfproducer   = \LaTeX{}
 }
-\AtEndOfClass{%
-  \AtBeginDocument{%
-    \hypersetup{%
-      pdfauthor     = \@author,%
-      pdftitle      = \@title,%
-      pdfsubject    = sdaps questionnaire \@title,%
-      pdfkeywords   = sdaps questionnaire \@title%
-    }%
-  }%
-}
 
 % graphics
 \RequirePackage{graphicx}
-
-% headers and footers
-\usepackage{scrpage2}
-\clearscrheadings
-  \chead[\@author\\\@title]{\@author\\\@title}
-\pagestyle{scrheadings}
 
 % Section formatting
 \RequirePackage{sectsty}
@@ -182,12 +163,8 @@
 \renewcommand\tabularxcolumn[1]{m{#1}}
 \newcolumntype{Y}{>{\raggedleft}X}
 
-% format counter
-\RequirePackage{fmtcount}
-
 % Babel (needed for the translator)
 \RequirePackage{babel}
-
 
 % Translation
 \RequirePackage{translator}
@@ -324,7 +301,16 @@
   \endgroup
 }
 
-\PageLayout{%
+% This hooks the page layout. Basically the same as bophook would do, but
+% bophook does not work properly with new hyperref versions.
+% We overwrite \@begindvi; this needs to be redone after 
+\let\sdaps@orig@begindvi\@begindvi
+\def\sdaps@begindvi{%
+  \@sdaps@pagemarks\sdaps@orig@begindvi%
+  \global\let\sdaps@orig@begindvi\@begindvi%
+  \global\let\@begindvi\sdaps@begindvi}
+\let\@begindvi\sdaps@begindvi
+\def\@sdaps@pagemarks{%
   \begin{tikzpicture}[remember picture,overlay]%
     %---------------------------------------------------------------------------
     % pagemark
@@ -491,6 +477,13 @@
 \newlength{\boxheight}
 
 \NewEnviron{questionnaire}[1][]{
+  \hypersetup{%
+    pdfauthor     = \@author,%
+    pdftitle      = \@title,%
+    pdfsubject    = sdaps questionnaire \@title,%
+    pdfkeywords   = sdaps questionnaire \@title%
+  }%
+  %
   \if@PrintQuestionnaireId
     \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=1}
   \else
@@ -564,11 +557,21 @@
 \setlength\normallineskip{1\p@}
 \renewcommand\baselinestretch{}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt}
+\setlength{\parskip}{1.0ex \@plus 1.5ex \@minus -0.25ex}
+%\setlength{\parskip}{0pt}
 \setlength\columnsep{10\p@}
 \setlength\columnseprule{0\p@}
 % Redefine the spacings for \subsection ie. \questions.
-\renewcommand{\subsection}{\@startsection{subsection}{2}{0pt}{1.5ex \@plus 1.5ex \@minus 0.25ex}{1ex}{}}
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+      {-\parskip}%
+      {\parskip}%
+      {\normalfont\Large\bfseries\SS@sectfont}}
+\renewcommand\subsection{
+  \@startsection{subsection}{2}{\z@}%  
+      {0.5\parskip}%
+      {0.25\parskip}% These are deleted again for questions
+      {}%
+}
 \pagestyle{scrheadings}
 \pagenumbering{arabic}
 \raggedbottom
@@ -756,14 +759,20 @@
 \renewcommand{\author}[1]{\def\@author{#1}\protectedimmediatewrite\sdapsoutfile{Author=#1}}
 \renewcommand{\title}[1]{\def\@title{#1}\protectedimmediatewrite\sdapsoutfile{Title=#1}}
 
-\def\question#1{\subsection{\usekomafont{questionfont}#1}}
+\def\question#1{%
+  \subsection{\usekomafont{questionfont}#1}%
+  % This is extra spacing after the subsection is removed. By doing this we
+  % get exactly one \parskip
+  \nobreak%
+  \vspace{-0.25\parskip}%
+  \nobreak%
+}
 
 % http://mrunix.de/forums/showthread.php?t=59943
 \newenvironment{info}{%
   \vspace{\baselineskip}\vspace{\lineskip}\vspace{-1.0em}%
   \hrule height 1pt%
   \vspace{\lineskip}%
-  \vspace{\parskip}%
 }{%
   \vspace{\lineskip}%
   \leavevmode\noindent\hrule height 1pt%
@@ -795,7 +804,9 @@
   }%
   \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
   \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height} %
-  \vspace{-\lineskip}%
+  \nobreak%
+  \vspace{\parskip}%
+  \nobreak%
   \begingroup %
     \setlength\@tempdima{#2}%
     \def\sides{%
@@ -823,7 +834,9 @@
     \addtocounter{textboxnum}{1}%
     %
   \endgroup %
-  \vspace{\baselineskip}%
+  \leavevmode%
+  \vspace{-\baselineskip}\vspace{\parskip}%
+  \relax%
 }
 
 %\providecommand*{\textbox}[2]{%
