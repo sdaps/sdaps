@@ -625,6 +625,11 @@
 \newlength{\barcodebcorr}
 \setlength{\barcodebcorr}{0.020mm}
 
+\newlength{\sdapsocrheight}
+\setlength{\sdapsocrheight}{8mm}
+\newlength{\sdapsocrwidth}
+\setlength{\sdapsocrwidth}{5mm}
+
 % The padding on the left/right of a barcode. This is the distance that the
 % barcodes will be printed from the cornermarks
 % Choosen to be the same as the barcode height. Note that the Code-128
@@ -1101,6 +1106,76 @@
     &%
   }%
 }
+
+\providecommand{\choiceitemocr}[2]{%
+  \multicolumn{#1}{l}{%
+    \addtocounter{choiceitems}{#1}%
+    \begingroup%
+      {\usekomafont{choiceitemfont}#2}~%
+      %
+      \setlength\@tempdimheight{\sdapsocrheight}%
+      %
+      \setlength\@tempdimlower{0pt}%
+      \advance\@tempdimlower by -0.5\@tempdimheight%
+      \advance\@tempdimlower by 0.8ex%
+      %
+      \setlength\@tempdimboxlower\@tempdimlower%
+      \advance\@tempdimboxlower by -\smallskipamount%
+      %
+      \setlength\@tempdima{2cm}%
+      \@tempdimruleheight=\@tempdimheight%
+      \advance\@tempdimruleheight by +2.0\elementlinewidth%
+      \advance\@tempdimruleheight by \@tempdimlower%
+      %
+      \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#2}%
+      %
+      \label{textbox\thetextboxnum}%
+      \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
+      \pgfsys@getposition{textboxleft\thetextboxnum}{\@sdaps@textboxleftpos}%
+      \pgfpointadd{\@sdaps@textboxleftpos}{%
+        \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{\@tempdimruleheight}}%
+      }%
+      \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
+      %
+      \pgfsys@getposition{textboxright\thetextboxnum}{\@sdaps@textboxrightpos}%
+      \pgfpointadd{\@sdaps@textboxrightpos}{%
+        \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxleftpos}}{
+          \pgfpoint{0}{#1+2\elementlinewidth}%
+        }%
+      }%
+      \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
+      \gdef\@sdaps@height{\sdapsocrheight}%
+      %
+      \pgfsys@markposition{textboxleft\thetextboxnum}%
+      \vrule depth -\@tempdimlower width 0pt height \@tempdimruleheight %
+      \hfill
+      \vrule depth -\@tempdimlower width 0pt height \@tempdimruleheight%
+      \pgfsys@markposition{textboxright\thetextboxnum}%
+      %
+      % Now we have the top and left most/bottom right position.
+      %
+      \begin{tikzpicture}[overlay,shift={(0pt, 0pt)},baseline=-\@tempdimlower]
+        \pgfmathparse{floor(\@sdaps@width/\sdapsocrwidth)}
+        \global\edef\boxcount{\pgfmathresult}
+        \foreach \i in {1,...,\boxcount} {
+          \draw[line width=\elementlinewidth, shift={(-\i\sdapsocrwidth,0)}] (0.5\elementlinewidth, 0) -- +(0, 2\elementlinewidth) ($(0.5\elementlinewidth, \@sdaps@height) +(0, 2\elementlinewidth)$) -- +(0, -2\elementlinewidth);
+        };
+        \gdef\@sdaps@width{\boxcount\sdapsocrwidth}
+        \draw[line width=\elementlinewidth] (-0.5\elementlinewidth, 0.5\elementlinewidth) rectangle +($(-\@sdaps@width, \@sdaps@height) + (+1\elementlinewidth,\elementlinewidth)$);
+      \end{tikzpicture}
+      %
+      \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
+      \addtocounter{textboxnum}{1}%
+    \endgroup%
+  }%
+  \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%
+    \setcounter{choiceitems}{1}%
+    \\%
+  }{%
+    &%
+  }%
+}
+
 
 \sectionfont{\sectbox}
 
