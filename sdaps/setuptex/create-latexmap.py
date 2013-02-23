@@ -38,7 +38,7 @@ regexp = re.compile(r'^\\DeclareUnicodeCharacter\{(?P<unicode>[0-9a-fA-F]{4})\}\
 
 mapping = []
 for match in regexp.finditer(data):
-    mapping.append('''\tu\'%s\': u\'\\u%s\'''' %
+    mapping.append('''    u\'%s\': u\'\\u%s\'''' %
                    (match.group('str').replace('\\', '\\\\').replace('\'', '\\\''),
                     match.group('unicode')))
 
