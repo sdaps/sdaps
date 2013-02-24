@@ -136,7 +136,8 @@
 % headers and footers
 \usepackage{scrpage2}
 \clearscrheadings
-  \chead[\sdapspagemark\@author\\\@title]{\sdapspagemark\@author\\\@title}
+  \chead[\@author\\\@title]{\@author\\\@title}
+  \cfoot{\sdapspagemark}
 \pagestyle{scrheadings}
 
 % hyperrefs
@@ -303,6 +304,7 @@
 
 % This needs to be called once for each page!
 \def\sdapspagemark{%
+  \normalfont%
   \begin{tikzpicture}[remember picture,overlay]%
     %---------------------------------------------------------------------------
     % pagemark
