@@ -760,7 +760,7 @@
 \renewcommand{\title}[1]{\def\@title{#1}\protectedimmediatewrite\sdapsoutfile{Title=#1}}
 
 \def\question#1{%
-  \subsection{\usekomafont{questionfont}#1}%
+  \subsection{\usekomafont{questionfont}\strut#1\strut}%
   % This is extra spacing after the subsection is removed. By doing this we
   % get exactly one \parskip
   \nobreak%
@@ -890,12 +890,12 @@
   % This is not really elegant, couldn't we just check whether choicegroup@start
   % is empty?
   \ifnum\thechoicegroupnumchoices>0
+    % Move to the next line (as it is not part of the @start macro)
     \\ %
     \setcounter{choicegroupnumchoices}{-1} %
   \fi %
   \protectedimmediatewrite\sdapsoutfile{QObject-Choice=#1}%
-  % First move to the next line (as it is not part of the @start macro)
-  {\usekomafont{choicegrouplinefont}#1} \@sdaps@choicegroup@boxes \\ %
+  {\usekomafont{choicegrouplinefont}\strut#1\strut} \@sdaps@choicegroup@boxes \\ %
 }
 
 \providecommand*{\groupaddchoice}[1]{%
@@ -905,7 +905,7 @@
     \PackageError{sdaps}{Tried to add a new choice, but not at the beginning of a choicegroup environment!}\@ehb
   \else
     \stepcounter{choicegroupnumchoices}%
-    \g@addto@macro{\@sdaps@choicegroup@start}{& {\usekomafont{choicegroupchoicefont}#1}}%
+    \g@addto@macro{\@sdaps@choicegroup@start}{& {\usekomafont{choicegroupchoicefont}\strut#1}}%
     \g@addto@macro{\@sdaps@choicegroup@boxes}{& \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#1} \checkbox}%
   \fi
 }
@@ -913,7 +913,7 @@
 
 \newenvironment{markgroup}[1]{%
   \question{#1}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1}
+  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1}%
   \tabularx{\linewidth}{Xr*{5}{c}l}
 }{%
   \endtabularx%
@@ -923,7 +923,7 @@
   \protectedimmediatewrite\sdapsoutfile{QObject-Mark=#1}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
-  {\usekomafont{marklinequestionfont}#1} & {\usekomafont{marklinechoicefont}#2} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}#3}\\%
+  {\usekomafont{marklinequestionfont}\strut#1\strut} & {\usekomafont{marklinechoicefont}#2} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}#3}\\%
 }
 
 %\providecommand*{\singlemark}[3]{\begin{markquestion}{#1}\markline{}{#2}{#3}\end{markquestion}}
@@ -933,8 +933,8 @@
   \protectedimmediatewrite\sdapsoutfile{QObject-Mark=\arabic{section}.\arabic{subsection}. #1}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
-  \begin{tabularx}{\linewidth}{Y*{5}{c}X}%
-    {\usekomafont{singlemarkchoicefont}#2} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}#3}%
+  \begin{tabularx}{\linewidth}{Y*{5}{c}X}
+    {\usekomafont{singlemarkchoicefont}\strut#2} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}#3}\\%
   \end{tabularx}%
 }
 
