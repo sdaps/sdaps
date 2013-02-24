@@ -28,6 +28,7 @@ from sdaps import surface
 from sdaps import clifilter
 from sdaps import defs
 from sdaps import paths
+from sdaps import log
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
@@ -42,7 +43,11 @@ zoom_steps = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
 
 def gui(survey, cmdline):
     filter = clifilter.clifilter(survey, cmdline['filter'])
-    MainWindow(Provider(survey, filter)).run()
+    provider = Provider(survey, filter)
+    if not provider.images:
+        log.error(_("The survey does not have any images! Please add images (and run recognize) before using the GUI."))
+        return 1
+    MainWindow(provider).run()
 
 
 class Provider(object):
@@ -56,6 +61,12 @@ class Provider(object):
         self.survey.iterate(self, filter)
         self.qualities.sort(reverse=False)
         self.index = 0
+
+        # There may be no images. This error is
+        # caught and printed in the "gui" function.
+        if not self.images:
+            return
+
         self.image.surface.load_rgb()
         self.survey.goto_sheet(self.image.sheet)
         #self._surface = None
