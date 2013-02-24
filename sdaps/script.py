@@ -102,8 +102,9 @@ def logfile(function):
     '''
     def decorated_function(cmdline):
         log.logfile.open(os.path.join(cmdline['project'], 'log'))
-        function(cmdline)
+        result = function(cmdline)
         log.logfile.close()
+        return result
 
     functools.update_wrapper(decorated_function, function)
 

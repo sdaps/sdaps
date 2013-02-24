@@ -46,8 +46,8 @@ def recognize(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import recognize
     if cmdline['identify']:
-        recognize.identify(survey)
+        return recognize.identify(survey)
     else:
-        recognize.recognize(survey)
+        return recognize.recognize(survey)
 
 

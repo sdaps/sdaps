@@ -55,9 +55,9 @@ def csvdata(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import csvdata
     if cmdline['direction'] == 'export':
-        csvdata.csvdata_export(survey, cmdline)
+        return csvdata.csvdata_export(survey, cmdline)
     elif cmdline['direction'] == 'import':
-        csvdata.csvdata_import(survey, cmdline)
+        return csvdata.csvdata_import(survey, cmdline)
     else:
         raise AssertionError
 

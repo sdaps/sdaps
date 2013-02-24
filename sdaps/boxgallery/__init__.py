@@ -50,6 +50,6 @@ def boxgallery(cmdline):
 
     survey = model.survey.Survey.load(cmdline['project'])
     import boxgallery
-    boxgallery.boxgallery(survey, cmdline['debugrecognition'])
+    return boxgallery.boxgallery(survey, cmdline['debugrecognition'])
 
 

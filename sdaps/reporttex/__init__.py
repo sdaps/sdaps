@@ -41,6 +41,6 @@ parser.add_argument('-f', '--filter',
 def report_tex(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import report
-    report.report(survey, cmdline['output'], cmdline['filter'])
+    return report.report(survey, cmdline['output'], cmdline['filter'])
 
 

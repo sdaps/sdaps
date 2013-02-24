@@ -47,6 +47,6 @@ parser.add_argument('additional_questions',
 def setup_tex(cmdline):
     survey = model.survey.Survey.new(cmdline['project'])
     import setup
-    setup.setup(survey, cmdline)
+    return setup.setup(survey, cmdline)
 
 

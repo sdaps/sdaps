@@ -42,6 +42,6 @@ parser.add_argument('-f', '--filter',
 def gui(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import gui
-    gui.gui(survey, cmdline)
+    return gui.gui(survey, cmdline)
 
 

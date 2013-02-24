@@ -42,6 +42,4 @@ def reorder(cmdline):
 
     import reorder
 
-    reorder.reorder(survey)
-
-    survey.save()
+    return reorder.reorder(survey)

@@ -62,8 +62,8 @@ def report(cmdline):
         small = 0
 
     if cmdline['all_filters']:
-        report.stats(survey, cmdline['filter'], cmdline['output'], small)
+        return report.stats(survey, cmdline['filter'], cmdline['output'], small)
     else:
-        report.report(survey, cmdline['filter'], cmdline['output'], small)
+        return report.report(survey, cmdline['filter'], cmdline['output'], small)
 
 

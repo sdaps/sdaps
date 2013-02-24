@@ -70,3 +70,5 @@ def reorder(survey):
                 sheet.add_image(img_list.pop(0))
 
 
+    survey.save()
+

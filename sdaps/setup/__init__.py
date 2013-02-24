@@ -95,6 +95,6 @@ def setup(cmdline):
         cmdline['global_id'] = None
 
     import setup
-    setup.setup(survey, cmdline)
+    return setup.setup(survey, cmdline)
 
 
