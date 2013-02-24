@@ -136,7 +136,7 @@
 % headers and footers
 \usepackage{scrpage2}
 \clearscrheadings
-  \chead[\@author\\\@title]{\@author\\\@title}
+  \chead[\sdapspagemark\@author\\\@title]{\sdapspagemark\@author\\\@title}
 \pagestyle{scrheadings}
 
 % hyperrefs
@@ -301,16 +301,8 @@
   \endgroup
 }
 
-% This hooks the page layout. Basically the same as bophook would do, but
-% bophook does not work properly with new hyperref versions.
-% We overwrite \@begindvi; this needs to be redone after 
-\let\sdaps@orig@begindvi\@begindvi
-\def\sdaps@begindvi{%
-  \@sdaps@pagemarks\sdaps@orig@begindvi%
-  \global\let\sdaps@orig@begindvi\@begindvi%
-  \global\let\@begindvi\sdaps@begindvi}
-\let\@begindvi\sdaps@begindvi
-\def\@sdaps@pagemarks{%
+% This needs to be called once for each page!
+\def\sdapspagemark{%
   \begin{tikzpicture}[remember picture,overlay]%
     %---------------------------------------------------------------------------
     % pagemark
