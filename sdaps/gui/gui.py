@@ -307,8 +307,10 @@ class MainWindow(object):
         valid = toggle.get_active()
         if self.provider.image.sheet.valid != valid:
             self.provider.image.sheet.valid = valid
+            # XXX: this forces the survey_id to be correct
+            # Do we really want to do this?
             if valid:
-                self.provider.image.sheet.survey_id = self.provider.survey_id
+                self.provider.image.sheet.survey_id = self.provider.survey.survey_id
             self.update_ui()
         return False
 
