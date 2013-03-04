@@ -199,6 +199,16 @@
 \usetikzlibrary{positioning}
 \usetikzlibrary{decorations.pathmorphing}
 
+% The pgfgetlastxy macro was only added on 2010-04-09
+% By copying its definition here we can support older PGF versions
+\ifx\pgfgetlastxy\undefined
+  % The definition from newer pgf versions.
+  \def\pgfgetlastxy#1#2{%
+          \edef#1{\the\pgf@x}%
+          \edef#2{\the\pgf@y}%
+  }%
+\fi
+
 % Code 128 implementation in plain TeX
 \include{code128}
 
