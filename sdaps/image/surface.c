@@ -254,7 +254,7 @@ count_black_pixel_masked_unchecked(guint32* pixels, guint32 stride, guint32 *mas
 			/* Note that a shift of 32 is not defined, it may also be 0. */
 #if G_BYTE_ORDER == G_BIG_ENDIAN
 			curr_pixels = pixels[(x / 32) + pos + (y_pos + y) * stride / 4] << (x % 32);
-			curr_pixels |= pixels[(x / 32) + pos + (y_pos + y) * stride / 4 + 1] >> (32 - (x % 32));
+			curr_pixels |= pixels[((x + 31) / 32) + pos + (y_pos + y) * stride / 4] >> (32 - (x % 32));
 #else
 			curr_pixels = pixels[(x / 32) + pos + (y_pos + y) * stride / 4] >> (x % 32);
 			curr_pixels |= pixels[((x + 31) / 32) + pos + (y_pos + y) * stride / 4] << (32 - (x % 32));
