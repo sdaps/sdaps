@@ -21,6 +21,7 @@
 #include "image.h"
 #include <string.h>
 #include <math.h>
+#include "surface.h"
 #include "transform.h"
 
 /* Some of the more important Magic Values */

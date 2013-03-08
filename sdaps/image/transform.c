@@ -16,240 +16,9 @@
  */
 
 #include "transform.h"
+#include "surface.h"
 #include <string.h>
 #include <math.h>
-#include <glib/gprintf.h>
-
-cairo_surface_t*
-surface_copy_partial(cairo_surface_t *surface, int x, int y, int width, int height)
-{
-	cairo_surface_t *result;
-	cairo_t *cr;
-
-	result = cairo_image_surface_create(cairo_image_surface_get_format(surface), width, height);
-	cr = cairo_create(result);
-
-	cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
-	/* In case the area is outside of the source image, fill with zeros. */
-	cairo_set_source_rgba(cr, 0, 0, 0, 0);
-	cairo_paint(cr);
-
-	cairo_set_source_surface(cr, surface, -x, -y);
-	cairo_paint(cr);
-
-	cairo_destroy(cr);
-
-	cairo_surface_flush(result);
-
-	return result;
-}
-
-cairo_surface_t*
-surface_copy(cairo_surface_t *surface)
-{
-	int width, height;
-	width = cairo_image_surface_get_width(surface);
-	height = cairo_image_surface_get_height(surface);
-
-	return surface_copy_partial(surface, 0, 0, width, height);
-}
-
-cairo_surface_t*
-surface_copy_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y)
-{
-	gint width, height;
-	gint word_width;
-	cairo_surface_t *result;
-	gint result_stride, mask_stride;
-	guint32 *result_pixels, *mask_pixels;
-
-	width = cairo_image_surface_get_width(mask);
-	height = cairo_image_surface_get_height(mask);
-
-	result = surface_copy_partial(surface, x, y, width, height);
-
-	result_pixels = (guint32*) cairo_image_surface_get_data(result);
-	result_stride = cairo_image_surface_get_stride(result);
-	mask_pixels = (guint32*) cairo_image_surface_get_data(mask);
-	mask_stride = cairo_image_surface_get_stride(mask);
-
-	word_width = (width + 31) / 32 + 1;
-	for (y = 0; y < height; y++) {
-		for (x = 0; x < word_width; x++) {
-			result_pixels[x + y*result_stride/4] &= mask_pixels[x + y*mask_stride/4];
-		}
-	}
-
-	cairo_surface_mark_dirty(result);
-
-	return result;
-}
-
-
-#if 0
-/* This function is for debugging purposes. */
-void
-a1_surface_write_to_png(cairo_surface_t* surface, gchar* filename)
-{
-	guint img_width, img_height;
-	cairo_surface_t *tmp_surface;
-	cairo_t *cr;
-
-	img_width = cairo_image_surface_get_width(surface);
-	img_height = cairo_image_surface_get_height(surface);
-
-	tmp_surface = cairo_image_surface_create(CAIRO_FORMAT_RGB24, img_width, img_height);
-
-	cr = cairo_create(tmp_surface);
-	cairo_set_source_rgb(cr, 1, 1, 1);
-	cairo_paint(cr);
-	cairo_set_source_rgb(cr, 0, 0, 0);
-	cairo_mask_surface(cr, surface, 0, 0);
-
-	cairo_surface_write_to_png(tmp_surface, filename);
-
-	cairo_destroy(cr);
-	cairo_surface_destroy(tmp_surface);
-}
-
-
-/* The following is an adaption from the Animal imaging library.
- * The library was written by Ricardo Fabbri (2011) and is licensed under the
- * GPLv2 or any later version there.
- * The same algorithm is used in queXF for character recognition. */
-
-/* Offsets to the neighbors of a pixel. */
-static int n8[8][2] = {
-  { 0,  1},
-  {-1,  1},
-  {-1,  0},
-  {-1, -1},
-  { 0, -1},
-  { 1, -1},
-  { 1,  0},
-  { 1,  1} 
-};
-
-/*
-	This function tells the number N of regions that would exist if the
-	pixel P(r,c) where changed from FG to BG. It returns 2*N, that is,
-	the number of pixel transitions in the neighbourhood.
-*/
-static int
-crossing_index_np(guint32 *pixels, int stride, int x, int y)
-{
-	guint n=0, idx;
-	guint current, next;
-
-	/* The last one (so we get the crossing from last to first pixel). */
-	current = GET_PIXEL(pixels, stride, x + n8[7][0], y + n8[7][1]);
-
-	for (idx = 0; idx < 8; idx++) {
-		next = GET_PIXEL(pixels, stride, x + n8[idx][0], y + n8[idx][1]);
-
-		if (next != current)
-			n++;
-
-		current = next;
-	}
-
-	return n;
-}
-
-int 
-nh8count_np(guint32 *pixels, int stride, int x, int y, int val) 
-{
-	guint i, n=0;
-
-	for (i=0; i < 8; i++)
-		if (GET_PIXEL(pixels, stride, x + n8[i][1], y + n8[i][0]) == val)
-			n++;
-
-	return n;
-}
-
-/*
-	In place Zhang-Suen thinning. The algorithm leaves a 1px border untouched.
-*/
-void
-thinzs_np(cairo_surface_t *surface)
-{
-	gboolean modified;
-	guint x, y, n;
-	guint img_width, img_height;
-	guint stride, tmp_stride;
-	guint32 *pixels, *tmp_pixels;
-	guint pixel;
-	guint FG=1, BG=0;
-
-	cairo_surface_t *tmp_surface;
-	tmp_surface = surface_copy(surface);
-
-	img_width = cairo_image_surface_get_width(surface);
-	img_height = cairo_image_surface_get_height(surface);
-
-	pixels = (guint32*) cairo_image_surface_get_data(surface);
-	stride = cairo_image_surface_get_stride(surface);
-
-	tmp_pixels = (guint32*) cairo_image_surface_get_data(tmp_surface);
-	tmp_stride = cairo_image_surface_get_stride(tmp_surface);
-
-
-	do {
-		modified = FALSE;
-
-		for (y=1; y < img_height-1; y++)  for (x=1; x < img_width-1; x++) {
-			pixel = GET_PIXEL(pixels, stride, x, y);
-
-			SET_PIXEL(tmp_pixels, tmp_stride, x, y, pixel);
-
-			if (pixel == FG) {
-				n = nh8count_np(pixels, stride, x, y, FG);
-
-				if ( n >= 2 && n <= 6 && crossing_index_np(pixels, stride, x, y) == 2) {
-					if((GET_PIXEL(pixels, stride, x, y-1) == BG ||
-					    GET_PIXEL(pixels, stride, x+1, y) == BG ||
-					    GET_PIXEL(pixels, stride, x, y+1) == BG)
-					&& (GET_PIXEL(pixels, stride, x, y-1) == BG ||
-					    GET_PIXEL(pixels, stride, x, y+1) == BG ||
-					    GET_PIXEL(pixels, stride, x-1, y) == BG))
-					{
-						SET_PIXEL(tmp_pixels, tmp_stride, x, y, BG);
-						modified = TRUE;
-					}
-				}
-			}
-		}
-
-		for (y=1; y < img_height-1; y++)  for (x=1; x < img_width-1; x++) {
-			pixel = GET_PIXEL(tmp_pixels, tmp_stride, x, y);
-
-			SET_PIXEL(pixels, stride, x, y, pixel);
-
-			if (pixel == FG) {
-				n = nh8count_np(tmp_pixels, tmp_stride, x, y, FG);
-
-				if ( n>=2 && n<=6 && crossing_index_np(tmp_pixels, tmp_stride, x, y) == 2) {
-					if((GET_PIXEL(pixels, stride, x+1, y) == BG ||
-					    GET_PIXEL(pixels, stride, x-1, y) == BG ||
-					    GET_PIXEL(pixels, stride, x, y-1) == BG)
-					&& (GET_PIXEL(pixels, stride, x, y-1) == BG ||
-					    GET_PIXEL(pixels, stride, x-1, y) == BG ||
-					    GET_PIXEL(pixels, stride, x, y+1) == BG))
-					{
-						SET_PIXEL(pixels, stride, x, y, BG);
-						modified = TRUE;
-					}
-				}
-			}
-		}
-	} while (modified);
-
-	cairo_surface_destroy(tmp_surface);
-
-	cairo_surface_mark_dirty(surface);
-}
-#endif
 
 
 /* The following is an adaption from gamera. It is a modified
@@ -619,203 +388,142 @@ remove_maximum_line(cairo_surface_t *surface, cairo_surface_t *debug_surf, gdoub
 }
 
 
-/* Generic pixel routines */
-gint
-count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint height)
-{
-	guint32 *pixels;
-	guint stride;
-	guint img_width, img_height;
+#if 0
+/* The following is an adaption from the Animal imaging library.
+ * The library was written by Ricardo Fabbri (2011) and is licensed under the
+ * GPLv2 or any later version there.
+ * The same algorithm is used in queXF for character recognition. */
 
-	pixels = (guint32*) cairo_image_surface_get_data(surface);
+/* Offsets to the neighbors of a pixel. */
+static int n8[8][2] = {
+  { 0,  1},
+  {-1,  1},
+  {-1,  0},
+  {-1, -1},
+  { 0, -1},
+  { 1, -1},
+  { 1,  0},
+  { 1,  1} 
+};
+
+/*
+	This function tells the number N of regions that would exist if the
+	pixel P(r,c) where changed from FG to BG. It returns 2*N, that is,
+	the number of pixel transitions in the neighbourhood.
+*/
+static int
+crossing_index_np(guint32 *pixels, int stride, int x, int y)
+{
+	guint n=0, idx;
+	guint current, next;
+
+	/* The last one (so we get the crossing from last to first pixel). */
+	current = GET_PIXEL(pixels, stride, x + n8[7][0], y + n8[7][1]);
+
+	for (idx = 0; idx < 8; idx++) {
+		next = GET_PIXEL(pixels, stride, x + n8[idx][0], y + n8[idx][1]);
+
+		if (next != current)
+			n++;
+
+		current = next;
+	}
+
+	return n;
+}
+
+int 
+nh8count_np(guint32 *pixels, int stride, int x, int y, int val) 
+{
+	guint i, n=0;
+
+	for (i=0; i < 8; i++)
+		if (GET_PIXEL(pixels, stride, x + n8[i][1], y + n8[i][0]) == val)
+			n++;
+
+	return n;
+}
+
+/*
+	In place Zhang-Suen thinning. The algorithm leaves a 1px border untouched.
+*/
+void
+thinzs_np(cairo_surface_t *surface)
+{
+	gboolean modified;
+	guint x, y, n;
+	guint img_width, img_height;
+	guint stride, tmp_stride;
+	guint32 *pixels, *tmp_pixels;
+	guint pixel;
+	guint FG=1, BG=0;
+
+	cairo_surface_t *tmp_surface;
+	tmp_surface = surface_copy(surface);
+
 	img_width = cairo_image_surface_get_width(surface);
 	img_height = cairo_image_surface_get_height(surface);
+
+	pixels = (guint32*) cairo_image_surface_get_data(surface);
 	stride = cairo_image_surface_get_stride(surface);
 
-	if (y < 0) {
-		height += y;
-		y = 0;
-	}
-	if (x < 0) {
-		width += x;
-		x = 0;
-	}
-	if ((width <= 0) || (height <= 0))
-		return 0;
-	if (x + width > img_width) {
-		width = img_width - x;
-	}
-	if (y + height > img_height) {
-		height = img_height - y;
-	}
+	tmp_pixels = (guint32*) cairo_image_surface_get_data(tmp_surface);
+	tmp_stride = cairo_image_surface_get_stride(tmp_surface);
 
-	return count_black_pixel_unchecked(pixels, stride, x, y, width, height);
-}
 
-gint
-count_black_pixel_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height)
-{
-	static guint8 bitcount[256];
-	static gint table_initialized = FALSE;
-	guint x_pos, y_pos;
-	guint black_pixel = 0;
+	do {
+		modified = FALSE;
 
-	if (G_UNLIKELY(!table_initialized)) {
-		int i;
+		for (y=1; y < img_height-1; y++)  for (x=1; x < img_width-1; x++) {
+			pixel = GET_PIXEL(pixels, stride, x, y);
 
-		for (i = 0; i < 256; i++) {
-			int j;
-			bitcount[i] = 0;
-			for (j = i; j; j = j >> 1) {
-				bitcount[i] += j & 0x1;
+			SET_PIXEL(tmp_pixels, tmp_stride, x, y, pixel);
+
+			if (pixel == FG) {
+				n = nh8count_np(pixels, stride, x, y, FG);
+
+				if ( n >= 2 && n <= 6 && crossing_index_np(pixels, stride, x, y) == 2) {
+					if((GET_PIXEL(pixels, stride, x, y-1) == BG ||
+					    GET_PIXEL(pixels, stride, x+1, y) == BG ||
+					    GET_PIXEL(pixels, stride, x, y+1) == BG)
+					&& (GET_PIXEL(pixels, stride, x, y-1) == BG ||
+					    GET_PIXEL(pixels, stride, x, y+1) == BG ||
+					    GET_PIXEL(pixels, stride, x-1, y) == BG))
+					{
+						SET_PIXEL(tmp_pixels, tmp_stride, x, y, BG);
+						modified = TRUE;
+					}
+				}
 			}
 		}
-		table_initialized = TRUE;
-	}
 
-	for (y_pos = y; y_pos < y + height; y_pos++) {
-#define COUNT_WORD(x) bitcount[(x) & 0xff] + bitcount[((x) >> 8) & 0xff] + bitcount[((x) >> 16) & 0xff] + bitcount[((x) >> 24) & 0xff]
+		for (y=1; y < img_height-1; y++)  for (x=1; x < img_width-1; x++) {
+			pixel = GET_PIXEL(tmp_pixels, tmp_stride, x, y);
 
-		guint32 start_mask;
-		guint32 end_mask;
-		int start;
-		int end;
-		int pos;
+			SET_PIXEL(pixels, stride, x, y, pixel);
 
-#if G_BYTE_ORDER == G_BIG_ENDIAN
-		start_mask = (1 << (x & 0x1f)) - 1;
-		end_mask = -(1 << ((x + width) & 0x1f));
-#else
-		start_mask = -(1 << (x & 0x1f));
-		end_mask = (1 << ((x + width) & 0x1f)) - 1;
-#endif
-		start = x >> 5;
-		end = (x + width) >> 5;
+			if (pixel == FG) {
+				n = nh8count_np(tmp_pixels, tmp_stride, x, y, FG);
 
-		if (start == end) {
-			black_pixel += COUNT_WORD(pixels[start + y_pos * stride / 4] & start_mask & end_mask);
-		} else {
-			black_pixel += COUNT_WORD(pixels[start + y_pos * stride / 4] & start_mask);
-			for (pos = start + 1; pos < end; pos++) {
-				black_pixel += COUNT_WORD(pixels[pos + y_pos * stride / 4]);
-			}
-			black_pixel += COUNT_WORD(pixels[end + y_pos * stride / 4] & end_mask);
-		}
-
-#undef COUNT_WORD
-	}
-
-	return black_pixel;
-}
-
-gint
-count_black_pixel_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y)
-{
-	guint32 *pixels;
-	guint32 *mask_pixels;
-	guint stride;
-	guint mask_stride;
-	gint width, height;
-	guint img_width, img_height;
-
-	width = cairo_image_surface_get_width (mask);
-	height = cairo_image_surface_get_height (mask);
-	mask_pixels = (guint32*) cairo_image_surface_get_data (mask);
-	mask_stride = cairo_image_surface_get_stride (mask);
-
-	pixels = (guint32*) cairo_image_surface_get_data (surface);
-	img_width = cairo_image_surface_get_width (surface);
-	img_height = cairo_image_surface_get_height (surface);
-	stride = cairo_image_surface_get_stride (surface);
-
-	/* Ignore if the mask is not completely in the image ... */
-	if (y < 0) {
-		return 0;
-	}
-	if (x < 0) {
-		return 0;
-	}
-	if ((width <= 0) || (height <= 0))
-		return 0;
-	if (x + width > img_width) {
-		return 0;
-	}
-	if (y + height > img_height) {
-		return 0;
-	}
-
-	return count_black_pixel_masked_unchecked(pixels, stride, mask_pixels, mask_stride, x, y, width, height);
-}
-
-gint
-count_black_pixel_masked_unchecked(guint32* pixels, guint32 stride, guint32 *mask_pixels, guint32 mask_stride, gint x, gint y, gint width, gint height)
-{
-	static guint8 bitcount[256];
-	static gint table_initialized = FALSE;
-	guint y_pos;
-	guint black_pixel = 0;
-
-	if (G_UNLIKELY(!table_initialized)) {
-		int i;
-
-		for (i = 0; i < 256; i++) {
-			int j;
-			bitcount[i] = 0;
-			for (j = i; j; j = j >> 1) {
-				bitcount[i] += j & 0x1;
+				if ( n>=2 && n<=6 && crossing_index_np(tmp_pixels, tmp_stride, x, y) == 2) {
+					if((GET_PIXEL(pixels, stride, x+1, y) == BG ||
+					    GET_PIXEL(pixels, stride, x-1, y) == BG ||
+					    GET_PIXEL(pixels, stride, x, y-1) == BG)
+					&& (GET_PIXEL(pixels, stride, x, y-1) == BG ||
+					    GET_PIXEL(pixels, stride, x-1, y) == BG ||
+					    GET_PIXEL(pixels, stride, x, y+1) == BG))
+					{
+						SET_PIXEL(pixels, stride, x, y, BG);
+						modified = TRUE;
+					}
+				}
 			}
 		}
-		table_initialized = TRUE;
-	}
+	} while (modified);
 
-	for (y_pos = 0; y_pos < height; y_pos++) {
-#define COUNT_WORD(x) bitcount[(x) & 0xff] + bitcount[((x) >> 8) & 0xff] + bitcount[((x) >> 16) & 0xff] + bitcount[((x) >> 24) & 0xff]
+	cairo_surface_destroy(tmp_surface);
 
-		guint32 end_mask;
-		guint32 curr_pixels;
-		int end;
-		int pos;
-
-#if G_BYTE_ORDER == G_BIG_ENDIAN
-		end_mask = -(1 << (width & 0x1f));
-#else
-		end_mask = (1 << (width & 0x1f)) - 1;
-#endif
-		end = width >> 5;
-
-		for (pos = 0; pos <= end; pos++) {
-			/* Note that a shift of 32 is not defined, it may also be 0. */
-#if G_BYTE_ORDER == G_BIG_ENDIAN
-			curr_pixels = pixels[(x / 32) + pos + (y_pos + y) * stride / 4] << (x % 32);
-			curr_pixels |= pixels[(x / 32) + pos + (y_pos + y) * stride / 4 + 1] >> (32 - (x % 32));
-#else
-			curr_pixels = pixels[(x / 32) + pos + (y_pos + y) * stride / 4] >> (x % 32);
-			curr_pixels |= pixels[((x + 31) / 32) + pos + (y_pos + y) * stride / 4] << (32 - (x % 32));
-#endif
-
-			curr_pixels &= mask_pixels[pos + y_pos * mask_stride / 4];
-
-			if (pos == end)
-				curr_pixels &= end_mask;
-
-			black_pixel += COUNT_WORD(curr_pixels);
-		}
-
-#undef COUNT_WORD
-	}
-
-	return black_pixel;
+	cairo_surface_mark_dirty(surface);
 }
-
-void
-set_pixels_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height, int value)
-{
-	guint x_pos, y_pos;
-
-	for (y_pos = y; y_pos < y + height; y_pos++) {
-		for (x_pos = x; x_pos < x + width; x_pos++) {
-			SET_PIXEL(pixels, stride, x_pos, y_pos, value);
-		}
-	}
-}
+#endif
 
