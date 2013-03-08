@@ -92,7 +92,7 @@ surface_copy_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gin
 	mask_pixels = (guint32*) cairo_image_surface_get_data(mask);
 	mask_stride = cairo_image_surface_get_stride(mask);
 
-	word_width = (width + 31) / 32 + 1;
+	word_width = (width + 31) / 32;
 	for (y = 0; y < height; y++) {
 		for (x = 0; x < word_width; x++) {
 			result_pixels[x + y*result_stride/4] &= mask_pixels[x + y*mask_stride/4];
