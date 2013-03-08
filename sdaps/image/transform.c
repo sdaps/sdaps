@@ -144,7 +144,7 @@ kfill_modified(cairo_surface_t* surface, gint k)
 				r = 4 - r;
 			}
 
-			if ((c <= 1) && ((n > 3*k - 4) || (n == 3*k - 4) && (r == 2))) {
+			if ((c <= 1) && ((n > 3*k - 4) || ((n == 3*k - 4) && (r == 2)))) {
 				set_pixels_unchecked(pixels, stride, x+1, y+1, k-2, k-2, !core_color);
 			} else {
 				set_pixels_unchecked(pixels, stride, x+1, y+1, k-2, k-2, core_color);

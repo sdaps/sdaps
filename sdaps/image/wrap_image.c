@@ -17,6 +17,7 @@
  */
 
 #include "image.h"
+#include "transform.h"
 #include <Python.h>
 #include <pycairo.h>
 #include <cairo.h>
@@ -77,13 +78,11 @@ initpycairo(void)
 PyMODINIT_FUNC
 initimage(void)
 {
-	PyObject *m;
-
 	/* Return if pycairo cannot be initilized. */
 	if (!initpycairo())
 		return;
 
-	m = Py_InitModule("image", EvaluateMethods);
+	Py_InitModule("image", EvaluateMethods);
 
 	/* supress warnings from libtiff. */
 	disable_libtiff_warnings ();

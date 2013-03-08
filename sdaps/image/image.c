@@ -36,8 +36,8 @@ gint sdaps_debug_surface_ox;
 gint sdaps_debug_surface_oy;
 cairo_surface_t *sdaps_debug_surface = NULL;
 
-cairo_surface_t*
-debug_surface_clear()
+static void
+debug_surface_clear(void)
 {
 	if (sdaps_debug_surface != NULL) {
 		cairo_surface_destroy(sdaps_debug_surface);
@@ -45,7 +45,7 @@ debug_surface_clear()
 	}
 }
 
-cairo_surface_t*
+static cairo_surface_t*
 debug_surface_create(gint x, gint y, gint width, gint height, gdouble r, gdouble g, gdouble b, gdouble a)
 {
 	cairo_t* cr;
@@ -212,7 +212,6 @@ gboolean
 get_tiff_resolution (char *filename, gint page, gdouble *xresolution, gdouble *yresolution)
 {
 	TIFF* tiff;
-	gint pages;
 	float xres = 0.0;
 	float yres = 0.0;
 	uint16 unit = RESUNIT_NONE;
