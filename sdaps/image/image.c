@@ -961,6 +961,71 @@ calculate_correction_matrix(cairo_surface_t  *surface,
 	return result;
 }
 
+/* Version that works on a mask instead of a fixed box. */
+cairo_matrix_t*
+calculate_correction_matrix_masked(cairo_surface_t  *surface,
+                                   cairo_surface_t  *mask,
+                                   cairo_matrix_t   *matrix,
+                                   gdouble           mm_x,
+                                   gdouble           mm_y)
+{
+	gdouble tmp_x, tmp_y;
+	gint px_x, px_y, px_width, px_height;
+	cairo_matrix_t inverse;
+	cairo_matrix_t *result = NULL;
+	gint test_dist;
+	gint line_width;
+	gint x_offset, y_offset;
+	gint x_cov;
+	gint y_cov;
+	gint coverage = 0;
+
+	inverse = *matrix;
+	cairo_matrix_invert(&inverse);
+	
+	tmp_x = mm_x;
+	tmp_y = mm_y;
+	cairo_matrix_transform_point(matrix, &tmp_x, &tmp_y);
+	px_x = tmp_x;
+	px_y = tmp_y;
+	
+	/* Shut up the compiler. */
+	x_cov = px_x;
+	y_cov = px_y;
+
+	px_width = cairo_image_surface_get_width(mask);
+	px_height = cairo_image_surface_get_height(mask);
+
+	test_dist = MIN(px_width, px_height) / 2;
+
+	/* Top */
+	for (x_offset = -test_dist; x_offset <= test_dist; x_offset++) {
+		for (y_offset = -test_dist; y_offset <= test_dist; y_offset++) {
+		    gint new_cov;
+
+            new_cov = count_black_pixel_masked(surface, mask, px_x + x_offset, px_y + y_offset);
+			if (coverage < new_cov) {
+				coverage = new_cov;
+				x_cov = px_x + x_offset;
+				y_cov = px_y + y_offset;
+			}
+		}
+	}
+	
+	tmp_x = x_cov;
+	tmp_y = y_cov;
+	cairo_matrix_transform_point(&inverse, &tmp_x, &tmp_y);
+	
+	result = g_malloc(sizeof(cairo_matrix_t));
+	cairo_matrix_init_identity(result);
+
+	/* Just a translation */	
+	result->x0 = tmp_x - mm_x;
+	result->y0 = tmp_y - mm_y;
+	
+	return result;
+}
+
 gboolean
 find_box_corners(cairo_surface_t  *surface,
                  cairo_matrix_t   *matrix,

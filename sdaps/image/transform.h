@@ -66,7 +66,13 @@ gint
 count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint height);
 
 gint
+count_black_pixel_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y);
+
+gint
 count_black_pixel_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height);
+
+gint
+count_black_pixel_masked_unchecked(guint32* pixels, guint32 stride, guint32 *mask_pixels, guint32 mask_stride, gint x, gint y, gint width, gint height);
 
 void
 set_pixels_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height, int value);

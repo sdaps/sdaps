@@ -624,7 +624,7 @@ gint
 count_black_pixel_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height)
 {
 	static guint8 bitcount[256];
-	static table_initialized = FALSE;
+	static gint table_initialized = FALSE;
 	guint x_pos, y_pos;
 	guint black_pixel = 0;
 
@@ -675,6 +675,107 @@ count_black_pixel_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gin
 
 	return black_pixel;
 }
+
+gint
+count_black_pixel_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y)
+{
+	guint32 *pixels;
+	guint32 *mask_pixels;
+	guint stride;
+	guint mask_stride;
+    gint width, height;
+    guint img_width, img_height;
+
+    width = cairo_image_surface_get_width (mask);
+    height = cairo_image_surface_get_height (mask);
+	mask_pixels = (guint32*) cairo_image_surface_get_data (mask);
+	mask_stride = cairo_image_surface_get_stride (mask);
+
+	pixels = (guint32*) cairo_image_surface_get_data (surface);
+	img_width = cairo_image_surface_get_width (surface);
+	img_height = cairo_image_surface_get_height (surface);
+	stride = cairo_image_surface_get_stride (surface);
+
+    /* Ignore if the mask is not completely in the image ... */
+	if (y < 0) {
+		return 0;
+	}
+	if (x < 0) {
+		return 0;
+	}
+	if ((width <= 0) || (height <= 0))
+		return 0;
+	if (x + width > img_width) {
+		return 0;
+	}
+	if (y + height > img_height) {
+		return 0;
+	}
+
+	return count_black_pixel_masked_unchecked(pixels, stride, mask_pixels, mask_stride, x, y, width, height);
+}
+
+gint
+count_black_pixel_masked_unchecked(guint32* pixels, guint32 stride, guint32 *mask_pixels, guint32 mask_stride, gint x, gint y, gint width, gint height)
+{
+	static guint8 bitcount[256];
+	static gint table_initialized = FALSE;
+	guint y_pos;
+	guint black_pixel = 0;
+
+	if (G_UNLIKELY(!table_initialized)) {
+		int i;
+
+		for (i = 0; i < 256; i++) {
+			int j;
+			bitcount[i] = 0;
+			for (j = i; j; j = j >> 1) {
+				bitcount[i] += j & 0x1;
+			}
+		}
+		table_initialized = TRUE;
+	}
+
+	for (y_pos = 0; y_pos < height; y_pos++) {
+#define COUNT_WORD(x) bitcount[(x) & 0xff] + bitcount[((x) >> 8) & 0xff] + bitcount[((x) >> 16) & 0xff] + bitcount[((x) >> 24) & 0xff]
+
+		guint32 end_mask;
+		guint32 curr_pixels;
+		int end;
+		int pos;
+
+#if G_BYTE_ORDER == G_BIG_ENDIAN
+		end_mask = -(1 << (width & 0x1f));
+#else
+		end_mask = (1 << (width & 0x1f)) - 1;
+#endif
+		end = width >> 5;
+
+		for (pos = 0; pos <= end; pos++) {
+		    /* Note that a shift of 32 is not defined, it may also be 0. */
+#if G_BYTE_ORDER == G_BIG_ENDIAN
+		    curr_pixels = pixels[(x / 32) + pos + (y_pos + y) * stride / 4] << (x % 32);
+		    curr_pixels |= pixels[(x / 32) + pos + (y_pos + y) * stride / 4 + 1] >> (32 - (x % 32));
+#else
+		    curr_pixels = pixels[(x / 32) + pos + (y_pos + y) * stride / 4] >> (x % 32);
+		    curr_pixels |= pixels[((x + 31) / 32) + pos + (y_pos + y) * stride / 4] << (32 - (x % 32));
+#endif
+
+		    curr_pixels &= mask_pixels[pos + y_pos * mask_stride / 4];
+
+            if (pos == end)
+                curr_pixels &= end_mask;
+
+			black_pixel += COUNT_WORD(curr_pixels);
+		}
+
+#undef COUNT_WORD
+	}
+
+	return black_pixel;
+}
+
+
 
 void
 set_pixels_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height, int value)

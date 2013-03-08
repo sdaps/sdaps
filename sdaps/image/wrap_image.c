@@ -25,6 +25,7 @@ static PyObject *wrap_get_a1_from_tiff(PyObject *self, PyObject *args);
 static PyObject *wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args);
 static PyObject *wrap_calculate_matrix(PyObject *self, PyObject *args);
 static PyObject *wrap_calculate_correction_matrix(PyObject *self, PyObject *args);
+static PyObject *wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args);
 static PyObject *wrap_find_box_corners(PyObject *self, PyObject *args);
 static PyObject *wrap_get_coverage(PyObject *self, PyObject *args);
 static PyObject *wrap_get_coverage_without_lines(PyObject *self, PyObject *args);
@@ -48,6 +49,7 @@ static PyMethodDef EvaluateMethods[] = {
 	{"check_tiff_monochrome",  wrap_check_tiff_monochrome, METH_VARARGS, "Check whether all pages of the tiff are monochrome."},
 	{"calculate_matrix",  wrap_calculate_matrix, METH_VARARGS, "Calculates the transformation matrix transform the image into the survey coordinate system."},
 	{"calculate_correction_matrix",  wrap_calculate_correction_matrix, METH_VARARGS, "Calculates a corrected transformation matrix for the box at the given position (argument should be the bounding box)."},
+	{"calculate_correction_matrix_masked",  wrap_calculate_correction_matrix_masked, METH_VARARGS, "Calculates a corrected transformation matrix for the mask at the given the top left corner."},
 	{"find_box_corners",  wrap_find_box_corners, METH_VARARGS, "Tries to find the actuall corners of a box in the milimeter space."},
 	{"get_coverage",  wrap_get_coverage, METH_VARARGS, "Calculates the black coverage in the given area."},
 	{"get_coverage_without_lines",  wrap_get_coverage_without_lines, METH_VARARGS, "First removes the number of requested lines with the specified stroke width using a hough transformation. Then calculates the coverage."},
@@ -212,6 +214,28 @@ wrap_calculate_correction_matrix(PyObject *self, PyObject *args)
 		return NULL;
 	
 	correction_matrix = calculate_correction_matrix(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
+
+	if (correction_matrix) {
+		return PycairoMatrix_FromMatrix(correction_matrix);
+	} else {
+		PyErr_SetString(PyExc_AssertionError, "Could not calculate the corrected matrix!");
+		return NULL;
+	}
+}
+
+static PyObject *
+wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
+{
+	PycairoSurface *py_surface;
+	PycairoSurface *py_mask;
+	PycairoMatrix *py_matrix;
+	cairo_matrix_t *correction_matrix;
+	float mm_x, mm_y;
+	
+	if (!PyArg_ParseTuple(args, "O!O!O!ff", &PycairoImageSurface_Type, &py_surface, &PycairoImageSurface_Type, &py_mask, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y))
+		return NULL;
+	
+	correction_matrix = calculate_correction_matrix_masked(py_surface->surface, py_mask->surface, &py_matrix->matrix, mm_x, mm_y);
 
 	if (correction_matrix) {
 		return PycairoMatrix_FromMatrix(correction_matrix);
