@@ -343,8 +343,13 @@ class Box(buddy.Object, DataObject):
 
 class Checkbox(Box):
 
-    pass
+    def init_attributes(self):
+        Box.init_attributes(self)
+        self.form = "box"
 
+    def calculate_survey_id(self, md5):
+        Box.calculate_survey_id(self, md5)
+        md5.update(self.form)
 
 class Textbox(Box):
 
