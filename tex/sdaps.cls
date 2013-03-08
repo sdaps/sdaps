@@ -586,11 +586,16 @@
 \setlength{\edgelen}{2.00cm}
 \newlength{\elementlinewidth}
 \setlength{\elementlinewidth}{1.0bp}
-\newlength{\boxsize}
-\setlength{\boxsize}{3.5mm}
+\newlength{\checkboxsize}
+\setlength{\checkboxsize}{3.5mm}
 \newlength{\boxpaddings}
 \setlength{\boxpaddings}{3mm}
-\addtolength{\boxsize}{-\elementlinewidth}
+% Subtract outline width
+\addtolength{\checkboxsize}{-\elementlinewidth}
+
+% How to draw the checkbox, either "box" or "ellipse" (though ellipse is a circle,
+% because we don't support non-square sizes here for now).
+\def\checkboxstyle{box}
 
 % Settings for cornerboxes (used in classic style)
 
@@ -696,47 +701,63 @@
     \checkboxNoStar%
 }
 
+\providecommand{\@sdaps@drawbox}{
+  \ifstr{\checkboxstyle}{box}{
+    \draw[line width=\elementlinewidth] (0.5\elementlinewidth, 0) rectangle +(\checkboxsize, \checkboxsize);%
+  }{}
+  \ifstr{\checkboxstyle}{ellipse}{
+    \draw[line width=\elementlinewidth] ($(0.5\elementlinewidth, 0) + (0.5\checkboxsize, 0.5\checkboxsize)$) circle (0.5\checkboxsize);%
+  }{}
+}
+
 \providecommand{\checkboxNoStar}{%
   \mbox{%
   \label{checkbox\thecheckboxnum}%
-  \tikz[baseline={max(0ex, 0.5\boxsize-1ex+0.5\elementlinewidth)},remember picture]{%
-    \draw[line width=\elementlinewidth] (0.5\elementlinewidth, 0) rectangle +(\boxsize, \boxsize);%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+    \@sdaps@drawbox
 %
     \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
     \pgfsys@getposition{\pgfpictureid}{\@sdaps@checkboxpos}%
     \pgfpointadd{\@sdaps@checkboxpos}{%
-      \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{-{max(0ex, 0.5\boxsize-1ex+0.5\elementlinewidth)} + \boxsize + 0.5\elementlinewidth}}%
+      \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{-{max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)} + \checkboxsize + 0.5\elementlinewidth}}%
     }%
     \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
-    \pgfpoint{\boxsize+\elementlinewidth}{\boxsize+\elementlinewidth}%
+    \pgfpoint{\checkboxsize+\elementlinewidth}{\checkboxsize+\elementlinewidth}%
     \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-    \protectedimmediatewrite\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width}%
+    \protectedimmediatewrite\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width, \checkboxstyle}%
   }%
   \addtocounter{checkboxnum}{1}}%
 }
 \providecommand{\checkboxStar}{%
-  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
-    \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+    \@sdaps@drawbox
   }%
 }
 \providecommand{\checkedbox}{%
   \hspace{-2pt}%
-  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
-    \draw[line width=\elementlinewidth] (0, 0) rectangle (\boxsize, \boxsize);%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+    \@sdaps@drawbox
+ %
     \begin{scope}[decoration={random steps,segment length=4pt,amplitude=1pt}]
-      \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\boxsize, \boxsize) + (2pt,2pt)$);%
-      \draw[line width=\elementlinewidth, decorate] ($(0, \boxsize) + (-2pt,2pt)$)-- ($(\boxsize, 0) + (2pt,-2pt)$);%
+      \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\checkboxsize, \checkboxsize) + (2pt,2pt)$);%
+      \draw[line width=\elementlinewidth, decorate] ($(0, \checkboxsize) + (-2pt,2pt)$)-- ($(\checkboxsize, 0) + (2pt,-2pt)$);%
     \end{scope}
   }%
 }
 \providecommand{\correctedbox}{%
   \hspace{-2pt}%
-  \tikz[baseline=-0.5\boxsize+0.5em-0.5\elementlinewidth]{%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+    \ifstr{\checkboxstyle}{box}{
+      \fill[line width=\elementlinewidth] (0.5\elementlinewidth, 0) rectangle +(\checkboxsize, \checkboxsize);%
+    }{}
+    \ifstr{\checkboxstyle}{ellipse}{
+      \fill[line width=\elementlinewidth] ($(0.5\elementlinewidth, 0) + (0.5\checkboxsize, 0.5\checkboxsize)$) circle (0.5\checkboxsize);%
+    }{}
+%
     \begin{scope}[decoration={random steps,segment length=4pt,amplitude=1pt}]
-      \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\boxsize, \boxsize) + (2pt,2pt)$);%
-      \draw[line width=\elementlinewidth, decorate] ($(0, \boxsize) + (-2pt,2pt)$)-- ($(\boxsize, 0) + (2pt,-2pt)$);%
+      \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\checkboxsize, \checkboxsize) + (2pt,2pt)$);%
+      \draw[line width=\elementlinewidth, decorate] ($(0, \checkboxsize) + (-2pt,2pt)$)-- ($(\checkboxsize, 0) + (2pt,-2pt)$);%
     \end{scope}
-    \fill[line width=\elementlinewidth] (0, 0) rectangle +(\boxsize, \boxsize);%
   }%
 }
 

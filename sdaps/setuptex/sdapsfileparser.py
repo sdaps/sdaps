@@ -140,13 +140,18 @@ def parse(survey):
             boxtype = args[0]
             # Convert to mm
             page = int(args[1])
-            x, y, width, height = [float(arg[:-2]) / 72.27 * 25.4 for arg in args[2:]]
+            x, y, width, height = [float(arg[:-2]) / 72.27 * 25.4 for arg in args[2:6]]
             y = survey.defs.paper_height - y
 
             if boxtype == 'Textbox':
                 box = model.questionnaire.Textbox()
+                assert(len(args) == 6)
             else:
                 box = model.questionnaire.Checkbox()
+                if len(args) == 7:
+                    box.form = args[6]
+                else:
+                    assert(len(args) == 6)
 
             box.setup.setup(page, x, y, width, height)
             qobject.setup.box(box)
