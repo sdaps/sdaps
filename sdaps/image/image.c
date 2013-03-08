@@ -749,7 +749,7 @@ find_corner_marker(cairo_surface_t *surface,
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -1000,9 +1000,9 @@ calculate_correction_matrix_masked(cairo_surface_t  *surface,
 	/* Top */
 	for (x_offset = -test_dist; x_offset <= test_dist; x_offset++) {
 		for (y_offset = -test_dist; y_offset <= test_dist; y_offset++) {
-		    gint new_cov;
+			gint new_cov;
 
-            new_cov = count_black_pixel_masked(surface, mask, px_x + x_offset, px_y + y_offset);
+			new_cov = count_black_pixel_masked(surface, mask, px_x + x_offset, px_y + y_offset);
 			if (coverage < new_cov) {
 				coverage = new_cov;
 				x_cov = px_x + x_offset;
