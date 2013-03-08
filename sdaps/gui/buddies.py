@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import cairo
+import math
 
 from sdaps import model
 from sdaps import defs
@@ -37,6 +38,33 @@ def inner_box(cr, x, y, width, height):
     cr.rectangle(x + line_width / 2.0, y + line_width / 2.0,
                  width - line_width, height - line_width)
 
+def ellipse(cr, x, y, width, height):
+    cr.save()
+
+    cr.translate(x + width / 2.0, y + height / 2.0)
+
+    line_width = cr.get_line_width()
+
+    cr.scale(width / 2.0, height / 2.0)
+    cr.arc(0, 0, 1.0, 0, 2*math.pi)
+    cr.close_path()
+
+    # Restore old matrix (without removing the current path)
+    cr.restore()
+
+def inner_ellipse(cr, x, y, width, height):
+    cr.save()
+
+    cr.translate(x + width / 2.0, y + height / 2.0)
+
+    line_width = cr.get_line_width()
+
+    cr.scale((width - line_width) / 2.0, (height - line_width) / 2.0)
+    cr.arc(0, 0, 1.0, 0, 2*math.pi)
+    cr.close_path()
+
+    # Restore old matrix (without removing the current path)
+    cr.restore()
 
 class Questionnaire(model.buddy.Buddy):
 
@@ -153,11 +181,19 @@ class Checkbox(Box):
         cr.set_line_width(LINE_WIDTH)
 
         if self.obj.data.state:
-            cr.rectangle(self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
-            cr.fill()
+            if self.obj.form == "box":
+                cr.rectangle(self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
+                cr.fill()
+            elif self.obj.form == "ellipse":
+                ellipse(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
+                cr.fill()
         else:
-            inner_box(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
-            cr.stroke()
+            if self.obj.form == "box":
+                inner_box(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
+                cr.stroke()
+            elif self.obj.form == "ellipse":
+                inner_ellipse(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
+                cr.stroke()
 
         cr.restore()
 

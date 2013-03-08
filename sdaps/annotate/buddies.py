@@ -21,6 +21,7 @@
 from gi.repository import Pango
 from gi.repository import PangoCairo
 import cairo
+import math
 
 from sdaps import model
 from sdaps import defs
@@ -44,6 +45,19 @@ def inner_box(cr, x, y, width, height):
 
     cr.rectangle(x + line_width / 2.0, y + line_width / 2.0,
                  width - line_width, height - line_width)
+
+def inner_ellipse(cr, x, y, width, height):
+    cr.save()
+
+    cr.translate(x + width / 2.0, y + height / 2.0)
+
+    line_width = cr.get_line_width()
+
+    cr.scale((width - line_width) / 2.0, (height - line_width) / 2.0)
+    cr.arc(0, 0, 1.0, 0, 2*math.pi)
+
+    # Restore old matrix (without removing the current path)
+    cr.restore()
 
 def create_layout(cr, text, layout_info, indent=0):
     layout = PangoCairo.create_layout(cr)
@@ -164,6 +178,10 @@ class Box(model.buddy.Buddy):
     name = 'annotate'
     obj_class = model.questionnaire.Checkbox
 
+    def draw_box(self, cr):
+        inner_box(cr, self.obj.x, self.obj.y, self.obj.width, self.obj.height)
+        cr.stroke()
+
     def draw(self, cr, layout_info, nostring=False):
         if nostring is False:
             layout = create_layout(cr, self.obj.id_str() + " " + self.obj.text, layout_info, 6)
@@ -180,8 +198,7 @@ class Box(model.buddy.Buddy):
         cr.set_source_rgba(0.0, 0.0, 1.0, 0.5)
         cr.set_line_width(LINE_WIDTH)
 
-        inner_box(cr, self.obj.x, self.obj.y, self.obj.width, self.obj.height)
-        cr.stroke()
+        self.draw_box(cr)
 
         text = str(self.obj.id[-1])
         layout = PangoCairo.create_layout(cr)
@@ -192,6 +209,7 @@ class Box(model.buddy.Buddy):
 
         cr.move_to(self.obj.x + LINE_WIDTH, self.obj.y + LINE_WIDTH)
         PangoCairo.show_layout(cr, layout)
+        cr.new_path()
 
 
 class Checkbox(Box):
@@ -199,6 +217,15 @@ class Checkbox(Box):
     __metaclass__ = model.buddy.Register
     name = 'annotate'
     obj_class = model.questionnaire.Checkbox
+
+    def draw_box(self, cr):
+        if self.obj.form == "box":
+            inner_box(cr, self.obj.x, self.obj.y, self.obj.width, self.obj.height)
+            cr.stroke()
+        elif self.obj.form == "ellipse":
+            inner_ellipse(cr, self.obj.x, self.obj.y, self.obj.width, self.obj.height)
+            cr.stroke()
+
 
 
 class Textbox(Box):
