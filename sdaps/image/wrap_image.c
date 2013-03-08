@@ -28,8 +28,9 @@ static PyObject *wrap_calculate_correction_matrix(PyObject *self, PyObject *args
 static PyObject *wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args);
 static PyObject *wrap_find_box_corners(PyObject *self, PyObject *args);
 static PyObject *wrap_get_coverage(PyObject *self, PyObject *args);
-static PyObject *wrap_get_coverage_without_lines(PyObject *self, PyObject *args);
-static PyObject *wrap_get_white_area_count(PyObject *self, PyObject *args);
+static PyObject *wrap_get_masked_coverage(PyObject *self, PyObject *args);
+static PyObject *wrap_get_masked_coverage_without_lines(PyObject *self, PyObject *args);
+static PyObject *wrap_get_masked_white_area_count(PyObject *self, PyObject *args);
 static PyObject *wrap_get_pbm(PyObject *self, PyObject *args);
 static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args);
 static PyObject *enable_debug_surface_creation(PyObject *self, PyObject *args);
@@ -52,8 +53,9 @@ static PyMethodDef EvaluateMethods[] = {
 	{"calculate_correction_matrix_masked",  wrap_calculate_correction_matrix_masked, METH_VARARGS, "Calculates a corrected transformation matrix for the mask at the given the top left corner."},
 	{"find_box_corners",  wrap_find_box_corners, METH_VARARGS, "Tries to find the actuall corners of a box in the milimeter space."},
 	{"get_coverage",  wrap_get_coverage, METH_VARARGS, "Calculates the black coverage in the given area."},
-	{"get_coverage_without_lines",  wrap_get_coverage_without_lines, METH_VARARGS, "First removes the number of requested lines with the specified stroke width using a hough transformation. Then calculates the coverage."},
-	{"get_white_area_count",  wrap_get_white_area_count, METH_VARARGS, "Returns the number and overall size of white areas that are larger than the given percentage of the overall size."},
+	{"get_masked_coverage",  wrap_get_masked_coverage, METH_VARARGS, "Calculates the black coverage in the given mask."},
+	{"get_masked_coverage_without_lines",  wrap_get_masked_coverage_without_lines, METH_VARARGS, "First removes the number of requested lines with the specified stroke width using a hough transformation. Then calculates the coverage. Works on the masked area."},
+	{"get_masked_white_area_count",  wrap_get_masked_white_area_count, METH_VARARGS, "Returns the number and overall size of white areas that are larger than the given percentage of the overall size. Works on the masked area."},
 	{"get_pbm",  wrap_get_pbm, METH_VARARGS, "Returns a string that contains a binary PBM data representation of the cairo A1 surface."},
 	{"set_magic_values",  sdaps_set_magic_values, METH_VARARGS, "Sets some magic values for recognition."},
 	{"enable_debug_surface_creation",  enable_debug_surface_creation, METH_VARARGS, "Sets whether debug images should be created."},
@@ -273,49 +275,65 @@ wrap_get_coverage(PyObject *self, PyObject *args)
 {
 	PycairoSurface *py_surface;
 	PycairoMatrix *py_matrix;
-	float mm_x, mm_y, mm_width, mm_height;
-	float coverage;
-	
-	if (!PyArg_ParseTuple(args, "O!O!ffff", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height))
-		return NULL;
-	
-	coverage = get_coverage(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
-
-	return Py_BuildValue("f", coverage);
-}
-
-static PyObject *
-wrap_get_coverage_without_lines(PyObject *self, PyObject *args)
-{
-	PycairoSurface *py_surface;
-	PycairoMatrix *py_matrix;
 	gdouble mm_x, mm_y, mm_width, mm_height;
-	gdouble line_width;
-	gint line_count;
 	gdouble coverage;
 
-	if (!PyArg_ParseTuple(args, "O!O!dddddi", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height, &line_width, &line_count))
+	if (!PyArg_ParseTuple(args, "O!O!dddd", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
 
-	coverage = get_coverage_without_lines(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height, line_width, line_count);
+	coverage = get_coverage(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
 
 	return Py_BuildValue("d", coverage);
 }
 
 static PyObject *
-wrap_get_white_area_count(PyObject *self, PyObject *args)
+wrap_get_masked_coverage(PyObject *self, PyObject *args)
 {
 	PycairoSurface *py_surface;
-	PycairoMatrix *py_matrix;
-	gdouble mm_x, mm_y, mm_width, mm_height;
+	PycairoSurface *py_mask;
+	gint x, y;
+	gdouble coverage;
+
+	if (!PyArg_ParseTuple(args, "O!O!ii", &PycairoImageSurface_Type, &py_surface, &PycairoImageSurface_Type, &py_mask, &x, &y))
+		return NULL;
+
+	coverage = get_masked_coverage(py_surface->surface, py_mask->surface, x, y);
+
+	return Py_BuildValue("d", coverage);
+}
+
+static PyObject *
+wrap_get_masked_coverage_without_lines(PyObject *self, PyObject *args)
+{
+	PycairoSurface *py_surface;
+	PycairoSurface *py_mask;
+	gint x, y;
+	gdouble line_width;
+	gint line_count;
+	gdouble coverage;
+
+	if (!PyArg_ParseTuple(args, "O!O!iidi", &PycairoImageSurface_Type, &py_surface, &PycairoImageSurface_Type, &py_mask, &x, &y, &line_width, &line_count))
+		return NULL;
+
+	coverage = get_masked_coverage_without_lines(py_surface->surface, py_mask->surface, x, y, line_width, line_count);
+
+	return Py_BuildValue("d", coverage);
+}
+
+static PyObject *
+wrap_get_masked_white_area_count(PyObject *self, PyObject *args)
+{
+	PycairoSurface *py_surface;
+	PycairoSurface *py_mask;
+	gint x, y;
 	gdouble min_size, max_size;
 	gdouble filled_area;
 	int count;
 
-	if (!PyArg_ParseTuple(args, "O!O!dddddd", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height, &min_size, &max_size))
+	if (!PyArg_ParseTuple(args, "O!O!iidd", &PycairoImageSurface_Type, &py_surface, &PycairoImageSurface_Type, &py_mask, &x, &y, &min_size, &max_size))
 		return NULL;
 
-	count = get_white_area_count(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height, min_size, max_size, &filled_area);
+	count = get_masked_white_area_count(py_surface->surface, py_mask->surface, x, y, min_size, max_size, &filled_area);
 
 	return Py_BuildValue("id", count, filled_area);
 }

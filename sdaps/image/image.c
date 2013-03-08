@@ -974,7 +974,6 @@ calculate_correction_matrix_masked(cairo_surface_t  *surface,
 	cairo_matrix_t inverse;
 	cairo_matrix_t *result = NULL;
 	gint test_dist;
-	gint line_width;
 	gint x_offset, y_offset;
 	gint x_cov;
 	gint y_cov;
@@ -1149,48 +1148,68 @@ get_coverage(cairo_surface_t *surface,
 	return black / (double) all;
 }
 
+float
+get_masked_coverage(cairo_surface_t *surface,
+                    cairo_surface_t *mask,
+                    gint             x,
+                    gint             y)
+{
+	gint width, height;
+	gint black, all;
+
+	width = cairo_image_surface_get_width (mask);
+	height = cairo_image_surface_get_height (mask);
+
+	all = count_black_pixel(mask, 0, 0, width, height);
+	black = count_black_pixel_masked(surface, mask, x, y);
+
+	if (sdaps_create_debug_surface) {
+		cairo_surface_t *surf = debug_surface_create(x, y, width, height, 0, 0, 0, 0);
+		cairo_t *cr = cairo_create(surf);
+
+		cairo_set_source_rgba(cr, 1, 0, 0, 0.5);
+		cairo_mask_surface(cr, mask, 0, 0);
+
+		cairo_destroy(cr);
+		cairo_surface_flush(surf);
+	}
+
+	return black / (double) all;
+}
+
 /* First removes the number of lines, and then calculates the coverage of what
  * is left. */
 gdouble
-get_coverage_without_lines(cairo_surface_t *surface,
-                           cairo_matrix_t  *matrix,
-                           gdouble          mm_x,
-                           gdouble          mm_y,
-                           gdouble          mm_width,
-                           gdouble          mm_height,
-                           gdouble          line_width,
-                           gint             line_count)
+get_masked_coverage_without_lines(cairo_surface_t *surface,
+                                  cairo_surface_t *mask,
+                                  gint             x,
+                                  gint             y,
+                                  gdouble          line_width,
+                                  gint             line_count)
 {
 	cairo_surface_t *tmp_surface;
 	cairo_surface_t *debug_surf;
-	gint x, y, width, height;
-	gdouble tmp_x, tmp_y;
+	gint width, height;
 	gdouble result;
 	gint i, all;
 
-	/* Transform to pixel. */
-	tmp_x = mm_x;
-	tmp_y = mm_y;
-	cairo_matrix_transform_point(matrix, &tmp_x, &tmp_y);
-	x = tmp_x;
-	y = tmp_y;
+	width = cairo_image_surface_get_width (mask);
+	height = cairo_image_surface_get_height (mask);
 
-	tmp_x = mm_width;
-	tmp_y = mm_height;
-	cairo_matrix_transform_distance(matrix, &tmp_x, &tmp_y);
-	width = tmp_x;
-	height = tmp_y;
+	all = count_black_pixel(mask, 0, 0, width, height);
 
-	/* Transform line width to pixel space. */
-	tmp_x = line_width;
-	tmp_y = line_width;
-	cairo_matrix_transform_distance(matrix, &tmp_x, &tmp_y);
-	line_width = MAX(tmp_x, tmp_y);
+	tmp_surface = surface_copy_masked(surface, mask, x, y);
 
-	all = width * height;
+	debug_surf = debug_surface_create(x, y, width, height, 0, 0, 0, 0);
+	if (debug_surf) {
+		cairo_t *cr;
+		cr = cairo_create(debug_surf);
+		cairo_set_source_rgba(cr, 0, 0, 1, 0.5);
+		cairo_mask_surface(cr, mask, 0, 0);
 
-	tmp_surface = surface_copy_partial(surface, x, y, width, height);
-	debug_surf = debug_surface_create(x, y, width, height, 0, 0, 1, 0.5);
+		cairo_destroy(cr);
+		cairo_surface_flush(debug_surf);
+	}
 
 #if 0
 	/* Something like this could be used to filter the image first.
@@ -1221,44 +1240,34 @@ get_coverage_without_lines(cairo_surface_t *surface,
 }
 
 guint
-get_white_area_count(cairo_surface_t *surface,
-                     cairo_matrix_t  *matrix,
-                     gdouble          mm_x,
-                     gdouble          mm_y,
-                     gdouble          mm_width,
-                     gdouble          mm_height,
-                     gdouble          min_size,
-                     gdouble          max_size,
-                     gdouble         *filled_area)
+get_masked_white_area_count(cairo_surface_t *surface,
+                            cairo_surface_t *mask,
+                            gint             x,
+                            gint             y,
+                            gdouble          min_size,
+                            gdouble          max_size,
+                            gdouble         *filled_area)
 {
 	cairo_surface_t *tmp_surface;
 	cairo_surface_t *backup_surface;
 	cairo_surface_t *debug_surf;
 	cairo_t *backup_cr;
-	gint x, y, width, height;
-	gdouble tmp_x, tmp_y;
+	gint width, height;
 	guint result = 0;
 	guint min_size_px;
 	guint max_size_px;
+	guint all;
 
-	/* Transform to pixel. */
-	tmp_x = mm_x;
-	tmp_y = mm_y;
-	cairo_matrix_transform_point(matrix, &tmp_x, &tmp_y);
-	x = tmp_x;
-	y = tmp_y;
+	width = cairo_image_surface_get_width (mask);
+	height = cairo_image_surface_get_height (mask);
 
-	tmp_x = mm_width;
-	tmp_y = mm_height;
-	cairo_matrix_transform_distance(matrix, &tmp_x, &tmp_y);
-	width = tmp_x;
-	height = tmp_y;
+	all = count_black_pixel(mask, 0, 0, width, height);
 
-	min_size_px = width * height * min_size;
-	max_size_px = width * height * max_size;
+	min_size_px = all * min_size;
+	max_size_px = all * max_size;
 
+	tmp_surface = surface_copy_masked(surface, mask, x, y);
 	/* Debug images */
-	tmp_surface = surface_copy_partial(surface, x, y, width, height);
 	debug_surf = debug_surface_create(x, y, width, height, 0, 0, 1, 0.5);
 	if (debug_surf != NULL) {
 		backup_surface = surface_copy(tmp_surface);
@@ -1278,7 +1287,7 @@ get_white_area_count(cairo_surface_t *surface,
 			guint area = flood_fill(tmp_surface, NULL, x, y, 0);
 			if ((area >= min_size_px) && (area <= max_size_px)) {
 				result += 1;
-				*filled_area += area / ((gdouble) width * height);
+				*filled_area += area / ((gdouble) all);
 
 				/* Flood fill again, this time also mark the area on the debug surface. */
 				if (debug_surf)

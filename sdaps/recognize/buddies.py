@@ -364,19 +364,24 @@ class Image(model.buddy.Buddy):
             x, y, width, height
         )
 
-    def get_coverage_without_lines(self, x, y, width, height, line_width, line_count):
-        return image.get_coverage_without_lines(
+    def get_masked_coverage(self, mask, x, y):
+        return image.get_masked_coverage(
             self.obj.surface.surface,
-            self.matrix,
-            x, y, width, height,
+            mask,
+            x, y
+        )
+
+    def get_masked_coverage_without_lines(self, mask, x, y, line_width, line_count):
+        return image.get_masked_coverage_without_lines(
+            self.obj.surface.surface,
+            mask, x, y,
             line_width, line_count
         )
 
-    def get_white_area_count(self, x, y, width, height, min_size, max_size):
-        return image.get_white_area_count(
+    def get_masked_white_area_count(self, mask, x, y, min_size, max_size):
+        return image.get_masked_white_area_count(
             self.obj.surface.surface,
-            self.matrix,
-            x, y, width, height,
+            mask, x, y,
             min_size, max_size
         )
 
@@ -575,7 +580,7 @@ class Checkbox(Box):
         return surf, xoff, yoff
 
     def get_inner_mask(self):
-        cr, surf, line_width, width, height = self.prepare_mask()
+        cr, surf, line_width, width, height, xoff, yoff = self.prepare_mask()
 
         if self.obj.form == "ellipse":
             cr.save()
@@ -593,7 +598,7 @@ class Checkbox(Box):
         surf.flush()
         del cr
 
-        return surf
+        return surf, xoff, yoff
         
 
     def recognize(self):
@@ -609,7 +614,7 @@ class Checkbox(Box):
             self.obj.x, self.obj.y,
             surf
         )
-        
+
         x, y = matrix.transform_point(self.obj.x, self.obj.y)
         width, height = matrix.transform_distance(self.obj.width, self.obj.height)
         self.obj.data.x = x + xoff
@@ -621,24 +626,26 @@ class Checkbox(Box):
         # C library. This is done by the boxgallery script currently.
         self.debug = {}
 
-        coverage = img.recognize.get_coverage(
-            x + 1.5 * pt_to_mm, y + 1.5 * pt_to_mm,
-            width - 3 * pt_to_mm, height - 3 * pt_to_mm)
+        mask, xoff, yoff = self.get_inner_mask()
+        x, y = self.obj.data.x, self.obj.data.y
+        x, y = x + xoff, y + yoff
+
+        x, y = img.recognize.matrix.transform_point(x, y)
+        x, y = int(x), int(y)
+
+        remove_line_width = 1.2 * 25.4 / 72.0
+        remove_line_width_px = max(img.recognize.matrix.transform_distance(remove_line_width, remove_line_width))
+
+        coverage = img.recognize.get_masked_coverage(mask, x, y)
         self.obj.data.metrics['coverage'] = coverage
         self.debug['coverage'] = image.get_debug_surface()
 
         # Remove 3 lines with width 1.2pt(about 5px).
-        coverage = img.recognize.get_coverage_without_lines(
-            x + 1.5 * pt_to_mm, y + 1.5 * pt_to_mm,
-            width - 3 * pt_to_mm, height - 3 * pt_to_mm,
-            1.2 * 25.4 / 72.0, 3)
+        coverage = img.recognize.get_masked_coverage_without_lines(mask, x, y, remove_line_width_px, 3)
         self.obj.data.metrics['cov-lines-removed'] = coverage
         self.debug['cov-lines-removed'] = image.get_debug_surface()
 
-        count, coverage = img.recognize.get_white_area_count(
-            x + 1.5 * pt_to_mm, y + 1.5 * pt_to_mm,
-            width - 3 * pt_to_mm, height - 3 * pt_to_mm,
-            0.05, 1.0)
+        count, coverage = img.recognize.get_masked_white_area_count(mask, x, y, 0.05, 1.0)
         self.obj.data.metrics['cov-min-size'] = coverage
         self.debug['cov-min-size'] = image.get_debug_surface()
 

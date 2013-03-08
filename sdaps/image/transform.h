@@ -45,6 +45,9 @@ surface_copy_partial(cairo_surface_t *surface, int x, int y, int width, int heig
 cairo_surface_t*
 surface_copy(cairo_surface_t *surface);
 
+cairo_surface_t*
+surface_copy_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y);
+
 #if 0
 void
 a1_surface_write_to_png(cairo_surface_t* surface, gchar* filename);

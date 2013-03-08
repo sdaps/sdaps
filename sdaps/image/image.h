@@ -65,11 +65,14 @@ find_box_corners(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x,
 float
 get_coverage(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);
 
+float
+get_masked_coverage(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y);
+
 gdouble
-get_coverage_without_lines(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height, gdouble line_width, gint line_count);
+get_masked_coverage_without_lines(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y, gdouble line_width, gint line_count);
 
 guint
-get_white_area_count(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height, gdouble min_size, gdouble max_size, gdouble *filled_area);
+get_masked_white_area_count(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y, gdouble min_size, gdouble max_size, gdouble *filled_area);
 
 void
 get_pbm(cairo_surface_t *surface, void **data, int *length);

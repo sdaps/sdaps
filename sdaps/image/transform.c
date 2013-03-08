@@ -54,6 +54,38 @@ surface_copy(cairo_surface_t *surface)
 	return surface_copy_partial(surface, 0, 0, width, height);
 }
 
+cairo_surface_t*
+surface_copy_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y)
+{
+	gint width, height;
+	gint word_width;
+	cairo_surface_t *result;
+	gint result_stride, mask_stride;
+	guint32 *result_pixels, *mask_pixels;
+
+	width = cairo_image_surface_get_width(mask);
+	height = cairo_image_surface_get_height(mask);
+
+	result = surface_copy_partial(surface, x, y, width, height);
+
+	result_pixels = (guint32*) cairo_image_surface_get_data(result);
+	result_stride = cairo_image_surface_get_stride(result);
+	mask_pixels = (guint32*) cairo_image_surface_get_data(mask);
+	mask_stride = cairo_image_surface_get_stride(mask);
+
+	word_width = (width + 31) / 32 + 1;
+	for (y = 0; y < height; y++) {
+	    for (x = 0; x < word_width; x++) {
+	        result_pixels[x + y*result_stride/4] &= mask_pixels[x + y*mask_stride/4];
+	    }
+	}
+
+	cairo_surface_mark_dirty(result);
+
+	return result;
+}
+
+
 #if 0
 /* This function is for debugging purposes. */
 void
