@@ -388,6 +388,14 @@ class Image(model.buddy.Buddy):
             width, height
         )
 
+    def correction_matrix_masked(self, x, y, mask):
+        return image.calculate_correction_matrix_masked(
+            self.obj.surface.surface,
+            mask,
+            self.matrix,
+            x, y
+        )
+
     def find_box_corners(self, x, y, width, height):
         tl, tr, br, bl = image.find_box_corners(
             self.obj.surface.surface,
@@ -510,6 +518,84 @@ class Checkbox(Box):
     name = 'recognize'
     obj_class = model.questionnaire.Checkbox
 
+    def prepare_mask(self):
+        img = self.obj.sheet.get_page_image(self.obj.page_number)
+        width, height = self.obj.width, self.obj.height
+
+        matrix = list(img.recognize.matrix)
+        # Remove any offset from the matrix
+        matrix[4] = 0
+        matrix[5] = 0
+        matrix = cairo.Matrix(*matrix)
+
+        px_width, px_height = matrix.transform_distance(width, height)
+        px_width, px_height = int(math.ceil(px_width)), int(math.ceil(px_height))
+
+        surf = cairo.ImageSurface(cairo.FORMAT_A1, px_width, px_height)
+        cr = cairo.Context(surf)
+        cr.set_source_rgba(0, 0, 0, 0)
+        cr.set_operator(cairo.OPERATOR_SOURCE)
+        cr.paint()
+
+        # Move to center and apply matrix
+        cr.translate(0.5 * px_width, 0.5 * px_height)
+        cr.transform(matrix)
+
+        cr.set_source_rgba(0, 0, 0, 1)
+
+        line_width = 1 / 72.0 * 25.4
+        cr.set_line_width(line_width)
+
+        matrix.invert()
+        xoff, yoff = matrix.transform_distance(px_width / 2.0, px_height / 2.0)
+        xoff = xoff - width / 2
+        yoff = yoff - width / 2
+
+        return cr, surf, line_width, width, height, xoff, yoff
+
+    def get_outline_mask(self):
+        cr, surf, line_width, width, height, xoff, yoff = self.prepare_mask()
+
+        if self.obj.form == "ellipse":
+            cr.save()
+
+            cr.scale((width - line_width) / 2.0, (height - line_width) / 2.0)
+            cr.arc(0, 0, 1.0, 0, 2*math.pi)
+            
+            # Restore old matrix (without removing the current path)
+            cr.restore()
+        else:
+            cr.translate(-0.5 * width, -0.5 * height)
+            cr.rectangle(line_width / 2, line_width / 2, width - line_width / 2, height - line_width / 2)
+
+        cr.stroke()
+        surf.flush()
+        del cr
+
+        return surf, xoff, yoff
+
+    def get_inner_mask(self):
+        cr, surf, line_width, width, height = self.prepare_mask()
+
+        if self.obj.form == "ellipse":
+            cr.save()
+
+            cr.scale((width - 3*line_width) / 2.0, (height - 3*line_width) / 2.0)
+            cr.arc(0, 0, 1.0, 0, 2*math.pi)
+            
+            # Restore old matrix (without removing the current path)
+            cr.restore()
+        else:
+            cr.translate(-0.5 * width, -0.5 * height)
+            cr.rectangle(1.5 * line_width, 1.5 * line_width, width - 3 * line_width, height - 3 * line_width)
+
+        cr.fill()
+        surf.flush()
+        del cr
+
+        return surf
+        
+
     def recognize(self):
         img = self.obj.sheet.get_page_image(self.obj.page_number)
 
@@ -517,14 +603,17 @@ class Checkbox(Box):
             self.obj.sheet.valid = 0
             return
 
-        matrix = img.recognize.correction_matrix(
+        surf, xoff, yoff = self.get_outline_mask()
+
+        matrix = img.recognize.correction_matrix_masked(
             self.obj.x, self.obj.y,
-            self.obj.width, self.obj.height
+            surf
         )
+        
         x, y = matrix.transform_point(self.obj.x, self.obj.y)
         width, height = matrix.transform_distance(self.obj.width, self.obj.height)
-        self.obj.data.x = x
-        self.obj.data.y = y
+        self.obj.data.x = x + xoff
+        self.obj.data.y = y + yoff
         self.obj.data.width = width
         self.obj.data.height = height
 
