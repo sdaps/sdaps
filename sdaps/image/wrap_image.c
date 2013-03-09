@@ -186,6 +186,7 @@ wrap_check_tiff_monochrome(PyObject *self, PyObject *args)
 static PyObject *
 wrap_calculate_matrix(PyObject *self, PyObject *args)
 {
+	PyObject *result;
 	PycairoSurface *py_surface;
 	PycairoMatrix *py_matrix;
 	cairo_matrix_t *matrix;
@@ -197,7 +198,9 @@ wrap_calculate_matrix(PyObject *self, PyObject *args)
 	matrix = calculate_matrix(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
 
 	if (matrix) {
-		return PycairoMatrix_FromMatrix(matrix);
+		result = PycairoMatrix_FromMatrix(matrix);
+		g_free(matrix);
+		return result;
 	} else {
 		PyErr_SetString(PyExc_AssertionError, "Could not calculate the matrix!");
 		return NULL;
@@ -207,6 +210,7 @@ wrap_calculate_matrix(PyObject *self, PyObject *args)
 static PyObject *
 wrap_calculate_correction_matrix(PyObject *self, PyObject *args)
 {
+	PyObject *result;
 	PycairoSurface *py_surface;
 	PycairoMatrix *py_matrix;
 	cairo_matrix_t *correction_matrix;
@@ -218,7 +222,9 @@ wrap_calculate_correction_matrix(PyObject *self, PyObject *args)
 	correction_matrix = calculate_correction_matrix(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
 
 	if (correction_matrix) {
-		return PycairoMatrix_FromMatrix(correction_matrix);
+		result = PycairoMatrix_FromMatrix(correction_matrix);
+		g_free(correction_matrix);
+		return result;
 	} else {
 		PyErr_SetString(PyExc_AssertionError, "Could not calculate the corrected matrix!");
 		return NULL;
@@ -228,6 +234,7 @@ wrap_calculate_correction_matrix(PyObject *self, PyObject *args)
 static PyObject *
 wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
 {
+	PyObject *result;
 	PycairoSurface *py_surface;
 	PycairoSurface *py_mask;
 	PycairoMatrix *py_matrix;
@@ -240,7 +247,9 @@ wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
 	correction_matrix = calculate_correction_matrix_masked(py_surface->surface, py_mask->surface, &py_matrix->matrix, mm_x, mm_y);
 
 	if (correction_matrix) {
-		return PycairoMatrix_FromMatrix(correction_matrix);
+		result = PycairoMatrix_FromMatrix(correction_matrix);
+		g_free(correction_matrix);
+		return result;
 	} else {
 		PyErr_SetString(PyExc_AssertionError, "Could not calculate the corrected matrix!");
 		return NULL;
