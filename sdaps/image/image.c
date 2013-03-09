@@ -103,7 +103,7 @@ get_a1_from_tiff (char *filename, gint page, gboolean rotated)
 
 	TIFFGetField(tiff, TIFFTAG_IMAGEWIDTH, &width);
 	TIFFGetField(tiff, TIFFTAG_IMAGELENGTH, &height);
-	t_pixels = g_malloc(width * height *sizeof(uint32));
+	t_pixels = g_new(guint32, width * height);
 	if (!rotated)
 		TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_TOPLEFT, 0);
 	else
@@ -160,7 +160,7 @@ get_rgb24_from_tiff (char *filename, gint page, gboolean rotated)
 
 	TIFFGetField(tiff, TIFFTAG_IMAGEWIDTH, &width);
 	TIFFGetField(tiff, TIFFTAG_IMAGELENGTH, &height);
-	t_pixels = g_malloc(width * height *sizeof(uint32));
+	t_pixels = g_new(guint32, width * height);
 	if (!rotated)
 		TIFFReadRGBAImageOriented(tiff, width, height, t_pixels, ORIENTATION_TOPLEFT, 0);
 	else
@@ -297,14 +297,10 @@ get_pbm(cairo_surface_t *surface, void **data, int *length)
 	start = g_strdup_printf("P4\n%i %i\n", width, height);
 	d_stride = (width + 7) / 8;
 	*length = strlen(start) + height * d_stride;
-	*data = g_malloc(*length);
+	*data = g_malloc0(*length);
 	strcpy(*data, start);
 	d_pixel = *data + strlen(start);
 	g_free(start);
-
-	for (i = 0; i < height * d_stride; i++) {
-		*(d_pixel + i) = 0;
-	}
 
 	for (y = 0; y < height; y++) {
 		for (x = 0; x < width; x++) {
@@ -824,7 +820,7 @@ calculate_matrix(cairo_surface_t *surface,
 
 	/* Corners are known, now calculate the matrix. */
 
-	result = g_malloc(sizeof(cairo_matrix_t));
+	result = g_new(cairo_matrix_t, 1);
 
 	/* Simply calculate the missing corner, that seems easier to write down. */
 	if (missing_corner == CORNER_TOP_LEFT) {
@@ -951,7 +947,7 @@ calculate_correction_matrix(cairo_surface_t  *surface,
 	tmp_y = y_cov;
 	cairo_matrix_transform_point(&inverse, &tmp_x, &tmp_y);
 
-	result = g_malloc(sizeof(cairo_matrix_t));
+	result = g_new(cairo_matrix_t, 1);
 	cairo_matrix_init_identity(result);
 
 	/* Just a translation */
@@ -1015,7 +1011,7 @@ calculate_correction_matrix_masked(cairo_surface_t  *surface,
 	tmp_y = y_cov;
 	cairo_matrix_transform_point(&inverse, &tmp_x, &tmp_y);
 
-	result = g_malloc(sizeof(cairo_matrix_t));
+	result = g_new(cairo_matrix_t, 1);
 	cairo_matrix_init_identity(result);
 
 	/* Just a translation */
