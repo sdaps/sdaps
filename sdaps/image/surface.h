@@ -47,6 +47,9 @@ surface_copy(cairo_surface_t *surface);
 cairo_surface_t*
 surface_copy_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y);
 
+void
+get_pbm(cairo_surface_t *surface, void **data, int *length);
+
 #if 0
 void
 a1_surface_write_to_png(cairo_surface_t* surface, gchar* filename);

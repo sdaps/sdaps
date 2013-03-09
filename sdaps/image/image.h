@@ -74,6 +74,3 @@ get_masked_coverage_without_lines(cairo_surface_t *surface, cairo_surface_t *mas
 guint
 get_masked_white_area_count(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y, gdouble min_size, gdouble max_size, gdouble *filled_area);
 
-void
-get_pbm(cairo_surface_t *surface, void **data, int *length);
-

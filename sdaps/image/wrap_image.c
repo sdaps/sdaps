@@ -18,6 +18,7 @@
 
 #include "image.h"
 #include "transform.h"
+#include "surface.h"
 #include <Python.h>
 #include <pycairo.h>
 #include <cairo.h>

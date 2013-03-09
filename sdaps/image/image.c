@@ -19,7 +19,6 @@
 /*#include <gdk-pixbuf/gdk-pixbuf.h>*/
 #include <tiffio.h>
 #include "image.h"
-#include <string.h>
 #include <math.h>
 #include "surface.h"
 #include "transform.h"
@@ -270,43 +269,6 @@ check_tiff_monochrome (char *filename)
 	TIFFClose(tiff);
 
 	return monochrome;
-}
-
-void
-get_pbm(cairo_surface_t *surface, void **data, int *length)
-{
-	int width, height;
-	int s_stride;
-	int d_stride;
-	unsigned char* s_pixel;
-	unsigned char* d_pixel;
-	char *start;
-	int x, y, i;
-
-	*data = NULL;
-	*length = 0;
-
-	if (cairo_image_surface_get_format (surface) != CAIRO_FORMAT_A1)
-		return;
-
-	width = cairo_image_surface_get_width(surface);
-	height = cairo_image_surface_get_height(surface);
-	s_stride = cairo_image_surface_get_stride(surface);
-	s_pixel = cairo_image_surface_get_data(surface);
-
-	start = g_strdup_printf("P4\n%i %i\n", width, height);
-	d_stride = (width + 7) / 8;
-	*length = strlen(start) + height * d_stride;
-	*data = g_malloc0(*length);
-	strcpy(*data, start);
-	d_pixel = *data + strlen(start);
-	g_free(start);
-
-	for (y = 0; y < height; y++) {
-		for (x = 0; x < width; x++) {
-			*(d_pixel + y*d_stride + x / 8) |= (GET_PIXEL(s_pixel, s_stride, x, y)) << (7 - x % 8);
-		}
-	}
 }
 
 #define LINE_COVERAGE sdaps_line_coverage
