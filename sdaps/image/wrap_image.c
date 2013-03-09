@@ -67,7 +67,7 @@ static PyMethodDef EvaluateMethods[] = {
 
 static int
 initpycairo(void)
-{ 
+{
 	Pycairo_IMPORT;
 	if (Pycairo_CAPI == NULL)
 		return 0;
@@ -99,9 +99,9 @@ wrap_get_a1_from_tiff(PyObject *self, PyObject *args)
 
 	if (!PyArg_ParseTuple(args, "sii", &filename, &page, &rotated))
 		return NULL;
-	
+
 	surface = get_a1_from_tiff(filename, page, rotated);
-	
+
 	if (surface) {
 		return PycairoSurface_FromSurface(surface, NULL);
 	} else {
@@ -120,9 +120,9 @@ wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args)
 
 	if (!PyArg_ParseTuple(args, "sii", &filename, &page, &rotated))
 		return NULL;
-	
+
 	surface = get_rgb24_from_tiff(filename, page, rotated);
-	
+
 	if (surface) {
 		return PycairoSurface_FromSurface(surface, NULL);
 	} else {
@@ -189,10 +189,10 @@ wrap_calculate_matrix(PyObject *self, PyObject *args)
 	PycairoMatrix *py_matrix;
 	cairo_matrix_t *matrix;
 	float mm_x, mm_y, mm_width, mm_height;
-	
+
 	if (!PyArg_ParseTuple(args, "O!O!ffff", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
-	
+
 	matrix = calculate_matrix(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
 
 	if (matrix) {
@@ -210,10 +210,10 @@ wrap_calculate_correction_matrix(PyObject *self, PyObject *args)
 	PycairoMatrix *py_matrix;
 	cairo_matrix_t *correction_matrix;
 	float mm_x, mm_y, mm_width, mm_height;
-	
+
 	if (!PyArg_ParseTuple(args, "O!O!ffff", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
-	
+
 	correction_matrix = calculate_correction_matrix(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
 
 	if (correction_matrix) {
@@ -232,10 +232,10 @@ wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
 	PycairoMatrix *py_matrix;
 	cairo_matrix_t *correction_matrix;
 	float mm_x, mm_y;
-	
+
 	if (!PyArg_ParseTuple(args, "O!O!O!ff", &PycairoImageSurface_Type, &py_surface, &PycairoImageSurface_Type, &py_mask, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y))
 		return NULL;
-	
+
 	correction_matrix = calculate_correction_matrix_masked(py_surface->surface, py_mask->surface, &py_matrix->matrix, mm_x, mm_y);
 
 	if (correction_matrix) {
@@ -344,10 +344,10 @@ wrap_get_pbm(PyObject *self, PyObject *args)
 	PyObject* result;
 	int length = 0;
 	void *data = NULL;
-	
+
 	if (!PyArg_ParseTuple(args, "O!", &PycairoImageSurface_Type, &py_surface))
 		return NULL;
-	
+
 	get_pbm(py_surface->surface, &data, &length);
 
 	result = Py_BuildValue("s#", data, length);

@@ -249,7 +249,7 @@ hough_add_point(hough_data *hough, guint x, guint y, guint filter_width, guint *
 
 		for (i = 0; i < filter_width; i++) {
 			filt_bin = r_bin + i - filter_width / 2;
-			
+
 			if ((filt_bin >= 0) && (filt_bin < hough->distance_bins)) {
 				hough->data[angle_step*hough->distance_bins + filt_bin] += filter_coff[i];
 			}
@@ -283,7 +283,7 @@ get_gaussion(gdouble sigma, guint **filter_coff)
 }
 
 /* Hough transforms the image.
- * 
+ *
  * */
 hough_data*
 hough_transform(cairo_surface_t *surface, guint angle_bins, guint distance_bins, gdouble sigma_px)
@@ -403,7 +403,7 @@ static int n8[8][2] = {
   { 0, -1},
   { 1, -1},
   { 1,  0},
-  { 1,  1} 
+  { 1,  1}
 };
 
 /*
@@ -432,8 +432,8 @@ crossing_index_np(guint32 *pixels, int stride, int x, int y)
 	return n;
 }
 
-int 
-nh8count_np(guint32 *pixels, int stride, int x, int y, int val) 
+int
+nh8count_np(guint32 *pixels, int stride, int x, int y, int val)
 {
 	guint i, n=0;
 

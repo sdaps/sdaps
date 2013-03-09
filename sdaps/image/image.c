@@ -301,7 +301,7 @@ get_pbm(cairo_surface_t *surface, void **data, int *length)
 	strcpy(*data, start);
 	d_pixel = *data + strlen(start);
 	g_free(start);
-	
+
 	for (i = 0; i < height * d_stride; i++) {
 		*(d_pixel + i) = 0;
 	}
@@ -309,7 +309,7 @@ get_pbm(cairo_surface_t *surface, void **data, int *length)
 	for (y = 0; y < height; y++) {
 		for (x = 0; x < width; x++) {
 			*(d_pixel + y*d_stride + x / 8) |= (GET_PIXEL(s_pixel, s_stride, x, y)) << (7 - x % 8);
-		}	
+		}
 	}
 }
 
@@ -549,7 +549,7 @@ follow_line(cairo_surface_t *surface,
 				gdouble seg_x, seg_y;
 				seg_x = x + offset * y_dir + 0.5;
 				seg_y = y + offset * x_dir + 0.5;
-				
+
 				w1_x = w1_x * weight / (weight + seg_weight) + seg_x * seg_weight / (weight + seg_weight);
 				w1_y = w1_y * weight / (weight + seg_weight) + seg_y * seg_weight / (weight + seg_weight);
 				weight += seg_weight;
@@ -578,13 +578,13 @@ follow_line(cairo_surface_t *surface,
 				gdouble seg_x, seg_y;
 				seg_x = x + offset * y_dir + 0.5;
 				seg_y = y + offset * x_dir + 0.5;
-				
+
 				w2_x = w2_x * weight / (weight + seg_weight) + seg_x * seg_weight / (weight + seg_weight);
 				w2_y = w2_y * weight / (weight + seg_weight) + seg_y * seg_weight / (weight + seg_weight);
 				weight += seg_weight;
 			}
 		}
-		
+
 		/* got two points, now extrapolate them to the line start/end. */
 		*x1 = w1_x - (w2_x - w1_x) / 2.0;
 		*y1 = w1_y - (w2_y - w1_y) / 2.0;
@@ -692,12 +692,12 @@ find_corner_marker(cairo_surface_t *surface,
 	gboolean found = FALSE;
 	gint coverage = 0;
 	gint width;
-	
+
 	width = cairo_image_surface_get_width(surface);
 
 	x = x_start + (x_dir * (width / 6 + 1));
 	y = y_start + y_dir;
-	
+
 	while (!found && (distance < search_distance)) {
 		distance += 1;
 
@@ -710,13 +710,13 @@ find_corner_marker(cairo_surface_t *surface,
 			gint old_coverage = coverage;
 
 			y += y_dir;
-			
+
 			coverage = count_black_pixel(surface,
 			                             x - line_width / 2,
 			                             y - line_width / 2,
 			                             line_width,
 			                             line_width);
-			
+
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
 				if (test_corner_marker(surface, x, y, -x_dir, -y_dir,
 				                       line_width, line_length, line_max_length,
@@ -734,13 +734,13 @@ find_corner_marker(cairo_surface_t *surface,
 			gint old_coverage = coverage;
 
 			x += x_dir;
-			
+
 			coverage = count_black_pixel(surface,
 			                             x - line_width / 2,
 			                             y - line_width / 2,
 			                             line_width,
 			                             line_width);
-			
+
 			if ((old_coverage > (line_width * line_width) * LINE_COVERAGE) && (old_coverage > coverage)) {
 				if (test_corner_marker(surface, x, y, -x_dir, -y_dir,
 				                       line_width, line_length, line_max_length,
@@ -855,7 +855,7 @@ calculate_matrix(cairo_surface_t *surface,
 	/* Y-Axis *********************/
 	dx = ((x_bottomright - x_topright) + (x_bottomleft - x_topleft)) / 2.0;
 	dy = ((y_bottomright - y_topright) + (y_bottomleft - y_topleft)) / 2.0;
-	
+
 	length_squared = dx*dx + dy*dy;
 	result->xy = -dx / length_squared * mm_height; /* negative for some reason, no idea why right now ... */
 	result->yy = dy / length_squared * mm_height;
@@ -899,13 +899,13 @@ calculate_correction_matrix(cairo_surface_t  *surface,
 
 	inverse = *matrix;
 	cairo_matrix_invert(&inverse);
-	
+
 	tmp_x = mm_x;
 	tmp_y = mm_y;
 	cairo_matrix_transform_point(matrix, &tmp_x, &tmp_y);
 	px_x = tmp_x;
 	px_y = tmp_y;
-	
+
 	/* Shut up the compiler. */
 	x_cov = px_x;
 	y_cov = px_y;
@@ -946,18 +946,18 @@ calculate_correction_matrix(cairo_surface_t  *surface,
 			}
 		}
 	}
-	
+
 	tmp_x = x_cov;
 	tmp_y = y_cov;
 	cairo_matrix_transform_point(&inverse, &tmp_x, &tmp_y);
-	
+
 	result = g_malloc(sizeof(cairo_matrix_t));
 	cairo_matrix_init_identity(result);
 
-	/* Just a translation */	
+	/* Just a translation */
 	result->x0 = tmp_x - mm_x;
 	result->y0 = tmp_y - mm_y;
-	
+
 	return result;
 }
 
@@ -981,13 +981,13 @@ calculate_correction_matrix_masked(cairo_surface_t  *surface,
 
 	inverse = *matrix;
 	cairo_matrix_invert(&inverse);
-	
+
 	tmp_x = mm_x;
 	tmp_y = mm_y;
 	cairo_matrix_transform_point(matrix, &tmp_x, &tmp_y);
 	px_x = tmp_x;
 	px_y = tmp_y;
-	
+
 	/* Shut up the compiler. */
 	x_cov = px_x;
 	y_cov = px_y;
@@ -1010,18 +1010,18 @@ calculate_correction_matrix_masked(cairo_surface_t  *surface,
 			}
 		}
 	}
-	
+
 	tmp_x = x_cov;
 	tmp_y = y_cov;
 	cairo_matrix_transform_point(&inverse, &tmp_x, &tmp_y);
-	
+
 	result = g_malloc(sizeof(cairo_matrix_t));
 	cairo_matrix_init_identity(result);
 
-	/* Just a translation */	
+	/* Just a translation */
 	result->x0 = tmp_x - mm_x;
 	result->y0 = tmp_y - mm_y;
-	
+
 	return result;
 }
 
@@ -1157,8 +1157,8 @@ get_masked_coverage(cairo_surface_t *surface,
 	gint width, height;
 	gint black, all;
 
-	width = cairo_image_surface_get_width (mask);
-	height = cairo_image_surface_get_height (mask);
+	width = cairo_image_surface_get_width(mask);
+	height = cairo_image_surface_get_height(mask);
 
 	all = count_black_pixel(mask, 0, 0, width, height);
 	black = count_black_pixel_masked(surface, mask, x, y);
@@ -1193,8 +1193,8 @@ get_masked_coverage_without_lines(cairo_surface_t *surface,
 	gdouble result;
 	gint i, all;
 
-	width = cairo_image_surface_get_width (mask);
-	height = cairo_image_surface_get_height (mask);
+	width = cairo_image_surface_get_width(mask);
+	height = cairo_image_surface_get_height(mask);
 
 	all = count_black_pixel(mask, 0, 0, width, height);
 
@@ -1258,8 +1258,8 @@ get_masked_white_area_count(cairo_surface_t *surface,
 	guint max_size_px;
 	guint all;
 
-	width = cairo_image_surface_get_width (mask);
-	height = cairo_image_surface_get_height (mask);
+	width = cairo_image_surface_get_width(mask);
+	height = cairo_image_surface_get_height(mask);
 
 	all = count_black_pixel(mask, 0, 0, width, height);
 
@@ -1297,8 +1297,8 @@ get_masked_white_area_count(cairo_surface_t *surface,
 	}
 
 	if (debug_surf != NULL) {
-		cairo_surface_destroy (backup_surface);
-		cairo_destroy (backup_cr);
+		cairo_surface_destroy(backup_surface);
+		cairo_destroy(backup_cr);
 	}
 
 	cairo_surface_destroy(tmp_surface);

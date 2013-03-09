@@ -200,15 +200,15 @@ count_black_pixel_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x
 	gint width, height;
 	guint img_width, img_height;
 
-	width = cairo_image_surface_get_width (mask);
-	height = cairo_image_surface_get_height (mask);
-	mask_pixels = (guint32*) cairo_image_surface_get_data (mask);
-	mask_stride = cairo_image_surface_get_stride (mask);
+	width = cairo_image_surface_get_width(mask);
+	height = cairo_image_surface_get_height(mask);
+	mask_pixels = (guint32*) cairo_image_surface_get_data(mask);
+	mask_stride = cairo_image_surface_get_stride(mask);
 
-	pixels = (guint32*) cairo_image_surface_get_data (surface);
-	img_width = cairo_image_surface_get_width (surface);
-	img_height = cairo_image_surface_get_height (surface);
-	stride = cairo_image_surface_get_stride (surface);
+	pixels = (guint32*) cairo_image_surface_get_data(surface);
+	img_width = cairo_image_surface_get_width(surface);
+	img_height = cairo_image_surface_get_height(surface);
+	stride = cairo_image_surface_get_stride(surface);
 
 	/* Ignore if the mask is not completely in the image ... */
 	if (y < 0) {
