@@ -593,6 +593,11 @@
 % Subtract outline width
 \addtolength{\checkboxsize}{-\elementlinewidth}
 
+% This padding is applied at the bottom of textboxes (similar to a strut)
+% as they do not have a sane baseline.
+\newlength{\textboxbottompad}
+\setlength{\textboxbottompad}{0.5ex \@plus 1ex \@minus 0.2ex}
+
 % How to draw the checkbox, either "box" or "ellipse" (though ellipse is a circle,
 % because we don't support non-square sizes here for now).
 \def\checkboxstyle{box}
@@ -813,45 +818,56 @@
 %
   \pgfsys@getposition{textboxbottom\thetextboxnum}{\@sdaps@textboxbottompos}%
   \pgfpointadd{\@sdaps@textboxtoppos}{%
-    \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxbottompos}}{
+    \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxbottompos}}{%
+      % Assume width is equal to \linewidth
       \pgfpoint{\linewidth}{0}%
     }%
   }%
   \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-  \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height} %
+  \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
   \nobreak%
   \vspace{\parskip}%
   \nobreak%
   \begingroup %
     \setlength\@tempdima{#2}%
+    \setlength\@tempdimb{\lineskip}%
+    \offinterlineskip
     \def\sides{%
-      \hbox to\linewidth {%
-        \vrule depth 0pt height \@tempdima width \elementlinewidth %
+      \hbox{\raise -\@tempdima \hbox to\linewidth{%
+        \vrule depth 0pt height \@tempdima width \elementlinewidth%
         \hfill%
-        \vrule depth 0pt width \elementlinewidth%
-      }%
+        \vrule depth 0pt height \@tempdima width \elementlinewidth%
+      }}%
     }%
     \pgfsys@markposition{textboxtop\thetextboxnum}%
-    \hrule width \linewidth height \elementlinewidth %
+    \hrule width \linewidth height \elementlinewidth depth 0pt%
     \nobreak%
-    \sides %
+    \sides%
     \nobreak%
-    \kern-0.5\@tempdima %
+    \kern-0.5\@tempdima%
     \nobreak%
-    #1 %
+    #1%
     \nobreak%
-    \kern-0.5\@tempdima %
-    \nobreak%
-    \sides %
-    \nobreak%
-    \hrule width \linewidth height \elementlinewidth %
-    \pgfsys@markposition{textboxbottom\thetextboxnum}%
+    \kern-0.5\@tempdima%
+    \sides\nobreak%
+    % Undo the skip following \leavevmode
+    \vspace{-\parskip}\nobreak%
+    \vspace{-\@tempdimb}\nobreak%
+    \vspace{-\@tempdima}\nobreak%
+    % Not entirely sure why this is needed ... but with it the lines join
+    % exactly.
+    \vspace{\elementlinewidth}\nobreak%
+    \leavevmode\nobreak%
+    \hbox{\raise -\@tempdima \hbox to \linewidth {%
+      % Mark at the bottom left (right underneath the top mark)
+      \pgfsys@markposition{textboxbottom\thetextboxnum}%
+      \cleaders\hrule height \elementlinewidth depth 0pt \hfill%
+      % And add the bottom padding
+      \vrule depth \textboxbottompad height 0pt width 0pt%
+      }%
+    }%
     \addtocounter{textboxnum}{1}%
-    %
-  \endgroup %
-  \leavevmode%
-  \vspace{-\baselineskip}\vspace{\parskip}%
-  \relax%
+  \endgroup%
 }
 
 %\providecommand*{\textbox}[2]{%
@@ -1019,7 +1035,7 @@
       \advance\@tempdimlower by 0.8ex%
       %
       \setlength\@tempdimboxlower\@tempdimlower%
-      \advance\@tempdimboxlower by -\smallskipamount%
+      \advance\@tempdimboxlower by -\textboxbottompad%
       %
       \setlength\@tempdima{2cm}%
       \@tempdimruleheight=\@tempdimheight%
@@ -1051,7 +1067,7 @@
             \hrule width \@tempdima height \elementlinewidth %
             \vspace \@tempdimheight%
             \hrule height \elementlinewidth%
-            \vspace\smallskipamount%
+            \vspace{\textboxbottompad}%
           }%
         }%
       }%
