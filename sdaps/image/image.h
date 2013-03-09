@@ -53,9 +53,6 @@ cairo_matrix_t*
 calculate_matrix(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);
 
 cairo_matrix_t*
-calculate_correction_matrix(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);
-
-cairo_matrix_t*
 calculate_correction_matrix_masked(cairo_surface_t *surface, cairo_surface_t *mask, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y);
 
 gboolean

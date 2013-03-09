@@ -385,14 +385,6 @@ class Image(model.buddy.Buddy):
             min_size, max_size
         )
 
-    def correction_matrix(self, x, y, width, height):
-        return image.calculate_correction_matrix(
-            self.obj.surface.surface,
-            self.matrix,
-            x, y,
-            width, height
-        )
-
     def correction_matrix_masked(self, x, y, mask):
         return image.calculate_correction_matrix_masked(
             self.obj.surface.surface,
