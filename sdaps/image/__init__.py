@@ -42,7 +42,8 @@ if paths.local_run:
 
 try:
     from image import *
-except ImportError:
+except ImportError, e:
+    print e
     log.error(_("It appears you have not build the C extension. Please run \"./setup.py build\" in the toplevel directory."))
     sys.exit(1)
 
