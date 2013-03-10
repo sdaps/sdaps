@@ -857,6 +857,15 @@
     % Not entirely sure why this is needed ... but with it the lines join
     % exactly.
     \vspace{\elementlinewidth}\nobreak%
+    % This needs some explanation: ie. why do we do a leavevmode, and then
+    % raisebox, etc.
+    % The idea is that the baseline for the last vbox much higher than the
+    % lower line of the textbox. By doing this the minimum baseline
+    % distance is not taken into account for the next line after the textbox.
+    % The result is that the spacing after a freeform text field, and the
+    % spacing after a choicegroup with a choiceitemtext is the same.
+    % Seems insane? Maybe it is :-)
+    % And maybe there are better ways of doing this ...
     \leavevmode\nobreak%
     \hbox{\raise -\@tempdima \hbox to \linewidth {%
       % Mark at the bottom left (right underneath the top mark)
