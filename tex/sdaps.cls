@@ -1,6 +1,6 @@
 %% start of file `sdaps.cls'.
-%% Copyright 2010-2011 Ferdinand Schwenk (ferdisdot@gmail.com).
-%% Copyright 2011 Benjamin Berg (benjamin@sipsolutions.net).
+%% Copyright 2010-2013 Ferdinand Schwenk (ferdisdot@gmail.com).
+%% Copyright 2011-2013 Benjamin Berg (benjamin@sipsolutions.net).
 %% Copyright 2010 Tobias Simon <tobsimon@googlemail.com>
 %
 % This work may be distributed and/or modified under the
@@ -12,8 +12,8 @@
 % identification
 %-------------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{sdaps}[2011/01/04%
-                      v0.1 Class for composing questionairs for SDAPS]
+\ProvidesClass{sdaps}[2013/03/10%
+                      v1.0 Class for composing questionairs for SDAPS]
 
 % Load scrbase for keyval support
 \RequirePackage{scrkbase}
@@ -879,17 +879,6 @@
   \endgroup%
 }
 
-%\providecommand*{\textbox}[2]{%
-%  \setlength{\boxheight}{#1}%
-%  \addtolength{\boxheight}{\fill}%
-%  \stepcounter{question}%
-%  \immediate\write\sdapsoutfile{[\thequestion]}%
-%  \immediate\write\sdapsoutfile{	height=\the\boxheight}%
-%  \immediate\write\sdapsoutfile{	width=\the\linewidth}%
-%  #2:\checkbox\checkedbox\correctedbox\\%
-%  \frame{\parbox{\linewidth}{\vspace*{\boxheight}\vspace*{\fill}\ }}\\%
-%}
-
 \newcommand{\sectbox}[1]{%
  \noindent\protect\colorbox{sectionbgcolor}{%
    \@tempdima=\hsize
@@ -966,8 +955,6 @@
   {\usekomafont{marklinequestionfont}\strut#1\strut} & {\usekomafont{marklinechoicefont}#2} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}#3}\\%
 }
 
-%\providecommand*{\singlemark}[3]{\begin{markquestion}{#1}\markline{}{#2}{#3}\end{markquestion}}
-
 \providecommand*{\singlemark}[3]{%
   \question{#1}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Mark=\arabic{section}.\arabic{subsection}. #1}%
@@ -977,6 +964,7 @@
     {\usekomafont{singlemarkchoicefont}\strut#2} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}#3}\\%
   \end{tabularx}%
 }
+
 
 \newcounter{choiceitems}
 \newcounter{maxchoiceitems}
