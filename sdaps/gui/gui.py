@@ -17,11 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from gi.repository import GObject
+from gi.repository import GLib
 from gi.repository import Gtk
 from gi.repository import Gdk
 import os
 import time
 import sys
+import signal
 
 from sdaps import model
 from sdaps import surface
@@ -47,6 +49,10 @@ def gui(survey, cmdline):
     if not provider.images:
         log.error(_("The survey does not have any images! Please add images (and run recognize) before using the GUI."))
         return 1
+
+    # Exit the mainloop if Ctrl+C is pressed in the terminal.
+    GLib.unix_signal_add_full(GLib.PRIORITY_HIGH, signal.SIGINT, lambda *args : Gtk.main_quit(), None)
+
     MainWindow(provider).run()
 
 
