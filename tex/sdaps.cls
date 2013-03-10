@@ -715,6 +715,15 @@
   }{}
 }
 
+\providecommand{\@sdaps@drawfilledbox}{
+  \ifstr{\checkboxstyle}{box}{
+    \fill[line width=\elementlinewidth] (0.5\elementlinewidth, 0) rectangle +(\checkboxsize, \checkboxsize);%
+  }{}
+  \ifstr{\checkboxstyle}{ellipse}{
+    \fill[line width=\elementlinewidth] ($(0.5\elementlinewidth, 0) + (0.5\checkboxsize, 0.5\checkboxsize)$) circle (0.5\checkboxsize);%
+  }{}
+}
+
 \providecommand{\checkboxNoStar}{%
   \mbox{%
   \label{checkbox\thecheckboxnum}%
@@ -749,15 +758,16 @@
     \end{scope}
   }%
 }
+\providecommand{\filledbox}{%
+  \hspace{-2pt}%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+    \@sdaps@drawfilledbox
+  }%
+}
 \providecommand{\correctedbox}{%
   \hspace{-2pt}%
   \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
-    \ifstr{\checkboxstyle}{box}{
-      \fill[line width=\elementlinewidth] (0.5\elementlinewidth, 0) rectangle +(\checkboxsize, \checkboxsize);%
-    }{}
-    \ifstr{\checkboxstyle}{ellipse}{
-      \fill[line width=\elementlinewidth] ($(0.5\elementlinewidth, 0) + (0.5\checkboxsize, 0.5\checkboxsize)$) circle (0.5\checkboxsize);%
-    }{}
+    \@sdaps@drawfilledbox
 %
     \begin{scope}[decoration={random steps,segment length=4pt,amplitude=1pt}]
       \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\checkboxsize, \checkboxsize) + (2pt,2pt)$);%
