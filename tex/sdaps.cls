@@ -717,12 +717,20 @@
 
 \providecommand{\@sdaps@drawfilledbox}{
   \ifstr{\checkboxstyle}{box}{
-    \fill[line width=\elementlinewidth] (0.5\elementlinewidth, 0) rectangle +(\checkboxsize, \checkboxsize);%
+    \draw[fill,line width=\elementlinewidth] (0.5\elementlinewidth, 0) rectangle +(\checkboxsize, \checkboxsize);%
   }{}
   \ifstr{\checkboxstyle}{ellipse}{
-    \fill[line width=\elementlinewidth] ($(0.5\elementlinewidth, 0) + (0.5\checkboxsize, 0.5\checkboxsize)$) circle (0.5\checkboxsize);%
+    \draw[fill,line width=\elementlinewidth] ($(0.5\elementlinewidth, 0) + (0.5\checkboxsize, 0.5\checkboxsize)$) circle (0.5\checkboxsize);%
   }{}
 }
+
+\providecommand{\@sdaps@drawcheck}{
+  \begin{scope}[overlay,decoration={random steps,segment length=4pt,amplitude=1pt}]
+    \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- (0.5\checkboxsize, 0.5\checkboxsize) -- ($(\checkboxsize, \checkboxsize) + (2pt,2pt)$);%
+    \draw[line width=\elementlinewidth, decorate] ($(0, \checkboxsize) + (-2pt,2pt)$) -- (0.5\checkboxsize, 0.5\checkboxsize) -- ($(\checkboxsize, 0) + (2pt,-2pt)$);%
+  \end{scope}
+}
+
 
 \providecommand{\checkboxNoStar}{%
   \mbox{%
@@ -741,39 +749,33 @@
     \protectedimmediatewrite\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width, \checkboxstyle}%
   }%
   \addtocounter{checkboxnum}{1}}%
+  \ignorespaces
 }
 \providecommand{\checkboxStar}{%
-  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)}]{%
     \@sdaps@drawbox
   }%
+  \ignorespaces
 }
 \providecommand{\checkedbox}{%
-  \hspace{-2pt}%
-  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)}]{%
     \@sdaps@drawbox
- %
-    \begin{scope}[decoration={random steps,segment length=4pt,amplitude=1pt}]
-      \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\checkboxsize, \checkboxsize) + (2pt,2pt)$);%
-      \draw[line width=\elementlinewidth, decorate] ($(0, \checkboxsize) + (-2pt,2pt)$)-- ($(\checkboxsize, 0) + (2pt,-2pt)$);%
-    \end{scope}
+    \@sdaps@drawcheck
   }%
+  \ignorespaces
 }
 \providecommand{\filledbox}{%
-  \hspace{-2pt}%
-  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)}]{%
     \@sdaps@drawfilledbox
   }%
+  \ignorespaces
 }
 \providecommand{\correctedbox}{%
-  \hspace{-2pt}%
-  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)}]{%
     \@sdaps@drawfilledbox
-%
-    \begin{scope}[decoration={random steps,segment length=4pt,amplitude=1pt}]
-      \draw[line width=\elementlinewidth, decorate] ($(0, 0) - (2pt,2pt)$) -- ($(\checkboxsize, \checkboxsize) + (2pt,2pt)$);%
-      \draw[line width=\elementlinewidth, decorate] ($(0, \checkboxsize) + (-2pt,2pt)$)-- ($(\checkboxsize, 0) + (2pt,-2pt)$);%
-    \end{scope}
+    \@sdaps@drawcheck
   }%
+  \ignorespaces
 }
 
 \def\smallskip{\vspace\smallskipamount}
