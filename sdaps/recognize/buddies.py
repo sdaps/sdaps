@@ -792,9 +792,9 @@ class Textbox(Box):
                     yield x, y
 
         bbox = None
-        image = self.obj.sheet.get_page_image(self.obj.page_number)
+        img = self.obj.sheet.get_page_image(self.obj.page_number)
 
-        if image is None or image.recognize.matrix is None:
+        if img is None or img.recognize.matrix is None:
             self.obj.sheet.valid = 0
             return
 
@@ -815,14 +815,17 @@ class Textbox(Box):
 
         quad = Quadrilateral((x, y), (x + width, y), (x + width, y + height), (x, y + height))
         try:
-            quad = Quadrilateral(*image.recognize.find_box_corners(x, y, width, height))
+            quad = Quadrilateral(*img.recognize.find_box_corners(x, y, width, height))
             # Lower padding, as we found the corners and are therefore more acurate
             scan_padding = defs.textbox_scan_padding
         except AssertionError:
             pass
 
+        surface = img.surface.surface
+        matrix = img.recognize.matrix
         for x, y in quad.iterate(step_x, step_y, test_width, test_height, scan_padding):
-            coverage = image.recognize.get_coverage(x, y, test_width, test_height)
+            # Use the image module directly as we are calling in *a lot*
+            coverage = image.get_coverage(surface, matrix, x, y, test_width, test_height)
             if coverage > defs.textbox_scan_coverage:
                 if not bbox:
                     bbox = [x, y, test_width, test_height]
