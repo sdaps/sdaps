@@ -44,9 +44,11 @@ class Object(object):
     u'''class which can have buddies'''
 
     def get_buddy(self, name):
-        if not hasattr(self, '_%s_object_' % name):
+        try:
+            return getattr(self, '_%s_object_' % name)
+        except AttributeError:
             setattr(self, '_%s_object_' % name, getattr(self, '_%s_class_' % name)(self))
-        return getattr(self, '_%s_object_' % name)
+            return getattr(self, '_%s_object_' % name)
 
     def __getstate__(self):
         u'''do not pickle buddy instances.
