@@ -222,6 +222,9 @@ typedef struct {
 	guint distance_bins;
 
 	guint max_distance;
+
+	gdouble *cos_table;
+	gdouble *sin_table;
 } hough_data;
 
 /* Adds a point to the hough transformation. A (gaussion) filter is applied
@@ -232,17 +235,13 @@ void
 hough_add_point(hough_data *hough, guint x, guint y, guint filter_width, guint *filter_coff)
 {
 	guint angle_step;
-	gdouble angle;
 	gdouble r;
 	gint r_bin, filt_bin;
 	gint i;
 
 
 	for (angle_step = 0; angle_step < hough->angle_bins; angle_step++) {
-		angle = (2*G_PI * angle_step) / hough->angle_bins;
-
-		/*r = abs((y - x*tan(angle)) / sqrt(1 + tan(angle)*tan(angle)));*/
-		r = x * cos(angle) + y * sin(angle);
+		r = x * hough->cos_table[angle_step] + y * hough->sin_table[angle_step];
 
 		/* Only add if r is larger than zero */
 		r_bin = (int)round(hough->distance_bins * r / hough->max_distance);
@@ -254,6 +253,23 @@ hough_add_point(hough_data *hough, guint x, guint y, guint filter_width, guint *
 				hough->data[angle_step*hough->distance_bins + filt_bin] += filter_coff[i];
 			}
 		}
+	}
+}
+
+static void
+hough_create_lut(hough_data *hough)
+{
+	guint angle_step;
+	gdouble angle;
+
+	hough->cos_table = g_new(gdouble, hough->angle_bins);
+	hough->sin_table = g_new(gdouble, hough->angle_bins);
+
+	for (angle_step = 0; angle_step < hough->angle_bins; angle_step++) {
+		angle = (2*G_PI * angle_step) / hough->angle_bins;
+
+		hough->cos_table[angle_step] = cos(angle);
+		hough->sin_table[angle_step] = sin(angle);
 	}
 }
 
@@ -296,6 +312,8 @@ hough_transform(cairo_surface_t *surface, guint angle_bins, guint distance_bins,
 	guint *filter;
 	hough_data *result = g_malloc(sizeof(hough_data));
 	result->data = NULL;
+	result->cos_table = NULL;
+	result->sin_table = NULL;
 
 	img_width = cairo_image_surface_get_width(surface);
 	img_height = cairo_image_surface_get_height(surface);
@@ -305,6 +323,7 @@ hough_transform(cairo_surface_t *surface, guint angle_bins, guint distance_bins,
 	result->max_distance = (guint) sqrt(img_width*img_width + img_height*img_height);
 
 	result->data = g_malloc0_n(sizeof(*result->data), result->angle_bins*result->distance_bins);
+	hough_create_lut(result);
 
 	pixels = (guint32*) cairo_image_surface_get_data(surface);
 	stride = cairo_image_surface_get_stride(surface);
@@ -321,6 +340,15 @@ hough_transform(cairo_surface_t *surface, guint angle_bins, guint distance_bins,
 	g_free(filter);
 
 	return result;
+}
+
+void
+hough_data_free(hough_data *data)
+{
+	g_free(data->data);
+	g_free(data->cos_table);
+	g_free(data->sin_table);
+	g_free(data);
 }
 
 static void
@@ -381,8 +409,7 @@ remove_maximum_line(cairo_surface_t *surface, cairo_surface_t *debug_surf, gdoub
 	if (debug_surf != NULL)
 		remove_line(debug_surf, width, r_max, phi_max, TRUE);
 
-	g_free(hough->data);
-	g_free(hough);
+	hough_data_free(hough);
 
 	cairo_surface_flush(surface);
 }
