@@ -128,7 +128,7 @@ get_pbm(cairo_surface_t *surface, void **data, int *length)
 	unsigned char* s_pixel;
 	unsigned char* d_pixel;
 	char *start;
-	int x, y, i;
+	int x, y;
 
 	*data = NULL;
 	*length = 0;
