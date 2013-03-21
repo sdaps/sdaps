@@ -1,6 +1,7 @@
 include MANIFEST.in
 include NEWS
 include README
+include TROUBLESHOOTING
 include COPYING
 include sdaps.py
 recursive-include sdaps *.py *.ui *.c *.h
