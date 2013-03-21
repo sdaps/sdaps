@@ -100,7 +100,6 @@ def setup(survey, cmdline):
 
     # Last but not least calculate the survey id
     survey.calculate_survey_id()
-    survey.survey_id = 1591158456
 
     if not survey.check_settings():
         log.error(_("Some combination of options and project properties do not work. Aborted Setup."))
