@@ -1,0 +1,147 @@
+\documentclass[
+  % Babel language, also used to load translations
+  english,
+  %
+  % If you need it, you can add a custom barcode at the center
+  %globalid=SDAPS,
+  %
+  % And the following adds a per sheet barcode at the bottom left
+  %print_questionnaire_id,
+  %
+  % You can choose between twoside and oneside. twoside is the default, and
+  % requires the document to be printed and scanned in duplex mode.
+  %oneside,
+  %
+  % The following options make sense so that we can get a better feel for the
+  % final look.
+  pagemark,
+  stamp]{sdaps}
+\usepackage[utf8]{inputenc}
+% For demonstration purposes
+\usepackage{multicol}
+
+\author{The Author}
+\title{The Title}
+
+\begin{document}
+  % Everything you do should be done inside the questionnaire environment.
+
+  % If you don't like the default text at the beginning of each questionnaire
+  % you can remove it with the optional [noinfo] parameter for the environment 
+  \begin{questionnaire}
+    % There is a predefined "info" style to hilight some text.
+    \begin{info}
+      Some information here. Nothing special, just adds a line above/below.
+    \end{info}
+
+    % Use \addinfo to add metadata (which is printed on the report later on)
+    \addinfo{Date}{10.03.2013}
+
+    % You can structure the document using sections. You should not use
+    % subsections yourself, as these are used to typeset question text.
+    \section{Range Questions}
+
+    % Lets ask some questions.
+    % \singlemark creates a single range (1-5) question.
+    \singlemark{How often do you use SDAPS?}{never}{daily}
+
+    % Now we would like to ask multiple range questions that are similar. We
+    % can use a markgroup environment to typeset many range questions under
+    % one heading.
+    \begin{markgroup}{What do you think about the following aspects of \LaTeX?}
+      \markline{equation syntax}{bad}{good}
+      \markline{rendered equations}{ugly}{beautiful}
+      \markline{ease of use}{hard}{easy}
+    \end{markgroup}
+
+    \section{Choice Questions}
+    We can also give users a question with predefined choices. Such a list
+    of choices is typesetted using a tabularx environment with equally
+    sized columns. Items can span multiple columns.
+
+    \begin{choicequestion}[3]{Which of the following Open Source
+                              Optical Mark Recognition software
+                              packages have you heard about?}
+      \choiceitem{SDAPS}
+      \choicemulticolitem{2}{Auto Multiple Choice}
+      \choiceitem{QueXF}
+
+      % Insert a text field. The freeform box automatically scales horizontally
+      % The first parameter is the height of the box. The second parameter
+      % is the amount of columns it should span.
+      \choiceitemtext{1.2cm}{2}{Other:}
+    \end{choicequestion}
+
+    % And a more compact way of doing it; similar to markgroup
+    \begin{choicegroup}{Which software do you prefere for the following tasks?}
+      % We have to add the possible choices at the start.
+      \groupaddchoice{\LaTeX}
+      \groupaddchoice{LibreOffice}
+      \groupaddchoice{Microsoft Word}
+      \groupaddchoice{other}
+
+      % After that it is possible to add each question.
+      \choiceline{writing letters}
+      \choiceline{creating tables}
+      \choiceline{typesetting equations}
+    \end{choicegroup}
+
+    \section{Freeform text fields}
+
+    SDAPS will extract freeform textfields such as below as images and put
+    these into reports. SDAPS knows whether there is writing in the box and
+    how large it is.
+
+    % This is a textbox which is at least 2cm high. It will automatically scale
+    % to fill the page.
+    \textbox{2cm}{Do you have any comments?}
+
+    % Force a new page here
+    \newpage
+    \section{Tricks and Features}
+    SDAPS can also use circular checkboxes if you prefere. Or you can use the
+    {\tt multicol} package to create multi-column layouts as is done below.
+
+    % Set checkbox style to be circular
+    \def\checkboxstyle{ellipse}
+
+    \begin{multicols}{2}
+      \singlemark{This is a range question}{lower bound}{upper bound}%
+      % Note that we need the % at the end of the last line to prevent
+      % LaTeX from inserting too much whitespace.
+      \label{somelabel}
+
+      As you can see, this is a multi-column layout. The {\tt markgroup} and
+      {\tt choicegroup} environments may be a bit tight in this mode.
+
+      Lets put some more questions here, just because we can.
+
+      \begin{choicequestion}[1]{A choice question!}
+        \choiceitem{first choice}
+        \choiceitem{second choice}
+        \choiceitem{third choice}
+        \choiceitemtext{1.2cm}{1}{other:}
+      \end{choicequestion}
+
+      \singlemark{Another range question}{lower bound}{upper bound}
+      This text is closer to the question compared to question~\ref{somelabel}
+      because it is not starting a new paragraph.
+
+
+      \textbox{3cm}{And a freeform text field}
+    \end{multicols}
+
+    That's it for the multi-column part; it was fun while it lasted!
+
+    There are some more special commands. You can draw \checkedbox{} crossed
+    checkboxes, \filledbox{} filled or \correctedbox{} filled and crossed ones. Finally there is
+    also the plain \checkbox*{} checkbox using {\tt \textbackslash{}checkbox*}.
+
+    \textbox*{2cm}{And textboxes with a fixed height. This one is exactly 2\,cm high.}
+
+    % Reset checkbox style again.
+    \def\checkboxstyle{box}
+
+  \end{questionnaire}
+\end{document}
+

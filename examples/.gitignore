@@ -1,0 +1,8 @@
+*.log
+*.pdf
+*.sdaps
+*.out
+*.cls
+*.dict
+*.aux
+code128.tex
