@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 14:45+0100\n"
+"POT-Creation-Date: 2013-03-21 23:47+0100\n"
 "PO-Revision-Date: 2013-02-24 21:47+0300\n"
 "Last-Translator: red sea <dr.hatim@hotmail.com>\n"
 "Language-Team: \n"
+"Language: arabic\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Poedit 1.5.4\n"
-"Language: arabic\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
@@ -176,47 +176,53 @@ msgstr ""
 msgid "The file to import."
 msgstr ""
 
-#: ../sdaps/gui/gui.py:143
+#: ../sdaps/gui/gui.py:50
+msgid ""
+"The survey does not have any images! Please add images (and run recognize) "
+"before using the GUI."
+msgstr ""
+
+#: ../sdaps/gui/gui.py:160
 msgid "Page|Invalid"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:146
+#: ../sdaps/gui/gui.py:163
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "صفحة %i"
 
-#: ../sdaps/gui/gui.py:188
+#: ../sdaps/gui/gui.py:205
 msgid "Copyright © 2007-2012 The SDAPS Authors"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:190
+#: ../sdaps/gui/gui.py:207
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:191
+#: ../sdaps/gui/gui.py:208
 msgid "http://sdaps.sipsolutions.net"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:192
+#: ../sdaps/gui/gui.py:209
 msgid "translator-credits"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:238
+#: ../sdaps/gui/gui.py:255
 #, python-format
 msgid " of %i"
 msgstr "من %i"
 
-#: ../sdaps/gui/gui.py:239
+#: ../sdaps/gui/gui.py:256
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:353
+#: ../sdaps/gui/gui.py:372
 msgid "Close without saving"
 msgstr "إغلاق بدون حفظ"
 
-#: ../sdaps/gui/gui.py:357
+#: ../sdaps/gui/gui.py:376
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -329,7 +335,7 @@ msgstr ""
 msgid "Add IDs to the internal list from the specified file."
 msgstr ""
 
-#: ../sdaps/image/__init__.py:46
+#: ../sdaps/image/__init__.py:47
 msgid ""
 "It appears you have not build the C extension. Please run \"./setup.py build"
 "\" in the toplevel directory."
@@ -364,34 +370,34 @@ msgstr ""
 msgid "Existing fields:\n"
 msgstr ""
 
-#: ../sdaps/model/survey.py:227
+#: ../sdaps/model/survey.py:209
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/model/survey.py:238
+#: ../sdaps/model/survey.py:220
 #, python-format
 msgid "%f seconds per sheet"
 msgstr ""
 
-#: ../sdaps/model/survey.py:264
+#: ../sdaps/model/survey.py:246
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:268
+#: ../sdaps/model/survey.py:250
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
 msgstr ""
 
-#: ../sdaps/model/survey.py:279
+#: ../sdaps/model/survey.py:261
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:285
+#: ../sdaps/model/survey.py:267
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
@@ -657,7 +663,7 @@ msgstr ""
 msgid "Caught an Exception while parsing the ODT file. The current state is:"
 msgstr ""
 
-#: ../sdaps/setup/setup.py:106 ../sdaps/setuptex/setup.py:145
+#: ../sdaps/setup/setup.py:105 ../sdaps/setuptex/setup.py:145
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."

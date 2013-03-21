@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 14:45+0100\n"
-"PO-Revision-Date: 2013-02-17 14:57+0100\n"
+"POT-Creation-Date: 2013-03-21 23:47+0100\n"
+"PO-Revision-Date: 2013-03-21 23:47+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -211,48 +211,56 @@ msgstr "Daten aus einer CSV Datei importieren."
 msgid "The file to import."
 msgstr "Die zu importierende Datei."
 
-#: ../sdaps/gui/gui.py:143
+#: ../sdaps/gui/gui.py:50
+msgid ""
+"The survey does not have any images! Please add images (and run recognize) "
+"before using the GUI."
+msgstr ""
+"Die Umfrage enhält noch keine Bilder! Es müssen Bilder hinzugefügt und "
+"\"recognize\" ausgeführt werden befor die GUI benutzbar ist."
+
+#: ../sdaps/gui/gui.py:160
 msgid "Page|Invalid"
 msgstr "Ungültig"
 
-#: ../sdaps/gui/gui.py:146
+#: ../sdaps/gui/gui.py:163
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Seite %i"
 msgstr[1] "Seite %i"
 
-#: ../sdaps/gui/gui.py:188
+#: ../sdaps/gui/gui.py:205
 msgid "Copyright © 2007-2012 The SDAPS Authors"
 msgstr "Copyright © 2007-2012 The SDAPS Authors"
 
-#: ../sdaps/gui/gui.py:190
+#: ../sdaps/gui/gui.py:207
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "SDAPS - Scripts zum auswerten von Papier basierten Umfragen"
 
-#: ../sdaps/gui/gui.py:191
+#: ../sdaps/gui/gui.py:208
 msgid "http://sdaps.sipsolutions.net"
 msgstr "http://sdaps.sipsolutions.net"
 
-#: ../sdaps/gui/gui.py:192
+#: ../sdaps/gui/gui.py:209
 msgid "translator-credits"
 msgstr "Benjamin Berg"
 
-#: ../sdaps/gui/gui.py:238
+#: ../sdaps/gui/gui.py:255
 #, python-format
 msgid " of %i"
 msgstr " von %i"
 
-#: ../sdaps/gui/gui.py:239
+#: ../sdaps/gui/gui.py:256
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr "Erkennungsqualität: %.2f"
 
-#: ../sdaps/gui/gui.py:353
+#: ../sdaps/gui/gui.py:372
 msgid "Close without saving"
 msgstr "Beenden ohne zu Speichern"
 
-#: ../sdaps/gui/gui.py:357
+#: ../sdaps/gui/gui.py:376
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -376,7 +384,7 @@ msgstr "Ausgabedatei (Standard: ids_%%i)"
 msgid "Add IDs to the internal list from the specified file."
 msgstr "Fügt die IDs aus der Angegebenen Datei hinzu."
 
-#: ../sdaps/image/__init__.py:46
+#: ../sdaps/image/__init__.py:47
 msgid ""
 "It appears you have not build the C extension. Please run \"./setup.py build"
 "\" in the toplevel directory."
@@ -419,26 +427,26 @@ msgstr "Den angegebenen Schlüssel und Wert löschen."
 msgid "Existing fields:\n"
 msgstr "Definierte Felder:\n"
 
-#: ../sdaps/model/survey.py:227
+#: ../sdaps/model/survey.py:209
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:238
+#: ../sdaps/model/survey.py:220
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/model/survey.py:264
+#: ../sdaps/model/survey.py:246
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
 "Anzahl von Seiten haben!"
 
-#: ../sdaps/model/survey.py:268
+#: ../sdaps/model/survey.py:250
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -446,11 +454,11 @@ msgstr ""
 "Der Stil 'classic' kann nur mit bis zu sechs Seiten umgehen. Für mehr Seiten "
 "kann der 'code128' Stil benutzt werden."
 
-#: ../sdaps/model/survey.py:279
+#: ../sdaps/model/survey.py:261
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "IDs müssen im \"classic\" Stil ganze Zahlen sein!"
 
-#: ../sdaps/model/survey.py:285
+#: ../sdaps/model/survey.py:267
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr "Ungültiges Zeichen %s in der Fragebogen ID \"%s\" im \"code128\" Stil!"
@@ -755,7 +763,7 @@ msgstr ""
 "Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
 "Zustand ist:"
 
-#: ../sdaps/setup/setup.py:106 ../sdaps/setuptex/setup.py:145
+#: ../sdaps/setup/setup.py:105 ../sdaps/setuptex/setup.py:145
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
