@@ -1,11 +1,11 @@
 [sdaps]
-title = Testfragebogen \textlatin  {\LaTeX  }
+title = The Title
 global_id = 
 
 [info]
-Umfrage = Testfragebogen
+Date = 10.03.2013
 asdf = title
-Author = Someone
+Author = The Author
 
 [defs]
 # These values are not read back, they exist for information only!
@@ -13,11 +13,11 @@ paper_width = 210.0
 paper_height = 297.0
 print_questionnaire_id = False
 print_survey_id = True
-style = classic
+style = code128
 duplex = True
 
 [questionnaire]
 # These values are not read back, they exist for information only!
 page_count = 2
-survey_id = 2770682620
+survey_id = 2829233940
 

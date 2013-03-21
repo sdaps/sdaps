@@ -148,6 +148,11 @@ rm -rf "$PROJECT"
 "$SDAPS" "$PROJECT" info title
 "$SDAPS" "$PROJECT" info --set title "asdf"
 
+# Add and recognize test data
+"$SDAPS" "$PROJECT" add "data/tex/test_without_ids.tif"
+"$SDAPS" "$PROJECT" recognize
+
+
 # And finally, create a report with the result
 "$SDAPS" "$PROJECT" report_tex
 
