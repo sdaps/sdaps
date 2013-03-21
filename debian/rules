@@ -11,4 +11,14 @@ override_dh_clean:
 	# Remove the pot file (yeah, this is probably not the right
 	# solution)
 	rm -f po/sdaps.pot
+	# And the test directory
+	rm -rf test/projects
 	dh_clean
+
+override_dh_auto_build:
+	dh_auto_build
+
+	# And run the testsuit
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	cd test; ./run-test-locally.sh
+endif
