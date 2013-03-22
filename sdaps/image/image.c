@@ -78,7 +78,7 @@ disable_libtiff_warnings (void)
 }
 
 cairo_surface_t*
-get_a1_from_tiff (char *filename, gint page, gboolean rotated)
+get_a1_from_tiff (const char *filename, gint page, gboolean rotated)
 {
 	TIFF* tiff;
 	cairo_surface_t *surface;
@@ -136,7 +136,7 @@ get_a1_from_tiff (char *filename, gint page, gboolean rotated)
 }
 
 cairo_surface_t*
-get_rgb24_from_tiff (char *filename, gint page, gboolean rotated)
+get_rgb24_from_tiff (const char *filename, gint page, gboolean rotated)
 {
 	TIFF* tiff;
 	cairo_surface_t *surface;
@@ -191,7 +191,7 @@ get_rgb24_from_tiff (char *filename, gint page, gboolean rotated)
 }
 
 gint
-get_tiff_page_count (char *filename)
+get_tiff_page_count (const char *filename)
 {
 	TIFF* tiff;
 	gint pages;
@@ -208,7 +208,7 @@ get_tiff_page_count (char *filename)
 }
 
 gboolean
-get_tiff_resolution (char *filename, gint page, gdouble *xresolution, gdouble *yresolution)
+get_tiff_resolution (const char *filename, gint page, gdouble *xresolution, gdouble *yresolution)
 {
 	TIFF* tiff;
 	float xres = 0.0;
@@ -245,7 +245,7 @@ get_tiff_resolution (char *filename, gint page, gdouble *xresolution, gdouble *y
 }
 
 gboolean
-check_tiff_monochrome (char *filename)
+check_tiff_monochrome (const char *filename)
 {
 	TIFF* tiff;
 	gboolean monochrome = TRUE;

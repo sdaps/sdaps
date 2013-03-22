@@ -35,19 +35,19 @@ void
 disable_libtiff_warnings (void);
 
 cairo_surface_t*
-get_a1_from_tiff (char *filename, gint page, gboolean rotated);
+get_a1_from_tiff (const char *filename, gint page, gboolean rotated);
 
 cairo_surface_t*
-get_rgb24_from_tiff (char *filename, gint page, gboolean rotated);
+get_rgb24_from_tiff (const char *filename, gint page, gboolean rotated);
 
 gint
-get_tiff_page_count (char *filename);
+get_tiff_page_count (const char *filename);
 
 gboolean
-get_tiff_resolution (char *filename, gint page, gdouble *xresolution, gdouble *yresolution);
+get_tiff_resolution (const char *filename, gint page, gdouble *xresolution, gdouble *yresolution);
 
 gboolean
-check_tiff_monochrome (char *filename);
+check_tiff_monochrome (const char *filename);
 
 cairo_matrix_t*
 calculate_matrix(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);

@@ -92,7 +92,7 @@ static PyObject *
 wrap_get_a1_from_tiff(PyObject *self, PyObject *args)
 {
 	cairo_surface_t *surface;
-	char *filename = NULL;
+	const char *filename = NULL;
 	gboolean rotated;
 	gint page;
 
@@ -113,7 +113,7 @@ static PyObject *
 wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args)
 {
 	cairo_surface_t *surface;
-	char *filename = NULL;
+	const char *filename = NULL;
 	gboolean rotated;
 	gint page;
 
@@ -133,7 +133,7 @@ wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args)
 static PyObject *
 wrap_get_tiff_page_count(PyObject *self, PyObject *args)
 {
-	char *filename = NULL;
+	const char *filename = NULL;
 	gint pages;
 
 	if (!PyArg_ParseTuple(args, "s", &filename))
@@ -152,7 +152,7 @@ wrap_get_tiff_page_count(PyObject *self, PyObject *args)
 static PyObject *
 wrap_get_tiff_resolution(PyObject *self, PyObject *args)
 {
-	char *filename = NULL;
+	const char *filename = NULL;
 	gint page;
 	gdouble xresolution, yresolution;
 
@@ -170,7 +170,7 @@ wrap_get_tiff_resolution(PyObject *self, PyObject *args)
 static PyObject *
 wrap_check_tiff_monochrome(PyObject *self, PyObject *args)
 {
-	char *filename = NULL;
+	const char *filename = NULL;
 	gboolean monochrome;
 
 	if (!PyArg_ParseTuple(args, "s", &filename))
@@ -190,7 +190,10 @@ wrap_calculate_matrix(PyObject *self, PyObject *args)
 	cairo_matrix_t *matrix;
 	float mm_x, mm_y, mm_width, mm_height;
 
-	if (!PyArg_ParseTuple(args, "O!O!ffff", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height))
+	if (!PyArg_ParseTuple(args, "O!O!ffff",
+	                      &PycairoImageSurface_Type, &py_surface,
+	                      &PycairoMatrix_Type, &py_matrix,
+	                      &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
 
 	matrix = calculate_matrix(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
@@ -215,7 +218,11 @@ wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
 	cairo_matrix_t *correction_matrix;
 	float mm_x, mm_y;
 
-	if (!PyArg_ParseTuple(args, "O!O!O!ff", &PycairoImageSurface_Type, &py_surface, &PycairoImageSurface_Type, &py_mask, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y))
+	if (!PyArg_ParseTuple(args, "O!O!O!ff",
+	                      &PycairoImageSurface_Type, &py_surface,
+	                      &PycairoImageSurface_Type, &py_mask,
+	                      &PycairoMatrix_Type, &py_matrix,
+	                      &mm_x, &mm_y))
 		return NULL;
 
 	correction_matrix = calculate_correction_matrix_masked(py_surface->surface, py_mask->surface, &py_matrix->matrix, mm_x, mm_y);
@@ -239,7 +246,10 @@ wrap_find_box_corners(PyObject *self, PyObject *args)
 	gdouble mm_x1, mm_y1, mm_x2, mm_y2, mm_x3, mm_y3, mm_x4, mm_y4;
 	gboolean success;
 
-	if (!PyArg_ParseTuple(args, "O!O!dddd", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height))
+	if (!PyArg_ParseTuple(args, "O!O!dddd",
+	                      &PycairoImageSurface_Type, &py_surface,
+	                      &PycairoMatrix_Type, &py_matrix,
+	                      &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
 
 	success = find_box_corners(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height,
@@ -261,7 +271,10 @@ wrap_get_coverage(PyObject *self, PyObject *args)
 	gdouble mm_x, mm_y, mm_width, mm_height;
 	gdouble coverage;
 
-	if (!PyArg_ParseTuple(args, "O!O!dddd", &PycairoImageSurface_Type, &py_surface, &PycairoMatrix_Type, &py_matrix, &mm_x, &mm_y, &mm_width, &mm_height))
+	if (!PyArg_ParseTuple(args, "O!O!dddd",
+	                      &PycairoImageSurface_Type, &py_surface,
+	                      &PycairoMatrix_Type, &py_matrix,
+	                      &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
 
 	coverage = get_coverage(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
@@ -277,7 +290,10 @@ wrap_get_masked_coverage(PyObject *self, PyObject *args)
 	gint x, y;
 	gdouble coverage;
 
-	if (!PyArg_ParseTuple(args, "O!O!ii", &PycairoImageSurface_Type, &py_surface, &PycairoImageSurface_Type, &py_mask, &x, &y))
+	if (!PyArg_ParseTuple(args, "O!O!ii",
+	                      &PycairoImageSurface_Type, &py_surface,
+	                      &PycairoImageSurface_Type, &py_mask,
+	                      &x, &y))
 		return NULL;
 
 	coverage = get_masked_coverage(py_surface->surface, py_mask->surface, x, y);
@@ -295,7 +311,10 @@ wrap_get_masked_coverage_without_lines(PyObject *self, PyObject *args)
 	gint line_count;
 	gdouble coverage;
 
-	if (!PyArg_ParseTuple(args, "O!O!iidi", &PycairoImageSurface_Type, &py_surface, &PycairoImageSurface_Type, &py_mask, &x, &y, &line_width, &line_count))
+	if (!PyArg_ParseTuple(args, "O!O!iidi",
+	                      &PycairoImageSurface_Type, &py_surface,
+	                      &PycairoImageSurface_Type, &py_mask,
+	                      &x, &y, &line_width, &line_count))
 		return NULL;
 
 	coverage = get_masked_coverage_without_lines(py_surface->surface, py_mask->surface, x, y, line_width, line_count);
@@ -313,7 +332,10 @@ wrap_get_masked_white_area_count(PyObject *self, PyObject *args)
 	gdouble filled_area;
 	int count;
 
-	if (!PyArg_ParseTuple(args, "O!O!iidd", &PycairoImageSurface_Type, &py_surface, &PycairoImageSurface_Type, &py_mask, &x, &y, &min_size, &max_size))
+	if (!PyArg_ParseTuple(args, "O!O!iidd",
+	                      &PycairoImageSurface_Type, &py_surface,
+	                      &PycairoImageSurface_Type, &py_mask,
+	                      &x, &y, &min_size, &max_size))
 		return NULL;
 
 	count = get_masked_white_area_count(py_surface->surface, py_mask->surface, x, y, min_size, max_size, &filled_area);
@@ -329,7 +351,8 @@ wrap_get_pbm(PyObject *self, PyObject *args)
 	int length = 0;
 	void *data = NULL;
 
-	if (!PyArg_ParseTuple(args, "O!", &PycairoImageSurface_Type, &py_surface))
+	if (!PyArg_ParseTuple(args, "O!",
+	                      &PycairoImageSurface_Type, &py_surface))
 		return NULL;
 
 	get_pbm(py_surface->surface, &data, &length);
@@ -372,11 +395,24 @@ static PyObject *get_debug_surface(PyObject *self, PyObject *args)
 		Py_INCREF(Py_None);
 		return Py_None;
 	} else {
+		PyObject *result;
+		PyObject *pysurface;
+
 		cairo_surface_reference(sdaps_debug_surface);
-		return Py_BuildValue("Nii",
-		                     PycairoSurface_FromSurface(sdaps_debug_surface, NULL),
-		                     sdaps_debug_surface_ox,
-		                     sdaps_debug_surface_oy);
+		pysurface = (PyObject*) PycairoSurface_FromSurface(sdaps_debug_surface, NULL);
+
+		if (pysurface == NULL)
+			return NULL;
+
+		result =  Py_BuildValue("Nii",
+		                        pysurface,
+		                        sdaps_debug_surface_ox,
+		                        sdaps_debug_surface_oy);
+
+		if (result == NULL)
+			Py_DECREF(pysurface);
+
+		return result;
 	}
 }
 
@@ -387,7 +423,8 @@ wrap_kfill_modified(PyObject *self, PyObject *args)
 	PycairoSurface *py_surface;
 	gint k;
 
-	if (!PyArg_ParseTuple(args, "O!i", &PycairoImageSurface_Type, &py_surface, &k))
+	if (!PyArg_ParseTuple(args, "O!i",
+	                      &PycairoImageSurface_Type, &py_surface, &k))
 		return NULL;
 
 	if (cairo_image_surface_get_format (py_surface->surface) != CAIRO_FORMAT_A1) {
