@@ -1,3 +1,8 @@
+Overview of Changes in SDAPS 1.0.3
+==================================
+
+Bugfix so that the SDAPS class works with older PGF versions.
+
 Overview of Changes in SDAPS 1.0.2
 ==================================
 
