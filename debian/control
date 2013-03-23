@@ -8,7 +8,7 @@ Build-Depends: python2.7, python2.7-dev, libtiff4-dev | libtiff5-dev,
  libcairo2-dev, libglib2.0-dev, debhelper (>= 7.4.3),
  python2.7-imaging, python-reportlab, python-zbar,
  texlive-latex-recommended, pgf, latex-beamer, pdftk | python2.7-pdf,
- texlive-lang-ukenglish
+ texlive-lang-ukenglish, texlive-latex-extra
 Standards-Version: 3.9.4
 
 Package: sdaps
