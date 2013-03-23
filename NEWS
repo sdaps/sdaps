@@ -1,3 +1,8 @@
+Overview of Changes in SDAPS 1.0.2
+==================================
+
+Bugfix so that the commands work fine without a TTY.
+
 Overview of Changes in SDAPS 1.0.1
 ==================================
 

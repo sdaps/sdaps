@@ -27,7 +27,7 @@ def pkgconfig(*packages, **kw):
     return kw
 
 setup(name='sdaps',
-      version='1.0.1',
+      version='1.0.2',
       description='Scripts for data acquisition with paper-based surveys',
       url='http://sdaps.sipsolutions.net',
       author='Benjamin Berg, Christoph Simon',
