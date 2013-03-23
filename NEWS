@@ -1,3 +1,8 @@
+Overview of Changes in SDAPS 1.0.1
+==================================
+
+Only depend on distutils and pkg_resources if doing a local run.
+
 Overview of Changes in SDAPS 1.0.0
 ==================================
 

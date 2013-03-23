@@ -21,8 +21,6 @@ u'''Some path values, used to find and load program components.
 
 import os
 
-from pkg_resources import get_build_platform
-from distutils.sysconfig import get_python_version
 
 import gettext
 import locale
@@ -52,6 +50,9 @@ def init(local_run_value, package_path):
 
     if local_run:
         source_dir = base_dir
+
+        from pkg_resources import get_build_platform
+        from distutils.sysconfig import get_python_version
 
         # Initialize gettext
         init_gettext(os.path.join(

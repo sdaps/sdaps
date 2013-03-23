@@ -4,8 +4,11 @@ Section: python
 Priority: optional
 X-Python-Version: >= 2.7
 Build-Depends: python2.7, python2.7-dev, libtiff4-dev | libtiff5-dev,
- pkg-config, python-distutils-extra, python-cairo-dev, libcairo2-dev,
- libglib2.0-dev, debhelper (>= 7.4.3)
+ pkg-config, python-distutils-extra, python-pkg-resources, python-cairo-dev,
+ libcairo2-dev, libglib2.0-dev, debhelper (>= 7.4.3),
+ python2.7-imaging, python-reportlab, python-zbar,
+ texlive-latex-recommended, pgf, latex-beamer, pdftk | python2.7-pdf,
+ texlive-lang-ukenglish
 Standards-Version: 3.9.4
 
 Package: sdaps
