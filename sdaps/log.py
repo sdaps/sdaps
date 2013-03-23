@@ -132,12 +132,13 @@ class ProgressBar(object):
         self.update(0)
 
     def update(self, value):
+        self.elapsed_time = time.time() - self.start_time
+
         # Don't display anything if the output is a pipe
         if not self.pipe.isatty():
             return
 
         progress = float(value) / float(self.max_value)
-        self.elapsed_time = time.time() - self.start_time
         self.pipe.write('|')
         self.pipe.write(('#' * int(round(progress * 64))).ljust(64))
         self.pipe.write('| ')
