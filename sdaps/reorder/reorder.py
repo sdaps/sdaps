@@ -24,6 +24,7 @@ _ = ugettext
 def reorder(survey):
     """We can assume quite some things in this function, because recognize
     properly handles it. ie.
+
      * Every image will be tagged correctly (as long as the data is known)
      * in duplex mode both the front/back image will be tagged, so we don't
        need to care about that here!
