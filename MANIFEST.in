@@ -11,6 +11,8 @@ include test/run-test-locally.sh
 recursive-include test/data *.internetquestions *.odt *.pdf *.tif
 recursive-include test/data *.tex questionnaire_ids
 recursive-include test/data/info_files *
+include custom-scripts/README
+recursive-include custom-scripts *.py
 include examples/example.tex
 include examples/example.tif
 include test/data/tex/code128_test_ids

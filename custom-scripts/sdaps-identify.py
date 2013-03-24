@@ -20,11 +20,12 @@
 import sys
 import os
 
-# For local running
-sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), '..'))
+# Use the following and local_run=True below to run without installing SDAPS
+#sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), '..'))
 
 import sdaps
-sdaps.init(local_run=True)
+#sdaps.init(local_run=True)
+sdaps.init()
 
 from sdaps import model
 from sdaps import image
