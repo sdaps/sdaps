@@ -267,15 +267,14 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
     print ungettext(u'Creating stamp PDF for %i sheet', u'Creating stamp PDF for %i sheets', sheets) % sheets
     log.progressbar.start(sheets)
     for i in range(sheets):
+        id = questionnaire_ids.pop(0)
+
         for j in range(questionnaire_length):
             if survey.defs.style == "classic":
                 draw_corner_marks(survey, canvas)
                 draw_corner_boxes(survey, canvas, j)
                 if not survey.defs.duplex or j % 2:
                     if questionnaire_ids is not None:
-                        if j == 1 or questionnaire_length == 1:
-                            # Only read a new ID for the first page.
-                            id = questionnaire_ids.pop(0)
                         draw_questionnaire_id(canvas, survey, id)
 
                     if survey.defs.print_survey_id:
@@ -285,9 +284,6 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
                 if not survey.defs.duplex or j % 2:
                     if questionnaire_ids is not None:
-                        if j == 1 or questionnaire_length == 1:
-                            # Only read a new ID for the first page.
-                            id = questionnaire_ids.pop(0)
                         draw_code128_questionnaire_id(canvas, survey, id)
 
                     # Survey ID has to be printed in CODE128 mode, because it
