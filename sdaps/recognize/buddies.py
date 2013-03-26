@@ -203,12 +203,6 @@ class Sheet(model.buddy.Buddy):
             # Simply use the survey ID from the first image globally
             self.obj.survey_id = self.obj.images[0].survey_id
 
-            for image in self.obj.images:
-                if self.obj.survey_id != image.survey_id:
-                    if not warned_multipage_not_correctly_scanned:
-                        log.warn(_("Got different Survey-IDs on different pages for one sheet!"))
-                        warned_multipage_not_correctly_scanned = True
-
             if self.obj.survey_id != self.obj.survey.survey_id:
                 # Broken survey ID ...
                 log.warn(_("Got a wrong survey ID (%s, %i)! It is %s, but should be %i.") %
@@ -240,11 +234,6 @@ class Sheet(model.buddy.Buddy):
             self.duplex_copy_image_attr(failed_pages, "questionnaire_id")
 
             self.obj.questionnaire_id = self.obj.images[0].questionnaire_id
-            for image in self.obj.images:
-                if self.obj.questionnaire_id != image.questionnaire_id:
-                    if not warned_multipage_not_correctly_scanned:
-                        log.warn(_("Got different Questionnaire-IDs on different pages for in at least one sheet! Do *NOT* try to use filters on this! You have to run a \"reorder\" step for this to work properly!"))
-                        warned_multipage_not_correctly_scanned = True
 
         # Try to load the global ID. If it does not exist we will get None, if
         # it does, then it will be non-None. We don't care much about it
@@ -264,9 +253,14 @@ class Sheet(model.buddy.Buddy):
         self.obj.global_id = self.obj.images[0].global_id
 
         for image in self.obj.images:
-            if self.obj.global_id != image.global_id:
-                log.warn(_('%s, %i: Global ID is different to an earlier page.') % \
-                         (image.filename, image.tiff_page))
+            if self.obj.global_id != image.global_id or \
+                self.obj.survey_id != image.survey_id or \
+                self.obj.questionnaire_id != image.questionnaire_id:
+
+                if not warned_multipage_not_correctly_scanned:
+                    log.warn(_("Got different IDs on different pages for at least one sheet! Do *NOT* try to use filters with this survey! You have to run a \"reorder\" step for this to work properly!"))
+
+                    warned_multipage_not_correctly_scanned = True
 
         # Done
         if failed_pages:
