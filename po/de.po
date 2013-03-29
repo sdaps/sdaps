@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-21 23:47+0100\n"
-"PO-Revision-Date: 2013-03-21 23:47+0100\n"
+"POT-Creation-Date: 2013-03-29 15:34+0100\n"
+"PO-Revision-Date: 2013-03-29 15:36+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: \n"
@@ -529,40 +529,30 @@ msgid "%s, %i: Could not read survey ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Umfrage-ID nicht einlesen. Dies sollte aber möglich sein."
 
-#: ../sdaps/recognize/buddies.py:209
-msgid "Got different Survey-IDs on different pages for one sheet!"
-msgstr ""
-"Unterschiedliche Umfrage-IDs in Seiten die einem Fragebogen zugeordnet sind!"
-
 #. Broken survey ID ...
-#: ../sdaps/recognize/buddies.py:214
+#: ../sdaps/recognize/buddies.py:208
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
 msgstr ""
 "Falsche Umfrage-ID auf Seite (%s, %i)! Die ID ist %s sollte aber %i sein."
 
-#: ../sdaps/recognize/buddies.py:236
+#: ../sdaps/recognize/buddies.py:230
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Fragebogen-ID nicht lesen. Dies sollte jedoch möglich "
 "sein."
 
-#: ../sdaps/recognize/buddies.py:246
+#: ../sdaps/recognize/buddies.py:261
 msgid ""
-"Got different Questionnaire-IDs on different pages for in at least one "
-"sheet! Do *NOT* try to use filters on this! You have to run a \"reorder\" "
-"step for this to work properly!"
+"Got different IDs on different pages for at least one sheet! Do *NOT* try to "
+"use filters with this survey! You have to run a \"reorder\" step for this to "
+"work properly!"
 msgstr ""
-"Unterschiedliche Fragebogen-ID auf unterschiedlichen Seiten. Die Erkennung "
-"wird funktionieren, die Zuordnung der Daten ist jedoch Falsch! Falls die "
+"Unterschiedliche IDs auf unterschiedlichen Seiten. Die Erkennung wird "
+"funktionieren, die Zuordnung der Daten ist jedoch Falsch! Falls die "
 "Zuordnung benötigt wird, *muss* der \"reorder\" Befehl genutzt werden, um "
 "die Seiten wieder korrekt zuzuordnen."
-
-#: ../sdaps/recognize/buddies.py:268
-#, python-format
-msgid "%s, %i: Global ID is different to an earlier page."
-msgstr "%s, %i: Die Globale-ID ist anders als auf einer der vorherigen Seiten."
 
 #: ../sdaps/recognize/__init__.py:33
 msgid "Run the optical mark recognition."
@@ -900,7 +890,7 @@ msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
 msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
 
-#: ../sdaps/stamp/generic.py:307 ../sdaps/stamp/generic.py:418
+#: ../sdaps/stamp/generic.py:303 ../sdaps/stamp/generic.py:414
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
@@ -908,33 +898,33 @@ msgstr[0] "%i Bogen; %f Sekunden pro Bogen"
 msgstr[1] "%i Bögen; %f Sekunden pro Bogen"
 
 #. Merge using pdftk
-#: ../sdaps/stamp/generic.py:316
+#: ../sdaps/stamp/generic.py:312
 msgid "Stamping using pdftk"
 msgstr "Stempele mit Hilfe von pdftk."
 
-#: ../sdaps/stamp/generic.py:320
+#: ../sdaps/stamp/generic.py:316
 #, python-format
 msgid "pdftk: Splitting out page %d of each sheet."
 msgid_plural "pdftk: Splitting out page %d of each sheet."
 msgstr[0] "pdftk: Extrahier die %d Seite aus dem Stempel."
 msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
 
-#: ../sdaps/stamp/generic.py:334
+#: ../sdaps/stamp/generic.py:330
 msgid "pdftk: Splitting the questionnaire for watermarking."
 msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens"
 
-#: ../sdaps/stamp/generic.py:344
+#: ../sdaps/stamp/generic.py:340
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
 msgstr[0] "pdftk: Stempele die Seite %d."
 msgstr[1] "pdftk: Stempele die Seite %d."
 
-#: ../sdaps/stamp/generic.py:367
+#: ../sdaps/stamp/generic.py:363
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr "pdftk: Erstelle das fertige PDF."
 
-#: ../sdaps/stamp/generic.py:404
+#: ../sdaps/stamp/generic.py:400
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
 
@@ -1060,6 +1050,82 @@ msgstr ""
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr "Erstelle Überblick über die Boxen sortiert nach der Metrik \"%s\"."
+
+#. The language name of the LaTeX dictionary file for translator
+#: ../tex/tex_translations.in.h:2
+msgid "English"
+msgstr "German\t"
+
+#. Used as an overlay for questoinnaires that are not yet done
+#: ../tex/tex_translations.in.h:4
+msgid "draft"
+msgstr "Entwurf"
+
+#. Label for the survey-id on the questionnaire (in "classic" mode)
+#: ../tex/tex_translations.in.h:6
+msgid "Survey-ID:"
+msgstr "Umfrage-ID:"
+
+#. Label for the questionnaire-id on the questionnaire (in "classic" mode)
+#: ../tex/tex_translations.in.h:8
+msgid "Questionnaire-ID:"
+msgstr "Fragebogen-ID:"
+
+#. Default instructions on the questionnaire
+#: ../tex/tex_translations.in.h:10
+msgid ""
+"This questionnaire is automatically read by a computer program. Please use a "
+"pen for filling in your answers."
+msgstr ""
+"Der Fragebogen wird maschinell erfasst. Bitte mit Kugelschreiber oder nicht "
+"zu dickem Filzstift ausf\\\"ullen."
+
+#. Instruction on the questionnaire: Description of a crossed checkbox
+#: ../tex/tex_translations.in.h:12
+msgid "Check"
+msgstr "Ankreuzen"
+
+#. Instruction on the questionnaire: Description of a crossed and filled checkbox
+#: ../tex/tex_translations.in.h:14
+msgid "Uncheck to correct"
+msgstr "Korrigieren"
+
+#. Instruction on the questionnaire: Multiple choice question
+#: ../tex/tex_translations.in.h:16
+msgid "You can check any number of boxes in selection questions."
+msgstr "Bei Auswahlfeldern d\\\"urfen mehrere Antworten angekreuzt werden."
+
+#. Instruction on the questionnaire: Mark/range question.
+#: ../tex/tex_translations.in.h:18
+msgid ""
+"For questions with a range (1--5) choose the answer the mark that fits best."
+msgstr ""
+"Bei Bewertungsfragen (Skala 1--5) darf nur ein K\\\"astchen Angekreuzt "
+"werden."
+
+#. LaTeX based report: Label for the number of people that answered
+#: ../tex/tex_translations.in.h:20
+msgid "Answers"
+msgstr "Antworten:"
+
+#. LaTeX based report: The calculated mean value
+#: ../tex/tex_translations.in.h:22
+msgid "Mean"
+msgstr "Durchschnitt"
+
+#. LaTeX based report: The standard deviation
+#: ../tex/tex_translations.in.h:24
+msgid "Standard-Deviation"
+msgstr "Standardabweichung"
+
+#~ msgid "Got different Survey-IDs on different pages for one sheet!"
+#~ msgstr ""
+#~ "Unterschiedliche Umfrage-IDs in Seiten die einem Fragebogen zugeordnet "
+#~ "sind!"
+
+#~ msgid "%s, %i: Global ID is different to an earlier page."
+#~ msgstr ""
+#~ "%s, %i: Die Globale-ID ist anders als auf einer der vorherigen Seiten."
 
 #~ msgid ""
 #~ "Questionnaire IDs are required, use --random to create random ones or "

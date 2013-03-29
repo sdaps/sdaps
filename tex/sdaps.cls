@@ -521,8 +521,8 @@
       \begin{info}
         \translate{infotext}\\
         \begin{tabularx}{\textwidth}{llcX}
-          \translate{info_cross}: & \checkedbox &\quad & \translate{info_select} \\
-          \translate{info_correct}: & \correctedbox & & \translate{info_mark} \\
+          \translate{info-cross}: & \checkedbox &\quad & \translate{info-select} \\
+          \translate{info-correct}: & \correctedbox & & \translate{info-mark} \\
         \end{tabularx}
       \end{info}
     }

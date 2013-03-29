@@ -16,3 +16,4 @@ recursive-include custom-scripts *.py
 include examples/example.tex
 include examples/example.tif
 include test/data/tex/code128_test_ids
+include tex/tex_translations.in

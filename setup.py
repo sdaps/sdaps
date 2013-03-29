@@ -4,9 +4,11 @@ from distutils.core import setup
 from distutils.extension import Extension
 import glob
 import os
+import os.path
 import commands
 import sys
 from DistUtilsExtra.command import *
+import ConfigParser
 
 def pkgconfig(*packages, **kw):
     flag_map = {'-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries', '-D' : 'define_macros'}
@@ -25,6 +27,85 @@ def pkgconfig(*packages, **kw):
            type = 'extra_compile_args'
         kw.setdefault(type, []).append(value)
     return kw
+
+class sdaps_build_i18n(build_i18n.build_i18n):
+
+    # Hardcoded ...
+    dict_dir = 'share/sdaps/tex'
+    dict_filename = 'tex_translations'
+
+    def run(self):
+        # run the original code
+        build_i18n.build_i18n.run(self)
+
+        targetpath = self.dict_dir
+        tex_translations = os.path.join('build', self.dict_dir, self.dict_filename)
+
+        # The tex_translations file should not be installed
+        self.distribution.data_files.remove((targetpath, [tex_translations, ]))
+
+        # Now build the LaTeX dictionaries
+        def extract_key_lang(key):
+            if not key.endswith(']'):
+                return key, None
+            index = key.rfind('[')
+            return key[:index], key[index+1:-1]
+
+        parser = ConfigParser.ConfigParser()
+        parser.read(tex_translations)
+
+        langs = {}
+        keys = set()
+        for k, v in parser.items("translations"):
+            key, lang = extract_key_lang(k)
+            if not key == 'tex-language':
+                keys.add(key)
+                continue
+
+            assert lang not in langs
+            assert v not in langs.items()
+
+            langs[lang] = v
+
+        dictfiles = []
+        for lang, name in langs.iteritems():
+            print 'building LaTeX dictionary file for language %s (%s)' % (name, lang if lang else 'C')
+            dictfiles.append(os.path.join('build', self.dict_dir, 'translator-sdaps-dictionary-%s.dict' % name))
+            f = open(dictfiles[-1], 'w')
+
+            f.write('% This file is auto-generated from gettext translations (.po files).\n')
+            f.write('\\ProvidesDictionary{translator-sdaps-dictionary}{%s}\n\n' % name)
+
+            for key in keys:
+                if lang is not None:
+                    k = "%s[%s]" % (key, lang)
+                else:
+                    k = key
+
+                try:
+                    value = parser.get("translations", k)
+                except ConfigParser.NoOptionError:
+                    value = parser.get("translations", key)
+
+                f.write('\\providetranslation{%s}{%s}\n' % (key, value))
+
+        # And install the dictionary files
+        self.distribution.data_files.append((targetpath, dictfiles))
+
+class sdaps_clean_i18n(clean_i18n.clean_i18n):
+    dict_dir = 'share/sdaps/tex'
+
+    def run(self):
+        # Remove dictionaries
+
+        directory = os.path.join('build', self.dict_dir)
+        if os.path.isdir(directory):
+            print "removing all LaTeX dictionaries in '%s'" % directory
+            for filename in os.listdir(directory):
+                if filename.startswith('translator-sdaps-dictionary-'):
+                    os.unlink(os.path.join(directory, filename))
+
+        clean_i18n.clean_i18n.run(self)
 
 setup(name='sdaps',
       version='1.0.3',
@@ -73,12 +154,10 @@ the tools to later analyse the scanned data, and create a report.
                   ),
                   ('share/sdaps/tex', glob.glob('tex/*.tex')
                   ),
-                  ('share/sdaps/tex', glob.glob("tex/*.dict")
-                  ),
                   ],
       cmdclass = { "build" : build_extra.build_extra,
-                   "build_i18n" :  build_i18n.build_i18n,
+                   "build_i18n" :  sdaps_build_i18n,
                    "build_help" :  build_help.build_help,
                    "build_icons" :  build_icons.build_icons,
-                   "clean" : clean_i18n.clean_i18n }
+                   "clean" : sdaps_clean_i18n }
      )

@@ -1,0 +1,32 @@
+# This file only exist to extract translations using intltool.
+# From this file the latex dictionary files are created at
+# build time.
+
+[translations]
+# The language name of the LaTeX dictionary file for translator
+_tex-language=English
+# Used as an overlay for questoinnaires that are not yet done
+_draft=draft
+# Label for the survey-id on the questionnaire (in "classic" mode)
+_surveyid=Survey-ID:
+# Label for the questionnaire-id on the questionnaire (in "classic" mode)
+_questionnaireid=Questionnaire-ID:
+# Default instructions on the questionnaire
+_infotext=This questionnaire is automatically read by a computer program. Please use a pen for filling in your answers.
+
+# Instruction on the questionnaire: Description of a crossed checkbox
+_info-cross=Check
+# Instruction on the questionnaire: Description of a crossed and filled checkbox
+_info-correct=Uncheck to correct
+# Instruction on the questionnaire: Multiple choice question
+_info-select=You can check any number of boxes in selection questions.
+# Instruction on the questionnaire: Mark/range question.
+_info-mark=For questions with a range (1--5) choose the answer the mark that fits best.
+
+# LaTeX based report: Label for the number of people that answered
+_answers=Answers
+# LaTeX based report: The calculated mean value
+_mean=Mean
+# LaTeX based report: The standard deviation
+_standard-deviation=Standard-Deviation
+

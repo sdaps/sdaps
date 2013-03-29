@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-21 23:47+0100\n"
+"POT-Creation-Date: 2013-03-29 15:34+0100\n"
 "PO-Revision-Date: 2013-02-24 21:47+0300\n"
 "Last-Translator: red sea <dr.hatim@hotmail.com>\n"
 "Language-Team: \n"
@@ -465,31 +465,22 @@ msgstr ""
 msgid "%s, %i: Could not read survey ID, but should be able to."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:209
-msgid "Got different Survey-IDs on different pages for one sheet!"
-msgstr ""
-
 #. Broken survey ID ...
-#: ../sdaps/recognize/buddies.py:214
+#: ../sdaps/recognize/buddies.py:208
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:236
+#: ../sdaps/recognize/buddies.py:230
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:246
+#: ../sdaps/recognize/buddies.py:261
 msgid ""
-"Got different Questionnaire-IDs on different pages for in at least one "
-"sheet! Do *NOT* try to use filters on this! You have to run a \"reorder\" "
-"step for this to work properly!"
-msgstr ""
-
-#: ../sdaps/recognize/buddies.py:268
-#, python-format
-msgid "%s, %i: Global ID is different to an earlier page."
+"Got different IDs on different pages for at least one sheet! Do *NOT* try to "
+"use filters with this survey! You have to run a \"reorder\" step for this to "
+"work properly!"
 msgstr ""
 
 #: ../sdaps/recognize/__init__.py:33
@@ -780,7 +771,7 @@ msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/stamp/generic.py:307 ../sdaps/stamp/generic.py:418
+#: ../sdaps/stamp/generic.py:303 ../sdaps/stamp/generic.py:414
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
@@ -788,33 +779,33 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Merge using pdftk
-#: ../sdaps/stamp/generic.py:316
+#: ../sdaps/stamp/generic.py:312
 msgid "Stamping using pdftk"
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:320
+#: ../sdaps/stamp/generic.py:316
 #, python-format
 msgid "pdftk: Splitting out page %d of each sheet."
 msgid_plural "pdftk: Splitting out page %d of each sheet."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/stamp/generic.py:334
+#: ../sdaps/stamp/generic.py:330
 msgid "pdftk: Splitting the questionnaire for watermarking."
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:344
+#: ../sdaps/stamp/generic.py:340
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/stamp/generic.py:367
+#: ../sdaps/stamp/generic.py:363
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:404
+#: ../sdaps/stamp/generic.py:400
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr ""
 
@@ -919,4 +910,70 @@ msgstr ""
 #: ../sdaps/boxgallery/boxgallery.py:108
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
+msgstr ""
+
+#. The language name of the LaTeX dictionary file for translator
+#: ../tex/tex_translations.in.h:2
+msgid "English"
+msgstr ""
+
+#. Used as an overlay for questoinnaires that are not yet done
+#: ../tex/tex_translations.in.h:4
+msgid "draft"
+msgstr ""
+
+#. Label for the survey-id on the questionnaire (in "classic" mode)
+#: ../tex/tex_translations.in.h:6
+#, fuzzy
+msgid "Survey-ID:"
+msgstr "معرف-الاستفتاء: %i"
+
+#. Label for the questionnaire-id on the questionnaire (in "classic" mode)
+#: ../tex/tex_translations.in.h:8
+#, fuzzy
+msgid "Questionnaire-ID:"
+msgstr "معرف-السؤال: %i"
+
+#. Default instructions on the questionnaire
+#: ../tex/tex_translations.in.h:10
+msgid ""
+"This questionnaire is automatically read by a computer program. Please use a "
+"pen for filling in your answers."
+msgstr ""
+
+#. Instruction on the questionnaire: Description of a crossed checkbox
+#: ../tex/tex_translations.in.h:12
+msgid "Check"
+msgstr ""
+
+#. Instruction on the questionnaire: Description of a crossed and filled checkbox
+#: ../tex/tex_translations.in.h:14
+msgid "Uncheck to correct"
+msgstr ""
+
+#. Instruction on the questionnaire: Multiple choice question
+#: ../tex/tex_translations.in.h:16
+msgid "You can check any number of boxes in selection questions."
+msgstr ""
+
+#. Instruction on the questionnaire: Mark/range question.
+#: ../tex/tex_translations.in.h:18
+msgid ""
+"For questions with a range (1--5) choose the answer the mark that fits best."
+msgstr ""
+
+#. LaTeX based report: Label for the number of people that answered
+#: ../tex/tex_translations.in.h:20
+#, fuzzy
+msgid "Answers"
+msgstr "الاجابات: %i"
+
+#. LaTeX based report: The calculated mean value
+#: ../tex/tex_translations.in.h:22
+msgid "Mean"
+msgstr ""
+
+#. LaTeX based report: The standard deviation
+#: ../tex/tex_translations.in.h:24
+msgid "Standard-Deviation"
 msgstr ""

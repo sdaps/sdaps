@@ -34,8 +34,8 @@ from sdaps.ugettext import ugettext, ungettext
 _ = ugettext
 
 if paths.local_run:
-    # image.so liegt in build_dir/image/
-    __path__.append(os.path.join(paths.build_dir, 'image'))
+    # image.so liegt in lib_build_dir/image/
+    __path__.append(os.path.join(paths.lib_build_dir, 'image'))
 
 # If SDAPS is installed, then the image.so file is in the current directory.
 # Simply importing it without changes to the paths will work.

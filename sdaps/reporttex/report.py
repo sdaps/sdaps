@@ -80,7 +80,7 @@ def report(survey, filter, filename=None, small=0):
         # Copy class and dictionary files
         if paths.local_run:
             cls_file = os.path.join(paths.source_dir, 'tex', 'sdapsreport.cls')
-            dict_files = os.path.join(paths.source_dir, 'tex', '*.dict')
+            dict_files = os.path.join(paths.build_dir, 'tex', '*.dict')
             dict_files = glob.glob(dict_files)
         else:
             cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdapsreport.cls')

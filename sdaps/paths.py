@@ -32,6 +32,9 @@ local_run = False
 build_dir = str()
 
 # required if local_run == True
+lib_build_dir = str()
+
+# required if local_run == True
 source_dir = str()
 
 # required if local_run == False
@@ -41,7 +44,7 @@ prefix = str()
 def init(local_run_value, package_path):
     u'''Initialize path values for sdaps
     '''
-    global local_run, build_dir, source_dir, prefix
+    global local_run, build_dir, lib_build_dir, source_dir, prefix
 
     # Initialize local_run
     local_run = local_run_value
@@ -60,7 +63,9 @@ def init(local_run_value, package_path):
             'build',
             'mo'))
         # Initialize build_dir
-        build_dir = os.path.join(
+        build_dir = os.path.join(base_dir, 'build', 'share', 'sdaps')
+        # Initialize build_dir
+        lib_build_dir = os.path.join(
             base_dir,
             'build', 'lib.%s-%s' % (get_build_platform(), get_python_version()),
             'sdaps')

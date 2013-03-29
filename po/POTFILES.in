@@ -32,3 +32,4 @@ sdaps/setuptex/setup.py
 sdaps/reporttex/__init__.py
 sdaps/reporttex/report.py
 sdaps/boxgallery/boxgallery.py
+[type: gettext/ini] tex/tex_translations.in

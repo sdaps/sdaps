@@ -93,7 +93,7 @@ def setup(survey, cmdline):
         if paths.local_run:
             cls_file = os.path.join(paths.source_dir, 'tex', 'sdaps.cls')
             code128_file = os.path.join(paths.source_dir, 'tex', 'code128.tex')
-            dict_files = os.path.join(paths.source_dir, 'tex', '*.dict')
+            dict_files = os.path.join(paths.build_dir, 'tex', '*.dict')
             dict_files = glob.glob(dict_files)
         else:
             cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdaps.cls')

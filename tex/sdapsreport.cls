@@ -292,7 +292,7 @@
     \begin{description*}
       \item[\translate{answers}:] \pgfkeysvalueof{/sdaps/mark/count}
       \item[\translate{mean}:] \num{\pgfkeysvalueof{/sdaps/mark/mean}}
-      \item[\translate{standard deviation}:] \num{\pgfkeysvalueof{/sdaps/mark/stddev}}
+      \item[\translate{standard-deviation}:] \num{\pgfkeysvalueof{/sdaps/mark/stddev}}
     \end{description*}
   \end{minipage}
   \hfill
