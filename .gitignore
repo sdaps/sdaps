@@ -6,7 +6,6 @@ build
 *.o
 *.so
 *.pot
-debug.py
 test/projects
 doc-pak
 description-pak
