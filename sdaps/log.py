@@ -67,6 +67,10 @@ class Copier(object):
     def isatty(self):
         return self.pipe.isatty()
 
+    def flush(self):
+        self.pipe.flush()
+        self.logfile.flush()
+
 class Wiper(object):
     '''wipe out the progressbar before forwarding data through the pipe'''
 
@@ -84,6 +88,9 @@ class Wiper(object):
     def isatty(self):
         return self.pipe.isatty()
 
+    def flush(self):
+        self.pipe.flush()
+
 class Encoder(object):
     '''Encode data going through the pipe to utf8'''
 
@@ -99,6 +106,8 @@ class Encoder(object):
     def isatty(self):
         return self.pipe.isatty()
 
+    def flush(self):
+        self.pipe.flush()
 
 class Logfile(object):
 
@@ -119,6 +128,9 @@ class Logfile(object):
 
     def isatty(self):
         return False
+
+    def flush(self):
+        self.logfile.flush()
 
 class ProgressBar(object):
 
@@ -157,6 +169,9 @@ class ProgressBar(object):
 
     def isatty(self):
         return self.pipe.isatty()
+
+    def flush(self):
+        self.pipe.flush()
 
 progressbar = ProgressBar(sys.stdout)
 logfile = Logfile()
