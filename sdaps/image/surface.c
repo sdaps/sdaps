@@ -156,6 +156,68 @@ get_pbm(cairo_surface_t *surface, void **data, int *length)
 	}
 }
 
+void
+get_gamera_onebit(cairo_surface_t *surface, void **data, int *length)
+{
+	int width, height;
+	int s_stride;
+	unsigned char* s_pixel;
+	guint16* d_pixel;
+	int x, y;
+
+	*data = NULL;
+	*length = 0;
+
+	if (cairo_image_surface_get_format (surface) != CAIRO_FORMAT_A1)
+		return;
+
+	width = cairo_image_surface_get_width(surface);
+	height = cairo_image_surface_get_height(surface);
+	s_stride = cairo_image_surface_get_stride(surface);
+	s_pixel = cairo_image_surface_get_data(surface);
+
+	/* The gamera ONEBIT format uses 16 bits per pixel. The upper bit is used
+	 * for the pixel value, the rest can be used internally. Here we simply set
+	 * no bit for 0 and all bits for 1.
+	 * Endianness does not matter as either all bits are set or unset. */
+	*length = width*height*sizeof(guint16);
+	d_pixel = g_malloc(*length);
+	*data = d_pixel;
+
+	for (y = 0; y < height; y++) {
+		for (x = 0; x < width; x++) {
+			d_pixel[x + y*width] = GET_PIXEL(s_pixel, s_stride, x, y) * 0xffff;
+		}
+	}
+}
+
+cairo_surface_t*
+get_surface_from_rgb_string(guint8 *data, gint width, gint height)
+{
+	cairo_surface_t *result;
+	void *pixels;
+	guint stride;
+	guint x, y;
+	guint i = 0;
+
+	result = cairo_image_surface_create(CAIRO_FORMAT_RGB24, width, height);
+	stride = cairo_image_surface_get_stride(result);
+	pixels = cairo_image_surface_get_data(result);
+
+	for (y = 0; y < height; y++) {
+		for (x = 0; x < width; x++) {
+			guint32 *pixel = (pixels + y*stride + x*4);
+			*pixel = (data[i] << 16) + (data[i+1] << 8) + data[i+2];
+
+			i += 3;
+		}
+	}
+
+	cairo_surface_mark_dirty(result);
+
+	return result;
+}
+
 gint
 count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint height)
 {

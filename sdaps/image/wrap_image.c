@@ -33,6 +33,8 @@ static PyObject *wrap_get_masked_coverage(PyObject *self, PyObject *args);
 static PyObject *wrap_get_masked_coverage_without_lines(PyObject *self, PyObject *args);
 static PyObject *wrap_get_masked_white_area_count(PyObject *self, PyObject *args);
 static PyObject *wrap_get_pbm(PyObject *self, PyObject *args);
+static PyObject *wrap_get_gamera_onebit(PyObject *self, PyObject *args);
+static PyObject *wrap_get_surface_from_rgb_string(PyObject *self, PyObject *args);
 static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args);
 static PyObject *enable_debug_surface_creation(PyObject *self, PyObject *args);
 static PyObject *get_debug_surface(PyObject *self, PyObject *args);
@@ -57,6 +59,8 @@ static PyMethodDef EvaluateMethods[] = {
 	{"get_masked_coverage_without_lines",  wrap_get_masked_coverage_without_lines, METH_VARARGS, "First removes the number of requested lines with the specified stroke width using a hough transformation. Then calculates the coverage. Works on the masked area."},
 	{"get_masked_white_area_count",  wrap_get_masked_white_area_count, METH_VARARGS, "Returns the number and overall size of white areas that are larger than the given percentage of the overall size. Works on the masked area."},
 	{"get_pbm",  wrap_get_pbm, METH_VARARGS, "Returns a string that contains a binary PBM data representation of the cairo A1 surface."},
+	{"get_gamera_onebit",  wrap_get_gamera_onebit, METH_VARARGS, "Returns a string that contains the data in gameras 16bpp monochrome representation."},
+	{"get_surface_from_rgb_string",  wrap_get_surface_from_rgb_string, METH_VARARGS, "Returns a new cairo surface from gameras RGB format (packed into a string)."},
 	{"set_magic_values",  sdaps_set_magic_values, METH_VARARGS, "Sets some magic values for recognition."},
 	{"enable_debug_surface_creation",  enable_debug_surface_creation, METH_VARARGS, "Sets whether debug images should be created."},
 	{"get_debug_surface",  get_debug_surface, METH_VARARGS, "Returns the last created debug surface. Call immediately after a function that may create such a surface."},
@@ -360,6 +364,46 @@ wrap_get_pbm(PyObject *self, PyObject *args)
 	result = Py_BuildValue("s#", data, length);
 	g_free (data);
 	return result;
+}
+
+static PyObject *
+wrap_get_gamera_onebit(PyObject *self, PyObject *args)
+{
+	PycairoSurface *py_surface;
+	PyObject* result;
+	int length = 0;
+	void *data = NULL;
+
+	if (!PyArg_ParseTuple(args, "O!",
+	                      &PycairoImageSurface_Type, &py_surface))
+		return NULL;
+
+	get_gamera_onebit(py_surface->surface, &data, &length);
+
+	result = Py_BuildValue("s#", data, length);
+	g_free (data);
+	return result;
+}
+
+static PyObject *
+wrap_get_surface_from_rgb_string(PyObject *self, PyObject *args)
+{
+	cairo_surface_t *surface;
+	gint width, height;
+	void *data = NULL;
+	int length = 0;
+
+	if (!PyArg_ParseTuple(args, "s#ii",
+	                      &data, &length, &width, &height))
+		return NULL;
+
+	/* Check that the string is big enough. */
+	if (length < width*height)
+		return NULL;
+
+	surface = get_surface_from_rgb_string(data, width, height);
+
+	return PycairoSurface_FromSurface(surface, NULL);;
 }
 
 static PyObject *sdaps_set_magic_values(PyObject *self, PyObject *args)

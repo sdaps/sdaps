@@ -50,6 +50,12 @@ surface_copy_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gin
 void
 get_pbm(cairo_surface_t *surface, void **data, int *length);
 
+void
+get_gamera_onebit(cairo_surface_t *surface, void **data, int *length);
+
+cairo_surface_t*
+get_surface_from_rgb_string(guint8 *data, gint width, gint height);
+
 #if 0
 void
 a1_surface_write_to_png(cairo_surface_t* surface, gchar* filename);
