@@ -1,7 +1,14 @@
 #!/bin/sh
 
+set -e
+
 cd po
 
 intltool-update -m -g sdaps
 
-exec intltool-update -r -g sdaps
+intltool-update -r -g sdaps
+
+cd ../tex/po
+
+intltool-update -m -g sdaps-tex
+intltool-update -r -g sdaps-tex

@@ -8,9 +8,10 @@
 
 override_dh_clean:
 	rm -rf build/mo
-	# Remove the pot file (yeah, this is probably not the right
+	# Remove the pot files (yeah, this is probably not the right
 	# solution)
 	rm -f po/sdaps.pot
+	rm -f tex/po/sdaps-tex.pot
 	# And the test directory
 	rm -rf test/projects
 	dh_clean

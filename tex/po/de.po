@@ -1,0 +1,87 @@
+#
+# Benjamin Berg <benjamin@sipsolutions.net>, 2011, 2012, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: SDAPS 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-02 17:53+0200\n"
+"PO-Revision-Date: 2013-03-29 15:36+0100\n"
+"Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
+"Language-Team: German <>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Gtranslator 2.91.5\n"
+
+#. The language name of the LaTeX dictionary file for translator
+#: ../tex_translations.in.h:2
+msgid "English"
+msgstr "German\t"
+
+#. Used as an overlay for questoinnaires that are not yet done
+#: ../tex_translations.in.h:4
+msgid "draft"
+msgstr "Entwurf"
+
+#. Label for the survey-id on the questionnaire (in "classic" mode)
+#: ../tex_translations.in.h:6
+msgid "Survey-ID:"
+msgstr "Umfrage-ID:"
+
+#. Label for the questionnaire-id on the questionnaire (in "classic" mode)
+#: ../tex_translations.in.h:8
+msgid "Questionnaire-ID:"
+msgstr "Fragebogen-ID:"
+
+#. Default instructions on the questionnaire
+#: ../tex_translations.in.h:10
+msgid ""
+"This questionnaire is automatically read by a computer program. Please use a "
+"pen for filling in your answers."
+msgstr ""
+"Der Fragebogen wird maschinell erfasst. Bitte mit Kugelschreiber oder nicht "
+"zu dickem Filzstift ausf\\\"ullen."
+
+#. Instruction on the questionnaire: Description of a crossed checkbox
+#: ../tex_translations.in.h:12
+msgid "Check"
+msgstr "Ankreuzen"
+
+#. Instruction on the questionnaire: Description of a crossed and filled checkbox
+#: ../tex_translations.in.h:14
+msgid "Uncheck to correct"
+msgstr "Korrigieren"
+
+#. Instruction on the questionnaire: Multiple choice question
+#: ../tex_translations.in.h:16
+msgid "You can check any number of boxes in selection questions."
+msgstr "Bei Auswahlfeldern d\\\"urfen mehrere Antworten angekreuzt werden."
+
+#. Instruction on the questionnaire: Mark/range question.
+#: ../tex_translations.in.h:18
+msgid ""
+"For questions with a range (1--5) choose the answer the mark that fits best."
+msgstr ""
+"Bei Bewertungsfragen (Skala 1--5) darf nur ein K\\\"astchen Angekreuzt "
+"werden."
+
+#. LaTeX based report: Label for the number of people that answered
+#: ../tex_translations.in.h:20
+msgid "Answers"
+msgstr "Antworten:"
+
+#. LaTeX based report: The calculated mean value
+#: ../tex_translations.in.h:22
+msgid "Mean"
+msgstr "Durchschnitt"
+
+#. LaTeX based report: The standard deviation
+#: ../tex_translations.in.h:24
+msgid "Standard-Deviation"
+msgstr "Standardabweichung"

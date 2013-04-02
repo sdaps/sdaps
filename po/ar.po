@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-29 15:34+0100\n"
+"POT-Creation-Date: 2013-04-02 17:53+0200\n"
 "PO-Revision-Date: 2013-02-24 21:47+0300\n"
 "Last-Translator: red sea <dr.hatim@hotmail.com>\n"
 "Language-Team: \n"
@@ -912,68 +912,3 @@ msgstr ""
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr ""
 
-#. The language name of the LaTeX dictionary file for translator
-#: ../tex/tex_translations.in.h:2
-msgid "English"
-msgstr ""
-
-#. Used as an overlay for questoinnaires that are not yet done
-#: ../tex/tex_translations.in.h:4
-msgid "draft"
-msgstr ""
-
-#. Label for the survey-id on the questionnaire (in "classic" mode)
-#: ../tex/tex_translations.in.h:6
-#, fuzzy
-msgid "Survey-ID:"
-msgstr "معرف-الاستفتاء: %i"
-
-#. Label for the questionnaire-id on the questionnaire (in "classic" mode)
-#: ../tex/tex_translations.in.h:8
-#, fuzzy
-msgid "Questionnaire-ID:"
-msgstr "معرف-السؤال: %i"
-
-#. Default instructions on the questionnaire
-#: ../tex/tex_translations.in.h:10
-msgid ""
-"This questionnaire is automatically read by a computer program. Please use a "
-"pen for filling in your answers."
-msgstr ""
-
-#. Instruction on the questionnaire: Description of a crossed checkbox
-#: ../tex/tex_translations.in.h:12
-msgid "Check"
-msgstr ""
-
-#. Instruction on the questionnaire: Description of a crossed and filled checkbox
-#: ../tex/tex_translations.in.h:14
-msgid "Uncheck to correct"
-msgstr ""
-
-#. Instruction on the questionnaire: Multiple choice question
-#: ../tex/tex_translations.in.h:16
-msgid "You can check any number of boxes in selection questions."
-msgstr ""
-
-#. Instruction on the questionnaire: Mark/range question.
-#: ../tex/tex_translations.in.h:18
-msgid ""
-"For questions with a range (1--5) choose the answer the mark that fits best."
-msgstr ""
-
-#. LaTeX based report: Label for the number of people that answered
-#: ../tex/tex_translations.in.h:20
-#, fuzzy
-msgid "Answers"
-msgstr "الاجابات: %i"
-
-#. LaTeX based report: The calculated mean value
-#: ../tex/tex_translations.in.h:22
-msgid "Mean"
-msgstr ""
-
-#. LaTeX based report: The standard deviation
-#: ../tex/tex_translations.in.h:24
-msgid "Standard-Deviation"
-msgstr ""

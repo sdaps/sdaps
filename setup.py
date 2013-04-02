@@ -1,4 +1,20 @@
 #!/usr/bin/env python
+# SDAPS - Scripts for data acquisition with paper based surveys
+# Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
+# Copyright (C) 2008-2013, Benjamin Berg <benjamin@sipsolutions.net>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from distutils.core import setup
 from distutils.extension import Extension
@@ -31,6 +47,7 @@ def pkgconfig(*packages, **kw):
 class sdaps_build_i18n(build_i18n.build_i18n):
 
     # Hardcoded ...
+    dict_sourcefile = 'tex/tex_translations.in'
     dict_dir = 'share/sdaps/tex'
     dict_filename = 'tex_translations'
 
@@ -38,12 +55,16 @@ class sdaps_build_i18n(build_i18n.build_i18n):
         # run the original code
         build_i18n.build_i18n.run(self)
 
-        targetpath = self.dict_dir
-        tex_translations = os.path.join('build', self.dict_dir, self.dict_filename)
+        dest_dir = os.path.join('build', self.dict_dir)
+        tex_translations = os.path.join(dest_dir, self.dict_filename)
 
-        # The tex_translations file should not be installed
-        self.distribution.data_files.remove((targetpath, [tex_translations, ]))
+        # Build the tex_translations file
+        if not os.path.isdir(dest_dir):
+            os.makedirs(dest_dir)
+        cmd = ['intltool-merge', '-d', 'tex/po', self.dict_sourcefile, tex_translations]
+        self.spawn(cmd)
 
+        ###################
         # Now build the LaTeX dictionaries
         def extract_key_lang(key):
             if not key.endswith(']'):
@@ -70,10 +91,17 @@ class sdaps_build_i18n(build_i18n.build_i18n):
         dictfiles = []
         for lang, name in langs.iteritems():
             print 'building LaTeX dictionary file for language %s (%s)' % (name, lang if lang else 'C')
-            dictfiles.append(os.path.join('build', self.dict_dir, 'translator-sdaps-dictionary-%s.dict' % name))
+            dictfiles.append(os.path.join(dest_dir, 'translator-sdaps-dictionary-%s.dict' % name))
             f = open(dictfiles[-1], 'w')
 
             f.write('% This file is auto-generated from gettext translations (.po files).\n')
+            f.write('% The header of the original file follows for reference:\n')
+            f.write('%\n')
+            for line in open(self.dict_sourcefile).readlines():
+                if not line.startswith('#'):
+                    break
+                f.write('%' + line[1:])
+            f.write('%\n\n')
             f.write('\\ProvidesDictionary{translator-sdaps-dictionary}{%s}\n\n' % name)
 
             for key in keys:
@@ -90,7 +118,7 @@ class sdaps_build_i18n(build_i18n.build_i18n):
                 f.write('\\providetranslation{%s}{%s}\n' % (key, value))
 
         # And install the dictionary files
-        self.distribution.data_files.append((targetpath, dictfiles))
+        self.distribution.data_files.append((dest_dir, dictfiles))
 
 class sdaps_clean_i18n(clean_i18n.clean_i18n):
     dict_dir = 'share/sdaps/tex'
@@ -161,3 +189,4 @@ the tools to later analyse the scanned data, and create a report.
                    "build_icons" :  build_icons.build_icons,
                    "clean" : sdaps_clean_i18n }
      )
+
