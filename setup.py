@@ -122,6 +122,7 @@ class sdaps_build_i18n(build_i18n.build_i18n):
 
 class sdaps_clean_i18n(clean_i18n.clean_i18n):
     dict_dir = 'share/sdaps/tex'
+    dict_filename = "tex_translations"
 
     def run(self):
         # Remove dictionaries
@@ -132,6 +133,10 @@ class sdaps_clean_i18n(clean_i18n.clean_i18n):
             for filename in os.listdir(directory):
                 if filename.startswith('translator-sdaps-dictionary-'):
                     os.unlink(os.path.join(directory, filename))
+
+        fn = os.path.join('build', self.dict_dir, self.dict_filename)
+        if os.path.exists(fn):
+            os.unlink(fn)
 
         clean_i18n.clean_i18n.run(self)
 
