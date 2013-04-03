@@ -37,7 +37,7 @@ from pdftools import pdffile
 def setup(survey, cmdline):
 
     if os.access(survey.path(), os.F_OK):
-        log.error(_('The survey directory already exists'))
+        log.error(_('The survey directory already exists.'))
         return 1
 
     questionnaire_odt = cmdline['questionnaire.odt']
@@ -46,18 +46,18 @@ def setup(survey, cmdline):
 
     mimetype = utils.mimetype(questionnaire_odt)
     if mimetype != 'application/vnd.oasis.opendocument.text' and mimetype != '':
-        log.error(_('Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text') % mimetype)
+        log.error(_('Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text.') % mimetype)
         return 1
 
     mimetype = utils.mimetype(questionnaire_pdf)
     if mimetype != 'application/pdf' and mimetype != '':
-        log.error(_('Unknown file type (%s). questionnaire_pdf should be application/pdf') % mimetype)
+        log.error(_('Unknown file type (%s). questionnaire_pdf should be application/pdf.') % mimetype)
         return 1
 
     if additionalqobjects is not None:
         mimetype = utils.mimetype(additionalqobjects)
         if mimetype != 'text/plain' and mimetype != '':
-            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain') % mimetype)
+            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain.') % mimetype)
             return 1
 
     # Add the new questionnaire

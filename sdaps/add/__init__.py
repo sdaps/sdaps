@@ -37,12 +37,12 @@ parser.add_argument('--force',
     action="store_true",
     default=False)
 parser.add_argument('--copy',
-    help=_("Copy the files into the directory (default)"),
+    help=_("Copy the files into the directory (default)."),
     dest="copy",
     action="store_true",
     default=True)
 parser.add_argument('--no-copy',
-    help=_("Do not copy the files into the directory"),
+    help=_("Do not copy the files into the directory."),
     dest="copy",
     action="store_false")
 

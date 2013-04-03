@@ -62,7 +62,7 @@ def write_latex_override_file(survey, draft=False):
 
 def setup(survey, cmdline):
     if os.access(survey.path(), os.F_OK):
-        log.error(_('The survey directory already exists'))
+        log.error(_('The survey directory already exists.'))
         return 1
 
     questionnaire_tex = cmdline['questionnaire.tex']
@@ -70,13 +70,13 @@ def setup(survey, cmdline):
 
     mimetype = utils.mimetype(questionnaire_tex)
     if mimetype != 'text/x-tex' and mimetype != '':
-        log.warn(_('Unknown file type (%s). questionnaire_tex should be of type text/x-tex') % mimetype)
+        log.warn(_('Unknown file type (%s). questionnaire_tex should be of type text/x-tex.') % mimetype)
         log.warn(_('Will keep going, but expect failure!'))
 
     if additionalqobjects is not None:
         mimetype = utils.mimetype(additionalqobjects)
         if mimetype != 'text/plain' and mimetype != '':
-            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain') % mimetype)
+            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain.') % mimetype)
             return 1
 
     # Add the new questionnaire
