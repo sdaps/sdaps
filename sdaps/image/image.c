@@ -649,15 +649,9 @@ find_corner_marker(cairo_surface_t *surface,
 	gint search;
 	gboolean found = FALSE;
 	gint coverage = 0;
-	gint width;
-
-	width = cairo_image_surface_get_width(surface);
-
-	x = x_start + (x_dir * (width / 6 + 1));
-	y = y_start + y_dir;
 
 	while (!found && (distance < search_distance)) {
-		distance += 1;
+		distance += line_length / 4;
 
 		/* Try searching from the top/bottom. */
 		coverage = 0;
