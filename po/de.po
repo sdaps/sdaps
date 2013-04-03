@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-02 17:53+0200\n"
+"POT-Creation-Date: 2013-04-03 13:38+0200\n"
 "PO-Revision-Date: 2013-03-29 15:36+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
@@ -321,38 +321,18 @@ msgid "_Help"
 msgstr "_Hilfe"
 
 #: ../sdaps/gui/main_window.ui.h:9
-msgid "toolbutton1"
-msgstr "toolbutton1"
-
-#: ../sdaps/gui/main_window.ui.h:10
-msgid "toolbutton2"
-msgstr "toolbutton2"
-
-#: ../sdaps/gui/main_window.ui.h:11
-msgid "toolbutton4"
-msgstr "toolbutton4"
-
-#: ../sdaps/gui/main_window.ui.h:12
-msgid "toolbutton5"
-msgstr "toolbutton5"
-
-#: ../sdaps/gui/main_window.ui.h:13
-msgid "toolbutton7"
-msgstr "toolbutton7"
-
-#: ../sdaps/gui/main_window.ui.h:14
 msgid "Page Rotated"
 msgstr "Seite Gedreht"
 
-#: ../sdaps/gui/main_window.ui.h:15
+#: ../sdaps/gui/main_window.ui.h:10
 msgid "Sheet Valid (all pages)"
 msgstr "Ausgefüllter Bogen"
 
-#: ../sdaps/gui/main_window.ui.h:16
+#: ../sdaps/gui/main_window.ui.h:11
 msgid "Sort by Quality"
 msgstr "Nach Qualität sortieren"
 
-#: ../sdaps/gui/main_window.ui.h:17
+#: ../sdaps/gui/main_window.ui.h:12
 msgid "label"
 msgstr "Sollte niemals sichtbar sein."
 
@@ -1050,4 +1030,3 @@ msgstr ""
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr "Erstelle Überblick über die Boxen sortiert nach der Metrik \"%s\"."
-
