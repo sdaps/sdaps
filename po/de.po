@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-03 19:58+0200\n"
-"PO-Revision-Date: 2013-04-03 20:34+0200\n"
+"PO-Revision-Date: 2013-04-03 20:38+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
 "Language: de\n"
@@ -501,7 +501,7 @@ msgstr ""
 "Simplex Dokument mit zwei benachbarten Seiten mit bekannter Seitennummer "
 "bearbeitet. Das dürfte nicht passieren, da simplex Scans durch einfügen von "
 "Dummyseiten zu Duplexdokumenten konvertiert werden. VWurde ein simplex Scan "
-"im Duplexmodus hinzugefügt? Es sind die Seiten $s, %i und %s, %i betroffen."
+"im Duplexmodus hinzugefügt? Es sind die Seiten %s, %i und %s, %i betroffen."
 
 #: ../sdaps/recognize/buddies.py:165
 #, python-format
