@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-03 19:58+0200\n"
-"PO-Revision-Date: 2013-04-03 14:29+0200\n"
+"PO-Revision-Date: 2013-04-03 20:34+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
 "Language: de\n"
@@ -71,6 +71,8 @@ msgid ""
 "Images contain a duplex scan of a simplex questoinnaire (default: simplex "
 "scan)."
 msgstr ""
+"Die Bilder sind ein duplex Scan eines simplex Fragebogens (Standard: simplex "
+"Scan)."
 
 #: ../sdaps/add/__init__.py:55
 msgid "A number of TIFF image files."
@@ -452,7 +454,7 @@ msgstr "Ungültiges Zeichen %s in der Fragebogen ID \"%s\" im \"code128\" Stil!"
 #: ../sdaps/model/survey.py:292
 #, python-format
 msgid "Running upgrade routines for file format version %i"
-msgstr ""
+msgstr "Update für Dateiversion %i ausführen"
 
 #: ../sdaps/recognize/buddies.py:78
 #, python-format
@@ -496,6 +498,10 @@ msgid ""
 "inserting dummy pages. Maybe you did a simplex scan but added it in duplex "
 "mode? The pages in question are %s, %i and %s, %i."
 msgstr ""
+"Simplex Dokument mit zwei benachbarten Seiten mit bekannter Seitennummer "
+"bearbeitet. Das dürfte nicht passieren, da simplex Scans durch einfügen von "
+"Dummyseiten zu Duplexdokumenten konvertiert werden. VWurde ein simplex Scan "
+"im Duplexmodus hinzugefügt? Es sind die Seiten $s, %i und %s, %i betroffen."
 
 #: ../sdaps/recognize/buddies.py:165
 #, python-format
@@ -526,7 +532,7 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:213
 #, python-format
 msgid "Could not read survey ID of either %s, %i or %s, %i!"
-msgstr ""
+msgstr "Konnte die Umfragen-ID weder auf %s, %i noch auf %s, %i finden!"
 
 #. Broken survey ID ...
 #: ../sdaps/recognize/buddies.py:220
@@ -543,11 +549,9 @@ msgstr ""
 "sein."
 
 #: ../sdaps/recognize/buddies.py:246
-#, fuzzy, python-format
+#, python-format
 msgid "Could not read questoinnaire ID of either %s, %i or %s, %i!"
-msgstr ""
-"%s, %i: Konnte die Fragebogen-ID nicht lesen. Dies sollte jedoch möglich "
-"sein."
+msgstr "Konnte die Fragebogen-ID weder auf %s, %i noch auf %s, %i finden!"
 
 #: ../sdaps/recognize/buddies.py:273
 msgid ""
