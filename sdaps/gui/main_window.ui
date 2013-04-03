@@ -177,8 +177,6 @@
                 <property name="related_action">zoom-in</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="related_action">zoom-in</property>
-                <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -191,8 +189,6 @@
                 <property name="related_action">zoom-out</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="related_action">zoom-out</property>
-                <property name="label" translatable="yes">toolbutton2</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -217,8 +213,6 @@
                 <property name="related_action">action-prev-page</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="related_action">action-prev-page</property>
-                <property name="label" translatable="yes">toolbutton4</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -231,8 +225,6 @@
                 <property name="related_action">action-next-page</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="related_action">action-next-page</property>
-                <property name="label" translatable="yes">toolbutton5</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -257,8 +249,6 @@
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
-                <property name="label" translatable="yes">toolbutton7</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-fullscreen</property>
                 <signal name="clicked" handler="toggle_fullscreen" swapped="no"/>
