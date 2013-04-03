@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-03 13:38+0200\n"
-"PO-Revision-Date: 2013-04-03 14:29+0200\n"
+"PO-Revision-Date: 2013-04-03 14:35+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
 "Language: de\n"
@@ -649,7 +649,7 @@ msgstr "Das ODT Dokument"
 
 #: ../sdaps/setup/__init__.py:41
 msgid "PDF export of the ODT document"
-msgstr "PDF Export des ODT Dokuments."
+msgstr "PDF Export des ODT Dokuments"
 
 #: ../sdaps/setup/__init__.py:44 ../sdaps/setuptex/__init__.py:44
 msgid "Additional questions that are not part of the questionnaire."
@@ -657,7 +657,7 @@ msgstr "Weitere Fragen die nicht Teil des Fragebogens sind."
 
 #: ../sdaps/setup/__init__.py:53
 msgid "Enable printing of the survey ID (default)."
-msgstr "Ausschalten der Umfrage-ID auf den Bögen. (Standard)"
+msgstr "Ausschalten der Umfrage-ID auf den Bögen (Standard)."
 
 #: ../sdaps/setup/__init__.py:57
 msgid "Disable printing of the survey ID."
@@ -880,7 +880,7 @@ msgstr[1] "%i Bögen; %f Sekunden pro Bogen"
 #. Merge using pdftk
 #: ../sdaps/stamp/generic.py:312
 msgid "Stamping using pdftk"
-msgstr "Stempele mit Hilfe von pdftk."
+msgstr "Stempele mit Hilfe von pdftk"
 
 #: ../sdaps/stamp/generic.py:316
 #, python-format
