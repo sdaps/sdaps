@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-02 17:53+0200\n"
+"POT-Creation-Date: 2013-04-03 13:38+0200\n"
 "PO-Revision-Date: 2013-02-24 21:47+0300\n"
 "Last-Translator: red sea <dr.hatim@hotmail.com>\n"
 "Language-Team: \n"
@@ -278,38 +278,18 @@ msgid "_Help"
 msgstr "_مساعدة"
 
 #: ../sdaps/gui/main_window.ui.h:9
-msgid "toolbutton1"
-msgstr "زر الأداة1"
-
-#: ../sdaps/gui/main_window.ui.h:10
-msgid "toolbutton2"
-msgstr "زر الأداة2"
-
-#: ../sdaps/gui/main_window.ui.h:11
-msgid "toolbutton4"
-msgstr "زر الأداة4"
-
-#: ../sdaps/gui/main_window.ui.h:12
-msgid "toolbutton5"
-msgstr "زر الأداة5"
-
-#: ../sdaps/gui/main_window.ui.h:13
-msgid "toolbutton7"
-msgstr "زر الأداة7"
-
-#: ../sdaps/gui/main_window.ui.h:14
 msgid "Page Rotated"
 msgstr "دورت الصفحة"
 
-#: ../sdaps/gui/main_window.ui.h:15
+#: ../sdaps/gui/main_window.ui.h:10
 msgid "Sheet Valid (all pages)"
 msgstr ""
 
-#: ../sdaps/gui/main_window.ui.h:16
+#: ../sdaps/gui/main_window.ui.h:11
 msgid "Sort by Quality"
 msgstr "فرز حسب الجودة"
 
-#: ../sdaps/gui/main_window.ui.h:17
+#: ../sdaps/gui/main_window.ui.h:12
 msgid "label"
 msgstr ""
 
@@ -911,4 +891,3 @@ msgstr ""
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr ""
-
