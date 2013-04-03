@@ -5,7 +5,8 @@ include TROUBLESHOOTING
 include COPYING
 include sdaps.py
 recursive-include sdaps *.py *.ui *.c *.h
-recursive-include po *.pot POTFILES POTFILES.in *.po
+recursive-include po *.pot POTFILES.skip POTFILES.in *.po
+recursive-include tex/po *.pot POTFILES.skip POTFILES.in *.po
 include test/run-test.sh
 include test/run-test-locally.sh
 recursive-include test/data *.internetquestions *.odt *.pdf *.tif
