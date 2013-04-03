@@ -297,6 +297,8 @@ class Survey(object):
             # scanned image (or a duplex image needs to be added)
             # We need to insert these dummy images here.
             if not self.defs.duplex:
+                from sdaps.model.sheet import Image
+
                 for sheet in self.sheets:
                     images = sheet.images
 
@@ -305,7 +307,7 @@ class Survey(object):
                     for img in images:
                         sheet.add_image(img)
 
-                        dummy = model.sheet.Image()
+                        dummy = Image()
                         dummy.filename = "DUMMY"
                         dummy.tiff_page = -1
                         dummy.ignored = True
