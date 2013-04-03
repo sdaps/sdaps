@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-03 13:38+0200\n"
-"PO-Revision-Date: 2013-04-03 14:04+0200\n"
+"PO-Revision-Date: 2013-04-03 14:11+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
 "Language: de\n"
@@ -645,7 +645,7 @@ msgstr ""
 
 #: ../sdaps/setup/__init__.py:39
 msgid "The ODT Document"
-msgstr "Das ODT Dokument."
+msgstr "Das ODT Dokument"
 
 #: ../sdaps/setup/__init__.py:41
 msgid "PDF export of the ODT document"
@@ -669,7 +669,7 @@ msgstr "Einschalten der Fragebogen-ID auf den Bögen."
 
 #: ../sdaps/setup/__init__.py:66
 msgid "Disable printing of the questionnaire ID (default)."
-msgstr "Ausschalten der Fragebogen-ID auf den Bögen. (Standard)"
+msgstr "Ausschalten der Fragebogen-ID auf den Bögen (Standard)."
 
 #: ../sdaps/setup/__init__.py:70
 msgid ""
@@ -891,7 +891,7 @@ msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
 
 #: ../sdaps/stamp/generic.py:330
 msgid "pdftk: Splitting the questionnaire for watermarking."
-msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens"
+msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens."
 
 #: ../sdaps/stamp/generic.py:340
 #, python-format
@@ -954,7 +954,7 @@ msgstr ""
 
 #: ../sdaps/setuptex/__init__.py:38
 msgid "The LaTeX Document"
-msgstr "Das LaTeX Dokument."
+msgstr "Das LaTeX Dokument"
 
 #: ../sdaps/setuptex/__init__.py:40
 msgid ""
@@ -996,7 +996,7 @@ msgstr ""
 
 #: ../sdaps/reporttex/__init__.py:30
 msgid "Create a PDF report using LaTeX."
-msgstr "Erstellt ein PDF Report mit LaTeX"
+msgstr "Erstellt ein PDF Report mit LaTeX."
 
 #: ../sdaps/reporttex/__init__.py:31
 msgid ""
