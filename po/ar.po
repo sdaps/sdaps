@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-03 13:38+0200\n"
+"POT-Creation-Date: 2013-04-03 14:12+0200\n"
 "PO-Revision-Date: 2013-02-24 21:47+0300\n"
 "Last-Translator: red sea <dr.hatim@hotmail.com>\n"
 "Language-Team: \n"
@@ -52,11 +52,13 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/add/__init__.py:40
-msgid "Copy the files into the directory (default)"
+#, fuzzy
+msgid "Copy the files into the directory (default)."
 msgstr "نسخ الملفات إلى المسار (الافتراضي)"
 
 #: ../sdaps/add/__init__.py:45
-msgid "Do not copy the files into the directory"
+#, fuzzy
+msgid "Do not copy the files into the directory."
 msgstr "لا تنسخ الملفات إلى المسار"
 
 #: ../sdaps/add/__init__.py:50
@@ -610,24 +612,25 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/setup/setup.py:40 ../sdaps/setuptex/setup.py:65
-msgid "The survey directory already exists"
+#, fuzzy
+msgid "The survey directory already exists."
 msgstr "مسار الاستفتاء موجود مسبقا"
 
 #: ../sdaps/setup/setup.py:49
 #, python-format
 msgid ""
 "Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
-"opendocument.text"
+"opendocument.text."
 msgstr ""
 
 #: ../sdaps/setup/setup.py:54
 #, python-format
-msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf"
+msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf."
 msgstr ""
 
 #: ../sdaps/setup/setup.py:60 ../sdaps/setuptex/setup.py:79
 #, python-format
-msgid "Unknown file type (%s). additionalqobjects should be text/plain"
+msgid "Unknown file type (%s). additionalqobjects should be text/plain."
 msgstr ""
 
 #: ../sdaps/setup/setup.py:88
@@ -836,7 +839,7 @@ msgstr ""
 
 #: ../sdaps/setuptex/setup.py:73
 #, python-format
-msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex"
+msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
 msgstr ""
 
 #: ../sdaps/setuptex/setup.py:74
