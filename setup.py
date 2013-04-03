@@ -118,7 +118,7 @@ class sdaps_build_i18n(build_i18n.build_i18n):
                 f.write('\\providetranslation{%s}{%s}\n' % (key, value))
 
         # And install the dictionary files
-        self.distribution.data_files.append((dest_dir, dictfiles))
+        self.distribution.data_files.append((self.dict_dir, dictfiles))
 
 class sdaps_clean_i18n(clean_i18n.clean_i18n):
     dict_dir = 'share/sdaps/tex'
