@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-03 13:38+0200\n"
-"PO-Revision-Date: 2013-04-03 14:11+0200\n"
+"PO-Revision-Date: 2013-04-03 14:29+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
 "Language: de\n"
@@ -59,12 +59,10 @@ msgstr ""
 "(nur in einigen Fällen sinnvoll)."
 
 #: ../sdaps/add/__init__.py:40
-#, fuzzy
 msgid "Copy the files into the directory (default)."
 msgstr "Kopier das TIFF-Bild in das Projektverzeichniss (Standard)."
 
 #: ../sdaps/add/__init__.py:45
-#, fuzzy
 msgid "Do not copy the files into the directory."
 msgstr "Speichere einen relativen Pfad zum Bild."
 
@@ -706,27 +704,26 @@ msgstr ""
 "gescannt werden!"
 
 #: ../sdaps/setup/setup.py:40 ../sdaps/setuptex/setup.py:65
-#, fuzzy
 msgid "The survey directory already exists."
 msgstr "Das Umfrageverzeichniss existiert bereits."
 
 #: ../sdaps/setup/setup.py:49
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
 "opendocument.text."
 msgstr ""
-"Unbekanntes Dateiformat (%s). questionnaire_odt muss application/vnd.oasis."
-"opendocument.text sein."
+"Unbekanntes Dateiformat (%s). questionnaire_odt muss "
+"application/vnd.oasis.opendocument.text sein."
 
 #: ../sdaps/setup/setup.py:54
-#, fuzzy, python-format
+#, python-format
 msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf."
 msgstr ""
 "Unbekanntes Dateiformat (%s). questionnaire_pdf muss application/pdf sein."
 
 #: ../sdaps/setup/setup.py:60 ../sdaps/setuptex/setup.py:79
-#, fuzzy, python-format
+#, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain."
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
 
@@ -968,7 +965,7 @@ msgstr ""
 "das Projektverzeichnis kopiert werden müssen."
 
 #: ../sdaps/setuptex/setup.py:73
-#, fuzzy, python-format
+#, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
 msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
 
