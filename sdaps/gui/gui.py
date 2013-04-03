@@ -78,9 +78,13 @@ class Provider(object):
         #self._surface = None
 
     def __call__(self):
-        self.images.extend(list(self.survey.sheet.images))
+        # Add all images that are "valid" ie. everything except back side of
+        # a simplex printout
+        new_images = [img for img in self.survey.sheet.images if not img.ignored]
+
+        self.images.extend(new_images)
         # Insert each image of the sheet into the qualities array
-        for i in xrange(len(self.survey.sheet.images)):
+        for i in xrange(len(new_images)):
             self.qualities.append((self.survey.sheet.quality, len(self.qualities)))
 
     def next(self):

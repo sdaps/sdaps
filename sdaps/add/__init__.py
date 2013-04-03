@@ -45,6 +45,11 @@ parser.add_argument('--no-copy',
     help=_("Do not copy the files into the directory."),
     dest="copy",
     action="store_false")
+parser.add_argument('--duplex',
+    help=_("Images contain a duplex scan of a simplex questoinnaire (default: simplex scan)."),
+    dest="duplex",
+    action="store_true",
+    default=False)
 
 parser.add_argument('images',
     help=_("A number of TIFF image files."),
@@ -60,6 +65,24 @@ def add(cmdline):
 
     survey = model.survey.Survey.load(cmdline['project'])
 
+    # Insert dummy pages if the survey is duplex and the duplex option was not
+    # passed
+    if survey.defs.duplex:
+        # One image per questionnaire page in duplex mode
+        image_count_factor = 1
+        # No dummy pages in duplex mode
+        insert_dummy_pages = False
+    else:
+        # Two images per questionnaire page in duplex mode
+        image_count_factor = 2
+
+        # In simplex mode insertion of dummy pages depends on the command line
+        # optoin (default is True)
+        if cmdline['duplex']:
+            insert_dummy_pages = False
+        else:
+            insert_dummy_pages = True
+
     for file in cmdline['images']:
 
         print _('Processing %s') % file
@@ -71,9 +94,16 @@ def add(cmdline):
         num_pages = image.get_tiff_page_count(file)
 
         c = survey.questionnaire.page_count
+        if not insert_dummy_pages:
+            c = c * image_count_factor
+
+        # This test is on the image count that needs to come from the file
         if num_pages % c != 0 and not cmdline['force']:
             print _('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c)
             continue
+
+        if insert_dummy_pages:
+            c = c * image_count_factor
 
         if cmdline['copy']:
             tiff = survey.new_path('%i.tif')
@@ -95,6 +125,15 @@ def add(cmdline):
                 sheet.add_image(img)
                 img.filename = tiff
                 img.tiff_page = pages.pop(0)
+
+                # And a dummy page if required
+                if insert_dummy_pages:
+                    img = model.sheet.Image()
+                    sheet.add_image(img)
+
+                    img.filename = "DUMMY"
+                    img.tiff_page = -1
+                    img.ignored = True
 
         print _('Done')
 

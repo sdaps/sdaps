@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-03 13:38+0200\n"
-"PO-Revision-Date: 2013-04-03 14:35+0200\n"
+"POT-Creation-Date: 2013-04-03 19:58+0200\n"
+"PO-Revision-Date: 2013-04-03 14:29+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
 "Language: de\n"
@@ -66,16 +66,22 @@ msgstr "Kopier das TIFF-Bild in das Projektverzeichniss (Standard)."
 msgid "Do not copy the files into the directory."
 msgstr "Speichere einen relativen Pfad zum Bild."
 
-#: ../sdaps/add/__init__.py:50
+#: ../sdaps/add/__init__.py:49
+msgid ""
+"Images contain a duplex scan of a simplex questoinnaire (default: simplex "
+"scan)."
+msgstr ""
+
+#: ../sdaps/add/__init__.py:55
 msgid "A number of TIFF image files."
 msgstr "Ein oder mehere TIFF Dateien."
 
-#: ../sdaps/add/__init__.py:65
+#: ../sdaps/add/__init__.py:88
 #, python-format
 msgid "Processing %s"
 msgstr "Beartbeite %s"
 
-#: ../sdaps/add/__init__.py:68
+#: ../sdaps/add/__init__.py:91
 #, python-format
 msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
@@ -84,7 +90,7 @@ msgstr ""
 "Ungültige Eingabedatei %s. Ein (mehrseitiges) monochromes TIFF-Bild muss "
 "angegeben werden."
 
-#: ../sdaps/add/__init__.py:75
+#: ../sdaps/add/__init__.py:102
 #, python-format
 msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
@@ -93,7 +99,7 @@ msgstr ""
 "Füge Bild %s nicht hinzu, da die Anzahl der Seiten falsch ist (muss ein "
 "Vielfaches von %i sein)."
 
-#: ../sdaps/add/__init__.py:99
+#: ../sdaps/add/__init__.py:138
 msgid "Done"
 msgstr "Fertig"
 
@@ -219,48 +225,48 @@ msgstr ""
 "Die Umfrage enhält noch keine Bilder! Es müssen Bilder hinzugefügt und "
 "\"recognize\" ausgeführt werden befor die GUI benutzbar ist."
 
-#: ../sdaps/gui/gui.py:160
+#: ../sdaps/gui/gui.py:164
 msgid "Page|Invalid"
 msgstr "Ungültig"
 
-#: ../sdaps/gui/gui.py:163
+#: ../sdaps/gui/gui.py:167
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Seite %i"
 msgstr[1] "Seite %i"
 
-#: ../sdaps/gui/gui.py:205
+#: ../sdaps/gui/gui.py:209
 msgid "Copyright © 2007-2012 The SDAPS Authors"
 msgstr "Copyright © 2007-2012 The SDAPS Authors"
 
-#: ../sdaps/gui/gui.py:207
+#: ../sdaps/gui/gui.py:211
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "SDAPS - Scripts zum auswerten von Papier basierten Umfragen"
 
-#: ../sdaps/gui/gui.py:208
+#: ../sdaps/gui/gui.py:212
 msgid "http://sdaps.sipsolutions.net"
 msgstr "http://sdaps.sipsolutions.net"
 
-#: ../sdaps/gui/gui.py:209
+#: ../sdaps/gui/gui.py:213
 msgid "translator-credits"
 msgstr "Benjamin Berg"
 
-#: ../sdaps/gui/gui.py:255
+#: ../sdaps/gui/gui.py:259
 #, python-format
 msgid " of %i"
 msgstr " von %i"
 
-#: ../sdaps/gui/gui.py:256
+#: ../sdaps/gui/gui.py:260
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr "Erkennungsqualität: %.2f"
 
-#: ../sdaps/gui/gui.py:372
+#: ../sdaps/gui/gui.py:376
 msgid "Close without saving"
 msgstr "Beenden ohne zu Speichern"
 
-#: ../sdaps/gui/gui.py:376
+#: ../sdaps/gui/gui.py:380
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -407,26 +413,26 @@ msgstr "Den angegebenen Schlüssel und Wert löschen."
 msgid "Existing fields:\n"
 msgstr "Definierte Felder:\n"
 
-#: ../sdaps/model/survey.py:209
+#: ../sdaps/model/survey.py:217
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:220
+#: ../sdaps/model/survey.py:228
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/model/survey.py:246
+#: ../sdaps/model/survey.py:254
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
 "Anzahl von Seiten haben!"
 
-#: ../sdaps/model/survey.py:250
+#: ../sdaps/model/survey.py:258
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -434,96 +440,116 @@ msgstr ""
 "Der Stil 'classic' kann nur mit bis zu sechs Seiten umgehen. Für mehr Seiten "
 "kann der 'code128' Stil benutzt werden."
 
-#: ../sdaps/model/survey.py:261
+#: ../sdaps/model/survey.py:269
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "IDs müssen im \"classic\" Stil ganze Zahlen sein!"
 
-#: ../sdaps/model/survey.py:267
+#: ../sdaps/model/survey.py:275
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr "Ungültiges Zeichen %s in der Fragebogen ID \"%s\" im \"code128\" Stil!"
 
-#: ../sdaps/recognize/buddies.py:63
+#: ../sdaps/model/survey.py:292
+#, python-format
+msgid "Running upgrade routines for file format version %i"
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:78
 #, python-format
 msgid "%s, %i: Matrix not recognized."
 msgstr "%s, %i: Matrix wurde nicht erkannt."
 
-#: ../sdaps/recognize/buddies.py:72
+#: ../sdaps/recognize/buddies.py:87
 #, python-format
 msgid "%s, %i: Rotation not found."
 msgstr "%s, %i: Drehung wurde nicht erkannt."
 
-#: ../sdaps/recognize/buddies.py:89
+#. Copy the rotation over (if required) and print warning if the rotation is unknown
+#: ../sdaps/recognize/buddies.py:91
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known rotation!"
 msgstr "Weder %s, %i noch %s, %i hat eine bekannte Drehung!"
 
-#: ../sdaps/recognize/buddies.py:99
-#, python-format
-msgid ""
-"Found inconsistency. %s, %i and %s, %i should have the same rotation, but "
-"don't!"
-msgstr ""
-"%s, %i und %s, %i sollten die gleiche Drehung haben, diese stimmt jedoch "
-"nicht überein!"
-
-#: ../sdaps/recognize/buddies.py:115
+#: ../sdaps/recognize/buddies.py:103
 #, python-format
 msgid "%s, %i: Matrix not recognized (again)."
 msgstr "%s, %i: Matrix nicht erkannt (nach Drehung)."
 
-#: ../sdaps/recognize/buddies.py:129
+#: ../sdaps/recognize/buddies.py:117
 #, python-format
 msgid "%s, %i: Could not get page number."
 msgstr "%s, %i: Seitenzahl konnte nicht gelesen werden."
 
 #. Whoa, that should not happen.
-#: ../sdaps/recognize/buddies.py:146
+#: ../sdaps/recognize/buddies.py:137
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known page number!"
 msgstr "Weder %s, %i noch %s, %i haben eine bekannte Seitenzahl!"
 
-#: ../sdaps/recognize/buddies.py:157
+#. We don't touch the ignore flag in this case
+#. Simply print a message as this should *never* happen
+#: ../sdaps/recognize/buddies.py:148
+#, python-format
+msgid ""
+"Got a simplex document where two adjacent pages had a known page number. "
+"This should never happen as even simplex scans are converted to duplex by "
+"inserting dummy pages. Maybe you did a simplex scan but added it in duplex "
+"mode? The pages in question are %s, %i and %s, %i."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:165
 #, python-format
 msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
 msgstr "Die Bilder %s, %i und %s, %i besitzten nicht konsekutive Seitenzahlen!"
 
-#: ../sdaps/recognize/buddies.py:169
+#: ../sdaps/recognize/buddies.py:181
 #, python-format
 msgid "No page number for page %s, %i exists."
 msgstr "Es existiert keine Seitenzahl für Seite %s, %i."
 
-#: ../sdaps/recognize/buddies.py:174
+#: ../sdaps/recognize/buddies.py:186
 #, python-format
 msgid "Page number for page %s, %i already used by another image."
 msgstr "Seitenzahl für Seite %s, %i wurde schon einem anderen Bild zugewiesen."
 
-#: ../sdaps/recognize/buddies.py:180
+#: ../sdaps/recognize/buddies.py:192
 #, python-format
 msgid "Page number %i for page %s, %i is out of range."
 msgstr "Seitenzahl %i für Seite %s, %i ist außerhalb des erlaubten Bereichs."
 
-#: ../sdaps/recognize/buddies.py:197
+#: ../sdaps/recognize/buddies.py:209
 #, python-format
 msgid "%s, %i: Could not read survey ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Umfrage-ID nicht einlesen. Dies sollte aber möglich sein."
 
+#: ../sdaps/recognize/buddies.py:213
+#, python-format
+msgid "Could not read survey ID of either %s, %i or %s, %i!"
+msgstr ""
+
 #. Broken survey ID ...
-#: ../sdaps/recognize/buddies.py:208
+#: ../sdaps/recognize/buddies.py:220
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
 msgstr ""
 "Falsche Umfrage-ID auf Seite (%s, %i)! Die ID ist %s sollte aber %i sein."
 
-#: ../sdaps/recognize/buddies.py:230
+#: ../sdaps/recognize/buddies.py:242
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
 "%s, %i: Konnte die Fragebogen-ID nicht lesen. Dies sollte jedoch möglich "
 "sein."
 
-#: ../sdaps/recognize/buddies.py:261
+#: ../sdaps/recognize/buddies.py:246
+#, fuzzy, python-format
+msgid "Could not read questoinnaire ID of either %s, %i or %s, %i!"
+msgstr ""
+"%s, %i: Konnte die Fragebogen-ID nicht lesen. Dies sollte jedoch möglich "
+"sein."
+
+#: ../sdaps/recognize/buddies.py:273
 msgid ""
 "Got different IDs on different pages for at least one sheet! Do *NOT* try to "
 "use filters with this survey! You have to run a \"reorder\" step for this to "
@@ -531,8 +557,8 @@ msgid ""
 msgstr ""
 "Unterschiedliche IDs auf unterschiedlichen Seiten! Die Erkennung wird "
 "funktionieren, die Zuordnung der Daten ist jedoch Falsch! Falls die "
-"Zuordnung benötigt wird, *muss* der \"reorder\" Befehl genutzt werden, um die "
-"Seiten wieder korrekt zuzuordnen!"
+"Zuordnung benötigt wird, *muss* der \"reorder\" Befehl genutzt werden, um "
+"die Seiten wieder korrekt zuzuordnen!"
 
 #: ../sdaps/recognize/__init__.py:33
 msgid "Run the optical mark recognition."
@@ -713,8 +739,8 @@ msgid ""
 "Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
 "opendocument.text."
 msgstr ""
-"Unbekanntes Dateiformat (%s). questionnaire_odt muss "
-"application/vnd.oasis.opendocument.text sein."
+"Unbekanntes Dateiformat (%s). questionnaire_odt muss application/vnd.oasis."
+"opendocument.text sein."
 
 #: ../sdaps/setup/setup.py:54
 #, python-format
@@ -1030,3 +1056,10 @@ msgstr ""
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr "Erstelle Überblick über die Boxen sortiert nach der Metrik \"%s\"."
+
+#~ msgid ""
+#~ "Found inconsistency. %s, %i and %s, %i should have the same rotation, but "
+#~ "don't!"
+#~ msgstr ""
+#~ "%s, %i und %s, %i sollten die gleiche Drehung haben, diese stimmt jedoch "
+#~ "nicht überein!"

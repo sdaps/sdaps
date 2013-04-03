@@ -56,4 +56,7 @@ class Image(buddy.Object):
         self.survey_id = None
         self.global_id = None
         self.questionnaire_id = None
+        #: Whether the page should be ignored (because it is a blank back side)
+        self.ignored = False
+
 

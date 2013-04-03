@@ -69,7 +69,7 @@ class Defs(object):
 
 class Survey(object):
 
-    pickled_attrs = set(('sheets', 'defs', 'survey_id', 'questionnaire_ids', 'questionnaire'))
+    pickled_attrs = set(('sheets', 'defs', 'survey_id', 'questionnaire_ids', 'questionnaire', 'version'))
 
     def __init__(self):
         self.questionnaire = None
@@ -80,6 +80,7 @@ class Survey(object):
         self.global_id = None
         self.questionnaire_ids = list()
         self.index = 0
+        self.version = 2
         self.defs = Defs()
 
     def add_questionnaire(self, questionnaire):
@@ -136,6 +137,13 @@ class Survey(object):
         survey.info = dict()
         for key, value in config.items('info'):
             survey.info[key.decode('utf-8')] = value.decode('utf-8')
+
+        # Early versions of SDAPS 1.0 did not have the file version number
+        if not hasattr(survey, 'version'):
+            survey.version = 1
+
+        # Run any upgrade routine (if necessary)
+        survey.upgrade()
 
         return survey
 
@@ -279,4 +287,30 @@ class Survey(object):
             if not key in self.pickled_attrs:
                 del dict[key]
         return dict
+
+    def upgrade(self):
+        msg = _('Running upgrade routines for file format version %i')
+        if self.version < 2:
+            log.warn(msg % (1))
+            # The change between version 1 and 2 is that simplex surveys are
+            # stored in a duplex way. ie. dummy pages are inserted after every
+            # scanned image (or a duplex image needs to be added)
+            # We need to insert these dummy images here.
+            if not self.defs.duplex:
+                for sheet in self.sheets:
+                    images = sheet.images
+
+                    # And readd with 
+                    sheet.images = list()
+                    for img in images:
+                        sheet.add_image(img)
+
+                        dummy = model.sheet.Image()
+                        dummy.filename = "DUMMY"
+                        dummy.tiff_page = -1
+                        dummy.ignored = True
+
+                        sheet.add_image(dummy)
+
+        self.version = 2
 
