@@ -46,7 +46,7 @@ msgid ""
 "pen for filling in your answers."
 msgstr ""
 "Der Fragebogen wird maschinell erfasst. Bitte mit Kugelschreiber oder nicht "
-"zu dickem Filzstift ausf\\\"ullen."
+"zu dickem Filzstift ausfüllen."
 
 #. Instruction on the questionnaire: Description of a crossed checkbox
 #: ../tex_translations.in.h:12
@@ -61,14 +61,14 @@ msgstr "Korrigieren"
 #. Instruction on the questionnaire: Multiple choice question
 #: ../tex_translations.in.h:16
 msgid "You can check any number of boxes in selection questions."
-msgstr "Bei Auswahlfeldern d\\\"urfen mehrere Antworten angekreuzt werden."
+msgstr "Bei Auswahlfeldern dürfen mehrere Antworten angekreuzt werden."
 
 #. Instruction on the questionnaire: Mark/range question.
 #: ../tex_translations.in.h:18
 msgid ""
 "For questions with a range (1--5) choose the answer the mark that fits best."
 msgstr ""
-"Bei Bewertungsfragen (Skala 1--5) darf nur ein K\\\"astchen Angekreuzt "
+"Bei Bewertungsfragen (Skala 1--5) darf nur ein Kästchen Angekreuzt "
 "werden."
 
 #. LaTeX based report: Label for the number of people that answered
