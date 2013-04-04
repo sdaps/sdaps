@@ -56,6 +56,8 @@ def stamp(survey, output_filename, cmdline):
                     continue
 
                 questionnaire_ids.append(survey.validate_questionnaire_id(line))
+
+            survey.questionnaire_ids.extend(questionnaire_ids)
         else:
             # Create random IDs
             max = pow(2, 16)
@@ -71,15 +73,14 @@ def stamp(survey, output_filename, cmdline):
             questionnaire_ids = [id for id in questionnaire_ids if id > min]
             random.shuffle(questionnaire_ids)
             questionnaire_ids = questionnaire_ids[:cmdline['random']]
+
+            survey.questionnaire_ids.extend(questionnaire_ids)
     else:
         if survey.defs.print_questionnaire_id:
             log.error(_("This survey has been configured to use questionnaire IDs. Each questionnaire will be unique. You need to use on of the options to add new IDs or use the existing ones."))
             return 1
 
         questionnaire_ids = None
-
-    if questionnaire_ids is not None:
-        survey.questionnaire_ids.extend(questionnaire_ids)
 
     if os.path.exists(survey.path('questionnaire.tex')):
         # use the LaTeX stamper
