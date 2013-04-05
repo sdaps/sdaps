@@ -64,7 +64,10 @@ class Checkbox(Box):
 
 class Textbox(Box):
 
-    pass
+    def __init__(self, parent):
+        Box.__init__(self, parent)
+
+        self.text = unicode()
 
 
 class Additional_Mark(object):

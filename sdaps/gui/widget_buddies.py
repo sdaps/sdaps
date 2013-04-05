@@ -190,5 +190,43 @@ class Textbox(Box):
     name = 'widget'
     obj_class = model.questionnaire.Textbox
 
+    def create_widget(self):
+        self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
+        self.checkbox = Gtk.CheckButton.new_with_label(self.obj.text)
+        self.checkbox.connect('toggled', self.toggled_cb)
+
+        self.widget.add(self.checkbox)
+
+        indent = Gtk.Alignment()
+        indent.set_padding(0, 0, 10, 0)
+        frame = Gtk.Frame()
+        indent.add(frame)
+        self.widget.pack_end(indent, False, True, 0)
+
+        self.textbox = Gtk.TextView()
+        self.textbox.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
+        self.buffer = self.textbox.get_buffer()
+        self.buffer.connect('changed', self.buffer_changed_cb)
+
+        frame.add(self.textbox)
+
+        return self.widget
+
+    def buffer_changed_cb(self, buf):
+        start = buf.get_start_iter()
+        end = buf.get_end_iter()
+        self.obj.data.text = buf.get_text(start, end, False).decode('UTF-8')
+
+    def sync_state(self):
+        self.checkbox.props.active = self.obj.data.state
+
+        self.textbox.props.sensitive = self.obj.data.state
+
+        # Only update the text if it changed (or else recursion hits)
+        start = self.buffer.get_start_iter()
+        end = self.buffer.get_end_iter()
+        currtext = self.buffer.get_text(start, end, False).decode('UTF-8')
+        if self.obj.data.text != currtext:
+            self.buffer.set_text(self.obj.data.text)
 
