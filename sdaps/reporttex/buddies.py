@@ -27,6 +27,8 @@ from sdaps import image
 
 from sdaps import calculate
 
+from sdaps.utils.latex import raw_unicode_to_latex
+
 img_counter = 0
 
 
@@ -61,17 +63,20 @@ def output_image(box, tmpdir):
     return 'image-%i.png' % img_counter
 
 
+def format_raw_text(text):
+    from sdaps.setuptex import latexmap
+
 class Questionnaire(model.buddy.Buddy):
 
     __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Questionnaire
 
-    def init(self, small=0):
+    def init(self, small=0, suppress=None):
         self.small = small
         # iterate over qobjects
         for qobject in self.obj.qobjects:
-            qobject.report.init(small)
+            qobject.report.init(small, suppress)
 
     def report(self, tmpdir):
         # iterate over qobjects
@@ -97,7 +102,7 @@ class QObject(model.buddy.Buddy):
     name = 'report'
     obj_class = model.questionnaire.QObject
 
-    def init(self, small):
+    def init(self, small, suppress):
         self.small = small
 
     def report(self, tmpdir):
@@ -146,8 +151,9 @@ class Choice(Question):
     name = 'report'
     obj_class = model.questionnaire.Choice
 
-    def init(self, small):
+    def init(self, small, suppress):
         self.small = small
+        self.suppress = suppress
         self.text = ""
 
     def report(self, tmpdir):
@@ -155,8 +161,12 @@ class Choice(Question):
             for box in self.obj.boxes:
                 if (isinstance(box, model.questionnaire.Textbox) and
                         box.data.state):
-                    img_file = output_image(box, tmpdir)
-                    self.text += '\\freeform{%fmm}{%s}\n' % (box.data.width, img_file)
+                    if box.data.text and self.suppress != 'substitutions':
+                        text = raw_unicode_to_latex(box.data.text)
+                        self.text += '\\freeformtext{%s}\n' % (text)
+                    elif self.suppress != 'images':
+                        img_file = output_image(box, tmpdir)
+                        self.text += '\\freeform{%fmm}{%s}\n' % (box.data.width, img_file)
 
     def write_begin(self, out):
         # Smarter numbering handling?
@@ -212,16 +222,21 @@ class Text(Question):
     name = 'report'
     obj_class = model.questionnaire.Text
 
-    def init(self, small):
+    def init(self, small, suppress):
         self.small = small
+        self.suppress = suppress
         self.text = ""
 
     def report(self, tmpdir):
         if not self.small:
             for box in self.obj.boxes:
                 if box.data.state:
-                    img_file = output_image(box, tmpdir)
-                    self.text += '\\freeform{%fmm}{%s}\n' % (box.data.width, img_file)
+                    if box.data.text and self.suppress != 'substitutions':
+                        text = raw_unicode_to_latex(box.data.text)
+                        self.text += '\\freeformtext{%s}\n' % (text)
+                    elif self.suppress != 'images':
+                        img_file = output_image(box, tmpdir)
+                        self.text += '\\freeform{%fmm}{%s}\n' % (box.data.width, img_file)
 
     def write(self, out, tmpdir):
         Question.write_begin(self, out)

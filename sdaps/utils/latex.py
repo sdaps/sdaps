@@ -54,3 +54,22 @@ def unicode_to_latex(string):
     # Ensure only ASCII characters are left
     return string.encode('ascii')
 
+def raw_unicode_to_latex(string):
+    u"""In addition to converting all unicode characters to LaTeX expressions
+    this function also replaces some characters like newlines with their LaTeX
+    equvivalent."""
+
+    string = unicode_to_latex(string)
+
+    string = unicode(string)
+    # Replace many newlines with a paragraph marker
+    string, count = re.subn('\n\n+', u'\u2029', string, flags=re.MULTILINE)
+
+    # Repalce singlen newline with \\newline
+    string = string.replace('\n', '\\\\\n')
+
+    # And remove the paragraph marker again (insert two newlines)
+    string = string.replace(u'\u2029', '\n\n')
+
+    return string.encode('ascii')
+
