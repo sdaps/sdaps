@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-03 19:58+0200\n"
+"POT-Creation-Date: 2013-04-07 16:53+0200\n"
 "PO-Revision-Date: 2013-02-24 21:47+0300\n"
 "Last-Translator: red sea <dr.hatim@hotmail.com>\n"
 "Language-Team: \n"
@@ -172,7 +172,7 @@ msgid "Export data to CSV file."
 msgstr ""
 
 #: ../sdaps/csvdata/__init__.py:43 ../sdaps/report/__init__.py:35
-#: ../sdaps/reporttex/__init__.py:37
+#: ../sdaps/reporttex/__init__.py:48
 msgid "Filter to only export a partial dataset."
 msgstr ""
 
@@ -184,53 +184,53 @@ msgstr ""
 msgid "The file to import."
 msgstr ""
 
-#: ../sdaps/gui/gui.py:50
+#: ../sdaps/gui/gui.py:51
 msgid ""
 "The survey does not have any images! Please add images (and run recognize) "
 "before using the GUI."
 msgstr ""
 
-#: ../sdaps/gui/gui.py:164
+#: ../sdaps/gui/gui.py:170
 msgid "Page|Invalid"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:167
+#: ../sdaps/gui/gui.py:173
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "صفحة %i"
 
-#: ../sdaps/gui/gui.py:209
+#: ../sdaps/gui/gui.py:215
 msgid "Copyright © 2007-2012 The SDAPS Authors"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:211
+#: ../sdaps/gui/gui.py:217
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:212
+#: ../sdaps/gui/gui.py:218
 msgid "http://sdaps.sipsolutions.net"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:213
+#: ../sdaps/gui/gui.py:219
 msgid "translator-credits"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:259
+#: ../sdaps/gui/gui.py:265
 #, python-format
 msgid " of %i"
 msgstr "من %i"
 
-#: ../sdaps/gui/gui.py:260
+#: ../sdaps/gui/gui.py:266
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:376
+#: ../sdaps/gui/gui.py:384
 msgid "Close without saving"
 msgstr "إغلاق بدون حفظ"
 
-#: ../sdaps/gui/gui.py:380
+#: ../sdaps/gui/gui.py:388
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -358,39 +358,39 @@ msgstr ""
 msgid "Existing fields:\n"
 msgstr ""
 
-#: ../sdaps/model/survey.py:217
+#: ../sdaps/model/survey.py:221
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/model/survey.py:228
+#: ../sdaps/model/survey.py:232
 #, python-format
 msgid "%f seconds per sheet"
 msgstr ""
 
-#: ../sdaps/model/survey.py:254
+#: ../sdaps/model/survey.py:258
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:258
+#: ../sdaps/model/survey.py:262
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
 msgstr ""
 
-#: ../sdaps/model/survey.py:269
+#: ../sdaps/model/survey.py:273
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:275
+#: ../sdaps/model/survey.py:279
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:292
+#: ../sdaps/model/survey.py:296
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
@@ -562,6 +562,16 @@ msgid "Detailed output. (default)"
 msgstr ""
 
 #: ../sdaps/report/__init__.py:51 ../sdaps/reporttex/__init__.py:34
+msgid ""
+"Do not include original images in the report. This is useful if there are "
+"privacy concerns."
+msgstr ""
+
+#: ../sdaps/report/__init__.py:56 ../sdaps/reporttex/__init__.py:39
+msgid "Do not use substitutions instead of images."
+msgstr ""
+
+#: ../sdaps/report/__init__.py:62 ../sdaps/reporttex/__init__.py:45
 #, python-format
 msgid "Filename to store the data to (default: report_%%i.pdf)"
 msgstr ""
