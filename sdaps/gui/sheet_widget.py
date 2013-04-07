@@ -21,7 +21,6 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
 import cairo
-from sdaps import utils
 import copy
 import os
 from sdaps import defs
@@ -101,20 +100,6 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         self._widget_to_mm_matrix = \
             cairo.Matrix(*m)
         self._widget_to_mm_matrix.invert()
-
-    def invalidate_question_area(self, question):
-        # Just invalidate the bounding box of all boxes for now
-        bbox = question_utils.get_question_bounding_box(question)
-
-        x, y = self._mm_to_widget_matrix.transform_point(bbox[0], bbox[1])
-        width, height = self._mm_to_widget_matrix.transform_distance(bbox[2], bbox[3])
-
-        width = int(math.ceil(width + x - int(x))) + 20
-        height = int(math.ceil(height + y - int(y))) + 20
-        x = int(x) - 10
-        y = int(y) - 10
-
-        self.queue_draw_area(x, y, width, height)
 
     def invalidate_area(self, x_mm, y_mm, width_mm, height_mm):
         x, y = self._mm_to_widget_matrix.transform_point(x_mm, y_mm)

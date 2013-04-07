@@ -22,7 +22,7 @@ import shutil
 import glob
 import subprocess
 
-from sdaps import utils
+from sdaps.utils.mimetype import mimetype
 from sdaps import model
 from sdaps import log
 from sdaps import paths
@@ -68,15 +68,15 @@ def setup(survey, cmdline):
     questionnaire_tex = cmdline['questionnaire.tex']
     additionalqobjects = cmdline['additional_questions']
 
-    mimetype = utils.mimetype(questionnaire_tex)
-    if mimetype != 'text/x-tex' and mimetype != '':
-        log.warn(_('Unknown file type (%s). questionnaire_tex should be of type text/x-tex.') % mimetype)
+    mime = mimetype(questionnaire_tex)
+    if mime != 'text/x-tex' and mime != '':
+        log.warn(_('Unknown file type (%s). questionnaire_tex should be of type text/x-tex.') % mime)
         log.warn(_('Will keep going, but expect failure!'))
 
     if additionalqobjects is not None:
-        mimetype = utils.mimetype(additionalqobjects)
-        if mimetype != 'text/plain' and mimetype != '':
-            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain.') % mimetype)
+        mime = mimetype(additionalqobjects)
+        if mime != 'text/plain' and mime != '':
+            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain.') % mime)
             return 1
 
     # Add the new questionnaire

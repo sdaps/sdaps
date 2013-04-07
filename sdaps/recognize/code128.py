@@ -17,8 +17,8 @@
 
 from sdaps import defs
 
-from sdaps.utils import RecognitionError
-from sdaps.barcode import read_barcode
+from sdaps.utils.exceptions import RecognitionError
+from sdaps.utils.barcode import read_barcode
 
 
 # Reading the metainformation of CODE-128 style questionnaires.
