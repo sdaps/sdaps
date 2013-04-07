@@ -272,7 +272,6 @@
 }
 
 \newenvironment{choicequestion}[1]{%
-  \offinterlineskip%
   \question{#1}%
   \tabularx{\linewidth}{Yrl}
 }{%
