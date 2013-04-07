@@ -32,7 +32,7 @@ _ = ugettext
 import buddies
 
 
-def report(survey, filter, filename=None, small=0):
+def report(survey, filter, filename=None, small=0, suppress=None):
     assert isinstance(survey, model.survey.Survey)
 
     # compile clifilter
@@ -55,7 +55,7 @@ def report(survey, filter, filename=None, small=0):
     # Second: report buddies
 
     # init buddies
-    survey.questionnaire.report.init(small)
+    survey.questionnaire.report.init(small, suppress)
 
     # iterate over sheets
     survey.iterate(
@@ -91,7 +91,7 @@ def report(survey, filter, filename=None, small=0):
     doc.build(story)
 
 
-def stats(survey, filter, filename=None, small=0):
+def stats(survey, filter, filename=None, small=0, suppress=None):
     if filename is None:
         filename = survey.new_path('report_%i.pdf')
 
@@ -110,5 +110,6 @@ def stats(survey, filter, filename=None, small=0):
         report(
             survey, filt,
             filename='%s_%i %s.pdf' % (filename.split('.')[0], i, subfilter),
-            small=small)
+            small=small,
+            suppress=suppress)
 
