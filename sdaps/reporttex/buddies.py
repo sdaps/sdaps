@@ -200,6 +200,7 @@ class Mark(Question):
         Question.write_begin(self, out)
 
         if self.obj.calculate.count:
+            out.write('\\pgfkeyssetvalue{/sdaps/mark/range}{%s}\n' % (len(self.obj.boxes)))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/lower}{%s}\n' % (self.obj.answers[0]))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/upper}{%s}\n' % (self.obj.answers[1]))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/count}{%i}\n' % (self.obj.calculate.count))
