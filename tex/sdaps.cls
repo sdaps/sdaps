@@ -972,7 +972,7 @@
   \whiledo{\@tempcnta<\value{markcheckboxcount}}%
   {%
     \advance\@tempcnta by 1%
-    \g@addto@macro\@sdaps@markboxes{& {\usekomafont{marklinechoicefont}\checkbox}}%
+    \g@addto@macro\@sdaps@markboxes{& {\checkbox}}%
   }%
 }
 
@@ -983,15 +983,16 @@
   \@sdaps@generatemarkboxes%
   \tabularx{\linewidth}{Xr*{\themarkcheckboxcount}{c}l}
 }{%
-  \endtabularx%
   \@sdaps@markenvactivefalse%
+  \endtabularx%
 }
 
 \providecommand*{\markline}[3]{%
   \protectedimmediatewrite\sdapsoutfile{QObject-Mark=#1}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
-  {\usekomafont{marklinequestionfont}\strut#1\strut} & {\usekomafont{marklinechoicefont}#2} \@sdaps@markboxes & {\usekomafont{marklinechoicefont}#3}\\%
+  {\usekomafont{marklinequestionfont}\strut#1\strut} & {\usekomafont{marklinechoicefont}#2} \@sdaps@markboxes & {\usekomafont{marklinechoicefont}#3}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
+  \\%
 }
 
 \providecommand*{\singlemark}[3]{%
@@ -1000,7 +1001,7 @@
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
   \@sdaps@generatemarkboxes%
   \begin{tabularx}{\linewidth}{Y*{\themarkcheckboxcount}{c}X}
-    {\usekomafont{singlemarkchoicefont}\strut#2} \@sdaps@markboxes & {\usekomafont{marklinechoicefont}#3}\\%
+    {\usekomafont{singlemarkchoicefont}\strut#2} \@sdaps@markboxes & {\usekomafont{singlemarkchoicefont}#3}\\%
   \end{tabularx}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
 }
