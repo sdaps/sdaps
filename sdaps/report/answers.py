@@ -268,7 +268,7 @@ class Mark(platypus.Flowable):
         self.stdd_paragraph.drawOn(self.canv, self.left_margin, y_pos - 51)
 
 
-class Text(platypus.Flowable):
+class Freeform(platypus.Flowable):
 
     cache = dict()
 
@@ -316,4 +316,18 @@ class Text(platypus.Flowable):
         self.canv.setStrokeColorRGB(0.6, 0.6, 0.6)
         self.canv.line(0, 0, self.available_width, 0)
         self.canv.line(0, self.height, self.available_width, self.height)
+
+
+class RawText(platypus.Paragraph):
+
+    def __init__(self, text, *args, **kwargs):
+
+        # Replace things like 
+
+        text = escape(text)
+        text = text.replace('\n', u'<br/>')
+
+        text = text
+
+        platypus.Paragraph.__init__(self, text, *args, bulletText=u'&bull;', **kwargs)
 

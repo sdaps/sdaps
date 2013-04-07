@@ -54,6 +54,7 @@ class Questionnaire(buddy.Object):
         self.qobjects = list()
         self.last_id = (0, 0)
         self.init_attributes()
+        self._notify_changed_list = list()
 
     def init_attributes(self):
         self.page_count = 0
@@ -74,12 +75,31 @@ class Questionnaire(buddy.Object):
 
     sheet = property(get_sheet)
 
+    def notify_data_changed(self, qobj, dobj, name, old_value):
+        for func in self._notify_changed_list:
+            func(self, qobj, dobj, name, old_value)
+
+    def connect_data_changed(self, func):
+        self._notify_changed_list.append(func)
+
+    def disconnect_data_changed(self, func):
+        self._notify_changed_list.remove(func)
+
     def __unicode__(self):
         return unicode().join(
             [u'%s\n' % self.__class__.__name__] +
             [unicode(qobject) for qobject in self.qobjects]
         )
 
+    def find_object(self, oid):
+        for qobject in self.qobjects:
+            obj = qobject.find_object(oid)
+
+            if obj is not None:
+                return obj
+
+    def reinit_state(self):
+        self._notify_changed_list = list()
 
 class QObject(buddy.Object):
     '''
@@ -132,6 +152,18 @@ class QObject(buddy.Object):
         return u'(%s)\n' % (
             self.__class__.__name__,
         )
+
+    def find_object(self, oid):
+        if self.id == oid:
+            return self
+
+        for box in self.boxes:
+            obj = box.find_object(oid)
+
+            if obj is not None:
+                return obj
+
+        return None
 
 
 class Head(QObject):
@@ -339,6 +371,10 @@ class Box(buddy.Object, DataObject):
             (u'%.1f' % self.height).rjust(5),
             self.text
         )
+
+    def find_object(self, oid):
+        if self.id == oid:
+            return self
 
 
 class Checkbox(Box):

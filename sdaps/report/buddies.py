@@ -56,6 +56,16 @@ stylesheet['Question'] = styles.ParagraphStyle(
     fontName='Times-Bold',
 )
 
+stylesheet['Text'] = styles.ParagraphStyle(
+    'Text',
+    stylesheet['Normal'],
+    spaceBefore=1 * mm,
+    spaceAfter=1 * mm,
+    rightIndent=5 * mm,
+    bulletIndent=2 * mm,
+    leftIndent=5 * mm,
+)
+
 
 class Questionnaire(model.buddy.Buddy):
 
@@ -63,11 +73,11 @@ class Questionnaire(model.buddy.Buddy):
     name = 'report'
     obj_class = model.questionnaire.Questionnaire
 
-    def init(self, small=0):
+    def init(self, small=0, suppress=None):
         self.small = small
         # iterate over qobjects
         for qobject in self.obj.qobjects:
-            qobject.report.init(small)
+            qobject.report.init(small, suppress)
 
     def report(self):
         # iterate over qobjects
@@ -117,7 +127,7 @@ class QObject(model.buddy.Buddy):
     name = 'report'
     obj_class = model.questionnaire.QObject
 
-    def init(self, small):
+    def init(self, small, suppress):
         self.small = small
 
     def report(self):
@@ -163,8 +173,9 @@ class Choice(Question):
     name = 'report'
     obj_class = model.questionnaire.Choice
 
-    def init(self, small):
+    def init(self, small, suppress):
         self.small = small
+        self.suppress = suppress
         self.text = list()
 
     def report(self):
@@ -172,7 +183,12 @@ class Choice(Question):
             for box in self.obj.boxes:
                 if (isinstance(box, model.questionnaire.Textbox) and
                         box.data.state):
-                    self.text.append(answers.Text(box))
+
+                    if box.data.text and self.suppress != 'substitutions':
+                        self.text.append(answers.RawText(box.data.text,
+                                                         stylesheet['Text']))
+                    elif self.suppress != 'images':
+                        self.text.append(answers.Freeform(box))
 
     def story(self):
         story, tmp = Question.story(self)
@@ -226,15 +242,20 @@ class Text(Question):
     name = 'report'
     obj_class = model.questionnaire.Text
 
-    def init(self, small):
+    def init(self, small, suppress):
         self.small = small
+        self.suppress = suppress
         self.text = list()
 
     def report(self):
         if not self.small:
             for box in self.obj.boxes:
                 if box.data.state:
-                    self.text.append(answers.Text(box))
+                    if box.data.text and self.suppress != 'substitutions':
+                        self.text.append(answers.RawText(box.data.text,
+                                                         stylesheet['Text']))
+                    elif self.suppress != 'images':
+                        self.text.append(answers.Freeform(box))
 
     def story(self):
         story, tmp = Question.story(self)

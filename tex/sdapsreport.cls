@@ -235,7 +235,7 @@
 \renewcommand{\author}[1]{\def\@author{#1}}
 \renewcommand{\title}[1]{\def\@title{#1}}
 
-\def\question{{\let\freeformsep\relax}\subsection*}
+\def\question{{\global\let\freeformsep\relax}\subsection*}
 
 \newcommand*{\decimaltopercent}[1]{
   \pgfmathparse{100 * #1}
@@ -272,7 +272,6 @@
 }
 
 \newenvironment{choicequestion}[1]{%
-  \offinterlineskip%
   \question{#1}%
   \tabularx{\linewidth}{Yrl}
 }{%
@@ -310,6 +309,11 @@
   \freeformsep
   \pgfmathparse{min(#1, \linewidth)}
   \includegraphics[width=\pgfmathresult pt,keepaspectratio]{#2}\\
+  \def\freeformsep{\rule{\linewidth}{0.5pt}\\}
+}
+\newcommand*{\freeformtext}[1]{%
+  \freeformsep
+  #1
   \def\freeformsep{\rule{\linewidth}{0.5pt}\\}
 }
 

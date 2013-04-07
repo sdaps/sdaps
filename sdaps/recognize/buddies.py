@@ -24,7 +24,7 @@ from sdaps import matrix
 from sdaps import surface
 from sdaps import image
 from sdaps import defs
-from sdaps.utils import RecognitionError
+from sdaps.utils.exceptions import RecognitionError
 from sdaps import log
 
 from sdaps.ugettext import ugettext, ungettext

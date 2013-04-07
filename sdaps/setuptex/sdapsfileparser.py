@@ -20,13 +20,9 @@ from sdaps import log
 import xml.sax
 import zipfile
 import re
-try:
-    from latexmap import mapping
-except ImportError:
-    mapping = {}
-    log.warning(_(u'The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).'))
 
 from sdaps import model
+from sdaps.utils.latex import latex_to_unicode
 
 QOBJECT_PREFIX = u'QObject'
 ANSWER_PREFIX = u'Answer'
@@ -47,24 +43,6 @@ def get_index_and_string(string):
     index = tuple([int(x) for x in index])
 
     return index, string
-
-
-re_mapping = {}
-for token, replacement in mapping.iteritems():
-    regexp = re.compile(u'%s(?=^w|})' % re.escape(token))
-    re_mapping[regexp] = replacement
-
-
-def latex_to_unicode(string):
-    string = unicode(string)
-    for regexp, replacement in re_mapping.iteritems():
-        string, count = regexp.subn(replacement, string)
-
-    def ret_char(match):
-        return match.group('char')
-    string, count = re.subn(r'\\IeC {(?P<char>.*?)}', ret_char, string)
-    return string
-
 
 def parse(survey):
 

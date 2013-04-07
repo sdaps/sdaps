@@ -28,6 +28,34 @@ class Box(object):
         self.width = parent.width
         self.height = parent.height
 
+        # Set _parent last, so that we don't trigger notifications
+        # during __init__
+        self._parent = parent
+
+    def __setattr__(self, name, value):
+        if hasattr(self, name):
+            old_value = getattr(self, name)
+        else:
+            old_value = None
+
+        object.__setattr__(self, name, value)
+        # private
+        if name.startswith('_'):
+            return
+
+        if value != old_value and hasattr(self, '_parent') and self._parent is not None:
+            self._parent.question.questionnaire.notify_data_changed(self._parent, self, name, old_value)
+
+    def __getstate__(self):
+        u'''Only pickle non-private attributes
+        '''
+        dict = self.__dict__.copy()
+        keys = dict.keys()
+        for key in keys:
+            if key.startswith('_'):
+                del dict[key]
+        return dict
+
 
 class Checkbox(Box):
 
@@ -36,7 +64,10 @@ class Checkbox(Box):
 
 class Textbox(Box):
 
-    pass
+    def __init__(self, parent):
+        Box.__init__(self, parent)
+
+        self.text = unicode()
 
 
 class Additional_Mark(object):

@@ -18,7 +18,7 @@
 
 from sdaps import defs
 
-from sdaps.utils import RecognitionError
+from sdaps.utils.exceptions import RecognitionError
 
 from sdaps.ugettext import ugettext, ungettext
 _ = ugettext

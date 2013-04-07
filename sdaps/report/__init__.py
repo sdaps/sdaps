@@ -47,6 +47,17 @@ parser.add_argument('-l', '--long',
     action="store_const",
     const="long",
     default="long")
+parser.add_argument('--suppress-images',
+    help=_('Do not include original images in the report. This is useful if there are privacy concerns.'),
+    dest='suppress',
+    action='store_const',
+    const='images')
+parser.add_argument('--suppress-substitutions',
+    help=_('Do not use substitutions instead of images.'),
+    dest='suppress',
+    action='store_const',
+    const='substitutions',
+    default=None)
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: report_%%i.pdf)"))
 
@@ -62,8 +73,8 @@ def report(cmdline):
         small = 0
 
     if cmdline['all_filters']:
-        return report.stats(survey, cmdline['filter'], cmdline['output'], small)
+        return report.stats(survey, cmdline['filter'], cmdline['output'], small, cmdline['suppress'])
     else:
-        return report.report(survey, cmdline['filter'], cmdline['output'], small)
+        return report.report(survey, cmdline['filter'], cmdline['output'], small, cmdline['suppress'])
 
 

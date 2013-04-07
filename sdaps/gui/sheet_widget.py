@@ -21,7 +21,6 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
 import cairo
-from sdaps import utils
 import copy
 import os
 from sdaps import defs
@@ -65,12 +64,23 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         self._cs_image = None
         self._ss_image = None
 
+        self.provider.survey.questionnaire.connect_data_changed(self.partial_update)
+
     def update_state(self):
         # Cancel any dragging operation
         self._edge_drag_active = False
         self._update_matrices()
         self.queue_resize()
         self.queue_draw()
+
+    def partial_update(self, questionnaire, qobj, obj, name, old_value):
+        if not isinstance(obj, model.data.Box):
+            return
+
+        if self.provider.image.page_number != qobj.page_number:
+            return
+
+        self.invalidate_area(obj.x, obj.y, obj.width, obj.height)
 
     def _update_matrices(self):
         xoffset = 0
@@ -90,20 +100,6 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         self._widget_to_mm_matrix = \
             cairo.Matrix(*m)
         self._widget_to_mm_matrix.invert()
-
-    def invalidate_question_area(self, question):
-        # Just invalidate the bounding box of all boxes for now
-        bbox = question_utils.get_question_bounding_box(question)
-
-        x, y = self._mm_to_widget_matrix.transform_point(bbox[0], bbox[1])
-        width, height = self._mm_to_widget_matrix.transform_distance(bbox[2], bbox[3])
-
-        width = int(math.ceil(width + x - int(x))) + 20
-        height = int(math.ceil(height + y - int(y))) + 20
-        x = int(x) - 10
-        y = int(y) - 10
-
-        self.queue_draw_area(x, y, width, height)
 
     def invalidate_area(self, x_mm, y_mm, width_mm, height_mm):
         x, y = self._mm_to_widget_matrix.transform_point(x_mm, y_mm)
@@ -160,7 +156,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
         if box is not None:
             box.data.state = not box.data.state
-            self.invalidate_area(box.data.x, box.data.y, box.data.width, box.data.height)
+
             return True
 
     def do_button_release_event(self, event):

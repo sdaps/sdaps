@@ -30,6 +30,17 @@ parser = script.subparsers.add_parser("report_tex",
     help=_("Create a PDF report using LaTeX."),
     description=_("""This command creates a PDF report using LaTeX that
     contains statistics and freeform fields."""))
+parser.add_argument('--suppress-images',
+    help=_('Do not include original images in the report. This is useful if there are privacy concerns.'),
+    dest='suppress',
+    action='store_const',
+    const='images')
+parser.add_argument('--suppress-substitutions',
+    help=_('Do not use substitutions instead of images.'),
+    dest='suppress',
+    action='store_const',
+    const='substitutions',
+    default=None)
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: report_%%i.pdf)"))
 
@@ -41,6 +52,6 @@ parser.add_argument('-f', '--filter',
 def report_tex(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import report
-    return report.report(survey, cmdline['output'], cmdline['filter'])
+    return report.report(survey, cmdline['output'], cmdline['filter'], cmdline['suppress'])
 
 

@@ -37,7 +37,7 @@ import buddies
 import codecs
 
 
-def report(survey, filter, filename=None, small=0):
+def report(survey, filter, filename=None, small=0, suppress=None):
     assert isinstance(survey, model.survey.Survey)
 
     # compile clifilter
@@ -60,7 +60,7 @@ def report(survey, filter, filename=None, small=0):
     # Second: report buddies
 
     # init buddies
-    survey.questionnaire.report.init(small)
+    survey.questionnaire.report.init(small, suppress)
 
     # Filename of output
     if filename is None:

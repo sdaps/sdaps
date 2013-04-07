@@ -19,7 +19,7 @@
 import os
 import shutil
 
-from sdaps import utils
+from sdaps.utils.mimetype import mimetype
 from sdaps import model
 from sdaps import log
 
@@ -44,20 +44,20 @@ def setup(survey, cmdline):
     questionnaire_pdf = cmdline['questionnaire.pdf']
     additionalqobjects = cmdline['additional_questions']
 
-    mimetype = utils.mimetype(questionnaire_odt)
-    if mimetype != 'application/vnd.oasis.opendocument.text' and mimetype != '':
-        log.error(_('Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text.') % mimetype)
+    mime = mimetype(questionnaire_odt)
+    if mime != 'application/vnd.oasis.opendocument.text' and mime != '':
+        log.error(_('Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text.') % mime)
         return 1
 
-    mimetype = utils.mimetype(questionnaire_pdf)
-    if mimetype != 'application/pdf' and mimetype != '':
-        log.error(_('Unknown file type (%s). questionnaire_pdf should be application/pdf.') % mimetype)
+    mime = mimetype(questionnaire_pdf)
+    if mime != 'application/pdf' and mime != '':
+        log.error(_('Unknown file type (%s). questionnaire_pdf should be application/pdf.') % mime)
         return 1
 
     if additionalqobjects is not None:
-        mimetype = utils.mimetype(additionalqobjects)
-        if mimetype != 'text/plain' and mimetype != '':
-            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain.') % mimetype)
+        mime = mimetype(additionalqobjects)
+        if mime != 'text/plain' and mime != '':
+            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain.') % mime)
             return 1
 
     # Add the new questionnaire

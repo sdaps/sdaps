@@ -145,6 +145,10 @@ class Survey(object):
         # Run any upgrade routine (if necessary)
         survey.upgrade()
 
+        survey.questionnaire.reinit_state()
+        for sheet in survey.sheets:
+            sheet.reinit_state()
+
         return survey
 
     @staticmethod
@@ -292,10 +296,14 @@ class Survey(object):
         msg = _('Running upgrade routines for file format version %i')
         if self.version < 2:
             log.warn(msg % (1))
-            # The change between version 1 and 2 is that simplex surveys are
-            # stored in a duplex way. ie. dummy pages are inserted after every
-            # scanned image (or a duplex image needs to be added)
-            # We need to insert these dummy images here.
+            # Changes between version 1 and 2:
+            #  * Simplex surveys get a dummy page added for every image. This
+            #    way they can be handled in the same way as "duplex" mode
+            #    (and duplex scan can be supported).
+            #  * The data for "Textbox" has a string. This will be used in the
+            #    report if it contains data.
+
+            # Insert dummy images.
             if not self.defs.duplex:
                 from sdaps.model.sheet import Image
 
@@ -313,6 +321,13 @@ class Survey(object):
                         dummy.ignored = True
 
                         sheet.add_image(dummy)
+
+            # Add the "text" attribute to Textbox.
+            from sdaps.model.data import Textbox
+            for sheet in self.sheets:
+                for data in sheet.data.itervalues():
+                    if isinstance(data, Textbox):
+                        data.text = unicode()
 
         self.version = 2
 

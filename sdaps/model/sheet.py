@@ -44,6 +44,12 @@ class Sheet(buddy.Object):
                 return image
         return None
 
+    def reinit_state(self):
+        for k, v in self.data.iteritems():
+            obj = self.survey.questionnaire.find_object(k)
+
+            v._parent = obj
+
 class Image(buddy.Object):
 
     def __init__(self):

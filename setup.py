@@ -89,8 +89,7 @@ class sdaps_build_i18n(build_i18n.build_i18n):
             langs[lang] = v
 
         # Load mapping from unicode to LaTeX command name
-        from sdaps.setuptex import latexmap
-        unicode_to_tex = { unicode : u'{%s}' % tex for tex, unicode in latexmap.mapping.iteritems() }
+        from sdaps.utils.latex import unicode_to_latex
 
         dictfiles = []
         for lang, name in langs.iteritems():
@@ -119,17 +118,8 @@ class sdaps_build_i18n(build_i18n.build_i18n):
                 except ConfigParser.NoOptionError:
                     value = parser.get("translations", key)
 
-                # We need to convert unicode to LaTeX commands (that way we don't
-                # depend on a UTF-8 encoding for the document).
-                # This can be done using the latexmap.py that is already shipped
-                # in SDAPS (loaded above).
                 value = value.decode('UTF-8')
-                for unicode, replacement in unicode_to_tex.iteritems():
-                    value = value.replace(unicode, replacement)
-
-                # We should only have ascii characters left; encode it to ensure this
-                # is the case
-                value = value.encode('ascii')
+                value = unicode_to_latex(value)
 
                 f.write('\\providetranslation{%s}{%s}\n' % (key, value))
 
