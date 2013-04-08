@@ -15,13 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+_fallback = "A4", (210., 297.)
 
 def _get_gtk_ppd_papersize(paper=None):
     try:
         from gi.repository import Gtk
     except ImportError:
-        # Fall back to A4 if GTK+ cannot be loaded
-        return "A4", (210., 297.)
+        return paper, None
     else:
         def _find_papersize_by_ppd_name(paper=None):
             if not paper:
@@ -47,11 +47,24 @@ def get_tex_papersize(paper=None):
     # Assume that the name is the PPD name in lowercase + 'paper'
     paper, size = _get_gtk_ppd_papersize(paper)
 
+    if paper is None:
+        paper = fallback[0]
+
     return paper.lower() + 'paper'
 
 def get_reportlab_papersize(paper=None):
     paper, size = _get_gtk_ppd_papersize(paper)
 
-    size = (size[0] / 25.4 * 72.0, size[1] / 25.4 * 72.0)
+    if size:
+        size = (size[0] / 25.4 * 72.0, size[1] / 25.4 * 72.0)
+
+    if size is None:
+        if paper:
+            from reportlab.lib import pagesizes
+            if hasattr(pagesizes, paper.upper()):
+                size = getattr(pagesizes, paper.upper())
+
+    if size is None:
+        size = (_fallback[1][0] / 25.4 * 72.0, _fallback[1][1] / 25.4 * 72.0)
 
     return size
