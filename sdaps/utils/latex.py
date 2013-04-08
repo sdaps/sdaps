@@ -54,6 +54,24 @@ def unicode_to_latex(string):
     # Ensure only ASCII characters are left
     return string.encode('ascii')
 
+# This is a list, because the order is relevant!
+ascii_to_latex = [
+    (u'\\', u'{\\textbackslash}'),
+    (u'{', u'\\{'),
+    (u'}', u'\\}'),
+    (u'%', u'\\%'),
+    (u'$', u'\\$'),
+    (u'_', u'\\_'),
+    (u'|', u'{\\textbar}'),
+    (u'>', u'{\\textgreater}'),
+    (u'<', u'{\\textless}'),
+    (u'&', u'\\&'),
+    (u'#', u'\#'),
+    (u'^', u'\\^{}'),
+    (u'~', u'\\~{}'),
+    (u'"', u'\\"{}'),
+]
+
 def raw_unicode_to_latex(string):
     u"""In addition to converting all unicode characters to LaTeX expressions
     this function also replaces some characters like newlines with their LaTeX
@@ -62,10 +80,15 @@ def raw_unicode_to_latex(string):
     string = unicode_to_latex(string)
 
     string = unicode(string)
+
+    # We need to quote any special character (or replace it)
+    for char, replacement in ascii_to_latex:
+        string = string.replace(char, replacement)
+
     # Replace many newlines with a paragraph marker
     string, count = re.subn('\n\n+', u'\u2029', string, flags=re.MULTILINE)
 
-    # Repalce singlen newline with \\newline
+    # Replace single newline with \\+newline
     string = string.replace('\n', '\\\\\n')
 
     # And remove the paragraph marker again (insert two newlines)
