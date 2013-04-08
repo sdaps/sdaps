@@ -45,7 +45,7 @@ parser.add_argument('--create-tex',
     help=_('Save the generated TeX files instead of the final PDF.'),
     dest='create-tex',
     action='store_true',
-    default='False')
+    default=False)
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: report_%%i.pdf)"))
 
