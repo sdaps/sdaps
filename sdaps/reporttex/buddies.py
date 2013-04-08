@@ -213,7 +213,7 @@ class Mark(Question):
         Question.write_end(self, out)
 
     def filters(self):
-        for x in range(6):
+        for x in range(len(self.obj.boxes)+1):
             yield u'%i == %s' % (x, self.obj.id_filter())
 
 

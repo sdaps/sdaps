@@ -145,7 +145,7 @@ class Mark(platypus.Flowable):
     -----
     skala with mean        self.skala_height
     -----
-    marks(1 - 5)        self.marks_height
+    marks(1 - range)        self.marks_height
     -----
     '''
 
@@ -194,7 +194,7 @@ class Mark(platypus.Flowable):
         self.mean_paragraph.wrap(available_width, available_height)
         self.stdd_paragraph.wrap(available_width, available_height)
         self.width = available_width # self.box_width * 5
-        self.offset = self.width - self.box_width * 5 - self.margin
+        self.offset = self.width - self.box_width * len(self.values) - self.margin
         self.height = self.top_margin + self.values_height + self.values_gap + \
                       self.bars_height + self.skala_height + self.marks_height
         return self.width, self.height
@@ -227,7 +227,7 @@ class Mark(platypus.Flowable):
             box.drawOn(self.canv,
                        self.offset + i * self.box_width, self.marks_height + self.skala_height)
         # skala
-        for i in range(41):
+        for i in range( (len(self.values) - 1) * 10 + 1):
             if i % 10 == 0:
                 self.canv.setLineWidth(0.2)
                 self.canv.line(
@@ -253,7 +253,7 @@ class Mark(platypus.Flowable):
             if i % 10 == 0:
                 self.canv.setLineWidth(0.1)
         # marks
-        for i in range(1, 6):
+        for i in range(1, len(self.values)+1):
             self.canv.drawCentredString(
                 self.offset + (i - 0.5) * self.box_width, 0,
                 '%i' % i
