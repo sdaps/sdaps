@@ -144,11 +144,6 @@ class Mark(Question):
 
     def validate(self):
         Question.validate(self)
-        if not len(self.obj.boxes) == 5:
-            log.warn(_(u'%(class)s %(l0)i.%(l1)i got not exactly five boxes.') % {
-                'class': self.obj.__class__.__name__,
-                'l0': self.obj.id[0], 'l1': self.obj.id[1]
-            })
         if not len(self.obj.answers) == 2:
             log.warn(_(u'%(class)s %(l0)i.%(l1)i got not exactly two answers.') % {
                 'class': self.obj.__class__.__name__,
