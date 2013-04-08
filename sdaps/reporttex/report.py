@@ -37,7 +37,7 @@ import buddies
 import codecs
 
 
-def report(survey, filter, filename=None, small=0, suppress=None, create_tex=False):
+def report(survey, filter, filename=None, small=0, suppress=None, tex_only=False):
     assert isinstance(survey, model.survey.Survey)
 
     # compile clifilter
@@ -63,11 +63,17 @@ def report(survey, filter, filename=None, small=0, suppress=None, create_tex=Fal
     survey.questionnaire.report.init(small, suppress)
 
     # Filename of output
-    if filename is None:
+    if filename is None and tex_only == False:
         filename = survey.new_path('report_%i.pdf')
 
     # Temporary directory for TeX files.
-    tmpdir = tempfile.mkdtemp()
+    if tex_only and filename:
+        tmpdir = filename
+
+        # Create directory
+        os.makedirs(tmpdir)
+    else:
+        tmpdir = tempfile.mkdtemp()
 
     try:
         # iterate over sheets
@@ -138,8 +144,8 @@ def report(survey, filter, filename=None, small=0, suppress=None, create_tex=Fal
     \end{document}
     """)
 
-        if create_tex:
-            print _("The TeX project with the report data is located at'%s'.") % tmpdir
+        if tex_only:
+            print _("The TeX project with the report data is located at '%s'.") % tmpdir
             return
 
         print _("Running %s now twice to generate the report.") % defs.latex_engine
