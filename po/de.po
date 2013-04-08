@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-08 10:54+0200\n"
-"PO-Revision-Date: 2013-04-07 17:03+0200\n"
+"PO-Revision-Date: 2013-04-08 11:10+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
 "Language: de\n"
@@ -1046,6 +1046,8 @@ msgstr ""
 #: ../sdaps/reporttex/__init__.py:45
 msgid "Only generates the TeX project. This option is for debug purpose."
 msgstr ""
+"Generiert nur das TeX-Projekt. Diese Option ist für das Debuggen "
+"interessant."
 
 #: ../sdaps/reporttex/report.py:96
 msgid "author|Unknown"
@@ -1058,7 +1060,7 @@ msgstr "ngerman"
 #: ../sdaps/reporttex/report.py:142
 #, python-format
 msgid "The TeX project with the report data is located at'%s'."
-msgstr ""
+msgstr "Das TeX-Projekt für den Report liegt unter '%s'."
 
 #: ../sdaps/reporttex/report.py:145
 #, python-format
