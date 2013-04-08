@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-08 15:23+0200\n"
-"PO-Revision-Date: 2013-04-08 11:10+0200\n"
+"PO-Revision-Date: 2013-04-08 18:03+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
 "Language: de\n"
@@ -1045,7 +1045,7 @@ msgstr ""
 
 #: ../sdaps/reporttex/__init__.py:45
 msgid "Save the generated TeX files instead of the final PDF."
-msgstr ""
+msgstr "Speichert die generierten TeX-Dateien anstelle des erstellten PDFs."
 
 #: ../sdaps/reporttex/report.py:102
 msgid "author|Unknown"
@@ -1056,7 +1056,7 @@ msgid "tex language|english"
 msgstr "ngerman"
 
 #: ../sdaps/reporttex/report.py:148
-#, fuzzy, python-format
+#, python-format
 msgid "The TeX project with the report data is located at '%s'."
 msgstr "Das TeX-Projekt für den Report liegt unter '%s'."
 
