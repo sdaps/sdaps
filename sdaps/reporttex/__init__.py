@@ -42,7 +42,7 @@ parser.add_argument('--suppress-substitutions',
     const='substitutions',
     default=None)
 parser.add_argument('--create-tex',
-    help=_('Only generates the TeX project. This option is for debug purpose.'),
+    help=_('Save the generated TeX files instead of the final PDF.'),
     dest='create-tex',
     action='store_true',
     default='False')
