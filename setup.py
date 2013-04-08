@@ -176,7 +176,8 @@ the tools to later analyse the scanned data, and create a report.
                 'sdaps.reporttex',
                 'sdaps.setup.pdftools',
                 'sdaps.setup',
-                'sdaps.setuptex'
+                'sdaps.setuptex',
+                'sdaps.utils'
       ],
       package_dir={'sdaps.gui': 'sdaps/gui'},
       scripts=[
