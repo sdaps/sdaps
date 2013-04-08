@@ -666,6 +666,11 @@
 \newcounter{textboxnum}
 \setcounter{textboxnum}{0}
 
+% Variables for markquestions with arbitrary range
+\newcounter{markcheckboxcount}
+\setcounter{markcheckboxcount}{5}
+\newif\if@sdaps@markenvactive\@sdaps@markenvactivefalse
+
 \definecolor{sectionbgcolor}{gray}{0.8}
 \definecolor{sectionfgcolor}{gray}{0.0}
 
@@ -953,29 +958,52 @@
 }
 
 
+\providecommand*{\setmarkrange}[1]{%
+  \if@sdaps@markenvactive%
+    \ClassError{sdaps}{Changed markrange inside a markgroup!}{The markrange can not be changed inside an active markgroup.}%
+  \else%
+    \setcounter{markcheckboxcount}{#1}%
+  \fi%
+}
+
+\def\@sdaps@generatemarkboxes{%
+  \@tempcnta=0%
+  \def\@sdaps@markboxes{}%
+  \whiledo{\@tempcnta<\value{markcheckboxcount}}%
+  {%
+    \advance\@tempcnta by 1%
+    \g@addto@macro\@sdaps@markboxes{& {\checkbox}}%
+  }%
+}
+
 \newenvironment{markgroup}[1]{%
   \question{#1}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1}%
-  \tabularx{\linewidth}{Xr*{5}{c}l}
+  \@sdaps@markenvactivetrue%
+  \@sdaps@generatemarkboxes%
+  \tabularx{\linewidth}{Xr*{\themarkcheckboxcount}{c}l}
 }{%
+  \@sdaps@markenvactivefalse%
   \endtabularx%
 }
 
 \providecommand*{\markline}[3]{%
   \protectedimmediatewrite\sdapsoutfile{QObject-Mark=#1}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
+  {\usekomafont{marklinequestionfont}\strut#1\strut} & {\usekomafont{marklinechoicefont}#2} \@sdaps@markboxes & {\usekomafont{marklinechoicefont}#3}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
-  {\usekomafont{marklinequestionfont}\strut#1\strut} & {\usekomafont{marklinechoicefont}#2} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}\checkbox} & {\usekomafont{marklinechoicefont}#3}\\%
+  \\%
 }
 
 \providecommand*{\singlemark}[3]{%
   \question{#1}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Mark=\arabic{section}.\arabic{subsection}. #1}%
   \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
-  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
-  \begin{tabularx}{\linewidth}{Y*{5}{c}X}
-    {\usekomafont{singlemarkchoicefont}\strut#2} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}\checkbox} & {\usekomafont{singlemarkchoicefont}#3}\\%
+  \@sdaps@generatemarkboxes%
+  \begin{tabularx}{\linewidth}{Y*{\themarkcheckboxcount}{c}X}
+    {\usekomafont{singlemarkchoicefont}\strut#2} \@sdaps@markboxes & {\usekomafont{singlemarkchoicefont}#3}\\%
   \end{tabularx}%
+  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
 }
 
 

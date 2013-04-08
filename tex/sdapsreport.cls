@@ -115,7 +115,7 @@
 
 % Zeichenprogramm
 \RequirePackage{tikz}
-%\usetikzlibrary{calc}
+\usetikzlibrary{calc}
 
 
 %-------------------------------------------------------------------------------
@@ -245,7 +245,9 @@
 \newlength{\einheit}
 \newcommand*{\markdiagram}{%
   \begin{tikzpicture}[semithick]
-    \foreach \x in {1,...,5}
+    \pgfkeysgetvalue{/sdaps/mark/range}{\range}
+    \pgfmathsetlength{\einheit}{\linewidth/\range}
+    \foreach \x in {1,...,\range}
     {
       \pgfkeysgetvalue{/sdaps/mark/\x/fraction}{\val}
       \fill[xshift=\x\einheit,yshift=2pt, color=sdapsmarkbarcolor, draw=sdapsmarkbarframecolor, very thin]
@@ -257,16 +259,17 @@
       \pgfkeysvalueof{/sdaps/mark/stddev}\einheit, \einheit)}
     \pgfmathsetlength\@tempdima{\pgfmathresult}
     \pgfmathparse{min(\pgfkeysvalueof{/sdaps/mark/mean}\einheit + %
-      \pgfkeysvalueof{/sdaps/mark/stddev}\einheit, 5.0\einheit)}
+      \pgfkeysvalueof{/sdaps/mark/stddev}\einheit, \range\einheit)}
     \pgfmathsetlength\@tempdimb{\pgfmathresult}
     \fill[color=sdapsmarkstddevcolor] %Varianz
       (\@tempdima, 0ex) rectangle (\@tempdimb, -1ex);
     \draw[line width=2pt,color=sdapsmarkmeancolor,%
       xshift=\pgfkeysvalueof{/sdaps/mark/mean}\einheit] %Mittelwert
       (0, 0ex) -- (0, -1ex-1pt);
-    \draw (+1.0\einheit,0ex) -- (5\einheit,0ex); %Rahmen.Strich
-    \draw (+0.5\einheit,2pt) -- (5.5\einheit,2pt); %Rahmen.Strich
-    \foreach \x in {1,...,5}
+    \draw (+1.0\einheit,0ex) -- (\range\einheit,0ex); %Rahmen.Strich
+%    \draw (+0.5\einheit,2pt) -- (5.5\einheit,2pt); %Rahmen.Strich
+    \draw (+0.5\einheit,2pt) -- ($(\range\einheit,2pt) + (0.5\einheit,0)$); %Rahmen.Strich
+    \foreach \x in {1,...,\range}
       \draw[xshift=\x\einheit] (0,0) -- (0, -1ex-1pt) node[below]{\footnotesize\x}; %Vert.Striche
   \end{tikzpicture}
 }
@@ -298,7 +301,6 @@
   \end{minipage}
   \hfill
   \begin{minipage}[c]{\markdiawidth}
-    \setlength{\einheit}{0.2\linewidth}
     \markdiagram
   \end{minipage}
   \\
