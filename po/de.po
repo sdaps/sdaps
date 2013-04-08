@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-07 16:53+0200\n"
+"POT-Creation-Date: 2013-04-08 10:54+0200\n"
 "PO-Revision-Date: 2013-04-07 17:03+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
@@ -207,7 +207,7 @@ msgid "Export data to CSV file."
 msgstr "Daten im CSV Format exportieren."
 
 #: ../sdaps/csvdata/__init__.py:43 ../sdaps/report/__init__.py:35
-#: ../sdaps/reporttex/__init__.py:48
+#: ../sdaps/reporttex/__init__.py:53
 msgid "Filter to only export a partial dataset."
 msgstr "Filter um nur eine Teilmenge der Daten zu exportieren."
 
@@ -658,7 +658,7 @@ msgstr ""
 msgid "Do not use substitutions instead of images."
 msgstr "Unterdrückt die Ersetzung von Handschriftfeldern."
 
-#: ../sdaps/report/__init__.py:62 ../sdaps/reporttex/__init__.py:45
+#: ../sdaps/report/__init__.py:62 ../sdaps/reporttex/__init__.py:50
 #, python-format
 msgid "Filename to store the data to (default: report_%%i.pdf)"
 msgstr "Ausgabedatei (Standard: report_%%i.pdf)"
@@ -805,15 +805,10 @@ msgstr "%(class)s %(l0)i.%(l1)i hat keine Boxen."
 
 #: ../sdaps/setup/buddies.py:148
 #, python-format
-msgid "%(class)s %(l0)i.%(l1)i got not exactly five boxes."
-msgstr "%(class)s %(l0)i.%(l1)i hat nicht exakt fünf Boxen."
-
-#: ../sdaps/setup/buddies.py:153
-#, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
 msgstr "%(class)s %(l0)i.%(l1)i hat nicht exakt fünf Antworten."
 
-#: ../sdaps/setup/buddies.py:175
+#: ../sdaps/setup/buddies.py:170
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
 msgstr "%(class)s %(l0)i.%(l1)i hat nicht exakt eine Box."
@@ -966,7 +961,7 @@ msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr "Führe %s zwei mal aus um den gestempelten Fragebogen zu erstellen."
 
 #: ../sdaps/stamp/latex.py:71 ../sdaps/setuptex/setup.py:121
-#: ../sdaps/setuptex/setup.py:161 ../sdaps/reporttex/report.py:153
+#: ../sdaps/setuptex/setup.py:161 ../sdaps/reporttex/report.py:157
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr "Fehler beim ausführen von \"%s\" um die LaTeX Datei zu kompilieren."
@@ -1048,6 +1043,10 @@ msgstr ""
 "Dieses Kommando erstellt ein PDF report mit LaTeX. Der Report enthält\n"
 "Statistiken und die Freitextfelder."
 
+#: ../sdaps/reporttex/__init__.py:45
+msgid "Only generates the TeX project. This option is for debug purpose."
+msgstr ""
+
 #: ../sdaps/reporttex/report.py:96
 msgid "author|Unknown"
 msgstr "Unbekannt"
@@ -1056,12 +1055,17 @@ msgstr "Unbekannt"
 msgid "tex language|english"
 msgstr "ngerman"
 
-#: ../sdaps/reporttex/report.py:141
+#: ../sdaps/reporttex/report.py:142
+#, python-format
+msgid "The TeX project with the report data is located at'%s'."
+msgstr ""
+
+#: ../sdaps/reporttex/report.py:145
 #, python-format
 msgid "Running %s now twice to generate the report."
 msgstr "Führe %s zwei mal aus um den Report zu erstellen."
 
-#: ../sdaps/reporttex/report.py:159
+#: ../sdaps/reporttex/report.py:163
 #, python-format
 msgid "An occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
@@ -1072,6 +1076,9 @@ msgstr ""
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr "Erstelle Überblick über die Boxen sortiert nach der Metrik \"%s\"."
+
+#~ msgid "%(class)s %(l0)i.%(l1)i got not exactly five boxes."
+#~ msgstr "%(class)s %(l0)i.%(l1)i hat nicht exakt fünf Boxen."
 
 #~ msgid ""
 #~ "Found inconsistency. %s, %i and %s, %i should have the same rotation, but "

@@ -37,7 +37,7 @@ import buddies
 import codecs
 
 
-def report(survey, filter, filename=None, small=0, suppress=None):
+def report(survey, filter, filename=None, small=0, suppress=None, create_tex=False):
     assert isinstance(survey, model.survey.Survey)
 
     # compile clifilter
@@ -137,6 +137,10 @@ def report(survey, filter, filename=None, small=0, suppress=None):
         texfile.write(r"""
     \end{document}
     """)
+
+        if create_tex:
+            print _("The TeX project with the report data is located at'%s'.") % tmpdir
+            return
 
         print _("Running %s now twice to generate the report.") % defs.latex_engine
         subprocess.call([defs.latex_engine, '-halt-on-error',

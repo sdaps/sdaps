@@ -41,6 +41,11 @@ parser.add_argument('--suppress-substitutions',
     action='store_const',
     const='substitutions',
     default=None)
+parser.add_argument('--create-tex',
+    help=_('Only generates the TeX project. This option is for debug purpose.'),
+    dest='create-tex',
+    action='store_true',
+    default='False')
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: report_%%i.pdf)"))
 
@@ -52,6 +57,6 @@ parser.add_argument('-f', '--filter',
 def report_tex(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import report
-    return report.report(survey, cmdline['output'], cmdline['filter'], cmdline['suppress'])
+    return report.report(survey, cmdline['output'], cmdline['filter'], suppress=cmdline['suppress'], create_tex=cmdline['create-tex'])
 
 
