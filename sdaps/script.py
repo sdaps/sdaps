@@ -28,7 +28,7 @@ import functools
 import argparse
 
 import log
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 # Create parser

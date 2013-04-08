@@ -23,7 +23,7 @@ This modules contains the functionality to create reports using LaTeX.
 from sdaps import model
 from sdaps import script
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 parser = script.subparsers.add_parser("report_tex",

@@ -19,7 +19,7 @@ from reportlab.lib import units
 from sdaps import log
 from sdaps import defs
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 mm = units.mm

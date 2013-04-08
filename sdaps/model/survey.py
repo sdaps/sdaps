@@ -24,7 +24,7 @@ from sdaps import defs
 
 from sdaps import log
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 valid_styles = ['classic', 'code128']

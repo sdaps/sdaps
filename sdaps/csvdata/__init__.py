@@ -23,7 +23,7 @@ This module implements a simple export/import to/from CSV files.
 from sdaps import model
 from sdaps import script
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 

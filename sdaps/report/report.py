@@ -26,7 +26,7 @@ from sdaps import clifilter
 from sdaps import template
 from sdaps import matrix
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 import buddies

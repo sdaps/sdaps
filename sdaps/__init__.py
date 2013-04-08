@@ -37,7 +37,7 @@ import script
 import os
 import argparse
 
-from ugettext import ugettext, ungettext
+from utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 

@@ -20,7 +20,7 @@ import cairo
 from gi.repository import Pango
 from gi.repository import PangoCairo
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 import buddies

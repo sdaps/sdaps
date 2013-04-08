@@ -24,7 +24,7 @@ coverage. This can be used to adjust magic values for checkbox recognition.
 from sdaps import model
 from sdaps import script
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 parser = script.subparsers.add_parser("boxgallery",

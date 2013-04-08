@@ -20,7 +20,7 @@ from sdaps import defs
 
 from sdaps.utils.exceptions import RecognitionError
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 # Note, while it is possible to cache data in the image object, this data

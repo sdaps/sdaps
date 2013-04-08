@@ -19,7 +19,7 @@ u"""
 This module contains helpers to read barcodes from cairo A1 surfaces.
 """
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 import cairo

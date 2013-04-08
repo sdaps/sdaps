@@ -25,7 +25,7 @@ from sdaps import model
 from sdaps import script
 import optparse
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 

@@ -32,7 +32,7 @@ from sdaps import template
 from sdaps import model
 from sdaps import image
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 import flowables

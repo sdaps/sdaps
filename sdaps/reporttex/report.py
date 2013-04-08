@@ -30,7 +30,7 @@ from sdaps import matrix
 from sdaps import paths
 from sdaps import defs
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 import buddies

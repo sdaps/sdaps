@@ -10,7 +10,7 @@ from sdaps import paths
 from sdaps import defs
 import glob
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 def tex_quote_braces(string):

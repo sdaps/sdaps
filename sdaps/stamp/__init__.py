@@ -19,7 +19,7 @@
 from sdaps import model
 from sdaps import script
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 parser = script.subparsers.add_parser("stamp",

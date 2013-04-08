@@ -29,7 +29,7 @@ import sys
 import time
 import StringIO
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 

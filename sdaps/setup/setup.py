@@ -23,7 +23,7 @@ from sdaps.utils.mimetype import mimetype
 from sdaps import model
 from sdaps import log
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 import buddies

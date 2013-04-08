@@ -27,7 +27,7 @@ from sdaps import defs
 from sdaps.utils.exceptions import RecognitionError
 from sdaps import log
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 pt_to_mm = 25.4 / 72.0

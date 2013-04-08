@@ -26,7 +26,7 @@ import codecs
 from sdaps import model
 from sdaps import log
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 

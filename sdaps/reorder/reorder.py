@@ -18,7 +18,7 @@
 from collections import defaultdict
 from sdaps import model
 
-from sdaps.ugettext import ugettext, ungettext
+from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 def reorder(survey):
