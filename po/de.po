@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 10:54+0200\n"
+"POT-Creation-Date: 2013-04-08 15:23+0200\n"
 "PO-Revision-Date: 2013-04-08 11:10+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
@@ -663,11 +663,11 @@ msgstr "Unterdrückt die Ersetzung von Handschriftfeldern."
 msgid "Filename to store the data to (default: report_%%i.pdf)"
 msgstr "Ausgabedatei (Standard: report_%%i.pdf)"
 
-#: ../sdaps/report/report.py:70 ../sdaps/reporttex/report.py:129
+#: ../sdaps/report/report.py:70 ../sdaps/reporttex/report.py:135
 msgid "Turned in Questionnaires"
 msgstr "Abgegebene Fragebögen"
 
-#: ../sdaps/report/report.py:85 ../sdaps/reporttex/report.py:128
+#: ../sdaps/report/report.py:85 ../sdaps/reporttex/report.py:134
 msgid "sdaps report"
 msgstr "sdaps Report"
 
@@ -961,7 +961,7 @@ msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr "Führe %s zwei mal aus um den gestempelten Fragebogen zu erstellen."
 
 #: ../sdaps/stamp/latex.py:71 ../sdaps/setuptex/setup.py:121
-#: ../sdaps/setuptex/setup.py:161 ../sdaps/reporttex/report.py:157
+#: ../sdaps/setuptex/setup.py:161 ../sdaps/reporttex/report.py:163
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr "Fehler beim ausführen von \"%s\" um die LaTeX Datei zu kompilieren."
@@ -1044,30 +1044,28 @@ msgstr ""
 "Statistiken und die Freitextfelder."
 
 #: ../sdaps/reporttex/__init__.py:45
-msgid "Only generates the TeX project. This option is for debug purpose."
+msgid "Save the generated TeX files instead of the final PDF."
 msgstr ""
-"Generiert nur das TeX-Projekt. Diese Option ist für das Debuggen "
-"interessant."
 
-#: ../sdaps/reporttex/report.py:96
+#: ../sdaps/reporttex/report.py:102
 msgid "author|Unknown"
 msgstr "Unbekannt"
 
-#: ../sdaps/reporttex/report.py:127
+#: ../sdaps/reporttex/report.py:133
 msgid "tex language|english"
 msgstr "ngerman"
 
-#: ../sdaps/reporttex/report.py:142
-#, python-format
-msgid "The TeX project with the report data is located at'%s'."
+#: ../sdaps/reporttex/report.py:148
+#, fuzzy, python-format
+msgid "The TeX project with the report data is located at '%s'."
 msgstr "Das TeX-Projekt für den Report liegt unter '%s'."
 
-#: ../sdaps/reporttex/report.py:145
+#: ../sdaps/reporttex/report.py:151
 #, python-format
 msgid "Running %s now twice to generate the report."
 msgstr "Führe %s zwei mal aus um den Report zu erstellen."
 
-#: ../sdaps/reporttex/report.py:163
+#: ../sdaps/reporttex/report.py:169
 #, python-format
 msgid "An occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
@@ -1078,6 +1076,11 @@ msgstr ""
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr "Erstelle Überblick über die Boxen sortiert nach der Metrik \"%s\"."
+
+#~ msgid "Only generates the TeX project. This option is for debug purpose."
+#~ msgstr ""
+#~ "Generiert nur das TeX-Projekt. Diese Option ist für das Debuggen "
+#~ "interessant."
 
 #~ msgid "%(class)s %(l0)i.%(l1)i got not exactly five boxes."
 #~ msgstr "%(class)s %(l0)i.%(l1)i hat nicht exakt fünf Boxen."
