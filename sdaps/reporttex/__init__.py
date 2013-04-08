@@ -46,6 +46,9 @@ parser.add_argument('--create-tex',
     dest='create-tex',
     action='store_true',
     default=False)
+parser.add_argument('-p', '--paper',
+    help=_('The paper size used for the output (default: locale dependent)'),
+    dest='papersize')
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: report_%%i.pdf)"))
 
@@ -57,6 +60,6 @@ parser.add_argument('-f', '--filter',
 def report_tex(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import report
-    return report.report(survey, cmdline['filter'], cmdline['output'], suppress=cmdline['suppress'], tex_only=cmdline['create-tex'])
+    return report.report(survey, cmdline['filter'], cmdline['output'], cmdline['papersize'], suppress=cmdline['suppress'], tex_only=cmdline['create-tex'])
 
 

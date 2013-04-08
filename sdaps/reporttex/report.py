@@ -30,6 +30,7 @@ from sdaps import matrix
 from sdaps import paths
 from sdaps import defs
 
+from sdaps.utils import paper
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
@@ -37,7 +38,7 @@ import buddies
 import codecs
 
 
-def report(survey, filter, filename=None, small=0, suppress=None, tex_only=False):
+def report(survey, filter, filename=None, papersize=None, small=0, suppress=None, tex_only=False):
     assert isinstance(survey, model.survey.Survey)
 
     # compile clifilter
@@ -110,7 +111,7 @@ def report(survey, filter, filename=None, small=0, suppress=None, tex_only=False
             extra_info.append(u'\\addextrainfo{%(key)s}{%(value)s}' % {'key': key, 'value': value})
 
         extra_info = u'\n'.join(extra_info)
-        texfile.write(r"""\documentclass[%(language)s]{sdapsreport}
+        texfile.write(r"""\documentclass[%(language)s,%(papersize)s]{sdapsreport}
 
     \usepackage{ifxetex}
     \ifxetex
@@ -136,7 +137,8 @@ def report(survey, filter, filename=None, small=0, suppress=None, tex_only=False
            'title': survey.title,
            'author': author,
            'extra_info': extra_info,
-           'count': survey.questionnaire.calculate.count})
+           'count': survey.questionnaire.calculate.count,
+           'papersize' : paper.get_tex_papersize(papersize)})
 
         survey.questionnaire.report.write(texfile, tmpdir)
 

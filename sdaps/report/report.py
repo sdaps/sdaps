@@ -25,6 +25,7 @@ from sdaps import model
 from sdaps import clifilter
 from sdaps import template
 from sdaps import matrix
+from sdaps.utils import paper
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
@@ -32,7 +33,7 @@ _ = ugettext
 import buddies
 
 
-def report(survey, filter, filename=None, small=0, suppress=None):
+def report(survey, filter, filename=None, papersize=None, small=0, suppress=None):
     assert isinstance(survey, model.survey.Survey)
 
     # compile clifilter
@@ -80,13 +81,16 @@ def report(survey, filter, filename=None, small=0, suppress=None):
         subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
     subject = u'\n'.join(subject)
 
+    papersize = paper.get_reportlab_papersize(papersize)
+
     doc = template.DocTemplate(
         filename,
         _(u'sdaps report'),
         {
             'title': survey.title,
             'subject': subject,
-        }
+        },
+        papersize=papersize
     )
     doc.build(story)
 

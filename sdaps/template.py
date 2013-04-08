@@ -34,10 +34,10 @@ mm = units.mm
 
 class DocTemplate(platypus.BaseDocTemplate):
 
-    def __init__(self, filename, title, metainfo={}):
+    def __init__(self, filename, title, metainfo={}, papersize=pagesizes.A4):
         platypus.BaseDocTemplate.__init__(
             self, filename,
-            pagesize=pagesizes.A4,
+            pagesize=papersize,
             leftMargin=0,
             rightMargin=0,
             topMargin=0,

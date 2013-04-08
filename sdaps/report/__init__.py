@@ -58,6 +58,9 @@ parser.add_argument('--suppress-substitutions',
     action='store_const',
     const='substitutions',
     default=None)
+parser.add_argument('-p', '--paper',
+    help=_('The paper size used for the output (default: locale dependent)'),
+    dest='papersize')
 parser.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: report_%%i.pdf)"))
 
@@ -73,8 +76,8 @@ def report(cmdline):
         small = 0
 
     if cmdline['all_filters']:
-        return report.stats(survey, cmdline['filter'], cmdline['output'], small, cmdline['suppress'])
+        return report.stats(survey, cmdline['filter'], cmdline['output'], cmdline['papersize'], small, cmdline['suppress'])
     else:
-        return report.report(survey, cmdline['filter'], cmdline['output'], small, cmdline['suppress'])
+        return report.report(survey, cmdline['filter'], cmdline['output'], cmdline['papersize'], small, cmdline['suppress'])
 
 
