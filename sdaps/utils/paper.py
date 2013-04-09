@@ -48,7 +48,7 @@ def get_tex_papersize(paper=None):
     paper, size = _get_gtk_ppd_papersize(paper)
 
     if paper is None:
-        paper = fallback[0]
+        paper = _fallback[0]
 
     return paper.lower() + 'paper'
 
