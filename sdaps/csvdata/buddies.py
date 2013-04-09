@@ -84,13 +84,29 @@ class Choice(model.buddy.Buddy):
         return [self.obj.id_csv(box.id) for box in self.obj.boxes]
 
     def export_data(self):
-        return dict([(self.obj.id_csv(box.id), '%i' % box.data.state) for box in self.obj.boxes])
+        return dict([(self.obj.id_csv(box.id), box.csvdata.export_data()) for box in self.obj.boxes])
 
     def import_data(self, data):
         for box in self.obj.boxes:
             if self.obj.id_csv(box.id) in data:
-                box.data.state = int(data[self.obj.id_csv(box.id)])
+                box.csvdata.import_data(data[self.obj.id_csv(box.id)])
 
+class Text(model.buddy.Buddy):
+
+    __metaclass__ = model.buddy.Register
+    name = 'csvdata'
+    obj_class = model.questionnaire.Text
+
+    def export_header(self):
+        return [self.obj.id_csv(box.id) for box in self.obj.boxes]
+
+    def export_data(self):
+        return dict([(self.obj.id_csv(box.id), box.csvdata.export_data()) for box in self.obj.boxes])
+
+    def import_data(self, data):
+        for box in self.obj.boxes:
+            if self.obj.id_csv(box.id) in data:
+                box.csvdata.import_data(data[self.obj.id_csv(box.id)])
 
 class Mark(model.buddy.Buddy):
 
@@ -124,4 +140,43 @@ class Additional_Mark(model.buddy.Buddy):
     def import_data(self, data):
         if self.obj.id_csv() in data:
             self.obj.set_answer(int(data[self.obj.id_csv()]))
+
+
+class Box(model.buddy.Buddy):
+
+    __metaclass__ = model.buddy.Register
+    name = 'csvdata'
+    obj_class = model.questionnaire.Box
+
+    def export_data(self):
+        return str(int(self.obj.data.state))
+
+    def import_data(self, data):
+        self.obj.data.state = int(data)
+
+
+class Textbox(Box):
+
+    __metaclass__ = model.buddy.Register
+    name = 'csvdata'
+    obj_class = model.questionnaire.Textbox
+
+    def export_data(self):
+        data = str(int(self.obj.data.state))
+        if data and self.obj.data.text:
+            data = self.obj.data.text
+
+        return data
+
+    def import_data(self, data):
+        try:
+            state = int(data)
+            text = u''
+        except ValueError:
+            state = 1
+            text = unicode(data)
+
+        self.obj.data.state = state
+        self.obj.data.text = state
+
 
