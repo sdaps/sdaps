@@ -154,10 +154,12 @@ class MainWindow(object):
         self.sheet.show()
         scrolled_window.add(self.sheet)
 
-        data_viewport = self._builder.get_object("data_view")
+        self.data_viewport = self._builder.get_object("data_view")
         widgets = provider.survey.questionnaire.widget.create_widget()
         widgets.show_all()
-        data_viewport.add(widgets)
+        self.data_viewport.add(widgets)
+
+        provider.survey.questionnaire.widget.connect_ensure_visible(self.data_view_ensure_visible)
 
         self.sheet.connect('key-press-event', self.sheet_view_key_press)
 
@@ -349,6 +351,22 @@ class MainWindow(object):
     def save_project(self, *args):
         self.provider.survey.save()
         return True
+
+    def data_view_ensure_visible(self, widget):
+        allocation = widget.get_allocation()
+
+        vadj = self.data_viewport.props.vadjustment
+        lower = vadj.props.lower
+        upper = vadj.props.upper
+        value = vadj.props.value
+        page_size = vadj.props.page_size
+
+        value = max(value, allocation.y + allocation.height - page_size)
+        value = min(value, allocation.y)
+        value = max(value, lower)
+        value = min(value, upper)
+
+        vadj.props.value = value
 
     def sheet_view_key_press(self, window, event):
         # Go to the next when Enter or Tab is pressed

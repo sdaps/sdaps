@@ -33,6 +33,8 @@ class Questionnaire(model.buddy.Buddy):
 
         self.obj.connect_data_changed(self.data_changed)
 
+        self._notify_ensure_visible = list()
+
     def data_changed(self, questionnaire, qobj, obj, name, old_value):
         # Simply sync everything on every change.
         self.sync_state()
@@ -54,6 +56,16 @@ class Questionnaire(model.buddy.Buddy):
         for qobject in self.obj.qobjects:
             qobject.widget.sync_state()
 
+    def ensure_visible(self, widget):
+        for func in self._notify_ensure_visible:
+            func(widget)
+
+    def connect_ensure_visible(self, func):
+        self._notify_ensure_visible.append(func)
+
+    def disconnect_ensure_visible(self, func):
+        self._notify_ensure_visible.remove(func)
+
 
 class QObject(model.buddy.Buddy):
 
@@ -69,6 +81,12 @@ class QObject(model.buddy.Buddy):
     def sync_state(self):
         for box in self.obj.boxes:
             box.widget.sync_state()
+
+    def focus(self):
+        self.obj.question.questionnaire.widget.ensure_visible(self.widget)
+
+        if len(boxes) > 0:
+            self.obj.boxes[0].widget.focus()
 
 
 class Head(QObject):
@@ -113,7 +131,6 @@ class Question(QObject):
                 vbox.pack_start(widget, False, True, 0)
 
         return self.widget
-
 
 class Mark(Question):
 
@@ -177,6 +194,12 @@ class Box(model.buddy.Buddy):
     def toggled_cb(self, widget):
         self.obj.data.state = widget.props.active
 
+    def focus(self):
+        self.widget.grab_focus()
+
+        self.obj.question.questionnaire.widget.ensure_visible(self.obj.question.widget.widget)
+        self.obj.question.questionnaire.widget.ensure_visible(self.widget)
+
 class Checkbox(Box):
 
     __metaclass__ = model.buddy.Register
@@ -229,4 +252,13 @@ class Textbox(Box):
         currtext = self.buffer.get_text(start, end, False).decode('UTF-8')
         if self.obj.data.text != currtext:
             self.buffer.set_text(self.obj.data.text)
+
+    def focus(self):
+        if self.textbox.props.sensitive:
+            self.textbox.grab_focus()
+        else:
+            self.checkbox.grab_focus()
+
+        self.obj.question.questionnaire.widget.ensure_visible(self.obj.question.widget.widget)
+        self.obj.question.questionnaire.widget.ensure_visible(self.widget)
 

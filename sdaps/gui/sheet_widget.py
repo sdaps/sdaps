@@ -127,7 +127,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
     def do_button_press_event(self, event):
         # Pass everything except normal clicks down
-        if event.button != 1 and event.button != 2:
+        if event.button != 1 and event.button != 2 and event.button != 3:
             return False
 
         if event.button == 2:
@@ -137,10 +137,18 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
             self.get_window().set_cursor(cursor)
             return True
 
+        mm_x, mm_y = self._widget_to_mm_matrix.transform_point(event.x, event.y)
+
+        if event.button == 3:
+            # Give the corresponding widget the focus.
+            box = self.provider.survey.questionnaire.gui.find_box(self.provider.image.page_number, mm_x, mm_y)
+            if hasattr(box, "widget"):
+                box.widget.focus()
+
+            return True
+
         # button 1
         self.grab_focus()
-
-        mm_x, mm_y = self._widget_to_mm_matrix.transform_point(event.x, event.y)
 
         # Look for edges to drag first(on a 4x4px target)
         tollerance_x, tollerance_y = self._widget_to_mm_matrix.transform_distance(4.0, 4.0)
@@ -160,7 +168,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
             return True
 
     def do_button_release_event(self, event):
-        if event.button != 1 and event.button != 2:
+        if event.button != 1 and event.button != 2 and event.button != 3:
             return False
 
         self.get_window().set_cursor(None)
