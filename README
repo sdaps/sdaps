@@ -20,19 +20,39 @@ the results.
 Requirements
 ============
 
+Depending on what part of SDAPS you use, different dependencies are
+required.
+
+general (including recognize):
  * Python 2.7
  * distutils and distutils-extra
- * GTK+ and gobject introspection for the front end that can be used
-   to control/correct the results
- * reportlab
- * pdftk or pyPdf (pdftk is much faster if you need questionnaire ids)
- * Python Imaging Library (PIL)
  * python-cairo (including development files)
  * libtiff (including development files)
- * python development files
  * pkg-config
- * python-zbar for "code128" style.
- * Poppler (with gobject introspection) for the "annotate" debug utility
+ * python-zbar for "code128" style
+ * python development files
+
+graphical user interface (gui):
+ * GTK+ and introspection data
+ * python-gi
+
+reportlab based reports (report):
+ * reportlab
+ * Python Imaging Library (PIL)
+
+ODT based questionnaires (setup/stamp):
+ * pdftk or pyPdf (pdftk is much faster if you need questionnaire ids)
+ * python-pdftools
+
+LaTeX based questionnaires (setup_tex/stamp):
+ * pdflatex and packages:
+   * PGF/TikZ
+   * translator (part of beamer)
+   * and more
+
+Debug output (annotate):
+ * Poppler and introspection data
+ * python-gi
 
 Installation
 ============
