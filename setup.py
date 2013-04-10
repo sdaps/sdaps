@@ -174,7 +174,6 @@ the tools to later analyse the scanned data, and create a report.
                 'sdaps.stamp',
                 'sdaps.report',
                 'sdaps.reporttex',
-                'sdaps.setup.pdftools',
                 'sdaps.setup',
                 'sdaps.setuptex',
                 'sdaps.utils'
