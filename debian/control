@@ -19,7 +19,7 @@ Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends},
 Recommends: gir1.2-gtk-3.0 | gir1.0-gtk-3.0, texlive, texlive-latex-extra,
  texlive-latex-recommended, pgf, latex-beamer, pdftk | python2.7-pdf,
  texlive-lang-ukenglish, texlive-science, python-pdftools
-Suggests: gir1.2-poppler-0.18, libtiff-tools, imagemagick
+Suggests: gir1.2-poppler-0.18, libtiff-tools, imagemagick, sane-utils
 Description: Scripts for data acquisition with paper based surveys
  .
  SDAPS is a tool to carry out paper based surveys. You can create machine
