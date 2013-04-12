@@ -57,6 +57,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         self._edge_drag_active = False
 
         self._zoom = 1.0
+        self._bbox = None
 
         self.props.can_focus = True
 
@@ -82,13 +83,49 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
         self.invalidate_area(obj.x, obj.y, obj.width, obj.height)
 
+    def _get_px_bbox(self):
+        if self._bbox is None:
+            return None
+
+        matrix = self.provider.image.matrix.mm_to_px()
+        x0, y0 = matrix.transform_point(self._bbox[0], self._bbox[1])
+        x1, y1 = matrix.transform_point(self._bbox[0] + self._bbox[2], self._bbox[1])
+        x2, y2 = matrix.transform_point(self._bbox[0], self._bbox[1] + self._bbox[3])
+        x3, y3 = matrix.transform_point(self._bbox[0] + self._bbox[2], self._bbox[1] + self._bbox[3])
+
+        x = min(x0, x2)
+        y = min(y0, y1)
+
+        x = x * self._zoom
+        y = y * self._zoom
+
+        x = int(math.floor(x))
+        y = int(math.floor(y))
+
+        width = max(x1, x3) - x / self._zoom
+        height = max(y2, y3) - y / self._zoom
+
+        width = width * self._zoom
+        height = height * self._zoom
+
+        width = int(math.ceil(width))
+        height = int(math.ceil(height))
+
+        return x, y, width, height
+
     def _update_matrices(self):
+        pxbbox = self._get_px_bbox()
+
         xoffset = 0
         yoffset = 0
         if self.hadj:
             xoffset = int(self.hadj.props.value)
         if self.vadj:
             yoffset = int(self.vadj.props.value)
+
+        if pxbbox:
+            xoffset += pxbbox[0]
+            yoffset += pxbbox[1]
 
         m = cairo.Matrix(self._zoom, 0,
                          0, self._zoom,
@@ -250,8 +287,16 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
     def do_draw(self, cr):
         #event.window.clear()
         # For the image
-        xoffset = -int(self.hadj.props.value)
-        yoffset = -int(self.vadj.props.value)
+        xoffset = int(self.hadj.props.value)
+        yoffset = int(self.vadj.props.value)
+
+        pxbbox = self._get_px_bbox()
+        if pxbbox:
+            xoffset += pxbbox[0]
+            yoffset += pxbbox[1]
+
+            cr.rectangle(0, 0, math.ceil(pxbbox[2]), math.ceil(pxbbox[3]))
+            cr.clip()
 
         image = self.provider.image.surface.surface_rgb
 
@@ -264,7 +309,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
             subcr.paint()
 
         # Draw the image in the background
-        cr.translate(xoffset, yoffset)
+        cr.translate(-xoffset, -yoffset)
         cr.scale(self._zoom, self._zoom)
 
         cr.set_source_surface(self._ss_image, 0, 0)
@@ -358,6 +403,9 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         return False
 
     def _get_render_width(self):
+        if self._bbox:
+            return self._get_px_bbox()[2]
+
         image = self.provider.image.surface.surface_rgb
         if image:
             width = image.get_width()
@@ -367,6 +415,9 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         return width
 
     def _get_render_height(self):
+        if self._bbox:
+            return self._get_px_bbox()[3]
+
         image = self.provider.image.surface.surface_rgb
         if image:
             height = image.get_height()

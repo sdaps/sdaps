@@ -66,6 +66,23 @@ def inner_ellipse(cr, x, y, width, height):
     # Restore old matrix (without removing the current path)
     cr.restore()
 
+def expand_bounds(bounds1, bounds2):
+    if bounds1 is None:
+        return bounds2
+
+    if bounds2 is None:
+        return bounds1
+
+    bounds = []
+    # First two need to be the minimum, second two the maximum
+    for i, (b1, b2) in enumerate(zip(bounds1, bounds2)):
+        if i < 2:
+            bounds.append(min(b1, b2))
+        else:
+            bounds.append(max(b1, b2))
+
+    return bounds
+
 class Questionnaire(model.buddy.Buddy):
 
     __metaclass__ = model.buddy.Register
@@ -90,6 +107,11 @@ class Questionnaire(model.buddy.Buddy):
                 return result
         return None
 
+    def get_bounds(self, bounds=None):
+        for qobject in self.obj.qobjects:
+            bounds = expand_bounds(bounds, qobject.gui.get_bounds())
+        return bounds
+
 
 class QObject(model.buddy.Buddy):
 
@@ -104,6 +126,9 @@ class QObject(model.buddy.Buddy):
         pass
 
     def find_edge(self, page_number, x, y, tollerance_x, tollerance_y):
+        return None
+
+    def get_bounds(self, bounds=None):
         return None
 
 
@@ -140,6 +165,12 @@ class Question(model.buddy.Buddy):
                     return result
         return None
 
+    def get_bounds(self, bounds=None):
+        for box in self.obj.boxes:
+            bounds = expand_bounds(bounds, box.gui.get_bounds())
+
+        return bounds
+
 
 class Box(model.buddy.Buddy):
 
@@ -164,6 +195,10 @@ class Box(model.buddy.Buddy):
 
     def find_edge(self, x, y, tollerance_x, tollerance_y):
         return None
+
+    def get_bounds(self):
+        # Return the theoretical bounding box
+        return self.obj.x, self.obj.y, self.obj.x + self.obj.width, self.obj.y + self.obj.height
 
 
 class Checkbox(Box):
