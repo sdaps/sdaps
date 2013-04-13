@@ -254,13 +254,17 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         if self.vadj:
             self.vadj.props.upper = self._render_height
 
-        return min(self._render_height, 300), self._render_height
+            return min(self._render_height, 300), self._render_height
+        else:
+            return self._render_height, self._render_height
 
     def do_get_preferred_width(self):
         if self.hadj:
             self.hadj.props.upper = self._render_width
 
-        return min(self._render_width, 300), self._render_width
+            return min(self._render_width, 300), self._render_width
+        else:
+            return self._render_width, self._render_width
 
     def do_size_allocate(self, allocation):
         # WTF? Why does this happen?
@@ -285,10 +289,13 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         Gtk.DrawingArea.do_size_allocate(self, allocation)
 
     def do_draw(self, cr):
-        #event.window.clear()
-        # For the image
-        xoffset = int(self.hadj.props.value)
-        yoffset = int(self.vadj.props.value)
+        xoffset = 0
+        yoffset = 0
+
+        if self.hadj:
+            xoffset += int(self.hadj.props.value)
+        if self.vadj:
+            yoffset += int(self.vadj.props.value)
 
         pxbbox = self._get_px_bbox()
         if pxbbox:
