@@ -33,7 +33,7 @@ from sdaps import matrix
 class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
     __gtype_name__ = "SDAPSSheetWidget"
 
-    def __init__(self, provider):
+    def __init__(self, provider, handle=None):
         Gtk.DrawingArea.__init__(self)
         events = Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON_RELEASE_MASK | \
             Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.BUTTON_MOTION_MASK | \
@@ -44,6 +44,8 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
             # Does only work for GTK+ >=3.4
             pass
         self.add_events(events)
+
+        self._handle = handle
 
         self.hadj = None
         self.vadj = None
@@ -78,7 +80,13 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         if not isinstance(obj, model.data.Box):
             return
 
-        if self.provider.image.page_number != qobj.page_number:
+        if not self.provider.is_handle_active(self._handle):
+            return
+
+        if self.image is None:
+            return
+
+        if self.image.page_number != qobj.page_number:
             return
 
         self.invalidate_area(obj.x, obj.y, obj.width, obj.height)
@@ -87,7 +95,10 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         if self._bbox is None:
             return None
 
-        matrix = self.provider.image.matrix.mm_to_px()
+        if self.image is None:
+            return None
+
+        matrix = self.image.matrix.mm_to_px()
         x0, y0 = matrix.transform_point(self._bbox[0], self._bbox[1])
         x1, y1 = matrix.transform_point(self._bbox[0] + self._bbox[2], self._bbox[1])
         x2, y2 = matrix.transform_point(self._bbox[0], self._bbox[1] + self._bbox[3])
@@ -114,6 +125,12 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         return x, y, width, height
 
     def _update_matrices(self):
+        if self.image is None:
+            self._mm_to_widget_matrix = cairo.Matrix()
+            self._widget_to_mm_matrix = cairo.Matrix()
+
+            return
+
         pxbbox = self._get_px_bbox()
 
         xoffset = 0
@@ -130,7 +147,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         m = cairo.Matrix(self._zoom, 0,
                          0, self._zoom,
                          -xoffset, -yoffset)
-        form_matrix = self.provider.image.matrix.mm_to_px()
+        form_matrix = self.image.matrix.mm_to_px()
         m = form_matrix.multiply(m)
 
         self._mm_to_widget_matrix = m
@@ -163,6 +180,11 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         self._update_matrices()
 
     def do_button_press_event(self, event):
+        if self.image is None:
+            return False
+
+        self.provider.ensure_handle_active(self._handle)
+
         # Pass everything except normal clicks down
         if event.button != 1 and event.button != 2 and event.button != 3:
             return False
@@ -178,7 +200,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
         if event.button == 3:
             # Give the corresponding widget the focus.
-            box = self.provider.survey.questionnaire.gui.find_box(self.provider.image.page_number, mm_x, mm_y)
+            box = self.provider.survey.questionnaire.gui.find_box(self.image.page_number, mm_x, mm_y)
             if hasattr(box, "widget"):
                 box.widget.focus()
 
@@ -189,7 +211,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
         # Look for edges to drag first(on a 4x4px target)
         tollerance_x, tollerance_y = self._widget_to_mm_matrix.transform_distance(4.0, 4.0)
-        result = self.provider.survey.questionnaire.gui.find_edge(self.provider.image.page_number, mm_x, mm_y,
+        result = self.provider.survey.questionnaire.gui.find_edge(self.image.page_number, mm_x, mm_y,
                                                                   tollerance_x, tollerance_y)
         if result:
             self._edge_drag_active = True
@@ -197,7 +219,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
             self._edge_drag_data = result[1]
             return True
 
-        box = self.provider.survey.questionnaire.gui.find_box(self.provider.image.page_number, mm_x, mm_y)
+        box = self.provider.survey.questionnaire.gui.find_box(self.image.page_number, mm_x, mm_y)
 
         if box is not None:
             box.data.state = not box.data.state
@@ -205,6 +227,11 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
             return True
 
     def do_button_release_event(self, event):
+        if self.image is None:
+            return False
+
+        self.provider.ensure_handle_active(self._handle)
+
         if event.button != 1 and event.button != 2 and event.button != 3:
             return False
 
@@ -216,6 +243,11 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         return True
 
     def do_motion_notify_event(self, event):
+        if self.image is None:
+            return False
+
+        self.provider.ensure_handle_active(self._handle)
+
         if event.state & Gdk.ModifierType.BUTTON2_MASK:
             x = int(event.x)
             y = int(event.y)
@@ -292,6 +324,14 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         xoffset = 0
         yoffset = 0
 
+        image = self.surface
+        # If we don't have a surface, just give up (and paint an ugly red color)
+        if image is None:
+            cr.set_source_rgb(1, 0.8, 0.8)
+            cr.paint()
+
+            return
+
         if self.hadj:
             xoffset += int(self.hadj.props.value)
         if self.vadj:
@@ -304,8 +344,6 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
             cr.rectangle(0, 0, math.ceil(pxbbox[2]), math.ceil(pxbbox[3]))
             cr.clip()
-
-        image = self.provider.image.surface.surface_rgb
 
         if image != self._cs_image or self._ss_image is None:
             self._cs_image = image
@@ -332,8 +370,10 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
                      self.provider.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom)
         cr.stroke()
 
+        self.provider.ensure_handle_active(self._handle)
+
         # Draw the overlay stuff.
-        self.provider.survey.questionnaire.gui.draw(cr, self.provider.image.page_number)
+        self.provider.survey.questionnaire.gui.draw(cr, self.image.page_number)
 
         def inner_box(cr, x, y, width, height):
             line_width = cr.get_line_width()
@@ -384,6 +424,9 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         return True
 
     def do_key_press_event(self, event):
+        if self.image is None:
+            return False
+
         if self.vadj:
             if event.keyval == Gdk.keyval_from_name("Up"):
                 value = self.vadj.props.value - self.vadj.props.step_increment
@@ -409,11 +452,25 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
                 return True
         return False
 
+    def _get_image(self):
+        return self.provider.get_image(self._handle)
+
+    image = property(_get_image)
+
+    def _get_surface(self):
+        image = self.image
+        if image is None:
+            return None
+
+        return image.surface.surface_rgb
+
+    surface = property(_get_surface)
+
     def _get_render_width(self):
         if self._bbox:
             return self._get_px_bbox()[2]
 
-        image = self.provider.image.surface.surface_rgb
+        image = self.surface
         if image:
             width = image.get_width()
         else:
@@ -425,7 +482,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         if self._bbox:
             return self._get_px_bbox()[3]
 
-        image = self.provider.image.surface.surface_rgb
+        image = self.surface
         if image:
             height = image.get_height()
         else:
@@ -493,5 +550,4 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         return self._zoom
 
     zoom = GObject.property(get_zoom, set_zoom, float, minimum=0.001, maximum=1024.0, default=1.0)
-
 

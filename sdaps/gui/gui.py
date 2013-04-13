@@ -121,11 +121,22 @@ class Provider(object):
         self.image.surface.load_rgb()
         self.survey.goto_sheet(self.image.sheet)
 
-    def get_image(self):
+    def get_image(self, handle=None):
+        assert(handle is None)
+
         if self._by_quality:
             return self.images[self.qualities[self.index][1]]
         else:
             return self.images[self.index]
+
+    def ensure_handle_active(self, handle=None):
+        assert(handle is None)
+
+    def is_handle_active(self, handle=None):
+        assert(handle is None)
+        assert(self.survey.sheet == self.images[self.index].sheet)
+
+        return True
 
     image = property(get_image)
 
