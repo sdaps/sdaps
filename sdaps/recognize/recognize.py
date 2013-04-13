@@ -23,11 +23,11 @@ import buddies
 
 def recognize(survey):
     # iterate over sheets
-    survey.iterate_progressbar(survey.questionnaire.recognize.recognize)
+    survey.iterate_progressbar_threaded(survey.questionnaire.recognize.recognize)
     survey.save()
 
 def identify(survey):
     # iterate over sheets
-    survey.iterate_progressbar(survey.questionnaire.recognize.identify)
+    survey.iterate_progressbar_threaded(survey.questionnaire.recognize.identify)
     survey.save()
 
