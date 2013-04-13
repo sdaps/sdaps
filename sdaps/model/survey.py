@@ -21,6 +21,8 @@ import cPickle
 import os
 import sys
 from sdaps import defs
+import threading
+import Queue
 
 from sdaps import log
 
@@ -28,7 +30,6 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 valid_styles = ['classic', 'code128']
-
 
 class Defs(object):
     # Force a certain set of options using slots
@@ -79,9 +80,11 @@ class Survey(object):
         self.survey_id = 0
         self.global_id = None
         self.questionnaire_ids = list()
-        self.index = 0
         self.version = 2
         self.defs = Defs()
+
+        self._index = dict()
+        self._index[None] = 0
 
     def add_questionnaire(self, questionnaire):
         self.questionnaire = questionnaire
@@ -141,6 +144,9 @@ class Survey(object):
         # Early versions of SDAPS 1.0 did not have the file version number
         if not hasattr(survey, 'version'):
             survey.version = 1
+
+        survey._index = dict()
+        survey._index[None] = 0
 
         # Run any upgrade routine (if necessary)
         survey.upgrade()
@@ -208,6 +214,30 @@ class Survey(object):
 
     sheet = property(get_sheet)
 
+    def create_thread_index(self):
+        # Get the current index (from the global identifier)
+        index = self.index
+
+        # And set it
+        thread = threading.current_thread()
+        self._index[thread] = index
+
+    def get_index(self):
+        thread = threading.current_thread()
+        if thread in self._index:
+            return self._index[thread]
+        else:
+            return self._index[None]
+
+    def set_index(self, value):
+        thread = threading.current_thread()
+        if thread in self._index:
+            self._index[thread] = value
+        else:
+            self._index[None] = value
+
+    index = property(get_index, set_index)
+
     def iterate(self, function, filter=lambda: True, *args, **kwargs):
         '''call function once for each sheet
         '''
@@ -228,6 +258,58 @@ class Survey(object):
             if filter():
                 function()
             log.progressbar.update(self.index + 1)
+
+        print _('%f seconds per sheet') % (
+            float(log.progressbar.elapsed_time) /
+            float(log.progressbar.max_value)
+        )
+
+    def iterate_progressbar_threaded(self, function, parallel=4, filter=lambda: True, *args, **kwargs):
+        print ungettext('%i sheet', '%i sheets', len(self.sheets)) % len(self.sheets)
+
+        if len(self.sheets) == 0:
+            return
+
+        log.progressbar.start(len(self.sheets))
+
+        queue = Queue.Queue()
+        self._iterations_done = 0
+        progress_lock = threading.Lock()
+
+        def threadfunc():
+            self.create_thread_index()
+            item = queue.get()
+
+            while item != -1:
+                self.index = item
+                function(*args, **kwargs)
+
+                progress_lock.acquire()
+                self._iterations_done += 1
+                log.progressbar.update(self._iterations_done)
+                progress_lock.release()
+
+                queue.task_done()
+                item = queue.get()
+
+            queue.task_done()
+
+        threads = []
+        for i in xrange(parallel):
+            thread = threading.Thread(target=threadfunc)
+            thread.start()
+            threads.append(thread)
+
+        for self.index in range(len(self.sheets)):
+            if filter():
+                queue.put(self.index)
+
+        # Signal threads that they are done
+        for thread in threads:
+            queue.put(-1)
+
+        # Wait for the queue to be empty (all tasks done)
+        queue.join()
 
         print _('%f seconds per sheet') % (
             float(log.progressbar.elapsed_time) /

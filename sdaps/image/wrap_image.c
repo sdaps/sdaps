@@ -112,6 +112,7 @@ wrap_get_a1_from_tiff(PyObject *self, PyObject *args)
 static PyObject *
 wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	cairo_surface_t *surface;
 	const char *filename = NULL;
 	gboolean rotated;
@@ -120,7 +121,9 @@ wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "sii", &filename, &page, &rotated))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	surface = get_rgb24_from_tiff(filename, page, rotated);
+	PyEval_RestoreThread(state);
 
 	if (surface) {
 		return PycairoSurface_FromSurface(surface, NULL);
@@ -133,13 +136,16 @@ wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args)
 static PyObject *
 wrap_get_tiff_page_count(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	const char *filename = NULL;
 	gint pages;
 
 	if (!PyArg_ParseTuple(args, "s", &filename))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	pages = get_tiff_page_count(filename);
+	PyEval_RestoreThread(state);
 
 	if (pages >= 1) {
 		return Py_BuildValue("i", pages);
@@ -184,6 +190,7 @@ wrap_check_tiff_monochrome(PyObject *self, PyObject *args)
 static PyObject *
 wrap_calculate_matrix(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	PyObject *result;
 	PycairoSurface *py_surface;
 	PycairoMatrix *py_matrix;
@@ -196,7 +203,9 @@ wrap_calculate_matrix(PyObject *self, PyObject *args)
 	                      &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	matrix = calculate_matrix(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
+	PyEval_RestoreThread(state);
 
 	if (matrix) {
 		result = PycairoMatrix_FromMatrix(matrix);
@@ -211,6 +220,7 @@ wrap_calculate_matrix(PyObject *self, PyObject *args)
 static PyObject *
 wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	PyObject *result;
 	PycairoSurface *py_surface;
 	PycairoSurface *py_mask;
@@ -225,7 +235,9 @@ wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
 	                      &mm_x, &mm_y))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	correction_matrix = calculate_correction_matrix_masked(py_surface->surface, py_mask->surface, &py_matrix->matrix, mm_x, mm_y);
+	PyEval_RestoreThread(state);
 
 	if (correction_matrix) {
 		result = PycairoMatrix_FromMatrix(correction_matrix);
@@ -240,6 +252,7 @@ wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
 static PyObject *
 wrap_find_box_corners(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	PycairoSurface *py_surface;
 	PycairoMatrix *py_matrix;
 	gdouble mm_x, mm_y, mm_width, mm_height;
@@ -252,8 +265,10 @@ wrap_find_box_corners(PyObject *self, PyObject *args)
 	                      &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	success = find_box_corners(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height,
 	                           &mm_x1, &mm_y1, &mm_x2, &mm_y2, &mm_x3, &mm_y3, &mm_x4, &mm_y4);
+	PyEval_RestoreThread(state);
 
 	if (success) {
 		return Py_BuildValue("(dd)(dd)(dd)(dd)", mm_x1, mm_y1, mm_x2, mm_y2, mm_x3, mm_y3, mm_x4, mm_y4);
@@ -266,6 +281,7 @@ wrap_find_box_corners(PyObject *self, PyObject *args)
 static PyObject *
 wrap_get_coverage(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	PycairoSurface *py_surface;
 	PycairoMatrix *py_matrix;
 	gdouble mm_x, mm_y, mm_width, mm_height;
@@ -277,7 +293,9 @@ wrap_get_coverage(PyObject *self, PyObject *args)
 	                      &mm_x, &mm_y, &mm_width, &mm_height))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	coverage = get_coverage(py_surface->surface, &py_matrix->matrix, mm_x, mm_y, mm_width, mm_height);
+	PyEval_RestoreThread(state);
 
 	return Py_BuildValue("d", coverage);
 }
@@ -285,6 +303,7 @@ wrap_get_coverage(PyObject *self, PyObject *args)
 static PyObject *
 wrap_get_masked_coverage(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	PycairoSurface *py_surface;
 	PycairoSurface *py_mask;
 	gint x, y;
@@ -296,7 +315,9 @@ wrap_get_masked_coverage(PyObject *self, PyObject *args)
 	                      &x, &y))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	coverage = get_masked_coverage(py_surface->surface, py_mask->surface, x, y);
+	PyEval_RestoreThread(state);
 
 	return Py_BuildValue("d", coverage);
 }
@@ -304,6 +325,7 @@ wrap_get_masked_coverage(PyObject *self, PyObject *args)
 static PyObject *
 wrap_get_masked_coverage_without_lines(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	PycairoSurface *py_surface;
 	PycairoSurface *py_mask;
 	gint x, y;
@@ -317,7 +339,9 @@ wrap_get_masked_coverage_without_lines(PyObject *self, PyObject *args)
 	                      &x, &y, &line_width, &line_count))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	coverage = get_masked_coverage_without_lines(py_surface->surface, py_mask->surface, x, y, line_width, line_count);
+	PyEval_RestoreThread(state);
 
 	return Py_BuildValue("d", coverage);
 }
@@ -325,6 +349,7 @@ wrap_get_masked_coverage_without_lines(PyObject *self, PyObject *args)
 static PyObject *
 wrap_get_masked_white_area_count(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	PycairoSurface *py_surface;
 	PycairoSurface *py_mask;
 	gint x, y;
@@ -338,7 +363,9 @@ wrap_get_masked_white_area_count(PyObject *self, PyObject *args)
 	                      &x, &y, &min_size, &max_size))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	count = get_masked_white_area_count(py_surface->surface, py_mask->surface, x, y, min_size, max_size, &filled_area);
+	PyEval_RestoreThread(state);
 
 	return Py_BuildValue("id", count, filled_area);
 }
@@ -346,6 +373,7 @@ wrap_get_masked_white_area_count(PyObject *self, PyObject *args)
 static PyObject *
 wrap_get_pbm(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	PycairoSurface *py_surface;
 	PyObject* result;
 	int length = 0;
@@ -355,7 +383,9 @@ wrap_get_pbm(PyObject *self, PyObject *args)
 	                      &PycairoImageSurface_Type, &py_surface))
 		return NULL;
 
+	state = PyEval_SaveThread();
 	get_pbm(py_surface->surface, &data, &length);
+	PyEval_RestoreThread(state);
 
 	result = Py_BuildValue("s#", data, length);
 	g_free (data);
@@ -420,6 +450,7 @@ static PyObject *get_debug_surface(PyObject *self, PyObject *args)
 static PyObject *
 wrap_kfill_modified(PyObject *self, PyObject *args)
 {
+	PyThreadState *state;
 	PycairoSurface *py_surface;
 	gint k;
 
@@ -432,7 +463,9 @@ wrap_kfill_modified(PyObject *self, PyObject *args)
 		return NULL;
 	}
 
+	state = PyEval_SaveThread();
 	kfill_modified(py_surface->surface, k);
+	PyEval_RestoreThread(state);
 
 	Py_INCREF(Py_None);
 	return Py_None;
