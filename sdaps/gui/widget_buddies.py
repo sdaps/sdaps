@@ -25,7 +25,24 @@ from sdaps import defs
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-class Questionnaire(model.buddy.Buddy):
+# Mixin to provide lookup functionality for handles
+class Switcher(object):
+
+    def set_active_sheet(self, provider, handle):
+        if provider is None:
+            return
+
+        provider.ensure_handle_active(handle)
+
+    def iter_matching(self, keys):
+        for provider, handle in keys:
+            # Any None provider is simply always matched
+            if provider is None:
+                yield provider, handle
+            elif provider.is_handle_active(handle):
+                yield provider, handle
+
+class Questionnaire(model.buddy.Buddy, Switcher):
 
     __metaclass__ = model.buddy.Register
     name = 'widget'
@@ -42,7 +59,8 @@ class Questionnaire(model.buddy.Buddy):
         # Simply sync everything on every change.
         self.sync_state()
 
-    def create_widget(self):
+    def create_widget(self, provider=None, handle=None):
+        # XXX: Add "page" based options?
         self.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         # First some global options
@@ -73,11 +91,17 @@ class Questionnaire(model.buddy.Buddy):
 
         # And all the questions
         for qobject in self.obj.qobjects:
-            widget = qobject.widget.create_widget()
+            widget = qobject.widget.create_widget(provider, handle)
             if widget is not None:
                 self.box.pack_start(widget, False, True, 0)
 
         return self.box
+
+    def unref_widget(self, provider=None, handle=None):
+        del self.box
+
+        for qobject in self.obj.qobjects:
+            qobject.widget.unref_widget(provider, handle)
 
     def sync_state(self):
         for qobject in self.obj.qobjects:
@@ -103,23 +127,32 @@ class Questionnaire(model.buddy.Buddy):
     def toggled_verified_cb(self, widget):
         self.obj.survey.sheet.verified = widget.get_active()
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, Switcher):
 
     __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.QObject
 
-    def create_widget(self):
-        self.widget = None
+    def __init__(self, *args):
+        model.buddy.Buddy.__init__(self, *args)
 
-        return self.widget
+        self.widget = dict()
+
+    def create_widget(self, provider=None, handle=None):
+        self.widget[provider, handle] = None
+
+        return self.widget[provider, handle]
+
+    def unref_widget(self, provider=None, handle=None):
+        del self.widget[provider, handle]
 
     def sync_state(self):
         for box in self.obj.boxes:
             box.widget.sync_state()
 
     def focus(self):
-        self.obj.question.questionnaire.widget.ensure_visible(self.widget)
+        for key in self.iter_matching(self.widget.iterkeys()):
+            self.obj.question.questionnaire.widget.ensure_visible(self.widget[key])
 
         if len(boxes) > 0:
             self.obj.boxes[0].widget.focus()
@@ -131,12 +164,14 @@ class Head(QObject):
     name = 'widget'
     obj_class = model.questionnaire.Head
 
-    def create_widget(self):
-        self.widget = Gtk.Label()
-        self.widget.set_markup('<b>%s %s</b>' % (self.obj.id_str(), self.obj.title))
-        self.widget.props.xalign = 0.0
+    def create_widget(self, provider=None, handle=None):
+        key = provider, handle
 
-        return self.widget
+        self.widget[key] = Gtk.Label()
+        self.widget[key].set_markup('<b>%s %s</b>' % (self.obj.id_str(), self.obj.title))
+        self.widget[key].props.xalign = 0.0
+
+        return self.widget[key]
 
 
 class Question(QObject):
@@ -145,28 +180,28 @@ class Question(QObject):
     name = 'widget'
     obj_class = model.questionnaire.Question
 
-    def create_widget(self):
-        self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+    def create_widget(self, provider=None, handle=None):
+        self.widget[provider, handle] = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
-        self.label = Gtk.Label()
-        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), self.obj.question))
-        self.label.props.xalign = 0.0
+        label = Gtk.Label()
+        label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), self.obj.question))
+        label.props.xalign = 0.0
 
-        self.widget.pack_start(self.label, False, True, 0)
+        self.widget[provider, handle].pack_start(label, False, True, 0)
 
         indent = Gtk.Alignment()
         indent.set_padding(0, 0, 10, 0)
-        self.widget.pack_end(indent, False, True, 0)
+        self.widget[provider, handle].pack_end(indent, False, True, 0)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         indent.add(vbox)
 
         for box in self.obj.boxes:
-            widget = box.widget.create_widget()
+            widget = box.widget.create_widget(provider, handle)
             if widget is not None:
                 vbox.pack_start(widget, False, True, 0)
 
-        return self.widget
+        return self.widget[provider, handle]
 
 class Mark(Question):
 
@@ -174,14 +209,14 @@ class Mark(Question):
     name = 'widget'
     obj_class = model.questionnaire.Mark
 
-    def create_widget(self):
-        self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+    def create_widget(self, provider=None, handle=None):
+        self.widget[provider, handle] = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
-        self.label = Gtk.Label()
-        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), self.obj.question))
-        self.label.props.xalign = 0.0
+        label = Gtk.Label()
+        label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), self.obj.question))
+        label.props.xalign = 0.0
 
-        self.widget.pack_start(self.label, False, True, 0)
+        self.widget[provider, handle].pack_start(label, False, True, 0)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         lower_label = Gtk.Label()
@@ -201,40 +236,53 @@ class Mark(Question):
 
         # Maybe use radiobuttons instead?
         for box in self.obj.boxes:
-            widget = box.widget.create_widget()
+            widget = box.widget.create_widget(provider, handle)
             if widget is not None:
                 hbox.pack_start(widget, False, True, 0)
 
         hbox.pack_start(upper_label, True, True, 0)
 
-        self.widget.pack_start(hbox, False, True, 0)
+        self.widget[provider, handle].pack_start(hbox, False, True, 0)
 
-        return self.widget
+        return self.widget[provider, handle]
 
 
-class Box(model.buddy.Buddy):
+class Box(model.buddy.Buddy, Switcher):
 
     __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.Checkbox
 
-    def create_widget(self):
-        self.widget = Gtk.CheckButton.new_with_label(self.obj.text)
-        self.widget.connect('toggled', self.toggled_cb)
+    def __init__(self, *args):
+        model.buddy.Buddy.__init__(self, *args)
 
-        return self.widget
+        self.widget = dict()
+
+    def create_widget(self, provider=None, handle=None):
+        self.widget[provider, handle] = Gtk.CheckButton.new_with_label(self.obj.text)
+        self.widget[provider, handle].connect('toggled', self.toggled_cb, provider, handle)
+
+        return self.widget[provider, handle]
+
+    def free_widget(self, provider=None, handle=None):
+        del self.widget[provider, handle]
 
     def sync_state(self):
-        self.widget.props.active = self.obj.data.state
+        for key in self.iter_matching(self.widget.iterkeys()):
+            self.widget[key].props.active = self.obj.data.state
 
-    def toggled_cb(self, widget):
+    def toggled_cb(self, widget, provider, handle):
+        self.set_active_sheet(provider, handle)
+
         self.obj.data.state = widget.props.active
 
     def focus(self):
-        self.widget.grab_focus()
+        for key in self.iter_matching(self.widget.iterkeys()):
+            self.widget[key].grab_focus()
 
-        self.obj.question.questionnaire.widget.ensure_visible(self.obj.question.widget.widget)
-        self.obj.question.questionnaire.widget.ensure_visible(self.widget)
+            if key in self.obj.question.widget.widget:
+                self.obj.question.questionnaire.widget.ensure_visible(self.obj.question.widget.widget[key])
+            self.obj.question.questionnaire.widget.ensure_visible(self.widget[key])
 
 class Checkbox(Box):
 
@@ -249,52 +297,74 @@ class Textbox(Box):
     name = 'widget'
     obj_class = model.questionnaire.Textbox
 
-    def create_widget(self):
-        self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+    def __init__(self, *args):
+        model.buddy.Buddy.__init__(self, *args)
 
-        self.checkbox = Gtk.CheckButton.new_with_label(self.obj.text)
-        self.checkbox.connect('toggled', self.toggled_cb)
+        self.widget = dict()
+        self.checkbox = dict()
+        self.textbox = dict()
+        self.buffer = dict()
 
-        self.widget.add(self.checkbox)
+    def create_widget(self, provider=None, handle=None):
+        key = provider, handle
+        self.widget[key] = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+
+        self.checkbox[key] = Gtk.CheckButton.new_with_label(self.obj.text)
+        self.checkbox[key].connect('toggled', self.toggled_cb, provider, handle)
+
+        self.widget[key].add(self.checkbox[key])
 
         indent = Gtk.Alignment()
         indent.set_padding(0, 0, 10, 0)
         frame = Gtk.Frame()
         indent.add(frame)
-        self.widget.pack_end(indent, False, True, 0)
+        self.widget[key].pack_end(indent, False, True, 0)
 
-        self.textbox = Gtk.TextView()
-        self.textbox.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
-        self.buffer = self.textbox.get_buffer()
-        self.buffer.connect('changed', self.buffer_changed_cb)
+        self.textbox[key] = Gtk.TextView()
+        self.textbox[key].set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
+        self.buffer[key] = self.textbox[key].get_buffer()
+        self.buffer[key].connect('changed', self.buffer_changed_cb, provider, handle)
 
-        frame.add(self.textbox)
+        frame.add(self.textbox[key])
 
-        return self.widget
+        return self.widget[key]
 
-    def buffer_changed_cb(self, buf):
+    def free_widget(self, provider=None, handle=None):
+        key = provider, handle
+
+        del self.widget[key]
+        del self.checkbox[key]
+        del self.textbox[key]
+        del self.buffer[key]
+
+    def buffer_changed_cb(self, buf, provider, handle):
+        self.set_active_sheet(provider, handle)
+
         start = buf.get_start_iter()
         end = buf.get_end_iter()
         self.obj.data.text = buf.get_text(start, end, False).decode('UTF-8')
 
     def sync_state(self):
-        self.checkbox.props.active = self.obj.data.state
+        for key in self.iter_matching(self.widget.iterkeys()):
+            self.checkbox[key].props.active = self.obj.data.state
 
-        self.textbox.props.sensitive = self.obj.data.state
+            self.textbox[key].props.sensitive = self.obj.data.state
 
-        # Only update the text if it changed (or else recursion hits)
-        start = self.buffer.get_start_iter()
-        end = self.buffer.get_end_iter()
-        currtext = self.buffer.get_text(start, end, False).decode('UTF-8')
-        if self.obj.data.text != currtext:
-            self.buffer.set_text(self.obj.data.text)
+            # Only update the text if it changed (or else recursion hits)
+            start = self.buffer[key].get_start_iter()
+            end = self.buffer[key].get_end_iter()
+            currtext = self.buffer[key].get_text(start, end, False).decode('UTF-8')
+            if self.obj.data.text != currtext:
+                self.buffer[key].set_text(self.obj.data.text)
 
     def focus(self):
-        if self.textbox.props.sensitive:
-            self.textbox.grab_focus()
-        else:
-            self.checkbox.grab_focus()
+        for key in self.iter_matching(self.widget.iterkeys()):
+            if self.textbox[key].props.sensitive:
+                self.textbox[key].grab_focus()
+            else:
+                self.checkbox[key].grab_focus()
 
-        self.obj.question.questionnaire.widget.ensure_visible(self.obj.question.widget.widget)
-        self.obj.question.questionnaire.widget.ensure_visible(self.widget)
+            if key in self.obj.question.widget.widget:
+                self.obj.question.questionnaire.widget.ensure_visible(self.obj.question.widget.widget[key])
+            self.obj.question.questionnaire.widget.ensure_visible(self.widget[key])
 
