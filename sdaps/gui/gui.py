@@ -132,11 +132,12 @@ class Provider(object):
     def ensure_handle_active(self, handle=None):
         assert(handle is None)
 
+        self.survey.goto_sheet(self.images[self.index].sheet)
+
     def is_handle_active(self, handle=None):
         assert(handle is None)
-        assert(self.survey.sheet == self.images[self.index].sheet)
 
-        return True
+        return self.survey.sheet == self.images[self.index].sheet
 
     image = property(get_image)
 
@@ -170,7 +171,7 @@ class MainWindow(object):
         scrolled_window.add(self.sheet)
 
         self.data_viewport = self._builder.get_object("data_view")
-        widgets = provider.survey.questionnaire.widget.create_widget()
+        widgets = provider.survey.questionnaire.widget.create_widget(provider)
         widgets.show_all()
         self.data_viewport.add(widgets)
 
