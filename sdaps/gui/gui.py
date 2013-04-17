@@ -51,8 +51,12 @@ def gui(survey, cmdline):
         log.error(_("The survey does not have any images! Please add images (and run recognize) before using the GUI."))
         return 1
 
-    # Exit the mainloop if Ctrl+C is pressed in the terminal.
-    GLib.unix_signal_add_full(GLib.PRIORITY_HIGH, signal.SIGINT, lambda *args : Gtk.main_quit(), None)
+    try:
+        # Exit the mainloop if Ctrl+C is pressed in the terminal.
+        GLib.unix_signal_add_full(GLib.PRIORITY_HIGH, signal.SIGINT, lambda *args : Gtk.main_quit(), None)
+    except AttributeError:
+        # Whatever, it is only to enable Ctrl+C anyways
+        pass
 
     MainWindow(provider).run()
 
