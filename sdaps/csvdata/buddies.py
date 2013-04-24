@@ -164,7 +164,7 @@ class Textbox(Box):
     def export_data(self):
         data = str(int(self.obj.data.state))
         if data and self.obj.data.text:
-            data = self.obj.data.text
+            data = self.obj.data.text.encode('utf-8')
 
         return data
 
