@@ -68,7 +68,7 @@ msgstr "Bei Auswahlfeldern dürfen mehrere Antworten angekreuzt werden."
 msgid ""
 "For questions with a range (1--5) choose the answer the mark that fits best."
 msgstr ""
-"Bei Bewertungsfragen (Skala 1--5) darf nur ein Kästchen Angekreuzt werden."
+"Bei Bewertungsfragen (Skala 1--5) darf nur ein Kästchen angekreuzt werden."
 
 #. LaTeX based report: Label for the number of people that answered
 #: ../tex_translations.in.h:20
