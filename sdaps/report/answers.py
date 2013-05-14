@@ -307,7 +307,7 @@ class Text(platypus.Flowable):
                 image.get_a1_from_tiff(
                     self.filename,
                     self.tiff_page,
-                    self.rotated
+                    self.rotated if self.rotated else False
                 )
             ))
             img = Image.open(img).crop(self.bbox)
