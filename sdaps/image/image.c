@@ -1137,13 +1137,23 @@ get_masked_white_area_count(cairo_surface_t *surface,
 	min_size_px = all * min_size;
 	max_size_px = all * max_size;
 
-	tmp_surface = surface_copy_masked(surface, mask, x, y);
+	tmp_surface = surface_inverted_copy_masked(surface, mask, x, y);
+
 	/* Debug images */
-	debug_surf = debug_surface_create(x, y, width, height, 0, 0, 1, 0.5);
+	debug_surf = debug_surface_create(x, y, width, height, 0, 0, 0, 0);
 	if (debug_surf != NULL) {
+		cairo_t *debug_cr;
+
 		backup_surface = surface_copy(tmp_surface);
 		backup_cr = cairo_create(backup_surface);
 		cairo_set_operator(backup_cr, CAIRO_OPERATOR_SOURCE);
+
+		debug_cr = cairo_create(debug_surf);
+		cairo_set_source_rgba(debug_cr, 0, 0, 1, 0.5);
+		cairo_mask_surface(debug_cr, tmp_surface, 0, 0);
+
+		cairo_destroy(debug_cr);
+		cairo_surface_flush(debug_surf);
 	}
 
 	*filled_area = 0;
@@ -1155,14 +1165,14 @@ get_masked_white_area_count(cairo_surface_t *surface,
 				cairo_paint(backup_cr);
 			}
 
-			guint area = flood_fill(tmp_surface, NULL, x, y, 0);
+			guint area = flood_fill(tmp_surface, NULL, x, y, 1);
 			if ((area >= min_size_px) && (area <= max_size_px)) {
 				result += 1;
 				*filled_area += area / ((gdouble) all);
 
 				/* Flood fill again, this time also mark the area on the debug surface. */
 				if (debug_surf)
-					flood_fill(backup_surface, debug_surf, x, y, 0);
+					flood_fill(backup_surface, debug_surf, x, y, 1);
 			}
 		}
 	}
