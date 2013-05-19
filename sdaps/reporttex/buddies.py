@@ -47,7 +47,7 @@ def output_image(box, tmpdir):
     width = int(math.ceil(max(x0, x1, x2, x3) - x))
     height = int(math.ceil(max(y0, y1, y2, y3) - y))
 
-    img = image.get_a1_from_tiff(filename, img.tiff_page, img.rotated)
+    img = image.get_a1_from_tiff(filename, img.tiff_page, img.rotated if img.rotated else False)
     output = cairo.ImageSurface(cairo.FORMAT_RGB24, width, height)
     cr = cairo.Context(output)
     cr.set_source_rgb(1, 1, 1)
