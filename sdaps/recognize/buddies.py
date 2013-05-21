@@ -487,6 +487,9 @@ class Questionnaire(model.buddy.Buddy):
         # Mark the image as "recognized". It might have failed, but even if that
         # happened, we don't want to retry all the time.
         self.obj.sheet.recognized = True
+        # Any newly recognized sheet is definately not verified.
+        # This is relevant for reruns.
+        self.obj.sheet.verified = False
 
         # clean up
         self.obj.sheet.recognize.clean()
