@@ -50,6 +50,14 @@ class Sheet(buddy.Object):
 
             v._parent = obj
 
+    @property
+    def empty(self):
+        for k, v in self.data.iteritems():
+            if not v.empty:
+                return False
+
+        return True
+
 class Image(buddy.Object):
 
     def __init__(self):

@@ -56,6 +56,9 @@ class Box(object):
                 del dict[key]
         return dict
 
+    @property
+    def empty(self):
+        return not self.state
 
 class Checkbox(Box):
 
@@ -74,3 +77,8 @@ class Additional_Mark(object):
 
     def __init__(self, parent):
         self.value = 0
+
+    @property
+    def empty(self):
+        return self.value == 0
+
