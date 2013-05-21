@@ -63,6 +63,10 @@ class Sheet(buddy.Object):
 
     def __setattr__(self, attr, value):
         # Nonexisting attributes should never be set.
+        if attr.startswith('_'):
+            object.__setattr__(self, attr, value)
+            return
+
         old_value = getattr(self, attr)
 
         if value != old_value:
