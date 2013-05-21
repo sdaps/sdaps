@@ -31,6 +31,9 @@ class Sheet(buddy.Object):
         self.valid = 1
         self.quality = 1
 
+        self.recognized = False
+        self.verified = False
+
     def add_image(self, image):
         self.images.append(image)
         image.sheet = self

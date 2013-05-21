@@ -80,7 +80,7 @@ class Survey(object):
         self.global_id = None
         self.questionnaire_ids = list()
         self.index = 0
-        self.version = 2
+        self.version = 3
         self.defs = Defs()
 
     def add_questionnaire(self, questionnaire):
@@ -334,5 +334,10 @@ class Survey(object):
                     if isinstance(data, Textbox):
                         data.text = unicode()
 
-        self.version = 2
+        if self.version < 3:
+            for sheet in self.sheets:
+                sheet.recognized = False
+                sheet.verified = False
+
+        self.version = 3
 
