@@ -21,13 +21,13 @@ from sdaps import model
 import buddies
 
 
-def recognize(survey):
+def recognize(survey, filter):
     # iterate over sheets
-    survey.iterate_progressbar(survey.questionnaire.recognize.recognize)
+    survey.iterate_progressbar(survey.questionnaire.recognize.recognize, filter)
     survey.save()
 
-def identify(survey):
+def identify(survey, filter):
     # iterate over sheets
-    survey.iterate_progressbar(survey.questionnaire.recognize.identify)
+    survey.iterate_progressbar(survey.questionnaire.recognize.identify, filter)
     survey.save()
 
