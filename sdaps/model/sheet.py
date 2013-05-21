@@ -61,6 +61,15 @@ class Sheet(buddy.Object):
 
         return True
 
+    def __setattr__(self, attr, value):
+        # Nonexisting attributes should never be set.
+        old_value = getattr(self, attr)
+
+        if value != old_value:
+            object.__setattr__(self, attr, value)
+            self.survey.questionnaire.notify_data_changed(None, None, attr, old_value)
+
+
 class Image(buddy.Object):
 
     def __init__(self):
