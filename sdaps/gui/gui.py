@@ -361,7 +361,13 @@ class MainWindow(object):
     def sheet_view_key_press(self, window, event):
         # Go to the next when Enter or Tab is pressed
         if event.keyval == Gdk.keyval_from_name("Return"):
-            # Set sheet to valid if Return is used for switching.
+            # If "Return" is pressed, then the examiner figured that the data
+            # is good.
+
+            # Mark as verified
+            self.provider.image.sheet.verified = True
+
+            # Mark the sheet as valid
             self.provider.image.sheet.valid = True
 
             if event.state & Gdk.ModifierType.SHIFT_MASK:
