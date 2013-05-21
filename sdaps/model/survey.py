@@ -218,8 +218,13 @@ class Survey(object):
     def iterate_progressbar(self, function, filter=lambda: True):
         '''call function once for each sheet and display a progressbar
         '''
-        print ungettext('%i sheet', '%i sheets', len(self.sheets)) % len(self.sheets)
-        if len(self.sheets) == 0:
+        count = 0
+        for self.index in range(len(self.sheets)):
+            if filter():
+                count += 1
+
+        print ungettext('%i sheet', '%i sheets', count) % count
+        if count == 0:
             return
 
         log.progressbar.start(len(self.sheets))
