@@ -22,6 +22,9 @@ import cairo
 from sdaps import model
 from sdaps import defs
 
+from sdaps.utils.ugettext import ugettext, ungettext
+_ = ugettext
+
 class Questionnaire(model.buddy.Buddy):
 
     __metaclass__ = model.buddy.Register
@@ -40,9 +43,35 @@ class Questionnaire(model.buddy.Buddy):
         self.sync_state()
 
     def create_widget(self):
-        # XXX: Add "page" based options?
         self.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
+        # First some global options
+        widget = Gtk.Label()
+        widget.set_markup(_('<b>Global Properties</b>'))
+        widget.props.xalign = 0.0
+        self.box.pack_start(widget, False, True, 0)
+
+        self.valid_checkbox = Gtk.CheckButton.new_with_label(_("Sheet valid"))
+        self.verified_checkbox = Gtk.CheckButton.new_with_label(_("Verified"))
+        self.empty_checkbox = Gtk.CheckButton.new_with_label(_("Empty"))
+        self.empty_checkbox.set_sensitive(False)
+
+        self.valid_checkbox.connect('toggled', self.toggled_valid_cb)
+        self.verified_checkbox.connect('toggled', self.toggled_verified_cb)
+
+        indent = Gtk.Alignment()
+        indent.set_padding(0, 0, 10, 0)
+
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        indent.add(vbox)
+
+        vbox.add(self.valid_checkbox)
+        vbox.add(self.verified_checkbox)
+        vbox.add(self.empty_checkbox)
+
+        self.box.pack_start(indent, False, True, 0)
+
+        # And all the questions
         for qobject in self.obj.qobjects:
             widget = qobject.widget.create_widget()
             if widget is not None:
@@ -50,11 +79,13 @@ class Questionnaire(model.buddy.Buddy):
 
         return self.box
 
-        return None
-
     def sync_state(self):
         for qobject in self.obj.qobjects:
             qobject.widget.sync_state()
+
+        self.valid_checkbox.set_active(self.obj.survey.sheet.valid)
+        self.verified_checkbox.set_active(self.obj.survey.sheet.verified)
+        self.empty_checkbox.set_active(self.obj.survey.sheet.empty)
 
     def ensure_visible(self, widget):
         for func in self._notify_ensure_visible:
@@ -66,6 +97,11 @@ class Questionnaire(model.buddy.Buddy):
     def disconnect_ensure_visible(self, func):
         self._notify_ensure_visible.remove(func)
 
+    def toggled_valid_cb(self, widget):
+        self.obj.survey.sheet.valid = widget.get_active()
+
+    def toggled_verified_cb(self, widget):
+        self.obj.survey.sheet.verified = widget.get_active()
 
 class QObject(model.buddy.Buddy):
 
