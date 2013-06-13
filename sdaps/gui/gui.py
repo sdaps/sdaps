@@ -233,7 +233,6 @@ class MainWindow(object):
     def update_page_status(self):
         combo = self._builder.get_object("page_number_combo")
         turned_toggle = self._builder.get_object("turned_toggle")
-        valid_toggle = self._builder.get_object("valid_toggle")
 
         # Update the combobox
         if self.provider.image.survey_id == self.provider.survey.survey_id:
@@ -255,7 +254,6 @@ class MainWindow(object):
 
         # Update the toggle
         turned_toggle.set_active(self.provider.image.rotated or False)
-        valid_toggle.set_active(self.provider.image.sheet.valid)
 
     def update_ui(self):
         # Update the next/prev button states
@@ -326,18 +324,6 @@ class MainWindow(object):
             self.update_ui()
         return False
 
-    def valid_toggle_toggled_cb(self, *args):
-        toggle = self._builder.get_object("valid_toggle")
-        valid = toggle.get_active()
-        if self.provider.image.sheet.valid != valid:
-            self.provider.image.sheet.valid = valid
-            # XXX: this forces the survey_id to be correct
-            # Do we really want to do this?
-            if valid:
-                self.provider.image.sheet.survey_id = self.provider.survey.survey_id
-            self.update_ui()
-        return False
-
     def quality_sort_toggle_toggled_cb(self, *args):
         toggle = self._builder.get_object("quality_sort_toggle")
         self.provider.set_sort_by_quality(toggle.get_active())
@@ -375,7 +361,13 @@ class MainWindow(object):
     def sheet_view_key_press(self, window, event):
         # Go to the next when Enter or Tab is pressed
         if event.keyval == Gdk.keyval_from_name("Return"):
-            # Set sheet to valid if Return is used for switching.
+            # If "Return" is pressed, then the examiner figured that the data
+            # is good.
+
+            # Mark as verified
+            self.provider.image.sheet.verified = True
+
+            # Mark the sheet as valid
             self.provider.image.sheet.valid = True
 
             if event.state & Gdk.ModifierType.SHIFT_MASK:

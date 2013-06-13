@@ -31,6 +31,9 @@ class Sheet(buddy.Object):
         self.valid = 1
         self.quality = 1
 
+        self.recognized = False
+        self.verified = False
+
     def add_image(self, image):
         self.images.append(image)
         image.sheet = self
@@ -49,6 +52,27 @@ class Sheet(buddy.Object):
             obj = self.survey.questionnaire.find_object(k)
 
             v._parent = obj
+
+    @property
+    def empty(self):
+        for k, v in self.data.iteritems():
+            if not v.empty:
+                return False
+
+        return True
+
+    def __setattr__(self, attr, value):
+        # Nonexisting attributes should never be set.
+        if attr.startswith('_'):
+            object.__setattr__(self, attr, value)
+            return
+
+        old_value = getattr(self, attr)
+
+        if value != old_value:
+            object.__setattr__(self, attr, value)
+            self.survey.questionnaire.notify_data_changed(None, None, attr, old_value)
+
 
 class Image(buddy.Object):
 

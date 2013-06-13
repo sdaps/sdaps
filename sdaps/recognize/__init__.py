@@ -40,14 +40,25 @@ parser.add_argument('--identify',
     action="store_true",
     default=False)
 
+parser.add_argument('--rerun', '-r',
+    help=_("Rerun the recognition for all pages. The default is to skip all pages that were recognized or verified already."),
+    action="store_true",
+    default=False)
+
 @script.connect(parser)
 @script.logfile
 def recognize(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import recognize
-    if cmdline['identify']:
-        return recognize.identify(survey)
+
+    if not cmdline['rerun']:
+        filter = lambda : not (survey.sheet.verified or survey.sheet.recognized)
     else:
-        return recognize.recognize(survey)
+        filter = lambda: True
+
+    if cmdline['identify']:
+        return recognize.identify(survey, filter)
+    else:
+        return recognize.recognize(survey, filter)
 
 
