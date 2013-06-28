@@ -714,10 +714,10 @@
 
 \providecommand{\@sdaps@drawbox}{
   \ifstr{\checkboxstyle}{box}{
-    \draw[line width=\elementlinewidth] (0.5\elementlinewidth, 0) rectangle +(\checkboxsize, \checkboxsize);%
+    \draw[line width=\elementlinewidth,fill=white] (0.5\elementlinewidth, 0) rectangle +(\checkboxsize, \checkboxsize);%
   }{}
   \ifstr{\checkboxstyle}{ellipse}{
-    \draw[line width=\elementlinewidth] ($(0.5\elementlinewidth, 0) + (0.5\checkboxsize, 0.5\checkboxsize)$) circle (0.5\checkboxsize);%
+    \draw[line width=\elementlinewidth,fill=white] ($(0.5\elementlinewidth, 0) + (0.5\checkboxsize, 0.5\checkboxsize)$) circle (0.5\checkboxsize);%
   }{}
 }
 
@@ -822,6 +822,7 @@
     {\sdaps@textbox{}}%
     {\sdaps@textbox{\cleaders\sides\vfill}}%
 }
+\newdimen\@tempdimfillwidth%
 \providecommand{\sdaps@textbox}[3]{%
   % Both baselineskip and lineskip?
   \question{#3}%
@@ -849,11 +850,13 @@
   \begingroup %
     \setlength\@tempdima{#2}%
     \setlength\@tempdimb{\lineskip}%
+    \setlength\@tempdimfillwidth{\linewidth}%
+    \advance\@tempdimfillwidth by -2\elementlinewidth
     \offinterlineskip
     \def\sides{%
       \hbox{\raise -\@tempdima \hbox to\linewidth{%
         \vrule depth 0pt height \@tempdima width \elementlinewidth%
-        \hfill%
+        {\color{white}\vrule depth 0pt height \@tempdima width \@tempdimfillwidth}%
         \vrule depth 0pt height \@tempdima width \elementlinewidth%
       }}%
     }%
@@ -1103,7 +1106,7 @@
         \hbox{%
           \raise\@tempdimboxlower\vbox{%
             \hrule width \@tempdima height \elementlinewidth %
-            \vspace \@tempdimheight%
+            {\color{white}\hrule width \@tempdima height \@tempdimheight}%
             \hrule height \elementlinewidth%
             \vspace{\textboxbottompad}%
           }%
