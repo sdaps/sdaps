@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-28 16:18+0200\n"
+"POT-Creation-Date: 2013-06-28 16:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,6 +293,22 @@ msgstr ""
 
 #: ../sdaps/gui/main_window.ui.h:11
 msgid "label"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:50
+msgid "<b>Global Properties</b>"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:54
+msgid "Sheet valid"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:55
+msgid "Verified"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:56
+msgid "Empty"
 msgstr ""
 
 #: ../sdaps/ids/__init__.py:28
