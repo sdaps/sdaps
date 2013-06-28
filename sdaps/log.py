@@ -176,11 +176,13 @@ class ProgressBar(object):
 progressbar = ProgressBar(sys.stdout)
 logfile = Logfile()
 
-redirects_ativated = False
+redirects_activated = False
 def activate_redirects():
-    if redirects_ativated is not False:
+    global redirects_activated
+
+    if redirects_activated is not False:
         return
-    redirects_ativated = True
+    redirects_activated = True
 
     sys.stdout = Encoder(sys.stdout)
     sys.stderr = Encoder(sys.stderr)
