@@ -49,6 +49,9 @@ def main(local_run=False):
     the command line and passes control over to the selected function."""
     init(local_run)
 
+    import log
+    log.activate_redirects()
+
     import add
     import annotate
     import boxgallery

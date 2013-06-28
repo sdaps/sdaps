@@ -176,10 +176,16 @@ class ProgressBar(object):
 progressbar = ProgressBar(sys.stdout)
 logfile = Logfile()
 
-sys.stdout = Encoder(sys.stdout)
-sys.stderr = Encoder(sys.stderr)
-sys.stdout = Wiper(sys.stdout, progressbar)
-sys.stderr = Wiper(sys.stderr, progressbar)
-sys.stdout = Copier(sys.stdout, logfile)
-sys.stderr = Copier(sys.stderr, logfile)
+redirects_ativated = False
+def activate_redirects():
+    if redirects_ativated is not False:
+        return
+    redirects_ativated = True
+
+    sys.stdout = Encoder(sys.stdout)
+    sys.stderr = Encoder(sys.stderr)
+    sys.stdout = Wiper(sys.stdout, progressbar)
+    sys.stderr = Wiper(sys.stderr, progressbar)
+    sys.stdout = Copier(sys.stdout, logfile)
+    sys.stderr = Copier(sys.stderr, logfile)
 
