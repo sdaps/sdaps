@@ -21,6 +21,10 @@ import buddy
 
 class Sheet(buddy.Object):
 
+    _pickled_attrs = {'survey', 'data', 'images', 'survey_id',
+                      'questionnaire_id', 'global_id', 'valid',
+                      'quality', 'recognized', 'verified'}
+
     def __init__(self):
         self.survey = None
         self.data = dict()
@@ -67,11 +71,21 @@ class Sheet(buddy.Object):
             object.__setattr__(self, attr, value)
             return
 
-        old_value = getattr(self, attr)
+        assert attr in self._pickled_attrs
 
-        if value != old_value:
+        # We need to fall back to "None" for __init__ to work.
+        try:
+            old_value = getattr(self, attr)
+            force = False
+        except AttributeError:
+            old_value = None
+            force = True
+
+        if force or value != old_value:
             object.__setattr__(self, attr, value)
-            self.survey.questionnaire.notify_data_changed(None, None, attr, old_value)
+            # survey may be None if the sheet does not belong to a survey yet.
+            if self.survey is not None:
+                self.survey.questionnaire.notify_data_changed(None, None, attr, old_value)
 
 
 class Image(buddy.Object):
