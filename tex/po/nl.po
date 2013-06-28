@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 15:23+0200\n"
+"POT-Creation-Date: 2013-06-28 16:19+0200\n"
 "PO-Revision-Date: 2013-06-13 01:04+0200\n"
 "Last-Translator: Serge Stroobandt <serge@stroobandt.com>\n"
 "Language-Team: Dutch\n"
@@ -38,7 +38,9 @@ msgstr "Vragenlijst-ID:"
 
 #. Default instructions on the questionnaire
 #: ../tex_translations.in.h:10
-msgid "This questionnaire is automatically read by a computer program. Please use a pen for filling in your answers."
+msgid ""
+"This questionnaire is automatically read by a computer program. Please use a "
+"pen for filling in your answers."
 msgstr ""
 "De vragenlijst wordt elektronisch ingelezen. Gelieve met een balpen of dunne "
 "viltstift te antwoorden."
@@ -60,7 +62,8 @@ msgstr "Bij meerkeuzevragen mogen meerdere antwoorden worden aangekruist."
 
 #. Instruction on the questionnaire: Mark/range question.
 #: ../tex_translations.in.h:18
-msgid "For questions with a range (1--5) choose the answer the mark that fits best."
+msgid ""
+"For questions with a range (1--5) choose the answer the mark that fits best."
 msgstr ""
 "Bij waarderingsvragen met een bereik (1--5) mag slechts één hokje worden "
 "aangekruist."

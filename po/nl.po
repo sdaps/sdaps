@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-13 12:24+0200\n"
+"POT-Creation-Date: 2013-06-28 16:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,21 +214,21 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:271
+#: ../sdaps/gui/gui.py:269
 #, python-format
 msgid " of %i"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:272
+#: ../sdaps/gui/gui.py:270
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:406
+#: ../sdaps/gui/gui.py:398
 msgid "Close without saving"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:410
+#: ../sdaps/gui/gui.py:402
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -288,14 +288,10 @@ msgid "Page Rotated"
 msgstr ""
 
 #: ../sdaps/gui/main_window.ui.h:10
-msgid "Sheet Valid (all pages)"
-msgstr ""
-
-#: ../sdaps/gui/main_window.ui.h:11
 msgid "Sort by Quality"
 msgstr ""
 
-#: ../sdaps/gui/main_window.ui.h:12
+#: ../sdaps/gui/main_window.ui.h:11
 msgid "label"
 msgstr ""
 
@@ -356,39 +352,39 @@ msgstr ""
 msgid "Existing fields:\n"
 msgstr ""
 
-#: ../sdaps/model/survey.py:221
+#: ../sdaps/model/survey.py:226
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/model/survey.py:232
+#: ../sdaps/model/survey.py:237
 #, python-format
 msgid "%f seconds per sheet"
 msgstr ""
 
-#: ../sdaps/model/survey.py:258
+#: ../sdaps/model/survey.py:263
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:262
+#: ../sdaps/model/survey.py:267
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
 msgstr ""
 
-#: ../sdaps/model/survey.py:273
+#: ../sdaps/model/survey.py:278
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:279
+#: ../sdaps/model/survey.py:284
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:296
+#: ../sdaps/model/survey.py:301
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
@@ -504,6 +500,12 @@ msgstr ""
 #: ../sdaps/recognize/__init__.py:39
 msgid ""
 "Only identify the page properties, but don't recognize the checkbox states."
+msgstr ""
+
+#: ../sdaps/recognize/__init__.py:44
+msgid ""
+"Rerun the recognition for all pages. The default is to skip all pages that "
+"were recognized or verified already."
 msgstr ""
 
 #: ../sdaps/reorder/__init__.py:30

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-13 12:24+0200\n"
+"POT-Creation-Date: 2013-06-28 16:18+0200\n"
 "PO-Revision-Date: 2013-06-13 12:32+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
@@ -254,21 +254,21 @@ msgstr "http://sdaps.sipsolutions.net"
 msgid "translator-credits"
 msgstr "Benjamin Berg"
 
-#: ../sdaps/gui/gui.py:271
+#: ../sdaps/gui/gui.py:269
 #, python-format
 msgid " of %i"
 msgstr " von %i"
 
-#: ../sdaps/gui/gui.py:272
+#: ../sdaps/gui/gui.py:270
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr "Erkennungsqualität: %.2f"
 
-#: ../sdaps/gui/gui.py:406
+#: ../sdaps/gui/gui.py:398
 msgid "Close without saving"
 msgstr "Beenden ohne zu Speichern"
 
-#: ../sdaps/gui/gui.py:410
+#: ../sdaps/gui/gui.py:402
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -333,14 +333,10 @@ msgid "Page Rotated"
 msgstr "Seite Gedreht"
 
 #: ../sdaps/gui/main_window.ui.h:10
-msgid "Sheet Valid (all pages)"
-msgstr "Ausgefüllter Bogen"
-
-#: ../sdaps/gui/main_window.ui.h:11
 msgid "Sort by Quality"
 msgstr "Nach Qualität sortieren"
 
-#: ../sdaps/gui/main_window.ui.h:12
+#: ../sdaps/gui/main_window.ui.h:11
 msgid "label"
 msgstr "Sollte niemals sichtbar sein."
 
@@ -415,26 +411,26 @@ msgstr "Den angegebenen Schlüssel und Wert löschen."
 msgid "Existing fields:\n"
 msgstr "Definierte Felder:\n"
 
-#: ../sdaps/model/survey.py:221
+#: ../sdaps/model/survey.py:226
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:232
+#: ../sdaps/model/survey.py:237
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/model/survey.py:258
+#: ../sdaps/model/survey.py:263
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
 "Anzahl von Seiten haben!"
 
-#: ../sdaps/model/survey.py:262
+#: ../sdaps/model/survey.py:267
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -442,16 +438,16 @@ msgstr ""
 "Der Stil 'classic' kann nur mit bis zu sechs Seiten umgehen. Für mehr Seiten "
 "kann der 'code128' Stil benutzt werden."
 
-#: ../sdaps/model/survey.py:273
+#: ../sdaps/model/survey.py:278
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "IDs müssen im \"classic\" Stil ganze Zahlen sein!"
 
-#: ../sdaps/model/survey.py:279
+#: ../sdaps/model/survey.py:284
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr "Ungültiges Zeichen %s in der Fragebogen ID \"%s\" im \"code128\" Stil!"
 
-#: ../sdaps/model/survey.py:296
+#: ../sdaps/model/survey.py:301
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr "Update für Dateiversion %i ausführen"
@@ -584,6 +580,12 @@ msgid ""
 "Only identify the page properties, but don't recognize the checkbox states."
 msgstr ""
 "Analysiert nur die Eigenschaften der Seite, nicht jedoch die Antworten."
+
+#: ../sdaps/recognize/__init__.py:44
+msgid ""
+"Rerun the recognition for all pages. The default is to skip all pages that "
+"were recognized or verified already."
+msgstr ""
 
 #: ../sdaps/reorder/__init__.py:30
 msgid "Reorder pages according to questionnaire ID."
@@ -1080,6 +1082,9 @@ msgstr ""
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
 msgstr "Erstelle Überblick über die Boxen sortiert nach der Metrik \"%s\"."
+
+#~ msgid "Sheet Valid (all pages)"
+#~ msgstr "Ausgefüllter Bogen"
 
 #~ msgid "Only generates the TeX project. This option is for debug purpose."
 #~ msgstr ""
