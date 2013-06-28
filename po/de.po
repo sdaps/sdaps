@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-28 16:28+0200\n"
-"PO-Revision-Date: 2013-06-28 16:20+0200\n"
+"PO-Revision-Date: 2013-06-28 16:30+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -342,19 +342,19 @@ msgstr "Sollte niemals sichtbar sein."
 
 #: ../sdaps/gui/widget_buddies.py:50
 msgid "<b>Global Properties</b>"
-msgstr ""
+msgstr "<b>Globale Eigenschaften</b>"
 
 #: ../sdaps/gui/widget_buddies.py:54
 msgid "Sheet valid"
-msgstr ""
+msgstr "Bogen gültig"
 
 #: ../sdaps/gui/widget_buddies.py:55
 msgid "Verified"
-msgstr ""
+msgstr "Verifiziert"
 
 #: ../sdaps/gui/widget_buddies.py:56
 msgid "Empty"
-msgstr ""
+msgstr "Leer"
 
 #: ../sdaps/ids/__init__.py:28
 msgid "Export and import questionnaire IDs."
