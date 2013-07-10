@@ -540,6 +540,11 @@
     % It would be good to also redefine the protectedimmediatewrite macro,
     % but not sure how that can be done.
     \immediate\closeout\sdapsoutfile%
+    % Do not generate position information from now on
+    \global\@sdaps@outputfalse%
+    % Reset counters for testing purposes
+    \setcounter{checkboxnum}{0}
+    \setcounter{textboxnum}{0}
   }
 }
 
@@ -699,6 +704,7 @@
 \newkomafont{choicegroupchoicefont}{\usekomafont{questionfont}}
 \newkomafont{choicegrouplinefont}{\usekomafont{choicefont}}
 
+\newif\if@sdaps@output\@sdaps@outputtrue
 
 %-------------------------------------------------------------------------------
 %                style commands definitions
@@ -740,19 +746,25 @@
 
 \providecommand{\checkboxNoStar}{%
   \mbox{%
-  \label{checkbox\thecheckboxnum}%
-  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},remember picture]{%
-    \@sdaps@drawbox
-%
-    \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
-    \pgfsys@getposition{\pgfpictureid}{\@sdaps@checkboxpos}%
-    \pgfpointadd{\@sdaps@checkboxpos}{%
-      \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{-max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth) + \checkboxsize + 0.5\elementlinewidth}}%
-    }%
-    \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
-    \pgfpoint{\checkboxsize+\elementlinewidth}{\checkboxsize+\elementlinewidth}%
-    \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-    \protectedimmediatewrite\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width, \checkboxstyle}%
+  \def\@sdaps@tmp{}%
+  \if@sdaps@output%
+    \label{checkbox\thecheckboxnum}%
+    \def\@sdaps@tmp{remember picture}%
+  \fi%
+  \tikz[baseline={max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth)},\@sdaps@tmp]{%
+    \@sdaps@drawbox%
+    %
+    \if@sdaps@output%
+      \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
+      \pgfsys@getposition{\pgfpictureid}{\@sdaps@checkboxpos}%
+      \pgfpointadd{\@sdaps@checkboxpos}{%
+        \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{-max(0ex, 0.5\checkboxsize-1ex+0.5\elementlinewidth) + \checkboxsize + 0.5\elementlinewidth}}%
+      }%
+      \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
+      \pgfpoint{\checkboxsize+\elementlinewidth}{\checkboxsize+\elementlinewidth}%
+      \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
+      \protectedimmediatewrite\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width, \checkboxstyle}%
+    \fi%
   }%
   \addtocounter{checkboxnum}{1}}%
   \ignorespaces
@@ -826,24 +838,26 @@
 \providecommand{\sdaps@textbox}[3]{%
   % Both baselineskip and lineskip?
   \question{#3}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Text=\arabic{section}.\arabic{subsection}. #3} %
-  \label{textbox\thetextboxnum}%
-  \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
-  \pgfsys@getposition{textboxtop\thetextboxnum}{\@sdaps@textboxtoppos}%
-  \pgfpointadd{\@sdaps@textboxtoppos}{%
-    \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{0}}%
-  }%
-  \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
-%
-  \pgfsys@getposition{textboxbottom\thetextboxnum}{\@sdaps@textboxbottompos}%
-  \pgfpointadd{\@sdaps@textboxtoppos}{%
-    \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxbottompos}}{%
-      % Assume width is equal to \linewidth
-      \pgfpoint{\linewidth}{0}%
+  \if@sdaps@output%
+    \protectedimmediatewrite\sdapsoutfile{QObject-Text=\arabic{section}.\arabic{subsection}. #3} %
+    \label{textbox\thetextboxnum}%
+    \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
+    \pgfsys@getposition{textboxtop\thetextboxnum}{\@sdaps@textboxtoppos}%
+    \pgfpointadd{\@sdaps@textboxtoppos}{%
+      \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{0}}%
     }%
-  }%
-  \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-  \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
+    \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
+%
+    \pgfsys@getposition{textboxbottom\thetextboxnum}{\@sdaps@textboxbottompos}%
+    \pgfpointadd{\@sdaps@textboxtoppos}{%
+      \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxbottompos}}{%
+        % Assume width is equal to \linewidth
+        \pgfpoint{\linewidth}{0}%
+      }%
+    }%
+    \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
+    \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
+  \fi%
   \nobreak%
   \vspace{\parskip}%
   \nobreak%
@@ -860,7 +874,9 @@
         \vrule depth 0pt height \@tempdima width \elementlinewidth%
       }}%
     }%
-    \pgfsys@markposition{textboxtop\thetextboxnum}%
+    \if@sdaps@output%
+      \pgfsys@markposition{textboxtop\thetextboxnum}%
+    \fi%
     \hrule width \linewidth height \elementlinewidth depth 0pt%
     \nobreak%
     \sides%
@@ -890,7 +906,9 @@
     \leavevmode\nobreak%
     \hbox{\raise -\@tempdima \hbox to \linewidth {%
       % Mark at the bottom left (right underneath the top mark)
-      \pgfsys@markposition{textboxbottom\thetextboxnum}%
+      \if@sdaps@output%
+        \pgfsys@markposition{textboxbottom\thetextboxnum}%
+      \fi%
       \cleaders\hrule height \elementlinewidth depth 0pt \hfill%
       % And add the bottom padding
       \vrule depth \textboxbottompad height 0pt width 0pt%
@@ -1085,22 +1103,24 @@
       %
       \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#3}%
       %
-      \label{textbox\thetextboxnum}%
-      \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
-      \pgfsys@getposition{textboxleft\thetextboxnum}{\@sdaps@textboxleftpos}%
-      \pgfpointadd{\@sdaps@textboxleftpos}{%
-        \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{\@tempdimruleheight}}%
-      }%
-      \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
-      %
-      \pgfsys@getposition{textboxright\thetextboxnum}{\@sdaps@textboxrightpos}%
-      \pgfpointadd{\@sdaps@textboxrightpos}{%
-        \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxleftpos}}{
-          \pgfpoint{0}{#1+2\elementlinewidth}%
+      \if@sdaps@output%
+        \label{textbox\thetextboxnum}%
+        \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
+        \pgfsys@getposition{textboxleft\thetextboxnum}{\@sdaps@textboxleftpos}%
+        \pgfpointadd{\@sdaps@textboxleftpos}{%
+          \pgfpointadd{\@sdaps@pageorigin}{\pgfpoint{0}{\@tempdimruleheight}}%
         }%
-      }%
-      \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-      \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
+        \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
+        %
+        \pgfsys@getposition{textboxright\thetextboxnum}{\@sdaps@textboxrightpos}%
+        \pgfpointadd{\@sdaps@textboxrightpos}{%
+          \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxleftpos}}{
+            \pgfpoint{0}{#1+2\elementlinewidth}%
+          }%
+        }%
+        \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
+        \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
+      \fi%
       %
       \def\horizontallines{%
         \hbox{%
@@ -1112,7 +1132,9 @@
           }%
         }%
       }%
-      \pgfsys@markposition{textboxleft\thetextboxnum}%
+      \if@sdaps@output%
+        \pgfsys@markposition{textboxleft\thetextboxnum}%
+      \fi%
       \vrule depth -\@tempdimlower width \elementlinewidth height \@tempdimruleheight %
       %\kern -\elementlinewidth%
       \horizontallines%
@@ -1122,7 +1144,9 @@
       \horizontallines%
       %\kern -\elementlinewidth%
       \vrule depth -\@tempdimlower width \elementlinewidth height \@tempdimruleheight%
-      \pgfsys@markposition{textboxright\thetextboxnum}%
+      \if@sdaps@output%
+        \pgfsys@markposition{textboxright\thetextboxnum}%
+      \fi%
       \addtocounter{textboxnum}{1}%
     \endgroup%
   }%
