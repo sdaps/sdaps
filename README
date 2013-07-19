@@ -50,6 +50,9 @@ LaTeX based questionnaires (setup_tex/stamp):
    * translator (part of beamer)
    * and more
 
+LaTeX based reports:
+ * siunitx
+
 Debug output (annotate):
  * Poppler and introspection data
  * python-gi
