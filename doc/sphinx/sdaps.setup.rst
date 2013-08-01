@@ -57,10 +57,3 @@ setup Package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-    sdaps.setup.pdftools
-

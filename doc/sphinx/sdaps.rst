@@ -9,14 +9,6 @@ sdaps Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`barcode` Module
----------------------
-
-.. automodule:: sdaps.barcode
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`calculate` Module
 -----------------------
 
@@ -89,28 +81,13 @@ sdaps Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`ugettext` Module
-----------------------
-
-.. automodule:: sdaps.ugettext
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`utils` Module
--------------------
-
-.. automodule:: sdaps.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Subpackages
 -----------
 
 .. toctree::
 
     sdaps.add
+    sdaps.annotate
     sdaps.boxgallery
     sdaps.cover
     sdaps.csvdata
@@ -126,4 +103,5 @@ Subpackages
     sdaps.setup
     sdaps.setuptex
     sdaps.stamp
+    sdaps.utils
 

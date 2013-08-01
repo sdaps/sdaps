@@ -33,3 +33,11 @@ gui Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`widget_buddies` Module
+----------------------------
+
+.. automodule:: sdaps.gui.widget_buddies
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
