@@ -65,6 +65,18 @@ class Sheet(buddy.Object):
 
         return True
 
+    @property
+    def complete(self):
+        """A boolean whether this sheet is complete in the sense that
+        every page of the questionnaire has been identified.
+        ie. it is false if there are missing pages"""
+
+        # Simply retrieve every page, and see if it is not None
+        for page in xrange(self.survey.questionnaire.page_count):
+            if self.get_page_image(page + 1) is None:
+                return False
+        return True
+
     def __setattr__(self, attr, value):
         # Nonexisting attributes should never be set.
         if attr.startswith('_'):
