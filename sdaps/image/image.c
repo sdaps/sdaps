@@ -135,6 +135,69 @@ get_a1_from_tiff (const char *filename, gint page, gboolean rotated)
 	return surface;
 }
 
+gboolean
+write_a1_to_tiff (const char *filename, cairo_surface_t *surf)
+{
+	TIFF *tiff;
+	gint width, height;
+	gint stride;
+	gint y;
+	guint32 stripsize;
+	guint8 *data;
+
+	g_assert(cairo_image_surface_get_format(surf) == CAIRO_FORMAT_A1);
+
+	width = cairo_image_surface_get_width(surf);
+	height = cairo_image_surface_get_height(surf);
+	stride = cairo_image_surface_get_stride(surf);
+	data = (guint8*) cairo_image_surface_get_data(surf);
+
+	/* We create a new TIFF file if it doesn't exist yet, otherwise we append
+	 * to it. */
+	tiff = TIFFOpen(filename, "a");
+	if (tiff == NULL)
+		return FALSE;
+
+	/* Reverse *ALL* bits ...
+	 * TODO: Is this correct for big endian??? */
+	TIFFReverseBits(data, stride*(height-1) + (width+7)/8);
+
+	/* Setup the new image. */
+	TIFFSetField(tiff, TIFFTAG_IMAGEWIDTH, width);
+	TIFFSetField(tiff, TIFFTAG_IMAGELENGTH, height);
+	TIFFSetField(tiff, TIFFTAG_BITSPERSAMPLE, 1);
+	TIFFSetField(tiff, TIFFTAG_SAMPLESPERPIXEL, 1);
+	TIFFSetField(tiff, TIFFTAG_PLANARCONFIG, PLANARCONFIG_SEPARATE);
+
+	stripsize = TIFFDefaultStripSize(tiff, -1);
+
+	TIFFSetField(tiff, TIFFTAG_ROWSPERSTRIP, stripsize);
+	TIFFSetField(tiff, TIFFTAG_COMPRESSION, COMPRESSION_CCITTFAX4);
+	TIFFSetField(tiff, TIFFTAG_GROUP4OPTIONS, 0);
+	TIFFSetField(tiff, TIFFTAG_FAXMODE, FAXMODE_CLASSF);
+	TIFFSetField(tiff, TIFFTAG_THRESHHOLDING, THRESHHOLD_BILEVEL);
+	TIFFSetField(tiff, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_MINISWHITE);
+
+	for (y = 0; y < height; y++) {
+		if (TIFFWriteScanline(tiff, data + y * stride, y, 0) == -1)
+			goto BAIL_WRITE_A1;
+	}
+
+	/* Undo reversal again. */
+	TIFFReverseBits(data, stride*(height-1) + (width+7)/8);
+	TIFFClose(tiff);
+
+	return TRUE;
+
+BAIL_WRITE_A1:
+
+	/* Undo reversal again. */
+	TIFFReverseBits(data, stride*(height-1) + (width+7)/8);
+	TIFFClose(tiff);
+
+	return FALSE;
+}
+
 cairo_surface_t*
 get_rgb24_from_tiff (const char *filename, gint page, gboolean rotated)
 {

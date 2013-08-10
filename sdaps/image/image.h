@@ -37,6 +37,9 @@ disable_libtiff_warnings (void);
 cairo_surface_t*
 get_a1_from_tiff (const char *filename, gint page, gboolean rotated);
 
+gboolean
+write_a1_to_tiff (const char *filename, cairo_surface_t *surf);
+
 cairo_surface_t*
 get_rgb24_from_tiff (const char *filename, gint page, gboolean rotated);
 
