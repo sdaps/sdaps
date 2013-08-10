@@ -652,6 +652,8 @@ calc_intersection(gdouble  l1a_x,    gdouble l1a_y,
 	*result_y = l1a_y + u*(l1b_y - l1a_y);
 }
 
+#define DIST(x1, y1, x2, y2) sqrt(((x1) - (x2))*((x1) - (x2)) + ((y1) - (y2))*((y1) - (y2)))
+
 static gboolean
 test_corner_marker(cairo_surface_t *surface,
                    gint             x,
@@ -706,6 +708,13 @@ test_corner_marker(cairo_surface_t *surface,
 	}
 
 	if (!v_found_line || !h_found_line)
+		return FALSE;
+
+	/* Check that two of the endpoints are close together. */
+	if ((DIST(h_x1, h_y1, v_x1, v_y1) > line_width * 3) &&
+	    (DIST(h_x1, h_y1, v_x2, v_y2) > line_width * 3) &&
+	    (DIST(h_x2, h_y2, v_x1, v_y1) > line_width * 3) &&
+	    (DIST(h_x2, h_y2, v_x2, v_y2) > line_width * 3))
 		return FALSE;
 
 	calc_intersection(h_x1, h_y1, h_x2, h_y2,
