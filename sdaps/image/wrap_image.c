@@ -25,6 +25,7 @@
 
 static PyObject *wrap_get_a1_from_tiff(PyObject *self, PyObject *args);
 static PyObject *wrap_get_rgb24_from_tiff(PyObject *self, PyObject *args);
+static PyObject *wrap_find_corner_marker(PyObject *self, PyObject *args);
 static PyObject *wrap_calculate_matrix(PyObject *self, PyObject *args);
 static PyObject *wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args);
 static PyObject *wrap_find_box_corners(PyObject *self, PyObject *args);
@@ -49,6 +50,7 @@ static PyMethodDef EvaluateMethods[] = {
 	{"get_tiff_page_count",  wrap_get_tiff_page_count, METH_VARARGS, "Returns the number of pages a multipage tiff contains."},
 	{"get_tiff_resolution", wrap_get_tiff_resolution, METH_VARARGS, "Retrieves the resolution from the given page of the tiff file (in dots per mm)."},
 	{"check_tiff_monochrome",  wrap_check_tiff_monochrome, METH_VARARGS, "Check whether all pages of the tiff are monochrome."},
+	{"find_corner_marker",  wrap_find_corner_marker, METH_VARARGS, "Searches for a corner marker. The third parameter should be an integer specifying the corner (1: top left, 2: top right, 3: bottom right, 4: bottom left."},
 	{"calculate_matrix",  wrap_calculate_matrix, METH_VARARGS, "Calculates the transformation matrix transform the image into the survey coordinate system."},
 	{"calculate_correction_matrix_masked",  wrap_calculate_correction_matrix_masked, METH_VARARGS, "Calculates a corrected transformation matrix for the mask at the given the top left corner."},
 	{"find_box_corners",  wrap_find_box_corners, METH_VARARGS, "Tries to find the actuall corners of a box in the milimeter space."},
@@ -179,6 +181,32 @@ wrap_check_tiff_monochrome(PyObject *self, PyObject *args)
 	monochrome = check_tiff_monochrome(filename);
 
 	return Py_BuildValue("i", monochrome);
+}
+
+static PyObject *
+wrap_find_corner_marker(PyObject *self, PyObject *args)
+{
+	PyObject *result;
+	PycairoSurface *py_surface;
+	PycairoMatrix *py_matrix;
+	gint corner;
+	gdouble corner_x, corner_y;
+	gboolean success;
+
+	if (!PyArg_ParseTuple(args, "O!O!i",
+	                      &PycairoImageSurface_Type, &py_surface,
+	                      &PycairoMatrix_Type, &py_matrix, &corner))
+		return NULL;
+
+	success = find_corner_marker(py_surface->surface, &py_matrix->matrix, corner, &corner_x, &corner_y);
+
+	if (success) {
+		result = Py_BuildValue("dd", corner_x, corner_y);
+		return result;
+	} else {
+		PyErr_SetString(PyExc_AssertionError, "Could not find corner marker!");
+		return NULL;
+	}
 }
 
 static PyObject *

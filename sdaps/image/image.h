@@ -49,6 +49,9 @@ get_tiff_resolution (const char *filename, gint page, gdouble *xresolution, gdou
 gboolean
 check_tiff_monochrome (const char *filename);
 
+gboolean
+find_corner_marker(cairo_surface_t *surface, cairo_matrix_t *matrix, gint corner, gdouble *marker_x, gdouble *marker_y);
+
 cairo_matrix_t*
 calculate_matrix(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);
 
