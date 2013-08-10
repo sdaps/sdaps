@@ -996,7 +996,8 @@ calculate_correction_matrix_masked(cairo_surface_t  *surface,
                                    cairo_surface_t  *mask,
                                    cairo_matrix_t   *matrix,
                                    gdouble           mm_x,
-                                   gdouble           mm_y)
+                                   gdouble           mm_y,
+                                   gdouble          *covered)
 {
 	gdouble tmp_x, tmp_y;
 	gint px_x, px_y, px_width, px_height;
@@ -1050,6 +1051,8 @@ calculate_correction_matrix_masked(cairo_surface_t  *surface,
 	/* Just a translation */
 	result->x0 = tmp_x - mm_x;
 	result->y0 = tmp_y - mm_y;
+
+	*covered = coverage / (float) count_black_pixel(mask, 0, 0, px_width, px_height);
 
 	return result;
 }

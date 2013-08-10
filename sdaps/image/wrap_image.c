@@ -266,6 +266,7 @@ wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
 	PycairoMatrix *py_matrix;
 	cairo_matrix_t *correction_matrix;
 	float mm_x, mm_y;
+	gdouble covered;
 
 	if (!PyArg_ParseTuple(args, "O!O!O!ff",
 	                      &PycairoImageSurface_Type, &py_surface,
@@ -274,12 +275,12 @@ wrap_calculate_correction_matrix_masked(PyObject *self, PyObject *args)
 	                      &mm_x, &mm_y))
 		return NULL;
 
-	correction_matrix = calculate_correction_matrix_masked(py_surface->surface, py_mask->surface, &py_matrix->matrix, mm_x, mm_y);
+	correction_matrix = calculate_correction_matrix_masked(py_surface->surface, py_mask->surface, &py_matrix->matrix, mm_x, mm_y, &covered);
 
 	if (correction_matrix) {
 		result = PycairoMatrix_FromMatrix(correction_matrix);
 		g_free(correction_matrix);
-		return result;
+		return Py_BuildValue("Nd", result, covered);
 	} else {
 		PyErr_SetString(PyExc_AssertionError, "Could not calculate the corrected matrix!");
 		return NULL;

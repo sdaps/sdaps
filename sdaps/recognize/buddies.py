@@ -642,10 +642,15 @@ class Checkbox(Box):
 
         surf, xoff, yoff = self.get_outline_mask()
 
-        matrix = img.recognize.correction_matrix_masked(
+        matrix, covered = img.recognize.correction_matrix_masked(
             self.obj.x, self.obj.y,
             surf
         )
+        # Calculate some sort of quality for the checkbox position
+        if covered < defs.image_line_coverage:
+            pos_quality = 0
+        else:
+            pos_quality = min(covered + 0.2, 1)
 
         x, y = matrix.transform_point(self.obj.x, self.obj.y)
         width, height = matrix.transform_distance(self.obj.width, self.obj.height)
@@ -697,7 +702,7 @@ class Checkbox(Box):
                         quality = metric_quality
 
         self.obj.data.state = state
-        self.obj.data.quality = quality
+        self.obj.data.quality = min(quality, pos_quality)
 
 
 class Textbox(Box):
