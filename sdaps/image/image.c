@@ -668,6 +668,7 @@ test_corner_marker(cairo_surface_t *surface,
 	gboolean h_found_line;
 	gdouble v_x1, v_x2, v_y1, v_y2;
 	gboolean v_found_line;
+	gint width, height;
 
 	/* We just try to find both right away, even though we can only
 	 * expect to find one of them. */
@@ -710,6 +711,20 @@ test_corner_marker(cairo_surface_t *surface,
 	calc_intersection(h_x1, h_y1, h_x2, h_y2,
 	                  v_x1, v_y1, v_x2, v_y2,
 	                  x_result, y_result);
+
+	/* Check that the resulting position is not on the border of the image. */
+	width = cairo_image_surface_get_width (surface);
+	height = cairo_image_surface_get_height (surface);
+
+	if (*x_result - 3*line_width <= 0)
+		return FALSE;
+	if (*x_result + 3*line_width >= width)
+		return FALSE;
+
+	if (*y_result - 3*line_width <= 0)
+		return FALSE;
+	if (*y_result + 3*line_width >= height)
+		return FALSE;
 
 	return TRUE;
 }
