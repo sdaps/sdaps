@@ -92,7 +92,7 @@ class Sheet(model.buddy.Buddy):
 
         # Reload any image that is rotated.
         for page, image in enumerate(self.obj.images):
-            if image.rotated:
+            if image.rotated and not image.ignored:
                 image.surface.load()
                 # And redo the whole matrix stuff ...
                 # XXX: It would be better to manipulate the matrix instead.
