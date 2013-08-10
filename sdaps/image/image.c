@@ -363,7 +363,17 @@ follow_line(cairo_surface_t *surface,
 			coverage = coverage_1 + coverage_2 + coverage_3;
 
 			if ((coverage >= (3*line_width * line_width) * LINE_COVERAGE) && (coverage > max_coverage)) {
-				gint p_x, p_y;
+				gint p_x, p_y, cov_area;
+
+				/* Is this really a "line", ie. is the surrounding area *not* dark. */
+				cov_area = count_black_pixel(surface,
+				                             x + offset * y_dir - line_width - line_width / 2,
+				                             y + offset * x_dir - line_width - line_width / 2,
+				                             line_width * 3, line_width * 3);
+
+				if ((abs(x - start_x + y - start_y) > line_width*1.5) && cov_area >= 2*coverage)
+					continue;
+
 				found_segment = TRUE;
 				found_offset = offset;
 				max_coverage = coverage;
@@ -445,7 +455,17 @@ follow_line(cairo_surface_t *surface,
 			coverage = coverage_1 + coverage_2 + coverage_3;
 
 			if ((coverage >= (3*line_width * line_width) * LINE_COVERAGE) && (coverage > max_coverage)) {
-				gint p_x, p_y;
+				gint p_x, p_y, cov_area;
+
+				/* Is this really a "line", ie. is the surrounding area *not* dark. */
+				cov_area = count_black_pixel(surface,
+				                             x + offset * y_dir - line_width - line_width / 2,
+				                             y + offset * x_dir - line_width - line_width / 2,
+				                             line_width * 3, line_width * 3);
+
+				if ((abs(x - start_x + y - start_y) > line_width*1.5) && cov_area >= 2*coverage)
+					continue;
+
 				found_segment = TRUE;
 				found_offset = offset;
 				max_coverage = coverage;
