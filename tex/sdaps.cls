@@ -120,7 +120,7 @@
 \RequirePackage[T1]{fontenc}
 
 % color
-\RequirePackage[table]{xcolor}
+\RequirePackage{color}
 
 % Symbols (boxes)
 \RequirePackage{amssymb}
@@ -679,10 +679,6 @@
 \definecolor{sectionbgcolor}{gray}{0.8}
 \definecolor{sectionfgcolor}{gray}{0.0}
 
-\definecolor{groupevenrowcolor}{gray}{1.0}
-\definecolor{groupoddrowcolor}{gray}{1.0}
-
-
 % Execute sdaps.opt file to allow SDAPS to override any options
 \InputIfFileExists{sdaps.opt}{}{}
 
@@ -946,8 +942,7 @@
   \question{#1}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1} %
   \setcounter{choicegroupnumchoices}{0} %
-  \rowcolors{1}{groupoddrowcolor}{groupevenrowcolor}%
-  \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{X*{\thechoicegroupnumchoices}{c}}\hiderowcolors} %
+  \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{X*{\thechoicegroupnumchoices}{c}}} %
   \global\def\@sdaps@choicegroup@boxes{} %
 }{%
   \ifnum\thechoicegroupnumchoices>-1 %
@@ -963,12 +958,8 @@
   % This is not really elegant, couldn't we just check whether choicegroup@start
   % is empty?
   \ifnum\thechoicegroupnumchoices>0
-    % And set the row number to zero (as we don't want to "colorize" the header)
-    \global\rownum=\z@%
     % Move to the next line (as it is not part of the @start macro)
     \\ %
-    % Enable row colors
-    \showrowcolors%
     \setcounter{choicegroupnumchoices}{-1} %
   \fi %
   \protectedimmediatewrite\sdapsoutfile{QObject-Choice=#1}%
@@ -1011,7 +1002,6 @@
   \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1}%
   \@sdaps@markenvactivetrue%
   \@sdaps@generatemarkboxes%
-  \rowcolors{1}{groupoddrowcolor}{groupevenrowcolor}%
   \tabularx{\linewidth}{Xr*{\themarkcheckboxcount}{c}l}
 }{%
   \@sdaps@markenvactivefalse%
