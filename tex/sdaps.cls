@@ -56,6 +56,7 @@
 
 \newif\if@style@classic\@style@classicfalse
 \newif\if@style@codecxxviii\@style@codecxxviiitrue
+\def\@sdaps@style{code128}%
 
 \DefineFamily{SDAPS}
 \DefineFamilyMember{SDAPS}
@@ -63,14 +64,21 @@
 {%
   \KOMA@set@ncmdkey{style}{@tempa}{%
     {classic}{0},%
-    {code128}{1}%
+    {code128}{1},%
+    {custom}{2}%
   }{#1}%
   \ifcase \@tempa\relax
-    \@style@classictrue
-    \@style@codecxxviiifalse
+    \@style@classictrue%
+    \@style@codecxxviiifalse%
+    \def\@sdaps@style{classic}%
   \or
     \@style@classicfalse%
     \@style@codecxxviiitrue%
+    \def\@sdaps@style{code128}%
+  \or
+    \@style@classicfalse%
+    \@style@codecxxviiifalse%
+    \def\@sdaps@style{custom}%
   \fi
 }
 
@@ -499,12 +507,7 @@
     \protectedimmediatewrite\sdapsoutfile{Duplex=False}
   \fi
   % Only one can be true ...
-  \if@style@classic
-    \protectedimmediatewrite\sdapsoutfile{Style=classic}
-  \fi
-  \if@style@codecxxviii
-    \protectedimmediatewrite\sdapsoutfile{Style=code128}
-  \fi
+  \protectedimmediatewrite\sdapsoutfile{Style=\@sdaps@style}
   \protectedimmediatewrite\sdapsoutfile{GlobalID=\globalid}
   \protectedimmediatewrite\sdapsoutfile{GlobalIDLabel=\globalidlabel}
   %
