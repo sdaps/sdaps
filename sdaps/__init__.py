@@ -55,6 +55,7 @@ def main(local_run=False):
     import add
     import annotate
     import boxgallery
+    import convert
     import cover
     import csvdata
     import gui
