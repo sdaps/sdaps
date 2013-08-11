@@ -104,7 +104,7 @@
 \newcolumntype{Y}{>{\raggedleft}X}
 
 % Einheiten
-\RequirePackage[dp=1]{siunitx}
+\RequirePackage{siunitx}
 
 % Listen
 \RequirePackage{mdwlist}
