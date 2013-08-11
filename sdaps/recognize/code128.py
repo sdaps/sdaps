@@ -17,130 +17,135 @@
 
 from sdaps import defs
 
+from sdaps import model
 from sdaps.utils.exceptions import RecognitionError
 from sdaps.utils.barcode import read_barcode
 
 
-# Reading the metainformation of CODE-128 style questionnaires.
+# Reading the metainformation of CODE-128 style questionnaires. See classic.py
+# for some more information.
 
-def get_page_rotation(image):
-    # Returns page rotation or "None" if it cannot be retrieved
+class Image(model.buddy.Buddy):
 
-    # Figure out wether the page is rotated by looking for a barcode first
-    # at the bottom right, then at the top left.
-    # Note that we do not care about the value of the barcode, we are happy
-    # to simply know that it exists.
+    __metaclass__ = model.buddy.Register
+    name = 'style'
+    obj_class = model.sheet.Image
 
-    paper_width = image.obj.sheet.survey.defs.paper_width
-    paper_height = image.obj.sheet.survey.defs.paper_height
+    def get_page_rotation(self):
+        # Returns page rotation or "None" if it cannot be retrieved
 
-    # Search for the barcode in the lower left corner.
-    # Note that we cannot find another barcode this way, because the one in the
-    # center of the page is not complete
-    code = \
-        read_barcode(image.obj.surface.surface, image.obj.matrix.mm_to_px(),
-                     paper_width / 2,
-                     paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
-                     paper_width / 2,
-                     defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+        # Figure out wether the page is rotated by looking for a barcode first
+        # at the bottom right, then at the top left.
+        # Note that we do not care about the value of the barcode, we are happy
+        # to simply know that it exists.
 
-    if code is None:
-        # Well, that failed, so try to search the upper right corner instead
+        paper_width = self.obj.sheet.survey.defs.paper_width
+        paper_height = self.obj.sheet.survey.defs.paper_height
+
+        # Search for the barcode in the lower left corner.
+        # Note that we cannot find another barcode this way, because the one in the
+        # center of the page is not complete
         code = \
-            read_barcode(image.obj.surface.surface, image.obj.matrix.mm_to_px(),
-                         0, 0,
+            read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
+                         paper_width / 2,
+                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
                          paper_width / 2,
                          defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
-        if code is not None:
-            return True
+        if code is None:
+            # Well, that failed, so try to search the upper right corner instead
+            code = \
+                read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
+                             0, 0,
+                             paper_width / 2,
+                             defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+
+            if code is not None:
+                return True
+            else:
+                return None
         else:
+            return False
+
+
+    def get_page_number(self):
+        # Returns page number or "None" if it cannot be retrieved
+
+        # In this function assume that the rotation is correct already.
+        paper_width = self.obj.sheet.survey.defs.paper_width
+        paper_height = self.obj.sheet.survey.defs.paper_height
+
+        # Search for the barcode in the lower left corner.
+        code = \
+            read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
+                         paper_width / 2,
+                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
+                         paper_width / 2,
+                         defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+
+        # The code needs to be entirely numeric and at least 4 characters for the page
+        if code is None or(not code.isdigit() and len(code) < 4):
             return None
-    else:
-        return False
 
+        # The page number is in the lower four digits, simply extract it and convert
+        # to integer
+        return int(code[-4:])
 
-def get_page_number(image):
-    # Returns page number or "None" if it cannot be retrieved
+    def get_survey_id(self):
+        # Returns the survey ID or "None" if it cannot be retrieved
 
-    # In this function assume that the rotation is correct already.
-    paper_width = image.obj.sheet.survey.defs.paper_width
-    paper_height = image.obj.sheet.survey.defs.paper_height
+        # In this function assume that the rotation is correct already.
+        paper_width = self.obj.sheet.survey.defs.paper_width
+        paper_height = self.obj.sheet.survey.defs.paper_height
 
-    # Search for the barcode in the lower left corner.
-    code = \
-        read_barcode(image.obj.surface.surface, image.obj.matrix.mm_to_px(),
-                     paper_width / 2,
-                     paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
-                     paper_width / 2,
-                     defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+        # Search for the barcode in the lower left corner.
+        code = \
+            read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
+                         paper_width / 2,
+                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
+                         paper_width / 2,
+                         defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
-    # The code needs to be entirely numeric and at least 4 characters for the page
-    if code is None or(not code.isdigit() and len(code) < 4):
-        return None
+        if code is None or not code.isdigit() or len(code) <= 4:
+            return None
 
-    # The page number is in the lower four digits, simply extract it and convert
-    # to integer
-    return int(code[-4:])
+        return int(code[:-4])
 
+    def get_questionnaire_id(self):
+        # Returns the questionnaire ID or "None" if it cannot be retrieved
 
-def get_survey_id(image):
-    # Returns the survey ID or "None" if it cannot be retrieved
+        # In this function assume that the rotation is correct already.
+        paper_width = self.obj.sheet.survey.defs.paper_width
+        paper_height = self.obj.sheet.survey.defs.paper_height
 
-    # In this function assume that the rotation is correct already.
-    paper_width = image.obj.sheet.survey.defs.paper_width
-    paper_height = image.obj.sheet.survey.defs.paper_height
+        # Search for the barcode on the bottom left of the page
+        code = \
+            read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
+                         0,
+                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
+                         paper_width / 2,
+                         defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
-    # Search for the barcode in the lower left corner.
-    code = \
-        read_barcode(image.obj.surface.surface, image.obj.matrix.mm_to_px(),
-                     paper_width / 2,
-                     paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
-                     paper_width / 2,
-                     defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+        # Simply return the code, it may be alphanumeric, we don't care here
+        # XXX: Is that assumption sane?
+        return code
 
-    if code is None or not code.isdigit() or len(code) <= 4:
-        return None
+    def get_global_id(self):
+        # Returns the global ID or "None" if it cannot be retrieved
 
-    return int(code[:-4])
+        # In this function assume that the rotation is correct already.
+        paper_width = self.obj.sheet.survey.defs.paper_width
+        paper_height = self.obj.sheet.survey.defs.paper_height
 
+        # Search for the barcode in the bottom center of the page
+        code = \
+            read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
+                         paper_width / 4,
+                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
+                         paper_width / 2,
+                         defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
-def get_questionnaire_id(image):
-    # Returns the questionnaire ID or "None" if it cannot be retrieved
-
-    # In this function assume that the rotation is correct already.
-    paper_width = image.obj.sheet.survey.defs.paper_width
-    paper_height = image.obj.sheet.survey.defs.paper_height
-
-    # Search for the barcode on the bottom left of the page
-    code = \
-        read_barcode(image.obj.surface.surface, image.obj.matrix.mm_to_px(),
-                     0,
-                     paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
-                     paper_width / 2,
-                     defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
-
-    # Simply return the code, it may be alphanumeric, we don't care here
-    # XXX: Is that assumption sane?
-    return code
-
-
-def get_global_id(image):
-    # Returns the global ID or "None" if it cannot be retrieved
-
-    # In this function assume that the rotation is correct already.
-    paper_width = image.obj.sheet.survey.defs.paper_width
-    paper_height = image.obj.sheet.survey.defs.paper_height
-
-    # Search for the barcode in the bottom center of the page
-    code = \
-        read_barcode(image.obj.surface.surface, image.obj.matrix.mm_to_px(),
-                     paper_width / 4,
-                     paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
-                     paper_width / 2,
-                     defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
-
-    # Simply return the code, it may be alphanumeric, we don't care here
-    return code
+        # Simply return the code, it may be alphanumeric, we don't care here
+        return code
 
 

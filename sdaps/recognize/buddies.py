@@ -318,43 +318,46 @@ class Image(model.buddy.Buddy):
         model.buddy.Buddy.__init__(self, *args)
 
         if self.obj.sheet.survey.defs.style == "classic":
-            import classic as style_funcs
+            import classic
         elif self.obj.sheet.survey.defs.style == "code128":
-            import code128 as style_funcs
+            import code128
+        elif self.obj.sheet.survey.defs.style == "custom":
+            if not hasattr(self.obj, "style"):
+                import sys
+                log.error(_("No style buddy loaded. This needs to be done for the \"custom\" style!"))
+                sys.exit(1)
         else:
             raise AssertionError
-
-        self.style_funcs = style_funcs
 
     def calculate_rotation(self):
         if self.obj.ignored:
             self.obj.rotated = None
         else:
-            self.obj.rotated = self.style_funcs.get_page_rotation(self)
+            self.obj.rotated = self.obj.style.get_page_rotation()
 
     def calculate_page_number(self):
         if self.obj.ignored:
             self.obj.page_number = None
         else:
-            self.obj.page_number = self.style_funcs.get_page_number(self)
+            self.obj.page_number = self.obj.style.get_page_number()
 
     def calculate_survey_id(self):
         if self.obj.ignored:
             self.obj.survey_id = None
         else:
-            self.obj.survey_id = self.style_funcs.get_survey_id(self)
+            self.obj.survey_id = self.obj.style.get_survey_id()
 
     def calculate_questionnaire_id(self):
         if self.obj.ignored:
             self.obj.questionnaire_id = None
         else:
-            self.obj.questionnaire_id = self.style_funcs.get_questionnaire_id(self)
+            self.obj.questionnaire_id = self.obj.style.get_questionnaire_id()
 
     def calculate_global_id(self):
         if self.obj.ignored:
             self.obj.global_id = None
         else:
-            self.obj.global_id = self.style_funcs.get_global_id(self)
+            self.obj.global_id = self.obj.style.get_global_id()
 
     def clean(self):
         self.obj.surface.clean()

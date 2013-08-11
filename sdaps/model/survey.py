@@ -27,7 +27,7 @@ from sdaps import log
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-valid_styles = ['classic', 'code128']
+valid_styles = ['classic', 'code128', 'custom']
 
 
 class Defs(object):
@@ -308,6 +308,9 @@ class Survey(object):
                     log.error(_("Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!") % (c, qid))
                     sys.exit(1)
             return qid
+        elif self.defs.style == "custom":
+            log.error(_("SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this yourself somehow!"))
+            sys.exit(1)
         else:
             AssertionError()
 

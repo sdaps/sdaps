@@ -18,6 +18,7 @@
 
 from sdaps import defs
 
+from sdaps import model
 from sdaps.utils.exceptions import RecognitionError
 
 from sdaps.utils.ugettext import ugettext, ungettext
@@ -34,76 +35,78 @@ _ = ugettext
 # If no data can be retrieved(because eg. it is not printed on that
 # page) they may return None to indicate this.
 
-def get_page_rotation(image):
-    # Returns page rotation or "None" if it cannot be retrieved
+class Image(model.buddy.Buddy):
 
-    res = get_pagenumber_and_rotation(image)
-    if res is None:
+    __metaclass__ = model.buddy.Register
+    name = 'style'
+    obj_class = model.sheet.Image
+
+    def get_page_rotation(self):
+        # Returns page rotation or "None" if it cannot be retrieved
+
+        res = get_pagenumber_and_rotation(self)
+        if res is None:
+            return None
+
+        return res[0]
+
+    def get_page_number(self):
+        # Returns page number or "None" if it cannot be retrieved
+        # Returns page number rotation or "None" if it cannot be retrieved
+
+        res = get_pagenumber_and_rotation(self)
+        if res is None:
+            return None
+        # The page may not be rotated at this point
+        if res[0]:
+            raise RecognitionError
+
+        return res[1]
+
+    def get_survey_id(self):
+        # Returns the survey ID or "None" if it cannot be retrieved
+
+        if self.obj.page_number % 2 == 0 or \
+           self.obj.sheet.survey.questionnaire.page_count == 1:
+            pos = self.obj.sheet.survey.defs.get_survey_id_pos()
+
+            survey_id = read_codebox(self,
+                                     pos[0], pos[2])
+            survey_id = read_codebox(self,
+                                     pos[1], pos[2],
+                                     survey_id)
+
+            return survey_id
+        else:
+            return None
+
+    def get_questionnaire_id(self):
+        # Returns the questionnaire ID or "None" if it cannot be retrieved
+
+        if self.obj.page_number % 2 == 0 or \
+           self.obj.sheet.survey.questionnaire.page_count == 1:
+            pos = self.obj.sheet.survey.defs.get_questionnaire_id_pos()
+
+            questionnaire_id = read_codebox(self,
+                                            pos[0], pos[2])
+
+            return questionnaire_id
+        else:
+            return None
+
+    def get_global_id(self):
+        # The classic style does not support a global ID property.
         return None
-
-    return res[0]
-
-
-def get_page_number(image):
-    # Returns page number or "None" if it cannot be retrieved
-    # Returns page number rotation or "None" if it cannot be retrieved
-
-    res = get_pagenumber_and_rotation(image)
-    if res is None:
-        return None
-    # The page may not be rotated at this point
-    if res[0]:
-        raise RecognitionError
-
-    return res[1]
-
-
-def get_survey_id(image):
-    # Returns the survey ID or "None" if it cannot be retrieved
-
-    if image.obj.page_number % 2 == 0 or \
-       image.obj.sheet.survey.questionnaire.page_count == 1:
-        pos = image.obj.sheet.survey.defs.get_survey_id_pos()
-
-        survey_id = read_codebox(image,
-                                 pos[0], pos[2])
-        survey_id = read_codebox(image,
-                                 pos[1], pos[2],
-                                 survey_id)
-
-        return survey_id
-    else:
-        return None
-
-
-def get_questionnaire_id(image):
-    # Returns the questionnaire ID or "None" if it cannot be retrieved
-
-    if image.obj.page_number % 2 == 0 or \
-       image.obj.sheet.survey.questionnaire.page_count == 1:
-        pos = image.obj.sheet.survey.defs.get_questionnaire_id_pos()
-
-        questionnaire_id = read_codebox(image,
-                                        pos[0], pos[2])
-
-        return questionnaire_id
-    else:
-        return None
-
-
-def get_global_id(image):
-    # The classic style does not support a global ID property.
-    return None
 
 
 ############################
 # Internal Helpers
 ############################
 
-def read_codebox(image, x, y, code=0):
+def read_codebox(self, x, y, code=0):
     for i in range(defs.codebox_length):
         code <<= 1
-        coverage = image.get_coverage(
+        coverage = self.obj.recognize.get_coverage(
             x + (i * defs.codebox_step) + defs.codebox_offset,
             y + defs.codebox_offset,
             defs.codebox_step - 2 * defs.codebox_offset,
@@ -114,7 +117,7 @@ def read_codebox(image, x, y, code=0):
     return code
 
 
-def get_pagenumber_and_rotation(image):
+def get_pagenumber_and_rotation(self):
     # The coordinates in defs are the center of the line, not the bounding box of the box ...
     # Its a bug im stamp
     # So we need to adjust them
@@ -122,13 +125,13 @@ def get_pagenumber_and_rotation(image):
     pt = 1.0 / 72.0 * 25.4
 
     # Check whether there is a valid transformation matrix. If not simply return.
-    if image.obj.matrix.mm_to_px(False) is None:
+    if self.obj.matrix.mm_to_px(False) is None:
         return
 
     width = defs.corner_box_width
     height = defs.corner_box_height
     padding = defs.corner_box_padding
-    survey = image.obj.sheet.survey
+    survey = self.obj.sheet.survey
     corner_boxes_positions = [
         (defs.corner_mark_left + padding, defs.corner_mark_top + padding),
         (survey.defs.paper_width - defs.corner_mark_right - padding - width, defs.corner_mark_top + padding),
@@ -137,7 +140,7 @@ def get_pagenumber_and_rotation(image):
          survey.defs.paper_height - defs.corner_mark_bottom - padding - height)
     ]
     corners = [
-        int(image.get_coverage(
+        int(self.obj.recognize.get_coverage(
             corner[0] - half_pt,
             corner[1] - half_pt,
             width + pt,

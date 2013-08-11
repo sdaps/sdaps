@@ -293,6 +293,11 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
                     if survey.global_id is not None:
                         draw_code128_global_id(canvas, survey)
+            elif survey.defs.style == "custom":
+                # Only draw corner marker
+                draw_corner_marks(survey, canvas)
+
+                pass
             else:
                 raise AssertionError()
 

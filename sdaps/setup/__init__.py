@@ -71,7 +71,7 @@ parser.add_argument('--global-id',
     dest='global_id')
 
 parser.add_argument('--style',
-    choices=["code128", "classic"],
+    choices=["code128", "classic", "custom"],
     help=_('The stamping style to use. Should be either "classic" or "code128". Use "code128" for more features.'),
     dest='style',
     default="code128")
