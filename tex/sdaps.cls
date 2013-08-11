@@ -1045,18 +1045,18 @@
   \setcounter{maxchoiceitems}{#1}%
   \question{#2}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Choice=\arabic{section}.\arabic{subsection}. #2}%
-  \tabularx{\linewidth}{*{\themaxchoiceitems}{X}}%
-  % We insert dummy elements into each cell, because otherwise there may be
-  % layouting issues.
   \global\def\@sdaps@choiceitems@dummy{}%
   \loop{}%
   \ifnum\thechoiceitems<\themaxchoiceitems{\addtocounter{choiceitems}{1}} \global\edef\@sdaps@choiceitems@dummy{\@sdaps@choiceitems@dummy &}%
   \repeat%
+  \setcounter{choiceitems}{1}%
+  \tabularx{\linewidth}{*{\themaxchoiceitems}{X}}%
+  % We insert dummy elements into each cell, because otherwise there may be
+  % layouting issues.
   \@sdaps@choiceitems@dummy%
    \rule[-1em]{0pt}{3em}% Insert known space (1em below, 2em above the baseline)
    \cr%
   \noalign{\vspace{-\extrarowheight}\vspace{-3.0em}}% Subtract known space again.
-  \setcounter{choiceitems}{1}%
 }{%
   \endtabularx%
 }
