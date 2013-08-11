@@ -58,12 +58,25 @@ parser.add_argument('images',
 @script.connect(parser)
 @script.logfile
 def add(cmdline):
-    from sdaps import image
-    import subprocess
     import sys
-    import shutil
 
     survey = model.survey.Survey.load(cmdline['project'])
+
+    for file in cmdline['images']:
+
+        print _('Processing %s') % file
+
+        add_image(survey, file, cmdline['duplex'], cmdline['force'], cmdline['copy'])
+
+        print _('Done')
+
+    survey.save()
+
+
+def add_image(survey, file, duplex_scan=False, force=False, copy=True):
+
+    from sdaps import image
+    import shutil
 
     # Insert dummy pages if the survey is duplex and the duplex option was not
     # passed
@@ -78,64 +91,58 @@ def add(cmdline):
 
         # In simplex mode insertion of dummy pages depends on the command line
         # optoin (default is True)
-        if cmdline['duplex']:
+        if duplex_scan:
             insert_dummy_pages = False
         else:
             insert_dummy_pages = True
 
-    for file in cmdline['images']:
 
-        print _('Processing %s') % file
 
-        if not image.check_tiff_monochrome(file):
-            print _('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.') % (file,)
-            raise AssertionError()
+    if not image.check_tiff_monochrome(file):
+        print _('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.') % (file,)
+        raise AssertionError()
 
-        num_pages = image.get_tiff_page_count(file)
+    num_pages = image.get_tiff_page_count(file)
 
-        c = survey.questionnaire.page_count
-        if not insert_dummy_pages:
-            c = c * image_count_factor
+    c = survey.questionnaire.page_count
+    if not insert_dummy_pages:
+        c = c * image_count_factor
 
-        # This test is on the image count that needs to come from the file
-        if num_pages % c != 0 and not cmdline['force']:
-            print _('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c)
-            continue
+    # This test is on the image count that needs to come from the file
+    if num_pages % c != 0 and not force:
+        print _('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c)
+        return
 
-        if insert_dummy_pages:
-            c = c * image_count_factor
+    if insert_dummy_pages:
+        c = c * image_count_factor
 
-        if cmdline['copy']:
-            tiff = survey.new_path('%i.tif')
-            shutil.copyfile(file, tiff)
-        else:
-            tiff = file
+    if copy:
+        tiff = survey.new_path('%i.tif')
+        shutil.copyfile(file, tiff)
+    else:
+        tiff = file
 
-        if cmdline['copy']:
-            tiff = os.path.basename(tiff)
-        else:
-            tiff = os.path.relpath(os.path.abspath(tiff), survey.survey_dir)
+    if copy:
+        tiff = os.path.basename(tiff)
+    else:
+        tiff = os.path.relpath(os.path.abspath(tiff), survey.survey_dir)
 
-        pages = range(num_pages)
-        while len(pages) > 0:
-            sheet = model.sheet.Sheet()
-            survey.add_sheet(sheet)
-            while len(pages) > 0 and len(sheet.images) < c:
+    pages = range(num_pages)
+    while len(pages) > 0:
+        sheet = model.sheet.Sheet()
+        survey.add_sheet(sheet)
+        while len(pages) > 0 and len(sheet.images) < c:
+            img = model.sheet.Image()
+            sheet.add_image(img)
+            img.filename = tiff
+            img.tiff_page = pages.pop(0)
+
+            # And a dummy page if required
+            if insert_dummy_pages:
                 img = model.sheet.Image()
                 sheet.add_image(img)
-                img.filename = tiff
-                img.tiff_page = pages.pop(0)
 
-                # And a dummy page if required
-                if insert_dummy_pages:
-                    img = model.sheet.Image()
-                    sheet.add_image(img)
-
-                    img.filename = "DUMMY"
-                    img.tiff_page = -1
-                    img.ignored = True
-
-        print _('Done')
-
-    survey.save()
+                img.filename = "DUMMY"
+                img.tiff_page = -1
+                img.ignored = True
 
