@@ -51,12 +51,7 @@ parser.add_argument('images',
 @script.connect(parser)
 @script.logfile
 def convert(cmdline):
-    import subprocess
     import sys
-    import shutil
-
-    from sdaps import image
-    from sdaps.utils import opencv
 
     if cmdline['output'] is None:
         log.error(_("No output filename specified!"))
@@ -65,16 +60,24 @@ def convert(cmdline):
     # We need a survey only for the paper size!
     survey = model.survey.Survey.load(cmdline['project'])
 
-    for i, (img, filename, page) in enumerate(opencv.iter_images_and_pages(cmdline['images'])):
+    convert_images(cmdline['images'], cmdline['output'], survey.defs.paper_width, survey.defs.paper_height, cmdline['transform'])
+
+def convert_images(images, outfile, paper_width, paper_height, transform=False):
+    from sdaps import image
+    from sdaps.utils import opencv
+
+    for i, (img, filename, page) in enumerate(opencv.iter_images_and_pages(images)):
         img = opencv.ensure_portrait(img)
         img = opencv.sharpen(img)
 
-        if cmdline['transform']:
+        if transform:
             try:
-                img = opencv.transform_using_corners(img, survey.defs.paper_width, survey.defs.paper_height)
+                img = opencv.transform_using_corners(img, paper_width, paper_height)
             except AssertionError:
                 log.error(_("Could not apply 3D-transformation to image '%s', page %i!") % (filename, page))
 
         mono = opencv.convert_to_monochrome(img)
-        image.write_a1_to_tiff(cmdline['output'], opencv.to_a1_surf(mono))
+        image.write_a1_to_tiff(outfile, opencv.to_a1_surf(mono))
+
+
 
