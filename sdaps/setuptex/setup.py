@@ -48,9 +48,7 @@ def write_latex_override_file(survey, draft=False):
     latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
     if not draft:
         latex_override.write('% We turn of draft mode if questionnaire IDs are not printed.\n')
-        latex_override.write('% Otherwise we turn it on explicitly so that noboday has wrong ideas.\n')
         latex_override.write('\\if@PrintQuestionnaireId\n')
-        latex_override.write('\\@sdaps@drafttrue\n')
         latex_override.write('\\else\n')
         latex_override.write('\\@sdaps@draftfalse\n')
         latex_override.write('\\fi\n')
