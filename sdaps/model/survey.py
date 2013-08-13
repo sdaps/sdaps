@@ -335,6 +335,7 @@ class Survey(object):
                         data.text = unicode()
 
         if self.version < 3:
+            log.warn(msg % (2))
             for sheet in self.sheets:
                 sheet.recognized = False
                 sheet.verified = False
