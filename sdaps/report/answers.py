@@ -153,12 +153,12 @@ class Mark(platypus.Flowable):
     top_margin = 0
     left_margin = 12
 
-    def __init__(self, values, answers, mean, standard_derivation, count, significant=0):
+    def __init__(self, values, answers, mean, standard_deviation, count, significant=0):
         platypus.Flowable.__init__(self)
 
         self.values = values
         self.mean = mean
-        self.standard_derivation = standard_derivation
+        self.standard_deviation = standard_deviation
         self.count = count
 
         self.box_width = 40
@@ -186,7 +186,7 @@ class Mark(platypus.Flowable):
         self.mean_paragraph = \
             platypus.Paragraph(_(u'Mean: %.2f') % self.mean, stylesheet['Normal'])
         self.stdd_paragraph = \
-            platypus.Paragraph(_(u'Standard Deviation: %.2f') % self.standard_derivation, stylesheet['Normal'])
+            platypus.Paragraph(_(u'Standard Deviation: %.2f') % self.standard_deviation, stylesheet['Normal'])
 
     def wrap(self, available_width, available_height):
         self.answers_paragraph.wrap(available_width, available_height)

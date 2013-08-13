@@ -123,7 +123,7 @@ class Mark(Question):
         self.values = dict([(x, 0) for x in range(1, 6)])
         self.significant = 0
         self.mean = 0
-        self.standard_derivation = 0
+        self.standard_deviation = 0
 
     def read(self):
         answer = self.obj.get_answer()
@@ -137,7 +137,7 @@ class Mark(Question):
                 self.values[mark] = self.values[mark] / float(self.count)
             self.mean = sum(
                 [mark * value for mark, value in self.values.items()])
-            self.standard_derivation = math.sqrt(sum([
+            self.standard_deviation = math.sqrt(sum([
                 value * pow(mark - self.mean, 2)
                 for mark, value in self.values.items()]))
             if hasattr(self, 'ref_count'):

@@ -225,7 +225,7 @@ class Mark(Question):
                 self.obj.calculate.values.values(),
                 self.obj.answers,
                 self.obj.calculate.mean,
-                self.obj.calculate.standard_derivation,
+                self.obj.calculate.standard_deviation,
                 self.obj.calculate.count,
                 self.obj.calculate.significant))
             story = [platypus.KeepTogether(story)]
