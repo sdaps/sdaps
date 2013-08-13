@@ -27,6 +27,14 @@ import image
 
 
 class Image(model.buddy.Buddy):
+    """
+    Buddy to load and cache image data. Do not forget to call :py:meth:`clean`
+    when you are done (ie. before moving to the next sheet) or else the
+    surface will be cached indefinately.
+
+    :ivar surface: The cairo A1 surface, after it has been loaded using :py:meth:`load`.
+    :ivar surface_rgb: The cairo RGB24 surface, after it has been loaded using :py:meth:`load_rgb`.
+    """
 
     __metaclass__ = model.buddy.Register
     name = 'surface'

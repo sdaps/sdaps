@@ -35,23 +35,32 @@ class Questionnaire(model.buddy.Buddy):
     obj_class = model.questionnaire.Questionnaire
 
     def init(self):
+        """Initialize or reset the state of the calculate module."""
         self.count = 0
         # iterate over qobjects
         for qobject in self.obj.qobjects:
             qobject.calculate.init()
 
     def read(self):
+        """The function collects the data from a sheet. You should use
+        :py:meth:`Survey.iterate` to call it for each sheet that needs to be
+        counted."""
         self.count += 1
         # iterate over qobjects
         for qobject in self.obj.qobjects:
             qobject.calculate.read()
 
     def calculate(self):
+        """Call once after :py:meth:`Questionnaire.calculate.read` to calculate
+        statistical values like the standard deviation."""
         # iterate over qobjects
         for qobject in self.obj.qobjects:
             qobject.calculate.calculate()
 
     def reference(self):
+        """Can be used to calculate a reference value. You can later check
+        whether there was a significant difference to the previous run. The
+        `significant` property will be set accordingly."""
         # iterate over qobjects
         for qobject in self.obj.qobjects:
             qobject.calculate.reference()
@@ -84,6 +93,12 @@ class Question(QObject):
 
 
 class Choice(Question):
+    """
+    :ivar count: Number of times the question was answered.
+    :ivar values: Dictionary for each box with the ratio the answer was choosen.
+    :ivar significant: Whether there was a significant difference to the reference run.
+    """
+
 
     __metaclass__ = model.buddy.Register
     name = 'calculate'
@@ -113,6 +128,13 @@ class Choice(Question):
 
 
 class Mark(Question):
+    """
+    :ivar count: Number of times the question was answered.
+    :ivar values: Dictionary for each box with the ratio the value was choosen.
+    :ivar mean: The average value that was choosen.
+    :ivar standard_deviation: The average value that was choosen.
+    :ivar significant: Whether there was a significant difference to the reference run.
+    """
 
     __metaclass__ = model.buddy.Register
     name = 'calculate'

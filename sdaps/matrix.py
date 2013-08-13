@@ -18,13 +18,13 @@
 
 u"""
 The matrix module adds support to find out the rotation matrix for a scanned
-page. After loading the(cairo) matrixes can be accessed via two functions:
+page. After loading the (cairo) matrixes can be accessed via two functions:
 
-  model.sheet.Image.matrix.mm_to_px() and
-  model.sheet.Image.matrix.px_to_mm()
+  :py:meth:`model.sheet.Image.matrix.mm_to_px` and
+  :py:meth:`model.sheet.Image.matrix.px_to_mm`
 
-The return value of mm_to_px() can be used to convert milimeter values to pixel
-on the scanned page. px_to_mm() returns the inverse matrix to convert on page
+The return value of :py:meth:`mm_to_px` can be used to convert milimeter values to pixel
+on the scanned page. :py:meth:`px_to_mm` returns the inverse matrix to convert on page
 pixels to millimeter values of the original document.
 
 Both the millimeter and pixel spaces start at the top left corner of the page.

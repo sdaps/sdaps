@@ -31,6 +31,16 @@ valid_styles = ['classic', 'code128']
 
 
 class Defs(object):
+    """General definitions that are valid for this survey.
+
+    :ivar paper_width: Width of the paper in mm.
+    :ivar paper_height: Height of the paper in mm.
+    :ivar print_questionnaire_id: Whether a questionnaire ID is printed on each sheet.
+    :ivar print_survey_id: Whether a survey ID is printed on each sheet.
+    :ivar style: The style that is used for ID marking.
+    :ivar duplex: Whether the questionnaire is duplex or not.
+    """
+
     # Force a certain set of options using slots
     __slots__ = ['paper_width', 'paper_height', 'print_questionnaire_id',
                  'print_survey_id', 'style', 'duplex']
@@ -68,6 +78,17 @@ class Defs(object):
 
 
 class Survey(object):
+
+    """The main survey object.
+
+    :ivar defs: The :py:class:`model.survey.Defs` instance for this survey.
+    :ivar survey_id: The survey ID of this survey.
+    :ivar global_id: The global ID set for this survey. It is used during the "stamp" step.
+    :ivar questionnaire: The py:class:`model.questionnaire.Questionnaire` instance representing the questionnaire.
+    :ivar title: The title of the survey.
+    :ivar info: Dictionary with general information about the survey.
+    :ivar questionnaire_ids: A List of used questionnaire IDs.
+    """
 
     pickled_attrs = set(('sheets', 'defs', 'survey_id', 'questionnaire_ids', 'questionnaire', 'version'))
 
@@ -206,6 +227,7 @@ class Survey(object):
     def get_sheet(self):
         return self.sheets[self.index]
 
+    #: The currently selected sheet. Usually it will be changed by :py:meth:`iterate` or similar.
     sheet = property(get_sheet)
 
     def iterate(self, function, filter=lambda: True, *args, **kwargs):
@@ -270,6 +292,8 @@ class Survey(object):
         return True
 
     def validate_questionnaire_id(self, qid):
+        """Do style specific sanity checks on the questionnaire ID."""
+
         if self.defs.style == "classic":
             # The ID needs to be an integer
             try:
@@ -298,6 +322,8 @@ class Survey(object):
         return dict
 
     def upgrade(self):
+        """Ensure that all data structures conform to this version of SDAPS."""
+
         msg = _('Running upgrade routines for file format version %i')
         if self.version < 2:
             log.warn(msg % (1))
