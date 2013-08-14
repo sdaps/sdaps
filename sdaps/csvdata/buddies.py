@@ -33,7 +33,7 @@ class Questionnaire(model.buddy.Buddy):
             header.extend(qobject.csvdata.export_header())
         self.file = file(self.obj.survey.new_path('data_%i.csv'), 'w')
         self.csv = csv.DictWriter(self.file, header)
-        self.csv.writerow(dict([(value, value) for value in header]))
+        self.csv.writerow({value: value for value in header})
 
     def export_data(self):
         data = {'questionnaire_id': unicode(self.obj.sheet.questionnaire_id),
@@ -85,6 +85,7 @@ class Choice(model.buddy.Buddy):
 
     def export_data(self):
         return dict([(self.obj.id_csv(box.id), box.csvdata.export_data()) for box in self.obj.boxes])
+        return {self.obj.id_csv(box.id) : box.csvdata.export_data() for box in self.obj.boxes}
 
     def import_data(self, data):
         for box in self.obj.boxes:

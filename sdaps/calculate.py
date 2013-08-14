@@ -106,8 +106,8 @@ class Choice(Question):
 
     def init(self):
         self.count = 0
-        self.values = dict([(box.value, 0) for box in self.obj.boxes])
-        self.significant = dict([(box.value, 0) for box in self.obj.boxes])
+        self.values = {box.value: 0 for box in self.obj.boxes}
+        self.significant = {box.value: 0 for box in self.obj.boxes}
 
     def read(self):
         self.count += 1
@@ -142,7 +142,7 @@ class Mark(Question):
 
     def init(self):
         self.count = 0
-        self.values = dict([(x, 0) for x in range(1, 6)])
+        self.values = {box.value + 1: 0 for box in self.obj.boxes}
         self.significant = 0
         self.mean = 0
         self.standard_deviation = 0
