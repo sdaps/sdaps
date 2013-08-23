@@ -267,7 +267,8 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
     print ungettext(u'Creating stamp PDF for %i sheet', u'Creating stamp PDF for %i sheets', sheets) % sheets
     log.progressbar.start(sheets)
     for i in range(sheets):
-        id = questionnaire_ids.pop(0)
+        if questionnaire_ids is not None:
+            id = questionnaire_ids.pop(0)
 
         for j in range(questionnaire_length):
             if survey.defs.style == "classic":
