@@ -886,7 +886,7 @@
     #1%
     \nobreak%
     \kern-0.5\@tempdima%
-    \sides\nobreak%
+    \nobreak\sides\nobreak%
     % Undo the skip following \leavevmode
     \vspace{-\parskip}\nobreak%
     \vspace{-\@tempdimb}\nobreak%
