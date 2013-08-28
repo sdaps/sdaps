@@ -20,12 +20,22 @@ import cairo
 import buddies
 import os.path
 
-def annotate(survey, cmdline):
-    pdf = Poppler.Document.new_from_file('file://' + os.path.abspath(survey.path('questionnaire.pdf')), None)
+def annotate(survey, infile=None, outfile=None):
+    if infile is None:
+        infile = 'file://' + os.path.abspath(survey.path('questionnaire.pdf'))
+    else:
+        infile = 'file://' + os.path.abspath(infile)
+
+    if outfile is None:
+        outfile = survey.path('annotated_questionnaire.pdf')
+
+
+    print infile
+    pdf = Poppler.Document.new_from_file(infile, None)
 
     width, height = pdf.get_page(0).get_size()
 
-    output = cairo.PDFSurface(survey.path('annotated_questionnaire.pdf'), 2*width, 2*height)
+    output = cairo.PDFSurface(outfile, 2*width, 2*height)
 
     cr = cairo.Context(output)
 

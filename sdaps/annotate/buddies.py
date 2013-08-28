@@ -27,7 +27,7 @@ from sdaps import model
 from sdaps import defs
 
 colorcycle_pos = 0
-colorcycle = [(1, 0, 0), (1, 1, 0), (0, 1, 1), (1, 0, 1)]
+colorcycle = [(1, 0, 0), (0.5, 0.5, 0), (0, 0.5, 0.5), (0.5, 0, 0.5)]
 
 LINE_WIDTH = 25.4/72
 MIN_FREETEXT_SIZE = 4.0
@@ -94,6 +94,28 @@ class Questionnaire(model.buddy.Buddy):
     obj_class = model.questionnaire.Questionnaire
 
     def draw(self, cr, page_number, layout_info):
+        cr.set_source_rgba(0.0, 0.0, 1.0, 0.5)
+        cr.set_line_width(LINE_WIDTH)
+
+        # Draw corner marks.
+        cr.move_to(defs.corner_mark_left + defs.corner_mark_length, defs.corner_mark_top)
+        cr.line_to(defs.corner_mark_left, defs.corner_mark_top)
+        cr.line_to(defs.corner_mark_left, defs.corner_mark_top+defs.corner_mark_length)
+
+        cr.move_to(self.obj.survey.defs.paper_width - defs.corner_mark_right - defs.corner_mark_length, defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.paper_width - defs.corner_mark_right, defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.paper_width - defs.corner_mark_right, defs.corner_mark_top + defs.corner_mark_length)
+
+        cr.move_to(defs.corner_mark_left + defs.corner_mark_length, self.obj.survey.defs.paper_height - defs.corner_mark_bottom)
+        cr.line_to(defs.corner_mark_left, self.obj.survey.defs.paper_height - defs.corner_mark_top)
+        cr.line_to(defs.corner_mark_left, self.obj.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_length)
+
+        cr.move_to(self.obj.survey.defs.paper_width - defs.corner_mark_right - defs.corner_mark_length, self.obj.survey.defs.paper_height - defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.paper_width - defs.corner_mark_right, self.obj.survey.defs.paper_height - defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.paper_width - defs.corner_mark_right, self.obj.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_length)
+
+        cr.stroke()
+
         for qobject in self.obj.qobjects:
             cycle_color()
             qobject.annotate.draw(cr, page_number, layout_info)

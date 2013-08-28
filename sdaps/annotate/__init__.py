@@ -37,5 +37,5 @@ def annotate(cmdline):
 
     survey = model.survey.Survey.load(cmdline['project'])
 
-    return annotate(survey, cmdline)
+    return annotate(survey)
 
