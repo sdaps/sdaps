@@ -118,7 +118,7 @@ class QObject(buddy.Object):
         pass
 
     def init_id(self, id):
-        self.id = (id[0], id[1] + 1)
+        self.id = id[:-1] + (id[-1] + 1,)
         return self.id
 
     def add_box(self, box):
@@ -173,7 +173,7 @@ class Head(QObject):
         self.title = unicode()
 
     def init_id(self, id):
-        self.id = (id[0] + 1, 0)
+        self.id = (id[0] + 1, ) + (0,)*(len(id)-1)
         return self.id
 
     def __unicode__(self):
