@@ -88,6 +88,22 @@ def setup(survey, cmdline):
         log.error(_("Caught an Exception while parsing the ODT file. The current state is:"))
         print unicode(survey.questionnaire)
         print "------------------------------------"
+        print _("If the dependencies for the \"annotate\" command are installed, then an annotated version will be created next to the original PDF file.")
+        print "------------------------------------"
+
+        # Try to make an annotation
+        try:
+            if questionnaire_pdf.lower().endswith('.pdf'):
+                annotated_pdf = questionnaire_pdf[:-4] + '_annotated.pdf'
+            else:
+                # No .pdf ending? Just append the _annotated.pdf.
+                annotated_pdf = questionnaire_pdf + '_annotated.pdf'
+
+            import sdaps.annotate.annotate as annotate
+            annotate.annotate(survey, questionnaire_pdf, annotated_pdf)
+        except:
+            # Well, whatever
+            pass
 
         raise
 
