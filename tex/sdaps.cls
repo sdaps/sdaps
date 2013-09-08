@@ -950,15 +950,11 @@
 }
 
 
-\newenvironmentx{choicegroup}[2][2]{%
+\newenvironmentx{choicegroup}[2][2=X*{\thechoicegroupnumchoices}{c}]{%
   \question{#1}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1} %
   \setcounter{choicegroupnumchoices}{0} %
-\ifthenelse{\equal{#2}{}}{%
-  \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{X*{\thechoicegroupnumchoices}{c}} }%
-}{
   \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{#2} }%
-}%
   \global\def\@sdaps@choicegroup@boxes{} %
 }{%
   \ifnum\thechoicegroupnumchoices>-1 %
