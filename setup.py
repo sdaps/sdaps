@@ -163,6 +163,7 @@ the tools to later analyse the scanned data, and create a report.
                 'sdaps.annotate',
                 'sdaps.boxgallery',
                 'sdaps.cover',
+                'sdaps.convert',
                 'sdaps.csvdata',
                 'sdaps.gui',
                 'sdaps.ids',
