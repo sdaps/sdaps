@@ -38,6 +38,11 @@
 \DeclareOption{pagemark}{\@PAGEMARKtrue}
 \DeclareOption{nopagemark}{\@PAGEMARKfalse}
 
+% enable barcode
+\newif\if@BARCODE\@BARCODEfalse
+\DeclareOption{barcode}{\@BARCODEtrue}
+\DeclareOption{nobarcode}{\@BARCODEfalse}
+
 % Whether sdaps should print the questionnaire id
 \newif\if@PrintQuestionnaireId\@PrintQuestionnaireIdfalse
 \DeclareOption{no_print_questionnaire_id}{\@PrintQuestionnaireIdfalse}
@@ -216,6 +221,7 @@
           \end{scope}
         \fi
 
+        \if@BARCODE
         % We unconditionally print this barcode, it is required for the recognition
         % process.
         \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-\barcodehpad, \barcodevpad)$)}]%
@@ -225,6 +231,7 @@
           \node(barcode)[anchor=south east,outer sep=0,inner sep=0]{\X=\barcodebarwidth\bcorr=\barcodebcorr\barheight=\barcodeheight\expandafter\code\expandafter{\barcodechars}};%
           \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\surveyid\,\paddedpage};%
         \end{scope}
+        \fi
 
         \ifstr{\globalid}{}{}{
           \begin{scope}[shift={($(\paperwidth/2-\edgerightmargin/2+\edgeleftmargin/2, 0) + (0, \edgebottommargin) + (0, \barcodevpad)$)}]%
