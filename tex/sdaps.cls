@@ -18,6 +18,7 @@
 
 % Load scrbase for keyval support
 \RequirePackage{scrkbase}
+\RequirePackage{xargs}
 
 %-------------------------------------------------------------------------------
 % debugging
@@ -941,11 +942,11 @@
 }
 
 
-\newenvironment{choicegroup}[1]{%
+\newenvironmentx{choicegroup}[2][2={X*{\thechoicegroupnumchoices}{c}}]{%
   \question{#1}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1} %
   \setcounter{choicegroupnumchoices}{0} %
-  \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{X*{\thechoicegroupnumchoices}{c}}} %
+  \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{#2}}%
   \global\def\@sdaps@choicegroup@boxes{} %
 }{%
   \ifnum\thechoicegroupnumchoices>-1 %
