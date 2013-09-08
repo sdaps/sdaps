@@ -814,12 +814,18 @@
 \renewcommand{\title}[1]{\def\@title{#1}\protectedimmediatewrite\sdapsoutfile{Title=#1}}
 
 \def\question#1{%
+\ifx&#1&%
+  % #1 is empty
+  \refstepcounter{subsection}%
+ \else
+  % #1 is nonempty
   \subsection{\usekomafont{questionfont}\strut#1\strut}%
   % This is extra spacing after the subsection is removed. By doing this we
   % get exactly one \parskip
   \nobreak%
   \vspace{-0.25\parskip}%
   \nobreak%
+\fi
 }
 
 % http://mrunix.de/forums/showthread.php?t=59943
