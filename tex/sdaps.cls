@@ -18,6 +18,7 @@
 
 % Load scrbase for keyval support
 \RequirePackage{scrkbase}
+\RequirePackage{xargs}
 
 %-------------------------------------------------------------------------------
 % debugging
@@ -37,6 +38,11 @@
 \newif\if@PAGEMARK\@PAGEMARKfalse
 \DeclareOption{pagemark}{\@PAGEMARKtrue}
 \DeclareOption{nopagemark}{\@PAGEMARKfalse}
+
+% enable barcode
+\newif\if@BARCODE\@BARCODEfalse
+\DeclareOption{barcode}{\@BARCODEtrue}
+\DeclareOption{nobarcode}{\@BARCODEfalse}
 
 % Whether sdaps should print the questionnaire id
 \newif\if@PrintQuestionnaireId\@PrintQuestionnaireIdfalse
@@ -98,7 +104,7 @@
 
 % Set default options for scrartcl. Is this done correctly?
 \PassOptionsToClass{headings=small}{scrartcl}
-\PassOptionsToClass{twoside}{scrartcl}
+%\PassOptionsToClass{twoside}{scrartcl}
 % Well, I don't think that this worked in the past ...
 %\PassOptionsToClass{10pt}{scrartcl}
 
@@ -115,11 +121,6 @@
 % required packages
 %-------------------------------------------------------------------------------
 % geometry package
-\RequirePackage{geometry}
-\geometry{hmargin=13mm}
-\geometry{vmargin=25mm}
-%\geometry{top=21mm}
-%\geometry{bottom=25mm}
 
 % ifthen package
 \RequirePackage{ifthen}
@@ -128,7 +129,7 @@
 \RequirePackage[T1]{fontenc}
 
 % color
-\RequirePackage{color}
+%\RequirePackage{color}
 
 % Symbols (boxes)
 \RequirePackage{amssymb}
@@ -216,6 +217,7 @@
           \end{scope}
         \fi
 
+        \if@BARCODE
         % We unconditionally print this barcode, it is required for the recognition
         % process.
         \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-\barcodehpad, \barcodevpad)$)}]%
@@ -225,6 +227,7 @@
           \node(barcode)[anchor=south east,outer sep=0,inner sep=0]{\X=\barcodebarwidth\bcorr=\barcodebcorr\barheight=\barcodeheight\expandafter\code\expandafter{\barcodechars}};%
           \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\surveyid\,\paddedpage};%
         \end{scope}
+        \fi
 
         \ifstr{\globalid}{}{}{
           \begin{scope}[shift={($(\paperwidth/2-\edgerightmargin/2+\edgeleftmargin/2, 0) + (0, \edgebottommargin) + (0, \barcodevpad)$)}]%
@@ -813,12 +816,18 @@
 \renewcommand{\title}[1]{\def\@title{#1}\protectedimmediatewrite\sdapsoutfile{Title=#1}}
 
 \def\question#1{%
+\ifx&#1&%
+  % #1 is empty
+  \refstepcounter{subsection}%
+ \else
+  % #1 is nonempty
   \subsection{\usekomafont{questionfont}\strut#1\strut}%
   % This is extra spacing after the subsection is removed. By doing this we
   % get exactly one \parskip
   \nobreak%
   \vspace{-0.25\parskip}%
   \nobreak%
+\fi
 }
 
 % http://mrunix.de/forums/showthread.php?t=59943
@@ -941,11 +950,11 @@
 }
 
 
-\newenvironment{choicegroup}[1]{%
+\newenvironmentx{choicegroup}[2][2=X*{\thechoicegroupnumchoices}{c}]{%
   \question{#1}%
   \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1} %
   \setcounter{choicegroupnumchoices}{0} %
-  \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{X*{\thechoicegroupnumchoices}{c}}} %
+  \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{#2} }%
   \global\def\@sdaps@choicegroup@boxes{} %
 }{%
   \ifnum\thechoicegroupnumchoices>-1 %
