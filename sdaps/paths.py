@@ -75,12 +75,12 @@ def init(local_run_value, package_path):
         # existiert
         path = base_dir
         while True:
-            new_path = os.path.split(path)[0]
-            assert not path == new_path # Wir wären oben angekommen
-            path = new_path
             if os.path.exists(os.path.join(path, 'share', 'sdaps')):
                 prefix = path
                 break
+            new_path = os.path.split(path)[0]
+            assert not path == new_path, "could not find locales" # Wir wären oben angekommen
+            path = new_path
         # Initialize gettext
         init_gettext(os.path.join(prefix, 'share', 'locale'))
 
