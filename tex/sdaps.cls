@@ -104,7 +104,7 @@
 
 % Set default options for scrartcl. Is this done correctly?
 \PassOptionsToClass{headings=small}{scrartcl}
-\PassOptionsToClass{twoside}{scrartcl}
+%\PassOptionsToClass{twoside}{scrartcl}
 % Well, I don't think that this worked in the past ...
 %\PassOptionsToClass{10pt}{scrartcl}
 
@@ -121,11 +121,6 @@
 % required packages
 %-------------------------------------------------------------------------------
 % geometry package
-\RequirePackage{geometry}
-\geometry{hmargin=13mm}
-\geometry{vmargin=25mm}
-%\geometry{top=21mm}
-%\geometry{bottom=25mm}
 
 % ifthen package
 \RequirePackage{ifthen}
@@ -134,7 +129,7 @@
 \RequirePackage[T1]{fontenc}
 
 % color
-\RequirePackage{color}
+%\RequirePackage{color}
 
 % Symbols (boxes)
 \RequirePackage{amssymb}
