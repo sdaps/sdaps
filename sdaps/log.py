@@ -109,6 +109,9 @@ class Encoder(object):
     def flush(self):
         self.pipe.flush()
 
+    def fileno(self):
+        self.pipe.fileno()
+
 class Logfile(object):
 
     def __init__(self):
@@ -118,7 +121,7 @@ class Logfile(object):
         self.logfile.write(data)
 
     def open(self, filename):
-        logfile = Encoder(file(filename, 'a'))
+        logfile = Encoder(file(filename, 'a', buffering=0))
         logfile.write(self.logfile.getvalue())
         self.logfile = logfile
 
@@ -131,6 +134,9 @@ class Logfile(object):
 
     def flush(self):
         self.logfile.flush()
+
+    def fileno(self):
+        return self.logfile.fileno()
 
 class ProgressBar(object):
 
