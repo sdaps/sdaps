@@ -29,8 +29,6 @@ def annotate(survey, infile=None, outfile=None):
     if outfile is None:
         outfile = survey.path('annotated_questionnaire.pdf')
 
-
-    print infile
     pdf = Poppler.Document.new_from_file(infile, None)
 
     width, height = pdf.get_page(0).get_size()
