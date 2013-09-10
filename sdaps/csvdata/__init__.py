@@ -55,7 +55,7 @@ def csvdata(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
     import csvdata
     if cmdline['direction'] == 'export':
-        return csvdata.csvdata_export(survey, self.obj.survey.new_path('data_%i.csv'), cmdline['filter'])
+        return csvdata.csvdata_export(survey, survey.new_path('data_%i.csv'), cmdline['filter'])
     elif cmdline['direction'] == 'import':
         return csvdata.csvdata_import(survey, cmdline['file'])
     else:
