@@ -135,8 +135,8 @@ def save(img, filename):
 def _fallback_matrix(width, height, paper_width, paper_height):
     """Calcualte a fallback matrix. Basically the same as in matrix.py, should
     be merged somehow!"""
-    xres = width / paper_width
-    yres = height / paper_height
+    xres = width / float(paper_width)
+    yres = height / float(paper_height)
 
     # Assume the smaller size fits better ...
     res = min(xres, yres)
