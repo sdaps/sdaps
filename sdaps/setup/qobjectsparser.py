@@ -44,8 +44,9 @@ class ContentHandler(xml.sax.ContentHandler):
             qobject.setup.validate()
 
     def startElement(self, name, attrs):
-        self.setup_characters()
-        if self.active and name == u'text:p':
+        if name != u'text:span':
+            self.setup_characters()
+        elif self.active and name == u'text:p':
             qobject = attrs[u'text:style-name']
             if qobject in self.parent_styles:
                 qobject = self.parent_styles[qobject]
@@ -66,8 +67,10 @@ class ContentHandler(xml.sax.ContentHandler):
             self.parent_styles[attrs[u'style:name']] = attrs[u'style:parent-style-name']
 
     def endElement(self, name):
-        self.setup_characters()
-        if self.active and self.qobject and name == u'text:p':
+        if name != u'text:span':
+            self.setup_characters()
+
+        elif self.active and self.qobject and name == u'text:p':
             self.last_qobject = self.qobject
             self.qobject = None
         elif self.active and self.answer and name == u'text:p':
