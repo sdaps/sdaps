@@ -15,15 +15,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-u'''
 
-Hinweis zu den Diamantstrukturen
 
-Bei Klassen mit mehreren Basisklassen definiert maximal eine Basisklasse
-eine eigene __init__ - Funktion. Die anderen Klassen sind "nur" Mixin - Klassen.
-Dadurch werden die Probleme der Diamantstruktur umgangen.
+# The code uses multiple inheritance; however, most of the additional base
+# classes are solely used as mixins. This means they must not contain any
+# __init__ functions, as that could cause trouble.
 
-'''
 
 import buddy
 import data
