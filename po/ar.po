@@ -33,7 +33,7 @@ msgstr "قائمة الاوامر|الاوامر:"
 
 #: ../sdaps/add/__init__.py:29
 msgid "Add scanned questionnaires to the survey."
-msgstr ""
+msgstr "إضافة الاسئلة الممسوحة للاستفتاء"
 
 #: ../sdaps/add/__init__.py:30
 msgid ""
