@@ -6,15 +6,15 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-27 17:18+0100\n"
-"PO-Revision-Date: 2013-06-28 16:30+0200\n"
-"Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
-"Language-Team: German <>\n"
+"PO-Revision-Date: 2013-10-28 16:41+0200\n"
+"Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
+"Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Gtranslator 2.91.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.8-dev\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -162,7 +162,7 @@ msgstr ""
 
 #: ../sdaps/convert/__init__.py:29
 msgid "Convert a set of images to the correct image format."
-msgstr ""
+msgstr "Konvertiert einen Satz von Bildern in das passende Format."
 
 #: ../sdaps/convert/__init__.py:30
 msgid ""
@@ -175,25 +175,33 @@ msgid ""
 "        be performed, using this it may be possible to work with photos of\n"
 "        questionnaires instead of scans."
 msgstr ""
+"Dieser Befehl kann angewndet werden, falls die Bilder nicht als monochromes "
+"TIFF gescannt wurden. Alle angegebenen Dateien werden geladen, konvertiert "
+"und als mehrseitiges TIFF mit einem Bit Farbtiefe gespeichert. Optional kann "
+"eine 3D-Transformation angewendet werden. Dadurch können auch Fotos "
+"anstelle von Scans verarbeitet werden."
 
 #: ../sdaps/convert/__init__.py:38
 msgid ""
 "Do a 3D-transformation after finding the corner marks. If the\n"
 "        corner marks are not found then the image will be added as-is."
 msgstr ""
+"Wende eine 3D-Transformation an, nachdem die Eckmarkierungen gefunden "
+"wurden. Falls keine Eckmarken gefunden wird das Bild unverändert "
+"hinzugefügt."
 
 #: ../sdaps/convert/__init__.py:44
 msgid "The location of the output file. Must be given."
-msgstr ""
+msgstr "Speicherort der Ausgabe. Pflichtparamter."
 
 #: ../sdaps/convert/__init__.py:57
 msgid "No output filename specified!"
-msgstr ""
+msgstr "Ausgabedatei nicht angegeben!"
 
 #: ../sdaps/convert/__init__.py:77
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
-msgstr ""
+msgstr "Konnte die 3D-Transformation nicht auf Bild '%s' auf Seite %i anwenden!"
 
 #: ../sdaps/cover/__init__.py:27
 msgid "Create a cover for the questionnaires."
@@ -503,6 +511,8 @@ msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
 msgstr ""
+"SDAPS kann im \"custom\"-Stil keine Fragebogen ID eintragen. Tun Sie das "
+"irgendwie selbst!"
 
 #: ../sdaps/model/survey.py:330
 #, python-format
@@ -620,6 +630,7 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:327
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
+"Keine Style-Definition geladen. Dies ist beim \"custom\" Stil erforderlich!"
 
 #: ../sdaps/recognize/__init__.py:33
 msgid "Run the optical mark recognition."
@@ -849,6 +860,8 @@ msgid ""
 "If the dependencies for the \"annotate\" command are installed, then an "
 "annotated version will be created next to the original PDF file."
 msgstr ""
+"Wenn die Abhängigkeiten für den \"Anmerkungs\" Befehl installiert sind wird "
+"die kommentierte Version zusätzlich zum original PDF erstellt."
 
 #: ../sdaps/setup/setup.py:121 ../sdaps/setuptex/setup.py:143
 msgid ""
