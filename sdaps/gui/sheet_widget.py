@@ -198,6 +198,11 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
         mm_x, mm_y = self._widget_to_mm_matrix.transform_point(event.x, event.y)
 
+        if self._bbox is not None:
+            if not self._bbox[0] <= mm_x <= (self._bbox[0] + self._bbox[2]) or \
+               not self._bbox[1] <= mm_y <= (self._bbox[1] + self._bbox[3]):
+                return False
+
         if event.button == 3:
             # Give the corresponding widget the focus.
             box = self.provider.survey.questionnaire.gui.find_box(self.image.page_number, mm_x, mm_y)
