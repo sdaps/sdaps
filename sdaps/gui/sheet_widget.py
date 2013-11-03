@@ -248,7 +248,10 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         Gtk.DrawingArea.do_size_allocate(self, allocation)
 
     def do_draw(self, cr):
-        #event.window.clear()
+
+        cr.save()
+        cr.save()
+
         # For the image
         xoffset = -int(self.hadj.props.value)
         yoffset = -int(self.vadj.props.value)
@@ -270,8 +273,10 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         cr.set_source_surface(self._ss_image, 0, 0)
         cr.paint()
 
+        cr.restore()
+
         # Set the matrix _after_ drawing the background pixbuf.
-        cr.set_matrix(self._mm_to_widget_matrix)
+        cr.transform(self._mm_to_widget_matrix)
 
         cr.set_source_rgba(1.0, 0.0, 0.0, 0.6)
         cr.set_line_width(1.0 * 25.4 / 72.0)
@@ -328,6 +333,8 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
                       defs.corner_box_width + pt,
                       defs.corner_box_height + pt)
             cr.stroke()
+
+        cr.restore()
 
         return True
 
