@@ -163,12 +163,13 @@ class Survey(object):
         if not hasattr(survey, 'version'):
             survey.version = 1
 
-        # Run any upgrade routine (if necessary)
-        survey.upgrade()
-
+        # Before upgrading, reinit states, so events are "fired" correctly.
         survey.questionnaire.reinit_state()
         for sheet in survey.sheets:
             sheet.reinit_state()
+
+        # Run any upgrade routine (if necessary)
+        survey.upgrade()
 
         return survey
 
