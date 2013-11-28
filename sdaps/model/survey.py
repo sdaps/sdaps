@@ -349,6 +349,7 @@ class Survey(object):
                     sheet.images = list()
                     for img in images:
                         sheet.add_image(img)
+                        img.ignored = False
 
                         dummy = Image()
                         dummy.filename = "DUMMY"
