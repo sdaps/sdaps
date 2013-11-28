@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-27 17:18+0100\n"
+"POT-Creation-Date: 2013-11-28 15:25+0100\n"
 "PO-Revision-Date: 2013-10-28 16:41+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <http://hosted.weblate.org/projects/sdaps/master/de/>\n"
@@ -178,8 +178,8 @@ msgstr ""
 "Dieser Befehl kann angewndet werden, falls die Bilder nicht als monochromes "
 "TIFF gescannt wurden. Alle angegebenen Dateien werden geladen, konvertiert "
 "und als mehrseitiges TIFF mit einem Bit Farbtiefe gespeichert. Optional kann "
-"eine 3D-Transformation angewendet werden. Dadurch können auch Fotos "
-"anstelle von Scans verarbeitet werden."
+"eine 3D-Transformation angewendet werden. Dadurch können auch Fotos anstelle "
+"von Scans verarbeitet werden."
 
 #: ../sdaps/convert/__init__.py:38
 msgid ""
@@ -187,8 +187,7 @@ msgid ""
 "        corner marks are not found then the image will be added as-is."
 msgstr ""
 "Wende eine 3D-Transformation an, nachdem die Eckmarkierungen gefunden "
-"wurden. Falls keine Eckmarken gefunden wird das Bild unverändert "
-"hinzugefügt."
+"wurden. Falls keine Eckmarken gefunden wird das Bild unverändert hinzugefügt."
 
 #: ../sdaps/convert/__init__.py:44
 msgid "The location of the output file. Must be given."
@@ -201,7 +200,8 @@ msgstr "Ausgabedatei nicht angegeben!"
 #: ../sdaps/convert/__init__.py:77
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
-msgstr "Konnte die 3D-Transformation nicht auf Bild '%s' auf Seite %i anwenden!"
+msgstr ""
+"Konnte die 3D-Transformation nicht auf Bild '%s' auf Seite %i anwenden!"
 
 #: ../sdaps/cover/__init__.py:27
 msgid "Create a cover for the questionnaires."
@@ -470,26 +470,26 @@ msgstr "Den angegebenen Schlüssel und Wert löschen."
 msgid "Existing fields:\n"
 msgstr "Definierte Felder:\n"
 
-#: ../sdaps/model/survey.py:248
+#: ../sdaps/model/survey.py:249
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:259
+#: ../sdaps/model/survey.py:260
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/model/survey.py:285
+#: ../sdaps/model/survey.py:286
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
 "Anzahl von Seiten haben!"
 
-#: ../sdaps/model/survey.py:289
+#: ../sdaps/model/survey.py:290
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -497,16 +497,16 @@ msgstr ""
 "Der Stil 'classic' kann nur mit bis zu sechs Seiten umgehen. Für mehr Seiten "
 "kann der 'code128' Stil benutzt werden."
 
-#: ../sdaps/model/survey.py:302
+#: ../sdaps/model/survey.py:303
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "IDs müssen im \"classic\" Stil ganze Zahlen sein!"
 
-#: ../sdaps/model/survey.py:308
+#: ../sdaps/model/survey.py:309
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr "Ungültiges Zeichen %s in der Fragebogen ID \"%s\" im \"code128\" Stil!"
 
-#: ../sdaps/model/survey.py:312
+#: ../sdaps/model/survey.py:313
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
@@ -514,7 +514,7 @@ msgstr ""
 "SDAPS kann im \"custom\"-Stil keine Fragebogen ID eintragen. Tun Sie das "
 "irgendwie selbst!"
 
-#: ../sdaps/model/survey.py:330
+#: ../sdaps/model/survey.py:331
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr "Update für Dateiversion %i ausführen"

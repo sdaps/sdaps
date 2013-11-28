@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-27 17:18+0100\n"
+"POT-Creation-Date: 2013-11-28 15:25+0100\n"
 "PO-Revision-Date: 2013-10-18 14:15+0200\n"
 "Last-Translator: Michal Čihař Čihař <michal@cihar.com>\n"
 "Language-Team: Arabic <http://hosted.weblate.org/projects/sdaps/master/ar/>\n"
@@ -410,45 +410,45 @@ msgstr ""
 msgid "Existing fields:\n"
 msgstr ""
 
-#: ../sdaps/model/survey.py:248
+#: ../sdaps/model/survey.py:249
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/model/survey.py:259
+#: ../sdaps/model/survey.py:260
 #, python-format
 msgid "%f seconds per sheet"
 msgstr ""
 
-#: ../sdaps/model/survey.py:285
+#: ../sdaps/model/survey.py:286
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:289
+#: ../sdaps/model/survey.py:290
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
 msgstr ""
 
-#: ../sdaps/model/survey.py:302
+#: ../sdaps/model/survey.py:303
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:308
+#: ../sdaps/model/survey.py:309
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:312
+#: ../sdaps/model/survey.py:313
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:330
+#: ../sdaps/model/survey.py:331
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
