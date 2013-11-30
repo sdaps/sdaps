@@ -3,36 +3,36 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-28 15:25+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2013-11-30 03:02+0200\n"
+"Last-Translator: Rene Martinez <rantmtorres@gmail.com>\n"
+"Language-Team: Spanish <http://hosted.weblate.org/projects/sdaps/master/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.9-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
-msgstr ""
+msgstr "SDAPS -- Herramienta para el reconocimiento de documentos impresos."
 
 #: ../sdaps/script.py:45
 msgid "project directory|The SDAPS project."
-msgstr ""
+msgstr "directorio del proyecto|El proyecto SDAPS."
 
 #: ../sdaps/script.py:46
 msgid "command list|Commands:"
-msgstr ""
+msgstr "lista de comandos|Comandos:"
 
 #: ../sdaps/add/__init__.py:29
 msgid "Add scanned questionnaires to the survey."
-msgstr ""
+msgstr "Añade cuestionarios escaneados al reconocimiento."
 
 #: ../sdaps/add/__init__.py:30
 msgid ""
@@ -43,39 +43,49 @@ msgid ""
 "case\n"
 "    the data will be referenced using a relative path."
 msgstr ""
+"Este comando se emplea para añadir imágenes escaneadas al reconocimiento.\n"
+"  La imagen de los datos debe ser un archivo (multipágina) monocromático "
+"TIFF de 300dpi. Usted\n"
+"  puede elegir no copiar los datos en el directorio del proyecto. En ese "
+"caso\n"
+"  se hará referencia a los datos empleando una ruta relativa."
 
 #: ../sdaps/add/__init__.py:36
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
 msgstr ""
+"Fuerza el añadir las imágenes incluso si el conteo de página es incorrecto "
+"(empléelo únicamente si sabe lo que está haciendo."
 
 #: ../sdaps/add/__init__.py:40
 msgid "Copy the files into the directory (default)."
-msgstr ""
+msgstr "Copia los archivos en el directorio (por defecto)."
 
 #: ../sdaps/add/__init__.py:45
 msgid "Do not copy the files into the directory."
-msgstr ""
+msgstr "No copia los archivos en el directorio."
 
 #: ../sdaps/add/__init__.py:49
 msgid ""
 "Images contain a duplex scan of a simplex questoinnaire (default: simplex "
 "scan)."
 msgstr ""
+"Las imágenes contienen un escaneo doble de un cuestionario sencillo (por "
+"defecto: escaneo sencillo)."
 
 #: ../sdaps/add/__init__.py:55 ../sdaps/convert/__init__.py:48
 msgid "A number of TIFF image files."
-msgstr ""
+msgstr "Un número de archivos de imagen TIFF."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
 msgid "Processing %s"
-msgstr ""
+msgstr "Procesando %s"
 
 #: ../sdaps/add/__init__.py:71
 msgid "Done"
-msgstr ""
+msgstr "Finalizado"
 
 #: ../sdaps/add/__init__.py:102
 #, python-format
@@ -83,6 +93,8 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
+"Archivo de entrada inválido %s. Debe especificar un archivo (multipágina) "
+"monocromático TIFF como entrada."
 
 #: ../sdaps/add/__init__.py:113
 #, python-format
@@ -90,10 +102,12 @@ msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
 "%i)."
 msgstr ""
+"No se ha añadido %s debido a que tiene un conteo de página incorrecto (debe "
+"ser múltiplo de %i)."
 
 #: ../sdaps/annotate/__init__.py:28
 msgid "Annotate the questionnaire and show the recognized positions."
-msgstr ""
+msgstr "Comenta el cuestionario y muestra la posiciones reconocidas."
 
 #: ../sdaps/annotate/__init__.py:29
 msgid ""
@@ -101,18 +115,22 @@ msgid ""
 "    annotated version of the questionnaire, with the information that SDAPS\n"
 "    knows about it overlayed on top."
 msgstr ""
+"Este comando es principalmente una herramienta para depuración. Crea una\n"
+"  versión comentada del cuestionario con la información que SDAPS\n"
+"  conoce acerca de él sobrepuesta en la parte superior."
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
-msgstr ""
+msgstr "Advertencia: "
 
 #: ../sdaps/log.py:41
 msgid "Error: "
-msgstr ""
+msgstr "Error: "
 
 #: ../sdaps/boxgallery/__init__.py:31
 msgid "Create PDFs with boxes sorted by the detection heuristics."
 msgstr ""
+"Crear archivos PDF con casillas ordenadas por la heurística de detección."
 
 #: ../sdaps/boxgallery/__init__.py:32
 msgid ""
@@ -124,16 +142,25 @@ msgid ""
 "    will be created for each of the heuristics so that one can adjust the\n"
 "    values."
 msgstr ""
+"SDAPS emplea heurística múltiple para determinar el\n"
+"  estado de las casillas de verificación. Existe una lista para cada "
+"heurística que proporciona\n"
+"  el estado y la calidad del valor (ver defs.py). Empleando este comando se "
+"creará\n"
+"  un archivo PDF para cada heurística de tal forma que se puedan ajustar\n"
+"  los valores."
 
 #: ../sdaps/boxgallery/__init__.py:40
 msgid ""
 "Reruns part of the recognition process and retrieves debug images from this "
 "step."
 msgstr ""
+"Reejecuta parte del proceso de reconocimiento y recupera imágenes de "
+"depuración a partir de este paso."
 
 #: ../sdaps/convert/__init__.py:29
 msgid "Convert a set of images to the correct image format."
-msgstr ""
+msgstr "Convierte un conjunto de imágenes al formato correcto de imagen."
 
 #: ../sdaps/convert/__init__.py:30
 msgid ""
@@ -146,48 +173,64 @@ msgid ""
 "        be performed, using this it may be possible to work with photos of\n"
 "        questionnaires instead of scans."
 msgstr ""
+"Este comando puede ser empleado si usted escaneo archivos en un modo\n"
+"     distinto al archivo TIFF monocromático esperado. Todos los archivos "
+"proporcionados\n"
+"     se cargarán, convertirán a monocromático y almacenarán en un archivo "
+"multipágina\n"
+"     1bpp TIFF. Opcionamente, usted puede seleccionar que se realice una "
+"transformación 3D,\n"
+"     haciéndolo es posible trabajar con fotografías de\n"
+"     cuestionarios en lugar de escaneos."
 
 #: ../sdaps/convert/__init__.py:38
 msgid ""
 "Do a 3D-transformation after finding the corner marks. If the\n"
 "        corner marks are not found then the image will be added as-is."
 msgstr ""
+"Realiza una transformación 3D después de encontrar las marcas de esquina. Si "
+"no\n"
+"    se encuentran las marcas la imagen será añadida tal cual es."
 
 #: ../sdaps/convert/__init__.py:44
 msgid "The location of the output file. Must be given."
-msgstr ""
+msgstr "Se debe proporcionar la localización del archivo de salida."
 
 #: ../sdaps/convert/__init__.py:57
 msgid "No output filename specified!"
-msgstr ""
+msgstr "¡No se especificó un nombre de archivo de salida!"
 
 #: ../sdaps/convert/__init__.py:77
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
 msgstr ""
+"No fue posible aplicar la transformación 3D a la imagen '%s', página %i!"
 
 #: ../sdaps/cover/__init__.py:27
 msgid "Create a cover for the questionnaires."
-msgstr ""
+msgstr "Crea una portada para los cuestionarios."
 
 #: ../sdaps/cover/__init__.py:28
 msgid ""
 "This command creates a cover page for questionnaires. All\n"
 "    the metadata of the survey will be printed on the page."
 msgstr ""
+"Este comando crea una página portada para los cuestionarios. En ella\n"
+"  se imprimirán todos los metadatos de la captura."
 
 #: ../sdaps/cover/__init__.py:31
 #, python-format
 msgid "Filename to store the data to (default: cover_%%i.pdf)"
 msgstr ""
+"Nombre del archivo para almacenar los datos (por defecto: cover_%%i.pdf)"
 
 #: ../sdaps/cover/__init__.py:53
 msgid "sdaps questionnaire"
-msgstr ""
+msgstr "cuestionario de sdaps"
 
 #: ../sdaps/csvdata/__init__.py:31
 msgid "Import or export data to/from CSV files."
-msgstr ""
+msgstr "Importar o exportar datos a/desde archivos CSV."
 
 #: ../sdaps/csvdata/__init__.py:32
 msgid ""
@@ -198,44 +241,54 @@ msgid ""
 "sheet\n"
 "    which should be updated."
 msgstr ""
+"Importar o exportar datos a/desde un archivo CSV. La primera línea\n"
+" es un encabezado que define  questionnaire_id y  global_id, así como una "
+"columna\n"
+" para cada casilla de verificación y campo de texto. Tenga en cuenta que "
+"actualmente la\n"
+" importación es muy limitada, dado que debe especificar el ID del "
+"cuestionario para seleccionar\n"
+" la hoja que debe actualizarse."
 
 #: ../sdaps/csvdata/__init__.py:41
 msgid "Export data to CSV file."
-msgstr ""
+msgstr "Exportar datos a un archivo CSV."
 
 #: ../sdaps/csvdata/__init__.py:43 ../sdaps/report/__init__.py:35
 #: ../sdaps/reporttex/__init__.py:56
 msgid "Filter to only export a partial dataset."
-msgstr ""
+msgstr "Filtro para exportar solamente un conjunto parcial de datos."
 
 #: ../sdaps/csvdata/__init__.py:47
 msgid "Import data to from a CSV file."
-msgstr ""
+msgstr "Importar datos desde un archivo CSV."
 
 #: ../sdaps/csvdata/__init__.py:49
 msgid "The file to import."
-msgstr ""
+msgstr "El archivo a importar."
 
 #: ../sdaps/gui/gui.py:51
 msgid ""
 "The survey does not have any images! Please add images (and run recognize) "
 "before using the GUI."
 msgstr ""
+"¡La encuesta no tiene ninguna imagen! Por favor añadir imágenes (y ejecutar "
+"reconocimiento) antes de emplear la GUI."
 
 #: ../sdaps/gui/gui.py:176
 msgid "Page|Invalid"
-msgstr ""
+msgstr "Página|No válida"
 
 #: ../sdaps/gui/gui.py:179
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Página %i"
+msgstr[1] "Página %i"
 
 #: ../sdaps/gui/gui.py:221
 msgid "Copyright © 2007-2012 The SDAPS Authors"
-msgstr ""
+msgstr "Copyright © 2007-2012 los autores SDAPS"
 
 #: ../sdaps/gui/gui.py:223
 msgid "Scripts for data acquisition with paper based surveys"
