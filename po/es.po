@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-28 15:25+0100\n"
-"PO-Revision-Date: 2013-11-30 03:02+0200\n"
+"PO-Revision-Date: 2013-12-04 23:58+0200\n"
 "Last-Translator: Rene Martinez <rantmtorres@gmail.com>\n"
 "Language-Team: Spanish <http://hosted.weblate.org/projects/sdaps/master/es/>\n"
 "Language: es\n"
@@ -292,29 +292,29 @@ msgstr "Copyright © 2007-2012 los autores SDAPS"
 
 #: ../sdaps/gui/gui.py:223
 msgid "Scripts for data acquisition with paper based surveys"
-msgstr ""
+msgstr "Guiones para la adquisición de datos en encuestas impresas"
 
 #: ../sdaps/gui/gui.py:224
 msgid "http://sdaps.sipsolutions.net"
-msgstr ""
+msgstr "http://sdaps.sipsolutions.net"
 
 #: ../sdaps/gui/gui.py:225
 msgid "translator-credits"
-msgstr ""
+msgstr "Traductor-créditos"
 
 #: ../sdaps/gui/gui.py:269
 #, python-format
 msgid " of %i"
-msgstr ""
+msgstr " de %i"
 
 #: ../sdaps/gui/gui.py:270
 #, python-format
 msgid "Recognition Quality: %.2f"
-msgstr ""
+msgstr "Calidad de reconocimiento: %.2f"
 
 #: ../sdaps/gui/gui.py:398
 msgid "Close without saving"
-msgstr ""
+msgstr "Cerrar sin guardar"
 
 #: ../sdaps/gui/gui.py:402
 msgid ""
@@ -322,10 +322,15 @@ msgid ""
 "\n"
 "If you do not save you may loose data."
 msgstr ""
+"<b>¿Guardar el proyecto antes de cerrar?</b>\n"
+"\n"
+"Si no guarda puede perder datos."
 
 #: ../sdaps/gui/__init__.py:32
 msgid "Launch a gui. You can view and alter the (recognized) answers with it."
 msgstr ""
+"Lanzar una interfaz gráfica. Puede ver y modificar las respuestas "
+"(reconocidas) con ella."
 
 #: ../sdaps/gui/__init__.py:33
 msgid ""
@@ -334,74 +339,78 @@ msgid ""
 "it.\n"
 "    "
 msgstr ""
+"Este comando inicia una interfaz gráfica que puede utilizarse \n"
+"para corregir la respuesta. Necesitará ejecutar \"recognize\" antes de "
+"emplearlo.\n"
+"    "
 
 #: ../sdaps/gui/__init__.py:38
 msgid "Filter to only show a partial dataset."
-msgstr ""
+msgstr "Filtro para mostrar sólo un conjunto de datos parcial."
 
 #: ../sdaps/gui/main_window.ui.h:1
 msgid "Forward"
-msgstr ""
+msgstr "Adelante"
 
 #: ../sdaps/gui/main_window.ui.h:2
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #: ../sdaps/gui/main_window.ui.h:3
 msgid "Zoom In"
-msgstr ""
+msgstr "Acercar"
 
 #: ../sdaps/gui/main_window.ui.h:4
 msgid "Zoom Out"
-msgstr ""
+msgstr "Alejar"
 
 #: ../sdaps/gui/main_window.ui.h:5
 msgid "SDAPS"
-msgstr ""
+msgstr "SDAPS"
 
 #: ../sdaps/gui/main_window.ui.h:6
 msgid "_File"
-msgstr ""
+msgstr "_Archivo"
 
 #: ../sdaps/gui/main_window.ui.h:7
 msgid "_View"
-msgstr ""
+msgstr "_Ver"
 
 #: ../sdaps/gui/main_window.ui.h:8
 msgid "_Help"
-msgstr ""
+msgstr "_Ayuda"
 
 #: ../sdaps/gui/main_window.ui.h:9
 msgid "Page Rotated"
-msgstr ""
+msgstr "Página rotada"
 
 #: ../sdaps/gui/main_window.ui.h:10
 msgid "Sort by Quality"
-msgstr ""
+msgstr "Ordenar por Calidad"
 
 #: ../sdaps/gui/main_window.ui.h:11
 msgid "label"
-msgstr ""
+msgstr "etiqueta"
 
 #: ../sdaps/gui/widget_buddies.py:50
 msgid "<b>Global Properties</b>"
-msgstr ""
+msgstr "<b>Propiedades globales</b>"
 
 #: ../sdaps/gui/widget_buddies.py:54
 msgid "Sheet valid"
-msgstr ""
+msgstr "Hoja válida"
 
 #: ../sdaps/gui/widget_buddies.py:55
 msgid "Verified"
-msgstr ""
+msgstr "Verificado"
 
 #: ../sdaps/gui/widget_buddies.py:56
 msgid "Empty"
-msgstr ""
+msgstr "Vacío"
 
 #: ../sdaps/ids/__init__.py:28
 msgid "Export and import questionnaire IDs."
-msgstr ""
+msgstr "Exportación e importación de IDs de cuestionarios."
 
 #: ../sdaps/ids/__init__.py:29
 msgid ""
@@ -411,25 +420,32 @@ msgid ""
 "command,\n"
 "    which will give you the PDF at the same time."
 msgstr ""
+"Este comando puede utilizarse para importar y exportar IDs de cuestionarios "
+"IDs.       Sólo tiene sentido en proyectos donde el ID se imprime en el "
+"cuestionario.\n"
+" Tenga en cuenta que también puede agregar IDs mediante el comando stamp,\n"
+" el cual le dará el PDF al mismo tiempo."
 
 #: ../sdaps/ids/__init__.py:34
 #, python-format
 msgid "Filename to store the data to (default: ids_%%i)"
-msgstr ""
+msgstr "Nombre del archivo para almacenar los datos (por defecto: ids_%%i)"
 
 #: ../sdaps/ids/__init__.py:37
 msgid "Add IDs to the internal list from the specified file."
-msgstr ""
+msgstr "Agregar IDs a la lista interna del archivo especificado."
 
 #: ../sdaps/image/__init__.py:47
 msgid ""
 "It appears you have not build the C extension. Please run \"./setup.py build"
 "\" in the toplevel directory."
 msgstr ""
+"Parece que no se ha construído la extensión C. Ejecute \"./setup.py build\" en "
+"el directorio de nivel superior."
 
 #: ../sdaps/info/__init__.py:28
 msgid "Display and modify metadata of project."
-msgstr ""
+msgstr "Visualizar y modificar los metadatos del proyecto."
 
 #: ../sdaps/info/__init__.py:29
 msgid ""
@@ -439,97 +455,112 @@ msgid ""
 "    on the report. The only key that always exist is \"title\".\n"
 "    If no key is given then a list of defined keys is printed."
 msgstr ""
+"Este comando permite modificar los metadatos del proyecto SDAPS.\n"
+" Usted puede modificar, agregar y quitar claves arbitrarias que se "
+"imprimirán\n"
+" en el informe. La única llave que siempre existen es \"título\".\n"
+" Si no se proporciona ninguna llave entonces se imprime una lista de claves "
+"ya\n"
+" definidas."
 
 #: ../sdaps/info/__init__.py:36
 msgid "The key to display or modify."
-msgstr ""
+msgstr "La llave para mostrar o modificar."
 
 #: ../sdaps/info/__init__.py:40
 msgid "Set the given key to this value."
-msgstr ""
+msgstr "Establecer la clave dada a este valor."
 
 #: ../sdaps/info/__init__.py:44
 msgid "Delete the key and value pair."
-msgstr ""
+msgstr "Eliminar el par de llave y valor."
 
 #: ../sdaps/info/__init__.py:68
 msgid "Existing fields:\n"
-msgstr ""
+msgstr "Campos existentes:\n"
 
 #: ../sdaps/model/survey.py:249
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i hoja"
+msgstr[1] "%i hojas"
 
 #: ../sdaps/model/survey.py:260
 #, python-format
 msgid "%f seconds per sheet"
-msgstr ""
+msgstr "%f segundos por hoja"
 
 #: ../sdaps/model/survey.py:286
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
+"¡Un cuestionario que se imprime en dúplex necesita una cantidad par de "
+"páginas!"
 
 #: ../sdaps/model/survey.py:290
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
 msgstr ""
+"¡El estilo 'clásico' sólo admite un máximo de seis páginas! Utilice el "
+"estilo 'code128' si requiere de más páginas."
 
 #: ../sdaps/model/survey.py:303
 msgid "IDs need to be integers in \"classic\" style!"
-msgstr ""
+msgstr "¡Los IDs deben ser enteros en el estilo clásico!"
 
 #: ../sdaps/model/survey.py:309
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
+"¡Caracter inválido %s en el ID del cuestionario \"%s\" en el estilo \"code128\"!"
 
 #: ../sdaps/model/survey.py:313
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
 msgstr ""
+"SDAPS no puede dibujar un cuestionario ID en el estilo \"custom\" ¡Debe "
+"Hacerlo por sí mismo de alguna manera!"
 
 #: ../sdaps/model/survey.py:331
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
+"Ejecutando rutinas de actualización para la versión de formato de archivo %i"
 
 #: ../sdaps/recognize/buddies.py:78
 #, python-format
 msgid "%s, %i: Matrix not recognized."
-msgstr ""
+msgstr "%s, %i: Matriz no reconocida."
 
 #: ../sdaps/recognize/buddies.py:87
 #, python-format
 msgid "%s, %i: Rotation not found."
-msgstr ""
+msgstr "%s, %i: Rotación no encontrada."
 
 #. Copy the rotation over (if required) and print warning if the rotation is unknown
 #: ../sdaps/recognize/buddies.py:91
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known rotation!"
-msgstr ""
+msgstr "¡Ni %s, %i o %s, %i tienen una rotación conocida!"
 
 #: ../sdaps/recognize/buddies.py:103
 #, python-format
 msgid "%s, %i: Matrix not recognized (again)."
-msgstr ""
+msgstr "%s, %i: Matriz no reconocida (otra vez)."
 
 #: ../sdaps/recognize/buddies.py:117
 #, python-format
 msgid "%s, %i: Could not get page number."
-msgstr ""
+msgstr "%s, %i: No se pudo obtener el número de página."
 
 #. Whoa, that should not happen.
 #: ../sdaps/recognize/buddies.py:137
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known page number!"
-msgstr ""
+msgstr "¡Ni %s, %i o %s, %i tienen un número de página conocido!"
 
 #. We don't touch the ignore flag in this case
 #. Simply print a message as this should *never* happen
@@ -541,31 +572,39 @@ msgid ""
 "inserting dummy pages. Maybe you did a simplex scan but added it in duplex "
 "mode? The pages in question are %s, %i and %s, %i."
 msgstr ""
+"Se obtuvo un documento simple donde dos páginas adyacentes tenían un número "
+"de página conocido. Esto nunca debe suceder dado que  incluso exploraciones "
+"simples se convierten en dúplex insertando páginas vacías. ¿Tal vez se "
+"realizó un escáneo simple pero se añadió en modo duplex? Las páginas en "
+"cuestión son %s, %i y %s, %i."
 
 #: ../sdaps/recognize/buddies.py:165
 #, python-format
 msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
-msgstr ""
+msgstr "¡Las imágenes %s, %i y %s, %i no tienen números de página consecutivos!"
 
 #: ../sdaps/recognize/buddies.py:181
 #, python-format
 msgid "No page number for page %s, %i exists."
-msgstr ""
+msgstr "No existe número de página para la página %s, %i."
 
 #: ../sdaps/recognize/buddies.py:186
 #, python-format
 msgid "Page number for page %s, %i already used by another image."
 msgstr ""
+"El número de página para la página %s, %i ya es utilizado por otra imagen."
 
 #: ../sdaps/recognize/buddies.py:192
 #, python-format
 msgid "Page number %i for page %s, %i is out of range."
-msgstr ""
+msgstr "El número de página %i para la página %s, %i está fuera de rango."
 
 #: ../sdaps/recognize/buddies.py:209
 #, python-format
 msgid "%s, %i: Could not read survey ID, but should be able to."
 msgstr ""
+"%s, %i: No se pudo leer el ID del reconocimiento, pero debiera ser capaz de "
+"hacerse."
 
 #: ../sdaps/recognize/buddies.py:213
 #, python-format
