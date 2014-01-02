@@ -92,21 +92,37 @@ class Provider(object):
         for i in xrange(len(new_images)):
             self.qualities.append((self.survey.sheet.quality, len(self.qualities)))
 
-    def next(self):
+    def next(self, cycle=True):
+        if self.index >= len(self.images) - 1:
+            if cycle:
+                self.index = 0
+            else:
+                return False
+        else:
+            self.index += 1
+
         self.image.surface.clean()
-        self.index += 1
-        if self.index == len(self.images):
-            self.index = 0
+
         self.image.surface.load_rgb()
         self.survey.goto_sheet(self.image.sheet)
 
-    def previous(self):
+        return True
+
+    def previous(self, cycle=True):
+        if self.index <= 0:
+            if cycle:
+                self.index = len(self.images) - 1
+            else:
+                return False
+        else:
+            self.index -= 1
+
         self.image.surface.clean()
-        self.index -= 1
-        if self.index < 0:
-            self.index = len(self.images) - 1
+
         self.image.surface.load_rgb()
         self.survey.goto_sheet(self.image.sheet)
+
+        return True
 
     def goto(self, index):
         if index >= 0 and index < len(self.images):
@@ -278,7 +294,16 @@ class MainWindow(object):
         self.provider.survey.questionnaire.widget.sync_state()
 
     def go_to_previous_page(self, *args):
-        self.provider.previous()
+        if not self.provider.previous(cycle=False):
+            dialog = Gtk.MessageDialog(
+                flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                type=Gtk.MessageType.INFO,
+                buttons=Gtk.ButtonsType.CANCEL,
+                message_format=_("You have reached the first page of the survey. Would you like to go to the last page?"))
+            dialog.add_button(_("Go to last page"), Gtk.ResponseType.OK)
+            if dialog.run() == Gtk.ResponseType.OK:
+                self.provider.previous(cycle=True)
+            dialog.destroy()
         self.update_ui()
         return True
 
@@ -292,7 +317,17 @@ class MainWindow(object):
         return True
 
     def go_to_next_page(self, *args):
-        self.provider.next()
+        if not self.provider.next(cycle=False):
+            dialog = Gtk.MessageDialog(
+                flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                type=Gtk.MessageType.INFO,
+                buttons=Gtk.ButtonsType.CANCEL,
+                message_format=_("You have reached the last page of the survey. Would you like to go to the first page?"))
+            dialog.add_button(_("Go to first page"), Gtk.ResponseType.OK)
+            if dialog.run() == Gtk.ResponseType.OK:
+                self.provider.next(cycle=True)
+            dialog.destroy()
+
         self.update_ui()
         return True
 
