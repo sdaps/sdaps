@@ -360,7 +360,8 @@ class MainWindow(object):
 
     def sheet_view_key_press(self, window, event):
         # Go to the next when Enter or Tab is pressed
-        if event.keyval == Gdk.keyval_from_name("Return"):
+        enter_keyvals = [Gdk.keyval_from_name(k) for k in ["Return", "KP_Enter", "ISO_Enter"]]
+        if event.keyval in enter_keyvals:
             # If "Return" is pressed, then the examiner figured that the data
             # is good.
 
