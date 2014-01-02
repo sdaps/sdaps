@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-28 15:25+0100\n"
+"POT-Creation-Date: 2014-01-02 23:59+0100\n"
 "PO-Revision-Date: 2013-12-04 23:58+0200\n"
 "Last-Translator: Rene Martinez <rantmtorres@gmail.com>\n"
-"Language-Team: Spanish <http://hosted.weblate.org/projects/sdaps/master/es/>\n"
+"Language-Team: Spanish <http://hosted.weblate.org/projects/sdaps/master/es/"
+">\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -275,48 +276,68 @@ msgstr ""
 "¡La encuesta no tiene ninguna imagen! Por favor añadir imágenes (y ejecutar "
 "reconocimiento) antes de emplear la GUI."
 
-#: ../sdaps/gui/gui.py:176
+#: ../sdaps/gui/gui.py:192
 msgid "Page|Invalid"
 msgstr "Página|No válida"
 
-#: ../sdaps/gui/gui.py:179
+#: ../sdaps/gui/gui.py:195
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Página %i"
 msgstr[1] "Página %i"
 
-#: ../sdaps/gui/gui.py:221
+#: ../sdaps/gui/gui.py:237
 msgid "Copyright © 2007-2012 The SDAPS Authors"
 msgstr "Copyright © 2007-2012 los autores SDAPS"
 
-#: ../sdaps/gui/gui.py:223
+#: ../sdaps/gui/gui.py:239
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "Guiones para la adquisición de datos en encuestas impresas"
 
-#: ../sdaps/gui/gui.py:224
+#: ../sdaps/gui/gui.py:240
 msgid "http://sdaps.sipsolutions.net"
 msgstr "http://sdaps.sipsolutions.net"
 
-#: ../sdaps/gui/gui.py:225
+#: ../sdaps/gui/gui.py:241
 msgid "translator-credits"
 msgstr "Traductor-créditos"
 
-#: ../sdaps/gui/gui.py:269
+#: ../sdaps/gui/gui.py:285
 #, python-format
 msgid " of %i"
 msgstr " de %i"
 
-#: ../sdaps/gui/gui.py:270
+#: ../sdaps/gui/gui.py:286
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr "Calidad de reconocimiento: %.2f"
 
-#: ../sdaps/gui/gui.py:398
+#: ../sdaps/gui/gui.py:302
+msgid ""
+"You have reached the first page of the survey. Would you like to go to the "
+"last page?"
+msgstr ""
+
+#: ../sdaps/gui/gui.py:303
+msgid "Go to last page"
+msgstr ""
+
+#: ../sdaps/gui/gui.py:325
+msgid ""
+"You have reached the last page of the survey. Would you like to go to the "
+"first page?"
+msgstr ""
+
+#: ../sdaps/gui/gui.py:326
+msgid "Go to first page"
+msgstr ""
+
+#: ../sdaps/gui/gui.py:434
 msgid "Close without saving"
 msgstr "Cerrar sin guardar"
 
-#: ../sdaps/gui/gui.py:402
+#: ../sdaps/gui/gui.py:438
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -440,8 +461,8 @@ msgid ""
 "It appears you have not build the C extension. Please run \"./setup.py build"
 "\" in the toplevel directory."
 msgstr ""
-"Parece que no se ha construído la extensión C. Ejecute \"./setup.py build\" en "
-"el directorio de nivel superior."
+"Parece que no se ha construído la extensión C. Ejecute \"./setup.py build\" "
+"en el directorio de nivel superior."
 
 #: ../sdaps/info/__init__.py:28
 msgid "Display and modify metadata of project."
@@ -514,7 +535,8 @@ msgstr "¡Los IDs deben ser enteros en el estilo clásico!"
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
-"¡Caracter inválido %s en el ID del cuestionario \"%s\" en el estilo \"code128\"!"
+"¡Caracter inválido %s en el ID del cuestionario \"%s\" en el estilo "
+"\"code128\"!"
 
 #: ../sdaps/model/survey.py:313
 msgid ""
@@ -581,7 +603,8 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:165
 #, python-format
 msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
-msgstr "¡Las imágenes %s, %i y %s, %i no tienen números de página consecutivos!"
+msgstr ""
+"¡Las imágenes %s, %i y %s, %i no tienen números de página consecutivos!"
 
 #: ../sdaps/recognize/buddies.py:181
 #, python-format

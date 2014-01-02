@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-28 15:25+0100\n"
+"POT-Creation-Date: 2014-01-02 23:59+0100\n"
 "PO-Revision-Date: 2013-10-18 14:15+0200\n"
 "Last-Translator: Michal Čihař Čihař <michal@cihar.com>\n"
 "Language-Team: Arabic <http://hosted.weblate.org/projects/sdaps/master/ar/>\n"
@@ -225,11 +225,11 @@ msgid ""
 "before using the GUI."
 msgstr ""
 
-#: ../sdaps/gui/gui.py:176
+#: ../sdaps/gui/gui.py:192
 msgid "Page|Invalid"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:179
+#: ../sdaps/gui/gui.py:195
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
@@ -240,37 +240,57 @@ msgstr[3] "صفحة %i"
 msgstr[4] "صفحة %i"
 msgstr[5] "صفحة %i"
 
-#: ../sdaps/gui/gui.py:221
+#: ../sdaps/gui/gui.py:237
 msgid "Copyright © 2007-2012 The SDAPS Authors"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:223
+#: ../sdaps/gui/gui.py:239
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:224
+#: ../sdaps/gui/gui.py:240
 msgid "http://sdaps.sipsolutions.net"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:225
+#: ../sdaps/gui/gui.py:241
 msgid "translator-credits"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:269
+#: ../sdaps/gui/gui.py:285
 #, python-format
 msgid " of %i"
 msgstr "من %i"
 
-#: ../sdaps/gui/gui.py:270
+#: ../sdaps/gui/gui.py:286
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr ""
 
-#: ../sdaps/gui/gui.py:398
+#: ../sdaps/gui/gui.py:302
+msgid ""
+"You have reached the first page of the survey. Would you like to go to the "
+"last page?"
+msgstr ""
+
+#: ../sdaps/gui/gui.py:303
+msgid "Go to last page"
+msgstr ""
+
+#: ../sdaps/gui/gui.py:325
+msgid ""
+"You have reached the last page of the survey. Would you like to go to the "
+"first page?"
+msgstr ""
+
+#: ../sdaps/gui/gui.py:326
+msgid "Go to first page"
+msgstr ""
+
+#: ../sdaps/gui/gui.py:434
 msgid "Close without saving"
 msgstr "إغلاق بدون حفظ"
 
-#: ../sdaps/gui/gui.py:402
+#: ../sdaps/gui/gui.py:438
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
