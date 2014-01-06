@@ -8,10 +8,9 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-01-02 23:59+0100\n"
-"PO-Revision-Date: 2013-12-04 23:58+0200\n"
+"PO-Revision-Date: 2014-01-06 06:53+0200\n"
 "Last-Translator: Rene Martinez <rantmtorres@gmail.com>\n"
-"Language-Team: Spanish <http://hosted.weblate.org/projects/sdaps/master/es/"
-">\n"
+"Language-Team: Spanish <http://hosted.weblate.org/projects/sdaps/master/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -318,20 +317,22 @@ msgid ""
 "You have reached the first page of the survey. Would you like to go to the "
 "last page?"
 msgstr ""
+"Ha llegado a la primera página de la encuesta. ¿Desea ir a la última página?"
 
 #: ../sdaps/gui/gui.py:303
 msgid "Go to last page"
-msgstr ""
+msgstr "Ir a la última página"
 
 #: ../sdaps/gui/gui.py:325
 msgid ""
 "You have reached the last page of the survey. Would you like to go to the "
 "first page?"
 msgstr ""
+"Ha llegado a la última página de la encuesta. ¿Desea ir a la primera página?"
 
 #: ../sdaps/gui/gui.py:326
 msgid "Go to first page"
-msgstr ""
+msgstr "Ir a la primera página"
 
 #: ../sdaps/gui/gui.py:434
 msgid "Close without saving"
@@ -632,23 +633,27 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:213
 #, python-format
 msgid "Could not read survey ID of either %s, %i or %s, %i!"
-msgstr ""
+msgstr "No se pudo leer el ID de la encuesta de %s, %i o %s, %i!"
 
 #. Broken survey ID ...
 #: ../sdaps/recognize/buddies.py:220
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
 msgstr ""
+"Se obtuvo una identificación equivocada de la encuesta (%s, %)! Es %s, pero "
+"debe ser %i."
 
 #: ../sdaps/recognize/buddies.py:242
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
+"%s, %i: No se pudo leer el ID del cuestionario, pero usted debe ser capaz de "
+"hacerlo."
 
 #: ../sdaps/recognize/buddies.py:246
 #, python-format
 msgid "Could not read questoinnaire ID of either %s, %i or %s, %i!"
-msgstr ""
+msgstr "No se pudo leer el ID del cuestionario de %s, %i o %s, %i!"
 
 #: ../sdaps/recognize/buddies.py:273
 msgid ""
@@ -656,6 +661,9 @@ msgid ""
 "use filters with this survey! You have to run a \"reorder\" step for this to "
 "work properly!"
 msgstr ""
+"¡Se obtuvieron diferentes IDs en las diferentes páginas para por lo menos "
+"una hoja! *NO* intentar utilizar filtros con esta encuesta! ¡Tiene que "
+"ejecutar el paso de \"reordenar\" para que ello funcione correctamente!"
 
 #: ../sdaps/recognize/buddies.py:327
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
