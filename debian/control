@@ -6,7 +6,7 @@ X-Python-Version: >= 2.7
 Build-Depends: python2.7, python2.7-dev, libtiff4-dev | libtiff5-dev,
  pkg-config, python-distutils-extra, python-pkg-resources, python-cairo-dev,
  libcairo2-dev, libglib2.0-dev, debhelper (>= 7.4.3),
- python2.7-imaging, python-reportlab, python-zbar, python-pdftools,
+ python2.7-imaging | python-imaging, python-reportlab, python-zbar, python-pdftools,
  texlive-latex-recommended, pgf, latex-beamer, pdftk | python2.7-pdf,
  texlive-lang-ukenglish | texlive-lang-english, texlive-latex-extra, texlive-science
 Standards-Version: 3.9.4
@@ -14,7 +14,7 @@ Standards-Version: 3.9.4
 Package: sdaps
 Architecture: any
 Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends},
- python2.7-cairo, python2.7-gi, python2.7-imaging,
+ python2.7-cairo, python2.7-gi, python2.7-imaging | python-imaging,
  python-reportlab, python-zbar, python-gi-cairo
 Recommends: gir1.2-gtk-3.0 | gir1.0-gtk-3.0, texlive, texlive-latex-extra,
  texlive-latex-recommended, pgf, latex-beamer, pdftk | python2.7-pdf,
