@@ -66,14 +66,8 @@ class Sheet(model.buddy.Buddy):
 
         # We need to check the matrix_errors. Some are expected in simplex mode
         for page in matrix_errors:
-            if not duplex_mode:
-                # Every second should be failed, ie. if the other page of the
-                # pair is in the set then we are fine.
-                # Otherwise this page is likely ignored (we only mark it as
-                # ignored when we have a page number of the other one).
-                other = page - 1 + 2 * (page % 2)
-                if not other in matrix_errors:
-                    continue
+            # in simplex mode every page will have a matrix; it might be a None
+            # matrix though
 
             log.warn(_('%s, %i: Matrix not recognized.') % (image.filename, image.tiff_page))
             failed_pages.add(page)
