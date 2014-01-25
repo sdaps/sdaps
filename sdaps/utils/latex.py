@@ -24,6 +24,10 @@ except ImportError:
     mapping = {}
     log.warning(_(u'The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).'))
 
+# Add some more mappings
+# NBSP
+mapping[u'~'] = u' '
+
 
 re_latex_to_unicode_mapping = {}
 for token, replacement in mapping.iteritems():

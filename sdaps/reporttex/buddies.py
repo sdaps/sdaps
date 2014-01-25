@@ -27,7 +27,7 @@ from sdaps import image
 
 from sdaps import calculate
 
-from sdaps.utils.latex import raw_unicode_to_latex
+from sdaps.utils.latex import raw_unicode_to_latex, unicode_to_latex
 
 img_counter = 0
 
@@ -123,7 +123,7 @@ class Head(QObject):
 
     def write(self, out, tmpdir):
         # Smarter numbering handling?
-        out.write('\\section*{%s %s}\n' % (self.obj.id_str(), self.obj.title))
+        out.write('\\section*{%s %s}\n' % (self.obj.id_str(), unicode_to_latex(self.obj.title)))
 
 
 class Question(QObject):
@@ -134,7 +134,7 @@ class Question(QObject):
 
     def write_begin(self, out):
         # Smarter numbering handling?
-        out.write('\\begin{question}{%s %s}\n' % (self.obj.id_str(), self.obj.question))
+        out.write('\\begin{question}{%s %s}\n' % (self.obj.id_str(), unicode_to_latex(self.obj.question)))
 
     def write_end(self, out):
         # Smarter numbering handling?
@@ -170,7 +170,7 @@ class Choice(Question):
 
     def write_begin(self, out):
         # Smarter numbering handling?
-        out.write('\\begin{choicequestion}{%s %s}\n' % (self.obj.id_str(), self.obj.question))
+        out.write('\\begin{choicequestion}{%s %s}\n' % (self.obj.id_str(), unicode_to_latex(self.obj.question)))
 
     def write_end(self, out):
         # Smarter numbering handling?
@@ -180,7 +180,7 @@ class Choice(Question):
         self.write_begin(out)
         if self.obj.calculate.count:
             for box in self.obj.boxes:
-                out.write('''\\choiceanswer{%s}{%.1f}\n''' % (box.text, self.obj.calculate.values[box.value]))
+                out.write('''\\choiceanswer{%s}{%.3f}\n''' % (unicode_to_latex(box.text), self.obj.calculate.values[box.value]))
         self.write_end(out)
 
         out.write(self.text)
@@ -201,8 +201,8 @@ class Mark(Question):
 
         if self.obj.calculate.count:
             out.write('\\pgfkeyssetvalue{/sdaps/mark/range}{%s}\n' % (len(self.obj.boxes)))
-            out.write('\\pgfkeyssetvalue{/sdaps/mark/lower}{%s}\n' % (self.obj.answers[0]))
-            out.write('\\pgfkeyssetvalue{/sdaps/mark/upper}{%s}\n' % (self.obj.answers[1]))
+            out.write('\\pgfkeyssetvalue{/sdaps/mark/lower}{%s}\n' % (unicode_to_latex(self.obj.answers[0])))
+            out.write('\\pgfkeyssetvalue{/sdaps/mark/upper}{%s}\n' % (unicode_to_latex(self.obj.answers[1])))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/count}{%i}\n' % (self.obj.calculate.count))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/stddev}{%.1f}\n' % (self.obj.calculate.standard_deviation))
             for i, fraction in sorted(self.obj.calculate.values.iteritems()):
