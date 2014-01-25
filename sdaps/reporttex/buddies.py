@@ -206,7 +206,7 @@ class Mark(Question):
             out.write('\\pgfkeyssetvalue{/sdaps/mark/count}{%i}\n' % (self.obj.calculate.count))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/stddev}{%.1f}\n' % (self.obj.calculate.standard_deviation))
             for i, fraction in sorted(self.obj.calculate.values.iteritems()):
-                out.write('\\pgfkeyssetvalue{/sdaps/mark/%i/fraction}{%.1f}\n' % (i, fraction))
+                out.write('\\pgfkeyssetvalue{/sdaps/mark/%i/fraction}{%.3f}\n' % (i, fraction))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/mean}{%.1f}\n' % (self.obj.calculate.mean))
             out.write('\n\\markanswer\n')
 
@@ -258,8 +258,8 @@ class Additional_FilterHistogram(Question):
 
         if self.obj.calculate.count:
             for i in range(len(self.obj.calculate.values)):
-                out.write('''\\choiceanswer{%s}{%.1f}{%.1f}\n''' %
-                          (self.obj.answers[i], self.obj.calculate.values[i], self.obj.calculate.significant[i]))
+                out.write('''\\choiceanswer{%s}{%.3f}{%.3f}\n''' %
+                          (unicode_to_latex(self.obj.answers[i]), self.obj.calculate.values[i], self.obj.calculate.significant[i]))
 
         Question.write_end(self, out)
 

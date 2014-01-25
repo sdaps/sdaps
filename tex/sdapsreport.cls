@@ -238,7 +238,9 @@
 \def\question{{\global\let\freeformsep\relax}\subsection*}
 
 \newcommand*{\decimaltopercent}[1]{
+  \pgfset{/pgf/number format/precision=0}
   \pgfmathparse{100 * #1}
+  \pgfmathroundtozerofill{\pgfmathresult}
   \SI{\pgfmathresult}{\percent}
 }
 
