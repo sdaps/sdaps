@@ -318,60 +318,82 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         print _("Stamping using pdftk")
         tmp_dir = tempfile.mkdtemp()
 
-        for page in xrange(1, questionnaire_length + 1):
-            print ungettext(u"pdftk: Splitting out page %d of each sheet.", u"pdftk: Splitting out page %d of each sheet.", page) % page
+        if sheets == 1:
+            # Shortcut if we only have one sheet.
+            # In this case form data in the PDF will *not* break, in
+            # the other code path it *will* break.
+            print _(u"pdftk: Overlaying the original PDF with the markings.")
+            subprocess.call(['pdftk',
+                             survey.path('questionnaire.pdf'),
+                             'stamp',
+                             survey.path('tmp.pdf'),
+                             'output',
+                             output_filename])
+        else:
+            for page in xrange(1, questionnaire_length + 1):
+                print ungettext(u"pdftk: Splitting out page %d of each sheet.", u"pdftk: Splitting out page %d of each sheet.", page) % page
+                args = []
+                args.append('pdftk')
+                args.append(survey.path('tmp.pdf'))
+                args.append('cat')
+                cur = page
+                for i in range(sheets):
+                    args.append('%d' % cur)
+                    cur += questionnaire_length
+                args.append('output')
+                args.append(os.path.join(tmp_dir, 'stamp-%d.pdf' % page))
+
+                subprocess.call(args)
+
+            print _(u"pdftk: Splitting the questionnaire for watermarking.")
+            subprocess.call(['pdftk', survey.path('questionnaire.pdf'),
+                             'dump_data', 'output',
+                             os.path.join(tmp_dir, 'doc_data.txt')])
+            for page in xrange(1, questionnaire_length + 1):
+                subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'cat',
+                                 '%d' % page, 'output',
+                                 os.path.join(tmp_dir, 'watermark-%d.pdf' % page)])
+
+            if sheets == 1:
+                for page in xrange(1, questionnaire_length + 1):
+                    print ungettext(u"pdftk: Watermarking page %d of all sheets.", u"pdftk: Watermarking page %d of all sheets.", page) % page
+                    subprocess.call(['pdftk',
+                                     os.path.join(tmp_dir, 'stamp-%d.pdf' % page),
+                                     'background',
+                                     os.path.join(tmp_dir, 'watermark-%d.pdf' % page),
+                                     'output',
+                                     os.path.join(tmp_dir, 'watermarked-%d.pdf' % page)])
+            else:
+                for page in xrange(1, questionnaire_length + 1):
+                    print ungettext(u"pdftk: Watermarking page %d of all sheets.", u"pdftk: Watermarking page %d of all sheets.", page) % page
+                    subprocess.call(['pdftk',
+                                     os.path.join(tmp_dir, 'stamp-%d.pdf' % page),
+                                     'background',
+                                     os.path.join(tmp_dir, 'watermark-%d.pdf' % page),
+                                     'output',
+                                     os.path.join(tmp_dir, 'watermarked-%d.pdf' % page)])
+
             args = []
             args.append('pdftk')
-            args.append(survey.path('tmp.pdf'))
-            args.append('cat')
-            cur = page
-            for i in range(sheets):
-                args.append('%d' % cur)
-                cur += questionnaire_length
-            args.append('output')
-            args.append(os.path.join(tmp_dir, 'stamp-%d.pdf' % page))
-
-            subprocess.call(args)
-
-        print _(u"pdftk: Splitting the questionnaire for watermarking.")
-        subprocess.call(['pdftk', survey.path('questionnaire.pdf'),
-                         'dump_data', 'output',
-                         os.path.join(tmp_dir, 'doc_data.txt')])
-        for page in xrange(1, questionnaire_length + 1):
-            subprocess.call(['pdftk', survey.path('questionnaire.pdf'), 'cat',
-                             '%d' % page, 'output',
-                             os.path.join(tmp_dir, 'watermark-%d.pdf' % page)])
-
-        for page in xrange(1, questionnaire_length + 1):
-            print ungettext(u"pdftk: Watermarking page %d of all sheets.", u"pdftk: Watermarking page %d of all sheets.", page) % page
-            subprocess.call(['pdftk',
-                             os.path.join(tmp_dir, 'stamp-%d.pdf' % page),
-                             'background',
-                             os.path.join(tmp_dir, 'watermark-%d.pdf' % page),
-                             'output',
-                             os.path.join(tmp_dir, 'watermarked-%d.pdf' % page)])
-
-        args = []
-        args.append('pdftk')
-        for page in xrange(1, questionnaire_length + 1):
-            char = chr(ord('A') + page - 1)
-            args.append('%s=' % char + os.path.join(tmp_dir, 'watermarked-%d.pdf' % page))
-
-        args.append('cat')
-
-        for i in range(sheets):
             for page in xrange(1, questionnaire_length + 1):
                 char = chr(ord('A') + page - 1)
-                args.append('%s%d' % (char, i + 1))
+                args.append('%s=' % char + os.path.join(tmp_dir, 'watermarked-%d.pdf' % page))
 
-        args.append('output')
-        args.append(os.path.join(tmp_dir, 'final.pdf'))
-        print _(u"pdftk: Assembling everything into the final PDF.")
-        subprocess.call(args)
+            args.append('cat')
 
-        subprocess.call(['pdftk', os.path.join(tmp_dir, 'final.pdf'),
-                         'update_info', os.path.join(tmp_dir, 'doc_data.txt'),
-                         'output', output_filename])
+            for i in range(sheets):
+                for page in xrange(1, questionnaire_length + 1):
+                    char = chr(ord('A') + page - 1)
+                    args.append('%s%d' % (char, i + 1))
+
+            args.append('output')
+            args.append(os.path.join(tmp_dir, 'final.pdf'))
+            print _(u"pdftk: Assembling everything into the final PDF.")
+            subprocess.call(args)
+
+            subprocess.call(['pdftk', os.path.join(tmp_dir, 'final.pdf'),
+                             'update_info', os.path.join(tmp_dir, 'doc_data.txt'),
+                             'output', output_filename])
 
         # Remove tmp.pdf
         os.unlink(survey.path('tmp.pdf'))
