@@ -1124,13 +1124,15 @@
         %
         \pgfsys@getposition{textboxright\thetextboxnum}{\@sdaps@textboxrightpos}%
         \pgfpointadd{\@sdaps@textboxrightpos}{%
-          \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxleftpos}}{
+          \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxleftpos}}{%
             \pgfpoint{0}{#1+2\elementlinewidth}%
           }%
         }%
         \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
         \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
       \fi%
+      {
+      }% Yes, this inserts whitespace, because well, we had a bug and we don't
       %
       \def\horizontallines{%
         \hbox{%
