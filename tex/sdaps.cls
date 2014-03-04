@@ -1005,7 +1005,7 @@
       %
       \pgfsys@getposition{textboxright\thetextboxnum}{\@sdaps@textboxrightpos}%
       \pgfpointadd{\@sdaps@textboxrightpos}{%
-        \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxleftpos}}{
+        \pgfpointadd{\pgfpointscale{-1}{\@sdaps@textboxleftpos}}{%
           \pgfpoint{0}{#1+2\elementlinewidth}%
         }%
       }%
