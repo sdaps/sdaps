@@ -584,6 +584,10 @@
 
 \newif\if@forceSTAMP\@forceSTAMPfalse
 
+% Most of these lengths are hardcoded in the defs.py too. So
+% any modification here will need a corresponding change in
+% defs.py.
+% If you want to make this more configurable, patches are always welcome :-)
 \newlength{\edgeleftmargin}
 \setlength{\edgeleftmargin}{10mm}
 \newlength{\edgerightmargin}
