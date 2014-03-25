@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-02 23:59+0100\n"
+"POT-Creation-Date: 2014-03-25 11:29+0100\n"
 "PO-Revision-Date: 2014-01-23 09:31+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Arabic <http://hosted.weblate.org/projects/sdaps/master/ar/>\n"
@@ -473,41 +473,43 @@ msgstr ""
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:78
+#. in simplex mode every page will have a matrix; it might be a None
+#. matrix though
+#: ../sdaps/recognize/buddies.py:72
 #, python-format
 msgid "%s, %i: Matrix not recognized."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:87
+#: ../sdaps/recognize/buddies.py:81
 #, python-format
 msgid "%s, %i: Rotation not found."
 msgstr ""
 
 #. Copy the rotation over (if required) and print warning if the rotation is unknown
-#: ../sdaps/recognize/buddies.py:91
+#: ../sdaps/recognize/buddies.py:85
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known rotation!"
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:103
+#: ../sdaps/recognize/buddies.py:97
 #, python-format
 msgid "%s, %i: Matrix not recognized (again)."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:117
+#: ../sdaps/recognize/buddies.py:111
 #, python-format
 msgid "%s, %i: Could not get page number."
 msgstr ""
 
 #. Whoa, that should not happen.
-#: ../sdaps/recognize/buddies.py:137
+#: ../sdaps/recognize/buddies.py:131
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known page number!"
 msgstr ""
 
 #. We don't touch the ignore flag in this case
 #. Simply print a message as this should *never* happen
-#: ../sdaps/recognize/buddies.py:148
+#: ../sdaps/recognize/buddies.py:142
 #, python-format
 msgid ""
 "Got a simplex document where two adjacent pages had a known page number. "
@@ -516,60 +518,60 @@ msgid ""
 "mode? The pages in question are %s, %i and %s, %i."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:165
+#: ../sdaps/recognize/buddies.py:159
 #, python-format
 msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:181
+#: ../sdaps/recognize/buddies.py:175
 #, python-format
 msgid "No page number for page %s, %i exists."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:186
+#: ../sdaps/recognize/buddies.py:180
 #, python-format
 msgid "Page number for page %s, %i already used by another image."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:192
+#: ../sdaps/recognize/buddies.py:186
 #, python-format
 msgid "Page number %i for page %s, %i is out of range."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:209
+#: ../sdaps/recognize/buddies.py:203
 #, python-format
 msgid "%s, %i: Could not read survey ID, but should be able to."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:213
+#: ../sdaps/recognize/buddies.py:207
 #, python-format
 msgid "Could not read survey ID of either %s, %i or %s, %i!"
 msgstr ""
 
 #. Broken survey ID ...
-#: ../sdaps/recognize/buddies.py:220
+#: ../sdaps/recognize/buddies.py:214
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:242
+#: ../sdaps/recognize/buddies.py:236
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:246
+#: ../sdaps/recognize/buddies.py:240
 #, python-format
 msgid "Could not read questoinnaire ID of either %s, %i or %s, %i!"
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:273
+#: ../sdaps/recognize/buddies.py:267
 msgid ""
 "Got different IDs on different pages for at least one sheet! Do *NOT* try to "
 "use filters with this survey! You have to run a \"reorder\" step for this to "
 "work properly!"
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:327
+#: ../sdaps/recognize/buddies.py:321
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
 
@@ -883,7 +885,7 @@ msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/stamp/generic.py:309 ../sdaps/stamp/generic.py:420
+#: ../sdaps/stamp/generic.py:309 ../sdaps/stamp/generic.py:442
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
@@ -895,29 +897,36 @@ msgstr[1] ""
 msgid "Stamping using pdftk"
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:322
+#. Shortcut if we only have one sheet.
+#. In this case form data in the PDF will *not* break, in
+#. the other code path it *will* break.
+#: ../sdaps/stamp/generic.py:325
+msgid "pdftk: Overlaying the original PDF with the markings."
+msgstr ""
+
+#: ../sdaps/stamp/generic.py:334
 #, python-format
 msgid "pdftk: Splitting out page %d of each sheet."
 msgid_plural "pdftk: Splitting out page %d of each sheet."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/stamp/generic.py:336
+#: ../sdaps/stamp/generic.py:348
 msgid "pdftk: Splitting the questionnaire for watermarking."
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:346
+#: ../sdaps/stamp/generic.py:359 ../sdaps/stamp/generic.py:368
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/stamp/generic.py:369
+#: ../sdaps/stamp/generic.py:391
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:406
+#: ../sdaps/stamp/generic.py:428
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr ""
 
