@@ -45,7 +45,7 @@ def setup(survey, cmdline):
     additionalqobjects = cmdline['additional_questions']
 
     mime = mimetype(questionnaire_odt)
-    if mime != 'application/vnd.oasis.opendocument.text' and mime != '':
+    if mime != 'application/vnd.oasis.opendocument.text' and mime not in ['', 'binary']:
         log.error(_('Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text.') % mime)
         return 1
 
