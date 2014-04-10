@@ -150,7 +150,7 @@ class Box(model.buddy.Buddy):
     def draw(self, cr):
         cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
 
-        cr.set_source_rgba(0.0, 0.0, 1.0, 0.5)
+        cr.set_source_rgba(0.57, 1.0, 0.0, 0.5)
         cr.set_line_width(LINE_WIDTH)
 
         inner_box(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
@@ -172,20 +172,41 @@ class Checkbox(Box):
     name = 'gui'
     obj_class = model.questionnaire.Checkbox
 
+    def find(self, x, y):
+        if self.obj.data.x - 2*LINE_WIDTH < x < self.obj.data.x + self.obj.data.width + 2*LINE_WIDTH:
+            if self.obj.data.y - 2*LINE_WIDTH < y < self.obj.data.y + self.obj.data.height + 2*LINE_WIDTH:
+                return self.obj
+        return None
+
+
     def draw(self, cr):
         cr.save()
 
         cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
 
-        cr.set_source_rgba(0.0, 0.0, 1.0, 0.5)
+        if self.obj.data.quality < 0.5:
+            cr.save()
+            cr.set_line_width(2*LINE_WIDTH)
+            cr.set_source_rgba(1.0, 0.0, 0.2, 0.6)
+
+            if self.obj.form == "box":
+                inner_box(cr, self.obj.data.x - 4*LINE_WIDTH, self.obj.data.y - 4*LINE_WIDTH,  self.obj.data.width+8*LINE_WIDTH, self.obj.data.height+8*LINE_WIDTH)
+                cr.stroke()
+            elif self.obj.form == "ellipse":
+                inner_ellipse(cr, self.obj.data.x - 4*LINE_WIDTH, self.obj.data.y - 4*LINE_WIDTH,  self.obj.data.width+8*LINE_WIDTH, self.obj.data.height+8*LINE_WIDTH)
+                cr.stroke()
+
+            cr.restore()
+
+        cr.set_source_rgba(0.57, 1.0, 0.0, 0.5)
         cr.set_line_width(LINE_WIDTH)
 
         if self.obj.data.state:
             if self.obj.form == "box":
-                cr.rectangle(self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
+                cr.rectangle(self.obj.data.x - 2*LINE_WIDTH, self.obj.data.y - 2*LINE_WIDTH, self.obj.data.width + 4*LINE_WIDTH, self.obj.data.height + 4*LINE_WIDTH)
                 cr.fill()
             elif self.obj.form == "ellipse":
-                ellipse(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
+                ellipse(cr, self.obj.data.x - 2*2*LINE_WIDTH, self.obj.data.y - 2*LINE_WIDTH, self.obj.data.width + 4*LINE_WIDTH, self.obj.data.height + 4*LINE_WIDTH)
                 cr.fill()
         else:
             if self.obj.form == "box":
@@ -209,7 +230,7 @@ class Textbox(Box):
 
         cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
 
-        cr.set_source_rgba(0.0, 0.0, 1.0, 0.5)
+        cr.set_source_rgba(0.57, 1.0, 0.0, 0.5)
 
         if self.obj.data.state:
             cr.set_line_width(3 * LINE_WIDTH)
