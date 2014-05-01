@@ -52,22 +52,7 @@ def main(local_run=False):
     import log
     log.activate_redirects()
 
-    import add
-    import annotate
-    import boxgallery
-    import convert
-    import cover
-    import csvdata
-    import gui
-    import ids
-    import info
-    import recognize
-    import reorder
-    import report
-    import reporttex
-    import setup
-    import setuptex
-    import stamp
+    import cmdline
 
     cmdline = script.parser.parse_args()
     cmdline = vars(cmdline)

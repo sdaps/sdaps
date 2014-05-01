@@ -16,38 +16,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import csv
 
-from sdaps import clifilter
 from sdaps import model
+from sdaps import script
 
-import buddies
-
-
-def csvdata_export(survey, filename, filter=None):
-    # compile clifilter
-    filter = clifilter.clifilter(survey, filter)
-
-    # export
-    survey.questionnaire.csvdata.open_csv(filename)
-
-    survey.iterate(
-        survey.questionnaire.csvdata.export_data,
-        filter,
-    )
-
-    survey.questionnaire.csvdata.export_finish()
+from sdaps.utils.ugettext import ugettext, ungettext
+_ = ugettext
 
 
-def csvdata_import(survey, filename):
-    csvfile = file(filename, 'r')
-    csvreader = csv.DictReader(csvfile)
+parser = script.subparsers.add_parser("gui",
+    help=_("Launch a gui. You can view and alter the (recognized) answers with it."),
+    description=_("""This command launches a graphical user interface that can
+    be used to correct answer. You need to run "recognize" before using it.
+    """))
 
-    for data in csvreader:
-        survey.questionnaire.csvdata.import_data(data)
+parser.add_argument('-f', '--filter',
+    help=_("Filter to only show a partial dataset."))
 
-    csvfile.close()
+@script.connect(parser)
+@script.logfile
+def gui(cmdline):
+    from sdaps import gui
 
-    survey.save()
+    survey = model.survey.Survey.load(cmdline['project'])
+
+    return gui.gui(survey, cmdline)
 
 

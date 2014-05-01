@@ -1,7 +1,6 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2012, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,38 +15,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import csv
+import os
 
-from sdaps import clifilter
 from sdaps import model
+from sdaps import script
 
-from . import buddies
-
-
-def csvdata_export(survey, filename, filter=None):
-    # compile clifilter
-    filter = clifilter.clifilter(survey, filter)
-
-    # export
-    survey.questionnaire.csvdata.open_csv(filename)
-
-    survey.iterate(
-        survey.questionnaire.csvdata.export_data,
-        filter,
-    )
-
-    survey.questionnaire.csvdata.export_finish()
+from sdaps.utils.ugettext import ugettext, ungettext
+_ = ugettext
 
 
-def csvdata_import(survey, filename):
-    csvfile = file(filename, 'r')
-    csvreader = csv.DictReader(csvfile)
+parser = script.subparsers.add_parser("annotate",
+    help=_("Annotate the questionnaire and show the recognized positions."),
+    description=_("""This command is mainly a debug utility. It creates an
+    annotated version of the questionnaire, with the information that SDAPS
+    knows about it overlayed on top."""))
 
-    for data in csvreader:
-        survey.questionnaire.csvdata.import_data(data)
+@script.connect(parser)
+@script.logfile
+def annotate(cmdline):
+    from sdaps.annotate import annotate
 
-    csvfile.close()
+    survey = model.survey.Survey.load(cmdline['project'])
 
-    survey.save()
-
+    return annotate(survey)
 

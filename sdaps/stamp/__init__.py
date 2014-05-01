@@ -16,43 +16,78 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import random
+
+import os
+import sys
+import math
+import codecs
+
 from sdaps import model
-from sdaps import script
+from sdaps import log
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.subparsers.add_parser("stamp",
-    help=_("Add marks for automatic processing."),
-    description=_("""This command creates the printable document. Depending on
-    the projects setting you are required to specifiy a source for questionnaire
-    IDs."""))
 
-parser.add_argument('-r', '--random',
-    metavar="N",
-    help=_("If using questionnaire IDs, create N questionnaires with randomized IDs."),
-    type=int)
-parser.add_argument('-f', '--file',
-    help=_("If using questionnaire IDs, create questionnaires from the IDs read from the specified file."))
-parser.add_argument('--existing',
-    action="store_true",
-    help=_("If using questionnaire IDs, create questionnaires for all stored IDs."))
+def stamp(survey, output_filename, cmdline):
+    # copy questionnaire_ids
+    # get number of sheets to create
+    if cmdline['file'] or cmdline['random'] or cmdline['existing']:
+        if not survey.defs.print_questionnaire_id:
+            log.error(_("You may not specify the number of sheets for this survey. All questionnaires will be identical as the survey has been configured to not use questionnaire IDs for each sheet."))
+            return 1
 
-parser.add_argument('-o', '--output',
-    help=_("Filename to store the data to (default: stamp_%%i.pdf)"))
+        if cmdline['existing']:
+            questionnaire_ids = survey.questionnaire_ids
+        elif cmdline['file']:
+            if cmdline['file'] == '-':
+                fd = sys.stdin
+            else:
+                fd = codecs.open(cmdline['file'], 'r', encoding="utf-8")
 
-@script.connect(parser)
-@script.logfile
-def stamp(cmdline):
-    survey = model.survey.Survey.load(cmdline['project'])
+            questionnaire_ids = list()
+            for line in fd.readlines():
+                # Only strip newline/linefeed not spaces
+                line = line.strip('\n\r')
 
-    import stamp
+                # Skip empty lines
+                if line == "":
+                    continue
 
-    if cmdline['output'] is None:
-        output = survey.new_path('stamped_%i.pdf')
+                questionnaire_ids.append(survey.validate_questionnaire_id(line))
+        else:
+            # Create random IDs
+            max = pow(2, 16)
+            min = max - 50000
+            questionnaire_ids = range(min, max)
+
+            # Remove any id that has already been used.
+            for id in survey.questionnaire_ids:
+                if type(id) != int:
+                    continue
+                questionnaire_ids[id - min] = 0
+
+            questionnaire_ids = [id for id in questionnaire_ids if id > min]
+            random.shuffle(questionnaire_ids)
+            questionnaire_ids = questionnaire_ids[:cmdline['random']]
     else:
-        output = cmdline['output']
+        if survey.defs.print_questionnaire_id:
+            log.error(_("This survey has been configured to use questionnaire IDs. Each questionnaire will be unique. You need to use on of the options to add new IDs or use the existing ones."))
+            return 1
 
-    return stamp.stamp(survey, output, cmdline)
+        questionnaire_ids = None
 
+    if questionnaire_ids is not None:
+        survey.questionnaire_ids.extend(questionnaire_ids)
+
+    if os.path.exists(survey.path('questionnaire.tex')):
+        # use the LaTeX stamper
+        from sdaps.stamp.latex import create_stamp_pdf
+    else:
+        from sdaps.stamp.generic import create_stamp_pdf
+
+    create_stamp_pdf(survey, output_filename, questionnaire_ids)
+
+    survey.save()
 

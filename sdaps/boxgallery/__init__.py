@@ -16,40 +16,115 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
-This modules contains a script for the user to output all boxes sorted by their
-coverage. This can be used to adjust magic values for checkbox recognition.
-"""
-
-from sdaps import model
-from sdaps import script
+import cairo
+from gi.repository import Pango
+from gi.repository import PangoCairo
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.subparsers.add_parser("boxgallery",
-    help=_("Create PDFs with boxes sorted by the detection heuristics."),
-    description=_("""SDAPS uses multiple heuristics to detect determine the
-    state of checkboxes. There is a list for each heuristic giving the expected
-    state and the quality of the value (see defs.py). Using this command a PDF
-    will be created for each of the heuristics so that one can adjust the
-    values."""))
+import copy
+from . import buddies
 
-parser.add_argument('--debugrecognition',
-    action="store_true",
-    help=_('Reruns part of the recognition process and retrieves debug images from this step.'),
-    default=False)
 
-@script.connect(parser)
-@script.logfile
-def boxgallery(cmdline):
+def paint_box(cr, mm_to_pt, x, y, box, key):
+    cr.save()
+    cr.set_matrix(mm_to_pt)
+    cr.translate(x, y)
 
-    # We need to load the buddies before the survey is loaded.
-    if cmdline['debugrecognition']:
-        from sdaps.recognize import buddies
+    cr.scale(25.4 / 300.0, 25.4 / 300.0)
 
-    survey = model.survey.Survey.load(cmdline['project'])
-    import boxgallery
-    return boxgallery.boxgallery(survey, cmdline['debugrecognition'])
+    cr.set_source_rgb(0, 0, 0)
+    cr.mask_surface(box[2][0], 0, 0)
 
+    if box[3] and key in box[3] and box[3][key] is not None:
+        cr.set_source_surface(box[3][key][0], box[3][key][1] - box[2][1], box[3][key][2] - box[2][2])
+        cr.paint()
+
+    cr.restore()
+
+    cr.save()
+
+    tmp_x, tmp_y = mm_to_pt.transform_point(x, y)
+    tmp_width, tmp_height = mm_to_pt.transform_distance(8, 13)
+
+    tmp_x, tmp_y = mm_to_pt.transform_point(x, y + 8.0)
+    # Print bold if detected ON
+    value = box[1][key] if key in box[1] else -1
+    if box[0]:
+        t = "<b>%.2f</b>" % value
+    else:
+        t = "%.2f" % value
+
+    cr.move_to(tmp_x, tmp_y)
+
+    layout = PangoCairo.create_layout(cr)
+    layout.set_markup(t, -1)
+    font = Pango.FontDescription("serif 6")
+    layout.set_font_description(font)
+
+    PangoCairo.show_layout(cr, layout)
+
+    cr.restore()
+
+
+def fill_page(cr, mm_to_pt, checkboxes, key):
+    y = 15
+    y_step = 13
+    x_step = 10
+    x_max = 210 - 15 - 8
+    y_max = 297 - 15 - 8
+
+    while y < y_max:
+        x = 15
+        while x < x_max:
+
+            if len(checkboxes) == 0:
+                return
+            box = checkboxes.pop(0)
+
+            paint_box(cr, mm_to_pt, x, y, box, key)
+
+            x += x_step
+        y += y_step
+
+
+def boxgallery(survey, debugrecognition):
+    # Enable debug image creation in the C module
+    if debugrecognition:
+        from sdaps import image
+        image.enable_debug_surface_creation(True)
+
+    survey.questionnaire.boxgallery.init(debugrecognition)
+    survey.iterate_progressbar(survey.questionnaire.boxgallery.get_checkbox_images)
+    checkboxes = survey.questionnaire.boxgallery.checkboxes
+    survey.questionnaire.boxgallery.clean()
+
+    keys = set()
+    for checkbox in checkboxes:
+        keys = keys.union(checkbox[1].iterkeys())
+
+    for key in keys:
+        print _("Rendering boxgallery for metric \"%s\"." % key)
+        draw_list = copy.copy(checkboxes)
+        draw_list.sort(key=lambda x: x[1][key] if key in x[1] else 0)
+
+        # Hardcode 300dpi
+        # Hardcode the mm size:
+        # 3.5 + 0.4mm = 3.9mm
+        mm_to_pt = cairo.Matrix(72.0 / 25.4, 0, 0, 72.0 / 25.4, 0, 0)
+
+        page = 1
+        pdf = cairo.PDFSurface(survey.path('boxgallery-%s.pdf' % key), 595, 842)
+        cr = cairo.Context(pdf)
+
+        while len(draw_list) > 0:
+            fill_page(cr, mm_to_pt, draw_list, key)
+            cr.show_page()
+            pdf.flush()
+
+            page += 1
+
+        del pdf
+        del cr
 

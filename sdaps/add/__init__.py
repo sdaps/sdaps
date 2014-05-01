@@ -19,58 +19,9 @@
 import os
 
 from sdaps import model
-from sdaps import script
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
-
-
-parser = script.subparsers.add_parser("add",
-    help=_("Add scanned questionnaires to the survey."),
-    description=_("""This command is used to add scanned images to the survey.
-    The image data needs to be a (multipage) 300dpi monochrome TIFF file. You
-    may choose not to copy the data into the project directory. In that case
-    the data will be referenced using a relative path."""))
-
-parser.add_argument('--force',
-    help=_("Force adding the images even if the page count is wrong (only use if you know what you are doing)."),
-    action="store_true",
-    default=False)
-parser.add_argument('--copy',
-    help=_("Copy the files into the directory (default)."),
-    dest="copy",
-    action="store_true",
-    default=True)
-parser.add_argument('--no-copy',
-    help=_("Do not copy the files into the directory."),
-    dest="copy",
-    action="store_false")
-parser.add_argument('--duplex',
-    help=_("Images contain a duplex scan of a simplex questoinnaire (default: simplex scan)."),
-    dest="duplex",
-    action="store_true",
-    default=False)
-
-parser.add_argument('images',
-    help=_("A number of TIFF image files."),
-    nargs='+')
-
-@script.connect(parser)
-@script.logfile
-def add(cmdline):
-    import sys
-
-    survey = model.survey.Survey.load(cmdline['project'])
-
-    for file in cmdline['images']:
-
-        print _('Processing %s') % file
-
-        add_image(survey, file, cmdline['duplex'], cmdline['force'], cmdline['copy'])
-
-        print _('Done')
-
-    survey.save()
 
 
 def add_image(survey, file, duplex_scan=False, force=False, copy=True):

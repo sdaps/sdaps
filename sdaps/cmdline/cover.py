@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
 # Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
@@ -17,17 +17,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from sdaps import model
+from sdaps import script
 
-import buddies
+from sdaps.utils.ugettext import ugettext, ungettext
+_ = ugettext
 
 
-def recognize(survey, filter):
-    # iterate over sheets
-    survey.iterate_progressbar(survey.questionnaire.recognize.recognize, filter)
-    survey.save()
+parser = script.subparsers.add_parser("cover",
+    help=_("Create a cover for the questionnaires."),
+    description=_("""This command creates a cover page for questionnaires. All
+    the metadata of the survey will be printed on the page."""))
+parser.add_argument('-o', '--output',
+    help=_("Filename to store the data to (default: cover_%%i.pdf)"))
 
-def identify(survey, filter):
-    # iterate over sheets
-    survey.iterate_progressbar(survey.questionnaire.recognize.identify, filter)
-    survey.save()
+@script.connect(parser)
+@script.logfile
+def cover(cmdline):
+    from sdaps import cover
+
+    survey = model.survey.Survey.load(cmdline['project'])
+
+    cover.cover(survey, cmdline['output'])
+
 

@@ -1,7 +1,6 @@
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
-# Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
-# Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
+# Copyright(C) 2012, Benjamin Berg <benjamin@sipsolutions.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,33 +15,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from sdaps import template
+from sdaps import model
+from sdaps import script
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-def cover(survey, output=None):
+parser = script.subparsers.add_parser("reorder",
+    help=_("Reorder pages according to questionnaire ID."),
+    description=_("""This command reorders all pages according to the already
+    recognized questionnaire ID. To use it add all the files to the project,
+    then run a partial recognition using "recognize --identify". After this
+    you have to run this command to reorder the data for the real recognition.
+    """))
 
-    story = template.story_title(survey)
-    subject = []
-    for key, value in survey.info.iteritems():
-        subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
-    subject = u'\n'.join(subject)
 
-    if output:
-        filename = output
-    else:
-        filename = survey.new_path('cover_%i.pdf')
+@script.connect(parser)
+@script.logfile
+def reorder(cmdline):
+    survey = model.survey.Survey.load(cmdline['project'])
 
-    doc = template.DocTemplate(
-        filename,
-        _(u'sdaps questionnaire'),
-        {
-            'title': survey.title,
-            'subject': subject
-        }
-    )
-    doc.build(story)
+    from sdaps import reorder
 
+    return reorder.reorder(survey)
 

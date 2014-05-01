@@ -20,46 +20,161 @@ u"""
 This modules contains the functionality to create reports using LaTeX.
 """
 
-from sdaps import model
-from sdaps import script
+import os
+import tempfile
+import shutil
+import glob
+import subprocess
 
+from sdaps import model
+
+from sdaps import clifilter
+from sdaps import template
+from sdaps import matrix
+from sdaps import paths
+from sdaps import defs
+
+from sdaps.utils import paper
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.subparsers.add_parser("report_tex",
-    help=_("Create a PDF report using LaTeX."),
-    description=_("""This command creates a PDF report using LaTeX that
-    contains statistics and freeform fields."""))
-parser.add_argument('--suppress-images',
-    help=_('Do not include original images in the report. This is useful if there are privacy concerns.'),
-    dest='suppress',
-    action='store_const',
-    const='images')
-parser.add_argument('--suppress-substitutions',
-    help=_('Do not use substitutions instead of images.'),
-    dest='suppress',
-    action='store_const',
-    const='substitutions',
-    default=None)
-parser.add_argument('--create-tex',
-    help=_('Save the generated TeX files instead of the final PDF.'),
-    dest='create-tex',
-    action='store_true',
-    default=False)
-parser.add_argument('-p', '--paper',
-    help=_('The paper size used for the output (default: locale dependent)'),
-    dest='papersize')
-parser.add_argument('-o', '--output',
-    help=_("Filename to store the data to (default: report_%%i.pdf)"))
+from . import buddies
+import codecs
 
-parser.add_argument('-f', '--filter',
-    help=_("Filter to only export a partial dataset."))
 
-@script.connect(parser)
-@script.logfile
-def report_tex(cmdline):
-    survey = model.survey.Survey.load(cmdline['project'])
-    import report
-    return report.report(survey, cmdline['filter'], cmdline['output'], cmdline['papersize'], suppress=cmdline['suppress'], tex_only=cmdline['create-tex'])
+def report(survey, filter, filename=None, papersize=None, small=0, suppress=None, tex_only=False):
+    assert isinstance(survey, model.survey.Survey)
 
+    # compile clifilter
+    filter = clifilter.clifilter(survey, filter)
+
+    # First: calculate buddies
+
+    # init buddies
+    survey.questionnaire.calculate.init()
+
+    # iterate over sheets
+    survey.iterate(
+        survey.questionnaire.calculate.read,
+        lambda: survey.sheet.valid and filter()
+    )
+
+    # do calculations
+    survey.questionnaire.calculate.calculate()
+
+    # Second: report buddies
+
+    # init buddies
+    survey.questionnaire.report.init(small, suppress)
+
+    # Filename of output
+    if filename is None and tex_only == False:
+        filename = survey.new_path('report_%i.pdf')
+
+    # Temporary directory for TeX files.
+    if tex_only and filename:
+        tmpdir = filename
+
+        # Create directory
+        os.makedirs(tmpdir)
+    else:
+        tmpdir = tempfile.mkdtemp()
+
+    try:
+        # iterate over sheets
+        survey.iterate(
+            survey.questionnaire.report.report,
+            lambda: survey.sheet.valid and filter(),
+            tmpdir
+        )
+
+        # Copy class and dictionary files
+        if paths.local_run:
+            cls_file = os.path.join(paths.source_dir, 'tex', 'sdapsreport.cls')
+            dict_files = os.path.join(paths.build_dir, 'tex', '*.dict')
+            dict_files = glob.glob(dict_files)
+        else:
+            cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdapsreport.cls')
+            dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
+            dict_files = glob.glob(dict_files)
+
+        shutil.copyfile(cls_file, os.path.join(tmpdir, 'sdapsreport.cls'))
+        for dict_file in dict_files:
+            shutil.copyfile(dict_file, os.path.join(tmpdir, os.path.basename(dict_file)))
+
+        texfile = codecs.open(os.path.join(tmpdir, 'report.tex'), 'w', 'utf-8')
+
+        author = _('author|Unknown')
+
+        extra_info = []
+        for key, value in survey.info.iteritems():
+            if key == 'Author':
+                author = value
+                continue
+
+            extra_info.append(u'\\addextrainfo{%(key)s}{%(value)s}' % {'key': key, 'value': value})
+
+        extra_info = u'\n'.join(extra_info)
+        texfile.write(r"""\documentclass[%(language)s,%(papersize)s]{sdapsreport}
+
+    \usepackage{ifxetex}
+    \ifxetex
+    \else
+      \usepackage[utf8]{inputenc}
+    \fi
+    \usepackage[%(language)s]{babel}
+
+    \title{%(title)s}
+    \subject{%(title)s}
+    \author{%(author)s}
+
+    \addextrainfo{%(turned_in)s}{%(count)i}
+    %(extra_info)s
+
+    \begin{document}
+
+    \maketitle
+
+    """ % {'language': _('tex language|english'),
+           'title': _(u'sdaps report'),
+           'turned_in': _('Turned in Questionnaires'),
+           'title': survey.title,
+           'author': author,
+           'extra_info': extra_info,
+           'count': survey.questionnaire.calculate.count,
+           'papersize' : paper.get_tex_papersize(papersize)})
+
+        survey.questionnaire.report.write(texfile, tmpdir)
+
+        texfile.write(r"""
+    \end{document}
+    """)
+
+        if tex_only:
+            print _("The TeX project with the report data is located at '%s'.") % tmpdir
+            return
+
+        print _("Running %s now twice to generate the report.") % defs.latex_engine
+        subprocess.call([defs.latex_engine, '-halt-on-error',
+                         '-interaction', 'batchmode',
+                         os.path.join(tmpdir, 'report.tex')],
+                        cwd=tmpdir)
+        # And again
+        subprocess.call([defs.latex_engine, '-halt-on-error',
+                         '-interaction', 'batchmode',
+                         os.path.join(tmpdir, 'report.tex')],
+                        cwd=tmpdir)
+
+        if not os.path.exists(os.path.join(tmpdir, 'report.pdf')):
+            print _("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine
+            raise AssertionError('PDF file not generated')
+
+        shutil.move(os.path.join(tmpdir, 'report.pdf'), filename)
+
+    except:
+        print _("An occured during creation of the report. Temporary files left in '%s'." % tmpdir)
+
+        raise
+
+    shutil.rmtree(tmpdir)
 

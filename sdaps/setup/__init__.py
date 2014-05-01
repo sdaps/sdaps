@@ -21,80 +21,123 @@ Contains the functionality to create a new SDAPS project using an OpenOffice.org
 document and its PDF Export.
 """
 
+import os
+import shutil
+
+from sdaps.utils.mimetype import mimetype
 from sdaps import model
-from sdaps import script
-import optparse
+from sdaps import log
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
+from . import buddies
+from . import boxesparser
+from . import qobjectsparser
+from . import additionalparser
+from . import metaparser
+from pdftools import pdffile
 
-parser = script.subparsers.add_parser("setup",
-    help=_("Create a new survey using an ODT document."),
-    description=_("""Create a new surevey from an ODT document. The PDF export
-    of the file needs to be specified at the same time. SDAPS will import
-    metadata (properties) and the title from the ODT document."""))
 
-parser.add_argument('questionnaire.odt',
-    help=_("The ODT Document"))
-parser.add_argument('questionnaire.pdf',
-    help=_("PDF export of the ODT document"))
-parser.add_argument('additional_questions',
-    nargs='?',
-    help=_("Additional questions that are not part of the questionnaire."))
+def setup(survey, questionnaire_odt, questionnaire_pdf, additionalqobjects, options):
 
-parser.set_defaults(print_survey_id=True)
-parser.set_defaults(print_questionnaire_id=False)
-parser.set_defaults(global_id="")
-parser.set_defaults(duplex=True)
+    if os.access(survey.path(), os.F_OK):
+        log.error(_('The survey directory already exists.'))
+        return 1
 
-parser.add_argument('--print-survey-id',
-    action="store_const",
-    help=_('Enable printing of the survey ID (default).'),
-    dest='print_survey_id', const=True)
-parser.add_argument('--no-print-survey-id',
-    action="store_const",
-    help=_('Disable printing of the survey ID.'),
-    dest='print_survey_id', const=False)
+    mime = mimetype(questionnaire_odt)
+    if mime != 'application/vnd.oasis.opendocument.text' and mime not in ['', 'binary', 'application/octet-stream']:
+        log.error(_('Unknown file type (%s). questionnaire_odt should be application/vnd.oasis.opendocument.text.') % mime)
+        return 1
 
-parser.add_argument('--print-questionnaire-id',
-    action="store_true",
-    help=_('Enable printing of the questionnaire ID.'),
-    dest='print_questionnaire_id')
-parser.add_argument('--no-print-questionnaire-id',
-    action="store_false",
-    help=_('Disable printing of the questionnaire ID (default).'),
-    dest='print_questionnaire_id')
+    mime = mimetype(questionnaire_pdf)
+    if mime != 'application/pdf' and mime != '':
+        log.error(_('Unknown file type (%s). questionnaire_pdf should be application/pdf.') % mime)
+        return 1
 
-parser.add_argument('--global-id',
-    help=_('Set an additional global ID for tracking. This can can only be used in the "code128" style.'),
-    dest='global_id')
+    if additionalqobjects is not None:
+        mime = mimetype(additionalqobjects)
+        if mime != 'text/plain' and mime != '':
+            log.error(_('Unknown file type (%s). additionalqobjects should be text/plain.') % mime)
+            return 1
 
-parser.add_argument('--style',
-    choices=["code128", "classic", "custom"],
-    help=_('The stamping style to use. Should be either "classic" or "code128". Use "code128" for more features.'),
-    dest='style',
-    default="code128")
+    # Add the new questionnaire
+    survey.add_questionnaire(model.questionnaire.Questionnaire())
 
-parser.add_argument('--duplex',
-    action="store_true",
-    help=_('Use duplex mode (ie. only print the IDs on the back side). Requires a mulitple of two pages.'),
-    dest='duplex')
+    # Parse the box objects into a cache
+    boxes, page_count = boxesparser.parse(questionnaire_pdf)
+    survey.questionnaire.page_count = page_count
 
-parser.add_argument('--simplex',
-    action="store_false",
-    help=_('Use simplex mode. IDs are printed on each page. You need a simplex scan currently!'),
-    dest='duplex')
+    # Get the papersize
+    doc = pdffile.PDFDocument(questionnaire_pdf)
+    page = doc.read_page(1)
+    survey.defs.paper_width = abs(page.MediaBox[0] - page.MediaBox[2]) / 72.0 * 25.4
+    survey.defs.paper_height = abs(page.MediaBox[1] - page.MediaBox[3]) / 72.0 * 25.4
+    survey.defs.print_questionnaire_id = options['print_questionnaire_id']
+    survey.defs.print_survey_id = options['print_survey_id']
 
-@script.connect(parser)
-def setup(cmdline):
-    survey = model.survey.Survey.new(cmdline['project'])
+    survey.defs.style = options['style']
+    # Force simplex if page count is one.
+    survey.defs.duplex = False if page_count == 1 else options['duplex']
 
-    # Cleanup of options.
-    if cmdline['global_id'] == '':
-        cmdline['global_id'] = None
+    survey.global_id = options['global_id']
 
-    import setup
-    return setup.setup(survey, cmdline)
+    # Parse qobjects
+    try:
+        qobjectsparser.parse(survey, questionnaire_odt, boxes)
+    except:
+        log.error(_("Caught an Exception while parsing the ODT file. The current state is:"))
+        print unicode(survey.questionnaire)
+        print "------------------------------------"
+        print _("If the dependencies for the \"annotate\" command are installed, then an annotated version will be created next to the original PDF file.")
+        print "------------------------------------"
 
+        # Try to make an annotation
+        try:
+            if questionnaire_pdf.lower().endswith('.pdf'):
+                annotated_pdf = questionnaire_pdf[:-4] + '_annotated.pdf'
+            else:
+                # No .pdf ending? Just append the _annotated.pdf.
+                annotated_pdf = questionnaire_pdf + '_annotated.pdf'
+
+            import sdaps.annotate.annotate as annotate
+            annotate.annotate(survey, questionnaire_pdf, annotated_pdf)
+        except:
+            # Well, whatever
+            pass
+
+        raise
+
+    # Parse additionalqobjects
+    if additionalqobjects:
+        additionalparser.parse(survey, additionalqobjects)
+
+    # Parse Metadata
+    metaparser.parse(survey, questionnaire_odt)
+
+    # Last but not least calculate the survey id
+    survey.calculate_survey_id()
+
+    if not survey.check_settings():
+        log.error(_("Some combination of options and project properties do not work. Aborted Setup."))
+        return 1
+
+    # Print the result
+    print survey.title
+
+    for item in survey.info.items():
+        print u'%s: %s' % item
+
+    print unicode(survey.questionnaire)
+
+    # Create the survey
+    os.mkdir(survey.path())
+
+    log.logfile.open(survey.path('log'))
+
+    shutil.copy(questionnaire_odt, survey.path('questionnaire.odt'))
+    shutil.copy(questionnaire_pdf, survey.path('questionnaire.pdf'))
+
+    survey.save()
+    log.logfile.close()
 

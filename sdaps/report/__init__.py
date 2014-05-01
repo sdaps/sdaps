@@ -20,64 +20,104 @@ u"""
 This modules contains the functionality to create PDF based reports.
 """
 
+import os
+
+from reportlab import platypus
+
 from sdaps import model
-from sdaps import script
+
+from sdaps import clifilter
+from sdaps import template
+from sdaps import matrix
+from sdaps.utils import paper
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.subparsers.add_parser("report",
-    help=_("Create a PDF report."),
-    description=_("""This command creates a PDF report using reportlab that
-    contains statistics and if selected the freeform fields."""))
+from . import buddies
 
-parser.add_argument('-f', '--filter',
-    help=_("Filter to only export a partial dataset."))
-parser.add_argument('--all-filters',
-    help=_("Create a filtered report for every checkbox."),
-    action="store_true")
-parser.add_argument('-s', '--short',
-    help=_("Short format (without freeform text fields)."),
-    action="store_const",
-    const="short",
-    dest="format")
-parser.add_argument('-l', '--long',
-    help=_("Detailed output. (default)"),
-    dest="format",
-    action="store_const",
-    const="long",
-    default="long")
-parser.add_argument('--suppress-images',
-    help=_('Do not include original images in the report. This is useful if there are privacy concerns.'),
-    dest='suppress',
-    action='store_const',
-    const='images')
-parser.add_argument('--suppress-substitutions',
-    help=_('Do not use substitutions instead of images.'),
-    dest='suppress',
-    action='store_const',
-    const='substitutions',
-    default=None)
-parser.add_argument('-p', '--paper',
-    help=_('The paper size used for the output (default: locale dependent)'),
-    dest='papersize')
-parser.add_argument('-o', '--output',
-    help=_("Filename to store the data to (default: report_%%i.pdf)"))
 
-@script.connect(parser)
-@script.logfile
-def report(cmdline):
-    survey = model.survey.Survey.load(cmdline['project'])
-    import report
+def report(survey, filter, filename=None, papersize=None, small=0, suppress=None):
+    assert isinstance(survey, model.survey.Survey)
 
-    if cmdline['format'] == 'short':
-        small = 1
-    else:
-        small = 0
+    # compile clifilter
+    filter = clifilter.clifilter(survey, filter)
 
-    if cmdline['all_filters']:
-        return report.stats(survey, cmdline['filter'], cmdline['output'], cmdline['papersize'], small, cmdline['suppress'])
-    else:
-        return report.report(survey, cmdline['filter'], cmdline['output'], cmdline['papersize'], small, cmdline['suppress'])
+    # First: calculate buddies
 
+    # init buddies
+    survey.questionnaire.calculate.init()
+
+    # iterate over sheets
+    survey.iterate(
+        survey.questionnaire.calculate.read,
+        lambda: survey.sheet.valid and not survey.sheet.empty and filter()
+    )
+
+    # do calculations
+    survey.questionnaire.calculate.calculate()
+
+    # Second: report buddies
+
+    # init buddies
+    survey.questionnaire.report.init(small, suppress)
+
+    # iterate over sheets
+    survey.iterate(
+        survey.questionnaire.report.report,
+        lambda: survey.sheet.valid and filter()
+    )
+
+    # create story
+    story = template.story_title(
+        survey,
+        {
+            _(u'Turned in Questionnaires'): survey.questionnaire.calculate.count,
+        }
+    )
+    story.extend(survey.questionnaire.report.story())
+
+    # create report(out of story)
+    if filename is None:
+        filename = survey.new_path('report_%i.pdf')
+    subject = []
+    for key, value in survey.info.iteritems():
+        subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
+    subject = u'\n'.join(subject)
+
+    papersize = paper.get_reportlab_papersize(papersize)
+
+    doc = template.DocTemplate(
+        filename,
+        _(u'sdaps report'),
+        {
+            'title': survey.title,
+            'subject': subject,
+        },
+        papersize=papersize
+    )
+    doc.build(story)
+
+
+def stats(survey, filter, filename=None, small=0, suppress=None):
+    if filename is None:
+        filename = survey.new_path('report_%i.pdf')
+
+    # do a report
+    report(survey, filter, filename=filename, small=small)
+
+    # save reference (to highlight large differences)
+    survey.questionnaire.calculate.reference()
+
+    # do a report for every filter
+    for i, subfilter in enumerate(survey.questionnaire.report.filters()):
+        if filter is None:
+            filt = subfilter
+        else:
+            filt = "(%s) and (%s)" % (filter, subfilter)
+        report(
+            survey, filt,
+            filename='%s_%i %s.pdf' % (filename.split('.')[0], i, subfilter),
+            small=small,
+            suppress=suppress)
 
