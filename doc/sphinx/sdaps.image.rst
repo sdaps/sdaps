@@ -1,11 +1,10 @@
-image Package
-=============
+sdaps.image package
+===================
 
-:mod:`image` Package
---------------------
+Module contents
+---------------
 
 .. automodule:: sdaps.image
     :members:
     :undoc-members:
     :show-inheritance:
-

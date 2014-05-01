@@ -1,43 +1,46 @@
-recognize Package
-=================
+sdaps.recognize package
+=======================
 
-:mod:`recognize` Package
-------------------------
+Submodules
+----------
 
-.. automodule:: sdaps.recognize
+sdaps.recognize.blank module
+----------------------------
+
+.. automodule:: sdaps.recognize.blank
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`buddies` Module
----------------------
+sdaps.recognize.buddies module
+------------------------------
 
 .. automodule:: sdaps.recognize.buddies
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`classic` Module
----------------------
+sdaps.recognize.classic module
+------------------------------
 
 .. automodule:: sdaps.recognize.classic
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`code128` Module
----------------------
+sdaps.recognize.code128 module
+------------------------------
 
 .. automodule:: sdaps.recognize.code128
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`recognize` Module
------------------------
 
-.. automodule:: sdaps.recognize.recognize
+Module contents
+---------------
+
+.. automodule:: sdaps.recognize
     :members:
     :undoc-members:
     :show-inheritance:
-

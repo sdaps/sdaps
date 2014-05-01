@@ -1,27 +1,22 @@
-csvdata Package
-===============
+sdaps.csvdata package
+=====================
 
-:mod:`csvdata` Package
-----------------------
+Submodules
+----------
 
-.. automodule:: sdaps.csvdata
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`buddies` Module
----------------------
+sdaps.csvdata.buddies module
+----------------------------
 
 .. automodule:: sdaps.csvdata.buddies
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`csvdata` Module
----------------------
 
-.. automodule:: sdaps.csvdata.csvdata
+Module contents
+---------------
+
+.. automodule:: sdaps.csvdata
     :members:
     :undoc-members:
     :show-inheritance:
-

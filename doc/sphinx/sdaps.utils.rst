@@ -1,67 +1,86 @@
-utils Package
-=============
+sdaps.utils package
+===================
 
-:mod:`barcode` Module
----------------------
+Submodules
+----------
+
+sdaps.utils.barcode module
+--------------------------
 
 .. automodule:: sdaps.utils.barcode
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`create-latexmap` Module
------------------------------
+sdaps.utils.create-latexmap module
+----------------------------------
 
 .. automodule:: sdaps.utils.create-latexmap
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`exceptions` Module
-------------------------
+sdaps.utils.exceptions module
+-----------------------------
 
 .. automodule:: sdaps.utils.exceptions
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`latex` Module
--------------------
+sdaps.utils.latex module
+------------------------
 
 .. automodule:: sdaps.utils.latex
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`latexmap` Module
-----------------------
+sdaps.utils.latexmap module
+---------------------------
 
 .. automodule:: sdaps.utils.latexmap
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`mimetype` Module
-----------------------
+sdaps.utils.mimetype module
+---------------------------
 
 .. automodule:: sdaps.utils.mimetype
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`paper` Module
--------------------
+sdaps.utils.opencv module
+-------------------------
+
+.. automodule:: sdaps.utils.opencv
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sdaps.utils.paper module
+------------------------
 
 .. automodule:: sdaps.utils.paper
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`ugettext` Module
-----------------------
+sdaps.utils.ugettext module
+---------------------------
 
 .. automodule:: sdaps.utils.ugettext
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: sdaps.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:

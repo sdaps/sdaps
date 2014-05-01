@@ -1,11 +1,10 @@
-cover Package
-=============
+sdaps.cover package
+===================
 
-:mod:`cover` Package
---------------------
+Module contents
+---------------
 
 .. automodule:: sdaps.cover
     :members:
     :undoc-members:
     :show-inheritance:
-

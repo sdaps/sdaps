@@ -1,43 +1,38 @@
-report Package
-==============
+sdaps.report package
+====================
 
-:mod:`report` Package
----------------------
+Submodules
+----------
 
-.. automodule:: sdaps.report
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`answers` Module
----------------------
+sdaps.report.answers module
+---------------------------
 
 .. automodule:: sdaps.report.answers
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`buddies` Module
----------------------
+sdaps.report.buddies module
+---------------------------
 
 .. automodule:: sdaps.report.buddies
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`flowables` Module
------------------------
+sdaps.report.flowables module
+-----------------------------
 
 .. automodule:: sdaps.report.flowables
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`report` Module
---------------------
 
-.. automodule:: sdaps.report.report
+Module contents
+---------------
+
+.. automodule:: sdaps.report
     :members:
     :undoc-members:
     :show-inheritance:
-

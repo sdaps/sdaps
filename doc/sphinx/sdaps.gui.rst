@@ -1,43 +1,38 @@
-gui Package
-===========
+sdaps.gui package
+=================
 
-:mod:`gui` Package
-------------------
+Submodules
+----------
 
-.. automodule:: sdaps.gui
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`buddies` Module
----------------------
+sdaps.gui.buddies module
+------------------------
 
 .. automodule:: sdaps.gui.buddies
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`gui` Module
------------------
-
-.. automodule:: sdaps.gui.gui
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`sheet_widget` Module
---------------------------
+sdaps.gui.sheet_widget module
+-----------------------------
 
 .. automodule:: sdaps.gui.sheet_widget
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`widget_buddies` Module
-----------------------------
+sdaps.gui.widget_buddies module
+-------------------------------
 
 .. automodule:: sdaps.gui.widget_buddies
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: sdaps.gui
+    :members:
+    :undoc-members:
+    :show-inheritance:

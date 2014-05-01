@@ -1,51 +1,54 @@
-model Package
-=============
+sdaps.model package
+===================
 
-:mod:`model` Package
---------------------
+Submodules
+----------
 
-.. automodule:: sdaps.model
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`buddy` Module
--------------------
+sdaps.model.buddy module
+------------------------
 
 .. automodule:: sdaps.model.buddy
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`data` Module
-------------------
+sdaps.model.data module
+-----------------------
 
 .. automodule:: sdaps.model.data
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`questionnaire` Module
----------------------------
+sdaps.model.questionnaire module
+--------------------------------
 
 .. automodule:: sdaps.model.questionnaire
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`sheet` Module
--------------------
+sdaps.model.sheet module
+------------------------
 
 .. automodule:: sdaps.model.sheet
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`survey` Module
---------------------
+sdaps.model.survey module
+-------------------------
 
 .. automodule:: sdaps.model.survey
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: sdaps.model
+    :members:
+    :undoc-members:
+    :show-inheritance:

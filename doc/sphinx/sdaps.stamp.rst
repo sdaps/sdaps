@@ -1,35 +1,30 @@
-stamp Package
-=============
+sdaps.stamp package
+===================
 
-:mod:`stamp` Package
---------------------
+Submodules
+----------
 
-.. automodule:: sdaps.stamp
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`generic` Module
----------------------
+sdaps.stamp.generic module
+--------------------------
 
 .. automodule:: sdaps.stamp.generic
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`latex` Module
--------------------
+sdaps.stamp.latex module
+------------------------
 
 .. automodule:: sdaps.stamp.latex
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`stamp` Module
--------------------
 
-.. automodule:: sdaps.stamp.stamp
+Module contents
+---------------
+
+.. automodule:: sdaps.stamp
     :members:
     :undoc-members:
     :show-inheritance:
-

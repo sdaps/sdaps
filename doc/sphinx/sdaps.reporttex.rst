@@ -1,27 +1,22 @@
-reporttex Package
-=================
+sdaps.reporttex package
+=======================
 
-:mod:`reporttex` Package
-------------------------
+Submodules
+----------
 
-.. automodule:: sdaps.reporttex
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`buddies` Module
----------------------
+sdaps.reporttex.buddies module
+------------------------------
 
 .. automodule:: sdaps.reporttex.buddies
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`report` Module
---------------------
 
-.. automodule:: sdaps.reporttex.report
+Module contents
+---------------
+
+.. automodule:: sdaps.reporttex
     :members:
     :undoc-members:
     :show-inheritance:
-

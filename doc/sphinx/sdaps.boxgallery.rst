@@ -1,27 +1,22 @@
-boxgallery Package
-==================
+sdaps.boxgallery package
+========================
 
-:mod:`boxgallery` Package
--------------------------
+Submodules
+----------
 
-.. automodule:: sdaps.boxgallery
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`boxgallery` Module
-------------------------
-
-.. automodule:: sdaps.boxgallery.boxgallery
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`buddies` Module
----------------------
+sdaps.boxgallery.buddies module
+-------------------------------
 
 .. automodule:: sdaps.boxgallery.buddies
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: sdaps.boxgallery
+    :members:
+    :undoc-members:
+    :show-inheritance:

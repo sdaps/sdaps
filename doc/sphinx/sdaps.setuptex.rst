@@ -1,27 +1,22 @@
-setuptex Package
-================
+sdaps.setuptex package
+======================
 
-:mod:`setuptex` Package
------------------------
+Submodules
+----------
 
-.. automodule:: sdaps.setuptex
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`sdapsfileparser` Module
------------------------------
+sdaps.setuptex.sdapsfileparser module
+-------------------------------------
 
 .. automodule:: sdaps.setuptex.sdapsfileparser
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`setup` Module
--------------------
 
-.. automodule:: sdaps.setuptex.setup
+Module contents
+---------------
+
+.. automodule:: sdaps.setuptex
     :members:
     :undoc-members:
     :show-inheritance:
-
