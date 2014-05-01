@@ -163,6 +163,8 @@ rm -rf "$PROJECT"
 
 for i in data/info_files/*; do
   name=`basename "$i"`
-  diff "$i" "projects/$name/info"
+  # This ignores the title; for whatever reason the \LaTeX
+  # is written out differently with newer latex versions.
+  diff -I '^title' "$i" "projects/$name/info"
 done
 
