@@ -64,7 +64,7 @@ def reorder(survey):
                 if (img.questionnaire_id == sheet.questionnaire_id) and (img.questionnaire_id != None):
                     found = 1
                     try:
-			# try if we already have that page, if yes insert a DUMMY image and go on 
+                        # try if we already have that page, if yes insert a DUMMY image and go on 
                         pages[img.questionnaire_id,img.page_number]
 
                         img = model.sheet.Image()
@@ -73,7 +73,7 @@ def reorder(survey):
                         img.tiff_page = -1
                         img.ignored = True
                     except KeyError:
-			# image not in pages, add it
+                        # image not in pages, add it
                         sheet.add_image(img)
                         pages[img.questionnaire_id,img.page_number] = True
 
