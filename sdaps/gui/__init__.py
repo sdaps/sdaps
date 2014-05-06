@@ -91,7 +91,7 @@ class Provider(object):
     def __call__(self):
         # Add all images that are "valid" ie. everything except back side of
         # a simplex printout
-        new_images = [img for img in self.survey.sheet.images if not img.ignored]
+        new_images = [img for img in sorted(self.survey.sheet.images, key=lambda Image: Image.page_number) if not img.ignored]
 
         self.images.extend(new_images)
         # Insert each image of the sheet into the qualities array
@@ -287,9 +287,11 @@ class MainWindow(object):
 
         position_label = self._builder.get_object("position_label")
         quality_label = self._builder.get_object("quality_label")
+        questionnaire_id_label = self._builder.get_object("questionnaire_id_label")
         page_spin = self._builder.get_object("page_spin")
         position_label.set_text(_(u" of %i") % len(self.provider.images))
         quality_label.set_text(_(u"Recognition Quality: %.2f") % self.provider.image.sheet.quality)
+        questionnaire_id_label.set_text(_(u"Questionnaire ID: %s") % self.provider.image.sheet.questionnaire_id)
         #position_label.props.sensitive = True
         page_spin.set_range(1, len(self.provider.images))
         page_spin.set_value(self.provider.index + 1)
