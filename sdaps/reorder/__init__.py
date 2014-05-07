@@ -34,6 +34,11 @@ def reorder(survey):
        need to care about that here!
     """
 
+    image_count = survey.questionnaire.page_count
+    # We have two images per page in simplex mode!
+    if not survey.defs.duplex:
+        image_count = image_count * 2
+
     # First, go over all sheets and figure out which ones need reordering.
     # For every sheet that isn't quite right, we extract the images, and delete
     # the sheet.
@@ -42,14 +47,21 @@ def reorder(survey):
     images = defaultdict(lambda : [])
     for sheet in survey.sheets[:]: # Use a flat copy to iterate over
         broken = False
+        pages = set()
         for image in sheet.images:
             if sheet.questionnaire_id != image.questionnaire_id:
                 broken = True
             if sheet.global_id != image.global_id:
                 broken = True
-        # Also consider incomplete sets broken, so that hopefully the will
+
+            # Check that no page exists twice
+            if image.page_number is not None and image.page_number in pages:
+                broken = True
+            pages.add(image.page_number)
+
+        # Also consider incomplete sets broken, so that hopefully they will
         # be filled up with the correct page.
-        if len(sheet.images) != survey.questionnaire.page_count:
+        if len(sheet.images) != image_count:
             broken = True
 
         if broken:
@@ -64,14 +76,13 @@ def reorder(survey):
     # This could probably be more robust. We don't care about the questionnaire
     # ID itself here, just put each list into sheets, splitting it into many
     # if there are too many images.
-    c = survey.questionnaire.page_count
     for img_list in images.itervalues():
 
         while len(img_list) > 0:
             sheet = model.sheet.Sheet()
             survey.add_sheet(sheet)
 
-            while len(img_list) > 0 and len(sheet.images) < c:
+            while len(img_list) > 0 and len(sheet.images) < image_count:
                 sheet.add_image(img_list.pop(0))
 
 
