@@ -34,6 +34,11 @@ def reorder(survey):
        need to care about that here!
     """
 
+    image_count = survey.questionnaire.page_count
+    # We have two images per page in simplex mode!
+    if not survey.defs.duplex:
+        image_count = image_count * 2
+
     # First, go over all sheets and figure out which ones need reordering.
     # For every sheet that isn't quite right, we extract the images, and delete
     # the sheet.
@@ -41,48 +46,44 @@ def reorder(survey):
     # Each entry in the dictionary is a list.
     images = defaultdict(lambda : [])
     for sheet in survey.sheets[:]: # Use a flat copy to iterate over
-
-        # Drop from the list of sheets and always reoder
-        survey.sheets.remove(sheet)
-
+        broken = False
+        pages = set()
         for image in sheet.images:
-            images[(image.questionnaire_id, image.global_id)].append(image)
+            if sheet.questionnaire_id != image.questionnaire_id:
+                broken = True
+            if sheet.global_id != image.global_id:
+                broken = True
+
+            # Check that no page exists twice
+            if image.page_number is not None and image.page_number in pages:
+                broken = True
+            pages.add(image.page_number)
+
+        # Also consider incomplete sets broken, so that hopefully they will
+        # be filled up with the correct page.
+        if len(sheet.images) != image_count:
+            broken = True
+
+        if broken:
+            # Drop from the list of sheets
+            survey.sheets.remove(sheet)
+
+            for image in sheet.images:
+                images[(image.questionnaire_id, image.global_id)].append(image)
 
     # We have dictionnary of lists of images that needs to be put into sheets
     # again.
     # This could probably be more robust. We don't care about the questionnaire
     # ID itself here, just put each list into sheets, splitting it into many
     # if there are too many images.
-    c = survey.questionnaire.page_count
-    pages = {} 
-
     for img_list in images.itervalues():
+
         while len(img_list) > 0:
-            img = img_list.pop(0)
-            found = 0
-            for sheet in survey.sheets[:]:
-                if (img.questionnaire_id == sheet.questionnaire_id) and (img.questionnaire_id != None):
-                    found = 1
-                    try:
-                        # try if we already have that page, if yes insert a DUMMY image and go on 
-                        pages[img.questionnaire_id,img.page_number]
+            sheet = model.sheet.Sheet()
+            survey.add_sheet(sheet)
 
-                        img = model.sheet.Image()
-                        sheet.add_image(img)
-                        img.filename = "DUMMY"
-                        img.tiff_page = -1
-                        img.ignored = True
-                    except KeyError:
-                        # image not in pages, add it
-                        sheet.add_image(img)
-                        pages[img.questionnaire_id,img.page_number] = True
-
-            if (found == 0) and (img.questionnaire_id != None):
-                newsheet = model.sheet.Sheet()
-                survey.add_sheet(newsheet)
-                newsheet.questionnaire_id = img.questionnaire_id
-                newsheet.add_image(img)
-                pages[img.questionnaire_id,img.page_number] = True
+            while len(img_list) > 0 and len(sheet.images) < image_count:
+                sheet.add_image(img_list.pop(0))
 
 
     survey.save()
