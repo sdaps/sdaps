@@ -63,8 +63,14 @@ class Questionnaire(model.buddy.Buddy):
         indent.set_padding(0, 0, 10, 0)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+
+        self.qid = Gtk.Label()
+        self.qid.set_markup(_('<b>Questionnaire ID:</b>')+str(self.obj.survey.sheet.questionnaire_id))
+        self.qid.props.xalign = 0.0
+
         indent.add(vbox)
 
+	vbox.add(self.qid)
         vbox.add(self.valid_checkbox)
         vbox.add(self.verified_checkbox)
         vbox.add(self.empty_checkbox)
@@ -83,6 +89,7 @@ class Questionnaire(model.buddy.Buddy):
         for qobject in self.obj.qobjects:
             qobject.widget.sync_state()
 
+        self.qid.set_markup(_('<b>Questionnaire ID:</b>')+str(self.obj.survey.sheet.questionnaire_id))
         self.valid_checkbox.set_active(self.obj.survey.sheet.valid)
         self.verified_checkbox.set_active(self.obj.survey.sheet.verified)
         self.empty_checkbox.set_active(self.obj.survey.sheet.empty)
