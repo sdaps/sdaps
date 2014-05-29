@@ -147,7 +147,7 @@ class sdaps_clean_i18n(clean_i18n.clean_i18n):
         clean_i18n.clean_i18n.run(self)
 
 setup(name='sdaps',
-      version='1.1.2',
+      version='1.1.3',
       description='Scripts for data acquisition with paper-based surveys',
       url='http://sdaps.sipsolutions.net',
       author='Benjamin Berg, Christoph Simon',
