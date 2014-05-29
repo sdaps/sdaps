@@ -3,7 +3,7 @@ Maintainer: Benjamin Berg <benjamin@sipsolutions.net>
 Section: python
 Priority: optional
 X-Python-Version: >= 2.7
-Build-Depends: python2.7, python2.7-dev, libtiff4-dev | libtiff5-dev,
+Build-Depends: python2.7, python2.7-dev, libtiff5-dev | libtiff4-dev,
  pkg-config, python-distutils-extra, python-pkg-resources, python-cairo-dev,
  libcairo2-dev, libglib2.0-dev, debhelper (>= 7.4.3),
  python2.7-imaging | python-imaging, python-reportlab, python-zbar, python-pdftools,
