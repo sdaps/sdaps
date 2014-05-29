@@ -1,5 +1,5 @@
 [sdaps]
-title = Testfragebogen \textlatin  {\LaTeX  }
+title = Testfragebogen \LaTeX
 global_id = SDAPS
 
 [info]
@@ -18,5 +18,5 @@ duplex = True
 [questionnaire]
 # These values are not read back, they exist for information only!
 page_count = 2
-survey_id = 2308348515
+survey_id = 143062700
 
