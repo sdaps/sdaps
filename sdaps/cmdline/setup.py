@@ -83,7 +83,7 @@ parser.add_argument('--simplex',
 
 @script.connect(parser)
 def setup(cmdline):
-    from sdaps import setup
+    from sdaps import setupodt
 
     survey = model.survey.Survey.new(cmdline['project'])
 
@@ -91,6 +91,6 @@ def setup(cmdline):
     if cmdline['global_id'] == '':
         cmdline['global_id'] = None
 
-    return setup.setup(survey, cmdline['questionnaire.odt'], cmdline['questionnaire.pdf'], cmdline['additional_questions'], cmdline)
+    return setupodt.setup(survey, cmdline['questionnaire.odt'], cmdline['questionnaire.pdf'], cmdline['additional_questions'], cmdline)
 
 
