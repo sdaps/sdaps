@@ -17,7 +17,10 @@
 
 from sdaps import image
 from sdaps.utils import opencv
+from sdaps import log
 
+from sdaps.utils.ugettext import ugettext, ungettext
+_ = ugettext
 
 def convert_images(images, outfile, paper_width, paper_height, transform=False):
 
