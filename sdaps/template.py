@@ -30,7 +30,7 @@ from reportlab.lib import units
 from reportlab.lib import pagesizes
 
 mm = units.mm
-
+PADDING = 15 * mm
 
 class DocTemplate(platypus.BaseDocTemplate):
 
@@ -50,23 +50,23 @@ class DocTemplate(platypus.BaseDocTemplate):
             #title=None,
             #author=None,
             #_pageBreakQuick=1
-        self.addPageTemplates(TitlePageTemplate(title))
-        self.addPageTemplates(PageTemplate())
+        self.addPageTemplates(TitlePageTemplate(papersize, title))
+        self.addPageTemplates(PageTemplate(papersize))
 
 
 class TitlePageTemplate(platypus.PageTemplate):
 
-    def __init__(self, title):
+    def __init__(self, papersize, title):
         self.title = title
         frames = [
             platypus.Frame(
-                20 * mm, 160 * mm,
-                170 * mm, 40 * mm,
+                PADDING, papersize[1] / 2,
+                papersize[0] - 2*PADDING, papersize[1] / 6,
                 showBoundary=0
             ),
             platypus.Frame(
-                20 * mm, 20 * mm,
-                170 * mm, 110 * mm,
+                PADDING, PADDING,
+                papersize[0] - 2*PADDING, papersize[1] / 2 - PADDING,
                 showBoundary=0
             ),
         ]
@@ -92,11 +92,11 @@ class TitlePageTemplate(platypus.PageTemplate):
 
 class PageTemplate(platypus.PageTemplate):
 
-    def __init__(self):
+    def __init__(self, papersize):
         frames = [
             platypus.Frame(
-                15 * mm, 15 * mm,
-                180 * mm, 270 * mm,
+                PADDING, PADDING,
+                papersize[0] - 2*PADDING, papersize[1] - 2*PADDING,
                 showBoundary=0
             )
         ]
