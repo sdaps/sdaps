@@ -1,0 +1,1039 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: SDAPS 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-29 16:28+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../sdaps/script.py:41
+msgid "SDAPS -- Paper based survey tool."
+msgstr ""
+
+#: ../sdaps/script.py:45
+msgid "project directory|The SDAPS project."
+msgstr ""
+
+#: ../sdaps/script.py:46
+msgid "command list|Commands:"
+msgstr ""
+
+#: ../sdaps/add/__init__.py:53
+#, python-format
+msgid ""
+"Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
+"input."
+msgstr ""
+
+#: ../sdaps/add/__init__.py:64
+#, python-format
+msgid ""
+"Not adding %s because it has a wrong page count (needs to be a mulitple of "
+"%i)."
+msgstr ""
+
+#: ../sdaps/boxgallery/__init__.py:108
+#, python-format
+msgid "Rendering boxgallery for metric \"%s\"."
+msgstr ""
+
+#: ../sdaps/log.py:37
+msgid "Warning: "
+msgstr ""
+
+#: ../sdaps/log.py:41
+msgid "Error: "
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:29
+msgid "Add scanned questionnaires to the survey."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:30
+msgid ""
+"This command is used to add scanned images to the survey.\n"
+"    The image data needs to be a (multipage) 300dpi monochrome TIFF file. "
+"You\n"
+"    may choose not to copy the data into the project directory. In that "
+"case\n"
+"    the data will be referenced using a relative path."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:36
+msgid ""
+"Force adding the images even if the page count is wrong (only use if you "
+"know what you are doing)."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:40
+msgid "Copy the files into the directory (default)."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:45
+msgid "Do not copy the files into the directory."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:49
+msgid ""
+"Images contain a duplex scan of a simplex questoinnaire (default: simplex "
+"scan)."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:55 ../sdaps/cmdline/convert.py:49
+msgid "A number of TIFF image files."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:68
+#, python-format
+msgid "Processing %s"
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:72
+msgid "Done"
+msgstr ""
+
+#: ../sdaps/cmdline/annotate.py:28
+msgid "Annotate the questionnaire and show the recognized positions."
+msgstr ""
+
+#: ../sdaps/cmdline/annotate.py:29
+msgid ""
+"This command is mainly a debug utility. It creates an\n"
+"    annotated version of the questionnaire, with the information that SDAPS\n"
+"    knows about it overlayed on top."
+msgstr ""
+
+#: ../sdaps/cmdline/boxgallery.py:31
+msgid "Create PDFs with boxes sorted by the detection heuristics."
+msgstr ""
+
+#: ../sdaps/cmdline/boxgallery.py:32
+msgid ""
+"SDAPS uses multiple heuristics to detect determine the\n"
+"    state of checkboxes. There is a list for each heuristic giving the "
+"expected\n"
+"    state and the quality of the value (see defs.py). Using this command a "
+"PDF\n"
+"    will be created for each of the heuristics so that one can adjust the\n"
+"    values."
+msgstr ""
+
+#: ../sdaps/cmdline/boxgallery.py:40
+msgid ""
+"Reruns part of the recognition process and retrieves debug images from this "
+"step."
+msgstr ""
+
+#: ../sdaps/cmdline/convert.py:30
+msgid "Convert a set of images to the correct image format."
+msgstr ""
+
+#: ../sdaps/cmdline/convert.py:31
+msgid ""
+"This command can be used if you scanned files in a different\n"
+"        mode than the expected monochrome TIFF file. All the given files "
+"will\n"
+"        be loaded, converted to monochrome and stored into a multipage 1bpp\n"
+"        TIFF file. Optionally you can select that a 3D transformation "
+"should\n"
+"        be performed, using this it may be possible to work with photos of\n"
+"        questionnaires instead of scans."
+msgstr ""
+
+#: ../sdaps/cmdline/convert.py:39
+msgid ""
+"Do a 3D-transformation after finding the corner marks. If the\n"
+"        corner marks are not found then the image will be added as-is."
+msgstr ""
+
+#: ../sdaps/cmdline/convert.py:45
+msgid "The location of the output file. Must be given."
+msgstr ""
+
+#: ../sdaps/cmdline/convert.py:58
+msgid "No output filename specified!"
+msgstr ""
+
+#: ../sdaps/cmdline/cover.py:27
+msgid "Create a cover for the questionnaires."
+msgstr ""
+
+#: ../sdaps/cmdline/cover.py:28
+msgid ""
+"This command creates a cover page for questionnaires. All\n"
+"    the metadata of the survey will be printed on the page."
+msgstr ""
+
+#: ../sdaps/cmdline/cover.py:31
+#, python-format
+msgid "Filename to store the data to (default: cover_%%i.pdf)"
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:31
+msgid "Import or export data to/from CSV files."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:32
+msgid ""
+"Import or export data to/from a CSV file. The first line\n"
+"    is a header which defines questionnaire_id and global_id, and a column\n"
+"    for each checkbox and textfield. Note that the import is currently very\n"
+"    limited, as you need to specifiy the questionnaire ID to select the "
+"sheet\n"
+"    which should be updated."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:41
+msgid "Export data to CSV file."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:43 ../sdaps/cmdline/report.py:31
+#: ../sdaps/cmdline/reporttex.py:52
+msgid "Filter to only export a partial dataset."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:47
+msgid "Import data to from a CSV file."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:49
+msgid "The file to import."
+msgstr ""
+
+#: ../sdaps/cmdline/gui.py:28
+msgid "Launch a gui. You can view and alter the (recognized) answers with it."
+msgstr ""
+
+#: ../sdaps/cmdline/gui.py:29
+msgid ""
+"This command launches a graphical user interface that can\n"
+"    be used to correct answer. You need to run \"recognize\" before using "
+"it.\n"
+"    "
+msgstr ""
+
+#: ../sdaps/cmdline/gui.py:34
+msgid "Filter to only show a partial dataset."
+msgstr ""
+
+#: ../sdaps/cmdline/ids.py:28
+msgid "Export and import questionnaire IDs."
+msgstr ""
+
+#: ../sdaps/cmdline/ids.py:29
+msgid ""
+"This command can be used to import and export questionnaire\n"
+"    IDs. It only makes sense in projects where such an ID is printed on the\n"
+"    questionnaire. Note that you can also add IDs by using the stamp "
+"command,\n"
+"    which will give you the PDF at the same time."
+msgstr ""
+
+#: ../sdaps/cmdline/ids.py:34
+#, python-format
+msgid "Filename to store the data to (default: ids_%%i)"
+msgstr ""
+
+#: ../sdaps/cmdline/ids.py:37
+msgid "Add IDs to the internal list from the specified file."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:28
+msgid "Display and modify metadata of project."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:29
+msgid ""
+"This command lets you modify the metadata of the SDAPS\n"
+"    project. You can modify, add and remove arbitrary keys that will be "
+"printed\n"
+"    on the report. The only key that always exist is \"title\".\n"
+"    If no key is given then a list of defined keys is printed."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:36
+msgid "The key to display or modify."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:40
+msgid "Set the given key to this value."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:44
+msgid "Delete the key and value pair."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:68
+msgid "Existing fields:\n"
+msgstr ""
+
+#: ../sdaps/cmdline/recognize.py:28
+msgid "Run the optical mark recognition."
+msgstr ""
+
+#: ../sdaps/cmdline/recognize.py:29
+msgid ""
+"Iterates over all images and runs the optical mark\n"
+"    recognition. It will reevaluate sheets even if \"recognize\" has "
+"already\n"
+"    run or manual changes were made."
+msgstr ""
+
+#: ../sdaps/cmdline/recognize.py:34
+msgid ""
+"Only identify the page properties, but don't recognize the checkbox states."
+msgstr ""
+
+#: ../sdaps/cmdline/recognize.py:39
+msgid ""
+"Rerun the recognition for all pages. The default is to skip all pages that "
+"were recognized or verified already."
+msgstr ""
+
+#: ../sdaps/cmdline/reorder.py:26
+msgid "Reorder pages according to questionnaire ID."
+msgstr ""
+
+#: ../sdaps/cmdline/reorder.py:27
+msgid ""
+"This command reorders all pages according to the already\n"
+"    recognized questionnaire ID. To use it add all the files to the "
+"project,\n"
+"    then run a partial recognition using \"recognize --identify\". After "
+"this\n"
+"    you have to run this command to reorder the data for the real "
+"recognition.\n"
+"    "
+msgstr ""
+
+#: ../sdaps/cmdline/report.py:26
+msgid "Create a PDF report."
+msgstr ""
+
+#: ../sdaps/cmdline/report.py:27
+msgid ""
+"This command creates a PDF report using reportlab that\n"
+"    contains statistics and if selected the freeform fields."
+msgstr ""
+
+#: ../sdaps/cmdline/report.py:33
+msgid "Create a filtered report for every checkbox."
+msgstr ""
+
+#: ../sdaps/cmdline/report.py:36
+msgid "Short format (without freeform text fields)."
+msgstr ""
+
+#: ../sdaps/cmdline/report.py:41
+msgid "Detailed output. (default)"
+msgstr ""
+
+#: ../sdaps/cmdline/report.py:47 ../sdaps/cmdline/reporttex.py:30
+msgid ""
+"Do not include original images in the report. This is useful if there are "
+"privacy concerns."
+msgstr ""
+
+#: ../sdaps/cmdline/report.py:52 ../sdaps/cmdline/reporttex.py:35
+msgid "Do not use substitutions instead of images."
+msgstr ""
+
+#: ../sdaps/cmdline/report.py:58 ../sdaps/cmdline/reporttex.py:46
+msgid "The paper size used for the output (default: locale dependent)"
+msgstr ""
+
+#: ../sdaps/cmdline/report.py:61 ../sdaps/cmdline/reporttex.py:49
+#, python-format
+msgid "Filename to store the data to (default: report_%%i.pdf)"
+msgstr ""
+
+#: ../sdaps/cmdline/reporttex.py:26
+msgid "Create a PDF report using LaTeX."
+msgstr ""
+
+#: ../sdaps/cmdline/reporttex.py:27
+msgid ""
+"This command creates a PDF report using LaTeX that\n"
+"    contains statistics and freeform fields."
+msgstr ""
+
+#: ../sdaps/cmdline/reporttex.py:41
+msgid "Save the generated TeX files instead of the final PDF."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:28
+msgid "Create a new survey using an ODT document."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:29
+msgid ""
+"Create a new surevey from an ODT document. The PDF export\n"
+"    of the file needs to be specified at the same time. SDAPS will import\n"
+"    metadata (properties) and the title from the ODT document."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:34
+msgid "The ODT Document"
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:36
+msgid "PDF export of the ODT document"
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:39 ../sdaps/cmdline/setuptex.py:39
+msgid "Additional questions that are not part of the questionnaire."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:48
+msgid "Enable printing of the survey ID (default)."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:52
+msgid "Disable printing of the survey ID."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:57
+msgid "Enable printing of the questionnaire ID."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:61
+msgid "Disable printing of the questionnaire ID (default)."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:65
+msgid ""
+"Set an additional global ID for tracking. This can can only be used in the "
+"\"code128\" style."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:70
+msgid ""
+"The stamping style to use. Should be either \"classic\" or \"code128\". Use "
+"\"code128\" for more features."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:76
+msgid ""
+"Use duplex mode (ie. only print the IDs on the back side). Requires a "
+"mulitple of two pages."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:81
+msgid ""
+"Use simplex mode. IDs are printed on each page. You need a simplex scan "
+"currently!"
+msgstr ""
+
+#: ../sdaps/cmdline/setuptex.py:27
+msgid "Create a new survey using a LaTeX document."
+msgstr ""
+
+#: ../sdaps/cmdline/setuptex.py:28
+msgid ""
+"Create a new survey from a LaTeX document. You need to\n"
+"    be using the SDAPS class. All the metadata and options for the project\n"
+"    can be set inside the LaTeX document."
+msgstr ""
+
+#: ../sdaps/cmdline/setuptex.py:33
+msgid "The LaTeX Document"
+msgstr ""
+
+#: ../sdaps/cmdline/setuptex.py:35
+msgid ""
+"Additional files that are required by the LaTeX document and need to be "
+"copied into the project directory."
+msgstr ""
+
+#: ../sdaps/cmdline/stamp.py:26
+msgid "Add marks for automatic processing."
+msgstr ""
+
+#: ../sdaps/cmdline/stamp.py:27
+msgid ""
+"This command creates the printable document. Depending on\n"
+"    the projects setting you are required to specifiy a source for "
+"questionnaire\n"
+"    IDs."
+msgstr ""
+
+#: ../sdaps/cmdline/stamp.py:33
+msgid ""
+"If using questionnaire IDs, create N questionnaires with randomized IDs."
+msgstr ""
+
+#: ../sdaps/cmdline/stamp.py:36
+msgid ""
+"If using questionnaire IDs, create questionnaires from the IDs read from the "
+"specified file."
+msgstr ""
+
+#: ../sdaps/cmdline/stamp.py:39
+msgid "If using questionnaire IDs, create questionnaires for all stored IDs."
+msgstr ""
+
+#: ../sdaps/cmdline/stamp.py:42
+#, python-format
+msgid "Filename to store the data to (default: stamp_%%i.pdf)"
+msgstr ""
+
+#: ../sdaps/convert/__init__.py:32
+#, python-format
+msgid "Could not apply 3D-transformation to image '%s', page %i!"
+msgstr ""
+
+#: ../sdaps/cover/__init__.py:40
+msgid "sdaps questionnaire"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:57
+msgid ""
+"The survey does not have any images! Please add images (and run recognize) "
+"before using the GUI."
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:198
+msgid "Page|Invalid"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:201
+#, python-format
+msgid "Page %i"
+msgid_plural "Page %i"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../sdaps/gui/__init__.py:243
+msgid "Copyright © 2007-2012 The SDAPS Authors"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:245
+msgid "Scripts for data acquisition with paper based surveys"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:246
+msgid "http://sdaps.sipsolutions.net"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:247
+msgid "translator-credits"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:291
+#, python-format
+msgid " of %i"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:292
+#, python-format
+msgid "Recognition Quality: %.2f"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:308
+msgid ""
+"You have reached the first page of the survey. Would you like to go to the "
+"last page?"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:309
+msgid "Go to last page"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:331
+msgid ""
+"You have reached the last page of the survey. Would you like to go to the "
+"first page?"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:332
+msgid "Go to first page"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:440
+msgid "Close without saving"
+msgstr ""
+
+#: ../sdaps/gui/__init__.py:444
+msgid ""
+"<b>Save the project before closing?</b>\n"
+"\n"
+"If you do not save you may loose data."
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:1
+msgid "Forward"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:2
+msgid "Previous"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:3
+msgid "Zoom In"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:4
+msgid "Zoom Out"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:5
+msgid "SDAPS"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:6
+msgid "_File"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:7
+msgid "_View"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:8
+msgid "_Help"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:9
+msgid "Page Rotated"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:10
+msgid "Sort by Quality"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:11
+msgid "label"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:51
+msgid "<b>Global Properties</b>"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:55
+msgid "Sheet valid"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:56
+msgid "Verified"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:57
+msgid "Empty"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:69 ../sdaps/gui/widget_buddies.py:93
+msgid "<b>Questionnaire ID: </b>"
+msgstr ""
+
+#: ../sdaps/image/__init__.py:47
+msgid ""
+"It appears you have not build the C extension. Please run \"./setup.py build"
+"\" in the toplevel directory."
+msgstr ""
+
+#: ../sdaps/model/survey.py:249
+#, python-format
+msgid "%i sheet"
+msgid_plural "%i sheets"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../sdaps/model/survey.py:260
+#, python-format
+msgid "%f seconds per sheet"
+msgstr ""
+
+#: ../sdaps/model/survey.py:286
+msgid ""
+"A questionnaire that is printed in duplex needs an even amount of pages!"
+msgstr ""
+
+#: ../sdaps/model/survey.py:290
+msgid ""
+"The 'classic' style only supports a maximum of six pages! Use the 'code128' "
+"style if you require more pages."
+msgstr ""
+
+#: ../sdaps/model/survey.py:303
+msgid "IDs need to be integers in \"classic\" style!"
+msgstr ""
+
+#: ../sdaps/model/survey.py:309
+#, python-format
+msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
+msgstr ""
+
+#: ../sdaps/model/survey.py:313
+msgid ""
+"SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
+"yourself somehow!"
+msgstr ""
+
+#: ../sdaps/model/survey.py:331
+#, python-format
+msgid "Running upgrade routines for file format version %i"
+msgstr ""
+
+#. in simplex mode every page will have a matrix; it might be a None
+#. matrix though
+#: ../sdaps/recognize/buddies.py:72
+#, python-format
+msgid "%s, %i: Matrix not recognized."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:81
+#, python-format
+msgid "%s, %i: Rotation not found."
+msgstr ""
+
+#. Copy the rotation over (if required) and print warning if the rotation is unknown
+#: ../sdaps/recognize/buddies.py:85
+#, python-format
+msgid "Neither %s, %i or %s, %i has a known rotation!"
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:97
+#, python-format
+msgid "%s, %i: Matrix not recognized (again)."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:111
+#, python-format
+msgid "%s, %i: Could not get page number."
+msgstr ""
+
+#. Whoa, that should not happen.
+#: ../sdaps/recognize/buddies.py:131
+#, python-format
+msgid "Neither %s, %i or %s, %i has a known page number!"
+msgstr ""
+
+#. We don't touch the ignore flag in this case
+#. Simply print a message as this should *never* happen
+#: ../sdaps/recognize/buddies.py:142
+#, python-format
+msgid ""
+"Got a simplex document where two adjacent pages had a known page number. "
+"This should never happen as even simplex scans are converted to duplex by "
+"inserting dummy pages. Maybe you did a simplex scan but added it in duplex "
+"mode? The pages in question are %s, %i and %s, %i."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:159
+#, python-format
+msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:175
+#, python-format
+msgid "No page number for page %s, %i exists."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:180
+#, python-format
+msgid "Page number for page %s, %i already used by another image."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:186
+#, python-format
+msgid "Page number %i for page %s, %i is out of range."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:203
+#, python-format
+msgid "%s, %i: Could not read survey ID, but should be able to."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:207
+#, python-format
+msgid "Could not read survey ID of either %s, %i or %s, %i!"
+msgstr ""
+
+#. Broken survey ID ...
+#: ../sdaps/recognize/buddies.py:214
+#, python-format
+msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:236
+#, python-format
+msgid "%s, %i: Could not read questionnaire ID, but should be able to."
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:240
+#, python-format
+msgid "Could not read questoinnaire ID of either %s, %i or %s, %i!"
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:267
+msgid ""
+"Got different IDs on different pages for at least one sheet! Do *NOT* try to "
+"use filters with this survey! You have to run a \"reorder\" step for this to "
+"work properly!"
+msgstr ""
+
+#: ../sdaps/recognize/buddies.py:321
+msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
+msgstr ""
+
+#: ../sdaps/report/answers.py:185
+#, python-format
+msgid "Answers: %i"
+msgstr ""
+
+#: ../sdaps/report/answers.py:187
+#, python-format
+msgid "Mean: %.2f"
+msgstr ""
+
+#: ../sdaps/report/answers.py:189
+#, python-format
+msgid "Standard Deviation: %.2f"
+msgstr ""
+
+#: ../sdaps/report/__init__.py:75 ../sdaps/reporttex/__init__.py:140
+msgid "Turned in Questionnaires"
+msgstr ""
+
+#: ../sdaps/report/__init__.py:92 ../sdaps/reporttex/__init__.py:139
+msgid "sdaps report"
+msgstr ""
+
+#: ../sdaps/setup/__init__.py:45 ../sdaps/setuptex/__init__.py:68
+msgid "The survey directory already exists."
+msgstr ""
+
+#: ../sdaps/setup/__init__.py:50
+#, python-format
+msgid ""
+"Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
+"opendocument.text."
+msgstr ""
+
+#: ../sdaps/setup/__init__.py:55
+#, python-format
+msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf."
+msgstr ""
+
+#: ../sdaps/setup/__init__.py:61 ../sdaps/setuptex/__init__.py:79
+#, python-format
+msgid "Unknown file type (%s). additionalqobjects should be text/plain."
+msgstr ""
+
+#: ../sdaps/setup/__init__.py:89
+msgid "Caught an Exception while parsing the ODT file. The current state is:"
+msgstr ""
+
+#: ../sdaps/setup/__init__.py:92
+msgid ""
+"If the dependencies for the \"annotate\" command are installed, then an "
+"annotated version will be created next to the original PDF file."
+msgstr ""
+
+#: ../sdaps/setup/__init__.py:122 ../sdaps/setuptex/__init__.py:145
+msgid ""
+"Some combination of options and project properties do not work. Aborted "
+"Setup."
+msgstr ""
+
+#: ../sdaps/setup/buddies.py:61
+#, python-format
+msgid "Head %(l0)i got no title."
+msgstr ""
+
+#: ../sdaps/setup/buddies.py:74
+#, python-format
+msgid "%(class)s %(l0)i.%(l1)i got no question."
+msgstr ""
+
+#: ../sdaps/setup/buddies.py:120
+#, python-format
+msgid "Error in question \"%s\""
+msgstr ""
+
+#: ../sdaps/setup/buddies.py:123
+#, python-format
+msgid "%(class)s %(l0)i.%(l1)i got no boxes."
+msgstr ""
+
+#: ../sdaps/setup/buddies.py:148
+#, python-format
+msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
+msgstr ""
+
+#: ../sdaps/setup/buddies.py:170
+#, python-format
+msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
+msgstr ""
+
+#: ../sdaps/setup/boxesparser.py:121 ../sdaps/setup/boxesparser.py:190
+#, python-format
+msgid ""
+"Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: "
+"%.1f)."
+msgstr ""
+
+#: ../sdaps/stamp/__init__.py:38
+msgid ""
+"You may not specify the number of sheets for this survey. All questionnaires "
+"will be identical as the survey has been configured to not use questionnaire "
+"IDs for each sheet."
+msgstr ""
+
+#: ../sdaps/stamp/__init__.py:76
+msgid ""
+"This survey has been configured to use questionnaire IDs. Each questionnaire "
+"will be unique. You need to use on of the options to add new IDs or use the "
+"existing ones."
+msgstr ""
+
+#: ../sdaps/stamp/generic.py:36
+#, python-format
+msgid "Survey-ID: %i"
+msgstr ""
+
+#: ../sdaps/stamp/generic.py:50
+#, python-format
+msgid "Questionnaire-ID: %i"
+msgstr ""
+
+#: ../sdaps/stamp/generic.py:251
+msgid ""
+"You need to have either pdftk or pyPdf installed. pdftk is the faster method."
+msgstr ""
+
+#. bottomup = False =>(0, 0) is the upper left corner
+#: ../sdaps/stamp/generic.py:267
+#, python-format
+msgid "Creating stamp PDF for %i sheet"
+msgid_plural "Creating stamp PDF for %i sheets"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../sdaps/stamp/generic.py:309 ../sdaps/stamp/generic.py:442
+#, python-format
+msgid "%i sheet; %f seconds per sheet"
+msgid_plural "%i sheet; %f seconds per sheet"
+msgstr[0] ""
+msgstr[1] ""
+
+#. Merge using pdftk
+#: ../sdaps/stamp/generic.py:318
+msgid "Stamping using pdftk"
+msgstr ""
+
+#. Shortcut if we only have one sheet.
+#. In this case form data in the PDF will *not* break, in
+#. the other code path it *will* break.
+#: ../sdaps/stamp/generic.py:325
+msgid "pdftk: Overlaying the original PDF with the markings."
+msgstr ""
+
+#: ../sdaps/stamp/generic.py:334
+#, python-format
+msgid "pdftk: Splitting out page %d of each sheet."
+msgid_plural "pdftk: Splitting out page %d of each sheet."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../sdaps/stamp/generic.py:348
+msgid "pdftk: Splitting the questionnaire for watermarking."
+msgstr ""
+
+#: ../sdaps/stamp/generic.py:359 ../sdaps/stamp/generic.py:368
+#, python-format
+msgid "pdftk: Watermarking page %d of all sheets."
+msgid_plural "pdftk: Watermarking page %d of all sheets."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../sdaps/stamp/generic.py:391
+msgid "pdftk: Assembling everything into the final PDF."
+msgstr ""
+
+#: ../sdaps/stamp/generic.py:428
+msgid "Stamping using pyPdf. For faster stamping, install pdftk."
+msgstr ""
+
+#: ../sdaps/stamp/latex.py:22
+msgid ""
+"There should be no need to stamp a SDAPS Project that uses LaTeX and does "
+"not have different questionnaire IDs printed on each sheet.\n"
+"I am going to do so anyways."
+msgstr ""
+
+#: ../sdaps/stamp/latex.py:59
+#, python-format
+msgid "Running %s now twice to generate the stamped questionnaire."
+msgstr ""
+
+#: ../sdaps/stamp/latex.py:71 ../sdaps/setuptex/__init__.py:121
+#: ../sdaps/setuptex/__init__.py:161 ../sdaps/reporttex/__init__.py:169
+#, python-format
+msgid "Error running \"%s\" to compile the LaTeX file."
+msgstr ""
+
+#: ../sdaps/stamp/latex.py:77
+#, python-format
+msgid ""
+"An error occured during creation of the report. Temporary files left in '%s'."
+msgstr ""
+
+#: ../sdaps/setuptex/__init__.py:73
+#, python-format
+msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
+msgstr ""
+
+#: ../sdaps/setuptex/__init__.py:74
+msgid "Will keep going, but expect failure!"
+msgstr ""
+
+#: ../sdaps/setuptex/__init__.py:112 ../sdaps/setuptex/__init__.py:151
+#, python-format
+msgid "Running %s now twice to generate the questionnaire."
+msgstr ""
+
+#: ../sdaps/setuptex/__init__.py:131
+msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
+msgstr ""
+
+#: ../sdaps/setuptex/__init__.py:177
+msgid ""
+"An error occured in the setup routine. The survey directory still exists. "
+"You can for example check the questionnaire.log file for LaTeX compile "
+"errors."
+msgstr ""
+
+#: ../sdaps/reporttex/__init__.py:107
+msgid "author|Unknown"
+msgstr ""
+
+#: ../sdaps/reporttex/__init__.py:138
+msgid "tex language|english"
+msgstr ""
+
+#: ../sdaps/reporttex/__init__.py:154
+#, python-format
+msgid "The TeX project with the report data is located at '%s'."
+msgstr ""
+
+#: ../sdaps/reporttex/__init__.py:157
+#, python-format
+msgid "Running %s now twice to generate the report."
+msgstr ""
+
+#: ../sdaps/reporttex/__init__.py:175
+#, python-format
+msgid "An occured during creation of the report. Temporary files left in '%s'."
+msgstr ""
