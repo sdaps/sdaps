@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-29 16:28+0200\n"
-"PO-Revision-Date: 2014-07-14 14:03+0200\n"
+"PO-Revision-Date: 2014-07-14 15:03+0200\n"
 "Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<https://hosted.weblate.org/projects/sdaps/master/pt_BR/>\n"
@@ -1014,14 +1014,14 @@ msgid "%(class)s %(l0)i.%(l1)i got no boxes."
 msgstr "%(class)s %(l0)i.%(l1)i não possui caixas."
 
 #: ../sdaps/setup/buddies.py:148
-#, fuzzy, python-format
+#, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
 msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente duas respostas."
 
 #: ../sdaps/setup/buddies.py:170
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente uma caixa."
 
 #: ../sdaps/setup/boxesparser.py:121 ../sdaps/setup/boxesparser.py:190
 #, python-format
@@ -1029,6 +1029,8 @@ msgid ""
 "Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: "
 "%.1f)."
 msgstr ""
+"Aviso: Ignorando uma caixa (página: %i, x: %.1f, y: %.1f, largura: %.1f, "
+"altura: %.1f)."
 
 #: ../sdaps/stamp/__init__.py:38
 msgid ""
@@ -1036,6 +1038,9 @@ msgid ""
 "will be identical as the survey has been configured to not use questionnaire "
 "IDs for each sheet."
 msgstr ""
+"Você não pode especificar o número de folhas para esta pesquisa. Todos os "
+"questionários serão idênticos já que a pesquisa foi configurada para não "
+"usar IDs de questionário em cada folha."
 
 #: ../sdaps/stamp/__init__.py:76
 msgid ""
@@ -1043,74 +1048,78 @@ msgid ""
 "will be unique. You need to use on of the options to add new IDs or use the "
 "existing ones."
 msgstr ""
+"Esta pesquisa foi configurada para usar IDs de questionário. Cada "
+"questionário será único. Por isso, uma das opções deve ser usada, para "
+"adicionar novos IDs ou usar já armazenados."
 
 #: ../sdaps/stamp/generic.py:36
 #, python-format
 msgid "Survey-ID: %i"
-msgstr ""
+msgstr "ID da Pesquisa: %i"
 
 #: ../sdaps/stamp/generic.py:50
 #, python-format
 msgid "Questionnaire-ID: %i"
-msgstr ""
+msgstr "ID do Questionário: %i"
 
 #: ../sdaps/stamp/generic.py:251
 msgid ""
 "You need to have either pdftk or pyPdf installed. pdftk is the faster method."
 msgstr ""
+"Você precisa ter o pdftk ou o pyPdf instalado. pdftk é o método mais rápido."
 
 #. bottomup = False =>(0, 0) is the upper left corner
 #: ../sdaps/stamp/generic.py:267
 #, python-format
 msgid "Creating stamp PDF for %i sheet"
 msgid_plural "Creating stamp PDF for %i sheets"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Criando estampa PDF para a folha %i"
+msgstr[1] "Criando estampa PDF para as folhas %i"
 
 #: ../sdaps/stamp/generic.py:309 ../sdaps/stamp/generic.py:442
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i folha; %f segundos por folha"
+msgstr[1] "%i folha; %f segundos por folha"
 
 #. Merge using pdftk
 #: ../sdaps/stamp/generic.py:318
 msgid "Stamping using pdftk"
-msgstr ""
+msgstr "Estampando com pdftk"
 
 #. Shortcut if we only have one sheet.
 #. In this case form data in the PDF will *not* break, in
 #. the other code path it *will* break.
 #: ../sdaps/stamp/generic.py:325
 msgid "pdftk: Overlaying the original PDF with the markings."
-msgstr ""
+msgstr "pdftk: Sobrepondo o PDF original com as marcas."
 
 #: ../sdaps/stamp/generic.py:334
 #, python-format
 msgid "pdftk: Splitting out page %d of each sheet."
 msgid_plural "pdftk: Splitting out page %d of each sheet."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "pdftk: Extraindo a página %d de cada folha."
+msgstr[1] "pdftk: Extraindo a página %d de cada folha."
 
 #: ../sdaps/stamp/generic.py:348
 msgid "pdftk: Splitting the questionnaire for watermarking."
-msgstr ""
+msgstr "pdftk: Dividindo o questionário para marca d'água."
 
 #: ../sdaps/stamp/generic.py:359 ../sdaps/stamp/generic.py:368
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "pdftk: Criando marca d'água na página %d de todas as folhas."
+msgstr[1] "pdftk: Criando marca d'água na página %d de todas as folhas."
 
 #: ../sdaps/stamp/generic.py:391
 msgid "pdftk: Assembling everything into the final PDF."
-msgstr ""
+msgstr "pdftk: Montando tudo no PDF final."
 
 #: ../sdaps/stamp/generic.py:428
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
-msgstr ""
+msgstr "Estampando com pyPdf. Para estampar mais rapidamente, instale o pdftk."
 
 #: ../sdaps/stamp/latex.py:22
 msgid ""
@@ -1118,41 +1127,48 @@ msgid ""
 "not have different questionnaire IDs printed on each sheet.\n"
 "I am going to do so anyways."
 msgstr ""
+"Não deveria ser necessário estampar um projeto SDAPS que usa LaTeX e não tem "
+"diferentes IDs de questionário impresso em cada folha.\n"
+"Vou fazê-lo de qualquer maneira."
 
 #: ../sdaps/stamp/latex.py:59
 #, python-format
 msgid "Running %s now twice to generate the stamped questionnaire."
-msgstr ""
+msgstr "Executando %s duas vezes para gerar o questionário estampado."
 
 #: ../sdaps/stamp/latex.py:71 ../sdaps/setuptex/__init__.py:121
 #: ../sdaps/setuptex/__init__.py:161 ../sdaps/reporttex/__init__.py:169
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
-msgstr ""
+msgstr "Erro executando \"%s\" para compilar o arquivo LaTeX."
 
 #: ../sdaps/stamp/latex.py:77
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
+"Ocorreu um erro durante a criação do relatório. Os arquivos temporários "
+"foram deixados em '%s'."
 
 #: ../sdaps/setuptex/__init__.py:73
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
 msgstr ""
+"Tipo de arquivo desconhecido (%s). O questionnaire_tex deve ser do tipo "
+"text/x-tex."
 
 #: ../sdaps/setuptex/__init__.py:74
 msgid "Will keep going, but expect failure!"
-msgstr ""
+msgstr "Vai continuar, mas espere falhas!"
 
 #: ../sdaps/setuptex/__init__.py:112 ../sdaps/setuptex/__init__.py:151
 #, python-format
 msgid "Running %s now twice to generate the questionnaire."
-msgstr ""
+msgstr "Executando %s duas vezes para gerar o questionário."
 
 #: ../sdaps/setuptex/__init__.py:131
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
-msgstr ""
+msgstr "Houve uma exceção ao analisar o arquivo SDAPS. O estado atual é:"
 
 #: ../sdaps/setuptex/__init__.py:177
 msgid ""
@@ -1160,26 +1176,31 @@ msgid ""
 "You can for example check the questionnaire.log file for LaTeX compile "
 "errors."
 msgstr ""
+"Ocorreu um erro na rotina de instalação. O diretório de pesquisa ainda "
+"existe. Você pode ver o arquivo questionnaire.log para verificar erros de "
+"compilação do LaTeX."
 
 #: ../sdaps/reporttex/__init__.py:107
 msgid "author|Unknown"
-msgstr ""
+msgstr "autor|Desconhecido"
 
 #: ../sdaps/reporttex/__init__.py:138
 msgid "tex language|english"
-msgstr ""
+msgstr "brazilian"
 
 #: ../sdaps/reporttex/__init__.py:154
 #, python-format
 msgid "The TeX project with the report data is located at '%s'."
-msgstr ""
+msgstr "O projeto TeX com os dados do relatório está localizado em '%s'."
 
 #: ../sdaps/reporttex/__init__.py:157
 #, python-format
 msgid "Running %s now twice to generate the report."
-msgstr ""
+msgstr "Executando %s duas vezes para gerar o relatório."
 
 #: ../sdaps/reporttex/__init__.py:175
 #, python-format
 msgid "An occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
+"Ocorreu um erro durante a criação do relatório. Os arquivos temporários "
+"foram deixados em '%s'."
