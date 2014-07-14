@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-29 16:28+0200\n"
-"PO-Revision-Date: 2014-07-14 13:58+0200\n"
+"PO-Revision-Date: 2014-07-14 14:03+0200\n"
 "Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<https://hosted.weblate.org/projects/sdaps/master/pt_BR/>\n"
@@ -1014,9 +1014,9 @@ msgid "%(class)s %(l0)i.%(l1)i got no boxes."
 msgstr "%(class)s %(l0)i.%(l1)i não possui caixas."
 
 #: ../sdaps/setup/buddies.py:148
-#, python-format
+#, fuzzy, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente duas respostas."
 
 #: ../sdaps/setup/buddies.py:170
 #, python-format
