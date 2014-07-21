@@ -206,7 +206,7 @@ class Checkbox(Box):
                 cr.rectangle(self.obj.data.x - 2*LINE_WIDTH, self.obj.data.y - 2*LINE_WIDTH, self.obj.data.width + 4*LINE_WIDTH, self.obj.data.height + 4*LINE_WIDTH)
                 cr.fill()
             elif self.obj.form == "ellipse":
-                ellipse(cr, self.obj.data.x - 2*2*LINE_WIDTH, self.obj.data.y - 2*LINE_WIDTH, self.obj.data.width + 4*LINE_WIDTH, self.obj.data.height + 4*LINE_WIDTH)
+                ellipse(cr, self.obj.data.x - 2*LINE_WIDTH, self.obj.data.y - 2*LINE_WIDTH, self.obj.data.width + 4*LINE_WIDTH, self.obj.data.height + 4*LINE_WIDTH)
                 cr.fill()
         else:
             if self.obj.form == "box":
