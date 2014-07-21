@@ -1022,7 +1022,7 @@ msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente duas respostas."
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
 msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente uma caixa."
 
-#: ../sdaps/setup/boxesparser.py:121 ../sdaps/setup/boxesparser.py:190
+#: ../sdaps/setupodt/boxesparser.py:121 ../sdaps/setupodt/boxesparser.py:190
 #, python-format
 msgid ""
 "Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: "

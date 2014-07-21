@@ -12,10 +12,10 @@ sdaps.setup.additionalparser module
     :undoc-members:
     :show-inheritance:
 
-sdaps.setup.boxesparser module
+sdaps.setupodt.boxesparser module
 ------------------------------
 
-.. automodule:: sdaps.setup.boxesparser
+.. automodule:: sdaps.setupodt.boxesparser
     :members:
     :undoc-members:
     :show-inheritance:
@@ -28,18 +28,18 @@ sdaps.setup.buddies module
     :undoc-members:
     :show-inheritance:
 
-sdaps.setup.metaparser module
+sdaps.setupodt.metaparser module
 -----------------------------
 
-.. automodule:: sdaps.setup.metaparser
+.. automodule:: sdaps.setupodt.metaparser
     :members:
     :undoc-members:
     :show-inheritance:
 
-sdaps.setup.qobjectsparser module
+sdaps.setupodt.qobjectsparser module
 ---------------------------------
 
-.. automodule:: sdaps.setup.qobjectsparser
+.. automodule:: sdaps.setupodt.qobjectsparser
     :members:
     :undoc-members:
     :show-inheritance:

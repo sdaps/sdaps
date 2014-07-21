@@ -35,7 +35,7 @@ sdaps/report/answers.py
 sdaps/report/__init__.py
 sdaps/setup/__init__.py
 sdaps/setup/buddies.py
-sdaps/setup/boxesparser.py
+sdaps/setupodt/boxesparser.py
 sdaps/stamp/__init__.py
 sdaps/stamp/generic.py
 sdaps/stamp/latex.py
