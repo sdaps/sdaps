@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-29 16:28+0200\n"
-"PO-Revision-Date: 2014-07-15 13:27+0200\n"
-"Last-Translator: Rodrigo Antonio Müller <rodrigo_blu@yahoo.com.br>\n"
+"PO-Revision-Date: 2014-07-25 20:08+0200\n"
+"Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<https://hosted.weblate.org/projects/sdaps/master/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -838,7 +838,7 @@ msgstr "%s, %i: Não foi possível obter o número da página."
 #: ../sdaps/recognize/buddies.py:131
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known page number!"
-msgstr "Nem %s, %i or %s, %i tem um número de página conhecido!"
+msgstr "Nem %s, %i ou %s, %i tem um número de página conhecido!"
 
 #. We don't touch the ignore flag in this case
 #. Simply print a message as this should *never* happen
@@ -864,7 +864,7 @@ msgstr "Imagens %s, %i e %s, %i não tem números de página consecutivos!"
 #: ../sdaps/recognize/buddies.py:175
 #, python-format
 msgid "No page number for page %s, %i exists."
-msgstr "Não existe número de página para a página %s, %i."
+msgstr "Não existe número de página para a página %s, %i existe."
 
 #: ../sdaps/recognize/buddies.py:180
 #, python-format
@@ -943,7 +943,7 @@ msgstr "Quantidade de questionários"
 
 #: ../sdaps/report/__init__.py:92 ../sdaps/reporttex/__init__.py:139
 msgid "sdaps report"
-msgstr "Relatório sdaps"
+msgstr "Relatório SDAPS"
 
 #: ../sdaps/setup/__init__.py:45 ../sdaps/setuptex/__init__.py:68
 msgid "The survey directory already exists."
@@ -1072,8 +1072,8 @@ msgstr ""
 #, python-format
 msgid "Creating stamp PDF for %i sheet"
 msgid_plural "Creating stamp PDF for %i sheets"
-msgstr[0] "Criando estampa PDF para a folha %i"
-msgstr[1] "Criando estampa PDF para as folhas %i"
+msgstr[0] "Criando estampa PDF para %i folha"
+msgstr[1] "Criando estampa PDF para %i folhas"
 
 #: ../sdaps/stamp/generic.py:309 ../sdaps/stamp/generic.py:442
 #, python-format
