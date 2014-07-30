@@ -507,7 +507,6 @@
   \else
     \protectedimmediatewrite\sdapsoutfile{Duplex=False}
   \fi
-  % Only one can be true ...
   \protectedimmediatewrite\sdapsoutfile{Style=\@sdaps@style}%
   \protectedimmediatewrite\sdapsoutfile{GlobalID=\globalid}%
   \protectedimmediatewrite\sdapsoutfile{GlobalIDLabel=\globalidlabel}%
