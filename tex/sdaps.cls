@@ -508,9 +508,9 @@
     \protectedimmediatewrite\sdapsoutfile{Duplex=False}
   \fi
   % Only one can be true ...
-  \protectedimmediatewrite\sdapsoutfile{Style=\@sdaps@style}
-  \protectedimmediatewrite\sdapsoutfile{GlobalID=\globalid}
-  \protectedimmediatewrite\sdapsoutfile{GlobalIDLabel=\globalidlabel}
+  \protectedimmediatewrite\sdapsoutfile{Style=\@sdaps@style}%
+  \protectedimmediatewrite\sdapsoutfile{GlobalID=\globalid}%
+  \protectedimmediatewrite\sdapsoutfile{GlobalIDLabel=\globalidlabel}%
   %
   \foreach \qid in \questionnaireids{%
     \@forceSTAMPfalse
@@ -547,8 +547,8 @@
     % Do not generate position information from now on
     \global\@sdaps@outputfalse%
     % Reset counters for testing purposes
-    \setcounter{checkboxnum}{0}
-    \setcounter{textboxnum}{0}
+    \setcounter{checkboxnum}{0}%
+    \setcounter{textboxnum}{0}%
   }
 }
 
@@ -821,7 +821,7 @@
 \ifx&#1&%
   % #1 is empty
   \refstepcounter{subsection}%
- \else
+ \else%
   % #1 is nonempty
   \subsection{\usekomafont{questionfont}\strut#1\strut}%
   % This is extra spacing after the subsection is removed. By doing this we
@@ -829,7 +829,7 @@
   \nobreak%
   \vspace{-0.25\parskip}%
   \nobreak%
-\fi
+\fi%
 }
 
 % http://mrunix.de/forums/showthread.php?t=59943
