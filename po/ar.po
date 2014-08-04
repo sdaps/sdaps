@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-02 20:48+0200\n"
+"POT-Creation-Date: 2014-08-04 13:34+0200\n"
 "PO-Revision-Date: 2014-01-23 09:31+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Arabic <http://hosted.weblate.org/projects/sdaps/master/ar/>\n"
@@ -497,7 +497,7 @@ msgstr ""
 msgid "Filename to store the data to (default: stamp_%%i.pdf)"
 msgstr ""
 
-#: ../sdaps/convert/__init__.py:32
+#: ../sdaps/convert/__init__.py:35
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
 msgstr ""
@@ -628,21 +628,26 @@ msgstr "فرز حسب الجودة"
 msgid "label"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:50
+#: ../sdaps/gui/widget_buddies.py:51
 msgid "<b>Global Properties</b>"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:54
+#: ../sdaps/gui/widget_buddies.py:55
 msgid "Sheet valid"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:55
+#: ../sdaps/gui/widget_buddies.py:56
 msgid "Verified"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:56
+#: ../sdaps/gui/widget_buddies.py:57
 msgid "Empty"
 msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:69 ../sdaps/gui/widget_buddies.py:93
+#, fuzzy
+msgid "<b>Questionnaire ID: </b>"
+msgstr "معرف-السؤال: %i"
 
 #: ../sdaps/image/__init__.py:47
 msgid ""
@@ -818,44 +823,6 @@ msgstr ""
 msgid "sdaps report"
 msgstr "تقرير سدابس"
 
-#: ../sdaps/setup/__init__.py:45 ../sdaps/setuptex/__init__.py:68
-#, fuzzy
-msgid "The survey directory already exists."
-msgstr "مسار الاستفتاء موجود مسبقا"
-
-#: ../sdaps/setup/__init__.py:50
-#, python-format
-msgid ""
-"Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
-"opendocument.text."
-msgstr ""
-
-#: ../sdaps/setup/__init__.py:55
-#, python-format
-msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf."
-msgstr ""
-
-#: ../sdaps/setup/__init__.py:61 ../sdaps/setuptex/__init__.py:79
-#, python-format
-msgid "Unknown file type (%s). additionalqobjects should be text/plain."
-msgstr ""
-
-#: ../sdaps/setup/__init__.py:89
-msgid "Caught an Exception while parsing the ODT file. The current state is:"
-msgstr ""
-
-#: ../sdaps/setup/__init__.py:92
-msgid ""
-"If the dependencies for the \"annotate\" command are installed, then an "
-"annotated version will be created next to the original PDF file."
-msgstr ""
-
-#: ../sdaps/setup/__init__.py:122 ../sdaps/setuptex/__init__.py:145
-msgid ""
-"Some combination of options and project properties do not work. Aborted "
-"Setup."
-msgstr ""
-
 #: ../sdaps/setup/buddies.py:61
 #, python-format
 msgid "Head %(l0)i got no title."
@@ -884,6 +851,44 @@ msgstr ""
 #: ../sdaps/setup/buddies.py:170
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
+msgstr ""
+
+#: ../sdaps/setupodt/__init__.py:45 ../sdaps/setuptex/__init__.py:68
+#, fuzzy
+msgid "The survey directory already exists."
+msgstr "مسار الاستفتاء موجود مسبقا"
+
+#: ../sdaps/setupodt/__init__.py:50
+#, python-format
+msgid ""
+"Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
+"opendocument.text."
+msgstr ""
+
+#: ../sdaps/setupodt/__init__.py:55
+#, python-format
+msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf."
+msgstr ""
+
+#: ../sdaps/setupodt/__init__.py:61 ../sdaps/setuptex/__init__.py:79
+#, python-format
+msgid "Unknown file type (%s). additionalqobjects should be text/plain."
+msgstr ""
+
+#: ../sdaps/setupodt/__init__.py:89
+msgid "Caught an Exception while parsing the ODT file. The current state is:"
+msgstr ""
+
+#: ../sdaps/setupodt/__init__.py:92
+msgid ""
+"If the dependencies for the \"annotate\" command are installed, then an "
+"annotated version will be created next to the original PDF file."
+msgstr ""
+
+#: ../sdaps/setupodt/__init__.py:122 ../sdaps/setuptex/__init__.py:145
+msgid ""
+"Some combination of options and project properties do not work. Aborted "
+"Setup."
 msgstr ""
 
 #: ../sdaps/setupodt/boxesparser.py:121 ../sdaps/setupodt/boxesparser.py:190

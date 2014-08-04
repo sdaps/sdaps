@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-29 16:28+0200\n"
+"POT-Creation-Date: 2014-08-04 13:34+0200\n"
 "PO-Revision-Date: 2014-07-25 20:08+0200\n"
 "Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://hosted.weblate.org/projects/sdaps/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"sdaps/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -87,8 +87,8 @@ msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
 msgstr ""
-"Força a adição das imagens, mesmo que a contagem de páginas esteja errada ("
-"só use se você sabe o que está fazendo)."
+"Força a adição das imagens, mesmo que a contagem de páginas esteja errada "
+"(só use se você sabe o que está fazendo)."
 
 #: ../sdaps/cmdline/add.py:40
 msgid "Copy the files into the directory (default)."
@@ -271,8 +271,8 @@ msgid ""
 "    "
 msgstr ""
 "Este comando lança uma interface gráfica (GUI) que pode ser utilizada para\n"
-"     corrigir respostas. Você precisa executar \"recognize\" antes de usá-lo."
-"\n"
+"     corrigir respostas. Você precisa executar \"recognize\" antes de usá-"
+"lo.\n"
 "    "
 
 #: ../sdaps/cmdline/gui.py:34
@@ -593,7 +593,7 @@ msgstr ""
 msgid "Filename to store the data to (default: stamp_%%i.pdf)"
 msgstr "Nome de arquivo para armazenar os dados (padrão: stamp_%%i.pdf)"
 
-#: ../sdaps/convert/__init__.py:32
+#: ../sdaps/convert/__init__.py:35
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
 msgstr "Não foi possível aplicar transformação 3D na imagem '%s', página %i!"
@@ -607,8 +607,8 @@ msgid ""
 "The survey does not have any images! Please add images (and run recognize) "
 "before using the GUI."
 msgstr ""
-"A pesquisa não possui imagens! Por favor, adicione imagens e execute \""
-"recognize\" antes de usar a interface gráfica (GUI)."
+"A pesquisa não possui imagens! Por favor, adicione imagens e execute "
+"\"recognize\" antes de usar a interface gráfica (GUI)."
 
 #: ../sdaps/gui/__init__.py:198
 msgid "Page|Invalid"
@@ -913,14 +913,14 @@ msgid ""
 "work properly!"
 msgstr ""
 "Tem diferentes IDs em páginas diferentes para pelo menos uma folha! *NÃO* "
-"tente usar filtros com esta pesquisa! Você precisa executar o passo \""
-"reorder\" para que isso funcione corretamente!"
+"tente usar filtros com esta pesquisa! Você precisa executar o passo \"reorder"
+"\" para que isso funcione corretamente!"
 
 #: ../sdaps/recognize/buddies.py:321
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
-"Não há definição de estilo carregada. Isto precisa ser feito para o estilo \""
-"custom\"!"
+"Não há definição de estilo carregada. Isto precisa ser feito para o estilo "
+"\"custom\"!"
 
 #: ../sdaps/report/answers.py:185
 #, python-format
@@ -944,53 +944,6 @@ msgstr "Quantidade de questionários"
 #: ../sdaps/report/__init__.py:92 ../sdaps/reporttex/__init__.py:139
 msgid "sdaps report"
 msgstr "Relatório SDAPS"
-
-#: ../sdaps/setup/__init__.py:45 ../sdaps/setuptex/__init__.py:68
-msgid "The survey directory already exists."
-msgstr "O diretório da pesquisa já existe."
-
-#: ../sdaps/setup/__init__.py:50
-#, python-format
-msgid ""
-"Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
-"opendocument.text."
-msgstr ""
-"Tipo de arquivo desconhecido (%s). O questionnaire_odt deve ser do tipo "
-"application/vnd.oasis.opendocument.text."
-
-#: ../sdaps/setup/__init__.py:55
-#, python-format
-msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf."
-msgstr ""
-"Tipo de arquivo desconhecido (%s). O questionnaire_pdf deve ser do tipo "
-"application/pdf."
-
-#: ../sdaps/setup/__init__.py:61 ../sdaps/setuptex/__init__.py:79
-#, python-format
-msgid "Unknown file type (%s). additionalqobjects should be text/plain."
-msgstr ""
-"Tipo de arquivo desconhecido (%s). O additionalqobjects deve ser do tipo "
-"text/plain."
-
-#: ../sdaps/setup/__init__.py:89
-msgid "Caught an Exception while parsing the ODT file. The current state is:"
-msgstr "Houve uma exceção ao analisar o arquivo ODT. O estado atual é:"
-
-#: ../sdaps/setup/__init__.py:92
-msgid ""
-"If the dependencies for the \"annotate\" command are installed, then an "
-"annotated version will be created next to the original PDF file."
-msgstr ""
-"Se as dependências para o comando \"annotate\" estão instaladas, uma versão "
-"anotada será criada junto ao arquivo PDF original."
-
-#: ../sdaps/setup/__init__.py:122 ../sdaps/setuptex/__init__.py:145
-msgid ""
-"Some combination of options and project properties do not work. Aborted "
-"Setup."
-msgstr ""
-"Uma combinação de opções e propriedades do projeto não funcionam. Instalação "
-"abortada."
 
 #: ../sdaps/setup/buddies.py:61
 #, python-format
@@ -1021,6 +974,53 @@ msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente duas respostas."
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
 msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente uma caixa."
+
+#: ../sdaps/setupodt/__init__.py:45 ../sdaps/setuptex/__init__.py:68
+msgid "The survey directory already exists."
+msgstr "O diretório da pesquisa já existe."
+
+#: ../sdaps/setupodt/__init__.py:50
+#, python-format
+msgid ""
+"Unknown file type (%s). questionnaire_odt should be application/vnd.oasis."
+"opendocument.text."
+msgstr ""
+"Tipo de arquivo desconhecido (%s). O questionnaire_odt deve ser do tipo "
+"application/vnd.oasis.opendocument.text."
+
+#: ../sdaps/setupodt/__init__.py:55
+#, python-format
+msgid "Unknown file type (%s). questionnaire_pdf should be application/pdf."
+msgstr ""
+"Tipo de arquivo desconhecido (%s). O questionnaire_pdf deve ser do tipo "
+"application/pdf."
+
+#: ../sdaps/setupodt/__init__.py:61 ../sdaps/setuptex/__init__.py:79
+#, python-format
+msgid "Unknown file type (%s). additionalqobjects should be text/plain."
+msgstr ""
+"Tipo de arquivo desconhecido (%s). O additionalqobjects deve ser do tipo "
+"text/plain."
+
+#: ../sdaps/setupodt/__init__.py:89
+msgid "Caught an Exception while parsing the ODT file. The current state is:"
+msgstr "Houve uma exceção ao analisar o arquivo ODT. O estado atual é:"
+
+#: ../sdaps/setupodt/__init__.py:92
+msgid ""
+"If the dependencies for the \"annotate\" command are installed, then an "
+"annotated version will be created next to the original PDF file."
+msgstr ""
+"Se as dependências para o comando \"annotate\" estão instaladas, uma versão "
+"anotada será criada junto ao arquivo PDF original."
+
+#: ../sdaps/setupodt/__init__.py:122 ../sdaps/setuptex/__init__.py:145
+msgid ""
+"Some combination of options and project properties do not work. Aborted "
+"Setup."
+msgstr ""
+"Uma combinação de opções e propriedades do projeto não funcionam. Instalação "
+"abortada."
 
 #: ../sdaps/setupodt/boxesparser.py:121 ../sdaps/setupodt/boxesparser.py:190
 #, python-format
@@ -1153,8 +1153,8 @@ msgstr ""
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
 msgstr ""
-"Tipo de arquivo desconhecido (%s). O questionnaire_tex deve ser do tipo "
-"text/x-tex."
+"Tipo de arquivo desconhecido (%s). O questionnaire_tex deve ser do tipo text/"
+"x-tex."
 
 #: ../sdaps/setuptex/__init__.py:74
 msgid "Will keep going, but expect failure!"
