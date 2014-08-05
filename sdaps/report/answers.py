@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import StringIO
-import Image
+from PIL import Image
 
 from reportlab import pdfgen
 from reportlab import platypus
