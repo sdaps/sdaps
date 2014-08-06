@@ -100,7 +100,7 @@ def setup(survey, questionnaire_odt, questionnaire_pdf, additionalqobjects, opti
                 # No .pdf ending? Just append the _annotated.pdf.
                 annotated_pdf = questionnaire_pdf + '_annotated.pdf'
 
-            import sdaps.annotate.annotate as annotate
+            import sdaps.annotate as annotate
             annotate.annotate(survey, questionnaire_pdf, annotated_pdf)
         except:
             # Well, whatever
