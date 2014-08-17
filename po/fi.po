@@ -3,32 +3,33 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-04 13:34+0200\n"
-"PO-Revision-Date: 2014-03-25 11:29+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2014-08-17 13:09+0200\n"
+"Last-Translator: Joonas Joensuu <joonas.joensuu@gmail.com>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/sdaps/master/fi/>"
+"\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.10-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
-msgstr ""
+msgstr "SDAPS -- Paperipohjainen kyselytyokalu."
 
 #: ../sdaps/script.py:45
 msgid "project directory|The SDAPS project."
-msgstr ""
+msgstr "projektin hakemisto|SDAPS-projekti."
 
 #: ../sdaps/script.py:46
 msgid "command list|Commands:"
-msgstr ""
+msgstr "komentolistaus|Komennot:"
 
 #: ../sdaps/add/__init__.py:53
 #, python-format
@@ -36,6 +37,8 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
+"Virheellinen syötetiedosto %s. Syötetiedosto pitää olla muodossa "
+"(monisivuinen) yksivärinen TIFF."
 
 #: ../sdaps/add/__init__.py:64
 #, python-format
@@ -43,25 +46,28 @@ msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
 "%i)."
 msgstr ""
+"Ei lisätä %s, koska sen sivumäärä on väärä (tarvitsee olla kerroin luvusta "
+"%i)."
 
 #: ../sdaps/boxgallery/__init__.py:108
-#, python-format
+#, fuzzy, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
-msgstr ""
+msgstr "Renderöidään laatikkogalleria metriseksi \"%s\"."
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
-msgstr ""
+msgstr "Varoitus: "
 
 #: ../sdaps/log.py:41
 msgid "Error: "
-msgstr ""
+msgstr "Virhe: "
 
 #: ../sdaps/cmdline/add.py:29
 msgid "Add scanned questionnaires to the survey."
-msgstr ""
+msgstr "Lisää skannatut kyselylomakkeet kyselyyn."
 
 #: ../sdaps/cmdline/add.py:30
+#, fuzzy
 msgid ""
 "This command is used to add scanned images to the survey.\n"
 "    The image data needs to be a (multipage) 300dpi monochrome TIFF file. "
@@ -70,54 +76,70 @@ msgid ""
 "case\n"
 "    the data will be referenced using a relative path."
 msgstr ""
+"Tällä komennolla voit lisätä skannattuja kuvia kyselyyn.\n"
+"    Kuvatiedodoston tulee olla (monisivuinen) 300dpi mustavalko-TIFF-"
+"tiedosto.\n"
+"    Voit olla kopioimatta tiedot projektin hakemistoon.\n"
+"    Tässä tapauksessa tietoja käsitellään käyttämällä suhteellista polkua."
 
 #: ../sdaps/cmdline/add.py:36
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
 msgstr ""
+"Pakota käyttämään kuvia, vaikka sivumäärä olisikin väärin (käytä vain, jos "
+"tiedä mitä olet tekemässä)."
 
 #: ../sdaps/cmdline/add.py:40
 msgid "Copy the files into the directory (default)."
-msgstr ""
+msgstr "Kopioi tiedostot hakemistoon (oletus)."
 
 #: ../sdaps/cmdline/add.py:45
 msgid "Do not copy the files into the directory."
-msgstr ""
+msgstr "Älä kopioi tiedostoja hakemistoon."
 
 #: ../sdaps/cmdline/add.py:49
 msgid ""
 "Images contain a duplex scan of a simplex questoinnaire (default: simplex "
 "scan)."
 msgstr ""
+"Kuvat sisältävät kaksipuolisen skannauksen yksipuolisesta kyselykaavakkeesta "
+"(oletus: yksipuolinen skannaus)."
 
 #: ../sdaps/cmdline/add.py:55 ../sdaps/cmdline/convert.py:49
 msgid "A number of TIFF image files."
-msgstr ""
+msgstr "TIFF-kuvatiedostojen lukumäärä."
 
 #: ../sdaps/cmdline/add.py:68
 #, python-format
 msgid "Processing %s"
-msgstr ""
+msgstr "Käsittelee %s"
 
 #: ../sdaps/cmdline/add.py:72
 msgid "Done"
-msgstr ""
+msgstr "Valmis"
 
 #: ../sdaps/cmdline/annotate.py:28
+#, fuzzy
 msgid "Annotate the questionnaire and show the recognized positions."
-msgstr ""
+msgstr "Lisää huomautuksia kyselykaavakkeeseen ja näytä tunnistetut sijainnit."
 
 #: ../sdaps/cmdline/annotate.py:29
+#, fuzzy
 msgid ""
 "This command is mainly a debug utility. It creates an\n"
 "    annotated version of the questionnaire, with the information that SDAPS\n"
 "    knows about it overlayed on top."
 msgstr ""
+"Tämä komento on pääasiassa virheenkorjauksen apuohjelma. Se luo \n"
+" huomautuksilla varustetun version kyselylomakkeesta ja \n"
+" lisää SDAPS:in tietämän informaation sen päälle."
 
 #: ../sdaps/cmdline/boxgallery.py:31
 msgid "Create PDFs with boxes sorted by the detection heuristics."
 msgstr ""
+"Luo PDF-tiedostot, joissa laatikot on lajiteltu tunnistusheuristiikan "
+"mukaisesti."
 
 #: ../sdaps/cmdline/boxgallery.py:32
 msgid ""
