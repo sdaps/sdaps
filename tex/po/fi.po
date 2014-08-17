@@ -3,40 +3,40 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-04 13:34+0200\n"
-"PO-Revision-Date: 2014-01-02 23:59+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2014-08-17 12:53+0200\n"
+"Last-Translator: Joonas Joensuu <joonas.joensuu@gmail.com>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/sdaps/tex/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.10-dev\n"
 
 #. The language name of the LaTeX dictionary file for translator
 #: ../tex_translations.in.h:2
 msgid "English"
-msgstr ""
+msgstr "Finnish"
 
 #. Used as an overlay for questoinnaires that are not yet done
 #: ../tex_translations.in.h:4
 msgid "draft"
-msgstr ""
+msgstr "luonnos"
 
 #. Label for the survey-id on the questionnaire (in "classic" mode)
 #: ../tex_translations.in.h:6
 msgid "Survey-ID:"
-msgstr ""
+msgstr "Kyselyn tunnus:"
 
 #. Label for the questionnaire-id on the questionnaire (in "classic" mode)
 #: ../tex_translations.in.h:8
 msgid "Questionnaire-ID:"
-msgstr ""
+msgstr "Kyselylomakkeen tunnus:"
 
 #. Default instructions on the questionnaire
 #: ../tex_translations.in.h:10
@@ -44,39 +44,43 @@ msgid ""
 "This questionnaire is automatically read by a computer program. Please use a "
 "pen for filling in your answers."
 msgstr ""
+"Tämä kyselykaavake luetaan automaattisesti tietokoneohjelman avulla. Käytä "
+"kuulakärkikynää vastatessasi kysymyksiin."
 
 #. Instruction on the questionnaire: Description of a crossed checkbox
 #: ../tex_translations.in.h:12
 msgid "Check"
-msgstr ""
+msgstr "Valitse"
 
 #. Instruction on the questionnaire: Description of a crossed and filled checkbox
 #: ../tex_translations.in.h:14
 msgid "Uncheck to correct"
-msgstr ""
+msgstr "Poista valinta korjataksesi"
 
 #. Instruction on the questionnaire: Multiple choice question
 #: ../tex_translations.in.h:16
 msgid "You can check any number of boxes in selection questions."
-msgstr ""
+msgstr "Voit valita haluamasi määrän laatikoita valintakysymyksissä."
 
 #. Instruction on the questionnaire: Mark/range question.
 #: ../tex_translations.in.h:18
 msgid ""
 "For questions with a range (1--5) choose the answer the mark that fits best."
 msgstr ""
+"Kysymyksissä, jotka vastaus kysytään vaihteluvälillä (1--5), valitse "
+"vastaus, joka sopii parhaiten."
 
 #. LaTeX based report: Label for the number of people that answered
 #: ../tex_translations.in.h:20
 msgid "Answers"
-msgstr ""
+msgstr "Vastaukset"
 
 #. LaTeX based report: The calculated mean value
 #: ../tex_translations.in.h:22
 msgid "Mean"
-msgstr ""
+msgstr "Keskiarvo"
 
 #. LaTeX based report: The standard deviation
 #: ../tex_translations.in.h:24
 msgid "Standard-Deviation"
-msgstr ""
+msgstr "Keskihajonta"
