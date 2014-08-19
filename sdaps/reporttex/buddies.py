@@ -161,6 +161,15 @@ class Choice(Question):
         for box in self.obj.boxes:
             yield u'%i in %s' % (box.value, self.obj.id_filter())
 
+class Option(Choice):
+
+    __metaclass__ = model.buddy.Register
+    name = 'report'
+    obj_class = model.questionnaire.Option
+
+    def filters(self):
+        for box in self.obj.boxes:
+            yield u'%i == %s' % (box.value, self.obj.id_filter())
 
 class Mark(Question):
 
@@ -171,16 +180,29 @@ class Mark(Question):
     def write(self, out, tmpdir):
         Question.write_begin(self, out)
 
-        if self.obj.calculate.count:
-            out.write('\\pgfkeyssetvalue{/sdaps/mark/range}{%s}\n' % (len(self.obj.boxes)))
+        if self.obj.calculate.range_count:
+            out.write('\\pgfkeyssetvalue{/sdaps/mark/range}{%s}\n' % (self.obj.calculate.range_max - self.obj.calculate.range_min + 1))
+            out.write('\\pgfkeyssetvalue{/sdaps/mark/rangemin}{%s}\n' % (self.obj.calculate.range_min))
+            out.write('\\pgfkeyssetvalue{/sdaps/mark/rangemax}{%s}\n' % (self.obj.calculate.range_max))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/lower}{%s}\n' % (unicode_to_latex(self.obj.answers[0])))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/upper}{%s}\n' % (unicode_to_latex(self.obj.answers[1])))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/count}{%i}\n' % (self.obj.calculate.count))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/stddev}{%.1f}\n' % (self.obj.calculate.standard_deviation))
-            for i, fraction in sorted(self.obj.calculate.values.iteritems()):
-                out.write('\\pgfkeyssetvalue{/sdaps/mark/%i/fraction}{%.3f}\n' % (i, fraction))
+            for key in range(self.obj.calculate.range_min, self.obj.calculate.range_max + 1):
+                if key in self.obj.calculate.range_values:
+                    fraction = self.obj.calculate.range_values[key]
+                else:
+                    fraction = 0
+                out.write('\\pgfkeyssetvalue{/sdaps/mark/%i/fraction}{%.3f}\n' % (key, fraction))
             out.write('\\pgfkeyssetvalue{/sdaps/mark/mean}{%.1f}\n' % (self.obj.calculate.mean))
             out.write('\n\\markanswer\n')
+
+        if self.obj.calculate.count > 0 and self.obj.calculate.values:
+            out.write('\\begin{embedchoicequestion}\n')
+            for box in self.obj.boxes:
+                if box.value in self.obj.calculate.values:
+                    out.write('''\\choiceanswer{%s}{%.3f}\n''' % (unicode_to_latex(box.text), self.obj.calculate.values[box.value]))
+            out.write('\\end{embedchoicequestion}\n')
 
         Question.write_end(self, out)
 

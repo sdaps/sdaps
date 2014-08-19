@@ -533,19 +533,6 @@ class Question(model.buddy.Buddy):
             result = min(result, box.data.quality)
         return result
 
-#class Choice(Question):
-
-    #__metaclass__ = model.buddy.Register
-    #name = 'recognize'
-    #obj_class = model.questionnaire.Choice
-
-
-#class Mark(Question):
-
-    #__metaclass__ = model.buddy.Register
-    #name = 'recognize'
-    #obj_class = model.questionnaire.Mark
-
 
 class Box(model.buddy.Buddy):
 

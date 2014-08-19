@@ -211,29 +211,51 @@ class Choice(Question):
         for box in self.obj.boxes:
             yield u'%i in %s' % (box.value, self.obj.id_filter())
 
-
-class Mark(Question):
+class Option(Question):
 
     __metaclass__ = model.buddy.Register
     name = 'report'
-    obj_class = model.questionnaire.Mark
+    obj_class = model.questionnaire.Option
+
+    def filters(self):
+        for box in self.obj.boxes:
+            yield u'%i == %s' % (box.value, self.obj.id_filter())
+
+class Range(Option):
+
+    __metaclass__ = model.buddy.Register
+    name = 'report'
+    obj_class = model.questionnaire.Range
+
+    def report(self):
+        pass
 
     def story(self):
         story, tmp = Question.story(self)
-        if self.obj.calculate.count:
-            story.append(answers.Mark(
-                self.obj.calculate.values.values(),
+        if self.obj.calculate.range_count:
+            story.append(answers.Range(
+                self.obj.calculate.range_min,
+                self.obj.calculate.range_max,
+                self.obj.calculate.range_values,
                 self.obj.answers,
                 self.obj.calculate.mean,
                 self.obj.calculate.standard_deviation,
                 self.obj.calculate.count,
                 self.obj.calculate.significant))
-            story = [platypus.KeepTogether(story)]
-        return story, False
 
-    def filters(self):
-        for x in range(len(self.obj.boxes)+1):
-            yield u'%i == %s' % (x, self.obj.id_filter())
+        if self.obj.calculate.count > 0 and self.obj.calculate.values:
+            for box in self.obj.boxes:
+                if box.value in self.obj.calculate.values:
+                    story.append(
+                        answers.Choice(
+                            box.text,
+                            self.obj.calculate.values[box.value],
+                            False
+                        )
+                    )
+
+        story = [platypus.KeepTogether(story)]
+        return story, False
 
 
 class Text(Question):

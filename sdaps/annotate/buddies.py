@@ -159,11 +159,11 @@ class Question(model.buddy.Buddy):
             for box in self.obj.boxes:
                 box.annotate.draw(cr, layout_info)
 
-class Mark(model.buddy.Buddy):
+class Range(model.buddy.Buddy):
 
     __metaclass__ = model.buddy.Register
     name = 'annotate'
-    obj_class = model.questionnaire.Mark
+    obj_class = model.questionnaire.Range
 
     def draw(self, cr, page_number, layout_info):
         # Does the sheet contain this question?
@@ -175,7 +175,7 @@ class Mark(model.buddy.Buddy):
             layout = create_layout(cr, self.obj.answers[0], layout_info, 10)
             xpos, ypos = show_layout(cr, layout, layout_info, 3)
 
-            cr.move_to(self.obj.boxes[0].x, self.obj.boxes[0].y)
+            cr.move_to(self.obj.boxes[self.obj.range[0]].x, self.obj.boxes[self.obj.range[0]].y)
             cr.line_to(xpos, ypos)
             cr.set_line_width(LINE_WIDTH)
             set_rgb_from_color_cycle(cr)
@@ -185,14 +185,16 @@ class Mark(model.buddy.Buddy):
             layout = create_layout(cr, self.obj.answers[1], layout_info, 10)
             xpos, ypos = show_layout(cr, layout, layout_info, 3)
 
-            cr.move_to(self.obj.boxes[-1].x, self.obj.boxes[-1].y)
+            cr.move_to(self.obj.boxes[self.obj.range[1]].x, self.obj.boxes[self.obj.range[1]].y)
             cr.line_to(xpos, ypos)
             cr.set_line_width(LINE_WIDTH)
             set_rgb_from_color_cycle(cr)
             cr.stroke()
 
-            for box in self.obj.boxes:
-                box.annotate.draw(cr, layout_info, nostring=True)
+            for i, box in enumerate(self.obj.boxes):
+                hide_if_empty = (self.obj.range[0] <= i <= self.obj.range[1])
+
+                box.annotate.draw(cr, layout_info, hide_if_empty=hide_if_empty)
 
 class Box(model.buddy.Buddy):
 
@@ -204,8 +206,8 @@ class Box(model.buddy.Buddy):
         inner_box(cr, self.obj.x, self.obj.y, self.obj.width, self.obj.height)
         cr.stroke()
 
-    def draw(self, cr, layout_info, nostring=False):
-        if nostring is False:
+    def draw(self, cr, layout_info, hide_if_empty=False):
+        if not hide_if_empty or self.obj.text:
             layout = create_layout(cr, self.obj.id_str() + " " + self.obj.text, layout_info, 6)
             xpos, ypos = show_layout(cr, layout, layout_info)
 

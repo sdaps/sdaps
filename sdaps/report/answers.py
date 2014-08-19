@@ -136,7 +136,7 @@ class Choice(platypus.Flowable):
         )
 
 
-class Mark(platypus.Flowable):
+class Range(platypus.Flowable):
     '''
     -----                self.top_margin
     values(percent)    self.values_height
@@ -153,8 +153,11 @@ class Mark(platypus.Flowable):
     top_margin = 0
     left_margin = 12
 
-    def __init__(self, values, answers, mean, standard_deviation, count, significant=0):
+    def __init__(self, range_min, range_max, values, answers, mean, standard_deviation, count, significant=0):
         platypus.Flowable.__init__(self)
+
+        self.range_min = range_min
+        self.range_max = range_max
 
         self.values = values
         self.mean = mean
@@ -170,7 +173,7 @@ class Mark(platypus.Flowable):
 
         self.values_height = 10
         self.values_gap = self.box_depth
-        self.bars_height = max(self.values) * self.box_height
+        self.bars_height = max(self.values.values()) * self.box_height
         self.skala_height = self.mean_height
         self.marks_height = 10
 
@@ -212,14 +215,21 @@ class Mark(platypus.Flowable):
                     self.offset + (self.mean - 0.5) * self.box_width - self.mean_width / 2.0,
                     self.marks_height)
         # values
-        for i, value in enumerate(self.values):
-            self.canv.drawCentredString(
-                self.offset + (i + 0.5) * self.box_width + self.box_depth * 0.5,
-                self.marks_height + self.skala_height + self.bars_height + self.values_gap,
-                '%.2f %%' % (value * 100)
-            )
+
+        for i, key in enumerate(range(self.range_min, self.range_max + 1)):
+            if key in self.values:
+                self.canv.drawCentredString(
+                    self.offset + (i + 0.5) * self.box_width + self.box_depth * 0.5,
+                    self.marks_height + self.skala_height + self.bars_height + self.values_gap,
+                    '%.2f %%' % (self.values[key] * 100)
+                )
         # bars
-        for i, value in enumerate(self.values):
+        for i, key in enumerate(range(self.range_min, self.range_max + 1)):
+            if key in self.values:
+                value = self.values[key]
+            else:
+                value = 0
+
             box = flowables.Box(self.box_width, value * self.box_height, self.box_depth)
             box.transparent = 0
             box.fill = 1
@@ -227,7 +237,7 @@ class Mark(platypus.Flowable):
             box.drawOn(self.canv,
                        self.offset + i * self.box_width, self.marks_height + self.skala_height)
         # skala
-        for i in range( (len(self.values) - 1) * 10 + 1):
+        for i in range((self.range_max - self.range_min) * 10 + 1):
             if i % 10 == 0:
                 self.canv.setLineWidth(0.2)
                 self.canv.line(

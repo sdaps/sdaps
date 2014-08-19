@@ -187,6 +187,7 @@ class Question(QObject):
         QObject.init_attributes(self)
         self.page_number = 0
         self.question = unicode()
+        self.variable = None
 
     def calculate_survey_id(self, md5):
         for box in self.boxes:
@@ -218,18 +219,44 @@ class Choice(Question):
                 answer.append(box.value)
         return answer
 
-
-class Mark(Question):
+class Option(Question):
 
     def init_attributes(self):
         Question.init_attributes(self)
-        self.answers = list()
+        self.value_none = -1
+        self.value_invalid = -2
+
+    def __unicode__(self):
+        return unicode().join(
+            [Question.__unicode__(self)] +
+            [unicode(box) for box in self.boxes]
+        )
+
+    def get_answer(self):
+        '''it's a list containing all selected values
+        '''
+        answer = list()
+        for box in self.boxes:
+            if box.data.state:
+                answer.append(box.value)
+
+        if len(answer) == 1:
+            return answer[0]
+        else:
+            return False
+
+class Range(Option):
+
+    def init_attributes(self):
+        Option.init_attributes(self)
+        self.answers = ("", "")
+        self.range = (0, 0)
 
     def __unicode__(self):
         if len(self.answers) == 2:
             return unicode().join(
                 [Question.__unicode__(self)] +
-                [u'\t%s - %s\n' % tuple(self.answers)] +
+                [u'\t%s (%i) - %s (%i)\n' % (self.answers[0], self.range[0], self.answers[1], self.range[1])] +
                 [unicode(box) for box in self.boxes]
             )
         else:
@@ -239,24 +266,13 @@ class Mark(Question):
                 [unicode(box) for box in self.boxes]
             )
 
-    def get_answer(self):
-        '''it's an integer between 0 and 5
-        1 till 5 are valid marks, 0 is returned if there's something wrong
-        '''
-        # box.value is zero based, a mark is based 1
-        answer = list()
-        for box in self.boxes:
-            if box.data.state:
-                answer.append(box.value)
-        if len(answer) == 1:
-            return answer[0] + 1
-        else:
-            return 0
-
     def set_answer(self, answer):
         for box in self.boxes:
             box.data.state = box.value == answer - 1
 
+class Mark(Range):
+    # Just an alias for unpickling old data
+    pass
 
 class Text(Question):
 
@@ -345,6 +361,9 @@ class Box(buddy.Object, DataObject):
         self.width = 0
         self.height = 0
         self.text = unicode()
+
+        self.variable = None
+        self.value = None
 
     def init_id(self, id):
         self.value = id + 1

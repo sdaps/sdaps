@@ -248,10 +248,14 @@
 \newcommand*{\markdiagram}{%
   \begin{tikzpicture}[semithick]
     \pgfkeysgetvalue{/sdaps/mark/range}{\range}
+    \pgfkeysgetvalue{/sdaps/mark/rangemin}{\rangemin}
+    \pgfkeysgetvalue{/sdaps/mark/rangemax}{\rangemax}
     \pgfmathsetlength{\einheit}{\linewidth/\range}
-    \foreach \x in {1,...,\range}
+    % note that we iter \key, not \x here; not sure why \x does not work.
+    \foreach \key in {\rangemin,...,\rangemax}
     {
-      \pgfkeysgetvalue{/sdaps/mark/\x/fraction}{\val}
+      \pgfmathsetmacro\x{\key + 1 - \rangemin}
+      \pgfkeysgetvalue{/sdaps/mark/\key/fraction}{\val}
       \fill[xshift=\x\einheit,yshift=2pt, color=sdapsmarkbarcolor, draw=sdapsmarkbarframecolor, very thin]
         (-0.5\einheit, 0) rectangle
         (+0.5\einheit, \val\markbarheight);
@@ -278,6 +282,12 @@
 
 \newenvironment{choicequestion}[1]{%
   \question{#1}%
+  \tabularx{\linewidth}{Yrl}
+}{%
+  \endtabularx%
+}
+
+\newenvironment{embedchoicequestion}{%
   \tabularx{\linewidth}{Yrl}
 }{%
   \endtabularx%

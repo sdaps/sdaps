@@ -126,25 +126,78 @@ class Choice(Question):
             })
 
 
-class Mark(Question):
+class Option(Choice):
+
+    __metaclass__ = model.buddy.Register
+    obj_class = model.questionnaire.Option
+
+
+class Range(Option):
+
+    __metaclass__ = model.buddy.Register
+    obj_class = model.questionnaire.Range
+
+    def set_lower(self, box, answer):
+        self.obj.answers = (answer, self.obj.answers[1])
+        self.obj.range = (box, self.obj.range[1])
+
+    def set_upper(self, box, answer):
+        self.obj.answers = (self.obj.answers[0], answer)
+        self.obj.range = (self.obj.range[0], box)
+
+    def validate(self):
+        Option.validate(self)
+
+        boxes = len(self.obj.boxes)
+
+        if not (0 <= self.obj.range[0] < boxes):
+            log.warn(_(u'%(class)s %(l0)i.%(l1)i lower box out of range.') % {
+                'class': self.obj.__class__.__name__,
+                'l0': self.obj.id[0], 'l1': self.obj.id[1]
+            })
+        if not (0 <= self.obj.range[1] < boxes):
+            log.warn(_(u'%(class)s %(l0)i.%(l1)i upper box out of range.') % {
+                'class': self.obj.__class__.__name__,
+                'l0': self.obj.id[0], 'l1': self.obj.id[1]
+            })
+        if not (self.obj.range[0] < self.obj.range[1]):
+            log.warn(_(u'%(class)s %(l0)i.%(l1)i lower box not before upper box.') % {
+                'class': self.obj.__class__.__name__,
+                'l0': self.obj.id[0], 'l1': self.obj.id[1]
+            })
+
+class Mark(Range):
 
     __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Mark
 
+    def init(self):
+        Range.init(self)
+        self.answer_count = 0
+
     def answer(self, chars):
-        self.obj.answers.append(chars)
+        if self.answer_count == 0:
+            self.obj.answers = (chars, '')
+        elif self.answer_count == 1:
+            self.obj.answers = (self.obj.answers[0], chars)
+
+        self.answer_count += 1
 
     def box(self, box):
         assert isinstance(box, model.questionnaire.Checkbox)
         self.obj.add_box(box)
+        box.value = len(self.obj.boxes)
+
         if self.obj.page_number == 0:
             self.obj.page_number = box.page_number
         else:
             assert self.obj.page_number == box.page_number
 
+        self.obj.range = (0, len(self.obj.boxes) - 1)
+
     def validate(self):
-        Question.validate(self)
-        if not len(self.obj.answers) == 2:
+        Range.validate(self)
+        if self.answer_count != 2:
             log.warn(_(u'%(class)s %(l0)i.%(l1)i got not exactly two answers.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]

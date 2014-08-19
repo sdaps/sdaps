@@ -126,8 +126,20 @@ class Choice(Question):
         self.ref_count = self.count
         self.ref_values = self.values
 
+class Option(Choice):
 
-class Mark(Question):
+    __metaclass__ = model.buddy.Register
+    name = 'calculate'
+    obj_class = model.questionnaire.Option
+
+    def read(self):
+        answer = self.obj.get_answer()
+
+        if answer is not False:
+            self.count += 1
+            self.values[answer] += 1
+
+class Range(Option):
     """
     :ivar count: Number of times the question was answered.
     :ivar values: Dictionary for each box with the ratio the value was choosen.
@@ -141,29 +153,46 @@ class Mark(Question):
     obj_class = model.questionnaire.Mark
 
     def init(self):
-        self.count = 0
-        self.values = {box.value + 1: 0 for box in self.obj.boxes}
+        Option.init(self)
+
         self.significant = 0
         self.mean = 0
         self.standard_deviation = 0
+        self.range_count = 0
 
-    def read(self):
-        answer = self.obj.get_answer()
-        if answer:
-            self.count += 1
-            self.values[answer] += 1
+        self.range_values = {}
+        for box in self.obj.boxes[self.obj.range[0]:self.obj.range[1] + 1]:
+            self.range_values[box.value] = 0
+
+        self.range_min = min(self.range_values)
+        self.range_max = max(self.range_values)
 
     def calculate(self):
+        self.mean = 0
+        self.range_count = 0
+
         if self.count:
-            for mark in self.values:
-                self.values[mark] = self.values[mark] / float(self.count)
-            self.mean = sum(
-                [mark * value for mark, value in self.values.items()])
-            self.standard_deviation = math.sqrt(sum([
-                value * pow(mark - self.mean, 2)
-                for mark, value in self.values.items()]))
-            if hasattr(self, 'ref_count'):
-                self.significant = abs(self.mean - self.ref_mean) > 0.1
+            for key in self.range_values:
+                self.range_count += self.values[key]
+
+                self.range_values[key] = self.values[key]
+                del self.values[key]
+
+            for key in self.values:
+                self.values[key] = self.values[key] / float(self.count)
+
+            if self.range_count > 0:
+                for key in self.range_values:
+                    self.range_values[key] = self.range_values[key] / float(self.range_count)
+
+                    self.standard_deviation += self.range_values[key] * pow(key - self.mean, 2)
+                    self.mean += key * self.range_values[key]
+
+                self.standard_deviation = math.sqrt(self.standard_deviation)
+
+                if hasattr(self, 'ref_count'):
+                    self.significant = abs(self.mean - self.ref_mean) > 0.1
+
 
     def reference(self):
         self.ref_count = self.count

@@ -101,7 +101,7 @@ class Survey(object):
         self.global_id = None
         self.questionnaire_ids = list()
         self.index = 0
-        self.version = 4
+        self.version = 5
         self.defs = Defs()
 
     def add_questionnaire(self, questionnaire):
@@ -406,5 +406,24 @@ class Survey(object):
             log.warn(msg % (4))
             self.defs.checkmode = "checkcorrect"
 
-        self.version = 4
+        if self.version < 5:
+            log.warn(msg % (5))
+
+            from sdaps.model import questionnaire
+
+            for qobject in self.questionnaire.qobjects:
+                if isinstance(qobject, questionnaire.Question):
+                    self.variable = None
+
+                    for i, box in enumerate(qobject.boxes):
+                        box.key = None
+                        box.value = None
+
+                if isinstance(qobject, questionnaire.Range):
+                    qobject.range = (0, len(qobject.boxes)-1)
+
+                    for i, box in enumerate(qobject.boxes):
+                        box.value = i + 1
+
+        self.version = 5
 

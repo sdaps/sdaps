@@ -161,11 +161,11 @@ class Text(QObject):
             if self.obj.id_csv(box.id) in data:
                 box.csvdata.import_data(data[self.obj.id_csv(box.id)])
 
-class Mark(QObject):
+class Option(QObject):
 
     __metaclass__ = model.buddy.Register
     name = 'csvdata'
-    obj_class = model.questionnaire.Mark
+    obj_class = model.questionnaire.Option
 
     def export_header(self):
         header = QObject.export_header(self)
