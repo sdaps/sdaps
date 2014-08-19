@@ -183,12 +183,14 @@ class Range(Option):
 
             if self.range_count > 0:
                 for key in self.range_values:
-                    self.range_values[key] = self.range_values[key] / float(self.range_count)
-
                     self.standard_deviation += self.range_values[key] * pow(key - self.mean, 2)
                     self.mean += key * self.range_values[key]
 
-                self.standard_deviation = math.sqrt(self.standard_deviation)
+                    # Also devide by count
+                    self.range_values[key] = self.range_values[key] / float(self.count)
+
+                self.standard_deviation = math.sqrt(self.standard_deviation / float(self.range_count))
+                self.mean = self.mean / float(self.range_count)
 
                 if hasattr(self, 'ref_count'):
                     self.significant = abs(self.mean - self.ref_mean) > 0.1
