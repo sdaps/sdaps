@@ -198,7 +198,7 @@
 \fi
 
 % Code 128 implementation in plain TeX
-\include{code128}
+\input{code128}
 
 % http://www.tex.ac.uk/cgi-bin/texfaq2html?label=isitanum
 \def\IsPositive#1{%
