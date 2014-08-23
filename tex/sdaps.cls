@@ -449,10 +449,13 @@
     \if@STAMP
       \if@twoside
         \ifodd \thepage%
-          \if@forceSTAMP%
-            % Stamp on the last page, even if it is odd
-            % This is simply a convenience to allow duplex for one paged documents
-            \@sdaps@STAMP
+          \if@sdaps@lastpage%
+            \ifnum \thepage=1
+              % if we have a one page document, just always stamp the last
+              % page. This means that SDAPS can fall back to simplex mode
+              % automatically.
+              \@sdaps@STAMP
+            \fi
           \fi
         \else%
           % questionnaire-id
@@ -512,7 +515,7 @@
   \protectedimmediatewrite\sdapsoutfile{GlobalIDLabel=\globalidlabel}%
   %
   \foreach \qid in \questionnaireids{%
-    \@forceSTAMPfalse
+    \@sdaps@lastpagefalse
     \setcounter{page}{1}
     \if\IsPositive{\qid}%
       \setcounter{questionnaireid}{\qid}%
@@ -534,7 +537,7 @@
     \BODY
 
     % Force a stamp on the next last page of the questionnaire
-    \@forceSTAMPtrue
+    \@sdaps@lastpagetrue
 
     \clearpage
 
@@ -581,7 +584,7 @@
 %\flushbottom
 \onecolumn
 
-\newif\if@forceSTAMP\@forceSTAMPfalse
+\newif\if@sdaps@lastpage\@sdaps@lastpagefalse
 
 % Most of these lengths are hardcoded in the defs.py too. So
 % any modification here will need a corresponding change in
