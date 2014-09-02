@@ -28,6 +28,7 @@ QOBJECT_PREFIX = u'QObject'
 ANSWER_PREFIX = u'Answer'
 BOX = u'Box'
 TEXTBOX = u'Textbox'
+RANGE_PREFIX = u'Range'
 
 index_re = re.compile(r'''^(?P<index>(?:[0-9]+\.)+)(?P<string>.*)$''')
 
@@ -116,6 +117,23 @@ def parse(survey):
             answer_type = arg[len(ANSWER_PREFIX) + 1:]
 
             qobject.setup.answer(value)
+
+        elif arg.startswith(RANGE_PREFIX):
+            assert qobject is not None
+            assert isinstance(qobject, model.questionnaire.Range)
+
+            idx, answer = value.split(maxsplit=1)
+            idx = int(idx)
+
+            range_type = arg[len(RANGE_PREFIX) + 1:].lower()
+
+            if range_type == u'lower':
+                qobject.set_lower(idx, answer)
+            elif range_type == u'upper':
+                qobject.set_upper(idx, answer)
+            else:
+                raise AssertionError('File format error, %s has to be either lower or upper!' % RANGE_PREFIX)
+
         elif arg == BOX:
             args = value.split(',')
             args = [arg.strip() for arg in args]
