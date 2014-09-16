@@ -153,9 +153,6 @@
 % Environment creation that gets the body as a macro
 \RequirePackage{environ}
 
-% qr codes
-\usepackage{graphicx}
-
 % headers and footers
 \usepackage{scrpage2}
 \clearscrheadings
@@ -220,9 +217,11 @@
   \begingroup
     \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
       \if@style@qr
+        \input{qrcode}
+
         \if@PrintQuestionnaireId
           \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (\barcodehpad, \barcodevpad)$)}]%
-            \node(barcode)[anchor=south west,outer sep=0,inner sep=0]{\includegraphics{\qidqrcode}};%
+            \node(barcode)[anchor=south west,outer sep=0,inner sep=0]{\qrcode{\qid}};%
             \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\qid};%
           \end{scope}
         \fi
@@ -232,13 +231,14 @@
         \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-\barcodehpad, \barcodevpad)$)}]%
           \pgfmathsetbasenumberlength{4}%
           \pgfmathdectobase{\paddedpage}{\thepage}{10}% Yes, padding to 4 chars the hard way
-          \node(barcode)[anchor=south east,outer sep=0,inner sep=0]{\includegraphics{\surveyidqrcode}};%
-          \node[below=0mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\surveyid};%
+          \edef\barcodechars{\surveyid\paddedpage}%
+          \node(barcode)[anchor=south east,outer sep=0,inner sep=0]{\qrcode{\barcodechars}};%
+          \node[below=0mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\surveyid\,\paddedpage};%
         \end{scope}
 
         \ifstr{\globalid}{}{}{
           \begin{scope}[shift={($(\paperwidth/2-\edgerightmargin/2+\edgeleftmargin/2, 0) + (0, \edgebottommargin) + (0, \barcodevpad)$)}]%
-            \node(barcode)[anchor=south,outer sep=0,inner sep=0]{\includegraphics{\globalidqrcode}};%
+            \node(barcode)[anchor=south,outer sep=0,inner sep=0]{\qrcode{\globalid}};%
             \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\ifstr{\globalidlabel}{}{\globalid}{\globalidlabel}};%
           \end{scope}
         }

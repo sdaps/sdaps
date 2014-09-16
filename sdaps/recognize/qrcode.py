@@ -26,46 +26,56 @@ class Image(model.buddy.Buddy):
 
     def get_page_number(self):
         code = self.find_bottom_right_barcode()
+
         if code is None or (not code.isdigit() and len(code) < 4):
             return None
 
-        return 1
+        return int(code[-4:])
 
     def get_survey_id(self):
         code = self.find_bottom_right_barcode()
+
         if code is None or not code.isdigit() or len(code) <= 4:
             return None
 
-        return int(code)
+        return int(code[:-4])
 
     def get_questionnaire_id(self):
         return self.find_bottom_left_barcode()
 
     def get_global_id(self):
-        return None
+        return self.find_bottom_center_barcode()
 
     def find_bottom_right_barcode(self):
       return read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
-                 self.paper_width() / 2,
-                 self.paper_height() - (self.paper_height() / 2),
-                 self.paper_width() / 2,
-                 self.paper_height() / 2,
-                 "QR")
+                 self.paper_width() * 0.75,
+                 self.paper_height() * 0.75,
+                 self.paper_width() * 0.25,
+                 self.paper_height() * 0.25,
+                 "QRCODE")
 
     def find_top_left_barcode(self):
       return read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                      0, 0,
-                     self.paper_width() / 2,
-                     self.paper_height() / 2,
-                     "QR")
+                     self.paper_width() * 0.25,
+                     self.paper_height() * 0.25,
+                     "QRCODE")
 
     def find_bottom_left_barcode(self):
       return read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                      0,
-                     self.paper_height() - (self.paper_height() / 2),
-                     self.paper_width() / 2,
-                     self.paper_height() / 2,
-                     "QR")
+                     self.paper_height() * 0.75,
+                     self.paper_width() * 0.25,
+                     self.paper_height() * 0.25,
+                     "QRCODE")
+
+    def find_bottom_center_barcode(self):
+      return read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
+                     self.paper_width() * 0.375,
+                     self.paper_height() * 0.75,
+                     self.paper_width() * 0.25,
+                     self.paper_height() * 0.25,
+                     "QRCODE")
 
     def paper_width(self):
       return self.obj.sheet.survey.defs.paper_width

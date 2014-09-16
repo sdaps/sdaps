@@ -10,7 +10,6 @@ from sdaps import paths
 from sdaps import defs
 import glob
 
-from sdaps.utils.qrcode import create_qr_code
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
@@ -29,6 +28,8 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         # Copy class and dictionary files
         tex_file = survey.path('questionnaire.tex')
         code128_file = survey.path('code128.tex')
+        qrcode_file = survey.path('qrcode.tex')
+        qrcode_script = survey.path('qrcode.py')
         cls_file = survey.path('sdaps.cls')
         dict_files = survey.path('*.dict')
         dict_files = glob.glob(dict_files)
@@ -36,6 +37,10 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         shutil.copyfile(tex_file, os.path.join(tmpdir, 'questionnaire.tex'))
         shutil.copyfile(code128_file, os.path.join(tmpdir, 'code128.tex'))
         shutil.copyfile(cls_file, os.path.join(tmpdir, 'sdaps.cls'))
+        shutil.copyfile(qrcode_file, os.path.join(tmpdir, 'qrcode.tex'))
+        shutil.copyfile(qrcode_script, os.path.join(tmpdir, 'qrcode.py'))
+        os.chmod(os.path.join(tmpdir, 'qrcode.py'), 0755)
+
         for dict_file in dict_files:
             shutil.copyfile(dict_file, os.path.join(tmpdir, os.path.basename(dict_file)))
 
@@ -48,10 +53,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2 ** 16)))
         latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2 ** 16)))
         latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
-        latex_override.write('\def\surveyidqrcode{%s}\n' % create_qr_code(survey.survey_id))
-        global_id = (tex_quote_braces(survey.global_id)) if survey.global_id is not None else '')
-        latex_override.write('\def\globalid{%s}\n' % global_id)
-        latex_override.write('\def\surveyidqrcode{%s}\n' % create_qr_code(global_id))
+        latex_override.write('\def\globalid{%s}\n' % (tex_quote_braces(survey.global_id)) if survey.global_id is not None else '')
         latex_override.write('\\@STAMPtrue\n')
         latex_override.write('\\@PAGEMARKtrue\n')
         latex_override.write('\\@sdaps@draftfalse\n')
@@ -62,12 +64,12 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
         print _("Running %s now twice to generate the stamped questionnaire.") % defs.latex_engine
         os.environ['TEXINPUTS'] = ':' + os.path.abspath(survey.path())
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine, '-halt-on-error', '-shell-escape',
                          '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'questionnaire.tex')],
                         cwd=tmpdir)
         # And again
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine, '-halt-on-error', '-shell-escape',
                          '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'questionnaire.tex')],
                         cwd=tmpdir)
