@@ -24,7 +24,7 @@ msgstr ""
 msgid "English"
 msgstr "Brazilian"
 
-#. Used as an overlay for questoinnaires that are not yet done
+#. Used as an overlay for questionnaires that are not yet done
 #: ../tex_translations.in.h:4
 msgid "draft"
 msgstr "projeto"
