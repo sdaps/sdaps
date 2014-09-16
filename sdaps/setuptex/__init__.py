@@ -33,6 +33,7 @@ from sdaps import log
 from sdaps import paths
 from sdaps import defs
 
+from sdaps.utils.qrcode import create_qr_code
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
@@ -51,6 +52,7 @@ def write_latex_override_file(survey, draft=False):
     latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2 ** 16)))
     latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2 ** 16)))
     latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
+    latex_override.write('\def\surveyidqrcode{%s}\n' % create_qr_code(survey.survey_id))
     if not draft:
         latex_override.write('% We turn off draft mode if questionnaire IDs are not printed.\n')
         latex_override.write('\\if@PrintQuestionnaireId\n')
@@ -180,4 +182,3 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
     except:
         log.error(_("An error occured in the setup routine. The survey directory still exists. You can for example check the questionnaire.log file for LaTeX compile errors."))
         raise
-
