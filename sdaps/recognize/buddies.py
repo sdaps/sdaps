@@ -237,7 +237,7 @@ class Sheet(model.buddy.Buddy):
                              (image.filename, image.tiff_page))
                     failed_pages.add(page)
 
-            self.duplex_copy_image_attr(failed_pages, "questionnaire_id", _("Could not read questoinnaire ID of either %s, %i or %s, %i!"))
+            self.duplex_copy_image_attr(failed_pages, "questionnaire_id", _("Could not read questionnaire ID of either %s, %i or %s, %i!"))
 
             self.obj.questionnaire_id = self.obj.images[0].questionnaire_id
 
