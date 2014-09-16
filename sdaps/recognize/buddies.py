@@ -315,7 +315,7 @@ class Image(model.buddy.Buddy):
             import classic
         elif self.obj.sheet.survey.defs.style == "code128":
             import code128
-        elif self.obj.sheet.survey.defs.style == "qr"
+        elif self.obj.sheet.survey.defs.style == "qr":
             import qrcode
         elif self.obj.sheet.survey.defs.style == "custom":
             if not hasattr(self.obj, "style"):

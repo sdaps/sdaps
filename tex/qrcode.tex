@@ -1,0 +1,7 @@
+% http://www.cognitionis.com/it/latex/install-style-files-sty/
+\wlog{**** Macro for qr codes ****}
+
+\newcommand{\qrcode}[1]{%
+  \immediate\write18{./qrcode.py #1}
+  \includegraphics{barcode_#1.pdf}%
+}%
