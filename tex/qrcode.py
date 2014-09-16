@@ -18,7 +18,7 @@ if not os.path.exists(filename):
   c = canvas.Canvas(filename, pagesize=[size, size])
 
   # draw a QR code
-  qr_code = qr.QrCodeWidget(str(code))
+  qr_code = qr.QrCodeWidget(str(code), barLevel='H')
   bounds = qr_code.getBounds()
   width = bounds[2] - bounds[0]
   height = bounds[3] - bounds[1]
