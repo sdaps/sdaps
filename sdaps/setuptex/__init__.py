@@ -101,7 +101,7 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
             cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdaps.cls')
             code128_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'code128.tex')
             qrcode_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'qrcode.tex')
-            qrcode_script = os.path.join(paths.source_dir, 'share', 'sdaps', 'tex', 'qrcode.py')
+            qrcode_script = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'qrcode.py')
             dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
             dict_files = glob.glob(dict_files)
 
