@@ -15,7 +15,7 @@
 [translations]
 # The language name of the LaTeX dictionary file for translator
 _tex-language=English
-# Used as an overlay for questoinnaires that are not yet done
+# Used as an overlay for questionnaires that are not yet done
 _draft=draft
 # Label for the survey-id on the questionnaire (in "classic" mode)
 _surveyid=Survey-ID:

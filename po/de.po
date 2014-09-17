@@ -100,7 +100,7 @@ msgstr "Speichere einen relativen Pfad zum Bild."
 
 #: ../sdaps/cmdline/add.py:49
 msgid ""
-"Images contain a duplex scan of a simplex questoinnaire (default: simplex "
+"Images contain a duplex scan of a simplex questionnaire (default: simplex "
 "scan)."
 msgstr ""
 "Die Bilder sind ein duplex Scan eines simplex Fragebogens (Standard: simplex "
@@ -902,7 +902,7 @@ msgstr ""
 
 #: ../sdaps/recognize/buddies.py:240
 #, python-format
-msgid "Could not read questoinnaire ID of either %s, %i or %s, %i!"
+msgid "Could not read questionnaire ID of either %s, %i or %s, %i!"
 msgstr "Konnte die Fragebogen-ID weder auf %s, %i noch auf %s, %i finden!"
 
 #: ../sdaps/recognize/buddies.py:267

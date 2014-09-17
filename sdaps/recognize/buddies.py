@@ -237,7 +237,7 @@ class Sheet(model.buddy.Buddy):
                              (image.filename, image.tiff_page))
                     failed_pages.add(page)
 
-            self.duplex_copy_image_attr(failed_pages, "questionnaire_id", _("Could not read questoinnaire ID of either %s, %i or %s, %i!"))
+            self.duplex_copy_image_attr(failed_pages, "questionnaire_id", _("Could not read questionnaire ID of either %s, %i or %s, %i!"))
 
             self.obj.questionnaire_id = self.obj.images[0].questionnaire_id
 
@@ -281,7 +281,7 @@ class Sheet(model.buddy.Buddy):
         from the image that defines it over to the one that does not.
         ie. if the attribute is None in one and differently in the other image
         it is copied.
-        
+
         """
 
         i = 0
@@ -315,6 +315,8 @@ class Image(model.buddy.Buddy):
             import classic
         elif self.obj.sheet.survey.defs.style == "code128":
             import code128
+        elif self.obj.sheet.survey.defs.style == "qr":
+            import qrcode
         elif self.obj.sheet.survey.defs.style == "custom":
             if not hasattr(self.obj, "style"):
                 import sys
@@ -595,7 +597,7 @@ class Checkbox(Box):
 
             cr.scale((width - line_width) / 2.0, (height - line_width) / 2.0)
             cr.arc(0, 0, 1.0, 0, 2*math.pi)
-            
+
             # Restore old matrix (without removing the current path)
             cr.restore()
         else:
@@ -616,7 +618,7 @@ class Checkbox(Box):
 
             cr.scale((width - 3*line_width) / 2.0, (height - 3*line_width) / 2.0)
             cr.arc(0, 0, 1.0, 0, 2*math.pi)
-            
+
             # Restore old matrix (without removing the current path)
             cr.restore()
         else:
@@ -628,7 +630,7 @@ class Checkbox(Box):
         del cr
 
         return surf, xoff, yoff
-        
+
 
     def recognize(self):
         img = self.obj.sheet.get_page_image(self.obj.page_number)
@@ -895,4 +897,3 @@ class Textbox(Box):
             self.obj.data.y = self.obj.y
             self.obj.data.width = self.obj.width
             self.obj.data.height = self.obj.height
-
