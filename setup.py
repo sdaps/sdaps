@@ -194,6 +194,8 @@ the tools to later analyse the scanned data, and create a report.
                   ),
                   ('share/sdaps/tex', glob.glob('tex/*.tex')
                   ),
+                  ('share/sdaps/tex', glob.glob('tex/*.py')
+                  ),
                   ],
       cmdclass = { "build" : build_extra.build_extra,
                    "build_i18n" :  sdaps_build_i18n,
@@ -201,4 +203,3 @@ the tools to later analyse the scanned data, and create a report.
                    "build_icons" :  build_icons.build_icons,
                    "clean" : sdaps_clean_i18n }
      )
-

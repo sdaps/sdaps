@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 u"""
-This module reorders already recognized data according to the questoinnaire IDs.
+This module reorders already recognized data according to the questionnaire IDs.
 """
 
 from collections import defaultdict
