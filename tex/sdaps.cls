@@ -56,13 +56,13 @@
 \DeclareOption{final}{\@sdaps@draftfalse}
 
 \newif\if@style@classic\@style@classicfalse
-\newif\if@style@codecxxviii\@style@codecxxviiifalse
-\newif\if@style@qr\@style@qrtrue
-\def\@sdaps@style{qr}%
+\newif\if@style@codecxxviii\@style@codecxxviiitrue
+\newif\if@style@qr\@style@qrfalse
+\def\@sdaps@style{code128}%
 
 \DefineFamily{SDAPS}
 \DefineFamilyMember{SDAPS}
-\DefineFamilyKey{SDAPS}{style}[qr]%
+\DefineFamilyKey{SDAPS}{style}[code128]%
 {%
   \KOMA@set@ncmdkey{style}{@tempa}{%
     {classic}{0},%
@@ -247,7 +247,7 @@
       \if@style@codecxxviii
         % Code 128 implementation in plain TeX
         \input{code128}
-        
+
         \if@PrintQuestionnaireId
           \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (\barcodehpad, \barcodevpad)$)}]%
             \node(barcode)[anchor=south west,outer sep=0,inner sep=0]{\X=\barcodebarwidth\bcorr=\barcodebcorr\barheight=\barcodeheight\expandafter\code\expandafter{\qid}};%
