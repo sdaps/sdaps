@@ -34,7 +34,7 @@ corner_mark_bottom = 12.0 # mm
 corner_mark_length = 20.0 # mm
 
 # Length in mm of the corner marks in the scanned image
-corner_mark_min_length = 18 # mm
+corner_mark_min_length = 15 # mm
 corner_mark_max_length = 22 # mm
 
 # The distance into the image that will be searched for the corner mark.
