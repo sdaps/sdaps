@@ -347,7 +347,7 @@ class Survey(object):
                 for sheet in self.sheets:
                     images = sheet.images
 
-                    # And read with
+                    # And re-add
                     sheet.images = list()
                     for img in images:
                         sheet.add_image(img)
