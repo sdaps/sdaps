@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-04 13:34+0200\n"
-"PO-Revision-Date: 2014-07-17 21:16+0200\n"
-"Last-Translator: alunacast38 <alvineloy@gmail.com>\n"
+"PO-Revision-Date: 2014-09-19 15:15+0200\n"
+"Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/tex/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #. The language name of the LaTeX dictionary file for translator
 #: ../tex_translations.in.h:2
 msgid "English"
-msgstr "Inglés"
+msgstr "Spanish"
 
 #. Used as an overlay for questoinnaires that are not yet done
 #: ../tex_translations.in.h:4
