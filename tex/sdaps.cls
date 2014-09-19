@@ -207,6 +207,12 @@
   }%
 \fi
 
+% QR Code implementation
+\input{qrcode}
+
+% Code 128 implementation in plain TeX
+\input{code128}
+
 % http://www.tex.ac.uk/cgi-bin/texfaq2html?label=isitanum
 \def\IsPositive#1{%
   TT\fi
@@ -217,8 +223,6 @@
   \begingroup
     \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
       \if@style@qr
-        \input{qrcode}
-
         \if@PrintQuestionnaireId
           \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (\barcodehpad, \barcodevpad)$)}]%
             \node(barcode)[anchor=south west,outer sep=0,inner sep=0]{\qrcode{\qid}};%
@@ -245,9 +249,6 @@
       \fi
 
       \if@style@codecxxviii
-        % Code 128 implementation in plain TeX
-        \input{code128}
-
         \if@PrintQuestionnaireId
           \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (\barcodehpad, \barcodevpad)$)}]%
             \node(barcode)[anchor=south west,outer sep=0,inner sep=0]{\X=\barcodebarwidth\bcorr=\barcodebcorr\barheight=\barcodeheight\expandafter\code\expandafter{\qid}};%
