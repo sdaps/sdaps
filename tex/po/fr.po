@@ -21,7 +21,7 @@ msgstr ""
 #. The language name of the LaTeX dictionary file for translator
 #: ../tex_translations.in.h:2
 msgid "English"
-msgstr ""
+msgstr "French"
 
 #. Used as an overlay for questoinnaires that are not yet done
 #: ../tex_translations.in.h:4
