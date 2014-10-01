@@ -27,7 +27,7 @@ import os.path
 import sys
 
 code = sys.argv[1]
-size = 50
+size = 65
 filename = "barcode_%s.pdf" % str(code)
 print "Barcode file: %s" % filename
 
