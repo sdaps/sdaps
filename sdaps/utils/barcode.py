@@ -29,7 +29,15 @@ from sdaps import image
 
 def read_barcode(surface, matrix, x, y, width, height, btype="CODE128"):
     u"""Tries to read the barcode at the given position"""
+    result = scan(surface, matrix, x, y, width, height, btype)
 
+    if result == None:
+      # Try kfill approach
+      result = scan(surface, matrix, x, y, width, height, btype, True)
+
+    return result
+
+def scan(surface, matrix, x, y, width, height, btype="CODE128", kfill=False):
     x0, y0 = matrix.transform_point(x, y)
     x1, y1 = matrix.transform_point(x + width, y + height)
 
@@ -52,7 +60,8 @@ def read_barcode(surface, matrix, x, y, width, height, btype="CODE128"):
     cr.set_source_surface(surface, -x, -y)
     cr.paint()
 
-    image.kfill_modified(a1_surface, 4)
+    if kfill:
+      image.kfill_modified(a1_surface, 4)
 
     # zbar does not understand A1, but it can handle 8bit greyscale ...
     # We create an inverted A8 mask for zbar, which is the same as a greyscale
