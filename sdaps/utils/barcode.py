@@ -52,7 +52,7 @@ def read_barcode(surface, matrix, x, y, width, height, btype="CODE128"):
     cr.set_source_surface(surface, -x, -y)
     cr.paint()
 
-    image.kfill_modified(a1_surface, 4)
+    # image.kfill_modified(a1_surface, 4)
 
     # zbar does not understand A1, but it can handle 8bit greyscale ...
     # We create an inverted A8 mask for zbar, which is the same as a greyscale
