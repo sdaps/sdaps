@@ -108,17 +108,9 @@ checkbox_metrics = {}
 # insert two dummy points with zero quality. To try and find better
 # values have a look at the output of "boxgallery". Any suggestions
 # for improvements(also algorithmic wise) are always welcome!
-checkbox_metrics['coverage'] = \
-    [(0, 0, 1.0), (0.02, 0, 0.9),
-     (0.15, 1, 1.0), (0.4, 1, 1.0), (0.5, 1, 0.2),
-     (0.6, 1, 0.3), (0.7, 0, 0.3), (1.0, 0, 0.6)]
-checkbox_metrics['cov-lines-removed'] = \
-    [(0, 1, 0), (0.01, 1, 0), (0.07, 1, 1.0), (0.10, 1, 1.0),
-     (0.13, 1, 0.3), (0.13, 0, 0.3), (0.25, 0, 0.7), (1, 0, 0.7)]
-checkbox_metrics['cov-min-size'] = \
-    [(0, 0, .9), (0.35, 0, 0.0), (0.35, 1, 0.0), (0.5, 1, 0.9),
-     (0.55, 1, 1.0), (0.8, 1, 1.0), (0.9, 1, 0.9), (0.95, 1, 0.5),
-     (0.95, 0, 0.5), (0.99, 0, 0.9), (1.0, 0, 1.0)]
+checkbox_metrics['coverage'] = [(0, 0, 1.0), (0.15, 1, 1.0), (0.7, 0, 1.0)]
+checkbox_metrics['cov-lines-removed'] = [(0, 0, 0), (1.0, 0, 0)]
+checkbox_metrics['cov-min-size'] = [(0, 0, 0), (1.0, 0, 0)]
 
 # Textbox =================================================
 
