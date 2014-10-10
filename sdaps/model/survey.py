@@ -27,7 +27,7 @@ from sdaps import log
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-valid_styles = ['classic', 'code128', 'custom']
+valid_styles = ['classic', 'code128', 'custom', 'qr']
 
 
 class Defs(object):
@@ -188,7 +188,7 @@ class Survey(object):
         # Hack to include comments. Set allow_no_value here, and add keys
         # with a '#' in the front and no value.
         config = ConfigParser.SafeConfigParser(allow_no_value=True)
-            
+
         config.optionxform = str
         config.add_section('sdaps')
         config.add_section('info')
@@ -312,6 +312,8 @@ class Survey(object):
         elif self.defs.style == "custom":
             log.error(_("SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this yourself somehow!"))
             sys.exit(1)
+        elif self.defs.style == "qr":
+          return qid
         else:
             AssertionError()
 
@@ -345,7 +347,7 @@ class Survey(object):
                 for sheet in self.sheets:
                     images = sheet.images
 
-                    # And readd with 
+                    # And re-add
                     sheet.images = list()
                     for img in images:
                         sheet.add_image(img)
@@ -372,4 +374,3 @@ class Survey(object):
                 sheet.verified = False
 
         self.version = 3
-

@@ -57,6 +57,7 @@
 
 \newif\if@style@classic\@style@classicfalse
 \newif\if@style@codecxxviii\@style@codecxxviiitrue
+\newif\if@style@qr\@style@qrfalse
 \def\@sdaps@style{code128}%
 
 \DefineFamily{SDAPS}
@@ -66,20 +67,29 @@
   \KOMA@set@ncmdkey{style}{@tempa}{%
     {classic}{0},%
     {code128}{1},%
-    {custom}{2}%
+    {custom}{2},%
+    {qr}{3}%
   }{#1}%
   \ifcase \@tempa\relax
     \@style@classictrue%
     \@style@codecxxviiifalse%
+    \@style@qrfalse%
     \def\@sdaps@style{classic}%
   \or
     \@style@classicfalse%
     \@style@codecxxviiitrue%
+    \@style@qrfalse%
     \def\@sdaps@style{code128}%
   \or
     \@style@classicfalse%
     \@style@codecxxviiifalse%
+    \@style@qrfalse%
     \def\@sdaps@style{custom}%
+  \or
+    \@style@classicfalse%
+    \@style@codecxxviiifalse%
+    \@style@qrtrue%
+    \def\@sdaps@style{qr}%
   \fi
 }
 
@@ -197,6 +207,9 @@
   }%
 \fi
 
+% QR Code implementation
+\input{qrcode}
+
 % Code 128 implementation in plain TeX
 \input{code128}
 
@@ -209,6 +222,32 @@
 \def\@sdaps@STAMP{%
   \begingroup
     \begin{scope}[line width=\elementlinewidth, shift={(current page.south west)}]%
+      \if@style@qr
+        \if@PrintQuestionnaireId
+          \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (\barcodehpad, \barcodevpad)$)}]%
+            \node(barcode)[anchor=south west,outer sep=0,inner sep=0]{\qrcode{\qid}};%
+            \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\qid};%
+          \end{scope}
+        \fi
+
+        % We unconditionally print this barcode, it is required for the recognition
+        % process.
+        \begin{scope}[shift={($(\paperwidth, 0) + (-\edgerightmargin, \edgebottommargin) + (-\barcodehpad, \barcodevpad)$)}]%
+          \pgfmathsetbasenumberlength{4}%
+          \pgfmathdectobase{\paddedpage}{\thepage}{10}% Yes, padding to 4 chars the hard way
+          \edef\barcodechars{\surveyid\paddedpage}%
+          \node(barcode)[anchor=south east,outer sep=0,inner sep=0]{\qrcode{\barcodechars}};%
+          \node[below=0mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\surveyid\,\paddedpage};%
+        \end{scope}
+
+        \ifstr{\globalid}{}{}{
+          \begin{scope}[shift={($(\paperwidth/2-\edgerightmargin/2+\edgeleftmargin/2, 0) + (0, \edgebottommargin) + (0, \barcodevpad)$)}]%
+            \node(barcode)[anchor=south,outer sep=0,inner sep=0]{\qrcode{\globalid}};%
+            \node[below=1mm of barcode,distance=0,anchor=north,outer sep=0,inner sep=0]{\usekomafont{barcodefont}\ifstr{\globalidlabel}{}{\globalid}{\globalidlabel}};%
+          \end{scope}
+        }
+      \fi
+
       \if@style@codecxxviii
         \if@PrintQuestionnaireId
           \begin{scope}[shift={($(\edgeleftmargin, \edgebottommargin) + (\barcodehpad, \barcodevpad)$)}]%
@@ -573,7 +612,7 @@
       {\parskip}%
       {\normalfont\Large\bfseries\SS@sectfont}}
 \renewcommand\subsection{
-  \@startsection{subsection}{2}{\z@}%  
+  \@startsection{subsection}{2}{\z@}%
       {0.5\parskip}%
       {0.25\parskip}% These are deleted again for questions
       {}%

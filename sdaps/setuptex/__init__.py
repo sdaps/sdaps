@@ -93,16 +93,23 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
         if paths.local_run:
             cls_file = os.path.join(paths.source_dir, 'tex', 'sdaps.cls')
             code128_file = os.path.join(paths.source_dir, 'tex', 'code128.tex')
+            qrcode_file = os.path.join(paths.source_dir, 'tex', 'qrcode.tex')
+            qrcode_script = os.path.join(paths.source_dir, 'tex', 'qrcode.py')
             dict_files = os.path.join(paths.build_dir, 'tex', '*.dict')
             dict_files = glob.glob(dict_files)
         else:
             cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdaps.cls')
             code128_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'code128.tex')
+            qrcode_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'qrcode.tex')
+            qrcode_script = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'qrcode.py')
             dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
             dict_files = glob.glob(dict_files)
 
         shutil.copyfile(cls_file, survey.path('sdaps.cls'))
         shutil.copyfile(code128_file, survey.path('code128.tex'))
+        shutil.copyfile(qrcode_file, survey.path('qrcode.tex'))
+        shutil.copyfile(qrcode_script, survey.path('qrcode.py'))
+        os.chmod(survey.path('qrcode.py'), 0755)
         for dict_file in dict_files:
             shutil.copyfile(dict_file, survey.path(os.path.basename(dict_file)))
 
@@ -110,11 +117,11 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
             shutil.copyfile(add_file, survey.path(os.path.basename(add_file)))
 
         print _("Running %s now twice to generate the questionnaire.") % defs.latex_engine
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine, '-halt-on-error', '-shell-escape',
                          '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         # And again, without the draft mode
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine, '-halt-on-error', '-shell-escape',
                          '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         if not os.path.exists(survey.path('questionnaire.pdf')):
@@ -128,8 +135,8 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
         try:
             sdapsfileparser.parse(survey)
 
-            for qobject in survey.questionnaire.qobjects:
-                qobject.setup.validate()
+            # for qobject in survey.questionnaire.qobjects:
+            #     qobject.setup.validate()
 
         except Exception, e:
             log.error(_("Caught an Exception while parsing the SDAPS file. The current state is:"))
@@ -154,11 +161,11 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
         write_latex_override_file(survey)
         print _("Running %s now twice to generate the questionnaire.") % defs.latex_engine
         os.remove(survey.path('questionnaire.pdf'))
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine, '-halt-on-error', '-shell-escape',
                          '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         # And again, without the draft mode
-        subprocess.call([defs.latex_engine, '-halt-on-error',
+        subprocess.call([defs.latex_engine, '-halt-on-error', '-shell-escape',
                          '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         if not os.path.exists(survey.path('questionnaire.pdf')):
@@ -180,4 +187,3 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
     except:
         log.error(_("An error occured in the setup routine. The survey directory still exists. You can for example check the questionnaire.log file for LaTeX compile errors."))
         raise
-

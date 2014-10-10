@@ -46,7 +46,7 @@ parser.add_argument('--no-copy',
     dest="copy",
     action="store_false")
 parser.add_argument('--duplex',
-    help=_("Images contain a duplex scan of a simplex questoinnaire (default: simplex scan)."),
+    help=_("Images contain a duplex scan of a simplex questionnaire (default: simplex scan)."),
     dest="duplex",
     action="store_true",
     default=False)

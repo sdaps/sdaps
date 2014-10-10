@@ -42,7 +42,7 @@ class Image(model.buddy.Buddy):
         paper_width = self.obj.sheet.survey.defs.paper_width
         paper_height = self.obj.sheet.survey.defs.paper_height
 
-        # Search for the barcode in the lower left corner.
+        # Search for the barcode in the lower right corner.
         # Note that we cannot find another barcode this way, because the one in the
         # center of the page is not complete
         code = \
@@ -53,7 +53,7 @@ class Image(model.buddy.Buddy):
                          defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
         if code is None:
-            # Well, that failed, so try to search the upper right corner instead
+            # Well, that failed, so try to search the upper left corner instead
             code = \
                 read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                              0, 0,
@@ -75,7 +75,7 @@ class Image(model.buddy.Buddy):
         paper_width = self.obj.sheet.survey.defs.paper_width
         paper_height = self.obj.sheet.survey.defs.paper_height
 
-        # Search for the barcode in the lower left corner.
+        # Search for the barcode in the lower right corner.
         code = \
             read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                          paper_width / 2,
@@ -147,5 +147,3 @@ class Image(model.buddy.Buddy):
 
         # Simply return the code, it may be alphanumeric, we don't care here
         return code
-
-
