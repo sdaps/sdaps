@@ -921,22 +921,28 @@ calculate_matrix(cairo_surface_t *surface,
 	if (!real_find_corner_marker(surface, 0, 0, 1, 1, search_distance, line_width, line_length, line_max_length, &x_topleft, &y_topleft)) {
 		found_corners -= 1;
 		missing_corner = CORNER_TOP_LEFT;
+		fprintf(stderr, "Warn: missing top left corner.\n");
 	}
 	if (!real_find_corner_marker(surface, width - 1, 0, -1, 1, search_distance, line_width, line_length, line_max_length, &x_topright, &y_topright)) {
 		found_corners -= 1;
 		missing_corner = CORNER_TOP_RIGHT;
+		fprintf(stderr, "Warn: missing top right corner.\n");
 	}
 	if (!real_find_corner_marker(surface, 0, height - 1, 1, -1, search_distance, line_width, line_length, line_max_length, &x_bottomleft, &y_bottomleft)) {
 		found_corners -= 1;
 		missing_corner = CORNER_BOTTOM_LEFT;
+		fprintf(stderr, "Warn: missing bottom left corner.\n");
 	}
 	if (!real_find_corner_marker(surface, width - 1, height - 1,-1, -1, search_distance, line_width, line_length, line_max_length, &x_bottomright, &y_bottomright)) {
 		found_corners -= 1;
 		missing_corner = CORNER_BOTTOM_RIGHT;
+		fprintf(stderr, "Warn: missing bottom right corner.\n");
 	}
 
-	if (found_corners < 3)
+	if (found_corners < 3) {
+		fprintf(stderr, "Error: could only find %i corners.\n", found_corners);
 		return NULL;
+	}
 
 	/* Corners are known, now calculate the matrix. */
 
@@ -1347,5 +1353,3 @@ get_masked_white_area_count(cairo_surface_t *surface,
 
 	return result;
 }
-
-
