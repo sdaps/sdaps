@@ -325,7 +325,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
             print _(u"pdftk: Overlaying the original PDF with the markings.")
             subprocess.call(['pdftk',
                              survey.path('questionnaire.pdf'),
-                             'stamp',
+                             'multistamp',
                              survey.path('tmp.pdf'),
                              'output',
                              output_filename])
