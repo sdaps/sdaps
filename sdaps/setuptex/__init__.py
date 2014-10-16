@@ -93,22 +93,19 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
         if paths.local_run:
             cls_file = os.path.join(paths.source_dir, 'tex', 'sdaps.cls')
             code128_file = os.path.join(paths.source_dir, 'tex', 'code128.tex')
-            qrcode_file = os.path.join(paths.source_dir, 'tex', 'qrcode.tex')
-            qrcode_script = os.path.join(paths.source_dir, 'tex', 'qrcode.py')
+            qrcode_style = os.path.join(paths.source_dir, 'tex', 'qrcode.sty')
             dict_files = os.path.join(paths.build_dir, 'tex', '*.dict')
             dict_files = glob.glob(dict_files)
         else:
             cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdaps.cls')
             code128_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'code128.tex')
-            qrcode_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'qrcode.tex')
-            qrcode_script = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'qrcode.py')
+            qrcode_style = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'qrcode.sty')
             dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
             dict_files = glob.glob(dict_files)
 
         shutil.copyfile(cls_file, survey.path('sdaps.cls'))
         shutil.copyfile(code128_file, survey.path('code128.tex'))
-        shutil.copyfile(qrcode_file, survey.path('qrcode.tex'))
-        shutil.copyfile(qrcode_script, survey.path('qrcode.py'))
+        shutil.copyfile(qrcode_style, survey.path('qrcode.sty'))
         os.chmod(survey.path('qrcode.py'), 0755)
         for dict_file in dict_files:
             shutil.copyfile(dict_file, survey.path(os.path.basename(dict_file)))
