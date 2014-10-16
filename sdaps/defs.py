@@ -33,6 +33,9 @@ corner_mark_top = 12.0 # mm
 corner_mark_bottom = 12.0 # mm
 corner_mark_length = 20.0 # mm
 
+# Bottom page margin (for QR-Code size calculation in fallback rendering)
+bottom_page_margin = 25.0 # mm
+
 # Length in mm of the corner marks in the scanned image
 corner_mark_min_length = 15 # mm
 corner_mark_max_length = 22 # mm

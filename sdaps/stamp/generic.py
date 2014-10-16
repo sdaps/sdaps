@@ -13,7 +13,8 @@ import shutil
 
 import reportlab.pdfgen.canvas
 from reportlab.graphics import renderPDF
-from reportlab.graphics.barcode import createBarcodeDrawing
+from reportlab.graphics.barcode import createBarcodeDrawing, qr
+from reportlab.graphics.shapes import Drawing
 from reportlab.lib import units
 
 from sdaps import log
@@ -229,6 +230,90 @@ def draw_code128_sdaps_info(canvas, survey, page):
     canvas.restoreState()
 
 
+# QR-Code support
+
+def draw_qr_questionnaire_id(canvas, survey, id):
+    # Only supports ascii for now (see also defs.py)
+    value = unicode(id).encode('ascii')
+
+    y = survey.defs.paper_height - defs.corner_mark_bottom
+    x = defs.corner_mark_left
+
+    qr_code = qr.QrCodeWidget(value, barLevel='H')
+    bounds = qr_code.getBounds()
+
+    width = bounds[2] - bounds[0]
+    height = bounds[3] - bounds[1]
+
+    # Squeeze into the space between corner mark and content
+    size = defs.bottom_page_margin - defs.corner_mark_bottom
+
+    code_y = y
+    code_x = x
+
+    d = Drawing(size*mm, size*mm, transform=[float(size*mm)/width,0,0,-float(size*mm)/height,0,0])
+    d.add(qr_code)
+
+    renderPDF.draw(d, canvas, code_x*mm, code_y*mm)
+
+def draw_qr_global_id(canvas, survey):
+    if survey.global_id is None:
+        raise AssertionError
+
+    # Only allow ascii
+    value = survey.global_id.encode('ascii')
+
+    y = survey.defs.paper_height - defs.corner_mark_bottom
+    x = (survey.defs.paper_width - defs.corner_mark_right + defs.corner_mark_left) / 2
+
+    qr_code = qr.QrCodeWidget(value, barLevel='H')
+    bounds = qr_code.getBounds()
+
+    width = bounds[2] - bounds[0]
+    height = bounds[3] - bounds[1]
+
+    # Squeeze into the space between corner mark and content
+    size = defs.bottom_page_margin - defs.corner_mark_bottom
+
+    code_y = y
+    code_x = x - size / 2.0
+
+    d = Drawing(size*mm, size*mm, transform=[float(size*mm)/width,0,0,-float(size*mm)/height,0,0])
+    d.add(qr_code)
+
+    renderPDF.draw(d, canvas, code_x*mm, code_y*mm)
+
+def draw_qr_sdaps_info(canvas, survey, page):
+    # The page number is one based here already
+    # The survey_id is a 32bit number, which means we need
+    # 10 decimal digits to encode it, then we need to encode the
+    # the page with at least 3 digits(just in case someone is insane enough
+    # to have a questionnaire with more than 99 pages.
+    # So use 10+4 digits
+
+    value = "%010d%04d" % (survey.survey_id, page)
+
+    y = survey.defs.paper_height - defs.corner_mark_bottom
+    x = survey.defs.paper_width - defs.corner_mark_right
+
+    qr_code = qr.QrCodeWidget(value, barLevel='H')
+    bounds = qr_code.getBounds()
+
+    width = bounds[2] - bounds[0]
+    height = bounds[3] - bounds[1]
+
+    # Squeeze into the space between corner mark and content
+    size = defs.bottom_page_margin - defs.corner_mark_bottom
+
+    code_y = y
+    code_x = x - size
+
+    d = Drawing(size*mm, size*mm, transform=[float(size*mm)/width,0,0,-float(size*mm)/height,0,0])
+    d.add(qr_code)
+
+    renderPDF.draw(d, canvas, code_x*mm, code_y*mm)
+
+
 def create_stamp_pdf(survey, output_filename, questionnaire_ids):
     sheets = 1 if questionnaire_ids is None else len(questionnaire_ids)
 
@@ -280,6 +365,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
                     if survey.defs.print_survey_id:
                         draw_survey_id(canvas, survey)
+
             elif survey.defs.style == "code128":
                 draw_corner_marks(survey, canvas)
 
@@ -293,6 +379,21 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
                     if survey.global_id is not None:
                         draw_code128_global_id(canvas, survey)
+
+            elif survey.defs.style == "qr":
+                draw_corner_marks(survey, canvas)
+
+                if not survey.defs.duplex or j % 2:
+                    if questionnaire_ids is not None:
+                        draw_qr_questionnaire_id(canvas, survey, id)
+
+                    # Survey ID has to be printed in QR mode, because it
+                    # contains the page number and rotation.
+                    draw_qr_sdaps_info(canvas, survey, j + 1)
+
+                    if survey.global_id is not None:
+                        draw_qr_global_id(canvas, survey)
+
             elif survey.defs.style == "custom":
                 # Only draw corner marker
                 draw_corner_marks(survey, canvas)
