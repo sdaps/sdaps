@@ -114,11 +114,11 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
             shutil.copyfile(add_file, survey.path(os.path.basename(add_file)))
 
         print _("Running %s now twice to generate the questionnaire.") % defs.latex_engine
-        subprocess.call([defs.latex_engine, '-halt-on-error', '-shell-escape',
+        subprocess.call([defs.latex_engine, '-halt-on-error',
                          '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         # And again, without the draft mode
-        subprocess.call([defs.latex_engine, '-halt-on-error', '-shell-escape',
+        subprocess.call([defs.latex_engine, '-halt-on-error',
                          '-interaction', 'batchmode', 'questionnaire.tex'],
                         cwd=survey.path())
         if not os.path.exists(survey.path('questionnaire.pdf')):
