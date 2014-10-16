@@ -5,4 +5,5 @@
 *.cls
 *.dict
 *.aux
+*.sty
 code128.tex
