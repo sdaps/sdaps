@@ -106,7 +106,6 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
         shutil.copyfile(cls_file, survey.path('sdaps.cls'))
         shutil.copyfile(code128_file, survey.path('code128.tex'))
         shutil.copyfile(qrcode_style, survey.path('qrcode.sty'))
-        os.chmod(survey.path('qrcode.py'), 0755)
         for dict_file in dict_files:
             shutil.copyfile(dict_file, survey.path(os.path.basename(dict_file)))
 
