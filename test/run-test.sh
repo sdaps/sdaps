@@ -150,6 +150,7 @@ rm -rf "$PROJECT"
 
 # Add and recognize test data
 "$SDAPS" "$PROJECT" add "data/tex/test_without_ids.tif"
+"$SDAPS" "$PROJECT" add "data/tex/test_without_ids_2.tif"
 "$SDAPS" "$PROJECT" recognize
 
 
