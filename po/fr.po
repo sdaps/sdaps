@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-21 18:22+0200\n"
+"POT-Creation-Date: 2014-10-24 16:28+0200\n"
 "PO-Revision-Date: 2014-08-31 19:43+0200\n"
 "Last-Translator: Calinou <calinou@opmbx.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/"
@@ -205,11 +205,15 @@ msgstr ""
 msgid "Filter to only export a partial dataset."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:47
+#: ../sdaps/cmdline/csvdata.py:45
+msgid "Export images of freeform fields."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:53
 msgid "Import data to from a CSV file."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:49
+#: ../sdaps/cmdline/csvdata.py:55
 msgid "The file to import."
 msgstr ""
 
@@ -681,7 +685,7 @@ msgid ""
 "yourself somehow!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:331
+#: ../sdaps/model/survey.py:333
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
@@ -784,7 +788,7 @@ msgid ""
 "work properly!"
 msgstr ""
 
-#: ../sdaps/recognize/buddies.py:321
+#: ../sdaps/recognize/buddies.py:323
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
 
@@ -872,7 +876,7 @@ msgid ""
 "annotated version will be created next to the original PDF file."
 msgstr ""
 
-#: ../sdaps/setupodt/__init__.py:122 ../sdaps/setuptex/__init__.py:149
+#: ../sdaps/setupodt/__init__.py:122 ../sdaps/setuptex/__init__.py:152
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
@@ -899,30 +903,30 @@ msgid ""
 "existing ones."
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:36
+#: ../sdaps/stamp/generic.py:37
 #, python-format
 msgid "Survey-ID: %i"
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:50
+#: ../sdaps/stamp/generic.py:51
 #, python-format
 msgid "Questionnaire-ID: %i"
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:251
+#: ../sdaps/stamp/generic.py:336
 msgid ""
 "You need to have either pdftk or pyPdf installed. pdftk is the faster method."
 msgstr ""
 
 #. bottomup = False =>(0, 0) is the upper left corner
-#: ../sdaps/stamp/generic.py:267
+#: ../sdaps/stamp/generic.py:352
 #, python-format
 msgid "Creating stamp PDF for %i sheet"
 msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/stamp/generic.py:309 ../sdaps/stamp/generic.py:442
+#: ../sdaps/stamp/generic.py:410 ../sdaps/stamp/generic.py:543
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
@@ -930,40 +934,40 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Merge using pdftk
-#: ../sdaps/stamp/generic.py:318
+#: ../sdaps/stamp/generic.py:419
 msgid "Stamping using pdftk"
 msgstr ""
 
 #. Shortcut if we only have one sheet.
 #. In this case form data in the PDF will *not* break, in
 #. the other code path it *will* break.
-#: ../sdaps/stamp/generic.py:325
+#: ../sdaps/stamp/generic.py:426
 msgid "pdftk: Overlaying the original PDF with the markings."
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:334
+#: ../sdaps/stamp/generic.py:435
 #, python-format
 msgid "pdftk: Splitting out page %d of each sheet."
 msgid_plural "pdftk: Splitting out page %d of each sheet."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/stamp/generic.py:348
+#: ../sdaps/stamp/generic.py:449
 msgid "pdftk: Splitting the questionnaire for watermarking."
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:359 ../sdaps/stamp/generic.py:368
+#: ../sdaps/stamp/generic.py:460 ../sdaps/stamp/generic.py:469
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/stamp/generic.py:391
+#: ../sdaps/stamp/generic.py:492
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr ""
 
-#: ../sdaps/stamp/generic.py:428
+#: ../sdaps/stamp/generic.py:529
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr ""
 
@@ -974,18 +978,18 @@ msgid ""
 "I am going to do so anyways."
 msgstr ""
 
-#: ../sdaps/stamp/latex.py:59
+#: ../sdaps/stamp/latex.py:62
 #, python-format
 msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr ""
 
-#: ../sdaps/stamp/latex.py:71 ../sdaps/setuptex/__init__.py:121
-#: ../sdaps/setuptex/__init__.py:165 ../sdaps/reporttex/__init__.py:169
+#: ../sdaps/stamp/latex.py:74 ../sdaps/setuptex/__init__.py:124
+#: ../sdaps/setuptex/__init__.py:168 ../sdaps/reporttex/__init__.py:169
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr ""
 
-#: ../sdaps/stamp/latex.py:77
+#: ../sdaps/stamp/latex.py:80
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."
@@ -1000,16 +1004,16 @@ msgstr ""
 msgid "Will keep going, but expect failure!"
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:112 ../sdaps/setuptex/__init__.py:155
+#: ../sdaps/setuptex/__init__.py:115 ../sdaps/setuptex/__init__.py:158
 #, python-format
 msgid "Running %s now twice to generate the questionnaire."
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:135
+#: ../sdaps/setuptex/__init__.py:138
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:181
+#: ../sdaps/setuptex/__init__.py:184
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "

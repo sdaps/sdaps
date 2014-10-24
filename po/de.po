@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-21 18:22+0200\n"
+"POT-Creation-Date: 2014-10-24 16:28+0200\n"
 "PO-Revision-Date: 2014-08-06 10:07+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/"
@@ -249,11 +249,16 @@ msgstr "Daten im CSV Format exportieren."
 msgid "Filter to only export a partial dataset."
 msgstr "Filter um nur eine Teilmenge der Daten zu exportieren."
 
-#: ../sdaps/cmdline/csvdata.py:47
+#: ../sdaps/cmdline/csvdata.py:45
+#, fuzzy
+msgid "Export images of freeform fields."
+msgstr "Kurzversion (ohne Freitextfelder)."
+
+#: ../sdaps/cmdline/csvdata.py:53
 msgid "Import data to from a CSV file."
 msgstr "Daten aus einer CSV Datei importieren."
 
-#: ../sdaps/cmdline/csvdata.py:49
+#: ../sdaps/cmdline/csvdata.py:55
 msgid "The file to import."
 msgstr "Die zu importierende Datei."
 
@@ -801,7 +806,7 @@ msgstr ""
 "SDAPS kann im \"custom\"-Stil keine Fragebogen ID eintragen. Tun Sie das "
 "irgendwie selbst!"
 
-#: ../sdaps/model/survey.py:331
+#: ../sdaps/model/survey.py:333
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr "Update für Dateiversion %i ausführen"
@@ -916,7 +921,7 @@ msgstr ""
 "Zuordnung benötigt wird, *muss* der \"reorder\" Befehl genutzt werden, um "
 "die Seiten wieder korrekt zuzuordnen!"
 
-#: ../sdaps/recognize/buddies.py:321
+#: ../sdaps/recognize/buddies.py:323
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
 "Keine Style-Definition geladen. Dies ist beim \"custom\" Stil erforderlich!"
@@ -1012,7 +1017,7 @@ msgstr ""
 "Wenn die Abhängigkeiten für den \"Anmerkungs\" Befehl installiert sind wird "
 "die kommentierte Version zusätzlich zum original PDF erstellt."
 
-#: ../sdaps/setupodt/__init__.py:122 ../sdaps/setuptex/__init__.py:149
+#: ../sdaps/setupodt/__init__.py:122 ../sdaps/setuptex/__init__.py:152
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
@@ -1049,17 +1054,17 @@ msgstr ""
 "sind unterschiedlich sind. Daher muss eine der Optionen benutzt werden, um "
 "neue IDs hinzuzufügen, oder schon gespeicherte zu verwenden."
 
-#: ../sdaps/stamp/generic.py:36
+#: ../sdaps/stamp/generic.py:37
 #, python-format
 msgid "Survey-ID: %i"
 msgstr "Umfrage-ID: %i"
 
-#: ../sdaps/stamp/generic.py:50
+#: ../sdaps/stamp/generic.py:51
 #, python-format
 msgid "Questionnaire-ID: %i"
 msgstr "Fragebogen-ID: %i"
 
-#: ../sdaps/stamp/generic.py:251
+#: ../sdaps/stamp/generic.py:336
 msgid ""
 "You need to have either pdftk or pyPdf installed. pdftk is the faster method."
 msgstr ""
@@ -1067,14 +1072,14 @@ msgstr ""
 "schnellere Metode."
 
 #. bottomup = False =>(0, 0) is the upper left corner
-#: ../sdaps/stamp/generic.py:267
+#: ../sdaps/stamp/generic.py:352
 #, python-format
 msgid "Creating stamp PDF for %i sheet"
 msgid_plural "Creating stamp PDF for %i sheets"
 msgstr[0] "Erstelle gestempeltes PDF für %i Fragebogen"
 msgstr[1] "Erstelle gestempeltes PDF für %i Fragebögen"
 
-#: ../sdaps/stamp/generic.py:309 ../sdaps/stamp/generic.py:442
+#: ../sdaps/stamp/generic.py:410 ../sdaps/stamp/generic.py:543
 #, python-format
 msgid "%i sheet; %f seconds per sheet"
 msgid_plural "%i sheet; %f seconds per sheet"
@@ -1082,40 +1087,40 @@ msgstr[0] "%i Bogen; %f Sekunden pro Bogen"
 msgstr[1] "%i Bögen; %f Sekunden pro Bogen"
 
 #. Merge using pdftk
-#: ../sdaps/stamp/generic.py:318
+#: ../sdaps/stamp/generic.py:419
 msgid "Stamping using pdftk"
 msgstr "Stempele mit Hilfe von pdftk"
 
 #. Shortcut if we only have one sheet.
 #. In this case form data in the PDF will *not* break, in
 #. the other code path it *will* break.
-#: ../sdaps/stamp/generic.py:325
+#: ../sdaps/stamp/generic.py:426
 msgid "pdftk: Overlaying the original PDF with the markings."
 msgstr "pdftk: Einfügen der Markierungen in das ursprüngliche PDF-Dokument."
 
-#: ../sdaps/stamp/generic.py:334
+#: ../sdaps/stamp/generic.py:435
 #, python-format
 msgid "pdftk: Splitting out page %d of each sheet."
 msgid_plural "pdftk: Splitting out page %d of each sheet."
 msgstr[0] "pdftk: Extrahier die %d Seite aus dem Stempel."
 msgstr[1] "pdftk: Extrahier die %d Seite aus dem Stempel."
 
-#: ../sdaps/stamp/generic.py:348
+#: ../sdaps/stamp/generic.py:449
 msgid "pdftk: Splitting the questionnaire for watermarking."
 msgstr "pdftk: Extrahiere die einzelnen Seiten des Fragebogens."
 
-#: ../sdaps/stamp/generic.py:359 ../sdaps/stamp/generic.py:368
+#: ../sdaps/stamp/generic.py:460 ../sdaps/stamp/generic.py:469
 #, python-format
 msgid "pdftk: Watermarking page %d of all sheets."
 msgid_plural "pdftk: Watermarking page %d of all sheets."
 msgstr[0] "pdftk: Stempele die Seite %d."
 msgstr[1] "pdftk: Stempele die Seite %d."
 
-#: ../sdaps/stamp/generic.py:391
+#: ../sdaps/stamp/generic.py:492
 msgid "pdftk: Assembling everything into the final PDF."
 msgstr "pdftk: Erstelle das fertige PDF."
 
-#: ../sdaps/stamp/generic.py:428
+#: ../sdaps/stamp/generic.py:529
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Stempele mit hilfe von pyPdf. Dies würde mit pdftk schneller gehen."
 
@@ -1129,18 +1134,18 @@ msgstr ""
 "keine Fragebogen IDs hat zu stempeln.\n"
 "Die gewünschte Aktion wird dennoch durchgeführt."
 
-#: ../sdaps/stamp/latex.py:59
+#: ../sdaps/stamp/latex.py:62
 #, python-format
 msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr "Führe %s zwei mal aus um den gestempelten Fragebogen zu erstellen."
 
-#: ../sdaps/stamp/latex.py:71 ../sdaps/setuptex/__init__.py:121
-#: ../sdaps/setuptex/__init__.py:165 ../sdaps/reporttex/__init__.py:169
+#: ../sdaps/stamp/latex.py:74 ../sdaps/setuptex/__init__.py:124
+#: ../sdaps/setuptex/__init__.py:168 ../sdaps/reporttex/__init__.py:169
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr "Fehler beim ausführen von \"%s\" um die LaTeX Datei zu kompilieren."
 
-#: ../sdaps/stamp/latex.py:77
+#: ../sdaps/stamp/latex.py:80
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."
@@ -1157,18 +1162,18 @@ msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
 msgid "Will keep going, but expect failure!"
 msgstr "Versuche trotzdem fortzusetzten."
 
-#: ../sdaps/setuptex/__init__.py:112 ../sdaps/setuptex/__init__.py:155
+#: ../sdaps/setuptex/__init__.py:115 ../sdaps/setuptex/__init__.py:158
 #, python-format
 msgid "Running %s now twice to generate the questionnaire."
 msgstr "Führe %s zwei mal aus um den Fragebogen zu erstellen."
 
-#: ../sdaps/setuptex/__init__.py:135
+#: ../sdaps/setuptex/__init__.py:138
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
 "Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
 "Zustand ist:"
 
-#: ../sdaps/setuptex/__init__.py:181
+#: ../sdaps/setuptex/__init__.py:184
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "
