@@ -528,27 +528,27 @@
   }%
   %
   \if@PrintQuestionnaireId
-    \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=1}
+    \immediate\write\sdapsoutfile{PrintQuestionnaireId=1}
   \else
-    \protectedimmediatewrite\sdapsoutfile{PrintQuestionnaireId=0}
+    \immediate\write\sdapsoutfile{PrintQuestionnaireId=0}
   \fi
   \if@PrintSurveyId
-    \protectedimmediatewrite\sdapsoutfile{PrintSurveyId=1}
+    \immediate\write\sdapsoutfile{PrintSurveyId=1}
   \else
-    \protectedimmediatewrite\sdapsoutfile{PrintSurveyId=0}
+    \immediate\write\sdapsoutfile{PrintSurveyId=0}
   \fi
-  \protectedimmediatewrite\sdapsoutfile{Pages=\getpagerefnumber{LastPage}}
+  \immediate\write\sdapsoutfile{Pages=\getpagerefnumber{LastPage}}
   \pgfpoint{\paperwidth}{\paperheight}
   \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}
-  \protectedimmediatewrite\sdapsoutfile{PageSize=\@sdaps@width, \@sdaps@height}
+  \immediate\write\sdapsoutfile{PageSize=\@sdaps@width, \@sdaps@height}
   \if@twoside
-    \protectedimmediatewrite\sdapsoutfile{Duplex=True}
+    \immediate\write\sdapsoutfile{Duplex=True}
   \else
-    \protectedimmediatewrite\sdapsoutfile{Duplex=False}
+    \immediate\write\sdapsoutfile{Duplex=False}
   \fi
-  \protectedimmediatewrite\sdapsoutfile{Style=\@sdaps@style}%
-  \protectedimmediatewrite\sdapsoutfile{GlobalID=\globalid}%
-  \protectedimmediatewrite\sdapsoutfile{GlobalIDLabel=\globalidlabel}%
+  \immediate\write\sdapsoutfile{Style=\@sdaps@style}%
+  \immediate\write\sdapsoutfile{GlobalID=\globalid}%
+  \immediate\write\sdapsoutfile{GlobalIDLabel=\globalidlabel}%
   %
   \foreach \qid in \questionnaireids{%
     \@sdaps@lastpagefalse
@@ -577,10 +577,8 @@
 
     \clearpage
 
-    \protectedimmediatewrite\sdapsoutfile{}
+    \immediate\write\sdapsoutfile{}
     % Just close the file here so nothing is written anymore ...
-    % It would be good to also redefine the protectedimmediatewrite macro,
-    % but not sure how that can be done.
     \immediate\closeout\sdapsoutfile%
     % Do not generate position information from now on
     \global\@sdaps@outputfalse%
@@ -728,6 +726,7 @@
 % Execute sdaps.opt file to allow SDAPS to override any options
 \InputIfFileExists{sdaps.opt}{}{}
 
+% Old helper macro, do not use anymore!
 \long\def \protectedimmediatewrite#1#2{%
   \begingroup
     \let\protect\noexpand%
@@ -756,7 +755,7 @@
 %                style commands definitions
 %-------------------------------------------------------------------------------
 \providecommand{\addinfo}[2]{%
-  \protectedimmediatewrite\sdapsoutfile{#1=#2}%
+  \immediate\write\sdapsoutfile{\unexpanded{#1}=\unexpanded{#2}}%
 }
 
 \providecommand{\checkbox}{\@ifstar
@@ -809,7 +808,7 @@
       \pgfgetlastxy{\@sdaps@x}{\@sdaps@y}%
       \pgfpoint{\checkboxsize+\elementlinewidth}{\checkboxsize+\elementlinewidth}%
       \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-      \protectedimmediatewrite\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width, \checkboxstyle}%
+      \immediate\write\sdapsoutfile{Box=Checkbox, \getpagerefnumber{checkbox\thecheckboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@height, \@sdaps@width, \checkboxstyle}%
     \fi%
   }%
   \addtocounter{checkboxnum}{1}}%
@@ -852,8 +851,8 @@
 %-------------------------------------------------------------------------------
 %                structure commands definitions
 %-------------------------------------------------------------------------------
-\renewcommand{\author}[1]{\def\@author{#1}\protectedimmediatewrite\sdapsoutfile{Author=#1}}
-\renewcommand{\title}[1]{\def\@title{#1}\protectedimmediatewrite\sdapsoutfile{Title=#1}}
+\renewcommand{\author}[1]{\def\@author{#1}\immediate\write\sdapsoutfile{Author=\unexpanded{#1}}}
+\renewcommand{\title}[1]{\def\@title{#1}\immediate\write\sdapsoutfile{Title=\unexpanded{#1}}}
 
 \def\question#1{%
 \ifx&#1&%
@@ -891,7 +890,7 @@
   % Both baselineskip and lineskip?
   \question{#3}%
   \if@sdaps@output%
-    \protectedimmediatewrite\sdapsoutfile{QObject-Text=\arabic{section}.\arabic{subsection}. #3} %
+    \immediate\write\sdapsoutfile{QObject-Text=\arabic{section}.\arabic{subsection}. \unexpanded{#3}} %
     \label{textbox\thetextboxnum}%
     \pgfsys@getposition{pgfpageorigin}{\@sdaps@pageorigin}%
     \pgfsys@getposition{textboxtop\thetextboxnum}{\@sdaps@textboxtoppos}%
@@ -908,7 +907,7 @@
       }%
     }%
     \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-    \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
+    \immediate\write\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
   \fi%
   \nobreak%
   \vspace{\parskip}%
@@ -985,14 +984,14 @@
 \let\origsection\section
 \renewcommand{\section}[1]{%
   \origsection{#1}
-  \protectedimmediatewrite\sdapsoutfile{}
-  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}. #1}
+  \immediate\write\sdapsoutfile{}
+  \immediate\write\sdapsoutfile{QObject-Head=\arabic{section}. \unexpanded{#1}}
 }
 
 
 \newenvironmentx{choicegroup}[2][2={X*{\thechoicegroupnumchoices}{c}}]{%
   \question{#1}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1} %
+  \immediate\write\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. \unexpanded{#1}} %
   \setcounter{choicegroupnumchoices}{0} %
   \global\def\@sdaps@choicegroup@start{\tabularx{\linewidth}{#2}}%
   \global\def\@sdaps@choicegroup@boxes{} %
@@ -1014,7 +1013,7 @@
     \\ %
     \setcounter{choicegroupnumchoices}{-1} %
   \fi %
-  \protectedimmediatewrite\sdapsoutfile{QObject-Choice=#1}%
+  \immediate\write\sdapsoutfile{QObject-Choice=\unexpanded{#1}}%
   {\usekomafont{choicegrouplinefont}\strut#1\strut} \@sdaps@choicegroup@boxes \\ %
 }
 
@@ -1026,7 +1025,7 @@
   \else
     \stepcounter{choicegroupnumchoices}%
     \g@addto@macro{\@sdaps@choicegroup@start}{& {\usekomafont{choicegroupchoicefont}\strut#1}}%
-    \g@addto@macro{\@sdaps@choicegroup@boxes}{& \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#1} \checkbox}%
+    \g@addto@macro{\@sdaps@choicegroup@boxes}{& \immediate\write\sdapsoutfile{Answer-Choice=\unexpanded{#1}} \checkbox}%
   \fi
 }
 
@@ -1051,7 +1050,7 @@
 
 \newenvironment{markgroup}[1]{%
   \question{#1}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. #1}%
+  \immediate\write\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. \unexpanded{#1}}%
   \@sdaps@markenvactivetrue%
   \@sdaps@generatemarkboxes%
   \tabularx{\linewidth}{Xr*{\themarkcheckboxcount}{c}l}
@@ -1061,22 +1060,22 @@
 }
 
 \providecommand*{\markline}[3]{%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Mark=#1}%
-  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
+  \immediate\write\sdapsoutfile{QObject-Mark=\unexpanded{#1}}%
+  \immediate\write\sdapsoutfile{Answer-Mark=\unexpanded{#2}}%
   {\usekomafont{marklinequestionfont}\strut#1\strut} & {\usekomafont{marklinechoicefont}#2} \@sdaps@markboxes & {\usekomafont{marklinechoicefont}#3}%
-  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
+  \immediate\write\sdapsoutfile{Answer-Mark=\unexpanded{#3}}%
   \\%
 }
 
 \providecommand*{\singlemark}[3]{%
   \question{#1}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Mark=\arabic{section}.\arabic{subsection}. #1}%
-  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#2}%
+  \immediate\write\sdapsoutfile{QObject-Mark=\arabic{section}.\arabic{subsection}. \unexpanded{#1}}%
+  \immediate\write\sdapsoutfile{Answer-Mark=\unexpanded{#2}}%
   \@sdaps@generatemarkboxes%
   \begin{tabularx}{\linewidth}{Y*{\themarkcheckboxcount}{c}X}
     {\usekomafont{singlemarkchoicefont}\strut#2} \@sdaps@markboxes & {\usekomafont{singlemarkchoicefont}#3}\\%
   \end{tabularx}%
-  \protectedimmediatewrite\sdapsoutfile{Answer-Mark=#3}%
+  \immediate\write\sdapsoutfile{Answer-Mark=\unexpanded{#3}}%
 }
 
 
@@ -1086,7 +1085,7 @@
   \setcounter{choiceitems}{1}%
   \setcounter{maxchoiceitems}{#1}%
   \question{#2}%
-  \protectedimmediatewrite\sdapsoutfile{QObject-Choice=\arabic{section}.\arabic{subsection}. #2}%
+  \immediate\write\sdapsoutfile{QObject-Choice=\arabic{section}.\arabic{subsection}. \unexpanded{#2}}%
   \global\def\@sdaps@choiceitems@dummy{}%
   \loop{}%
   \ifnum\thechoiceitems<\themaxchoiceitems{\addtocounter{choiceitems}{1}} \global\edef\@sdaps@choiceitems@dummy{\@sdaps@choiceitems@dummy &}%
@@ -1104,7 +1103,7 @@
 }
 
 \providecommand*{\choiceitem}[1]{%
-  \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#1}%
+  \immediate\write\sdapsoutfile{Answer-Choice=\unexpanded{#1}}%
   \ifthenelse{\thechoiceitems=\themaxchoiceitems}{%
     \setcounter{choiceitems}{1}%
     {\usekomafont{choiceitemfont}\checkbox~#1} \\%
@@ -1117,7 +1116,7 @@
 \providecommand*{\choicemulticolitem}[2]{%
   \multicolumn{#1}{l}{%
     \addtocounter{choiceitems}{#1}%
-    \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#2}%
+    \immediate\write\sdapsoutfile{Answer-Choice=\unexpanded{#2}}%
     {\usekomafont{choiceitemfont}\checkbox~#2}%
   }
   \ifthenelse{\thechoiceitems>\themaxchoiceitems}{%
@@ -1153,7 +1152,7 @@
       \advance\@tempdimruleheight by +2.0\elementlinewidth%
       \advance\@tempdimruleheight by \@tempdimlower%
       %
-      \protectedimmediatewrite\sdapsoutfile{Answer-Choice=#3}%
+      \immediate\write\sdapsoutfile{Answer-Choice=\unexpanded{#3}}%
       %
       \if@sdaps@output%
         \label{textbox\thetextboxnum}%
@@ -1171,7 +1170,7 @@
           }%
         }%
         \pgfgetlastxy{\@sdaps@width}{\@sdaps@height}%
-        \protectedimmediatewrite\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
+        \immediate\write\sdapsoutfile{Box=Textbox, \getpagerefnumber{textbox\thetextboxnum}, \@sdaps@x, \@sdaps@y, \@sdaps@width, \@sdaps@height}%
       \fi%
       {
       }% Yes, this inserts whitespace, because well, we had a bug and we don't
