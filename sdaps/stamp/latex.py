@@ -28,8 +28,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         # Copy class and dictionary files
         tex_file = survey.path('questionnaire.tex')
         code128_file = survey.path('code128.tex')
-        qrcode_file = survey.path('qrcode.tex')
-        qrcode_script = survey.path('qrcode.py')
+        qrcode_file = survey.path('qrcode.sty')
         cls_file = survey.path('sdaps.cls')
         dict_files = survey.path('*.dict')
         dict_files = glob.glob(dict_files)
@@ -37,9 +36,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         shutil.copyfile(tex_file, os.path.join(tmpdir, 'questionnaire.tex'))
         shutil.copyfile(code128_file, os.path.join(tmpdir, 'code128.tex'))
         shutil.copyfile(cls_file, os.path.join(tmpdir, 'sdaps.cls'))
-        shutil.copyfile(qrcode_file, os.path.join(tmpdir, 'qrcode.tex'))
-        shutil.copyfile(qrcode_script, os.path.join(tmpdir, 'qrcode.py'))
-        os.chmod(os.path.join(tmpdir, 'qrcode.py'), 0755)
+        shutil.copyfile(qrcode_file, os.path.join(tmpdir, 'qrcode.sty'))
 
         for dict_file in dict_files:
             shutil.copyfile(dict_file, os.path.join(tmpdir, os.path.basename(dict_file)))
@@ -64,7 +61,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
         print _("Running %s now twice to generate the stamped questionnaire.") % defs.latex_engine
         os.environ['TEXINPUTS'] = ':' + os.path.abspath(survey.path())
-        subprocess.call([defs.latex_engine, '-halt-on-error'
+        subprocess.call([defs.latex_engine, '-halt-on-error',
                          '-interaction', 'batchmode',
                          os.path.join(tmpdir, 'questionnaire.tex')],
                         cwd=tmpdir)
