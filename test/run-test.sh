@@ -161,10 +161,23 @@ rm -rf "$PROJECT"
 # Compare info files
 ###########################################################
 
-for i in data/info_files/*; do
+for i in projects/*; do
+  success=0
+  error=0
   name=`basename "$i"`
-  # This ignores the title; for whatever reason the \LaTeX
-  # is written out differently with newer latex versions.
-  diff -I '^title' "$i" "projects/$name/info"
+  for j in "data/info_files/$name" data/info_files/$name.*; do
+    if [ ! -f "$j" ]; then
+      continue;
+    fi;
+    # This ignores the title; for whatever reason the \LaTeX
+    # is written out differently with newer latex versions.
+    diff -I '^title' "$j" "$i/info" && success=1 || error=1
+  done
+
+  if [ $success -eq 0 -a $error -ne 0 ]; then
+    # Throw error
+    echo "None of the info files match for $name!"
+    exit 1;
+  fi
 done
 
