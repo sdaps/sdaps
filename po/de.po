@@ -1,21 +1,20 @@
 #
-# Benjamin Berg <benjamin@sipsolutions.net>, 2011, 2012, 2013.
+# Benjamin Berg <benjamin@sipsolutions.net>, 2011, 2012, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-24 16:28+0200\n"
-"PO-Revision-Date: 2014-08-06 10:07+0200\n"
+"PO-Revision-Date: 2014-10-24 16:31+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/"
-">\n"
+"Language-Team: German <>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.10-dev\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -250,9 +249,8 @@ msgid "Filter to only export a partial dataset."
 msgstr "Filter um nur eine Teilmenge der Daten zu exportieren."
 
 #: ../sdaps/cmdline/csvdata.py:45
-#, fuzzy
 msgid "Export images of freeform fields."
-msgstr "Kurzversion (ohne Freitextfelder)."
+msgstr "Bilder von Freitextfeldern exportieren."
 
 #: ../sdaps/cmdline/csvdata.py:53
 msgid "Import data to from a CSV file."
