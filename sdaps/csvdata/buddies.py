@@ -20,6 +20,8 @@ import csv
 
 from sdaps import model
 
+import os
+import os.path
 
 class Questionnaire(model.buddy.Buddy):
 
@@ -27,13 +29,23 @@ class Questionnaire(model.buddy.Buddy):
     name = 'csvdata'
     obj_class = model.questionnaire.Questionnaire
 
-    def open_csv(self, filename):
+    def open_csv(self, filename, export_images=False):
         header = ['questionnaire_id', 'global_id']
         for qobject in self.obj.qobjects:
             header.extend(qobject.csvdata.export_header())
         self.file = file(filename, 'w')
         self.csv = csv.DictWriter(self.file, header)
         self.csv.writerow({value: value for value in header})
+
+        if export_images:
+            from sdaps.utils.image import ImageWriter
+
+            img_path = os.path.dirname(filename)
+            img_prefix = os.path.join(os.path.splitext(os.path.basename(filename))[0], 'img')
+
+            self.image_writer = ImageWriter(img_path, img_prefix)
+        else:
+            self.image_writer = None
 
     def export_data(self):
         data = {'questionnaire_id': unicode(self.obj.sheet.questionnaire_id),
@@ -164,8 +176,13 @@ class Textbox(Box):
 
     def export_data(self):
         data = str(int(self.obj.data.state))
-        if data and self.obj.data.text:
+
+        image_writer = self.obj.question.questionnaire.csvdata.image_writer
+
+        if self.obj.data.state and self.obj.data.text:
             data = self.obj.data.text.encode('utf-8')
+        elif self.obj.data.state and image_writer is not None:
+            data = image_writer.output_box(self.obj)
 
         return data
 

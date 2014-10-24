@@ -62,15 +62,6 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
     # do calculations
     survey.questionnaire.calculate.calculate()
 
-    # Second: report buddies
-
-    # init buddies
-    survey.questionnaire.report.init(small, suppress)
-
-    # Filename of output
-    if filename is None and tex_only == False:
-        filename = survey.new_path('report_%i.pdf')
-
     # Temporary directory for TeX files.
     if tex_only and filename:
         tmpdir = filename
@@ -79,6 +70,15 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
         os.makedirs(tmpdir)
     else:
         tmpdir = tempfile.mkdtemp()
+
+    # Second: report buddies
+
+    # init buddies
+    survey.questionnaire.report.init(tmpdir, small, suppress)
+
+    # Filename of output
+    if filename is None and tex_only == False:
+        filename = survey.new_path('report_%i.pdf')
 
     try:
         # iterate over sheets

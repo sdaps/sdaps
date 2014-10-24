@@ -41,6 +41,12 @@ export = subparser.add_parser('export',
     help=_("Export data to CSV file."))
 export.add_argument('-f', '--filter',
     help=_("Filter to only export a partial dataset."))
+export.add_argument('--images',
+    help=_("Export images of freeform fields."),
+    dest='export_images',
+    action='store_const',
+    const=True,
+    default=False)
 export.set_defaults(direction='export')
 
 import_ = subparser.add_parser('import',
@@ -57,7 +63,7 @@ def csvdata(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
 
     if cmdline['direction'] == 'export':
-        return csvdata.csvdata_export(survey, survey.new_path('data_%i.csv'), cmdline['filter'])
+        return csvdata.csvdata_export(survey, survey.new_path('data_%i.csv'), cmdline['filter'], cmdline['export_images'])
     elif cmdline['direction'] == 'import':
         return csvdata.csvdata_import(survey, cmdline['file'])
     else:

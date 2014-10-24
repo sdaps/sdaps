@@ -24,12 +24,12 @@ from sdaps import model
 from . import buddies
 
 
-def csvdata_export(survey, filename, filter=None):
+def csvdata_export(survey, filename, filter=None, export_images=False):
     # compile clifilter
     filter = clifilter.clifilter(survey, filter)
 
     # export
-    survey.questionnaire.csvdata.open_csv(filename)
+    survey.questionnaire.csvdata.open_csv(filename, export_images)
 
     survey.iterate(
         survey.questionnaire.csvdata.export_data,

@@ -29,38 +29,7 @@ from sdaps import calculate
 
 from sdaps.utils.latex import raw_unicode_to_latex, unicode_to_latex
 
-img_counter = 0
-
-
-def output_image(box, tmpdir):
-    global img_counter
-    img = box.sheet.get_page_image(box.question.page_number)
-
-    filename = box.question.questionnaire.survey.path(img.filename)
-
-    mm_to_px = img.matrix.mm_to_px()
-    x0, y0 = mm_to_px.transform_point(box.data.x, box.data.y)
-    x1, y1 = mm_to_px.transform_point(box.data.x + box.data.width, box.data.y)
-    x2, y2 = mm_to_px.transform_point(box.data.x, box.data.y + box.data.height)
-    x3, y3 = mm_to_px.transform_point(box.data.x + box.data.width, box.data.y + box.data.height)
-
-    x = int(min(x0, x1, x2, x3))
-    y = int(min(y0, y1, y2, y3))
-    width = int(math.ceil(max(x0, x1, x2, x3) - x))
-    height = int(math.ceil(max(y0, y1, y2, y3) - y))
-
-    img = image.get_a1_from_tiff(filename, img.tiff_page, img.rotated if img.rotated else False)
-    output = cairo.ImageSurface(cairo.FORMAT_RGB24, width, height)
-    cr = cairo.Context(output)
-    cr.set_source_rgb(1, 1, 1)
-    cr.paint()
-
-    cr.set_source_surface(img, -x, -y)
-    cr.paint()
-
-    img_counter += 1
-    output.write_to_png(os.path.join(tmpdir, 'image-%i.png' % img_counter))
-    return 'image-%i.png' % img_counter
+from sdaps.utils.image import ImageWriter
 
 
 def format_raw_text(text):
@@ -72,8 +41,11 @@ class Questionnaire(model.buddy.Buddy):
     name = 'report'
     obj_class = model.questionnaire.Questionnaire
 
-    def init(self, small=0, suppress=None):
+    def init(self, img_dir, small=0, suppress=None):
         self.small = small
+
+        self.textbox_writer = ImageWriter(img_dir, 'textbox-')
+
         # iterate over qobjects
         for qobject in self.obj.qobjects:
             qobject.report.init(small, suppress)
@@ -165,7 +137,7 @@ class Choice(Question):
                         text = raw_unicode_to_latex(box.data.text)
                         self.text += '\\freeformtext{%s}\n' % (text)
                     elif self.suppress != 'images':
-                        img_file = output_image(box, tmpdir)
+                        img_file = self.obj.questionnaire.report.textbox_writer.output_box(box)
                         self.text += '\\freeform{%fmm}{%s}\n' % (box.data.width, img_file)
 
     def write_begin(self, out):
@@ -236,7 +208,7 @@ class Text(Question):
                         text = raw_unicode_to_latex(box.data.text)
                         self.text += '\\freeformtext{%s}\n' % (text)
                     elif self.suppress != 'images':
-                        img_file = output_image(box, tmpdir)
+                        img_file = self.obj.questionnaire.report.textbox_writer.output_box(box)
                         self.text += '\\freeform{%fmm}{%s}\n' % (box.data.width, img_file)
 
     def write(self, out, tmpdir):
