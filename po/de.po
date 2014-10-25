@@ -6,15 +6,16 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-25 22:04+0200\n"
-"PO-Revision-Date: 2014-10-25 12:08+0200\n"
-"Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
-"Language-Team: German <>\n"
+"PO-Revision-Date: 2014-10-25 23:06+0200\n"
+"Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.0-dev\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -115,21 +116,26 @@ msgid ""
 "correct format. If you don't want the file to be copied into the survey "
 "directory, you need to manually convert it first."
 msgstr ""
+"Es sollen bestehende Dateien referenziert werden, aber nicht alle Dateien "
+"haben das passende Format. Wenn die Dateien nicht in das Projektverzeichniss "
+"kopiert werden sollen müssen sie vorher konvertiert werden."
 
 #: ../sdaps/cmdline/add.py:105
 msgid "Converting some input files to temporary destination."
-msgstr ""
+msgstr "Konvertiere einige Eingabedateien in einem temporären Verzeichnis."
 
 #: ../sdaps/cmdline/add.py:117
 msgid ""
 "Converted image does not have correct format. This means the page count is "
 "wrong."
 msgstr ""
+"Das konvertierten hat nicht das richtige Format. Die Anzahl der Seiten ist "
+"falsch."
 
 #: ../sdaps/cmdline/add.py:122
 #, python-format
 msgid "Error running conversion on files: %s"
-msgstr ""
+msgstr "Fehler bei der Konvertierung folgender Dateien: %s"
 
 #: ../sdaps/cmdline/add.py:127
 #, python-format
@@ -789,6 +795,8 @@ msgstr ""
 #: ../sdaps/utils/opencv.py:31
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
 msgstr ""
+"PDF Dateien können nicht konvertiert werden, da poppler nicht gefunden wurde "
+"oder nicht verwendet werden kann!"
 
 #: ../sdaps/model/survey.py:253
 #, python-format
