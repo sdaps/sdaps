@@ -17,9 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import tempfile
 
 from sdaps import model
 from sdaps import script
+from sdaps import log
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
@@ -59,17 +61,66 @@ parser.add_argument('images',
 @script.logfile
 def add(cmdline):
     import sys
-    from sdaps.add import add_image
+    from sdaps.add import add_image, check_image
 
+    error = False
     survey = model.survey.Survey.load(cmdline['project'])
 
+    direct_add = []
+    convert = []
+    delete = []
+
+    conv_set = []
+
     for file in cmdline['images']:
+        if check_image(survey, file, cmdline['force'], cmdline['duplex']):
+            direct_add.append(file)
+            if conv_set:
+                convert.append(conv_set)
+                conv_set = []
+        else:
+            conv_set.append(file)
+    if conv_set:
+        convert.append(conv_set)
 
-        print _('Processing %s') % file
 
-        add_image(survey, file, cmdline['duplex'], cmdline['force'], cmdline['copy'])
+    if not cmdline['copy'] and convert:
+        log.error(_("You selected to reference existing files, however not all files are in the correct format. If you don't want the file to be copied into the survey directory, you need to manually convert it first."))
+        return 1
 
-        print _('Done')
+    for conv_set in convert:
+        from sdaps.convert import convert_images
+
+        print _("Converting some input files to temporary destination.")
+
+        tmp = tempfile.mktemp(suffix='.tif', prefix='sdaps-convert-')
+        delete.append(tmp)
+        direct_add.append(tmp)
+
+        # Run conversion
+        # TODO: Allow 3D transformation here!
+        try:
+            convert_images(conv_set, tmp, survey.defs.paper_width, survey.defs.paper_height, False)
+
+            if not check_image(survey, tmp, cmdline['duplex'], cmdline['force']):
+                log.error(_("Converted image does not have correct format. This means the page count is wrong."))
+                raise AssertionError()
+
+        except Exception, e:
+            log.error(str(e))
+            log.error(_("Error running conversion on files: %s") % (', '.join(conv_set)))
+            error = True
+
+    if not error:
+        for file in direct_add:
+            print _('Processing %s') % file
+
+            add_image(survey, file, cmdline['duplex'], cmdline['copy'], cmdline['force'])
+
+            print _('Done')
+
+    for file in delete:
+        os.unlink(file)
 
     survey.save()
 

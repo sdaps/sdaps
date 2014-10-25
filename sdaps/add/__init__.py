@@ -19,16 +19,13 @@
 import os
 
 from sdaps import model
+from sdaps import image
+import shutil
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-
-def add_image(survey, file, duplex_scan=False, force=False, copy=True):
-
-    from sdaps import image
-    import shutil
-
+def _insert_dummy_pages(survey, duplex_scan):
     # Insert dummy pages if the survey is duplex and the duplex option was not
     # passed
     if survey.defs.duplex:
@@ -47,11 +44,16 @@ def add_image(survey, file, duplex_scan=False, force=False, copy=True):
         else:
             insert_dummy_pages = True
 
+    return insert_dummy_pages, image_count_factor
 
+def check_image(survey, file, duplex_scan=False, force=False, message=False):
+
+    insert_dummy_pages, image_count_factor = _insert_dummy_pages(survey, duplex_scan)
 
     if not image.check_tiff_monochrome(file):
-        print _('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.') % (file,)
-        raise AssertionError()
+        if message:
+            print _('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.') % (file,)
+        return False
 
     num_pages = image.get_tiff_page_count(file)
 
@@ -61,8 +63,24 @@ def add_image(survey, file, duplex_scan=False, force=False, copy=True):
 
     # This test is on the image count that needs to come from the file
     if num_pages % c != 0 and not force:
-        print _('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c)
+        if message:
+            print _('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c)
+        return False
+
+    return True
+
+def add_image(survey, file, duplex_scan=False, force=False, copy=True):
+
+    insert_dummy_pages, image_count_factor = _insert_dummy_pages(survey, duplex_scan)
+
+    if not check_image(survey, file, duplex_scan, force, message=True):
         return
+
+    num_pages = image.get_tiff_page_count(file)
+
+    c = survey.questionnaire.page_count
+    if not insert_dummy_pages:
+        c = c * image_count_factor
 
     if insert_dummy_pages:
         c = c * image_count_factor
