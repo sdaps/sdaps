@@ -62,6 +62,7 @@ parser.add_argument('images',
 def add(cmdline):
     import sys
     from sdaps.add import add_image, check_image
+    from sdaps import image
 
     error = False
     survey = model.survey.Survey.load(cmdline['project'])
@@ -73,8 +74,12 @@ def add(cmdline):
     conv_set = []
 
     for file in cmdline['images']:
-        if check_image(survey, file, cmdline['force'], cmdline['duplex']):
+        if image.check_tiff_monochrome(file):
             direct_add.append(file)
+
+            if not check_image(survey, file, cmdline['duplex'], cmdline['force'], message=True):
+                error=True
+
             if conv_set:
                 convert.append(conv_set)
                 conv_set = []
@@ -83,13 +88,19 @@ def add(cmdline):
     if conv_set:
         convert.append(conv_set)
 
+    if error:
+        return 1
 
     if not cmdline['copy'] and convert:
         log.error(_("You selected to reference existing files, however not all files are in the correct format. If you don't want the file to be copied into the survey directory, you need to manually convert it first."))
         return 1
 
     for conv_set in convert:
-        from sdaps.convert import convert_images
+        try:
+            from sdaps.convert import convert_images
+        except:
+            log.error("Need to convert the images to monochrome TIFF, however the conversion module cannot be imported. You are likely missing the OpenCV dependency.")
+            return 1
 
         print _("Converting some input files to temporary destination.")
 
@@ -122,6 +133,10 @@ def add(cmdline):
     for file in delete:
         os.unlink(file)
 
-    survey.save()
+    if error:
+        return 1
+    else:
+        survey.save()
+        return 0
 
 
