@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-24 16:28+0200\n"
+"POT-Creation-Date: 2014-10-25 12:07+0200\n"
 "PO-Revision-Date: 2014-01-23 09:30+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Spanish <http://hosted.weblate.org/projects/sdaps/master/es/"
@@ -502,12 +502,16 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/cmdline/setup.py:76
+msgid "The mode to use when detecting checkboxes."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:82
 msgid ""
 "Use duplex mode (ie. only print the IDs on the back side). Requires a "
 "mulitple of two pages."
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:81
+#: ../sdaps/cmdline/setup.py:87
 msgid ""
 "Use simplex mode. IDs are printed on each page. You need a simplex scan "
 "currently!"
@@ -730,26 +734,26 @@ msgstr ""
 "Parece que no se ha construído la extensión C. Ejecute \"./setup.py build\" "
 "en el directorio de nivel superior."
 
-#: ../sdaps/model/survey.py:249
+#: ../sdaps/model/survey.py:253
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i hoja"
 msgstr[1] "%i hojas"
 
-#: ../sdaps/model/survey.py:260
+#: ../sdaps/model/survey.py:264
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f segundos por hoja"
 
-#: ../sdaps/model/survey.py:286
+#: ../sdaps/model/survey.py:290
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "¡Un cuestionario que se imprime en dúplex necesita una cantidad par de "
 "páginas!"
 
-#: ../sdaps/model/survey.py:290
+#: ../sdaps/model/survey.py:294
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -757,18 +761,18 @@ msgstr ""
 "¡El estilo 'clásico' sólo admite un máximo de seis páginas! Utilice el "
 "estilo 'code128' si requiere de más páginas."
 
-#: ../sdaps/model/survey.py:303
+#: ../sdaps/model/survey.py:307
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "¡Los IDs deben ser enteros en el estilo clásico!"
 
-#: ../sdaps/model/survey.py:309
+#: ../sdaps/model/survey.py:313
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
 "¡Caracter inválido %s en el ID del cuestionario \"%s\" en el estilo "
 "\"code128\"!"
 
-#: ../sdaps/model/survey.py:313
+#: ../sdaps/model/survey.py:317
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
@@ -776,7 +780,7 @@ msgstr ""
 "SDAPS no puede dibujar un cuestionario ID en el estilo \"custom\" ¡Debe "
 "Hacerlo por sí mismo de alguna manera!"
 
-#: ../sdaps/model/survey.py:333
+#: ../sdaps/model/survey.py:337
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
@@ -974,17 +978,17 @@ msgstr ""
 msgid "Unknown file type (%s). additionalqobjects should be text/plain."
 msgstr ""
 
-#: ../sdaps/setupodt/__init__.py:89
+#: ../sdaps/setupodt/__init__.py:90
 msgid "Caught an Exception while parsing the ODT file. The current state is:"
 msgstr ""
 
-#: ../sdaps/setupodt/__init__.py:92
+#: ../sdaps/setupodt/__init__.py:93
 msgid ""
 "If the dependencies for the \"annotate\" command are installed, then an "
 "annotated version will be created next to the original PDF file."
 msgstr ""
 
-#: ../sdaps/setupodt/__init__.py:122 ../sdaps/setuptex/__init__.py:152
+#: ../sdaps/setupodt/__init__.py:123 ../sdaps/setuptex/__init__.py:152
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."

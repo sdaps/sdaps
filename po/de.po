@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-24 16:28+0200\n"
-"PO-Revision-Date: 2014-10-24 16:31+0200\n"
+"POT-Creation-Date: 2014-10-25 12:07+0200\n"
+"PO-Revision-Date: 2014-10-25 12:08+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
 "Language: de\n"
@@ -513,6 +513,10 @@ msgstr ""
 "\"code128\" sein. \"code128\" hat mehr features."
 
 #: ../sdaps/cmdline/setup.py:76
+msgid "The mode to use when detecting checkboxes."
+msgstr "Erkennungsmodus für Ankreuzfelder."
+
+#: ../sdaps/cmdline/setup.py:82
 msgid ""
 "Use duplex mode (ie. only print the IDs on the back side). Requires a "
 "mulitple of two pages."
@@ -520,7 +524,7 @@ msgstr ""
 "Druckmodus auf Duplex einstellen. Die Umfrage muss eine grade Anzahl von "
 "Seiten besitzen."
 
-#: ../sdaps/cmdline/setup.py:81
+#: ../sdaps/cmdline/setup.py:87
 msgid ""
 "Use simplex mode. IDs are printed on each page. You need a simplex scan "
 "currently!"
@@ -760,26 +764,26 @@ msgstr ""
 "Die C Bibliothek steht nicht zur verfügung. Bitte führen Sie \"./setup.by "
 "build\" im obersten Verzeichniss aus um die Bibliothek zu bauen."
 
-#: ../sdaps/model/survey.py:249
+#: ../sdaps/model/survey.py:253
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:260
+#: ../sdaps/model/survey.py:264
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/model/survey.py:286
+#: ../sdaps/model/survey.py:290
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
 "Anzahl von Seiten haben!"
 
-#: ../sdaps/model/survey.py:290
+#: ../sdaps/model/survey.py:294
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -787,16 +791,16 @@ msgstr ""
 "Der Stil 'classic' kann nur mit bis zu sechs Seiten umgehen. Für mehr Seiten "
 "kann der 'code128' Stil benutzt werden."
 
-#: ../sdaps/model/survey.py:303
+#: ../sdaps/model/survey.py:307
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "IDs müssen im \"classic\" Stil ganze Zahlen sein!"
 
-#: ../sdaps/model/survey.py:309
+#: ../sdaps/model/survey.py:313
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr "Ungültiges Zeichen %s in der Fragebogen ID \"%s\" im \"code128\" Stil!"
 
-#: ../sdaps/model/survey.py:313
+#: ../sdaps/model/survey.py:317
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
@@ -804,7 +808,7 @@ msgstr ""
 "SDAPS kann im \"custom\"-Stil keine Fragebogen ID eintragen. Tun Sie das "
 "irgendwie selbst!"
 
-#: ../sdaps/model/survey.py:333
+#: ../sdaps/model/survey.py:337
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr "Update für Dateiversion %i ausführen"
@@ -1001,13 +1005,13 @@ msgstr ""
 msgid "Unknown file type (%s). additionalqobjects should be text/plain."
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
 
-#: ../sdaps/setupodt/__init__.py:89
+#: ../sdaps/setupodt/__init__.py:90
 msgid "Caught an Exception while parsing the ODT file. The current state is:"
 msgstr ""
 "Beim Parsen der ODT Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
 "Zustand ist:"
 
-#: ../sdaps/setupodt/__init__.py:92
+#: ../sdaps/setupodt/__init__.py:93
 msgid ""
 "If the dependencies for the \"annotate\" command are installed, then an "
 "annotated version will be created next to the original PDF file."
@@ -1015,7 +1019,7 @@ msgstr ""
 "Wenn die Abhängigkeiten für den \"Anmerkungs\" Befehl installiert sind wird "
 "die kommentierte Version zusätzlich zum original PDF erstellt."
 
-#: ../sdaps/setupodt/__init__.py:122 ../sdaps/setuptex/__init__.py:152
+#: ../sdaps/setupodt/__init__.py:123 ../sdaps/setuptex/__init__.py:152
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
