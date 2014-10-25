@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-25 22:03+0200\n"
+"POT-Creation-Date: 2014-10-25 22:04+0200\n"
 "PO-Revision-Date: 2014-07-25 20:08+0200\n"
 "Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -785,6 +785,10 @@ msgid ""
 msgstr ""
 "Parece que você não construiu a extensão C. Por favor, execute \"./setup.py "
 "build\" no diretório principal."
+
+#: ../sdaps/utils/opencv.py:31
+msgid "Cannot convert PDF files as poppler is not installed or usable!"
+msgstr ""
 
 #: ../sdaps/model/survey.py:253
 #, python-format

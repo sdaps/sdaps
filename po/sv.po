@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-25 22:03+0200\n"
+"POT-Creation-Date: 2014-10-25 22:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -670,6 +670,10 @@ msgstr ""
 msgid ""
 "It appears you have not build the C extension. Please run \"./setup.py build"
 "\" in the toplevel directory."
+msgstr ""
+
+#: ../sdaps/utils/opencv.py:31
+msgid "Cannot convert PDF files as poppler is not installed or usable!"
 msgstr ""
 
 #: ../sdaps/model/survey.py:253

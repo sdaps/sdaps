@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-25 22:03+0200\n"
+"POT-Creation-Date: 2014-10-25 22:04+0200\n"
 "PO-Revision-Date: 2014-10-25 12:08+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
@@ -785,6 +785,10 @@ msgid ""
 msgstr ""
 "Die C Bibliothek steht nicht zur verfügung. Bitte führen Sie \"./setup.by "
 "build\" im obersten Verzeichniss aus um die Bibliothek zu bauen."
+
+#: ../sdaps/utils/opencv.py:31
+msgid "Cannot convert PDF files as poppler is not installed or usable!"
+msgstr ""
 
 #: ../sdaps/model/survey.py:253
 #, python-format

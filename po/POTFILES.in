@@ -27,6 +27,7 @@ sdaps/gui/__init__.py
 [type: gettext/glade] sdaps/gui/main_window.ui
 sdaps/gui/widget_buddies.py
 sdaps/image/__init__.py
+sdaps/utils/opencv.py
 sdaps/model/survey.py
 sdaps/recognize/buddies.py
 sdaps/recognize/__init__.py
