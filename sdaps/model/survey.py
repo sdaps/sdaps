@@ -28,7 +28,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 valid_styles = ['classic', 'code128', 'custom', 'qr']
-
+valid_checkmodes = ['checkcorrect', 'check', 'fill']
 
 class Defs(object):
     """General definitions that are valid for this survey.
@@ -43,7 +43,7 @@ class Defs(object):
 
     # Force a certain set of options using slots
     __slots__ = ['paper_width', 'paper_height', 'print_questionnaire_id',
-                 'print_survey_id', 'style', 'duplex']
+                 'print_survey_id', 'style', 'duplex', 'checkmode']
 
     def get_survey_id_pos(self):
         assert(self.style == 'classic')
@@ -101,7 +101,7 @@ class Survey(object):
         self.global_id = None
         self.questionnaire_ids = list()
         self.index = 0
-        self.version = 3
+        self.version = 4
         self.defs = Defs()
 
     def add_questionnaire(self, questionnaire):
@@ -126,6 +126,10 @@ class Survey(object):
             qobject.calculate_survey_id(md5)
 
         for defs_slot in self.defs.__slots__:
+            # Backward compatibility
+            if defs_slot == 'checkmode' and self.defs.checkmode == "checkcorrect":
+                continue
+
             if isinstance(self.defs.__getattribute__(defs_slot), float):
                 md5.update(str(round(self.defs.__getattribute__(defs_slot), 1)))
             else:
@@ -368,9 +372,14 @@ class Survey(object):
                         data.text = unicode()
 
         if self.version < 3:
-            log.warn(msg % (2))
+            log.warn(msg % (3))
             for sheet in self.sheets:
                 sheet.recognized = False
                 sheet.verified = False
 
-        self.version = 3
+        if self.version < 4:
+            log.warn(msg % (4))
+            self.defs.checkmode = "checkcorrect"
+
+        self.version = 4
+

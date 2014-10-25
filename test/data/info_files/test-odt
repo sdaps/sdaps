@@ -15,6 +15,7 @@ print_questionnaire_id = True
 print_survey_id = False
 style = classic
 duplex = True
+checkmode = checkcorrect
 
 [questionnaire]
 # These values are not read back, they exist for information only!

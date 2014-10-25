@@ -77,6 +77,7 @@ def setup(survey, questionnaire_odt, questionnaire_pdf, additionalqobjects, opti
     survey.defs.print_survey_id = options['print_survey_id']
 
     survey.defs.style = options['style']
+    survey.defs.checkmode = options['checkmode']
     # Force simplex if page count is one.
     survey.defs.duplex = False if page_count == 1 else options['duplex']
 

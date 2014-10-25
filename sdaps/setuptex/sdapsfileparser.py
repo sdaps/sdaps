@@ -69,6 +69,9 @@ def parse(survey):
             survey.defs.print_survey_id = bool(int(value))
         elif arg == 'Pages':
             survey.questionnaire.page_count = int(value)
+        elif arg == 'CheckMode':
+            survey.defs.checkmode = value
+            assert survey.defs.checkmode in model.survey.valid_checkmodes
         elif arg == 'GlobalID':
             survey.global_id = value
         elif arg == 'GlobalIDLabel':

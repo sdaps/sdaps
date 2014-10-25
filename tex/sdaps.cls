@@ -60,6 +60,12 @@
 \newif\if@style@qr\@style@qrfalse
 \def\@sdaps@style{code128}%
 
+\newif\if@checkmode@checkcorrect\@checkmode@checkcorrecttrue
+\newif\if@checkmode@check\@checkmode@checkfalse
+\newif\if@checkmode@fill\@checkmode@fillfalse
+\def\@sdaps@checkmode{checkcorrect}%
+
+
 \DefineFamily{SDAPS}
 \DefineFamilyMember{SDAPS}
 \DefineFamilyKey{SDAPS}{style}[code128]%
@@ -92,6 +98,32 @@
     \def\@sdaps@style{qr}%
   \fi
 }
+
+\DefineFamilyKey{SDAPS}{checkmode}[checkcorrect]%
+{%
+  \KOMA@set@ncmdkey{checkmode}{@tempa}{%
+    {checkcorrect}{0},%
+    {check}{1},%
+    {fill}{2}%
+  }{#1}%
+  \ifcase \@tempa\relax
+    \def\@sdaps@checkmode{checkcorrect}%
+    \@checkmode@checkcorrecttrue%
+    \@checkmode@checkfalse%
+    \@checkmode@fillfalse%
+  \or
+    \def\@sdaps@checkmode{check}%
+    \@checkmode@checkcorrectfalse%
+    \@checkmode@checktrue%
+    \@checkmode@fillfalse%
+  \or
+    \def\@sdaps@checkmode{fill}%
+    \@checkmode@checkcorrectfalse%
+    \@checkmode@checkfalse%
+    \@checkmode@filltrue%
+  \fi
+}
+
 
 % If it is empty, it will not be printed out
 \def\globalid{}
@@ -547,6 +579,7 @@
     \immediate\write\sdapsoutfile{Duplex=False}
   \fi
   \immediate\write\sdapsoutfile{Style=\@sdaps@style}%
+  \immediate\write\sdapsoutfile{CheckMode=\@sdaps@checkmode}%
   \immediate\write\sdapsoutfile{GlobalID=\globalid}%
   \immediate\write\sdapsoutfile{GlobalIDLabel=\globalidlabel}%
   %
@@ -563,10 +596,14 @@
     \ifstr{#1}{noinfo}{}{
       \begin{info}
         \translate{infotext}\\
-        \begin{tabularx}{\textwidth}{llcX}
-          \translate{info-cross}: & \checkedbox &\quad & \translate{info-select} \\
-          \translate{info-correct}: & \correctedbox & & \translate{info-mark} \\
-        \end{tabularx}
+        \if@checkmode@checkcorrect
+          \begin{tabularx}{\textwidth}{llcX}
+              \translate{info-cross}: & \checkedbox &\quad & \translate{info-select} \\
+              \translate{info-correct}: & \correctedbox & & \translate{info-mark} \\
+          \end{tabularx}
+        \else
+          \PackageError{sdaps}{Sorry, there is no help text for the checkmode you have choosen right now! Please pass the noinfo optional argument to the questionnaire environment!}\@ehb %
+        \fi
       \end{info}
     }
 

@@ -689,7 +689,7 @@ class Checkbox(Box):
         quality = -1
         # Iterate the ranges
         for metric, value in self.obj.data.metrics.iteritems():
-            metric = defs.checkbox_metrics[metric]
+            metric = defs.checkbox_metrics[self.obj.sheet.survey.defs.checkmode][metric]
 
             for lower, upper in zip(metric[:-1], metric[1:]):
                 if value >= lower[0] and value < upper[0]:
