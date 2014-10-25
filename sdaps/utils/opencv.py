@@ -20,6 +20,15 @@ import numpy as np
 from sdaps import image
 import cairo
 from sdaps import defs
+from sdaps import log
+
+from sdaps.utils.ugettext import ugettext, ungettext
+_ = ugettext
+
+try:
+    from gi.repository import Poppler, Gio
+except:
+    log.warn(_("Cannot convert PDF files as poppler is not installed or usable!"))
 
 def iter_images_and_pages(images):
     """This function iterates over a images and also the contained pages. As
@@ -27,54 +36,106 @@ def iter_images_and_pages(images):
     loading method for those."""
 
     for filename in images:
+        pages = 1
+        is_tiff = False
+        is_pdf = False
+
         try:
             # Check whether this is a TIFF file (ie. try to retrieve the page count)
             pages = image.get_tiff_page_count(filename)
             is_tiff = True
         except AssertionError:
-            pages = 1
-            is_tiff = False
+            pass
+
+        if not is_tiff:
+            try:
+                gfile = Gio.File.new_for_path(filename)
+                pdf_doc = Poppler.Document.new_from_gfile(gfile, None, None)
+                pages = pdf_doc.get_n_pages()
+                is_pdf = True
+            except:
+                # Either not PDF/damaged or poppler not installed properly
+                pass
+
 
         for page in xrange(pages):
-            if not is_tiff:
-                img = cv2.imread(filename)
-
-            else:
+            if is_tiff:
                 # TIFF pages are zero based
                 surf = image.get_rgb24_from_tiff(filename, page, False)
 
-                width = surf.get_width()
-                height = surf.get_height()
-                stride = surf.get_stride()
+                img = to_opencv(surf)
 
-                # We need to ensure a sane stride!
-                np_width = stride / 4
+            elif is_pdf:
+                # Try to retrieve a single fullpage image, if that fails, render
+                # document at 300dpi.
 
-                # This converts by doing a copy; first create target numpy array
-                # We need a dummy alpha channel ...
-                target = np.empty((height, np_width), dtype=np.uint32)
+                THRESH = 10 #pt
 
-                tmp_surf = cairo.ImageSurface.create_for_data(target.data, cairo.FORMAT_RGB24, width, height, stride)
-                cr = cairo.Context(tmp_surf)
-                cr.set_source_surface(surf)
-                cr.paint()
-                del cr
-                tmp_surf.flush()
-                del tmp_surf
+                page = pdf_doc.get_page(page)
+                page_width, page_height = page.get_size()
 
-                # Now, we need a bit of reshaping
-                img = np.empty((height, width, 3), dtype=np.uint8)
+                images = page.get_image_mapping()
+                if len(images) == 1 and (
+                        abs(images[0].area.x1) < THRESH and
+                        abs(images[0].area.y1) < THRESH and
+                        abs(images[0].area.x2 - page_width) < THRESH and
+                        abs(images[0].area.y2 - page_height) < THRESH):
+                    # Assume one full page image, and simply use that.
+                    surf = page.get_image(images[0].image_id)
 
-                # order should be BGR
-                img[:,:,2] = 0xff & (target[:,:] >> 16)
-                img[:,:,1] = 0xff & (target[:,:] >> 8)
-                img[:,:,0] = 0xff & target[:,:]
+                else:
+                    # Render page at 300dpi
+                    surf = cairo.ImageSurface(cairo.FORMAT_RGB24, int(300 / 72 * page_width), int(300 / 72 * page_height))
+                    cr = cairo.Context(surf)
+                    cr.scale(300 / 72, 300 / 72)
+                    cr.set_source_rgb(1, 1, 1)
+                    cr.paint()
+
+                    page.render_for_printing(cr)
+
+                    del cr
+
+                img = to_opencv(surf)
+
+            else:
+                img = cv2.imread(filename)
 
             yield img, filename, page
 
 def sharpen(img):
     blured = cv2.GaussianBlur(img, (0,0), 5)
     img = cv2.addWeighted(img, 1.5, blured, -0.5, 0)
+
+    return img
+
+def to_opencv(surf):
+    width = surf.get_width()
+    height = surf.get_height()
+    stride = surf.get_stride()
+
+    # We need to ensure a sane stride!
+    np_width = stride / 4
+
+    # This converts by doing a copy; first create target numpy array
+    # We need a dummy alpha channel ...
+    target = np.empty((height, np_width), dtype=np.uint32)
+
+    tmp_surf = cairo.ImageSurface.create_for_data(target.data, cairo.FORMAT_RGB24, width, height, stride)
+    cr = cairo.Context(tmp_surf)
+    # Handle A1 surfaces?
+    cr.set_source_surface(surf)
+    cr.paint()
+    del cr
+    tmp_surf.flush()
+    del tmp_surf
+
+    # Now, we need a bit of reshaping
+    img = np.empty((height, width, 3), dtype=np.uint8)
+
+    # order should be BGR
+    img[:,:,2] = 0xff & (target[:,:] >> 16)
+    img[:,:,1] = 0xff & (target[:,:] >> 8)
+    img[:,:,0] = 0xff & target[:,:]
 
     return img
 
