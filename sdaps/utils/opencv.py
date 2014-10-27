@@ -71,17 +71,17 @@ def iter_images_and_pages(images):
 
                 THRESH = 10 #pt
 
-                page = pdf_doc.get_page(page)
-                page_width, page_height = page.get_size()
+                pdfpage = pdf_doc.get_page(page)
+                page_width, page_height = pdfpage.get_size()
 
-                images = page.get_image_mapping()
+                images = pdfpage.get_image_mapping()
                 if len(images) == 1 and (
                         abs(images[0].area.x1) < THRESH and
                         abs(images[0].area.y1) < THRESH and
                         abs(images[0].area.x2 - page_width) < THRESH and
                         abs(images[0].area.y2 - page_height) < THRESH):
                     # Assume one full page image, and simply use that.
-                    surf = page.get_image(images[0].image_id)
+                    surf = pdfpage.get_image(images[0].image_id)
 
                 else:
                     # Render page at 300dpi
@@ -91,7 +91,7 @@ def iter_images_and_pages(images):
                     cr.set_source_rgb(1, 1, 1)
                     cr.paint()
 
-                    page.render_for_printing(cr)
+                    pdfpage.render_for_printing(cr)
 
                     del cr
 
