@@ -34,6 +34,17 @@ parser = script.subparsers.add_parser("add",
     may choose not to copy the data into the project directory. In that case
     the data will be referenced using a relative path."""))
 
+parser.add_argument('--convert',
+    help=_("Convert given files and add the result."),
+    dest="convert",
+    action="store_true",
+    default=False)
+parser.add_argument('--3d-transform',
+    help=_("""Do a 3D-transformation after finding the corner marks. If the
+        corner marks are not found then the image will be added as-is."""),
+    dest="transform",
+    action="store_true",
+    default=False)
 parser.add_argument('--force',
     help=_("Force adding the images even if the page count is wrong (only use if you know what you are doing)."),
     action="store_true",
@@ -67,70 +78,57 @@ def add(cmdline):
     error = False
     survey = model.survey.Survey.load(cmdline['project'])
 
-    direct_add = []
-    convert = []
-    delete = []
+    filelist = []
+    deletelist = []
 
-    conv_set = []
-
-    for file in cmdline['images']:
-        if image.check_tiff_monochrome(file):
-            direct_add.append(file)
+    if not cmdline['convert']:
+        for file in cmdline['images']:
+            filelist.append(file)
 
             if not check_image(survey, file, cmdline['duplex'], cmdline['force'], message=True):
                 error=True
+        if error:
+            return
+    else:
+        if not cmdline['copy']:
+            log.error(_("The --no-copy option is not compatible with --convert!"))
+            return 1
 
-            if conv_set:
-                convert.append(conv_set)
-                conv_set = []
-        else:
-            conv_set.append(file)
-    if conv_set:
-        convert.append(conv_set)
-
-    if error:
-        return 1
-
-    if not cmdline['copy'] and convert:
-        log.error(_("You selected to reference existing files, however not all files are in the correct format. If you don't want the file to be copied into the survey directory, you need to manually convert it first."))
-        return 1
-
-    for conv_set in convert:
         try:
             from sdaps.convert import convert_images
         except:
             log.error("Need to convert the images to monochrome TIFF, however the conversion module cannot be imported. You are likely missing the OpenCV dependency.")
             return 1
 
-        print _("Converting some input files to temporary destination.")
+        print _("Converting input files into a single temporary file.")
 
         tmp = tempfile.mktemp(suffix='.tif', prefix='sdaps-convert-')
-        delete.append(tmp)
-        direct_add.append(tmp)
+        deletelist.append(tmp)
+        filelist.append(tmp)
 
         # Run conversion
         # TODO: Allow 3D transformation here!
         try:
-            convert_images(conv_set, tmp, survey.defs.paper_width, survey.defs.paper_height, False)
+            convert_images(cmdline['images'], tmp, survey.defs.paper_width, survey.defs.paper_height, cmdline['transform'])
 
             if not check_image(survey, tmp, cmdline['duplex'], cmdline['force']):
-                log.error(_("Converted image does not have correct format. This means the page count is wrong."))
+                log.error(_("The page count of the created temporary file does not work with this survey."))
                 raise AssertionError()
 
         except Exception, e:
             log.error(str(e))
-            log.error(_("Error running conversion on files: %s") % (', '.join(conv_set)))
+            log.error(_("Running the conversion failed."))
             error = True
 
     if not error:
-        for file in direct_add:
+        for file in filelist:
             print _('Processing %s') % file
 
-            add_image(survey, file, cmdline['duplex'], cmdline['copy'], cmdline['force'])
+            add_image(survey, file, cmdline['duplex'], cmdline['force'], cmdline['copy'])
 
             print _('Done')
 
-    for file in delete:
+    for file in deletelist:
         os.unlink(file)
 
     if error:
