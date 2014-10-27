@@ -3,8 +3,8 @@ title = Testfragebogen \LaTeX
 global_id = SDAPS
 
 [info]
-Umfrage = Testfragebogen
 Author = Someone
+Umfrage = Testfragebogen
 
 [defs]
 # These values are not read back, they exist for information only!
