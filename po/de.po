@@ -5,11 +5,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-25 22:04+0200\n"
+"POT-Creation-Date: 2014-10-27 10:30+0100\n"
 "PO-Revision-Date: 2014-10-25 23:06+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/>"
-"\n"
+"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/"
+">\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,6 +83,18 @@ msgstr ""
 "Projektverzeichniss relativer Pfad gespeichert."
 
 #: ../sdaps/cmdline/add.py:38
+msgid "Convert given files and add the result."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:43 ../sdaps/cmdline/convert.py:39
+msgid ""
+"Do a 3D-transformation after finding the corner marks. If the\n"
+"        corner marks are not found then the image will be added as-is."
+msgstr ""
+"Wende eine 3D-Transformation an, nachdem die Eckmarkierungen gefunden "
+"wurden. Falls keine Eckmarken gefunden wird das Bild unverändert hinzugefügt."
+
+#: ../sdaps/cmdline/add.py:49
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
@@ -90,15 +102,15 @@ msgstr ""
 "Hinzufügen der Bilder forcieren, selbst wenn die Seitenzahl nicht stimmt "
 "(nur in einigen Fällen sinnvoll)."
 
-#: ../sdaps/cmdline/add.py:42
+#: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
 msgstr "Kopier das TIFF-Bild in das Projektverzeichniss (Standard)."
 
-#: ../sdaps/cmdline/add.py:47
+#: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
 msgstr "Speichere einen relativen Pfad zum Bild."
 
-#: ../sdaps/cmdline/add.py:51
+#: ../sdaps/cmdline/add.py:62
 msgid ""
 "Images contain a duplex scan of a simplex questionnaire (default: simplex "
 "scan)."
@@ -106,43 +118,35 @@ msgstr ""
 "Die Bilder sind ein duplex Scan eines simplex Fragebogens (Standard: simplex "
 "Scan)."
 
-#: ../sdaps/cmdline/add.py:57 ../sdaps/cmdline/convert.py:49
+#: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:49
 msgid "A number of TIFF image files."
 msgstr "Ein oder mehere TIFF Dateien."
 
-#: ../sdaps/cmdline/add.py:95
-msgid ""
-"You selected to reference existing files, however not all files are in the "
-"correct format. If you don't want the file to be copied into the survey "
-"directory, you need to manually convert it first."
+#: ../sdaps/cmdline/add.py:94
+msgid "The --no-copy option is not compatible with --convert!"
 msgstr ""
-"Es sollen bestehende Dateien referenziert werden, aber nicht alle Dateien "
-"haben das passende Format. Wenn die Dateien nicht in das Projektverzeichniss "
-"kopiert werden sollen müssen sie vorher konvertiert werden."
 
-#: ../sdaps/cmdline/add.py:105
-msgid "Converting some input files to temporary destination."
+#: ../sdaps/cmdline/add.py:103
+#, fuzzy
+msgid "Converting input files into a single temporary file."
 msgstr "Konvertiere einige Eingabedateien in einem temporären Verzeichnis."
 
-#: ../sdaps/cmdline/add.py:117
+#: ../sdaps/cmdline/add.py:115
 msgid ""
-"Converted image does not have correct format. This means the page count is "
-"wrong."
+"The page count of the created temporary file does not work with this survey."
 msgstr ""
-"Das konvertierten hat nicht das richtige Format. Die Anzahl der Seiten ist "
-"falsch."
 
-#: ../sdaps/cmdline/add.py:122
-#, python-format
-msgid "Error running conversion on files: %s"
+#: ../sdaps/cmdline/add.py:120
+#, fuzzy
+msgid "Running the conversion failed."
 msgstr "Fehler bei der Konvertierung folgender Dateien: %s"
 
-#: ../sdaps/cmdline/add.py:127
+#: ../sdaps/cmdline/add.py:125
 #, python-format
 msgid "Processing %s"
 msgstr "Beartbeite %s"
 
-#: ../sdaps/cmdline/add.py:131
+#: ../sdaps/cmdline/add.py:129
 msgid "Done"
 msgstr "Fertig"
 
@@ -213,14 +217,6 @@ msgstr ""
 "und als mehrseitiges TIFF mit einem Bit Farbtiefe gespeichert. Optional kann "
 "eine 3D-Transformation angewendet werden. Dadurch können auch Fotos anstelle "
 "von Scans verarbeitet werden."
-
-#: ../sdaps/cmdline/convert.py:39
-msgid ""
-"Do a 3D-transformation after finding the corner marks. If the\n"
-"        corner marks are not found then the image will be added as-is."
-msgstr ""
-"Wende eine 3D-Transformation an, nachdem die Eckmarkierungen gefunden "
-"wurden. Falls keine Eckmarken gefunden wird das Bild unverändert hinzugefügt."
 
 #: ../sdaps/cmdline/convert.py:45
 msgid "The location of the output file. Must be given."
@@ -1243,6 +1239,23 @@ msgid "An occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
 "Es ist ein Fehler beim erstellen des Reports aufgetreten. Temporäre Dateien "
 "wurden in '%s' belassen."
+
+#~ msgid ""
+#~ "You selected to reference existing files, however not all files are in "
+#~ "the correct format. If you don't want the file to be copied into the "
+#~ "survey directory, you need to manually convert it first."
+#~ msgstr ""
+#~ "Es sollen bestehende Dateien referenziert werden, aber nicht alle Dateien "
+#~ "haben das passende Format. Wenn die Dateien nicht in das "
+#~ "Projektverzeichniss kopiert werden sollen müssen sie vorher konvertiert "
+#~ "werden."
+
+#~ msgid ""
+#~ "Converted image does not have correct format. This means the page count "
+#~ "is wrong."
+#~ msgstr ""
+#~ "Das konvertierten hat nicht das richtige Format. Die Anzahl der Seiten "
+#~ "ist falsch."
 
 #~ msgid "Sheet Valid (all pages)"
 #~ msgstr "Ausgefüllter Bogen"
