@@ -692,7 +692,7 @@ class Checkbox(Box):
             metric = defs.checkbox_metrics[self.obj.sheet.survey.defs.checkmode][metric]
 
             for lower, upper in zip(metric[:-1], metric[1:]):
-                if value >= lower[0] and value < upper[0]:
+                if value >= lower[0] and value <= upper[0]:
                     # Interpolate quality value
                     metric_quality = lower[2] + (upper[2] - lower[2]) * (value - lower[0]) / (upper[0] - lower[0])
 
