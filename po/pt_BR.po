@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-25 22:04+0200\n"
-"PO-Revision-Date: 2014-07-25 20:08+0200\n"
-"Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
-"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
-"sdaps/master/pt_BR/>\n"
+"PO-Revision-Date: 2014-10-28 12:52+0200\n"
+"Last-Translator: Rodrigo Müller <rodrigo_blu@yahoo.com.br>\n"
+"Language-Team: Portuguese (Brazil) "
+"<https://hosted.weblate.org/projects/sdaps/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.10-dev\n"
+"X-Generator: Weblate 2.0-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
@@ -116,21 +116,26 @@ msgid ""
 "correct format. If you don't want the file to be copied into the survey "
 "directory, you need to manually convert it first."
 msgstr ""
+"Você optou por referenciar arquivos existentes, no entanto nem todos os "
+"arquivos estão no formato correto. Se os arquivos não podem ser copiados "
+"para o diretório do projeto, eles devem ser convertidos antes."
 
 #: ../sdaps/cmdline/add.py:105
 msgid "Converting some input files to temporary destination."
-msgstr ""
+msgstr "Converter alguns arquivos de entrada em um diretório temporário."
 
 #: ../sdaps/cmdline/add.py:117
 msgid ""
 "Converted image does not have correct format. This means the page count is "
 "wrong."
 msgstr ""
+"A imagem convertida não tem o formato correto. O número de páginas está "
+"errado."
 
 #: ../sdaps/cmdline/add.py:122
 #, python-format
 msgid "Error running conversion on files: %s"
-msgstr ""
+msgstr "Erro ao converter os arquivos: %s"
 
 #: ../sdaps/cmdline/add.py:127
 #, python-format
@@ -272,9 +277,8 @@ msgid "Filter to only export a partial dataset."
 msgstr "Filtro para exportar apenas um conjunto de dados parcial."
 
 #: ../sdaps/cmdline/csvdata.py:45
-#, fuzzy
 msgid "Export images of freeform fields."
-msgstr "Formato curto (sem campos de texto de forma livre)."
+msgstr "Exportar imagens dos campos de forma livre."
 
 #: ../sdaps/cmdline/csvdata.py:53
 msgid "Import data to from a CSV file."
@@ -539,7 +543,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/setup.py:76
 msgid "The mode to use when detecting checkboxes."
-msgstr ""
+msgstr "Modo de detecção das caixas de seleção."
 
 #: ../sdaps/cmdline/setup.py:82
 msgid ""
@@ -789,6 +793,8 @@ msgstr ""
 #: ../sdaps/utils/opencv.py:31
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
 msgstr ""
+"Não é possível converter arquivos PDF, pois o poppler não está instalado ou "
+"utilizável!"
 
 #: ../sdaps/model/survey.py:253
 #, python-format
