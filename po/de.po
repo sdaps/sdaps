@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-27 10:30+0100\n"
-"PO-Revision-Date: 2014-10-25 23:06+0200\n"
+"POT-Creation-Date: 2014-10-25 22:04+0200\n"
+"PO-Revision-Date: 2014-10-25 23:13+0200\n"
 "Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/"
 ">\n"
@@ -132,9 +132,12 @@ msgid "Converting input files into a single temporary file."
 msgstr "Konvertiere einige Eingabedateien in einem temporären Verzeichnis."
 
 #: ../sdaps/cmdline/add.py:115
+#, fuzzy
 msgid ""
 "The page count of the created temporary file does not work with this survey."
 msgstr ""
+"Das konvertierte Bild hat nicht das richtige Format. Die Anzahl der Seiten "
+"ist falsch."
 
 #: ../sdaps/cmdline/add.py:120
 #, fuzzy
