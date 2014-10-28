@@ -4,8 +4,8 @@ title = Fachschaft Elektro- und Informationstechnik
 global_id = SDAPS!
 
 [info]
-Umfrage = Prüfung ES Sommersemester 2008
 Datum = 28.07.2008
+Umfrage = Prüfung ES Sommersemester 2008
 
 [defs]
 # These values are not read back, they exist for information only!

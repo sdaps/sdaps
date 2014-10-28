@@ -204,7 +204,7 @@ class Survey(object):
         else:
             config.set('sdaps', 'global_id', '')
 
-        for key, value in self.info.iteritems():
+        for key, value in sorted(self.info.iteritems()):
             config.set('info', key.encode('utf-8'), value.encode('utf-8'))
 
         config.set('defs', '# These values are not read back, they exist for information only!')

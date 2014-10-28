@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-25 22:04+0200\n"
+"POT-Creation-Date: 2014-10-27 10:30+0100\n"
 "PO-Revision-Date: 2014-01-23 09:30+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Spanish <http://hosted.weblate.org/projects/sdaps/master/es/"
@@ -83,6 +83,19 @@ msgstr ""
 "  se hará referencia a los datos empleando una ruta relativa."
 
 #: ../sdaps/cmdline/add.py:38
+msgid "Convert given files and add the result."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:43 ../sdaps/cmdline/convert.py:39
+msgid ""
+"Do a 3D-transformation after finding the corner marks. If the\n"
+"        corner marks are not found then the image will be added as-is."
+msgstr ""
+"Realiza una transformación 3D después de encontrar las marcas de esquina. Si "
+"no\n"
+"    se encuentran las marcas la imagen será añadida tal cual es."
+
+#: ../sdaps/cmdline/add.py:49
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
@@ -90,15 +103,15 @@ msgstr ""
 "Fuerza el añadir las imágenes incluso si el conteo de página es incorrecto "
 "(empléelo únicamente si sabe lo que está haciendo."
 
-#: ../sdaps/cmdline/add.py:42
+#: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
 msgstr "Copia los archivos en el directorio (por defecto)."
 
-#: ../sdaps/cmdline/add.py:47
+#: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
 msgstr "No copia los archivos en el directorio."
 
-#: ../sdaps/cmdline/add.py:51
+#: ../sdaps/cmdline/add.py:62
 msgid ""
 "Images contain a duplex scan of a simplex questionnaire (default: simplex "
 "scan)."
@@ -106,38 +119,33 @@ msgstr ""
 "Las imágenes contienen un escaneo doble de un cuestionario sencillo (por "
 "defecto: escaneo sencillo)."
 
-#: ../sdaps/cmdline/add.py:57 ../sdaps/cmdline/convert.py:49
+#: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:49
 msgid "A number of TIFF image files."
 msgstr "Un número de archivos de imagen TIFF."
 
-#: ../sdaps/cmdline/add.py:95
+#: ../sdaps/cmdline/add.py:94
+msgid "The --no-copy option is not compatible with --convert!"
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:103
+msgid "Converting input files into a single temporary file."
+msgstr ""
+
+#: ../sdaps/cmdline/add.py:115
 msgid ""
-"You selected to reference existing files, however not all files are in the "
-"correct format. If you don't want the file to be copied into the survey "
-"directory, you need to manually convert it first."
+"The page count of the created temporary file does not work with this survey."
 msgstr ""
 
-#: ../sdaps/cmdline/add.py:105
-msgid "Converting some input files to temporary destination."
+#: ../sdaps/cmdline/add.py:120
+msgid "Running the conversion failed."
 msgstr ""
 
-#: ../sdaps/cmdline/add.py:117
-msgid ""
-"Converted image does not have correct format. This means the page count is "
-"wrong."
-msgstr ""
-
-#: ../sdaps/cmdline/add.py:122
-#, python-format
-msgid "Error running conversion on files: %s"
-msgstr ""
-
-#: ../sdaps/cmdline/add.py:127
+#: ../sdaps/cmdline/add.py:125
 #, python-format
 msgid "Processing %s"
 msgstr "Procesando %s"
 
-#: ../sdaps/cmdline/add.py:131
+#: ../sdaps/cmdline/add.py:129
 msgid "Done"
 msgstr "Finalizado"
 
@@ -210,15 +218,6 @@ msgstr ""
 "transformación 3D,\n"
 "     haciéndolo es posible trabajar con fotografías de\n"
 "     cuestionarios en lugar de escaneos."
-
-#: ../sdaps/cmdline/convert.py:39
-msgid ""
-"Do a 3D-transformation after finding the corner marks. If the\n"
-"        corner marks are not found then the image will be added as-is."
-msgstr ""
-"Realiza una transformación 3D después de encontrar las marcas de esquina. Si "
-"no\n"
-"    se encuentran las marcas la imagen será añadida tal cual es."
 
 #: ../sdaps/cmdline/convert.py:45
 msgid "The location of the output file. Must be given."

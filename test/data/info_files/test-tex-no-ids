@@ -3,9 +3,9 @@ title = The Title
 global_id = 
 
 [info]
+Author = The Author
 Date = 10.03.2013
 asdf = title
-Author = The Author
 
 [defs]
 # These values are not read back, they exist for information only!
