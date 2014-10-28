@@ -78,7 +78,7 @@ def stamp(survey, output_filename, cmdline):
 
         questionnaire_ids = None
 
-    if questionnaire_ids is not None:
+    if questionnaire_ids is not None and not cmdline['existing']:
         survey.questionnaire_ids.extend(questionnaire_ids)
 
     if os.path.exists(survey.path('questionnaire.tex')):
