@@ -31,7 +31,7 @@ _info-correct=Uncheck to correct
 # Instruction on the questionnaire: Multiple choice question
 _info-select=You can check any number of boxes in selection questions.
 # Instruction on the questionnaire: Mark/range question.
-_info-mark=For questions with a range (1--5) choose the answer the mark that fits best.
+_info-mark=For questions with a range (1--\arabic{markcheckboxcount}) choose the answer the mark that fits best.
 
 # LaTeX based report: Label for the number of people that answered
 _answers=Answers

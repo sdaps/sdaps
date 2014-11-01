@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-04 13:34+0200\n"
+"POT-Creation-Date: 2014-11-01 10:52+0100\n"
 "PO-Revision-Date: 2014-09-19 15:15+0200\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
-"Language-Team: Portuguese "
-"<https://hosted.weblate.org/projects/sdaps/tex/pt/>\n"
+"Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/tex/pt/"
+">\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "English"
 msgstr "Portuguese"
 
-#. Used as an overlay for questoinnaires that are not yet done
+#. Used as an overlay for questionnaires that are not yet done
 #: ../tex_translations.in.h:4
 msgid "draft"
 msgstr "projeto"
@@ -66,9 +66,10 @@ msgstr "Você pode marcar qualquer número de caixas em questões de seleção."
 #. Instruction on the questionnaire: Mark/range question.
 #: ../tex_translations.in.h:18
 msgid ""
-"For questions with a range (1--5) choose the answer the mark that fits best."
+"For questions with a range (1--\\arabic{markcheckboxcount}) choose the "
+"answer the mark that fits best."
 msgstr ""
-"Em questões com um intervalo (1 - 5) escolha a resposta que se encaixa "
+"Em questões com um intervalo (1 - \\arabic{markcheckboxcount}) escolha a resposta que se encaixa "
 "melhor."
 
 #. LaTeX based report: Label for the number of people that answered
