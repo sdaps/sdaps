@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-27 10:30+0100\n"
+"POT-Creation-Date: 2014-11-02 11:58+0100\n"
 "PO-Revision-Date: 2014-07-25 20:08+0200\n"
 "Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/master/"
@@ -653,16 +653,16 @@ msgstr[0] "Página %i"
 msgstr[1] "Página %i"
 
 #: ../sdaps/gui/__init__.py:243
-msgid "Copyright © 2007-2012 The SDAPS Authors"
-msgstr "Copyright © 2007-2012 Os autores do SDAPS"
+msgid "Copyright © 2007-2014 The SDAPS Authors"
+msgstr "Copyright © 2007-2014 Os autores do SDAPS"
 
 #: ../sdaps/gui/__init__.py:245
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "SDAPS - Scripts para aquisição de dados de pesquisas baseadas em papel"
 
 #: ../sdaps/gui/__init__.py:246
-msgid "http://sdaps.sipsolutions.net"
-msgstr "http://sdaps.sipsolutions.net"
+msgid "http://sdaps.org"
+msgstr "http://sdaps.org"
 
 #: ../sdaps/gui/__init__.py:247
 msgid "translator-credits"

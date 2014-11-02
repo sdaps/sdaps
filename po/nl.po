@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-27 10:30+0100\n"
+"POT-Creation-Date: 2014-11-02 11:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -545,7 +545,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../sdaps/gui/__init__.py:243
-msgid "Copyright © 2007-2012 The SDAPS Authors"
+msgid "Copyright © 2007-2014 The SDAPS Authors"
 msgstr ""
 
 #: ../sdaps/gui/__init__.py:245
@@ -553,7 +553,7 @@ msgid "Scripts for data acquisition with paper based surveys"
 msgstr ""
 
 #: ../sdaps/gui/__init__.py:246
-msgid "http://sdaps.sipsolutions.net"
+msgid "http://sdaps.org"
 msgstr ""
 
 #: ../sdaps/gui/__init__.py:247
