@@ -240,10 +240,10 @@ class MainWindow(object):
                  u"Ferdinand Schwenk <ferdisdot@gmail.com>",
                  u"Christoph Simon <post@christoph-simon.eu>",
                  u"Tobias Simon <tobsimon@googlemail.com>"])
-            self.about_dialog.set_copyright(_(u"Copyright © 2007-2012 The SDAPS Authors"))
+            self.about_dialog.set_copyright(_(u"Copyright © 2007-2014 The SDAPS Authors"))
             self.about_dialog.set_license_type(Gtk.License.GPL_3_0)
             self.about_dialog.set_comments(_(u"Scripts for data acquisition with paper based surveys"))
-            self.about_dialog.set_website(_(u"http://sdaps.sipsolutions.net"))
+            self.about_dialog.set_website(_(u"http://sdaps.org"))
             self.about_dialog.set_translator_credits(_("translator-credits"))
             self.about_dialog.set_default_response(Gtk.ResponseType.CANCEL)
 
