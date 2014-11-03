@@ -364,6 +364,10 @@ class Image(model.buddy.Buddy):
             return
 
         try:
+            # Reset matrix, so that we do not use some existing (and broken)
+            # matrix for the resolution estimation.
+            self.obj.matrix.set_px_to_mm(None)
+
             matrix = image.calculate_matrix(
                 self.obj.surface.surface,
                 self.obj.matrix.mm_to_px(),
