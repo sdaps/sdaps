@@ -694,7 +694,10 @@ class Checkbox(Box):
             for lower, upper in zip(metric[:-1], metric[1:]):
                 if value >= lower[0] and value <= upper[0]:
                     # Interpolate quality value
-                    metric_quality = lower[2] + (upper[2] - lower[2]) * (value - lower[0]) / (upper[0] - lower[0])
+                    if lower[0] != upper[0]:
+                        metric_quality = lower[2] + (upper[2] - lower[2]) * (value - lower[0]) / (upper[0] - lower[0])
+                    else:
+                        metric_quality = lower[2]
 
                     if metric_quality > quality:
                         state = lower[1]
