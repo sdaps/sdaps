@@ -141,7 +141,7 @@ class Head(QObject):
 
     def create_widget(self):
         self.widget = Gtk.Label()
-        self.widget.set_markup('<b>%s %s</b>' % (self.obj.id_str(), self.obj.title))
+        self.widget.set_markup('<b>%s %s</b>' % (self.obj.id_str(), GLib.markup_escape_text(self.obj.title)))
         self.widget.props.xalign = 0.0
 
         return self.widget
@@ -157,7 +157,7 @@ class Question(QObject):
         self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         self.label = Gtk.Label()
-        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), self.obj.question))
+        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), GLib.markup_escape_text(self.obj.question)))
         self.label.props.xalign = 0.0
 
         self.widget.pack_start(self.label, False, True, 0)
@@ -186,7 +186,7 @@ class Mark(Question):
         self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         self.label = Gtk.Label()
-        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), self.obj.question))
+        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), GLib.markup_escape_text(self.obj.question)))
         self.label.props.xalign = 0.0
 
         self.widget.pack_start(self.label, False, True, 0)
