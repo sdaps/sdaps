@@ -69,7 +69,7 @@ class Sheet(model.buddy.Buddy):
             # in simplex mode every page will have a matrix; it might be a None
             # matrix though
 
-            log.warn(_('%s, %i: Matrix not recognized.') % (image.filename, image.tiff_page))
+            log.warn(_('%s, %i: Matrix not recognized.') % (self.obj.images[page].filename, self.obj.images[page].tiff_page))
             failed_pages.add(page)
 
         # Rotation for all of them
