@@ -53,6 +53,11 @@ LaTeX based questionnaires (setup_tex/stamp):
 LaTeX based reports:
  * siunitx
 
+Import of other image formats (convert, add --convert):
+ * python-opencv
+ * Poppler and introspection data
+ * python-gi
+
 Debug output (annotate):
  * Poppler and introspection data
  * python-gi
