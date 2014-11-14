@@ -18,6 +18,10 @@
 from sdaps import log
 import re
 
+from sdaps import defs
+import subprocess
+import os
+
 try:
     from sdaps.utils.latexmap import mapping
 except ImportError:
@@ -99,4 +103,23 @@ def raw_unicode_to_latex(string):
     string = string.replace(u'\u2029', '\n\n')
 
     return string.encode('ascii')
+
+def run_engine(texfile, cwd, inputs=None):
+    def _preexec_fn():
+        if defs.latex_preexec_hook is not None:
+            defs.latex_preexec_hook()
+
+        if inputs:
+            os.environ['TEXINPUTS'] = ':'.join([''], inputs)
+
+    subprocess.call([defs.latex_engine, '-halt-on-error',
+                     '-interaction', 'batchmode', texfile],
+                    cwd=cwd,
+                    preexec_fn=_preexec_fn)
+
+
+def compile(texfile, cwd, inputs=None):
+    run_engine(texfile, cwd)
+    run_engine(texfile, cwd)
+
 

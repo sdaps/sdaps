@@ -24,7 +24,6 @@ import os
 import tempfile
 import shutil
 import glob
-import subprocess
 
 from sdaps import model
 
@@ -33,6 +32,7 @@ from sdaps import template
 from sdaps import matrix
 from sdaps import paths
 from sdaps import defs
+from sdaps.utils import latex
 
 from sdaps.utils import paper
 from sdaps.utils.ugettext import ugettext, ungettext
@@ -155,15 +155,7 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
             return
 
         print _("Running %s now twice to generate the report.") % defs.latex_engine
-        subprocess.call([defs.latex_engine, '-halt-on-error',
-                         '-interaction', 'batchmode',
-                         os.path.join(tmpdir, 'report.tex')],
-                        cwd=tmpdir)
-        # And again
-        subprocess.call([defs.latex_engine, '-halt-on-error',
-                         '-interaction', 'batchmode',
-                         os.path.join(tmpdir, 'report.tex')],
-                        cwd=tmpdir)
+        latex.compile('report.tex', cwd=tmpdir)
 
         if not os.path.exists(os.path.join(tmpdir, 'report.pdf')):
             print _("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine

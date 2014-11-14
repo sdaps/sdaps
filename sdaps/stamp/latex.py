@@ -1,7 +1,6 @@
 
 import sys
 import os
-import subprocess
 import tempfile
 import shutil
 
@@ -10,6 +9,7 @@ from sdaps import paths
 from sdaps import defs
 import glob
 
+from sdaps.utils import latex
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
@@ -60,16 +60,8 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         latex_override.close()
 
         print _("Running %s now twice to generate the stamped questionnaire.") % defs.latex_engine
-        os.environ['TEXINPUTS'] = ':' + os.path.abspath(survey.path())
-        subprocess.call([defs.latex_engine, '-halt-on-error',
-                         '-interaction', 'batchmode',
-                         os.path.join(tmpdir, 'questionnaire.tex')],
-                        cwd=tmpdir)
-        # And again
-        subprocess.call([defs.latex_engine, '-halt-on-error',
-                         '-interaction', 'batchmode',
-                         os.path.join(tmpdir, 'questionnaire.tex')],
-                        cwd=tmpdir)
+        latex.compile('questionnaire.tex', tmpdir, inputs=[os.path.abspath(survey.path())])
+
         if not os.path.exists(os.path.join(tmpdir, 'questionnaire.pdf')):
             log.error(_("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine)
             raise AssertionError('PDF file not generated')

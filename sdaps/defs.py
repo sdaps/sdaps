@@ -195,3 +195,7 @@ c128_chars = [chr(i) for i in xrange(32, 127)] #+ [u'È', u'É', u'Ê', u'Ë', u
 # External commands =======================================
 #: The binary used to compile latex documents.
 latex_engine = "pdflatex"
+
+#: A function that is called after fork and before exec of the latex engine.
+#: This is useful when e.g. the LateX environment should be secured.
+latex_preexec_hook = None
