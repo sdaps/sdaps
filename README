@@ -41,6 +41,7 @@ reportlab based reports (report):
  * Python Imaging Library (PIL)
 
 ODT based questionnaires (setup/stamp):
+ * reportlab (for barcode rendering)
  * pdftk or pyPdf (pdftk is much faster if you need questionnaire ids)
  * python-pdftools
 
@@ -51,6 +52,9 @@ LaTeX based questionnaires (setup_tex/stamp):
    * and more
 
 LaTeX based reports:
+ * pdflatex and packages:
+   * PGF/TikZ
+   * translator (part of beamer)
  * siunitx
 
 Import of other image formats (convert, add --convert):
