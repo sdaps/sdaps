@@ -29,7 +29,7 @@ general (including recognize):
  * python-cairo (including development files)
  * libtiff (including development files)
  * pkg-config
- * python-zbar for "code128" style
+ * python-zbar for "code128" and "qr" styles
  * python development files
 
 graphical user interface (gui):
@@ -85,7 +85,7 @@ Using SDAPS
 ===========
 
 Please run sdaps with "--help" after installing it for a list of commands.
-Also check the website http://sdaps.sipsolutions.net for some examples.
+Also check the website http://sdaps.org for some examples.
 
 Quality of the recognition
 ==========================

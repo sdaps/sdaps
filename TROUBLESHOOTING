@@ -34,8 +34,8 @@ and quality measures.
 Should you find better values, please share them!
 
 NOTE: If you want to remove the errors arising from the possibility to
-correct mistakes, you can modify the lists to never consider a checkbox
-corrected.
+correct mistakes, you can choose a different checkbox detection mode
+that disallows corrections. Please have a look at the "checkmode" parameter.
 
 Text boxes are recognized even though they are empty
 ----------------------------------------------------
