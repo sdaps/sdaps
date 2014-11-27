@@ -20,6 +20,9 @@ u"""
 This module implements a simple export/import to/from CSV files.
 """
 
+import os
+import sys
+
 from sdaps import model
 from sdaps import script
 
@@ -39,6 +42,12 @@ subparser = parser.add_subparsers()
 
 export = subparser.add_parser('export',
     help=_("Export data to CSV file."))
+export.add_argument('-o', '--output',
+    help=_("Filename to store the data to (default: data_%%i.csv)"))
+export.add_argument('-d', '--delimiter',
+    help=_("The delimiter used in the CSV file (default ',')"),
+    default='',
+    action='store')
 export.add_argument('-f', '--filter',
     help=_("Filter to only export a partial dataset."))
 export.add_argument('--images',
@@ -63,9 +72,22 @@ def csvdata(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
 
     if cmdline['direction'] == 'export':
-        return csvdata.csvdata_export(survey, survey.new_path('data_%i.csv'), cmdline['filter'], cmdline['export_images'])
+        if cmdline['output']:
+            if cmdline['output'] == '-':
+                outfd = os.dup(sys.stdout.fileno())
+                outfile = os.fdopen(outfd, 'w')
+            else:
+                filename = cmdline['output']
+                outfile = file(filename, 'w')
+        else:
+            filename = survey.new_path('data_%i.csv')
+            outfile = file(filename, 'w')
+
+        csvoptions = { 'delimiter' : cmdline['delimiter'] }
+
+        return csvdata.csvdata_export(survey, outfile, cmdline['filter'], cmdline['export_images'], csvoptions)
     elif cmdline['direction'] == 'import':
-        return csvdata.csvdata_import(survey, cmdline['file'])
+        return csvdata.csvdata_import(survey, file(cmdline['file'], 'r'))
     else:
         raise AssertionError
 

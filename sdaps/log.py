@@ -71,6 +71,9 @@ class Copier(object):
         self.pipe.flush()
         self.logfile.flush()
 
+    def fileno(self):
+        return self.pipe.fileno()
+
 class Wiper(object):
     '''wipe out the progressbar before forwarding data through the pipe'''
 
@@ -91,6 +94,9 @@ class Wiper(object):
     def flush(self):
         self.pipe.flush()
 
+    def fileno(self):
+        return self.pipe.fileno()
+
 class Encoder(object):
     '''Encode data going through the pipe to utf8'''
 
@@ -110,7 +116,7 @@ class Encoder(object):
         self.pipe.flush()
 
     def fileno(self):
-        self.pipe.fileno()
+        return self.pipe.fileno()
 
 class Logfile(object):
 

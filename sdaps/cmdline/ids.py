@@ -19,6 +19,7 @@
 from sdaps import model
 from sdaps import script
 
+import os
 import sys
 
 from sdaps.utils.ugettext import ugettext, ungettext
@@ -63,7 +64,8 @@ def ids(cmdline):
     else:
         if cmdline['output']:
             if cmdline['output'] == '-':
-                ids = sys.stdout
+                outfd = os.dup(sys.stdout.fileno())
+                ids = os.fdopen(outfd, 'w')
             else:
                 filename = cmdline['output']
                 ids = file(filename, 'w')

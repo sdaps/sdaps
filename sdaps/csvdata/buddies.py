@@ -29,12 +29,12 @@ class Questionnaire(model.buddy.Buddy):
     name = 'csvdata'
     obj_class = model.questionnaire.Questionnaire
 
-    def open_csv(self, filename, export_images=False):
+    def open_csv(self, csvfile, export_images=False, csv_options={}):
         header = ['questionnaire_id', 'global_id']
         for qobject in self.obj.qobjects:
             header.extend(qobject.csvdata.export_header())
-        self.file = file(filename, 'w')
-        self.csv = csv.DictWriter(self.file, header)
+        self.file = csvfile
+        self.csv = csv.DictWriter(self.file, header, **csv_options)
         self.csv.writerow({value: value for value in header})
 
         if export_images:
