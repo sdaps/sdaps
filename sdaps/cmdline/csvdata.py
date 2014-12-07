@@ -46,7 +46,7 @@ export.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: data_%%i.csv)"))
 export.add_argument('-d', '--delimiter',
     help=_("The delimiter used in the CSV file (default ',')"),
-    default='',
+    default=',',
     action='store')
 export.add_argument('-f', '--filter',
     help=_("Filter to only export a partial dataset."))
