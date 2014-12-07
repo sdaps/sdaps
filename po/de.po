@@ -5,17 +5,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-02 11:58+0100\n"
-"PO-Revision-Date: 2014-11-01 12:42+0200\n"
-"Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/"
-">\n"
+"POT-Creation-Date: 2014-12-07 18:57+0100\n"
+"PO-Revision-Date: 2014-12-07 18:59+0100\n"
+"Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
+"Language-Team: German <>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.0-dev\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -244,11 +243,11 @@ msgstr ""
 msgid "Filename to store the data to (default: cover_%%i.pdf)"
 msgstr "Ausgabedatei (Standard: cover_%%i.pdf)"
 
-#: ../sdaps/cmdline/csvdata.py:31
+#: ../sdaps/cmdline/csvdata.py:34
 msgid "Import or export data to/from CSV files."
 msgstr "Importieren oder exportieren von Daten im CSV Format."
 
-#: ../sdaps/cmdline/csvdata.py:32
+#: ../sdaps/cmdline/csvdata.py:35
 msgid ""
 "Import or export data to/from a CSV file. The first line\n"
 "    is a header which defines questionnaire_id and global_id, and a column\n"
@@ -264,24 +263,33 @@ msgstr ""
 "Fragebogen-ID\n"
 "benutzt werden."
 
-#: ../sdaps/cmdline/csvdata.py:41
+#: ../sdaps/cmdline/csvdata.py:44
 msgid "Export data to CSV file."
 msgstr "Daten im CSV Format exportieren."
 
-#: ../sdaps/cmdline/csvdata.py:43 ../sdaps/cmdline/report.py:31
+#: ../sdaps/cmdline/csvdata.py:46
+#, python-format
+msgid "Filename to store the data to (default: data_%%i.csv)"
+msgstr "Dateiname für die CSV Datei (Standard: data_%%i.csv)"
+
+#: ../sdaps/cmdline/csvdata.py:48
+msgid "The delimiter used in the CSV file (default ',')"
+msgstr "Trennzeichen in der CSV Datei (Standard: ',')"
+
+#: ../sdaps/cmdline/csvdata.py:52 ../sdaps/cmdline/report.py:31
 #: ../sdaps/cmdline/reporttex.py:52
 msgid "Filter to only export a partial dataset."
 msgstr "Filter um nur eine Teilmenge der Daten zu exportieren."
 
-#: ../sdaps/cmdline/csvdata.py:45
+#: ../sdaps/cmdline/csvdata.py:54
 msgid "Export images of freeform fields."
 msgstr "Bilder von Freitextfeldern exportieren."
 
-#: ../sdaps/cmdline/csvdata.py:53
+#: ../sdaps/cmdline/csvdata.py:62
 msgid "Import data to from a CSV file."
 msgstr "Daten aus einer CSV Datei importieren."
 
-#: ../sdaps/cmdline/csvdata.py:55
+#: ../sdaps/cmdline/csvdata.py:64
 msgid "The file to import."
 msgstr "Die zu importierende Datei."
 
@@ -304,11 +312,11 @@ msgstr ""
 msgid "Filter to only show a partial dataset."
 msgstr "Filter um nur einen Teil der Bögen anzuzeigen."
 
-#: ../sdaps/cmdline/ids.py:28
+#: ../sdaps/cmdline/ids.py:29
 msgid "Export and import questionnaire IDs."
 msgstr "Export und Import der Fragebogen-IDs."
 
-#: ../sdaps/cmdline/ids.py:29
+#: ../sdaps/cmdline/ids.py:30
 msgid ""
 "This command can be used to import and export questionnaire\n"
 "    IDs. It only makes sense in projects where such an ID is printed on the\n"
@@ -323,12 +331,12 @@ msgstr ""
 "dem\n"
 "Fall wird gleichzeitig auch das druckbare PDF erstellt."
 
-#: ../sdaps/cmdline/ids.py:34
+#: ../sdaps/cmdline/ids.py:35
 #, python-format
 msgid "Filename to store the data to (default: ids_%%i)"
 msgstr "Ausgabedatei (Standard: ids_%%i)"
 
-#: ../sdaps/cmdline/ids.py:37
+#: ../sdaps/cmdline/ids.py:38
 msgid "Add IDs to the internal list from the specified file."
 msgstr "Fügt die IDs aus der Angegebenen Datei hinzu."
 
@@ -1050,7 +1058,7 @@ msgstr ""
 "Wenn die Abhängigkeiten für den \"Anmerkungs\" Befehl installiert sind wird "
 "die kommentierte Version zusätzlich zum original PDF erstellt."
 
-#: ../sdaps/setupodt/__init__.py:123 ../sdaps/setuptex/__init__.py:152
+#: ../sdaps/setupodt/__init__.py:123 ../sdaps/setuptex/__init__.py:147
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
@@ -1172,13 +1180,13 @@ msgstr ""
 msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr "Führe %s zwei mal aus um den gestempelten Fragebogen zu erstellen."
 
-#: ../sdaps/stamp/latex.py:74 ../sdaps/setuptex/__init__.py:124
-#: ../sdaps/setuptex/__init__.py:168 ../sdaps/reporttex/__init__.py:169
+#: ../sdaps/stamp/latex.py:66 ../sdaps/setuptex/__init__.py:119
+#: ../sdaps/setuptex/__init__.py:158 ../sdaps/reporttex/__init__.py:161
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr "Fehler beim ausführen von \"%s\" um die LaTeX Datei zu kompilieren."
 
-#: ../sdaps/stamp/latex.py:80
+#: ../sdaps/stamp/latex.py:72
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."
@@ -1195,18 +1203,18 @@ msgstr "Unbekanntes Dateiformat (%s). questionnaire_tex muss text/x-tex sein."
 msgid "Will keep going, but expect failure!"
 msgstr "Versuche trotzdem fortzusetzten."
 
-#: ../sdaps/setuptex/__init__.py:115 ../sdaps/setuptex/__init__.py:158
+#: ../sdaps/setuptex/__init__.py:115 ../sdaps/setuptex/__init__.py:153
 #, python-format
 msgid "Running %s now twice to generate the questionnaire."
 msgstr "Führe %s zwei mal aus um den Fragebogen zu erstellen."
 
-#: ../sdaps/setuptex/__init__.py:138
+#: ../sdaps/setuptex/__init__.py:133
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
 "Beim Parsen der SDAPS Datei ist ein schwerer Fehler aufgetreten. Der jetzige "
 "Zustand ist:"
 
-#: ../sdaps/setuptex/__init__.py:184
+#: ../sdaps/setuptex/__init__.py:174
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "
@@ -1234,7 +1242,7 @@ msgstr "Das TeX-Projekt für den Report liegt unter '%s'."
 msgid "Running %s now twice to generate the report."
 msgstr "Führe %s zwei mal aus um den Report zu erstellen."
 
-#: ../sdaps/reporttex/__init__.py:175
+#: ../sdaps/reporttex/__init__.py:167
 #, python-format
 msgid "An occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
