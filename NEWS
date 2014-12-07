@@ -1,3 +1,17 @@
+Overview of Changes in SDAPS 1.1.8
+==================================
+
+Important changes:
+ * recognize: prevent division by zero error
+ * recognize: try barcode detection both with and without kfill
+ * recognize: ignore data from previous run
+ * csv: Add support to specify delimiter
+ * csv, ids: allow output to any file including stdout
+ * gui: properly escape all strings
+
+New and updated languages:
+ * German
+
 Overview of Changes in SDAPS 1.1.7
 ==================================
 
