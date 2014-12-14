@@ -26,6 +26,11 @@ from sdaps import defs
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
+def markup_escape_text(text):
+    # Unfortunately the API returns a byte string, so we need to decode it
+    # as the formatting would not work otherwise.
+    return GLib.markup_escape_text(text).decode('utf-8')
+
 class Questionnaire(model.buddy.Buddy):
 
     __metaclass__ = model.buddy.Register
@@ -48,13 +53,13 @@ class Questionnaire(model.buddy.Buddy):
 
         # First some global options
         widget = Gtk.Label()
-        widget.set_markup(_('<b>Global Properties</b>'))
+        widget.set_markup(_(u'<b>Global Properties</b>'))
         widget.props.xalign = 0.0
         self.box.pack_start(widget, False, True, 0)
 
-        self.valid_checkbox = Gtk.CheckButton.new_with_label(_("Sheet valid"))
-        self.verified_checkbox = Gtk.CheckButton.new_with_label(_("Verified"))
-        self.empty_checkbox = Gtk.CheckButton.new_with_label(_("Empty"))
+        self.valid_checkbox = Gtk.CheckButton.new_with_label(_(u'Sheet valid'))
+        self.verified_checkbox = Gtk.CheckButton.new_with_label(_(u'Verified'))
+        self.empty_checkbox = Gtk.CheckButton.new_with_label(_(u'Empty'))
         self.empty_checkbox.set_sensitive(False)
 
         self.valid_checkbox.connect('toggled', self.toggled_valid_cb)
@@ -66,7 +71,7 @@ class Questionnaire(model.buddy.Buddy):
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         self.qid = Gtk.Label()
-        self.qid.set_markup(_('<b>Questionnaire ID: </b>')+GLib.markup_escape_text(str(self.obj.survey.sheet.questionnaire_id)))
+        self.qid.set_markup(_(u'<b>Questionnaire ID: </b>') + markup_escape_text(str(self.obj.survey.sheet.questionnaire_id)))
         self.qid.props.xalign = 0.0
 
         indent.add(vbox)
@@ -90,7 +95,7 @@ class Questionnaire(model.buddy.Buddy):
         for qobject in self.obj.qobjects:
             qobject.widget.sync_state()
 
-        self.qid.set_markup(_('<b>Questionnaire ID: </b>')+GLib.markup_escape_text(str(self.obj.survey.sheet.questionnaire_id)))
+        self.qid.set_markup(_(u'<b>Questionnaire ID: </b>') + markup_escape_text(str(self.obj.survey.sheet.questionnaire_id)))
         self.valid_checkbox.set_active(self.obj.survey.sheet.valid)
         self.verified_checkbox.set_active(self.obj.survey.sheet.verified)
         self.empty_checkbox.set_active(self.obj.survey.sheet.empty)
@@ -141,7 +146,7 @@ class Head(QObject):
 
     def create_widget(self):
         self.widget = Gtk.Label()
-        self.widget.set_markup('<b>%s %s</b>' % (self.obj.id_str(), GLib.markup_escape_text(self.obj.title)))
+        self.widget.set_markup(u'<b>%s %s</b>' % (self.obj.id_str(), markup_escape_text(self.obj.title)))
         self.widget.props.xalign = 0.0
 
         return self.widget
@@ -157,7 +162,7 @@ class Question(QObject):
         self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         self.label = Gtk.Label()
-        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), GLib.markup_escape_text(self.obj.question)))
+        self.label.set_markup(u'<b>%s %s</b>' % (self.obj.id_str(), markup_escape_text(self.obj.question)))
         self.label.props.xalign = 0.0
 
         self.widget.pack_start(self.label, False, True, 0)
@@ -186,7 +191,7 @@ class Mark(Question):
         self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         self.label = Gtk.Label()
-        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), GLib.markup_escape_text(self.obj.question)))
+        self.label.set_markup(u'<b>%s %s</b>' % (self.obj.id_str(), markup_escape_text(self.obj.question)))
         self.label.props.xalign = 0.0
 
         self.widget.pack_start(self.label, False, True, 0)
