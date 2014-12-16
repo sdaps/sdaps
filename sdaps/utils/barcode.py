@@ -25,6 +25,7 @@ _ = ugettext
 import cairo
 import zbar
 from sdaps import image
+from sdaps import defs
 
 
 def read_barcode(surface, matrix, x, y, width, height, btype="CODE128"):
@@ -61,7 +62,17 @@ def scan(surface, matrix, x, y, width, height, btype="CODE128", kfill=False):
     cr.paint()
 
     if kfill:
-      image.kfill_modified(a1_surface, 4)
+        pxpermm = (matrix[0] + matrix[3]) / 2
+        barwidth = pxpermm * defs.code128_barwidth
+        barwidth = int(round(barwidth))
+
+        if barwidth <= 3:
+            return
+
+        if barwidth > 6:
+            barwidth = 6
+
+        image.kfill_modified(a1_surface, barwidth)
 
     # zbar does not understand A1, but it can handle 8bit greyscale ...
     # We create an inverted A8 mask for zbar, which is the same as a greyscale
