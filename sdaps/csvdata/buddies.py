@@ -56,7 +56,6 @@ class Questionnaire(model.buddy.Buddy):
 
     def export_finish(self):
         del self.csv
-        self.file.close()
 
     def import_data(self, data):
         try:
