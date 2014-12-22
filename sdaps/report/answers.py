@@ -329,5 +329,5 @@ class RawText(platypus.Paragraph):
 
         text = text
 
-        platypus.Paragraph.__init__(self, text, *args, bulletText=u'&bull;', **kwargs)
+        platypus.Paragraph.__init__(self, text, *args, bulletText=u'•', **kwargs)
 
