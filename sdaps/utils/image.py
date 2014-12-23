@@ -27,16 +27,12 @@ import math
 import os
 import os.path
 
-def get_box_surface(box, format=cairo.FORMAT_RGB24):
-    img = box.sheet.get_page_image(box.question.page_number)
-
-    filename = box.question.questionnaire.survey.path(img.filename)
-
+def get_box_surface(img, filename, x, y, width, height, format=cairo.FORMAT_RGB24):
     mm_to_px = img.matrix.mm_to_px()
-    x0, y0 = mm_to_px.transform_point(box.data.x, box.data.y)
-    x1, y1 = mm_to_px.transform_point(box.data.x + box.data.width, box.data.y)
-    x2, y2 = mm_to_px.transform_point(box.data.x, box.data.y + box.data.height)
-    x3, y3 = mm_to_px.transform_point(box.data.x + box.data.width, box.data.y + box.data.height)
+    x0, y0 = mm_to_px.transform_point(x, y)
+    x1, y1 = mm_to_px.transform_point(x + width, y)
+    x2, y2 = mm_to_px.transform_point(x, y + height)
+    x3, y3 = mm_to_px.transform_point(x + width, y + height)
 
     x = int(min(x0, x1, x2, x3))
     y = int(min(y0, y1, y2, y3))
@@ -71,8 +67,8 @@ class ImageWriter:
         if not os.path.exists(real_path):
             os.mkdir(real_path)
 
-    def output_box(self, box):
-        surf = get_box_surface(box)
+    def output_area(self, img, filename, x, y, width, height):
+        surf = get_box_surface(img, filename, x, y, width, height)
 
         filename = "%s%04d.png" % (self.prefix, self.count)
         full_path = os.path.join(self.path, filename)
@@ -82,5 +78,38 @@ class ImageWriter:
         self.count += 1
 
         return filename
+
+    def output_box(self, box):
+        img = box.sheet.get_page_image(box.question.page_number)
+
+        filename = box.question.questionnaire.survey.path(img.filename)
+
+        return self.output_area(img, filename, box.data.x, box.data.y, box.data.width, box.data.height)
+
+    def output_boxes(self, boxes, real=False, padding=5):
+        x1 = 99999
+        y1 = 99999
+        x2 = 0
+        y2 = 0
+        img = boxes[0].sheet.get_page_image(boxes[0].question.page_number)
+        filename = boxes[0].question.questionnaire.survey.path(img.filename)
+
+        for box in boxes:
+            if real:
+                pos = box.data
+            else:
+                pos = box
+            x1 = min(x1, pos.x)
+            y1 = min(y1, pos.y)
+
+            x2 = max(x2, pos.x + pos.width)
+            y2 = max(y2, pos.y + pos.height)
+
+        x1 -= padding
+        y1 -= padding
+        x2 += padding
+        y2 += padding
+
+        return self.output_area(img, filename, x1, y1, x2 - x1, y2 - y1)
 
 

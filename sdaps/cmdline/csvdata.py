@@ -56,6 +56,12 @@ export.add_argument('--images',
     action='store_const',
     const=True,
     default=False)
+export.add_argument('--question-images',
+    help=_("Export an image for each question that includes all boxes."),
+    dest='export_question_images',
+    action='store_const',
+    const=True,
+    default=False)
 export.set_defaults(direction='export')
 
 import_ = subparser.add_parser('import',
@@ -68,6 +74,7 @@ import_.set_defaults(direction='import')
 @script.logfile
 def csvdata(cmdline):
     from sdaps import csvdata
+    from sdaps.utils.image import ImageWriter
 
     survey = model.survey.Survey.load(cmdline['project'])
 
@@ -85,7 +92,19 @@ def csvdata(cmdline):
 
         csvoptions = { 'delimiter' : cmdline['delimiter'] }
 
-        return csvdata.csvdata_export(survey, outfile, cmdline['filter'], cmdline['export_images'], csvoptions)
+        if cmdline['export_images'] or cmdline['export_question_images'] and cmdline['output'] != '-':
+            img_path = os.path.dirname(filename)
+            img_prefix = os.path.join(os.path.splitext(os.path.basename(filename))[0], 'img')
+
+            image_writer = ImageWriter(img_path, img_prefix)
+        else:
+            image_writer = None
+
+
+        return csvdata.csvdata_export(survey, outfile, image_writer,
+            filter=cmdline['filter'],
+            export_images=cmdline['export_images'],
+            export_question_images=cmdline['export_question_images'], csvoptions=csvoptions)
     elif cmdline['direction'] == 'import':
         return csvdata.csvdata_import(survey, file(cmdline['file'], 'r'))
     else:

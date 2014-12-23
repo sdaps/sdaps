@@ -29,23 +29,25 @@ class Questionnaire(model.buddy.Buddy):
     name = 'csvdata'
     obj_class = model.questionnaire.Questionnaire
 
-    def open_csv(self, csvfile, export_images=False, csv_options={}):
+    def open_csv(self, csvfile, image_writer=None, export_images=False, export_question_images=False, csv_options={}):
         header = ['questionnaire_id', 'global_id']
+
+        self.image_writer = image_writer
+        if image_writer is not None and (export_images or export_question_images):
+            from sdaps.utils.image import ImageWriter
+
+            self.export_images = export_images
+            self.export_question_images = export_question_images
+
+        else:
+            self.export_images = None
+            self.export_question_images = None
+
         for qobject in self.obj.qobjects:
             header.extend(qobject.csvdata.export_header())
         self.file = csvfile
         self.csv = csv.DictWriter(self.file, header, **csv_options)
         self.csv.writerow({value: value for value in header})
-
-        if export_images:
-            from sdaps.utils.image import ImageWriter
-
-            img_path = os.path.dirname(filename)
-            img_prefix = os.path.join(os.path.splitext(os.path.basename(filename))[0], 'img')
-
-            self.image_writer = ImageWriter(img_path, img_prefix)
-        else:
-            self.image_writer = None
 
     def export_data(self):
         data = {'questionnaire_id': unicode(self.obj.sheet.questionnaire_id),
@@ -76,61 +78,92 @@ class QObject(model.buddy.Buddy):
     obj_class = model.questionnaire.QObject
 
     def export_header(self):
-        return []
+        if self.obj.questionnaire.csvdata.export_question_images:
+            return [self.obj.id_csv(self.obj.id) + '_image']
+        else:
+            return []
 
     def export_data(self):
-        return []
+        data = {}
+        if self.obj.questionnaire.csvdata.export_question_images:
+            if self.obj.boxes:
+                img = self.obj.questionnaire.csvdata.image_writer.output_boxes(self.obj.boxes, real=False)
+                data[self.obj.id_csv() + '_image'] = img
+
+        return data
 
     def import_data(self, data):
         pass
 
+class QHead(QObject):
 
-class Choice(model.buddy.Buddy):
+    __metaclass__ = model.buddy.Register
+    name = 'csvdata'
+    obj_class = model.questionnaire.Head
+
+    def export_header(self):
+        return []
+
+    def export_data(self):
+        return {}
+
+class Choice(QObject):
 
     __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Choice
 
     def export_header(self):
-        return [self.obj.id_csv(box.id) for box in self.obj.boxes]
+        header = QObject.export_header(self)
+        header += [self.obj.id_csv(box.id) for box in self.obj.boxes]
+        return header
 
     def export_data(self):
-        return dict([(self.obj.id_csv(box.id), box.csvdata.export_data()) for box in self.obj.boxes])
-        return {self.obj.id_csv(box.id) : box.csvdata.export_data() for box in self.obj.boxes}
+        data = dict([(self.obj.id_csv(box.id), box.csvdata.export_data()) for box in self.obj.boxes])
+        data.update(QObject.export_data(self))
+        return data
 
     def import_data(self, data):
         for box in self.obj.boxes:
             if self.obj.id_csv(box.id) in data:
                 box.csvdata.import_data(data[self.obj.id_csv(box.id)])
 
-class Text(model.buddy.Buddy):
+class Text(QObject):
 
     __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Text
 
     def export_header(self):
-        return [self.obj.id_csv(box.id) for box in self.obj.boxes]
+        header = QObject.export_header(self)
+        header += [self.obj.id_csv(box.id) for box in self.obj.boxes]
+        return header
 
     def export_data(self):
-        return dict([(self.obj.id_csv(box.id), box.csvdata.export_data()) for box in self.obj.boxes])
+        data = dict([(self.obj.id_csv(box.id), box.csvdata.export_data()) for box in self.obj.boxes])
+        data.update(QObject.export_data(self))
+        return data
 
     def import_data(self, data):
         for box in self.obj.boxes:
             if self.obj.id_csv(box.id) in data:
                 box.csvdata.import_data(data[self.obj.id_csv(box.id)])
 
-class Mark(model.buddy.Buddy):
+class Mark(QObject):
 
     __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Mark
 
     def export_header(self):
-        return [self.obj.id_csv()]
+        header = QObject.export_header(self)
+        header += [self.obj.id_csv()]
+        return header
 
     def export_data(self):
-        return {self.obj.id_csv(): '%i' % self.obj.get_answer()}
+        data = {self.obj.id_csv(): '%i' % self.obj.get_answer()}
+        data.update(QObject.export_data(self))
+        return data
 
     def import_data(self, data):
         if self.obj.id_csv() in data:
@@ -180,7 +213,7 @@ class Textbox(Box):
 
         if self.obj.data.state and self.obj.data.text:
             data = self.obj.data.text.encode('utf-8')
-        elif self.obj.data.state and image_writer is not None:
+        elif self.obj.data.state and self.obj.question.questionnaire.csvdata.export_images:
             data = image_writer.output_box(self.obj)
 
         return data
