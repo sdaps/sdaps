@@ -110,7 +110,7 @@ def run_engine(texfile, cwd, inputs=None):
             defs.latex_preexec_hook()
 
         if inputs:
-            os.environ['TEXINPUTS'] = ':'.join([''], inputs)
+            os.environ['TEXINPUTS'] = ':'.join([''] + inputs)
 
     subprocess.call([defs.latex_engine, '-halt-on-error',
                      '-interaction', 'batchmode', texfile],
@@ -119,7 +119,7 @@ def run_engine(texfile, cwd, inputs=None):
 
 
 def compile(texfile, cwd, inputs=None):
-    run_engine(texfile, cwd)
-    run_engine(texfile, cwd)
+    run_engine(texfile, cwd, inputs)
+    run_engine(texfile, cwd, inputs)
 
 
