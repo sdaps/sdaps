@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
 # Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
@@ -98,13 +98,13 @@ class Wiper(object):
         return self.pipe.fileno()
 
 class Encoder(object):
-    '''Encode data going through the pipe to utf8'''
+    '''Encode data going through the pipe to utf-8'''
 
     def __init__(self, pipe):
         self.pipe = pipe
 
     def write(self, data):
-        self.pipe.write(data.encode('utf8'))
+        self.pipe.write(data.encode('utf-8'))
 
     def close(self):
         self.pipe.close()

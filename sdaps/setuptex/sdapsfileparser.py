@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
 # Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
@@ -48,7 +48,7 @@ def parse(survey):
 
     sdaps_file = open(survey.path('questionnaire.sdaps'))
     # the file is encoded in ascii format
-    sdaps_data = sdaps_file.read().decode('utf8')
+    sdaps_data = sdaps_file.read().decode('utf-8')
     qobject = None
     auto_numbering_id = (0,)
 

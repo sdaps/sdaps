@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
 # Copyright(C) 2008, Benjamin Berg <benjamin@sipsolutions.net>
@@ -329,8 +329,5 @@ class RawText(platypus.Paragraph):
 
         text = text
 
-        # Simply putting the bullet character here makes intltool stumble :-/
-        # And using &bull; does not seem to work either.
-        bullet = (''.join([chr(c) for c in [0xE2, 0x80, 0xA2]])).decode('utf-8')
-        platypus.Paragraph.__init__(self, text, *args, bulletText=bullet, **kwargs)
+        platypus.Paragraph.__init__(self, text, *args, bulletText=u'•', **kwargs)
 

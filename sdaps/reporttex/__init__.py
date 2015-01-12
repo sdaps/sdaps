@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright(C) 2008, Christoph Simon <post@christoph-simon.eu>
 # Copyright(C) 2008, 2011, Benjamin Berg <benjamin@sipsolutions.net>
@@ -120,7 +120,7 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
     \usepackage{ifxetex}
     \ifxetex
     \else
-      \usepackage[utf8]{inputenc}
+      \usepackage[utf-8]{inputenc}
     \fi
     \usepackage[%(language)s]{babel}
 
