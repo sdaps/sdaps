@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-07 18:57+0100\n"
+"POT-Creation-Date: 2015-01-12 10:24+0100\n"
 "PO-Revision-Date: 2015-01-01 19:18+0200\n"
 "Last-Translator: Uxío Pérez <uxiopr@yahoo.es>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/>"
-"\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/"
+">\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -274,7 +274,8 @@ msgstr "Exportar datos a un archivo CSV."
 #: ../sdaps/cmdline/csvdata.py:46
 #, python-format
 msgid "Filename to store the data to (default: data_%%i.csv)"
-msgstr "Nombre del archivo para almacenar los datos (por defecto: data_%%i.csv)"
+msgstr ""
+"Nombre del archivo para almacenar los datos (por defecto: data_%%i.csv)"
 
 #: ../sdaps/cmdline/csvdata.py:48
 msgid "The delimiter used in the CSV file (default ',')"
@@ -289,11 +290,16 @@ msgstr "Filtro para exportar solamente un conjunto parcial de datos."
 msgid "Export images of freeform fields."
 msgstr "Exportar imágenes de los campos de forma libre."
 
-#: ../sdaps/cmdline/csvdata.py:62
+#: ../sdaps/cmdline/csvdata.py:60
+#, fuzzy
+msgid "Export an image for each question that includes all boxes."
+msgstr "Exportación e importación de IDs de cuestionarios."
+
+#: ../sdaps/cmdline/csvdata.py:68
 msgid "Import data to from a CSV file."
 msgstr "Importar datos desde un archivo CSV."
 
-#: ../sdaps/cmdline/csvdata.py:64
+#: ../sdaps/cmdline/csvdata.py:70
 msgid "The file to import."
 msgstr "El archivo a importar."
 
@@ -394,8 +400,8 @@ msgid ""
 "    run or manual changes were made."
 msgstr ""
 "Itera sobre todas las imágenes y ejecuta el reconocimiento óptico↵\n"
-"    de marcas. Se reevaluarían las hojas incluso si se ha ejecutado \""
-"recognize\"↵\n"
+"    de marcas. Se reevaluarían las hojas incluso si se ha ejecutado "
+"\"recognize\"↵\n"
 "    o si se han realizado cambios manualmente."
 
 #: ../sdaps/cmdline/recognize.py:34
@@ -431,8 +437,8 @@ msgstr ""
 "Este comando reordena todas las páginas por las IDs ya reconocidas de↵\n"
 "    los cuestionarios. Para utilizarlo se deben añadir todos los archivos al "
 "proyecto y↵\n"
-"    después realizar un reconocimiento parcial usando \"recognize --"
-"identify\". Luego↵\n"
+"    después realizar un reconocimiento parcial usando \"recognize --identify"
+"\". Luego↵\n"
 "    hay que ejecutar este comando para reordenar los datos antes del "
 "reconocimiento.\n"
 "    "
@@ -557,8 +563,8 @@ msgid ""
 "The stamping style to use. Should be either \"classic\" or \"code128\". Use "
 "\"code128\" for more features."
 msgstr ""
-"El estilo utilizado para estampar. Debe ser \"classic\" o \"code128\". Use \""
-"code128\" para tener más recursos disponibles."
+"El estilo utilizado para estampar. Debe ser \"classic\" o \"code128\". Use "
+"\"code128\" para tener más recursos disponibles."
 
 #: ../sdaps/cmdline/setup.py:76
 msgid "The mode to use when detecting checkboxes."
@@ -784,23 +790,23 @@ msgstr "Ordenar por Calidad"
 msgid "label"
 msgstr "etiqueta"
 
-#: ../sdaps/gui/widget_buddies.py:51
+#: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
 msgstr "<b>Propiedades globales</b>"
 
-#: ../sdaps/gui/widget_buddies.py:55
+#: ../sdaps/gui/widget_buddies.py:60
 msgid "Sheet valid"
 msgstr "Hoja válida"
 
-#: ../sdaps/gui/widget_buddies.py:56
+#: ../sdaps/gui/widget_buddies.py:61
 msgid "Verified"
 msgstr "Verificado"
 
-#: ../sdaps/gui/widget_buddies.py:57
+#: ../sdaps/gui/widget_buddies.py:62
 msgid "Empty"
 msgstr "Vacío"
 
-#: ../sdaps/gui/widget_buddies.py:69 ../sdaps/gui/widget_buddies.py:93
+#: ../sdaps/gui/widget_buddies.py:74 ../sdaps/gui/widget_buddies.py:98
 msgid "<b>Questionnaire ID: </b>"
 msgstr "<b>ID del Cuestionario: </b>"
 
@@ -987,8 +993,8 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:323
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
-"No se ha cargado definición de estilo. ¡Esto se debe hacer para el estilo \""
-"custom\"!"
+"No se ha cargado definición de estilo. ¡Esto se debe hacer para el estilo "
+"\"custom\"!"
 
 #: ../sdaps/report/answers.py:185
 #, python-format
@@ -1067,8 +1073,8 @@ msgstr ""
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain."
 msgstr ""
-"Tipo de archivo desconocido (%s). additionalqobjects debe ser del tipo "
-"text/plain."
+"Tipo de archivo desconocido (%s). additionalqobjects debe ser del tipo text/"
+"plain."
 
 #: ../sdaps/setupodt/__init__.py:90
 msgid "Caught an Exception while parsing the ODT file. The current state is:"
@@ -1188,7 +1194,7 @@ msgstr "pdftk: Uniendo todo en el PDF final."
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Estampando usando pyPdf. Para estampación más rápida, instale pdftk."
 
-#: ../sdaps/stamp/latex.py:22
+#: ../sdaps/stamp/latex.py:21
 msgid ""
 "There should be no need to stamp a SDAPS Project that uses LaTeX and does "
 "not have different questionnaire IDs printed on each sheet.\n"
@@ -1198,18 +1204,18 @@ msgstr ""
 "tiene diferentes IDs de cuestionario impreso en cada hoja.↵\n"
 "Lo voy a hacer igualmente."
 
-#: ../sdaps/stamp/latex.py:62
+#: ../sdaps/stamp/latex.py:43
 #, python-format
 msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr "Ejecutando %s dos veces para generar el cuestionario estampado."
 
-#: ../sdaps/stamp/latex.py:66 ../sdaps/setuptex/__init__.py:119
+#: ../sdaps/stamp/latex.py:47 ../sdaps/setuptex/__init__.py:119
 #: ../sdaps/setuptex/__init__.py:158 ../sdaps/reporttex/__init__.py:161
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr "Error ejecutando \"%s\" para compilar el archivo LaTeX."
 
-#: ../sdaps/stamp/latex.py:72
+#: ../sdaps/stamp/latex.py:53
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."

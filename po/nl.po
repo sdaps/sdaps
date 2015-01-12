@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-07 18:57+0100\n"
+"POT-Creation-Date: 2015-01-12 10:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -238,11 +238,15 @@ msgstr ""
 msgid "Export images of freeform fields."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:62
+#: ../sdaps/cmdline/csvdata.py:60
+msgid "Export an image for each question that includes all boxes."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:68
 msgid "Import data to from a CSV file."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:64
+#: ../sdaps/cmdline/csvdata.py:70
 msgid "The file to import."
 msgstr ""
 
@@ -654,23 +658,23 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:51
+#: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:55
+#: ../sdaps/gui/widget_buddies.py:60
 msgid "Sheet valid"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:56
+#: ../sdaps/gui/widget_buddies.py:61
 msgid "Verified"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:57
+#: ../sdaps/gui/widget_buddies.py:62
 msgid "Empty"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:69 ../sdaps/gui/widget_buddies.py:93
+#: ../sdaps/gui/widget_buddies.py:74 ../sdaps/gui/widget_buddies.py:98
 msgid "<b>Questionnaire ID: </b>"
 msgstr ""
 
@@ -1008,25 +1012,25 @@ msgstr ""
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr ""
 
-#: ../sdaps/stamp/latex.py:22
+#: ../sdaps/stamp/latex.py:21
 msgid ""
 "There should be no need to stamp a SDAPS Project that uses LaTeX and does "
 "not have different questionnaire IDs printed on each sheet.\n"
 "I am going to do so anyways."
 msgstr ""
 
-#: ../sdaps/stamp/latex.py:62
+#: ../sdaps/stamp/latex.py:43
 #, python-format
 msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr ""
 
-#: ../sdaps/stamp/latex.py:66 ../sdaps/setuptex/__init__.py:119
+#: ../sdaps/stamp/latex.py:47 ../sdaps/setuptex/__init__.py:119
 #: ../sdaps/setuptex/__init__.py:158 ../sdaps/reporttex/__init__.py:161
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr ""
 
-#: ../sdaps/stamp/latex.py:72
+#: ../sdaps/stamp/latex.py:53
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."

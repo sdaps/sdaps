@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-07 18:57+0100\n"
+"POT-Creation-Date: 2015-01-12 10:24+0100\n"
 "PO-Revision-Date: 2014-10-28 18:40+0200\n"
 "Last-Translator: Rodrigo Müller <rodrigo_blu@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -284,11 +284,16 @@ msgstr "Filtro para exportar apenas um conjunto de dados parcial."
 msgid "Export images of freeform fields."
 msgstr "Exportar imagens dos campos de forma livre."
 
-#: ../sdaps/cmdline/csvdata.py:62
+#: ../sdaps/cmdline/csvdata.py:60
+#, fuzzy
+msgid "Export an image for each question that includes all boxes."
+msgstr "Exportação e importação de IDs de questionário."
+
+#: ../sdaps/cmdline/csvdata.py:68
 msgid "Import data to from a CSV file."
 msgstr "Importar dados de um arquivo CSV."
 
-#: ../sdaps/cmdline/csvdata.py:64
+#: ../sdaps/cmdline/csvdata.py:70
 msgid "The file to import."
 msgstr "O arquivo a ser importado."
 
@@ -766,23 +771,23 @@ msgstr "Ordenar pela Qualidade"
 msgid "label"
 msgstr "Rótulo"
 
-#: ../sdaps/gui/widget_buddies.py:51
+#: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
 msgstr "<b>Propriedades Globais</b>"
 
-#: ../sdaps/gui/widget_buddies.py:55
+#: ../sdaps/gui/widget_buddies.py:60
 msgid "Sheet valid"
 msgstr "Folha válida"
 
-#: ../sdaps/gui/widget_buddies.py:56
+#: ../sdaps/gui/widget_buddies.py:61
 msgid "Verified"
 msgstr "Verificado"
 
-#: ../sdaps/gui/widget_buddies.py:57
+#: ../sdaps/gui/widget_buddies.py:62
 msgid "Empty"
 msgstr "Vazio"
 
-#: ../sdaps/gui/widget_buddies.py:69 ../sdaps/gui/widget_buddies.py:93
+#: ../sdaps/gui/widget_buddies.py:74 ../sdaps/gui/widget_buddies.py:98
 msgid "<b>Questionnaire ID: </b>"
 msgstr "<b>ID do Questionário: </b>"
 
@@ -1165,7 +1170,7 @@ msgstr "pdftk: Montando tudo no PDF final."
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Estampando com pyPdf. Para estampar mais rapidamente, instale o pdftk."
 
-#: ../sdaps/stamp/latex.py:22
+#: ../sdaps/stamp/latex.py:21
 msgid ""
 "There should be no need to stamp a SDAPS Project that uses LaTeX and does "
 "not have different questionnaire IDs printed on each sheet.\n"
@@ -1175,18 +1180,18 @@ msgstr ""
 "diferentes IDs de questionário impresso em cada folha.\n"
 "Vou fazê-lo de qualquer maneira."
 
-#: ../sdaps/stamp/latex.py:62
+#: ../sdaps/stamp/latex.py:43
 #, python-format
 msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr "Executando %s duas vezes para gerar o questionário estampado."
 
-#: ../sdaps/stamp/latex.py:66 ../sdaps/setuptex/__init__.py:119
+#: ../sdaps/stamp/latex.py:47 ../sdaps/setuptex/__init__.py:119
 #: ../sdaps/setuptex/__init__.py:158 ../sdaps/reporttex/__init__.py:161
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr "Erro executando \"%s\" para compilar o arquivo LaTeX."
 
-#: ../sdaps/stamp/latex.py:72
+#: ../sdaps/stamp/latex.py:53
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."
