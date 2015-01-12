@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-12 10:24+0100\n"
-"PO-Revision-Date: 2015-01-01 19:18+0200\n"
-"Last-Translator: Uxío Pérez <uxiopr@yahoo.es>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/"
-">\n"
+"PO-Revision-Date: 2015-01-12 18:13+0200\n"
+"Last-Translator: Rene Martinez <rantmtorres@gmail.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/>"
+"\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -291,9 +291,9 @@ msgid "Export images of freeform fields."
 msgstr "Exportar imágenes de los campos de forma libre."
 
 #: ../sdaps/cmdline/csvdata.py:60
-#, fuzzy
 msgid "Export an image for each question that includes all boxes."
-msgstr "Exportación e importación de IDs de cuestionarios."
+msgstr ""
+"Exportar una imagen para cada pregunta que incluye a todos los recuadros."
 
 #: ../sdaps/cmdline/csvdata.py:68
 msgid "Import data to from a CSV file."
