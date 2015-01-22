@@ -1,3 +1,17 @@
+Overview of Changes in SDAPS 1.1.9
+==================================
+
+Mostly a bugfix release.
+
+Important changes:
+ * csv: PNG export for complete questions
+ * Fix various encoding issues (#59, #61)
+ * dynamic kfill size for barcode detection
+ * Fix LaTeX search path regression (see #11)
+
+New and updated languages:
+ * Spanish
+
 Overview of Changes in SDAPS 1.1.8
 ==================================
 
