@@ -120,7 +120,7 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
     \usepackage{ifxetex}
     \ifxetex
     \else
-      \usepackage[utf-8]{inputenc}
+      \usepackage[utf8]{inputenc}
     \fi
     \usepackage[%(language)s]{babel}
 
