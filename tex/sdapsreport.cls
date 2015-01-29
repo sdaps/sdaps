@@ -317,7 +317,7 @@
 }
 \newcommand*{\freeformtext}[1]{%
   \freeformsep
-  #1
+  #1\\
   \def\freeformsep{\rule{\linewidth}{0.5pt}\\}
 }
 
