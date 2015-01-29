@@ -99,15 +99,17 @@ class Provider(object):
             self.qualities.append((self.survey.sheet.quality, len(self.qualities)))
 
     def next(self, cycle=True):
-        self.image.surface.clean()
-
         if self.index >= len(self.images) - 1:
             if cycle:
-                self.index = 0
+                new_index = 0
             else:
                 return False
         else:
-            self.index += 1
+            new_index = self.index + 1
+
+        self.image.surface.clean()
+
+        self.index = new_index
 
         self.image.surface.load_rgb()
         self.survey.goto_sheet(self.image.sheet)
@@ -115,15 +117,17 @@ class Provider(object):
         return True
 
     def previous(self, cycle=True):
-        self.image.surface.clean()
-
         if self.index <= 0:
             if cycle:
-                self.index = len(self.images) - 1
+                new_index = len(self.images) - 1
             else:
                 return False
         else:
-            self.index -= 1
+            new_index = self.index - 1
+
+        self.image.surface.clean()
+
+        self.index = new_index
 
         self.image.surface.load_rgb()
         self.survey.goto_sheet(self.image.sheet)
