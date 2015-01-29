@@ -251,6 +251,7 @@ class MainWindow(object):
             self.about_dialog.set_translator_credits(_("translator-credits"))
             self.about_dialog.set_default_response(Gtk.ResponseType.CANCEL)
 
+        self.about_dialog.set_transient_for(self._window)
         self.about_dialog.run()
         self.about_dialog.hide()
 
@@ -310,6 +311,7 @@ class MainWindow(object):
                 type=Gtk.MessageType.INFO,
                 buttons=Gtk.ButtonsType.CANCEL,
                 message_format=_("You have reached the first page of the survey. Would you like to go to the last page?"))
+            dialog.set_transient_for(self._window)
             dialog.add_button(_("Go to last page"), Gtk.ResponseType.OK)
             if dialog.run() == Gtk.ResponseType.OK:
                 self.provider.previous(cycle=True)
@@ -333,6 +335,7 @@ class MainWindow(object):
                 type=Gtk.MessageType.INFO,
                 buttons=Gtk.ButtonsType.CANCEL,
                 message_format=_("You have reached the last page of the survey. Would you like to go to the first page?"))
+            dialog.set_transient_for(self._window)
             dialog.add_button(_("Go to first page"), Gtk.ResponseType.OK)
             if dialog.run() == Gtk.ResponseType.OK:
                 self.provider.next(cycle=True)
