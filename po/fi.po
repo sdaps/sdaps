@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-12 10:24+0100\n"
+"POT-Creation-Date: 2015-03-13 19:45+0100\n"
 "PO-Revision-Date: 2014-08-17 13:09+0200\n"
 "Last-Translator: Joonas Joensuu <joonas.joensuu@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/sdaps/master/fi/"
@@ -264,11 +264,15 @@ msgstr ""
 msgid "Export an image for each question that includes all boxes."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:68
+#: ../sdaps/cmdline/csvdata.py:66
+msgid "Export the recognition quality for each checkbox."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:74
 msgid "Import data to from a CSV file."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:70
+#: ../sdaps/cmdline/csvdata.py:76
 msgid "The file to import."
 msgstr ""
 
@@ -568,68 +572,68 @@ msgid ""
 "before using the GUI."
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:198
+#: ../sdaps/gui/__init__.py:202
 msgid "Page|Invalid"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:201
+#: ../sdaps/gui/__init__.py:205
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/gui/__init__.py:243
+#: ../sdaps/gui/__init__.py:247
 msgid "Copyright © 2007-2014 The SDAPS Authors"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:245
+#: ../sdaps/gui/__init__.py:249
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:246
+#: ../sdaps/gui/__init__.py:250
 msgid "http://sdaps.org"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:247
+#: ../sdaps/gui/__init__.py:251
 msgid "translator-credits"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:291
+#: ../sdaps/gui/__init__.py:296
 #, python-format
 msgid " of %i"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:292
+#: ../sdaps/gui/__init__.py:297
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:308
+#: ../sdaps/gui/__init__.py:313
 msgid ""
 "You have reached the first page of the survey. Would you like to go to the "
 "last page?"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:309
+#: ../sdaps/gui/__init__.py:315
 msgid "Go to last page"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:331
+#: ../sdaps/gui/__init__.py:337
 msgid ""
 "You have reached the last page of the survey. Would you like to go to the "
 "first page?"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:332
+#: ../sdaps/gui/__init__.py:339
 msgid "Go to first page"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:440
+#: ../sdaps/gui/__init__.py:447
 msgid "Close without saving"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:444
+#: ../sdaps/gui/__init__.py:451
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
