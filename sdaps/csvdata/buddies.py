@@ -29,8 +29,10 @@ class Questionnaire(model.buddy.Buddy):
     name = 'csvdata'
     obj_class = model.questionnaire.Questionnaire
 
-    def open_csv(self, csvfile, image_writer=None, export_images=False, export_question_images=False, csv_options={}):
+    def open_csv(self, csvfile, image_writer=None, export_images=False, export_question_images=False, export_quality=False, csv_options={}):
         header = ['questionnaire_id', 'global_id']
+
+        self.export_quality = export_quality
 
         self.image_writer = image_writer
         if image_writer is not None and (export_images or export_question_images):
@@ -115,12 +117,17 @@ class Choice(QObject):
 
     def export_header(self):
         header = QObject.export_header(self)
-        header += [self.obj.id_csv(box.id) for box in self.obj.boxes]
+        for box in self.obj.boxes:
+            header += box.csvdata.export_header()
+
         return header
 
     def export_data(self):
-        data = dict([(self.obj.id_csv(box.id), box.csvdata.export_data()) for box in self.obj.boxes])
-        data.update(QObject.export_data(self))
+        data = QObject.export_data(self)
+
+        for box in self.obj.boxes:
+            data.update(box.csvdata.export_data())
+
         return data
 
     def import_data(self, data):
@@ -136,12 +143,17 @@ class Text(QObject):
 
     def export_header(self):
         header = QObject.export_header(self)
-        header += [self.obj.id_csv(box.id) for box in self.obj.boxes]
+        for box in self.obj.boxes:
+            header += box.csvdata.export_header()
+
         return header
 
     def export_data(self):
-        data = dict([(self.obj.id_csv(box.id), box.csvdata.export_data()) for box in self.obj.boxes])
-        data.update(QObject.export_data(self))
+        data = QObject.export_data(self)
+
+        for box in self.obj.boxes:
+            data.update(box.csvdata.export_data())
+
         return data
 
     def import_data(self, data):
@@ -193,8 +205,17 @@ class Box(model.buddy.Buddy):
     name = 'csvdata'
     obj_class = model.questionnaire.Box
 
+    def export_header(self):
+        header = [self.obj.id_csv()]
+        if self.obj.question.questionnaire.csvdata.export_quality:
+            header += [self.obj.id_csv() + '_quality']
+        return header
+
     def export_data(self):
-        return str(int(self.obj.data.state))
+        data = {self.obj.id_csv() : str(int(self.obj.data.state))}
+        if self.obj.question.questionnaire.csvdata.export_quality:
+            data.update({self.obj.id_csv() + '_quality' : self.obj.data.quality})
+        return data
 
     def import_data(self, data):
         self.obj.data.state = int(data)
@@ -206,6 +227,10 @@ class Textbox(Box):
     name = 'csvdata'
     obj_class = model.questionnaire.Textbox
 
+    def export_header(self):
+        header = [self.obj.id_csv()]
+        return header
+
     def export_data(self):
         data = str(int(self.obj.data.state))
 
@@ -215,6 +240,8 @@ class Textbox(Box):
             data = self.obj.data.text.encode('utf-8')
         elif self.obj.data.state and self.obj.question.questionnaire.csvdata.export_images:
             data = image_writer.output_box(self.obj)
+
+        data = { self.obj.id_csv() : data }
 
         return data
 

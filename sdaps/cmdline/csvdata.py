@@ -62,6 +62,12 @@ export.add_argument('--question-images',
     action='store_const',
     const=True,
     default=False)
+export.add_argument('--quality',
+    help=_("Export the recognition quality for each checkbox."),
+    dest='export_quality',
+    action='store_const',
+    const=True,
+    default=False)
 export.set_defaults(direction='export')
 
 import_ = subparser.add_parser('import',
@@ -104,7 +110,9 @@ def csvdata(cmdline):
         return csvdata.csvdata_export(survey, outfile, image_writer,
             filter=cmdline['filter'],
             export_images=cmdline['export_images'],
-            export_question_images=cmdline['export_question_images'], csvoptions=csvoptions)
+            export_question_images=cmdline['export_question_images'],
+            export_quality=cmdline['export_quality'],
+            csvoptions=csvoptions)
     elif cmdline['direction'] == 'import':
         return csvdata.csvdata_import(survey, file(cmdline['file'], 'r'))
     else:

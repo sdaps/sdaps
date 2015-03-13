@@ -349,6 +349,10 @@ class Box(buddy.Object, DataObject):
         ids = [str(x) for x in self.id]
         return u'.'.join(ids)
 
+    def id_csv(self):
+        ids = [str(x) for x in self.id]
+        return u'_'.join(ids)
+
     def get_sheet(self):
         return self.question.sheet
 
