@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-13 19:45+0100\n"
-"PO-Revision-Date: 2014-10-28 18:40+0200\n"
-"Last-Translator: Rodrigo Müller <rodrigo_blu@yahoo.com.br>\n"
-"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
-"sdaps/master/pt_BR/>\n"
+"PO-Revision-Date: 2015-03-28 14:28+0200\n"
+"Last-Translator: Lucas Villar <lucas@villarcorp.com.br>\n"
+"Language-Team: Portuguese (Brazil) "
+"<https://hosted.weblate.org/projects/sdaps/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.0-dev\n"
+"X-Generator: Weblate 2.3-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
@@ -267,13 +267,13 @@ msgid "Export data to CSV file."
 msgstr "Exportar dados para arquivo CSV."
 
 #: ../sdaps/cmdline/csvdata.py:46
-#, fuzzy, python-format
+#, python-format
 msgid "Filename to store the data to (default: data_%%i.csv)"
-msgstr "Nome de arquivo para armazenar os dados (padrão: ids_%%i)"
+msgstr "Nome de arquivo para armazenar os dados (padrão: data_%%i.csv)"
 
 #: ../sdaps/cmdline/csvdata.py:48
 msgid "The delimiter used in the CSV file (default ',')"
-msgstr ""
+msgstr "O delimitador usado no arquivo CSV (default ',')"
 
 #: ../sdaps/cmdline/csvdata.py:52 ../sdaps/cmdline/report.py:31
 #: ../sdaps/cmdline/reporttex.py:52
@@ -285,13 +285,13 @@ msgid "Export images of freeform fields."
 msgstr "Exportar imagens dos campos de forma livre."
 
 #: ../sdaps/cmdline/csvdata.py:60
-#, fuzzy
 msgid "Export an image for each question that includes all boxes."
-msgstr "Exportação e importação de IDs de questionário."
+msgstr "Exportar uma imagem para cada pergunta que inclui todas as caixas."
 
 #: ../sdaps/cmdline/csvdata.py:66
+#, fuzzy
 msgid "Export the recognition quality for each checkbox."
-msgstr ""
+msgstr "Exportar a qualidade de reconhecimento para cada caixa de seleção."
 
 #: ../sdaps/cmdline/csvdata.py:74
 msgid "Import data to from a CSV file."
