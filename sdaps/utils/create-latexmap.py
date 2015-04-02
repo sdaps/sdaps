@@ -38,8 +38,11 @@ regexp = re.compile(r'^\\DeclareUnicodeCharacter\{(?P<unicode>[0-9a-fA-F]{4})\}\
 
 mapping = []
 for match in regexp.finditer(data):
+    repr = match.group('str')
+    repr = repr.replace('\\@tabacckludge', '\\')
+    repr = repr.replace('\\', '\\\\').replace('\'', '\\\'')
     mapping.append('''    u\'%s\': u\'\\u%s\'''' %
-                   (match.group('str').replace('\\', '\\\\').replace('\'', '\\\''),
+                   (repr,
                     match.group('unicode')))
 
 output.write('''#This file is auto generated from the latex unicode mapping.
