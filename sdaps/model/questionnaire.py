@@ -270,7 +270,13 @@ class Text(Question):
         '''it's a bool, wether there is content in the textbox
         '''
         assert len(self.boxes) == 1
-        return self.boxes[0].data.state
+        text = ""
+        for box in self.boxes:
+            text = text + box.data.text
+        if text:
+            return text
+        else:
+            return self.boxes[0].data.state
 
 
 class Additional_Head(Head):
