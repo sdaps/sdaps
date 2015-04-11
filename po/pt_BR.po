@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-13 19:45+0100\n"
-"PO-Revision-Date: 2015-03-28 14:28+0200\n"
-"Last-Translator: Lucas Villar <lucas@villarcorp.com.br>\n"
+"PO-Revision-Date: 2015-04-11 22:45+0200\n"
+"Last-Translator: Thiago Casotti <thiago.casotti@uol.com.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<https://hosted.weblate.org/projects/sdaps/master/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -289,9 +289,8 @@ msgid "Export an image for each question that includes all boxes."
 msgstr "Exportar uma imagem para cada pergunta que inclui todas as caixas."
 
 #: ../sdaps/cmdline/csvdata.py:66
-#, fuzzy
 msgid "Export the recognition quality for each checkbox."
-msgstr "Exportar a qualidade de reconhecimento para cada caixa de seleção."
+msgstr "Exportar a qualidade de reconhecimento para cada caixa de verificação."
 
 #: ../sdaps/cmdline/csvdata.py:74
 msgid "Import data to from a CSV file."
