@@ -31,6 +31,7 @@ TEXTBOX = u'Textbox'
 RANGE_PREFIX = u'Range'
 
 index_re = re.compile(r'''^(?P<index>(?:[0-9]+\.)+)(?P<string>.*)$''')
+arg_index_re = re.compile(r'''^(?P<arg>[^\[]*)(\[(?P<index>([0-9]+\.)*[0-9]+)\])?$''')
 
 
 def get_index_and_string(string):
@@ -63,6 +64,20 @@ def parse(survey):
         arg = arg.strip()
         value = value.strip()
         value = latex_to_unicode(value)
+
+        match = arg_index_re.match(arg)
+        if match is not None:
+            arg = match.group('arg')
+            index = match.group('index')
+            if index is None:
+                try:
+                    survey.questionnaire.qobjects[-1]
+                except IndexError:
+                    pass
+            else:
+                index = tuple([int(s) for s in index.split('.')])
+                qobject = survey.questionnaire.find_object(index)
+
 
         if arg == 'Title':
             survey.title = value
@@ -146,11 +161,19 @@ def parse(survey):
 
             if boxtype == 'Textbox':
                 box = model.questionnaire.Textbox()
-                assert(len(args) == 6)
+                if len(args) == 8:
+                    box.var = args[6] if args[6] else None
+                    box.value = int(args[7]) if args[7] else None
+                else:
+                    assert(len(args) == 6)
             else:
                 box = model.questionnaire.Checkbox()
                 if len(args) == 7:
                     box.form = args[6]
+                elif len(args) == 9:
+                    box.form = args[6]
+                    box.var = args[7] if args[7] else None
+                    box.value = int(args[8]) if args[8] else None
                 else:
                     assert(len(args) == 6)
 

@@ -33,13 +33,13 @@ class QObject(model.buddy.Buddy):
         pass
 
     def question(self, chars):
-        pass
+        raise AssertionError('Setting a question on this QObject type is not possible.')
 
     def answer(self, chars):
-        pass
+        raise AssertionError('Adding an answer to this QObject type is not possible.')
 
     def box(self, box):
-        pass
+        raise AssertionError('Adding a box to this QObject type is not possible.')
 
     def validate(self):
         pass

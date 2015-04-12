@@ -129,12 +129,12 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
             # for qobject in survey.questionnaire.qobjects:
             #     qobject.setup.validate()
 
-        except Exception, e:
+        except:
             log.error(_("Caught an Exception while parsing the SDAPS file. The current state is:"))
             print >>sys.stderr, unicode(survey.questionnaire)
             print >>sys.stderr, "------------------------------------"
 
-            raise e
+            raise
 
         # Parse additionalqobjects
         if additionalqobjects:
