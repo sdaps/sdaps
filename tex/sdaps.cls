@@ -1184,7 +1184,7 @@
       \setlength\@tempdimboxlower\@tempdimlower%
       \advance\@tempdimboxlower by -\textboxbottompad%
       %
-      \setlength\@tempdima{2cm}%
+      \setlength\@tempdima{1cm}%
       \@tempdimruleheight=\@tempdimheight%
       \advance\@tempdimruleheight by +2.0\elementlinewidth%
       \advance\@tempdimruleheight by \@tempdimlower%
