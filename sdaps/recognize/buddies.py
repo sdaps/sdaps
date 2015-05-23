@@ -236,10 +236,15 @@ class Sheet(model.buddy.Buddy):
                     log.warn(_('%s, %i: Could not read questionnaire ID, but should be able to.') % \
                              (image.filename, image.tiff_page))
                     failed_pages.add(page)
+                if image.questionnaire_id is not None:
+                    questionnaire_ids.append(image.questionnaire_id)
 
             self.duplex_copy_image_attr(failed_pages, "questionnaire_id", _("Could not read questionnaire ID of either %s, %i or %s, %i!"))
 
-            self.obj.questionnaire_id = self.obj.images[0].questionnaire_id
+            if len(questionnaire_ids):
+                self.obj.questionnaire_id = questionnaire_ids
+            else:
+                self.obj.questionnaire_id
 
         # Try to load the global ID. If it does not exist we will get None, if
         # it does, then it will be non-None. We don't care much about it
