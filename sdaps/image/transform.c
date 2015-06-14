@@ -322,7 +322,7 @@ hough_transform(cairo_surface_t *surface, guint angle_bins, guint distance_bins,
 	result->distance_bins = distance_bins;
 	result->max_distance = (guint) sqrt(img_width*img_width + img_height*img_height);
 
-	result->data = g_malloc0_n(sizeof(*result->data), result->angle_bins*result->distance_bins);
+	result->data = g_malloc0(sizeof(*result->data) * result->angle_bins*result->distance_bins);
 	hough_create_lut(result);
 
 	pixels = (guint32*) cairo_image_surface_get_data(surface);
