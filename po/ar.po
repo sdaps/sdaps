@@ -8,20 +8,21 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-13 19:45+0100\n"
-"PO-Revision-Date: 2014-01-23 09:31+0200\n"
-"Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Arabic <http://hosted.weblate.org/projects/sdaps/master/ar/>\n"
+"PO-Revision-Date: 2015-07-01 10:51+0200\n"
+"Last-Translator: Hatim Alahmadi <mandrivagnome@gmail.com>\n"
+"Language-Team: Arabic <https://hosted.weblate.org/projects/sdaps/master/ar/>"
+"\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 1.9-dev\n"
+"X-Generator: Weblate 2.4-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
-msgstr ""
+msgstr "SDAPS -- اداة ورقة الاستفتاءات الاساسية."
 
 #: ../sdaps/script.py:45
 msgid "project directory|The SDAPS project."
@@ -60,7 +61,7 @@ msgstr "خطأ: "
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
-msgstr "إضافة الاسئلة الممسوحة للاستفتاء"
+msgstr "إضافة الاسئلة الممسوحة للاستفتاء."
 
 #: ../sdaps/cmdline/add.py:32
 msgid ""
@@ -89,14 +90,12 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/cmdline/add.py:53
-#, fuzzy
 msgid "Copy the files into the directory (default)."
-msgstr "نسخ الملفات إلى المسار (الافتراضي)"
+msgstr "نسخ الملفات إلى المسار (الافتراضي)."
 
 #: ../sdaps/cmdline/add.py:58
-#, fuzzy
 msgid "Do not copy the files into the directory."
-msgstr "لا تنسخ الملفات إلى المسار"
+msgstr "لا تنسخ الملفات إلى المسار."
 
 #: ../sdaps/cmdline/add.py:62
 msgid ""
@@ -191,9 +190,8 @@ msgid "No output filename specified!"
 msgstr ""
 
 #: ../sdaps/cmdline/cover.py:27
-#, fuzzy
 msgid "Create a cover for the questionnaires."
-msgstr "تصدير واستيراد معرفات الاسئلة."
+msgstr "انشاء غلاف للاسئلة."
 
 #: ../sdaps/cmdline/cover.py:28
 msgid ""
@@ -422,9 +420,8 @@ msgid "Save the generated TeX files instead of the final PDF."
 msgstr ""
 
 #: ../sdaps/cmdline/setup.py:28
-#, fuzzy
 msgid "Create a new survey using an ODT document."
-msgstr "انشاء استفتاء جديد باستخدام مستند لتيك."
+msgstr "انشاء استفتاء جديد باستخدام مستند odt ."
 
 #: ../sdaps/cmdline/setup.py:29
 msgid ""
@@ -434,9 +431,8 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/cmdline/setup.py:34
-#, fuzzy
 msgid "The ODT Document"
-msgstr "مستند لتيك"
+msgstr "مستند odt"
 
 #: ../sdaps/cmdline/setup.py:36
 msgid "PDF export of the ODT document"
@@ -455,9 +451,8 @@ msgid "Disable printing of the survey ID."
 msgstr ""
 
 #: ../sdaps/cmdline/setup.py:57
-#, fuzzy
 msgid "Enable printing of the questionnaire ID."
-msgstr "تصدير واستيراد معرفات الاسئلة."
+msgstr "تفعيل طباعة معرفات الاسئلة."
 
 #: ../sdaps/cmdline/setup.py:61
 msgid "Disable printing of the questionnaire ID (default)."
@@ -692,9 +687,8 @@ msgid "Empty"
 msgstr ""
 
 #: ../sdaps/gui/widget_buddies.py:74 ../sdaps/gui/widget_buddies.py:98
-#, fuzzy
 msgid "<b>Questionnaire ID: </b>"
-msgstr "معرف-السؤال: %i"
+msgstr "<b>معرف السؤال: </b>"
 
 #: ../sdaps/image/__init__.py:47
 msgid ""
@@ -905,9 +899,8 @@ msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
 msgstr ""
 
 #: ../sdaps/setupodt/__init__.py:45 ../sdaps/setuptex/__init__.py:68
-#, fuzzy
 msgid "The survey directory already exists."
-msgstr "مسار الاستفتاء موجود مسبقا"
+msgstr "مسار الاستفتاء موجود مسبقا."
 
 #: ../sdaps/setupodt/__init__.py:50
 #, python-format
