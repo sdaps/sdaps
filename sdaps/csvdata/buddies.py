@@ -63,7 +63,7 @@ class Questionnaire(model.buddy.Buddy):
 
     def import_data(self, data):
         try:
-            self.obj.survey.goto_questionnaire_id(int(data['questionnaire_id']))
+            self.obj.survey.goto_questionnaire_id(data['questionnaire_id'])
         except ValueError:
             # The sheet does not exist
             # Ignore it
@@ -254,6 +254,6 @@ class Textbox(Box):
             text = unicode(data)
 
         self.obj.data.state = state
-        self.obj.data.text = state
+        self.obj.data.text = text
 
 

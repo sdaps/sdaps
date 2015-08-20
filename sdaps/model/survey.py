@@ -274,8 +274,15 @@ class Survey(object):
     def goto_questionnaire_id(self, questionnaire_id):
         u'''goto the sheet object specified by its questionnaire_id
         '''
+
+        qids = set()
+        try:
+            qids.add(int(questionnaire_id))
+        except ValueError:
+            pass
+
         sheets = filter(
-            lambda sheet: sheet.questionnaire_id == questionnaire_id,
+            lambda sheet: sheet.questionnaire_id in qids,
             self.sheets
         )
         if len(sheets) == 1:
