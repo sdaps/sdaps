@@ -185,7 +185,7 @@ class Survey(object):
 
     def save(self):
         import ConfigParser
-        file = bz2.BZ2File(os.path.join(self.survey_dir, 'survey'), 'w')
+        file = bz2.BZ2File(os.path.join(self.survey_dir, '.survey.tmp'), 'w')
         cPickle.dump(self, file, 2)
         file.close()
 
@@ -217,7 +217,25 @@ class Survey(object):
         # it is not stored there internally..
         config.set('questionnaire', 'survey_id', str(self.survey_id))
 
-        config.write(open(os.path.join(self.survey_dir, 'info'), 'w'))
+        info_fd = open(os.path.join(self.survey_dir, '.info.tmp'), 'w')
+        config.write(info_fd)
+
+        # Does that work with the fsync on a different FD?
+        os.fsync(open(os.path.join(self.survey_dir, '.survey.tmp'), 'a'))
+        os.fsync(info_fd)
+        info_fd.close()
+
+        # Now move the new files over, saving the old ones, ignore error to move old files away
+        # as the may not exist.
+        try:
+            os.rename(os.path.join(self.survey_dir, 'survey'), os.path.join(self.survey_dir, 'survey~'))
+            os.rename(os.path.join(self.survey_dir, 'info'), os.path.join(self.survey_dir, 'info~'))
+        except OSError:
+            pass
+
+        os.rename(os.path.join(self.survey_dir, '.survey.tmp'), os.path.join(self.survey_dir, 'survey'))
+        os.rename(os.path.join(self.survey_dir, '.info.tmp'), os.path.join(self.survey_dir, 'info'))
+
 
     def path(self, *path):
         return os.path.join(self.survey_dir, *path)
