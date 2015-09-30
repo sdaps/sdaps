@@ -68,6 +68,8 @@ while images:
 
     if survey.defs.duplex:
         add_image(survey, *images.pop(0))
+    else:
+        add_image(survey, 'DUMMY', -1)
 
     # Run the recognition algorithm over the given images
     survey.questionnaire.recognize.recognize()
