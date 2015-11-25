@@ -1050,7 +1050,7 @@
     \\ %
     \setcounter{choicegroupnumchoices}{-1} %
   \fi %
-  \immediate\write\sdapsoutfile{QObject-Choice=\unexpanded{#1}}%
+  \immediate\write\sdapsoutfile{QObject-Choice=XAUTO. \unexpanded{#1}}%
   {\usekomafont{choicegrouplinefont}\strut#1\strut} \@sdaps@choicegroup@boxes \\ %
 }
 
@@ -1097,7 +1097,7 @@
 }
 
 \providecommand*{\markline}[3]{%
-  \immediate\write\sdapsoutfile{QObject-Mark=\unexpanded{#1}}%
+  \immediate\write\sdapsoutfile{QObject-Mark=XAUTO. \unexpanded{#1}}%
   \immediate\write\sdapsoutfile{Answer-Mark=\unexpanded{#2}}%
   {\usekomafont{marklinequestionfont}\strut#1\strut} & {\usekomafont{marklinechoicefont}#2} \@sdaps@markboxes & {\usekomafont{marklinechoicefont}#3}%
   \immediate\write\sdapsoutfile{Answer-Mark=\unexpanded{#3}}%
