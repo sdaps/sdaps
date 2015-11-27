@@ -132,7 +132,7 @@ def setup(survey, questionnaire_odt, questionnaire_pdf, additionalqobjects, opti
     print unicode(survey.questionnaire)
 
     # Create the survey
-    os.mkdir(survey.path())
+    os.makedirs(survey.path())
 
     log.logfile.open(survey.path('log'))
 
