@@ -1,5 +1,4 @@
-SDAPS
-=====
+# SDAPS
 
 This Program can be used to carry out paper based surveys.
 
@@ -17,8 +16,7 @@ just scan them in, let sdaps run over them, and let it create a report with
 the results.
 
 
-Requirements
-============
+## Requirements
 
 Depending on what part of SDAPS you use, different dependencies are
 required.
@@ -66,29 +64,25 @@ Debug output (annotate):
  * Poppler and introspection data
  * python-gi
 
-Installation
-============
+## Installation
 
 You can install sdaps using "./setup.py install". The C extension will
 be compiled automatically, but of course you have to have all the
 dependencies installed for this to work.
 
-Standalone execution
-====================
+## Standalone execution
 
 As an alternative to installing sdaps it is also supported to run it without
 installation. To do this run "./setup.py build" to build the binary modules
 and translation. After this execute sdaps using the provided "sdaps.py"
 script in the toplevel directory.
 
-Using SDAPS
-===========
+## Using SDAPS
 
 Please run sdaps with "--help" after installing it for a list of commands.
 Also check the website http://sdaps.org for some examples.
 
-Quality of the recognition
-==========================
+## Quality of the recognition
 
 The quality of the recognition in SDAPS is quite good in my experience.
 There is a certain amount of wrong detections, that mostly arise from people
@@ -104,8 +98,7 @@ by using different heuristics to detect the case, but it is not foolproof.
 
 Suggestions on how to decrease the error rate are of course welcome.
 
-Matrix Errors
--------------
+### Matrix Errors
 
 It can happen that SDAPS is not able to calculate the transformation matrix
 which transforms the pixel space of the image into the mm coordinate system
@@ -115,4 +108,3 @@ It is usually possible to manually correct them using the GUI, but that can
 be quite tedious.
 
 See also TROUBLESHOOTING for some more information.
-
