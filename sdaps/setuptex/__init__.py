@@ -83,7 +83,7 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
     survey.add_questionnaire(model.questionnaire.Questionnaire())
 
     # Create the survey directory, and copy the tex file.
-    os.mkdir(survey.path())
+    os.makedirs(survey.path())
     try:
         shutil.copy(questionnaire_tex, survey.path('questionnaire.tex'))
 
