@@ -24,8 +24,10 @@ _ = ugettext
 
 def convert_images(images, outfile, paper_width, paper_height, transform=False):
 
+    portrait = paper_height >= paper_width
+
     for i, (img, filename, page) in enumerate(opencv.iter_images_and_pages(images)):
-        img = opencv.ensure_portrait(img)
+        img = opencv.ensure_orientation(img, portrait)
         img = opencv.sharpen(img)
 
         if transform:

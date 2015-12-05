@@ -162,8 +162,9 @@ def to_a1_surf(img):
 
     return surf_a1
 
-def ensure_portrait(img):
-    if img.shape[1] > img.shape[0]:
+def ensure_orientation(img, portrait):
+    img_portrait = img.shape[1] <= img.shape[0]
+    if img_portrait != portrait:
         # Rotate into new array (CV does not like negative strides and such)
         new = np.empty((img.shape[1],img.shape[0])+img.shape[2:], dtype=img.dtype)
         new[:] = np.rot90(img)
