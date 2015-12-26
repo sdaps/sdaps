@@ -135,10 +135,11 @@ class QObject(buddy.Object):
         ids = [str(x) for x in self.id]
         return u'.'.join(ids)
 
-    def id_csv(self, theid=None):
-        if theid is None:
-            theid = self.id
-        ids = [str(x) for x in theid]
+    def id_csv(self):
+        if self.var:
+            return self.var
+
+        ids = [str(x) for x in self.id]
         return u'_'.join(ids)
 
     def id_filter(self):
@@ -187,7 +188,7 @@ class Question(QObject):
         QObject.init_attributes(self)
         self.page_number = 0
         self.question = unicode()
-        self.variable = None
+        self.var = None
 
     def calculate_survey_id(self, md5):
         for box in self.boxes:
@@ -231,6 +232,16 @@ class Option(Question):
             [Question.__unicode__(self)] +
             [unicode(box) for box in self.boxes]
         )
+
+    def add_box(self, box):
+        Question.add_box(self, box)
+        if box.var:
+            var = box.var.rsplit('_', 1)
+            if len(var) != 2:
+                return
+
+            assert not self.var or self.var == var[0]
+            self.var = var[0]
 
     def get_answer(self):
         '''it's a list containing all selected values
@@ -362,7 +373,7 @@ class Box(buddy.Object, DataObject):
         self.height = 0
         self.text = unicode()
 
-        self.variable = None
+        self.var = None
         self.value = None
 
     def init_id(self, id):
@@ -375,6 +386,9 @@ class Box(buddy.Object, DataObject):
         return u'.'.join(ids)
 
     def id_csv(self):
+        if self.var:
+            return self.var
+
         ids = [str(x) for x in self.id]
         return u'_'.join(ids)
 
