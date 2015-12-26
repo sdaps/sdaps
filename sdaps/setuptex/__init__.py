@@ -48,9 +48,9 @@ def write_latex_override_file(survey, draft=False):
     latex_override.write('% It is parsed after the setup phase of the SDAPS class.\n\n')
     latex_override.write('\\@STAMPtrue\n')
     latex_override.write('\\@PAGEMARKtrue\n\n')
-    latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2 ** 16)))
-    latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2 ** 16)))
-    latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
+    latex_override.write('\\ifcsname surveyidlshw\\endcsname\\setcounter{surveyidlshw}{%i}\\fi\n' % (survey.survey_id % (2 ** 16)))
+    latex_override.write('\\ifcsname surveyidmshw\\endcsname\\setcounter{surveyidmshw}{%i}\\fi\n' % (survey.survey_id / (2 ** 16)))
+    latex_override.write('\\def\\surveyid{%i}\n' % (survey.survey_id))
     if not draft:
         latex_override.write('% We turn off draft mode if questionnaire IDs are not printed.\n')
         latex_override.write('\\if@PrintQuestionnaireId\n')
