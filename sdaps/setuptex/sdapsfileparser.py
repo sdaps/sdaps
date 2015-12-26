@@ -119,6 +119,8 @@ def parse(survey):
 
             qobject_type = arg[len(QOBJECT_PREFIX) + 1:]
 
+            qobject_type = qobject_type.lower().capitalize()
+
             qobject = getattr(model.questionnaire, qobject_type)
             assert issubclass(qobject, model.questionnaire.QObject)
             qobject = qobject()
