@@ -62,6 +62,55 @@ def unicode_to_latex(string):
     # Ensure only ASCII characters are left
     return string.encode('ascii')
 
+def quote_braces(string):
+    return string.replace('{', '\\{').replace('}', '\\}')
+
+def write_override(survey, optfile, draft=False, questionnaire_ids=None):
+    latex_override = open(optfile, 'w')
+
+    if questionnaire_ids:
+        quoted_ids = [quote_braces(str(id)) for id in questionnaire_ids]
+    else:
+        quoted_ids = []
+
+    latex_override.write('''
+%% This file exists to force the latex document into "final" mode.
+%% It is parsed after the setup phase of the SDAPS class.
+
+%% Old class vs. new class
+\\ifcsname @PAGEMARKtrue\endcsname
+    \\setcounter{surveyidlshw}{%(survey_id_lshw)i}
+    \\setcounter{surveyidmshw}{%(survey_id_mshw)i}
+    \\def\\surveyid{%(survey_id)i}
+    \\def\\globalid{%(global_id)s}
+    \\@STAMPtrue
+    \\@PAGEMARKtrue
+    \\@sdaps@draft%(draft)s
+    \\def\\questionnaireids{%(qids)s}
+\\else
+  \\group_begin:
+    \\def\\setoptions#1#2#3{
+      \\tl_set:Nn \\g_sdaps_survey_id_tl { #1 }
+      \\tl_set:Nn \\g_sdaps_global_id_tl { #2 }
+      \\seq_gset_from_clist:Nn \\g_sdaps_questionnaire_ids_seq { #3 }
+    }
+    \\bool_set_%(draft)s:N \g_sdaps_draft_bool
+
+    \\ExplSyntaxOff
+      \\setoptions{%(survey_id)i}{%(global_id)s}{%(qids)s}
+    \\ExplSyntaxOn
+  \group_end:
+\\fi
+''' % {
+            'survey_id' : survey.survey_id,
+            'survey_id_lshw' : (survey.survey_id % (2 ** 16)),
+            'survey_id_mshw' : (survey.survey_id / (2 ** 16)),
+            'draft' : 'true' if draft else 'false',
+            'global_id' : quote_braces(survey.global_id) if survey.global_id is not None else '',
+            'qids' : '{' + '},{'.join(quoted_ids) + '}' if quoted_ids else '{NONE}',
+        })
+    latex_override.close()
+
 # This is a list, because the order is relevant!
 ascii_to_latex = [
     (u'{', u'\\{'),

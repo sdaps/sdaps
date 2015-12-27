@@ -12,9 +12,6 @@ from sdaps.utils import latex
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-def tex_quote_braces(string):
-    return string.replace('{', '\\{').replace('}', '\\}')
-
 def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
     if questionnaire_ids is None:
@@ -24,21 +21,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
     tmpdir = tempfile.mkdtemp()
 
     try:
-        # Similar to setuptex/setup.py, but we also set questionnaire IDs
-        latex_override = open(os.path.join(tmpdir, 'sdaps.opt'), 'w')
-        latex_override.write('% This file exists to force the latex document into "final" mode.\n')
-        latex_override.write('% It is parsed after the setup phase of the SDAPS class.\n\n')
-        latex_override.write('\setcounter{surveyidlshw}{%i}\n' % (survey.survey_id % (2 ** 16)))
-        latex_override.write('\setcounter{surveyidmshw}{%i}\n' % (survey.survey_id / (2 ** 16)))
-        latex_override.write('\def\surveyid{%i}\n' % (survey.survey_id))
-        latex_override.write('\def\globalid{%s}\n' % (tex_quote_braces(survey.global_id)) if survey.global_id is not None else '')
-        latex_override.write('\\@STAMPtrue\n')
-        latex_override.write('\\@PAGEMARKtrue\n')
-        latex_override.write('\\@sdaps@draftfalse\n')
-        if questionnaire_ids is not None:
-            quoted_ids = [tex_quote_braces(str(id)) for id in questionnaire_ids]
-            latex_override.write('\def\questionnaireids{{%s}}\n' % '},{'.join(quoted_ids))
-        latex_override.close()
+        latex.write_override(survey, os.path.join(tmpdir, 'sdaps.opt'), questionnaire_ids=questionnaire_ids)
 
         print _("Running %s now twice to generate the stamped questionnaire.") % defs.latex_engine
         latex.compile('questionnaire.tex', tmpdir, inputs=[os.path.abspath(survey.path())])
