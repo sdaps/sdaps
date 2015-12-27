@@ -1,6 +1,6 @@
 include MANIFEST.in
 include NEWS
-include README
+include README.md
 include TROUBLESHOOTING
 include COPYING
 include sdaps.py
