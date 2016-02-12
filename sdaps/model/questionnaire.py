@@ -49,7 +49,7 @@ class Questionnaire(buddy.Object):
     def __init__(self):
         self.survey = None
         self.qobjects = list()
-        self.last_id = (0, 0)
+        self.last_id = (-1,)
         self.init_attributes()
         self._notify_changed_list = list()
 
