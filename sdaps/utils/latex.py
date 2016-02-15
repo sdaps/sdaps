@@ -90,11 +90,11 @@ def write_override(survey, optfile, draft=False, questionnaire_ids=None):
 \\else
   \\group_begin:
     \\def\\setoptions#1#2#3{
-      \\tl_set:Nn \\g_sdaps_survey_id_tl { #1 }
-      \\tl_set:Nn \\g_sdaps_global_id_tl { #2 }
+      \\tl_gset:Nn \\g_sdaps_survey_id_tl { #1 }
+      \\tl_gset:Nn \\g_sdaps_global_id_tl { #2 }
       \\seq_gset_from_clist:Nn \\g_sdaps_questionnaire_ids_seq { #3 }
     }
-    \\bool_set_%(draft)s:N \g_sdaps_draft_bool
+    \\bool_gset_%(draft)s:N \g_sdaps_draft_bool
 
     \\ExplSyntaxOff
       \\setoptions{%(survey_id)i}{%(global_id)s}{%(qids)s}
