@@ -31,7 +31,7 @@ parser = script.subparsers.add_parser("reset",
 
 @script.connect(parser)
 @script.logfile
-def clean(cmdline):
+def reset(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
 
     from sdaps import reset
