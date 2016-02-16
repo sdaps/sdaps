@@ -14,6 +14,7 @@ from . import recognize
 from . import reorder
 from . import report
 from . import reporttex
+from . import reset
 from . import setup
 from . import setuptex
 from . import stamp
