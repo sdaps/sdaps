@@ -27,10 +27,7 @@ _ = ugettext
 
 def reset(survey):
     print "Removing stored data..."
-    data = None
-    with bz2.BZ2File(os.path.join(survey.survey_dir, 'survey'), 'rb') as f:
-        data = cPickle.load(f)
-        data.sheets = []
-    with bz2.BZ2File(os.path.join(survey.survey_dir, 'survey'), 'w') as f:
-        cPickle.dump(data, f, 2)
+    survey.sheets = []
+    survey.questionnaire_ids = []
+    survey.save()
     print "Done"
