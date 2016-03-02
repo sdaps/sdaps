@@ -62,42 +62,17 @@ def parse(questionnaire_pdf):
         # TODO Test if its A4...
         width = page['MediaBox'][2]
         height = page['MediaBox'][3]
+
         for obj in contents.contents:
+            newbox = None
             if isinstance(obj, pdfpath.Path) and obj.painting:
                 # only analyse painting paths. Ignore clipping paths
                 # in fact, the subpath contains all information
                 if len(obj.subpaths) == 1 and isinstance(obj.subpaths[0], pdfpath.Rectangle):
                     # OpenOffice seams to construct only paths containing exactly one rectangle
                     rect = obj.subpaths[0]
-                    # if it's a big rectangle, it's a textbox
-                    if TEXTBOX_WIDTH[0] < rect.width < TEXTBOX_WIDTH[1] and \
-                            TEXTBOX_HEIGHT[0] < rect.height < TEXTBOX_HEIGHT[1]:
-                        box = model.questionnaire.Textbox()
-                        box_linecount = 0
-                        box.setup.setup(
-                            page_number,
-                            rect.point.x / mm,
-                            # transform the coordinate origin from the lower left corner to the upper left corner
-                            # and name the upper left corner of the box, not the lower left one
-                            (height - rect.point.y - rect.height) / mm,
-                            rect.width / mm,
-                            rect.height / mm
-                        )
-                    # if it's a small square, it's a checkbox
-                    elif CHECKBOX_SIZE[0] < rect.width < CHECKBOX_SIZE[1] and \
-                            CHECKBOX_SIZE[0] < rect.height < CHECKBOX_SIZE[1]:
-                        box = model.questionnaire.Checkbox()
-                        box_linecount = 0
-                        box.setup.setup(
-                            page_number,
-                            rect.point.x / mm,
-                            # transform the coordinate origin from the lower left corner to the upper left corner
-                            # and name the upper left corner of the box, not the lower left one
-                            (height - rect.point.y - rect.height) / mm,
-                            rect.width / mm,
-                            rect.height / mm
-                        )
-                    elif LINE_SIZE[0] < rect.width < LINE_SIZE[1] or \
+
+                    if LINE_SIZE[0] < rect.width < LINE_SIZE[1] or \
                             LINE_SIZE[0] < rect.height < LINE_SIZE[1]:
 
                         if box is None:
@@ -125,19 +100,11 @@ def parse(questionnaire_pdf):
                             box = None
                             box_linecount = 0
                     else:
-                        box_linecount = 0
-                        box = DummyBox(
-                            page_number,
-                            rect.point.x / mm,
-                            # transform the coordinate origin from the lower left corner to the upper left corner
-                            # and name the upper left corner of the box, not the lower left one
-                            (height - rect.point.y - rect.height) / mm,
-                            rect.width / mm,
-                            rect.height / mm
-                        )
+                        # transform the coordinate origin from the lower left corner to the upper left corner
+                        # and name the upper left corner of the box, not the lower left one
+                        newbox = (rect.point.x, (height - rect.point.y - rect.height), rect.width, rect.height)
+
                 elif len(obj.subpaths) == 1 and isinstance(obj.subpaths[0], pdfpath.Subpath):
-                    if box is None:
-                        continue
 
                     # OOo 3.x draws the box using a move + 4 lines + close.
                     if len(obj.subpaths[0].contents) == 6:
@@ -146,59 +113,73 @@ def parse(questionnaire_pdf):
                         point = obj.subpaths[0].contents[0]
                         if not isinstance(point, pdfpath.Move):
                             continue
-                        point = point.point
-                        if not (point.x / mm - box.x < 0.0001 and
-                                (height - point.y) / mm - box.y < 0.0001):
-                            continue
+                        point_a = point.point
 
                         point = obj.subpaths[0].contents[1]
                         if not isinstance(point, pdfpath.Line):
                             continue
-                        point = point.point2
-                        if not (point.x / mm - box.x < 0.0001 and
-                                (height - point.y) / mm - box.y - box.height < 0.0001):
-                            continue
+                        point_b = point.point2
 
                         point = obj.subpaths[0].contents[2]
                         if not isinstance(point, pdfpath.Line):
                             continue
-                        point = point.point2
-                        if not (point.x / mm - box.x - box.width < 0.0001 and
-                                (height - point.y) / mm - box.y - box.height < 0.0001):
-                            continue
+                        point_c = point.point2
 
                         point = obj.subpaths[0].contents[3]
                         if not isinstance(point, pdfpath.Line):
                             continue
-                        point = point.point2
-                        if not (point.x / mm - box.x - box.width < 0.0001 and
-                                (height - point.y) / mm - box.y < 0.0001):
-                            continue
+                        point_d = point.point2
+
                         point = obj.subpaths[0].contents[4]
                         if not isinstance(point, pdfpath.Line):
                             continue
-                        point = point.point2
-
-                        if not (point.x / mm - box.x < 0.0001 and
-                                (height - point.y) / mm - box.y - box.height < 0.0001):
-                            continue
+                        point_e = point.point2
 
                         if not isinstance(obj.subpaths[0].contents[5], pdfpath.Close):
                             continue
 
-                        if isinstance(box, DummyBox):
-                            print _("Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: %.1f).") % \
-                                (box.page, box.x, box.y, box.width, box.height)
-                        else:
-                            boxes.append(box)
-                        box = None
+                        if (point_e.x == point_a.x and point_e.y == point_a.y):
+                            # assume we have a box, just use first and third point
+                            # to calculate size.
+                            bwidth = point_c.x - point_a.x
+                            bheight = point_a.y - point_c.y
+                            newbox = ( point_a.x, (height - point_a.y), bwidth, bheight )
+
+                        if box is not None:
+                            bad = False
+                            if not (point_a.x / mm - box.x < 0.0001 and
+                                    (height - point_a.y) / mm - box.y < 0.0001):
+                                bad = True
+                            if not (point_b.x / mm - box.x < 0.0001 and
+                                    (height - point_b.y) / mm - box.y - box.height < 0.0001):
+                                bad = True
+                            if not (point_c.x / mm - box.x - box.width < 0.0001 and
+                                    (height - point_c.y) / mm - box.y - box.height < 0.0001):
+                                bad = True
+                            if not (point_d.x / mm - box.x - box.width < 0.0001 and
+                                    (height - point_d.y) / mm - box.y < 0.0001):
+                                bad = True
+                            if not (point_e.x / mm - box.x < 0.0001 and
+                                    (height - point_e.y) / mm - box.y - box.height < 0.0001):
+                                bad = True
+
+                            if not bad:
+                                if isinstance(box, DummyBox):
+                                    print _("Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: %.1f).") % \
+                                        (box.page, box.x, box.y, box.width, box.height)
+                                else:
+                                    boxes.append(box)
+                                box = None
 
                     # LibreOffice 3.5 draws the border as four trapezoids, with
                     # a 45degree angle in between, then filling it
                     elif len(obj.subpaths[0].contents) == 8:
+                        if box is None:
+                            continue
+
                         # 8 subpaths, m,l,l,l,l,l,l,h
                         # The angled corners have 3 points, instead of two, whoever thought of that ...
-                        # We just check that all points are inside the rectangle here
+                        # We just check that all points are acurately inside the rectangle here
                         x_min = 99999
                         y_min = 99999
                         x_max = -99999
@@ -225,10 +206,12 @@ def parse(questionnaire_pdf):
                         # LO 3.5.1.2 on MacOSX is 0.1 pt off for one of the
                         # border thicknesses.
                         if abs(_width - 1) < 0.1001:
-                            if abs(_height - box.height * mm) < 0.0001:
+                            if abs(_height - box.height * mm) < 0.0001 and \
+                               abs(height - y_max - box.y * mm) < 0.0001:
                                 box_linecount += 1
                         elif abs(_height - 1) < 0.1001:
-                            if abs(_width - box.width * mm) < 0.0001:
+                            if abs(_width - box.width * mm) < 0.0001 and \
+                               abs(x_min - box.x * mm) < 0.0001:
                                 box_linecount += 1
                         else:
                             box = None
@@ -238,6 +221,42 @@ def parse(questionnaire_pdf):
                             boxes.append(box)
                             box = None
                             box_linecount = 0
+
+            if newbox is not None:
+                # if it's a big rectangle, it's a textbox
+                if TEXTBOX_WIDTH[0] < newbox[2] < TEXTBOX_WIDTH[1] and \
+                        TEXTBOX_HEIGHT[0] < newbox[3] < TEXTBOX_HEIGHT[1]:
+                    box = model.questionnaire.Textbox()
+                    box_linecount = 0
+                    box.setup.setup(
+                        page_number,
+                        newbox[0] / mm,
+                        newbox[1] / mm,
+                        newbox[2] / mm,
+                        newbox[3] / mm
+                    )
+                # if it's a small square, it's a checkbox
+                elif CHECKBOX_SIZE[0] < newbox[2] < CHECKBOX_SIZE[1] and \
+                        CHECKBOX_SIZE[0] < newbox[3] < CHECKBOX_SIZE[1]:
+                    box = model.questionnaire.Checkbox()
+                    box_linecount = 0
+                    box.setup.setup(
+                        page_number,
+                        newbox[0] / mm,
+                        newbox[1] / mm,
+                        newbox[2] / mm,
+                        newbox[3] / mm
+                    )
+                else:
+                    box_linecount = 0
+                    box = DummyBox(
+                        page_number,
+                        newbox[0] / mm,
+                        newbox[1] / mm,
+                        newbox[2] / mm,
+                        newbox[3] / mm
+                    )
+
 
     return boxes, page_count
 
