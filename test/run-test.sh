@@ -68,6 +68,26 @@ diff "data/odt-3/questionnaire_ids" "$PROJECT/ids"
 
 
 ###########################################################
+# LibreOffice 5.2 PDF export
+###########################################################
+
+PROJECT="projects/test-odt-lo52"
+
+# Remove project dir that may exist
+rm -rf "$PROJECT"
+
+# Setup the test project, using the data in "data"
+# By disabling the surveyid and enable the questionnaire id we test more
+# unsual code paths, and we don't have a problem because the survey id
+# changed ...
+# Also test code128 style for ODT support
+"$SDAPS" "$PROJECT" setup --style="code128" --global-id="SDAPS!" --print-questionnaire-id "data/odt-5/debug.odt" "data/odt-5/debug.pdf" "data/odt-5/debug.internetquestions"
+"$SDAPS" "$PROJECT" stamp --file "data/odt-5/questionnaire_ids"
+"$SDAPS" "$PROJECT" ids -o "$PROJECT/ids"
+diff "data/odt-5/questionnaire_ids" "$PROJECT/ids"
+
+
+###########################################################
 # Test Tex with IDs
 ###########################################################
 
