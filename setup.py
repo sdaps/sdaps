@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
 # Copyright (C) 2008-2013, Benjamin Berg <benjamin@sipsolutions.net>
