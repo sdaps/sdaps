@@ -594,7 +594,7 @@ class Checkbox(Box):
         matrix.invert()
         xoff, yoff = matrix.transform_distance(px_width / 2.0, px_height / 2.0)
         xoff = xoff - width / 2
-        yoff = yoff - width / 2
+        yoff = yoff - height / 2
 
         return cr, surf, line_width, width, height, xoff, yoff
 
