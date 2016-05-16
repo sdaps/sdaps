@@ -1092,8 +1092,8 @@
   \@sdaps@generatemarkboxes%
   \tabularx{\linewidth}{Xr*{\themarkcheckboxcount}{c}l}
 }{%
-  \@sdaps@markenvactivefalse%
   \endtabularx%
+  \@sdaps@markenvactivefalse%
 }
 
 \providecommand*{\markline}[3]{%
