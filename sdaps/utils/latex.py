@@ -107,7 +107,7 @@ def write_override(survey, optfile, draft=False, questionnaire_ids=None):
             'survey_id_mshw' : (survey.survey_id / (2 ** 16)),
             'draft' : 'true' if draft else 'false',
             'global_id' : quote_braces(survey.global_id) if survey.global_id is not None else '',
-            'qids' : '{' + '},{'.join(quoted_ids) + '}' if quoted_ids else '{NONE}',
+            'qids' : '{' + '},{'.join(quoted_ids) + '}' if quoted_ids else '{}',
         })
     latex_override.close()
 
