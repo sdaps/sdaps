@@ -96,7 +96,7 @@ def parse(survey):
             # Ignore for now
             pass
         elif arg == 'Duplex':
-            survey.defs.duplex = (value == "True")
+            survey.defs.duplex = (value.lower() == "true")
         elif arg == 'Style':
             survey.defs.style = value
             assert survey.defs.style in model.survey.valid_styles
@@ -139,15 +139,15 @@ def parse(survey):
             assert qobject is not None
             assert isinstance(qobject, model.questionnaire.Range)
 
-            idx, answer = value.split(maxsplit=1)
+            idx, answer = value.split(',', 1)
             idx = int(idx)
 
             range_type = arg[len(RANGE_PREFIX) + 1:].lower()
 
             if range_type == u'lower':
-                qobject.set_lower(idx, answer)
+                qobject.setup.set_lower(idx, answer)
             elif range_type == u'upper':
-                qobject.set_upper(idx, answer)
+                qobject.setup.set_upper(idx, answer)
             else:
                 raise AssertionError('File format error, %s has to be either lower or upper!' % RANGE_PREFIX)
 

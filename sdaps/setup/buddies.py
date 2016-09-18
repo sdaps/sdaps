@@ -44,7 +44,7 @@ class QObject(model.buddy.Buddy):
     def validate(self):
         pass
 
-    def setup(self, args):
+    def setup(self, *args):
         pass
 
 
@@ -83,7 +83,8 @@ class Choice(Question):
     obj_class = model.questionnaire.Choice
 
     def init(self):
-        self.cache = list()
+        self.box_cache = list()
+        self.answer_cache = list()
 
     def _box(self, box):
         self.obj.add_box(box)
@@ -93,32 +94,27 @@ class Choice(Question):
             assert self.obj.page_number == box.page_number
 
     def answer(self, chars):
-        if self.cache:
-            if isinstance(self.cache[0], unicode):
-                self.cache.append(chars)
-            else:
-                box = self.cache.pop(0)
-                box.setup.answer(chars)
-                self._box(box)
-        else:
-            self.cache.append(chars)
+        self.answer_cache.append(chars)
 
     def box(self, box):
-        if self.cache:
-            if isinstance(self.cache[0], unicode):
-                answer = self.cache.pop(0)
-                box.setup.answer(answer)
-                self._box(box)
-            else:
-                self.cache.append(box)
-        else:
-            self.cache.append(box)
+        self.box_cache.append(box)
+
+
+    def setup(self):
+        while self.box_cache and self.answer_cache:
+            box = self.box_cache.pop(0)
+            answer = self.answer_cache.pop(0)
+            box.setup.answer(answer)
+            self._box(box)
+
+        Question.setup(self)
 
     def validate(self):
         Question.validate(self)
-        if self.cache:
+        if self.box_cache or self.answer_cache:
             raise AssertionError(_("Error in question \"%s\"") % self.obj.question)
-        del self.cache
+        del self.box_cache
+        del self.answer_cache
         if not self.obj.boxes:
             log.warn(_(u'%(class)s %(l0)i.%(l1)i got no boxes.') % {
                 'class': self.obj.__class__.__name__,
@@ -144,6 +140,20 @@ class Range(Option):
     def set_upper(self, box, answer):
         self.obj.answers = (self.obj.answers[0], answer)
         self.obj.range = (self.obj.range[0], box)
+
+    def setup(self):
+        # Insert None answer texts for the boxes part of the range
+        range_len = self.obj.range[1] - self.obj.range[0] + 1
+
+        self.answer_cache = \
+            self.answer_cache[:self.obj.range[0]] + \
+            [None for i in range(range_len)] + \
+            self.answer_cache[self.obj.range[0]:]
+
+        # Run normal setup routine which will match up the answers outside
+        # the range correctly now.
+        Option.setup(self)
+
 
     def validate(self):
         Option.validate(self)

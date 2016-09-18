@@ -104,8 +104,9 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
         try:
             sdapsfileparser.parse(survey)
 
-            # for qobject in survey.questionnaire.qobjects:
-            #     qobject.setup.validate()
+            for qobject in survey.questionnaire.qobjects:
+                qobject.setup.setup()
+                qobject.setup.validate()
 
         except:
             log.error(_("Caught an Exception while parsing the SDAPS file. The current state is:"))

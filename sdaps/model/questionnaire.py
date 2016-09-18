@@ -377,7 +377,8 @@ class Box(buddy.Object, DataObject):
         self.value = None
 
     def init_id(self, id):
-        self.value = id + 1
+        if self.value is None:
+            self.value = id + 1
         self.id = self.question.id + (self.value,)
         return self.value
 
