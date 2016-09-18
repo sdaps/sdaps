@@ -135,7 +135,7 @@ class Option(Choice):
     def read(self):
         answer = self.obj.get_answer()
 
-        if answer is not False:
+        if answer is not False and answer >= 0:
             self.count += 1
             self.values[answer] += 1
 
@@ -150,7 +150,7 @@ class Range(Option):
 
     __metaclass__ = model.buddy.Register
     name = 'calculate'
-    obj_class = model.questionnaire.Mark
+    obj_class = model.questionnaire.Range
 
     def init(self):
         Option.init(self)

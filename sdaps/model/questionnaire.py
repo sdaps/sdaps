@@ -254,7 +254,10 @@ class Option(Question):
         if len(answer) == 1:
             return answer[0]
         else:
-            return False
+            if len(answer) == 0:
+                return self.value_none
+            else:
+                return self.value_invalid
 
 class Range(Option):
 

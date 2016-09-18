@@ -181,11 +181,11 @@ class Question(QObject):
 
         return self.widget
 
-class Mark(Question):
+class Range(Question):
 
     __metaclass__ = model.buddy.Register
     name = 'widget'
-    obj_class = model.questionnaire.Mark
+    obj_class = model.questionnaire.Range
 
     def create_widget(self):
         self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -232,7 +232,10 @@ class Box(model.buddy.Buddy):
     obj_class = model.questionnaire.Checkbox
 
     def create_widget(self):
-        self.widget = Gtk.CheckButton.new_with_label(self.obj.text)
+        if self.obj.text:
+            self.widget = Gtk.CheckButton.new_with_label(self.obj.text)
+        else:
+            self.widget = Gtk.CheckButton.new_with_label('')
         self.widget.connect('toggled', self.toggled_cb)
 
         return self.widget
