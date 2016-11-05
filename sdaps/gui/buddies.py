@@ -151,7 +151,7 @@ class Box(model.buddy.Buddy):
         cr.set_fill_rule(cairo.FILL_RULE_EVEN_ODD)
 
         cr.set_source_rgba(0.57, 1.0, 0.0, 0.5)
-        cr.set_line_width(LINE_WIDTH)
+        cr.set_line_width(self.obj.lw)
 
         inner_box(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
         cr.stroke()
@@ -199,7 +199,7 @@ class Checkbox(Box):
             cr.restore()
 
         cr.set_source_rgba(0.57, 1.0, 0.0, 0.5)
-        cr.set_line_width(LINE_WIDTH)
+        cr.set_line_width(self.obj.lw)
 
         if self.obj.data.state:
             if self.obj.form == "box":
@@ -233,9 +233,9 @@ class Textbox(Box):
         cr.set_source_rgba(0.57, 1.0, 0.0, 0.5)
 
         if self.obj.data.state:
-            cr.set_line_width(3 * LINE_WIDTH)
+            cr.set_line_width(2 * LINE_WIDTH + self.obj.lw)
         else:
-            cr.set_line_width(LINE_WIDTH)
+            cr.set_line_width(self.obj.lw)
 
         inner_box(cr, self.obj.data.x, self.obj.data.y, self.obj.data.width, self.obj.data.height)
         cr.stroke()

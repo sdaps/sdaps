@@ -575,8 +575,7 @@ class Checkbox(Box):
 
         cr.set_source_rgba(0, 0, 0, 1)
 
-        line_width = 1 / 72.0 * 25.4
-        cr.set_line_width(line_width)
+        cr.set_line_width(self.obj.lw)
 
         matrix.invert()
         xoff, yoff = matrix.transform_distance(px_width / 2.0, px_height / 2.0)
@@ -607,6 +606,7 @@ class Checkbox(Box):
         return surf, xoff, yoff
 
     def get_inner_mask(self):
+        """Note this discards half a line width inside the box!"""
         cr, surf, line_width, width, height, xoff, yoff = self.prepare_mask()
 
         if self.obj.form == "ellipse":
@@ -665,7 +665,8 @@ class Checkbox(Box):
         x, y = img.recognize.matrix.transform_point(x, y)
         x, y = int(x), int(y)
 
-        remove_line_width = 1.2 * 25.4 / 72.0
+        # This is not the outline, but the width of the drawn stroke!
+        remove_line_width = 1.2 * pt_to_mm
         remove_line_width_px = max(img.recognize.matrix.transform_distance(remove_line_width, remove_line_width))
 
         coverage = img.recognize.get_masked_coverage(mask, x, y)

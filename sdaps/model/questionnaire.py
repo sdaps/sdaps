@@ -374,6 +374,7 @@ class Box(buddy.Object, DataObject):
         self.y = 0
         self.width = 0
         self.height = 0
+        self.lw = 25.4 / 72.0
         self.text = unicode()
 
         self.var = None

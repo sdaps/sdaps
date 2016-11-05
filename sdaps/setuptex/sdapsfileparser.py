@@ -160,26 +160,32 @@ def parse(survey):
             page = int(args[1])
             x, y, width, height = [float(arg[:-2]) / 72.27 * 25.4 for arg in args[2:6]]
             y = survey.defs.paper_height - y
+            lw = None
 
             if boxtype == 'Textbox':
                 box = model.questionnaire.Textbox()
-                if len(args) == 8:
-                    box.var = args[6] if args[6] else None
-                    box.value = int(args[7]) if args[7] else None
+                if len(args) == 9:
+                    lw = args[6] if args[6] else None
+                    box.var = args[7] if args[7] else None
+                    box.value = int(args[8]) if args[8] else None
                 else:
                     assert(len(args) == 6)
             else:
                 box = model.questionnaire.Checkbox()
                 if len(args) == 7:
                     box.form = args[6]
-                elif len(args) == 9:
+                elif len(args) == 10:
                     box.form = args[6]
-                    box.var = args[7] if args[7] else None
-                    box.value = int(args[8]) if args[8] else None
+                    lw = args[7] if args[7] else None
+                    box.var = args[8] if args[8] else None
+                    box.value = int(args[9]) if args[9] else None
                 else:
                     assert(len(args) == 6)
 
-            box.setup.setup(page, x, y, width, height)
+            if lw:
+                lw = float(lw[:-2]) / 72.27 * 25.4
+
+            box.setup.setup(page, x, y, width, height, lw)
             qobject.setup.box(box)
         else:
             # Falltrough, it is some metadata:

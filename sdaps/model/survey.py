@@ -418,12 +418,14 @@ class Survey(object):
                     for i, box in enumerate(qobject.boxes):
                         box.key = None
                         box.value = None
+                        box.lw = 25.4 / 72
 
                 if isinstance(qobject, questionnaire.Range):
                     qobject.range = (0, len(qobject.boxes)-1)
 
                     for i, box in enumerate(qobject.boxes):
                         box.value = i + 1
+                        box.lw = 25.4 / 72
 
         self.version = 5
 

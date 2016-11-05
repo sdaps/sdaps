@@ -280,12 +280,14 @@ class Box(model.buddy.Buddy):
     obj_class = model.questionnaire.Box
     name = 'setup'
 
-    def setup(self, page_number, x, y, width, height):
+    def setup(self, page_number, x, y, width, height, lw=None):
         self.obj.page_number = page_number
         self.obj.x = x
         self.obj.y = y
         self.obj.width = width
         self.obj.height = height
+        if lw is not None:
+            self.obj.lw = lw
 
     def answer(self, text):
         self.obj.text = text
