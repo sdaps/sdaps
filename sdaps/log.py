@@ -104,7 +104,10 @@ class Encoder(object):
         self.pipe = pipe
 
     def write(self, data):
-        self.pipe.write(data.encode('utf-8'))
+        try:
+            self.pipe.write(data.encode('utf-8'))
+        except UnicodeDecodeError:
+            self.pipe.write(data) 
 
     def close(self):
         self.pipe.close()
