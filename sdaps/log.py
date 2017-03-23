@@ -104,7 +104,10 @@ class Encoder(object):
         self.pipe = pipe
 
     def write(self, data):
-        self.pipe.write(data.encode('utf-8'))
+        if isinstance(data, unicode):
+            self.pipe.write(data.encode('utf-8'))
+        else:
+            self.pipe.write(data)
 
     def close(self):
         self.pipe.close()
