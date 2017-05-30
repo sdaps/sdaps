@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-13 19:45+0100\n"
-"PO-Revision-Date: 2017-05-30 17:41+0000\n"
-"Last-Translator: Nicolas Richard <theonewiththeevillook@yahoo.fr>\n"
+"PO-Revision-Date: 2017-05-30 17:43+0000\n"
+"Last-Translator: Berteh <berteh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
 "Language: fr\n"
@@ -45,7 +45,9 @@ msgstr ""
 msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
 "%i)."
-msgstr "%s n'a pas été ajouté parce que le nombre de pages est incorrect"
+msgstr ""
+"%s n'a pas été ajouté parce que le nombre de pages est incorrect (doit être "
+"multiple de %i)."
 
 #: ../sdaps/boxgallery/__init__.py:108
 #, python-format
@@ -73,6 +75,11 @@ msgid ""
 "case\n"
 "    the data will be referenced using a relative path."
 msgstr ""
+"Cette commande est utilisée pour ajouter des images au sondage.\n"
+"\tL'image doit être un fichier TIFF 300dpi monochrome (multipage). Vous\n"
+"\tpouvez choisir de ne pas copier les données dans le dossier du projet. "
+"Dans ce cas,\n"
+"\tles données seront référencées en utilisant un chemin relatif."
 
 #: ../sdaps/cmdline/add.py:38
 msgid "Convert given files and add the result."
@@ -89,14 +96,16 @@ msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
 msgstr ""
+"Forcer l'ajout des images même si le décompte de pages est faux ("
+"utilisateurs avertis uniquement)."
 
 #: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
-msgstr ""
+msgstr "Copier les fichiers dans le dossier (défaut)."
 
 #: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
-msgstr ""
+msgstr "Ne pas copier les fichiers dans le dossier."
 
 #: ../sdaps/cmdline/add.py:62
 msgid ""
