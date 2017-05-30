@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-13 19:45+0100\n"
-"PO-Revision-Date: 2017-05-30 18:14+0000\n"
-"Last-Translator: Nicolas Richard <theonewiththeevillook@yahoo.fr>\n"
+"PO-Revision-Date: 2017-05-30 18:23+0000\n"
+"Last-Translator: Berteh <berteh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
 "Language: fr\n"
@@ -301,6 +301,8 @@ msgstr "Le fichier à importer."
 #: ../sdaps/cmdline/gui.py:28
 msgid "Launch a gui. You can view and alter the (recognized) answers with it."
 msgstr ""
+"Lancer l'interface graphique. Vous pouvez y afficher et modifier les "
+"réponses (reconnues)."
 
 #: ../sdaps/cmdline/gui.py:29
 msgid ""
@@ -320,7 +322,7 @@ msgstr "Filtrer pour ne montrer qu'une partie des données."
 
 #: ../sdaps/cmdline/ids.py:29
 msgid "Export and import questionnaire IDs."
-msgstr ""
+msgstr "Exportez et importez les identifiants des questionnaires."
 
 #: ../sdaps/cmdline/ids.py:30
 msgid ""
@@ -330,19 +332,23 @@ msgid ""
 "command,\n"
 "    which will give you the PDF at the same time."
 msgstr ""
+"Cette commande peut être utilisée pour importer et exporter des\n"
+"\tIDs de questionnaire. N'est pertinente que dans les projets où l'ID est \n"
+"\timprimé sur le questionnaire. Vous pouvez également ajouter ID à l’aide\n"
+"\tde la commande stamp, qui génère également le PDF.."
 
 #: ../sdaps/cmdline/ids.py:35
 #, python-format
 msgid "Filename to store the data to (default: ids_%%i)"
-msgstr ""
+msgstr "Nom de fichier pour stocker les données (par défaut : ids_%%i)"
 
 #: ../sdaps/cmdline/ids.py:38
 msgid "Add IDs to the internal list from the specified file."
-msgstr ""
+msgstr "Ajouter les IDs à partir du fichier spécifié."
 
 #: ../sdaps/cmdline/info.py:28
 msgid "Display and modify metadata of project."
-msgstr ""
+msgstr "Affichez et modifiez les métadonnées du projet."
 
 #: ../sdaps/cmdline/info.py:29
 msgid ""
@@ -352,26 +358,31 @@ msgid ""
 "    on the report. The only key that always exist is \"title\".\n"
 "    If no key is given then a list of defined keys is printed."
 msgstr ""
+"Cette commande vous permet de modifier les métadonnées du projet \n"
+"\tSDAPS. Vous pouvez modifier, ajouter et supprimer toutes clés utiles \n"
+"\tqui seront imprimées sur le rapport. La seule clé qui existent toujours "
+"est « title ».\n"
+"\tSi aucune clé n’est donnée une liste de clés définies est imprimée."
 
 #: ../sdaps/cmdline/info.py:36
 msgid "The key to display or modify."
-msgstr ""
+msgstr "La clé à afficher ou modifier."
 
 #: ../sdaps/cmdline/info.py:40
 msgid "Set the given key to this value."
-msgstr ""
+msgstr "La valeur à donner à cette clé."
 
 #: ../sdaps/cmdline/info.py:44
 msgid "Delete the key and value pair."
-msgstr ""
+msgstr "Supprimer la paire clé / valeur."
 
 #: ../sdaps/cmdline/info.py:68
 msgid "Existing fields:\n"
-msgstr ""
+msgstr "Champs existants :\n"
 
 #: ../sdaps/cmdline/recognize.py:28
 msgid "Run the optical mark recognition."
-msgstr ""
+msgstr "Exécutez la reconnaissance optique de marques."
 
 #: ../sdaps/cmdline/recognize.py:29
 msgid ""
@@ -380,11 +391,18 @@ msgid ""
 "already\n"
 "    run or manual changes were made."
 msgstr ""
+"Effectue une itération sur toutes les images et exécute la reconnaissance \n"
+"\toptique de marques. Les pages seront évaluées à nouveau, même si l'option "
+"\n"
+"\trecognize a déjà été exécutée ou si des modifications manuelles ont été "
+"apportées."
 
 #: ../sdaps/cmdline/recognize.py:34
 msgid ""
 "Only identify the page properties, but don't recognize the checkbox states."
 msgstr ""
+"Identifie les propriétés de la page, sans reconnaître la valeur des cases à "
+"cocher."
 
 #: ../sdaps/cmdline/recognize.py:39
 msgid ""
