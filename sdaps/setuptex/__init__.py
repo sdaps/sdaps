@@ -88,7 +88,10 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
             shutil.copyfile(dict_file, survey.path(os.path.basename(dict_file)))
 
         for add_file in extra_files:
-            shutil.copyfile(add_file, survey.path(os.path.basename(add_file)))
+            if os.path.isdir(add_file):
+                shutil.copytree(add_file, survey.path(os.path.basename(add_file)))
+            else:
+                shutil.copyfile(add_file, survey.path(os.path.basename(add_file)))
 
         print _("Running %s now twice to generate the questionnaire.") % defs.latex_engine
         latex.compile('questionnaire.tex', cwd=survey.path())
