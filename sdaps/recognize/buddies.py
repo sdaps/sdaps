@@ -553,6 +553,7 @@ class Checkbox(Box):
     def prepare_mask(self):
         img = self.obj.sheet.get_page_image(self.obj.page_number)
         width, height = self.obj.width, self.obj.height
+        line_width = self.obj.lw
 
         matrix = list(img.recognize.matrix)
         # Remove any offset from the matrix
@@ -575,7 +576,7 @@ class Checkbox(Box):
 
         cr.set_source_rgba(0, 0, 0, 1)
 
-        cr.set_line_width(self.obj.lw)
+        cr.set_line_width(line_width)
 
         matrix.invert()
         xoff, yoff = matrix.transform_distance(px_width / 2.0, px_height / 2.0)
