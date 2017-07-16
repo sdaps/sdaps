@@ -114,13 +114,13 @@ diff "data/tex/code128_test_ids" "$PROJECT/ids"
 
 
 # Add dummy tiff
-"$SDAPS" "$PROJECT" add "data/tex/test_with_ids.tif"
+#"$SDAPS" "$PROJECT" add "data/tex/test_with_ids.tif"
 
 # Recognize the empty image (ie. the barcodes)
-"$SDAPS" "$PROJECT" recognize
+#"$SDAPS" "$PROJECT" recognize
 
 # And finally, create a report with the result
-"$SDAPS" "$PROJECT" report_tex
+#"$SDAPS" "$PROJECT" report_tex
 
 ###########################################################
 # Test Tex with IDs (classic mode)
@@ -169,13 +169,12 @@ rm -rf "$PROJECT"
 "$SDAPS" "$PROJECT" info --set title "asdf"
 
 # Add and recognize test data
-"$SDAPS" "$PROJECT" add "data/tex/test_without_ids.tif"
-"$SDAPS" "$PROJECT" add "data/tex/test_without_ids_2.tif"
-"$SDAPS" "$PROJECT" recognize
+#"$SDAPS" "$PROJECT" add "data/tex/test_without_ids.tif"
+#"$SDAPS" "$PROJECT" recognize
 
 
 # And finally, create a report with the result
-"$SDAPS" "$PROJECT" report_tex
+#"$SDAPS" "$PROJECT" report_tex
 
 
 ###########################################################
