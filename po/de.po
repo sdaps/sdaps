@@ -6,15 +6,16 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-16 19:27+0200\n"
-"PO-Revision-Date: 2015-03-13 19:46+0100\n"
+"PO-Revision-Date: 2017-07-16 22:17+0000\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
-"Language-Team: German <>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.16-dev\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -497,7 +498,7 @@ msgstr "Speichert die generierten TeX-Dateien anstelle des erstellten PDFs."
 
 #: ../sdaps/cmdline/reset.py:26
 msgid "Reset project into original state"
-msgstr ""
+msgstr "Projekt in Originalzustand zurücksetzen"
 
 #: ../sdaps/cmdline/reset.py:27
 msgid ""
@@ -505,6 +506,10 @@ msgid ""
 "    will be discarded and only the empty project is left.\n"
 "    "
 msgstr ""
+"Dieser Befehl setzt das Projekt in den Originalzustand zurück. Alle "
+"gespeicherten Daten werden gelöscht und das nur das leere Projekt bleibt "
+"übrig.\n"
+"    "
 
 #: ../sdaps/cmdline/setup.py:28
 msgid "Create a new survey using an ODT document."
@@ -1011,7 +1016,7 @@ msgstr "sdaps Report"
 
 #: ../sdaps/reset/__init__.py:29
 msgid "Removing stored data..."
-msgstr ""
+msgstr "Lösche gespeicherte Daten ..."
 
 #: ../sdaps/setup/buddies.py:61
 #, python-format
@@ -1034,19 +1039,19 @@ msgid "%(class)s %(l0)i.%(l1)i got no boxes."
 msgstr "%(class)s %(l0)i.%(l1)i hat keine Boxen."
 
 #: ../sdaps/setup/buddies.py:164
-#, fuzzy, python-format
+#, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box out of range."
-msgstr "%(class)s %(l0)i.%(l1)i hat keine Frage."
+msgstr "%(class)s %(l0)i.%(l1)i untere Box ist außerhalb des Bereichs."
 
 #: ../sdaps/setup/buddies.py:169
-#, fuzzy, python-format
+#, python-format
 msgid "%(class)s %(l0)i.%(l1)i upper box out of range."
-msgstr "%(class)s %(l0)i.%(l1)i hat keine Boxen."
+msgstr "%(class)s %(l0)i.%(l1)i obere Box ist außerhalb des Bereichs."
 
 #: ../sdaps/setup/buddies.py:174
-#, fuzzy, python-format
+#, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box not before upper box."
-msgstr "%(class)s %(l0)i.%(l1)i hat nicht exakt eine Box."
+msgstr "%(class)s %(l0)i.%(l1)i untere Box ist nicht vor der oberen Box."
 
 #: ../sdaps/setup/buddies.py:211
 #, python-format
