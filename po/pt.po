@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-13 19:45+0100\n"
+"POT-Creation-Date: 2017-07-16 19:27+0200\n"
 "PO-Revision-Date: 2014-07-25 20:08+0200\n"
 "Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/master/"
@@ -145,7 +145,7 @@ msgstr ""
 msgid "Processing %s"
 msgstr "Processando %s"
 
-#: ../sdaps/cmdline/add.py:129
+#: ../sdaps/cmdline/add.py:129 ../sdaps/reset/__init__.py:33
 msgid "Done"
 msgstr "Concluído"
 
@@ -497,6 +497,17 @@ msgstr ""
 msgid "Save the generated TeX files instead of the final PDF."
 msgstr "Salve os arquivos TeX gerados em vez do PDF final."
 
+#: ../sdaps/cmdline/reset.py:26
+msgid "Reset project into original state"
+msgstr ""
+
+#: ../sdaps/cmdline/reset.py:27
+msgid ""
+"This command does a full reset of the project. All data\n"
+"    will be discarded and only the empty project is left.\n"
+"    "
+msgstr ""
+
 #: ../sdaps/cmdline/setup.py:28
 msgid "Create a new survey using an ODT document."
 msgstr "Criar uma nova pesquisa usando um documento ODT."
@@ -642,7 +653,7 @@ msgstr ""
 msgid "Filename to store the data to (default: stamp_%%i.pdf)"
 msgstr "Nome de arquivo para armazenar os dados (padrão: stamp_%%i.pdf)"
 
-#: ../sdaps/convert/__init__.py:35
+#: ../sdaps/convert/__init__.py:37
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
 msgstr "Não foi possível aplicar transformação 3D na imagem '%s', página %i!"
@@ -808,26 +819,26 @@ msgstr ""
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:253
+#: ../sdaps/model/survey.py:271
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i folha"
 msgstr[1] "%i folhas"
 
-#: ../sdaps/model/survey.py:264
+#: ../sdaps/model/survey.py:282
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f segundos por folha"
 
-#: ../sdaps/model/survey.py:290
+#: ../sdaps/model/survey.py:315
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Um questionário impresso em duplex necessita de uma quantidade par de "
 "páginas!"
 
-#: ../sdaps/model/survey.py:294
+#: ../sdaps/model/survey.py:319
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -835,17 +846,17 @@ msgstr ""
 "O estilo 'classic' suporta apenas seis páginas no máximo! Use o estilo "
 "'code128' se você precisa de mais páginas."
 
-#: ../sdaps/model/survey.py:307
+#: ../sdaps/model/survey.py:332
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "IDs precisam ser números inteiros no estilo \"clássico\"!"
 
-#: ../sdaps/model/survey.py:313
+#: ../sdaps/model/survey.py:338
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
 "Caractere inválido %s no ID de questionário \"%s\" com estilo \"code128\"!"
 
-#: ../sdaps/model/survey.py:317
+#: ../sdaps/model/survey.py:342
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
@@ -853,7 +864,7 @@ msgstr ""
 "SDAPS não pode desenhar um ID de questionário com o estilo \"custom\". Faça "
 "isto de alguma forma!"
 
-#: ../sdaps/model/survey.py:337
+#: ../sdaps/model/survey.py:362
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
@@ -954,12 +965,12 @@ msgstr ""
 "%s, %i: Não foi possível ler o ID do questionário, mas deve ser capaz de "
 "fazer."
 
-#: ../sdaps/recognize/buddies.py:240
+#: ../sdaps/recognize/buddies.py:242
 #, fuzzy, python-format
 msgid "Could not read questionnaire ID of either %s, %i or %s, %i!"
 msgstr "Não foi possível ler o ID de questionário de %s, %i ou %s, %i!"
 
-#: ../sdaps/recognize/buddies.py:267
+#: ../sdaps/recognize/buddies.py:272
 msgid ""
 "Got different IDs on different pages for at least one sheet! Do *NOT* try to "
 "use filters with this survey! You have to run a \"reorder\" step for this to "
@@ -969,23 +980,23 @@ msgstr ""
 "tente usar filtros com esta pesquisa! Você precisa executar o passo \"reorder"
 "\" para que isso funcione corretamente!"
 
-#: ../sdaps/recognize/buddies.py:323
+#: ../sdaps/recognize/buddies.py:328
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
 "Não há definição de estilo carregada. Isto precisa ser feito para o estilo "
 "\"custom\"!"
 
-#: ../sdaps/report/answers.py:185
+#: ../sdaps/report/answers.py:188
 #, python-format
 msgid "Answers: %i"
 msgstr "Respostas: %i"
 
-#: ../sdaps/report/answers.py:187
+#: ../sdaps/report/answers.py:190
 #, python-format
 msgid "Mean: %.2f"
 msgstr "Média: %.2f"
 
-#: ../sdaps/report/answers.py:189
+#: ../sdaps/report/answers.py:192
 #, python-format
 msgid "Standard Deviation: %.2f"
 msgstr "Desvio Padrão: %.2f"
@@ -998,6 +1009,10 @@ msgstr "Quantidade de questionários"
 msgid "sdaps report"
 msgstr "Relatório SDAPS"
 
+#: ../sdaps/reset/__init__.py:29
+msgid "Removing stored data..."
+msgstr ""
+
 #: ../sdaps/setup/buddies.py:61
 #, python-format
 msgid "Head %(l0)i got no title."
@@ -1008,27 +1023,42 @@ msgstr "O cabeçalho %(l0)i não tem título."
 msgid "%(class)s %(l0)i.%(l1)i got no question."
 msgstr "%(class)s %(l0)i.%(l1)i não possui qualquer questão."
 
-#: ../sdaps/setup/buddies.py:120
+#: ../sdaps/setup/buddies.py:115
 #, python-format
 msgid "Error in question \"%s\""
 msgstr "Erro na questão \"%s\""
 
-#: ../sdaps/setup/buddies.py:123
+#: ../sdaps/setup/buddies.py:119
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got no boxes."
 msgstr "%(class)s %(l0)i.%(l1)i não possui caixas."
 
-#: ../sdaps/setup/buddies.py:148
+#: ../sdaps/setup/buddies.py:164
+#, fuzzy, python-format
+msgid "%(class)s %(l0)i.%(l1)i lower box out of range."
+msgstr "%(class)s %(l0)i.%(l1)i não possui qualquer questão."
+
+#: ../sdaps/setup/buddies.py:169
+#, fuzzy, python-format
+msgid "%(class)s %(l0)i.%(l1)i upper box out of range."
+msgstr "%(class)s %(l0)i.%(l1)i não possui caixas."
+
+#: ../sdaps/setup/buddies.py:174
+#, fuzzy, python-format
+msgid "%(class)s %(l0)i.%(l1)i lower box not before upper box."
+msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente uma caixa."
+
+#: ../sdaps/setup/buddies.py:211
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
 msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente duas respostas."
 
-#: ../sdaps/setup/buddies.py:170
+#: ../sdaps/setup/buddies.py:233
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
 msgstr "%(class)s %(l0)i.%(l1)i não tem exatamente uma caixa."
 
-#: ../sdaps/setupodt/__init__.py:45 ../sdaps/setuptex/__init__.py:68
+#: ../sdaps/setupodt/__init__.py:45 ../sdaps/setuptex/__init__.py:46
 msgid "The survey directory already exists."
 msgstr "O diretório da pesquisa já existe."
 
@@ -1048,7 +1078,7 @@ msgstr ""
 "Tipo de arquivo desconhecido (%s). O questionnaire_pdf deve ser do tipo "
 "application/pdf."
 
-#: ../sdaps/setupodt/__init__.py:61 ../sdaps/setuptex/__init__.py:79
+#: ../sdaps/setupodt/__init__.py:61 ../sdaps/setuptex/__init__.py:57
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain."
 msgstr ""
@@ -1067,7 +1097,7 @@ msgstr ""
 "Se as dependências para o comando \"annotate\" estão instaladas, uma versão "
 "anotada será criada junto ao arquivo PDF original."
 
-#: ../sdaps/setupodt/__init__.py:123 ../sdaps/setuptex/__init__.py:147
+#: ../sdaps/setupodt/__init__.py:123 ../sdaps/setuptex/__init__.py:131
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
@@ -1075,7 +1105,7 @@ msgstr ""
 "Uma combinação de opções e propriedades do projeto não funcionam. Instalação "
 "abortada."
 
-#: ../sdaps/setupodt/boxesparser.py:121 ../sdaps/setupodt/boxesparser.py:190
+#: ../sdaps/setupodt/boxesparser.py:96 ../sdaps/setupodt/boxesparser.py:168
 #, python-format
 msgid ""
 "Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: "
@@ -1173,7 +1203,7 @@ msgstr "pdftk: Montando tudo no PDF final."
 msgid "Stamping using pyPdf. For faster stamping, install pdftk."
 msgstr "Estampando com pyPdf. Para estampar mais rapidamente, instale o pdftk."
 
-#: ../sdaps/stamp/latex.py:21
+#: ../sdaps/stamp/latex.py:18
 msgid ""
 "There should be no need to stamp a SDAPS Project that uses LaTeX and does "
 "not have different questionnaire IDs printed on each sheet.\n"
@@ -1183,18 +1213,18 @@ msgstr ""
 "diferentes IDs de questionário impresso em cada folha.\n"
 "Vou fazê-lo de qualquer maneira."
 
-#: ../sdaps/stamp/latex.py:43
+#: ../sdaps/stamp/latex.py:26
 #, python-format
 msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr "Executando %s duas vezes para gerar o questionário estampado."
 
-#: ../sdaps/stamp/latex.py:47 ../sdaps/setuptex/__init__.py:119
-#: ../sdaps/setuptex/__init__.py:158 ../sdaps/reporttex/__init__.py:161
+#: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:102
+#: ../sdaps/setuptex/__init__.py:143 ../sdaps/reporttex/__init__.py:161
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr "Erro executando \"%s\" para compilar o arquivo LaTeX."
 
-#: ../sdaps/stamp/latex.py:53
+#: ../sdaps/stamp/latex.py:36
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."
@@ -1202,27 +1232,27 @@ msgstr ""
 "Ocorreu um erro durante a criação do relatório. Os arquivos temporários "
 "foram deixados em '%s'."
 
-#: ../sdaps/setuptex/__init__.py:73
+#: ../sdaps/setuptex/__init__.py:51
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
 msgstr ""
 "Tipo de arquivo desconhecido (%s). O questionnaire_tex deve ser do tipo text/"
 "x-tex."
 
-#: ../sdaps/setuptex/__init__.py:74
+#: ../sdaps/setuptex/__init__.py:52
 msgid "Will keep going, but expect failure!"
 msgstr "Vai continuar, mas espere por falhas!"
 
-#: ../sdaps/setuptex/__init__.py:115 ../sdaps/setuptex/__init__.py:153
+#: ../sdaps/setuptex/__init__.py:98 ../sdaps/setuptex/__init__.py:138
 #, python-format
 msgid "Running %s now twice to generate the questionnaire."
 msgstr "Executando %s duas vezes para gerar o questionário."
 
-#: ../sdaps/setuptex/__init__.py:133
+#: ../sdaps/setuptex/__init__.py:117
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr "Houve uma exceção ao analisar o arquivo SDAPS. O estado atual é:"
 
-#: ../sdaps/setuptex/__init__.py:174
+#: ../sdaps/setuptex/__init__.py:159
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "

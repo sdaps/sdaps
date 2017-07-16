@@ -17,6 +17,7 @@ sdaps/cmdline/recognize.py
 sdaps/cmdline/reorder.py
 sdaps/cmdline/report.py
 sdaps/cmdline/reporttex.py
+sdaps/cmdline/reset.py
 sdaps/cmdline/setup.py
 sdaps/cmdline/setuptex.py
 sdaps/cmdline/stamp.py
@@ -34,6 +35,7 @@ sdaps/recognize/__init__.py
 sdaps/reorder/__init__.py
 sdaps/report/answers.py
 sdaps/report/__init__.py
+sdaps/reset/__init__.py
 sdaps/setup/__init__.py
 sdaps/setup/buddies.py
 sdaps/setupodt/__init__.py
