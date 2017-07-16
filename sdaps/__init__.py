@@ -61,7 +61,13 @@ def main(local_run=False):
     log.interactive(('- SDAPS -- %s' % cmdline['_name']) + '\n')
     log.interactive('-'*78 + '\n')
 
-    return cmdline['_func'](cmdline)
+    try:
+        return cmdline['_func'](cmdline)
+    except:
+        import traceback
+        string = traceback.format_exc()
+        sys.stderr.write(string)
+        sys.exit(1)
 
 
 
