@@ -69,23 +69,25 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
 
         # Copy class and dictionary files
         if paths.local_run:
-            cls_file = os.path.join(paths.source_dir, 'tex', 'sdaps.cls')
-            code128_file = os.path.join(paths.source_dir, 'tex', 'code128.tex')
-            qrcode_style = os.path.join(paths.source_dir, 'tex', 'qrcode.sty')
+            cls_files = os.path.join(paths.source_dir, 'tex', '*.cls')
+            tex_files = os.path.join(paths.source_dir, 'tex', '*.tex')
+            sty_files = os.path.join(paths.source_dir, 'tex', '*.sty')
             dict_files = os.path.join(paths.build_dir, 'tex', '*.dict')
-            dict_files = glob.glob(dict_files)
         else:
-            cls_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'sdaps.cls')
-            code128_file = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'code128.tex')
-            qrcode_style = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', 'qrcode.sty')
+            cls_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.cls')
+            tex_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.tex')
+            sty_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.sty')
             dict_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.dict')
-            dict_files = glob.glob(dict_files)
 
-        shutil.copyfile(cls_file, survey.path('sdaps.cls'))
-        shutil.copyfile(code128_file, survey.path('code128.tex'))
-        shutil.copyfile(qrcode_style, survey.path('qrcode.sty'))
-        for dict_file in dict_files:
-            shutil.copyfile(dict_file, survey.path(os.path.basename(dict_file)))
+        def copy_to_survey(files_glob):
+            files = glob.glob(files_glob)
+            for file in files:
+                shutil.copyfile(file, survey.path(os.path.basename(file)))
+
+        copy_to_survey(cls_files)
+        copy_to_survey(tex_files)
+        copy_to_survey(sty_files)
+        copy_to_survey(dict_files)
 
         for add_file in extra_files:
             if os.path.isdir(add_file):

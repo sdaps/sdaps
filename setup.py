@@ -23,6 +23,7 @@ import os
 import os.path
 import commands
 import sys
+from distutils.command import build
 from DistUtilsExtra.command import *
 import ConfigParser
 
@@ -43,6 +44,27 @@ def pkgconfig(*packages, **kw):
            type = 'extra_compile_args'
         kw.setdefault(type, []).append(value)
     return kw
+
+class sdaps_build_tex(build.build):
+
+    description = "build and install the LaTeX packages and classes"
+
+    # Hardcoded ...
+    tex_buildscript = 'tex/class/build.lua'
+    tex_installdir = 'share/sdaps/tex'
+    tex_resultdir = 'tex/class/build/local'
+
+    def run(self):
+        # Build the LaTeX packages and classes, note that they cannot build
+        # out of tree currently.
+        maindir = os.path.abspath(os.curdir)
+        os.chdir('tex/class')
+        self.spawn(['./build.lua', 'install'])
+        os.chdir(maindir)
+
+        files = [os.path.join(self.tex_resultdir, f) for f in os.listdir(self.tex_resultdir)]
+        self.distribution.data_files.append((self.tex_installdir, files))
+
 
 class sdaps_build_i18n(build_i18n.build_i18n):
 
@@ -146,8 +168,11 @@ class sdaps_clean_i18n(clean_i18n.clean_i18n):
 
         clean_i18n.clean_i18n.run(self)
 
+class sdaps_build(build_extra.build_extra):
+    sub_commands = build_extra.build_extra.sub_commands + [('build_tex', lambda x : True)]
+
 setup(name='sdaps',
-      version='1.1.11',
+      version='1.9.0',
       description='Scripts for data acquisition with paper-based surveys',
       url='http://sdaps.sipsolutions.net',
       author='Benjamin Berg, Christoph Simon',
@@ -198,7 +223,8 @@ the tools to later analyse the scanned data, and create a report.
                   ('share/sdaps/tex', glob.glob('tex/*.sty')
                   ),
                   ],
-      cmdclass = { "build" : build_extra.build_extra,
+      cmdclass = { "build" : sdaps_build,
+                   "build_tex" : sdaps_build_tex,
                    "build_i18n" :  sdaps_build_i18n,
                    "build_help" :  build_help.build_help,
                    "build_icons" :  build_icons.build_icons,

@@ -4,6 +4,14 @@ include README.md
 include TROUBLESHOOTING
 include COPYING
 include sdaps.py
+include tex/class/*.dtx
+include tex/class/*.ins
+include tex/class/*.lua
+include tex/class/*.tex
+include tex/class/*.sty
+include tex/class/examples/*.tex
+include tex/class/testfiles/*.lvt
+include tex/class/testfiles/*.tlg
 recursive-include sdaps *.py *.ui *.c *.h
 recursive-include po *.pot POTFILES.skip POTFILES.in *.po
 recursive-include tex/po *.pot POTFILES.skip POTFILES.in *.po
