@@ -82,7 +82,7 @@ def write_override(survey, optfile, draft=False, questionnaire_ids=None):
     \\setcounter{surveyidlshw}{%(survey_id_lshw)i}
     \\setcounter{surveyidmshw}{%(survey_id_mshw)i}
     \\def\\surveyid{%(survey_id)i}
-    \\def\\globalid{%(global_id)s}
+    %(noglobalid)s\\def\\globalid{%(global_id)s}
     \\@STAMPtrue
     \\@PAGEMARKtrue
     \\@sdaps@draft%(draft)s
@@ -91,7 +91,7 @@ def write_override(survey, optfile, draft=False, questionnaire_ids=None):
   \\group_begin:
     \\def\\setoptions#1#2#3{
       \\tl_gset:Nn \\g_sdaps_survey_id_tl { #1 }
-      \\tl_gset:Nn \\g_sdaps_global_id_tl { #2 }
+      %(noglobalid)s\\tl_gset:Nn \\g_sdaps_global_id_tl { #2 }
       \\seq_gset_from_clist:Nn \\g_sdaps_questionnaire_ids_seq { #3 }
     }
     \\bool_gset_%(draft)s:N \g_sdaps_draft_bool
@@ -106,6 +106,7 @@ def write_override(survey, optfile, draft=False, questionnaire_ids=None):
             'survey_id_lshw' : (survey.survey_id % (2 ** 16)),
             'survey_id_mshw' : (survey.survey_id / (2 ** 16)),
             'draft' : 'true' if draft else 'false',
+            'noglobalid' : '%' if draft else '',
             'global_id' : quote_braces(survey.global_id) if survey.global_id is not None else '',
             'qids_old' : '{' + '},{'.join(quoted_ids) + '}' if quoted_ids else '{NONE}',
             'qids' : '{' + '},{'.join(quoted_ids) + '}' if quoted_ids else '{}',
