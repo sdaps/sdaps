@@ -1,3 +1,12 @@
+Overview of Changes in SDAPS 1.9.0
+==================================
+
+Beta release that includes the new class. Generating a new project will now
+need to use the sdapsclassic class to work fine.
+
+Please see http://sdaps.org/class-doc and https://github.com/sdaps/sdaps-class
+for some more information.
+
 Overview of Changes in SDAPS 1.1.11
 ===================================
 
