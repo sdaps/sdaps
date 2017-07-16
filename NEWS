@@ -1,3 +1,17 @@
+Overview of Changes in SDAPS 1.2.0
+==================================
+
+Important changes:
+ * Allow using LO 5.2, requires filling the background of checkboxes
+ * Use python2 instead of python (#91)
+ * Fix non-square checkboxes (#92)
+ * Update TeX code and example for newer LaTeX versions
+ * Fix encoding issues (#98)
+ * Fix a recursion in the GUI
+
+New and updated languages:
+ * French
+
 Overview of Changes in SDAPS 1.1.11
 ===================================
 
