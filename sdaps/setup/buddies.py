@@ -142,6 +142,12 @@ class Range(Option):
         self.obj.range = (self.obj.range[0], box)
 
     def setup(self):
+        # TODO: This happens while parsing the ODT, verify why and figure out
+        #       whether this is the reasonable solution to it.
+        if not self.box_cache:
+            Option.setup(self)
+            return
+
         # Insert None answer texts for the boxes part of the range
         range_len = self.obj.range[1] - self.obj.range[0] + 1
 

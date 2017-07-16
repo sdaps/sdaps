@@ -41,6 +41,7 @@ class ContentHandler(xml.sax.ContentHandler):
 
     def endDocument(self):
         for qobject in self.survey.questionnaire.qobjects:
+            qobject.setup.setup()
             qobject.setup.validate()
 
     def startElement(self, name, attrs):
