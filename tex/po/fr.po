@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-01 10:52+0100\n"
+"POT-Creation-Date: 2017-07-18 00:53+0200\n"
 "PO-Revision-Date: 2017-05-30 17:39+0000\n"
 "Last-Translator: Berteh <berteh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/tex/fr/>\n"
@@ -66,11 +66,11 @@ msgstr ""
 #. Instruction on the questionnaire: Mark/range question.
 #: ../tex_translations.in.h:18
 msgid ""
-"For questions with a range (1--\\arabic{markcheckboxcount}) choose the "
-"answer the mark that fits best."
+"For questions with a range (1--\\arabic{markcheckboxcount}) mark the answer "
+"that fits best."
 msgstr ""
-"Ne cochez qu'une seule réponse pour les questions d'échelles (1--\\"
-"arabic{markcheckboxcount})."
+"Ne cochez qu'une seule réponse pour les questions d'échelles (1--"
+"\\arabic{markcheckboxcount})."
 
 #. LaTeX based report: Label for the number of people that answered
 #: ../tex_translations.in.h:20
