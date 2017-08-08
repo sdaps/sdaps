@@ -59,7 +59,7 @@ class sdaps_build_tex(build.build):
         # out of tree currently.
         maindir = os.path.abspath(os.curdir)
         os.chdir('tex/class')
-        self.spawn(['./build.lua', 'install'])
+        self.spawn(['./build.lua', 'unpack'])
         os.chdir(maindir)
 
         files = [os.path.join(self.tex_resultdir, f) for f in os.listdir(self.tex_resultdir)]
