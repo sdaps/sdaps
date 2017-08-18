@@ -69,11 +69,13 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
 
         # Copy class and dictionary files
         if paths.local_run:
-            cls_files = os.path.join(paths.source_dir, 'tex', '*.cls')
-            tex_files = os.path.join(paths.source_dir, 'tex', '*.tex')
-            sty_files = os.path.join(paths.source_dir, 'tex', '*.sty')
+            cls_extra_files = os.path.join(paths.source_dir, 'tex', '*.cls')
+            cls_files = os.path.join(paths.source_dir, 'tex', 'class', 'build', 'local', '*.cls')
+            tex_files = os.path.join(paths.source_dir, 'tex', 'class', 'build', 'local', '*.tex')
+            sty_files = os.path.join(paths.source_dir, 'tex', 'class', 'build', 'local', '*.sty')
             dict_files = os.path.join(paths.build_dir, 'tex', '*.dict')
         else:
+            cls_extra_files = None
             cls_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.cls')
             tex_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.tex')
             sty_files = os.path.join(paths.prefix, 'share', 'sdaps', 'tex', '*.sty')
@@ -84,6 +86,8 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
             for file in files:
                 shutil.copyfile(file, survey.path(os.path.basename(file)))
 
+        if cls_extra_files is not None:
+            copy_to_survey(cls_extra_files)
         copy_to_survey(cls_files)
         copy_to_survey(tex_files)
         copy_to_survey(sty_files)
