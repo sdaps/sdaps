@@ -119,8 +119,15 @@ diff "data/tex/code128_test_ids" "$PROJECT/ids"
 # Recognize the empty pages (ie. the barcodes)
 "$SDAPS" "$PROJECT" recognize
 
-# And finally, create a report with the result
-#"$SDAPS" "$PROJECT" report_tex
+# Import some data
+"$SDAPS" "$PROJECT" csv import data/tex/ids_test_import.csv
+# Export data again
+"$SDAPS" "$PROJECT" csv export
+# And compare with expected result
+diff -qup data/tex/ids_test_export.csv "$PROJECT/data_1.csv"
+
+# Export all the other extra data
+"$SDAPS" "$PROJECT" csv export --images --question-images --quality
 
 ###########################################################
 # Test Tex with IDs (classic mode)
