@@ -25,9 +25,8 @@ from sdaps import log
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-import gi
-
 try:
+    import gi
     gi.require_version('Poppler', '0.18')
     from gi.repository import Poppler, Gio
 except:
