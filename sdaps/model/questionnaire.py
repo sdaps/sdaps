@@ -259,6 +259,10 @@ class Option(Question):
             else:
                 return self.value_invalid
 
+    def set_answer(self, answer):
+        for box in self.boxes:
+            box.data.state = box.value == answer
+
 class Range(Option):
 
     def init_attributes(self):
@@ -279,10 +283,6 @@ class Range(Option):
                 [u'\t? - ?\n'] +
                 [unicode(box) for box in self.boxes]
             )
-
-    def set_answer(self, answer):
-        for box in self.boxes:
-            box.data.state = box.value == answer - 1
 
 class Mark(Range):
     # Just an alias for unpickling old data
