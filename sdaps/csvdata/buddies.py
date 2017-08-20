@@ -30,7 +30,7 @@ class Questionnaire(model.buddy.Buddy):
     obj_class = model.questionnaire.Questionnaire
 
     def open_csv(self, csvfile, image_writer=None, export_images=False, export_question_images=False, export_quality=False, csv_options={}):
-        header = ['questionnaire_id', 'global_id']
+        header = ['questionnaire_id', 'global_id', 'empty', 'valid', 'recognized', 'verified']
 
         self.export_quality = export_quality
 
@@ -52,8 +52,14 @@ class Questionnaire(model.buddy.Buddy):
         self.csv.writerow({value: value for value in header})
 
     def export_data(self):
-        data = {'questionnaire_id': unicode(self.obj.sheet.questionnaire_id),
-            'global_id': unicode(self.obj.sheet.global_id)}
+        data = {
+            'questionnaire_id': unicode(self.obj.sheet.questionnaire_id),
+            'global_id': unicode(self.obj.sheet.global_id),
+            'empty' : unicode(int(self.obj.sheet.empty)),
+            'valid' : unicode(int(self.obj.sheet.valid)),
+            'recognized' : unicode(int(self.obj.sheet.recognized)),
+            'verified' : unicode(int(self.obj.sheet.verified)),
+        }
         for qobject in self.obj.qobjects:
             data.update(qobject.csvdata.export_data())
         self.csv.writerow(data)
@@ -69,6 +75,11 @@ class Questionnaire(model.buddy.Buddy):
             # Ignore it
             pass
         else:
+            if 'valid' in data:
+                self.obj.sheet.verified = bool(int(data['valid']))
+            if 'verified' in data:
+                self.obj.sheet.verified = bool(int(data['verified']))
+
             for qobject in self.obj.qobjects:
                 qobject.csvdata.import_data(data)
 
