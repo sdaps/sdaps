@@ -18,7 +18,9 @@
 _fallback = "A4", (210., 297.)
 
 def _get_gtk_ppd_papersize(paper=None):
+    import gi
     try:
+        gi.require_version('Gtk', '3.0')
         from gi.repository import Gtk
     except:
         return paper, None

@@ -25,7 +25,10 @@ from sdaps import log
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
+import gi
+
 try:
+    gi.require_version('Poppler', '0.18')
     from gi.repository import Poppler, Gio
 except:
     log.warn(_("Cannot convert PDF files as poppler is not installed or usable!"))
