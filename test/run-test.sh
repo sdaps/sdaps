@@ -129,6 +129,9 @@ diff -qup data/tex/ids_test_export.csv "$PROJECT/data_1.csv"
 # Export all the other extra data
 "$SDAPS" "$PROJECT" csv export --images --question-images --quality
 
+# And finally, create a report with the fake result
+"$SDAPS" "$PROJECT" report_tex
+
 ###########################################################
 # Test Tex with IDs (classic mode)
 ###########################################################
