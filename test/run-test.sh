@@ -113,11 +113,11 @@ diff "data/tex/code128_test_ids" "$PROJECT/ids"
 
 
 
-# Add dummy tiff
-#"$SDAPS" "$PROJECT" add "data/tex/test_with_ids.tif"
+# Add original PDF and convert
+"$SDAPS" "$PROJECT" add --convert "$PROJECT/stamped_1.pdf"
 
-# Recognize the empty image (ie. the barcodes)
-#"$SDAPS" "$PROJECT" recognize
+# Recognize the empty pages (ie. the barcodes)
+"$SDAPS" "$PROJECT" recognize
 
 # And finally, create a report with the result
 #"$SDAPS" "$PROJECT" report_tex

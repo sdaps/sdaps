@@ -9,7 +9,8 @@ Build-Depends: python2.7, python2.7-dev, libtiff5-dev | libtiff4-dev,
  python2.7-imaging | python-imaging, python-reportlab, python-zbar, python-pdftools,
  texlive, texlive-generic-recommended, pgf | texlive-pictures (>= 2017.20170808),
  latex-beamer | texlive-latex-recommended (>= 2017.20170808), pdftk | python2.7-pdf,
- texlive-lang-ukenglish | texlive-lang-english, texlive-latex-extra, texlive-science
+ texlive-lang-ukenglish | texlive-lang-english, texlive-latex-extra, texlive-science,
+ gir1.2-poppler-0.18, python-opencv
 Standards-Version: 3.9.4
 
 Package: sdaps
