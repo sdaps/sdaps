@@ -10,7 +10,7 @@ Build-Depends: python2.7, python2.7-dev, libtiff5-dev | libtiff4-dev,
  texlive, texlive-generic-recommended, pgf | texlive-pictures (>= 2017.20170808),
  latex-beamer | texlive-latex-recommended (>= 2017.20170808), pdftk | python2.7-pdf,
  texlive-lang-ukenglish | texlive-lang-english, texlive-latex-extra, texlive-science,
- gir1.2-poppler-0.18, python-opencv
+ gir1.2-poppler-0.18, python-opencv, python-gi-cairo
 Standards-Version: 3.9.4
 
 Package: sdaps
