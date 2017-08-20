@@ -171,11 +171,11 @@ class Option(Choice):
         for box in self.obj.boxes:
             yield u'%i == %s' % (box.value, self.obj.id_filter())
 
-class Mark(Question):
+class Range(Question):
 
     __metaclass__ = model.buddy.Register
     name = 'report'
-    obj_class = model.questionnaire.Mark
+    obj_class = model.questionnaire.Range
 
     def write(self, out, tmpdir):
         Question.write_begin(self, out)
