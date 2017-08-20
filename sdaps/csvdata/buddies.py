@@ -22,6 +22,8 @@ from sdaps import model
 
 import os
 import os.path
+from sdaps.utils.ugettext import ugettext, ungettext
+_ = ugettext
 
 class Questionnaire(model.buddy.Buddy):
 
@@ -71,6 +73,7 @@ class Questionnaire(model.buddy.Buddy):
         try:
             self.obj.survey.goto_questionnaire_id(data['questionnaire_id'])
         except ValueError:
+            print(_('Not importing unknown questionnaire ID "%s"') % data['questionnaire_id'])
             # The sheet does not exist
             # Ignore it
             pass
