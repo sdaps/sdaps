@@ -417,7 +417,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         stampsfile.close()
         # Merge using pdftk
         print _("Stamping using pdftk")
-        tmp_dir = tempfile.mkdtemp()
+        tmp_dir = tempfile.mkdtemp(prefix='sdaps-stamp-')
 
         if sheets == 1:
             # Shortcut if we only have one sheet.

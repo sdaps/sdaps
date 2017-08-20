@@ -69,7 +69,7 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
         # Create directory
         os.makedirs(tmpdir)
     else:
-        tmpdir = tempfile.mkdtemp()
+        tmpdir = tempfile.mkdtemp(prefix='sdaps-report-')
 
     # Second: report buddies
 

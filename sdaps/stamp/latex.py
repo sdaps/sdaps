@@ -18,7 +18,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         log.warn(_("There should be no need to stamp a SDAPS Project that uses LaTeX and does not have different questionnaire IDs printed on each sheet.\nI am going to do so anyways."))
 
     # Temporary directory for TeX files.
-    tmpdir = tempfile.mkdtemp()
+    tmpdir = tempfile.mkdtemp(prefix='sdaps-stamp-')
 
     try:
         latex.write_override(survey, os.path.join(tmpdir, 'sdaps.opt'), questionnaire_ids=questionnaire_ids)
