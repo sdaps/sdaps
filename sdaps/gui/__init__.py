@@ -21,6 +21,8 @@ This modules contains a GTK+ user interface. With the help of this GUI it is
 possible to manually correct the automatic recognition and do basic debugging.
 """
 
+import gi
+gi.require_version('Gtk', '3.0')
 
 from gi.repository import GObject
 from gi.repository import GLib
