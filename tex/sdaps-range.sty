@@ -1,0 +1,149 @@
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{sdaps-range}
+    [2015/08/23 v1.0 SDAPS class extension for ranges]
+    
+% % For mark questions that look like choicegroups, with labels
+% % in column headers. This should allow for more usable reports,
+% % taking into account the semantics of the range.
+% % 
+% % Example :
+% % \begin{rangegroup}{Code the first 4 letters of your name}{1}{26}[\rAlph]
+% %      \rangeline{1st}
+% %      \rangeline{2nd}
+% %      \rangeline{3rd}
+% %      \rangeline{4th}
+% % \end{rangegroup}
+% % 
+% % This also allows for partial (contiguous) ranges - sdaps internals are
+% % not modified; only some checkboxes are not drawn.
+% % \begin{rangegroup}{Code your day and month of birth}{1}{31}
+% %  \rangeline{Day}
+% %  \partialrangeline{Month}{1}{12}
+% % \end{rangegroup}
+% % 
+% % Non-numerical, non-alphabetical "ranges" are also possible by defining
+% % a custom "printer" e.g. using a TeX \ifcase..\or..\or.. \else..\fi
+% % \def\rPratique\begingroup#1\endgroup{%
+% %   \ifcase #1 \parbox{2cm}{\centering\scriptsize Jamais}%
+% %   \or\parbox{2cm}{\scriptsize\centering Un programme\\  simple }%
+% %   \or\parbox{2cm}{\scriptsize\centering Programme(s)\\ non trivial(ux)}%
+% %   \else\parbox{2cm}{\scriptsize\centering Pratique\\ régulière}%
+% %   \fi}
+% % \begin{rangegroup}{Pour chacune des catégories de langage suivantes, indiquez votre niveau de pratique}
+% %   {0}{3}[\rPratique]
+% %  \rangeline{Whatever}
+% % \end{rangegroup}
+
+
+    
+\def\rnum\begingroup#1\endgroup{{#1}}
+\def\ralph\begingroup#1\endgroup{\@alph{#1}}
+\def\rAlph\begingroup#1\endgroup{\@Alph{#1}}
+\def\rgreek\begingroup#1\endgroup{\ensuremath{\ifcase#1??\or\alpha\or\beta\or\gamma\or\delta\or\epsilon\or\zeta\or\eta\or\theta\or\iota\or\kappa\or\lambda\or\mu\or\nu\or\xi\or o\or\pi\or\rho\or\sigma\or\tau\or\upsilon\or\phi\or\chi\or\psi\or\omega\else??\fi}}
+%\def\makeprinter#1#2{\def\begingroup##1\endgroup{#2}}
+
+    
+\newcounter{rangegroupnumchoices}
+\setcounter{rangegroupnumchoices}{-1}
+\newcounter{rangegroupmin}
+\newcounter{rangegroupmax}
+\newkomafont{rangegroupchoicefont}{\usekomafont{questionfont}}
+\newkomafont{rangegrouplinefont}{\usekomafont{choicefont}}
+    
+% #1 : question
+% #2 : min
+% #3 : max
+%[#4]: printer
+%[#5]: tabularx argument
+\newenvironmentx{rangegroup}[5][5={X*{\therangegroupnumchoices}{c}},4={\rnum}]{%
+  \question{#1}%
+  \immediate\write\sdapsoutfile{QObject-Head=\arabic{section}.\arabic{subsection}. \unexpanded{#1}} %
+  \setcounter{rangegroupmin}{#2}
+  \setcounter{rangegroupmax}{#3}
+  %\global\def\@sdaps@rangegroup@printer#1{\relax{#1}}
+  \global\let\@sdaps@rangegroup@printer#4
+  \setcounter{rangegroupnumchoices}{\therangegroupmax} %
+  \addtocounter{rangegroupnumchoices}{1}%
+  \addtocounter{rangegroupnumchoices}{-\therangegroupmin}%
+  \global\def\@sdaps@rangegroup@start{\tabularx{\linewidth}{#5}}%
+  \@sdaps@generaterangeheader
+  \@sdaps@generaterangeboxes
+  \@sdaps@rangegroup@start
+  \\
+}{%
+  \endtabularx%
+}
+
+\providecommand*{\rangeline}[1]{%
+  \immediate\write\sdapsoutfile{QObject-Mark=\unexpanded{#1}}%
+  \immediate\write\sdapsoutfile{Answer-Mark=\therangegroupmin}%
+  {\usekomafont{rangegrouplinefont}\strut#1\strut} \@sdaps@rangeboxes
+  \immediate\write\sdapsoutfile{Answer-Mark=\therangegroupmax}%
+  \\ %
+}
+
+%% #1 : name
+%% #2 : min
+%% #3 : max
+\providecommand*{\partialrangeline}[3]{%
+  \immediate\write\sdapsoutfile{QObject-Mark=\unexpanded{#1}}%
+  \immediate\write\sdapsoutfile{Answer-Mark=#2}%
+  \@sdaps@generaterangeboxes@partial{#2}{#3}
+  {\usekomafont{rangegrouplinefont}\strut#1\strut} \@sdaps@rangeboxes@partial
+  \immediate\write\sdapsoutfile{Answer-Mark=#3}%
+  \\ %
+}
+
+
+\def\@sdaps@generaterangeboxes{%
+  \@tempcnta=\therangegroupmin%
+  \def\@sdaps@rangeboxes{}%
+  \whiledo{\@tempcnta<\therangegroupmax}%
+  {%
+    \advance\@tempcnta by 1%
+    \g@addto@macro\@sdaps@rangeboxes{& {\checkbox}}%
+  }%
+  \g@addto@macro\@sdaps@rangeboxes{& {\checkbox}}%
+}
+
+\def\@sdaps@generaterangeboxes@partial#1#2{%
+  \@tempcnta=\therangegroupmin%
+  \def\@sdaps@rangeboxes@partial{}%
+  \whiledo{\@tempcnta<#1}%
+  {%
+    \advance\@tempcnta by 1%
+    \g@addto@macro\@sdaps@rangeboxes@partial{& {\strut}}%
+  }%
+  \whiledo{\@tempcnta<#2}%
+  {%
+    \advance\@tempcnta by 1%
+    \g@addto@macro\@sdaps@rangeboxes@partial{& {\checkbox}}%
+  }%
+  \g@addto@macro\@sdaps@rangeboxes@partial{& {\checkbox}}%
+  \advance\@tempcnta by 1%
+  \ifthenelse{#2<\therangegroupmax}
+  { \whiledo{\@tempcnta<\therangegroupmax}%
+  {%
+    \advance\@tempcnta by 1%
+    \g@addto@macro\@sdaps@rangeboxes@partial{& {\strut}}%
+  }%
+  \g@addto@macro\@sdaps@rangeboxes@partial{& {\strut}}%
+  }{}
+}
+
+\def\@sdaps@generaterangeheader{%
+  \@tempcnta=\therangegroupmin%
+  \whiledo{\@tempcnta<\therangegroupmax}%
+  {%
+    \edef\@sdaps@range@h{{\the\@tempcnta}}
+    \advance\@tempcnta by 1%
+    \g@addto@macro\@sdaps@rangegroup@start{& \begingroup\usekomafont{rangegroupchoicefont}\strut\@sdaps@rangegroup@printer\begingroup}%
+    \expandafter\g@addto@macro\expandafter\@sdaps@rangegroup@start\@sdaps@range@h
+    \g@addto@macro\@sdaps@rangegroup@start{\endgroup\endgroup}
+  }%
+  \edef\@sdaps@range@h{{\the\@tempcnta}}
+  \g@addto@macro\@sdaps@rangegroup@start{& \begingroup\usekomafont{rangegroupchoicefont}\strut\@sdaps@rangegroup@printer\begingroup}%
+  \expandafter\g@addto@macro\expandafter\@sdaps@rangegroup@start\@sdaps@range@h
+  \g@addto@macro\@sdaps@rangegroup@start{\endgroup\endgroup}
+}
+
