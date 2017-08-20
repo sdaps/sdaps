@@ -95,7 +95,7 @@ class QObject(model.buddy.Buddy):
 
     def export_header(self):
         if self.obj.questionnaire.csvdata.export_question_images:
-            return [self.obj.id_csv(self.obj.id) + '_image']
+            return [self.obj.id_csv() + '_image']
         else:
             return []
 
@@ -146,8 +146,7 @@ class Choice(QObject):
 
     def import_data(self, data):
         for box in self.obj.boxes:
-            if self.obj.id_csv(box.id) in data:
-                box.csvdata.import_data(data[self.obj.id_csv(box.id)])
+            box.csvdata.import_data(data)
 
 class Text(QObject):
 
@@ -172,8 +171,7 @@ class Text(QObject):
 
     def import_data(self, data):
         for box in self.obj.boxes:
-            if self.obj.id_csv(box.id) in data:
-                box.csvdata.import_data(data[self.obj.id_csv(box.id)])
+            box.csvdata.import_data(data)
 
 class Option(QObject):
 
@@ -232,7 +230,10 @@ class Box(model.buddy.Buddy):
         return data
 
     def import_data(self, data):
-        self.obj.data.state = int(data)
+        if not self.obj.id_csv() in data:
+            return
+
+        self.obj.data.state = int(data[self.obj.id_csv()])
 
 
 class Textbox(Box):
@@ -260,12 +261,15 @@ class Textbox(Box):
         return data
 
     def import_data(self, data):
+        if not self.obj.id_csv() in data:
+            return
+
         try:
-            state = int(data)
+            state = int(data[self.obj.id_csv()])
             text = u''
         except ValueError:
             state = 1
-            text = unicode(data)
+            text = unicode(data[self.obj.id_csv()])
 
         self.obj.data.state = state
         self.obj.data.text = text
