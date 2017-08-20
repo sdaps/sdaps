@@ -294,6 +294,8 @@ class Survey(object):
         '''
 
         qids = set()
+        qids.add(questionnaire_id)
+        # May also be an integer, so also add that if it can be decoded!
         try:
             qids.add(int(questionnaire_id))
         except ValueError:
