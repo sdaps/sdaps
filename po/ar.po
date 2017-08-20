@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-16 19:27+0200\n"
+"POT-Creation-Date: 2017-08-20 22:30+0200\n"
 "PO-Revision-Date: 2015-07-01 10:51+0200\n"
 "Last-Translator: Hatim Alahmadi <mandrivagnome@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/sdaps/master/ar/"
@@ -559,6 +559,11 @@ msgstr ""
 msgid "sdaps questionnaire"
 msgstr ""
 
+#: ../sdaps/csvdata/buddies.py:76
+#, fuzzy, python-format
+msgid "Not importing unknown questionnaire ID \"%s\""
+msgstr "تصدير واستيراد معرفات الاسئلة."
+
 #: ../sdaps/gui/__init__.py:57
 msgid ""
 "The survey does not have any images! Please add images (and run recognize) "
@@ -707,7 +712,7 @@ msgid ""
 "\" in the toplevel directory."
 msgstr ""
 
-#: ../sdaps/utils/opencv.py:31
+#: ../sdaps/utils/opencv.py:34
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
 msgstr ""
 
@@ -723,33 +728,33 @@ msgstr[1] ""
 msgid "%f seconds per sheet"
 msgstr ""
 
-#: ../sdaps/model/survey.py:315
+#: ../sdaps/model/survey.py:317
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:319
+#: ../sdaps/model/survey.py:321
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
 msgstr ""
 
-#: ../sdaps/model/survey.py:332
+#: ../sdaps/model/survey.py:334
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:338
+#: ../sdaps/model/survey.py:340
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:342
+#: ../sdaps/model/survey.py:344
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:362
+#: ../sdaps/model/survey.py:364
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
@@ -903,27 +908,27 @@ msgstr ""
 msgid "%(class)s %(l0)i.%(l1)i got no boxes."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:164
+#: ../sdaps/setup/buddies.py:170
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box out of range."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:169
+#: ../sdaps/setup/buddies.py:175
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i upper box out of range."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:174
+#: ../sdaps/setup/buddies.py:180
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box not before upper box."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:211
+#: ../sdaps/setup/buddies.py:217
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:233
+#: ../sdaps/setup/buddies.py:239
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
 msgstr ""
@@ -959,7 +964,7 @@ msgid ""
 "annotated version will be created next to the original PDF file."
 msgstr ""
 
-#: ../sdaps/setupodt/__init__.py:123 ../sdaps/setuptex/__init__.py:131
+#: ../sdaps/setupodt/__init__.py:123 ../sdaps/setuptex/__init__.py:135
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
@@ -1066,8 +1071,8 @@ msgstr ""
 msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr ""
 
-#: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:102
-#: ../sdaps/setuptex/__init__.py:143 ../sdaps/reporttex/__init__.py:161
+#: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:106
+#: ../sdaps/setuptex/__init__.py:147 ../sdaps/reporttex/__init__.py:161
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr ""
@@ -1087,16 +1092,16 @@ msgstr ""
 msgid "Will keep going, but expect failure!"
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:98 ../sdaps/setuptex/__init__.py:138
+#: ../sdaps/setuptex/__init__.py:102 ../sdaps/setuptex/__init__.py:142
 #, python-format
 msgid "Running %s now twice to generate the questionnaire."
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:117
+#: ../sdaps/setuptex/__init__.py:121
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:159
+#: ../sdaps/setuptex/__init__.py:163
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "
