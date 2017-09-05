@@ -70,6 +70,13 @@ You can install sdaps using "./setup.py install". The C extension will
 be compiled automatically, but of course you have to have all the
 dependencies installed for this to work.
 
+Please note that this git repository uses submodules to pull in the LaTeX
+code. This means you need to run
+ $ git submodule init
+and then run
+ $ git submodule update
+to checkout and update the repository after a pull.
+
 ## Standalone execution
 
 As an alternative to installing sdaps it is also supported to run it without
