@@ -1,3 +1,3 @@
 [submodule "tex/class"]
 	path = tex/class
-	url = https://github.com/sdaps/sdaps-class
+	url = ../sdaps-class
