@@ -50,7 +50,6 @@ class sdaps_build_tex(build.build):
     description = "build and install the LaTeX packages and classes"
 
     # Hardcoded ...
-    tex_buildscript = 'tex/class/build.lua'
     tex_installdir = 'share/sdaps/tex'
     tex_resultdir = 'tex/class/build/local'
 
@@ -58,6 +57,10 @@ class sdaps_build_tex(build.build):
         # Build the LaTeX packages and classes, note that they cannot build
         # out of tree currently.
         maindir = os.path.abspath(os.curdir)
+        if not os.path.exists('tex/class/build.lua'):
+            print('error: LaTeX build script is not available')
+            print('Did you forget to checkout the git submodule? See README for more information.')
+            os._exit(1)
         os.chdir('tex/class')
         self.spawn(['./build.lua', 'unpack'])
         os.chdir(maindir)
