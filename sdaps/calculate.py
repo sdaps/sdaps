@@ -182,15 +182,19 @@ class Range(Option):
                 self.values[key] = self.values[key] / float(self.count)
 
             if self.range_count > 0:
+                # First calculate the mean
+                for key in self.range_values:
+                    self.mean += key * self.range_values[key]
+                self.mean = self.mean / float(self.range_count)
+
+                # Now we can calculate the standard deviation
                 for key in self.range_values:
                     self.standard_deviation += self.range_values[key] * pow(key - self.mean, 2)
-                    self.mean += key * self.range_values[key]
-
-                    # Also devide by count
-                    self.range_values[key] = self.range_values[key] / float(self.count)
-
                 self.standard_deviation = math.sqrt(self.standard_deviation / float(self.range_count))
-                self.mean = self.mean / float(self.range_count)
+
+                # And finally store the percentage rather than count for each answer
+                for key in self.range_values:
+                    self.range_values[key] = self.range_values[key] / float(self.count)
 
                 if hasattr(self, 'ref_count'):
                     self.significant = abs(self.mean - self.ref_mean) > 0.1
