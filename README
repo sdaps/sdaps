@@ -77,6 +77,8 @@ and then run
  $ git submodule update
 to checkout and update the repository after a pull.
 
+Alternatively, do the initial clone using "git clone --recursive".
+
 ## Standalone execution
 
 As an alternative to installing sdaps it is also supported to run it without
