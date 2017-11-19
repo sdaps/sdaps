@@ -1,3 +1,9 @@
+Overview of Changes in SDAPS 1.2.1
+==================================
+
+Important changes:
+ * Fix regression in questionnaire ID handling
+
 Overview of Changes in SDAPS 1.2.0
 ==================================
 
