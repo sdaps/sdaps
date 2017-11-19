@@ -7,7 +7,8 @@ Build-Depends: python2.7, python2.7-dev, libtiff5-dev | libtiff4-dev,
  pkg-config, python-distutils-extra, python-pkg-resources, python-cairo-dev,
  libcairo2-dev, libglib2.0-dev, debhelper (>= 7.4.3),
  python2.7-imaging | python-imaging, python-reportlab, python-zbar, python-pdftools,
- texlive, texlive-generic-recommended, pgf, latex-beamer, pdftk | python2.7-pdf,
+ texlive, texlive-generic-recommended, pgf | texlive-pictures (>= 2017),
+ latex-beamer | texlive-latex-extra (>= 2017), pdftk | python2.7-pdf,
  texlive-lang-ukenglish | texlive-lang-english, texlive-latex-extra, texlive-science
 Standards-Version: 3.9.4
 
@@ -17,7 +18,8 @@ Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends},
  python2.7-cairo, python2.7-gi, python2.7-imaging | python-imaging,
  python-reportlab, python-zbar, python-gi-cairo
 Recommends: gir1.2-gtk-3.0 | gir1.0-gtk-3.0, texlive, texlive-latex-extra,
- texlive-generic-recommended, pgf, latex-beamer, pdftk | python2.7-pdf,
+ texlive-generic-recommended, pgf | texlive-pictures (>= 2017),
+ latex-beamer | texlive-latex-extra (>= 2017), pdftk | python2.7-pdf,
  texlive-lang-ukenglish | texlive-lang-english, texlive-science,
  python-pdftools, gir1.2-poppler-0.18, python-opencv, texlive-science
 Suggests: libtiff-tools, imagemagick, sane-utils
