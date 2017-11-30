@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-13 19:45+0100\n"
+"POT-Creation-Date: 2017-11-30 14:36+0100\n"
 "PO-Revision-Date: 2015-03-13 19:46+0100\n"
 "Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <>\n"
@@ -640,7 +640,7 @@ msgstr ""
 msgid "Filename to store the data to (default: stamp_%%i.pdf)"
 msgstr "Ausgabedatei (default: stamp_%%i.pdf)"
 
-#: ../sdaps/convert/__init__.py:35
+#: ../sdaps/convert/__init__.py:37
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
 msgstr ""
@@ -811,26 +811,26 @@ msgstr ""
 "PDF Dateien können nicht konvertiert werden, da poppler nicht gefunden wurde "
 "oder nicht verwendet werden kann!"
 
-#: ../sdaps/model/survey.py:253
+#: ../sdaps/model/survey.py:271
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i Bogen"
 msgstr[1] "%i Bögen"
 
-#: ../sdaps/model/survey.py:264
+#: ../sdaps/model/survey.py:282
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f Sekunden pro Bogen"
 
-#: ../sdaps/model/survey.py:290
+#: ../sdaps/model/survey.py:315
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Ein Fragebogen der doppelseitig gedruckt werden soll, muss eine gerade "
 "Anzahl von Seiten haben!"
 
-#: ../sdaps/model/survey.py:294
+#: ../sdaps/model/survey.py:319
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -838,16 +838,16 @@ msgstr ""
 "Der Stil 'classic' kann nur mit bis zu sechs Seiten umgehen. Für mehr Seiten "
 "kann der 'code128' Stil benutzt werden."
 
-#: ../sdaps/model/survey.py:307
+#: ../sdaps/model/survey.py:332
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "IDs müssen im \"classic\" Stil ganze Zahlen sein!"
 
-#: ../sdaps/model/survey.py:313
+#: ../sdaps/model/survey.py:338
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr "Ungültiges Zeichen %s in der Fragebogen ID \"%s\" im \"code128\" Stil!"
 
-#: ../sdaps/model/survey.py:317
+#: ../sdaps/model/survey.py:342
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
@@ -855,7 +855,7 @@ msgstr ""
 "SDAPS kann im \"custom\"-Stil keine Fragebogen ID eintragen. Tun Sie das "
 "irgendwie selbst!"
 
-#: ../sdaps/model/survey.py:337
+#: ../sdaps/model/survey.py:362
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr "Update für Dateiversion %i ausführen"
@@ -954,12 +954,12 @@ msgstr ""
 "%s, %i: Konnte die Fragebogen-ID nicht lesen. Dies sollte jedoch möglich "
 "sein."
 
-#: ../sdaps/recognize/buddies.py:240
+#: ../sdaps/recognize/buddies.py:242
 #, python-format
 msgid "Could not read questionnaire ID of either %s, %i or %s, %i!"
 msgstr "Konnte die Fragebogen-ID weder auf %s, %i noch auf %s, %i finden!"
 
-#: ../sdaps/recognize/buddies.py:267
+#: ../sdaps/recognize/buddies.py:272
 msgid ""
 "Got different IDs on different pages for at least one sheet! Do *NOT* try to "
 "use filters with this survey! You have to run a \"reorder\" step for this to "
@@ -970,7 +970,7 @@ msgstr ""
 "Zuordnung benötigt wird, *muss* der \"reorder\" Befehl genutzt werden, um "
 "die Seiten wieder korrekt zuzuordnen!"
 
-#: ../sdaps/recognize/buddies.py:323
+#: ../sdaps/recognize/buddies.py:328
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
 "Keine Style-Definition geladen. Dies ist beim \"custom\" Stil erforderlich!"
@@ -1074,7 +1074,7 @@ msgstr ""
 "Setup abgebrochen, da einige Optionen und Projekteigenschaften so nicht "
 "funktionieren."
 
-#: ../sdaps/setupodt/boxesparser.py:121 ../sdaps/setupodt/boxesparser.py:190
+#: ../sdaps/setupodt/boxesparser.py:96 ../sdaps/setupodt/boxesparser.py:168
 #, python-format
 msgid ""
 "Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: "

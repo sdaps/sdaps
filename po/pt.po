@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-13 19:45+0100\n"
+"POT-Creation-Date: 2017-11-30 14:36+0100\n"
 "PO-Revision-Date: 2014-07-25 20:08+0200\n"
 "Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/master/"
@@ -642,7 +642,7 @@ msgstr ""
 msgid "Filename to store the data to (default: stamp_%%i.pdf)"
 msgstr "Nome de arquivo para armazenar os dados (padrão: stamp_%%i.pdf)"
 
-#: ../sdaps/convert/__init__.py:35
+#: ../sdaps/convert/__init__.py:37
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
 msgstr "Não foi possível aplicar transformação 3D na imagem '%s', página %i!"
@@ -808,26 +808,26 @@ msgstr ""
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:253
+#: ../sdaps/model/survey.py:271
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i folha"
 msgstr[1] "%i folhas"
 
-#: ../sdaps/model/survey.py:264
+#: ../sdaps/model/survey.py:282
 #, python-format
 msgid "%f seconds per sheet"
 msgstr "%f segundos por folha"
 
-#: ../sdaps/model/survey.py:290
+#: ../sdaps/model/survey.py:315
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "Um questionário impresso em duplex necessita de uma quantidade par de "
 "páginas!"
 
-#: ../sdaps/model/survey.py:294
+#: ../sdaps/model/survey.py:319
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -835,17 +835,17 @@ msgstr ""
 "O estilo 'classic' suporta apenas seis páginas no máximo! Use o estilo "
 "'code128' se você precisa de mais páginas."
 
-#: ../sdaps/model/survey.py:307
+#: ../sdaps/model/survey.py:332
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "IDs precisam ser números inteiros no estilo \"clássico\"!"
 
-#: ../sdaps/model/survey.py:313
+#: ../sdaps/model/survey.py:338
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
 "Caractere inválido %s no ID de questionário \"%s\" com estilo \"code128\"!"
 
-#: ../sdaps/model/survey.py:317
+#: ../sdaps/model/survey.py:342
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
@@ -853,7 +853,7 @@ msgstr ""
 "SDAPS não pode desenhar um ID de questionário com o estilo \"custom\". Faça "
 "isto de alguma forma!"
 
-#: ../sdaps/model/survey.py:337
+#: ../sdaps/model/survey.py:362
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
@@ -954,12 +954,12 @@ msgstr ""
 "%s, %i: Não foi possível ler o ID do questionário, mas deve ser capaz de "
 "fazer."
 
-#: ../sdaps/recognize/buddies.py:240
+#: ../sdaps/recognize/buddies.py:242
 #, fuzzy, python-format
 msgid "Could not read questionnaire ID of either %s, %i or %s, %i!"
 msgstr "Não foi possível ler o ID de questionário de %s, %i ou %s, %i!"
 
-#: ../sdaps/recognize/buddies.py:267
+#: ../sdaps/recognize/buddies.py:272
 msgid ""
 "Got different IDs on different pages for at least one sheet! Do *NOT* try to "
 "use filters with this survey! You have to run a \"reorder\" step for this to "
@@ -969,7 +969,7 @@ msgstr ""
 "tente usar filtros com esta pesquisa! Você precisa executar o passo \"reorder"
 "\" para que isso funcione corretamente!"
 
-#: ../sdaps/recognize/buddies.py:323
+#: ../sdaps/recognize/buddies.py:328
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
 "Não há definição de estilo carregada. Isto precisa ser feito para o estilo "
@@ -1075,7 +1075,7 @@ msgstr ""
 "Uma combinação de opções e propriedades do projeto não funcionam. Instalação "
 "abortada."
 
-#: ../sdaps/setupodt/boxesparser.py:121 ../sdaps/setupodt/boxesparser.py:190
+#: ../sdaps/setupodt/boxesparser.py:96 ../sdaps/setupodt/boxesparser.py:168
 #, python-format
 msgid ""
 "Warning: Ignoring a box (page: %i, x: %.1f, y: %.1f, width: %.1f, height: "
