@@ -25,9 +25,9 @@ _ = ugettext
 
 
 parser = script.subparsers.add_parser("gui",
-    help=_("Launch a gui. You can view and alter the (recognized) answers with it."),
+    help=_("Launch a GUI. You can view and alter the (recognized) answers with it."),
     description=_("""This command launches a graphical user interface that can
-    be used to correct answer. You need to run "recognize" before using it.
+    be used to correct answers. You need to run "recognize" before using it.
     """))
 
 parser.add_argument('-f', '--filter',
