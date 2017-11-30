@@ -28,21 +28,20 @@ _ = ugettext
 
 parser = script.subparsers.add_parser("convert",
     help=_("Convert a set of images to the correct image format."),
-    description=_("""This command can be used if you scanned files in a different
-        mode than the expected monochrome TIFF file. All the given files will
-        be loaded, converted to monochrome and stored into a multipage 1bpp
-        TIFF file. Optionally you can select that a 3D transformation should
-        be performed, using this it may be possible to work with photos of
-        questionnaires instead of scans."""))
+    description=_("""This command can be used if you scanned files in something
+        other than the expected monochrome TIFF mode. All given files will
+        be loaded, converted to monochrome and stored in a multipage 1bpp
+        TIFF file. Optionally, you can select \"3D transformation"\ ,which may facilitate
+        working with photos of questionnaires instead of scans."""))
 
 parser.add_argument('--3d-transform',
-    help=_("""Do a 3D-transformation after finding the corner marks. If the
-        corner marks are not found then the image will be added as-is."""),
+    help=_("""Do a 3D-transformation after finding the corner marks.
+    If they are not found, the image will be added as-is."""),
     dest="transform",
     action="store_true",
     default=False)
 parser.add_argument('-o', '--output',
-    help=_("The location of the output file. Must be given."),
+    help=_("Required location of output file."),
     dest="output")
 
 parser.add_argument('images',
