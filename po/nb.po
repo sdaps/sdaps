@@ -3,33 +3,32 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: SDAPS 0.1\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-30 14:41+0100\n"
-"PO-Revision-Date: 2017-05-30 18:23+0000\n"
-"Last-Translator: Berteh <berteh@gmail.com>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/"
-">\n"
-"Language: fr\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.14.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
-msgstr "SDAPS -- Sondages papier faciles."
+msgstr ""
 
 #: ../sdaps/script.py:45
 msgid "project directory|The SDAPS project."
-msgstr "répertoire du projet|Le projet SDAPS."
+msgstr ""
 
 #: ../sdaps/script.py:46
 msgid "command list|Commands:"
-msgstr "liste des commandes|Commandes :"
+msgstr ""
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
@@ -37,8 +36,6 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
-"Fichier %s non valide. Veuillez donner une image TIFF monochrome (multipage) "
-"en entrée."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
@@ -46,8 +43,6 @@ msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
 "%i)."
 msgstr ""
-"%s n'a pas été ajouté parce que le nombre de pages est incorrect (doit être "
-"multiple de %i)."
 
 #: ../sdaps/boxgallery/__init__.py:108
 #, python-format
@@ -56,15 +51,15 @@ msgstr ""
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
-msgstr "Avertissement : "
+msgstr ""
 
 #: ../sdaps/log.py:41
 msgid "Error: "
-msgstr "Erreur : "
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
-msgstr "Ajouter des questionnaires scannés au sondage."
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:32
 msgid ""
@@ -75,85 +70,70 @@ msgid ""
 "case\n"
 "    the data will be referenced using a relative path."
 msgstr ""
-"Cette commande est utilisée pour ajouter des images scannées au sondage.\n"
-"…Les images doivent être un fichier TIFF 300dpi monochrome (multipage). "
-"Vous\n"
-"…pouvez décider de ne pas copier les images dans le répertoire du projet. "
-"Dans\n"
-"…ce cas, les fichiers seront référencés par un chemin relatif."
 
 #: ../sdaps/cmdline/add.py:38
 msgid "Convert given files and add the result."
-msgstr "Convertir les fichiers donnés et ajouter le résultat."
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:43 ../sdaps/cmdline/convert.py:39
 msgid ""
 "Do a 3D-transformation after finding the corner marks. If the\n"
 "        corner marks are not found then the image will be added as-is."
 msgstr ""
-"Effectuer une transformation 3D après avoir repéré les marques des coins. Si "
-"les\n"
-"\tmarques des coins ne sont pas trouvées l'image est ajoutée en l'état."
 
 #: ../sdaps/cmdline/add.py:49
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
 msgstr ""
-"Ajouter les images même si le nombre de pages est incorrect (n'utilisez ceci "
-"que si vous savez ce que vous faites)."
 
 #: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
-msgstr "Copie les fichiers dans le répertoire (par défaut)."
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
-msgstr "Ne copie pas les fichiers dans le répertoire."
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:62
 msgid ""
 "Images contain a duplex scan of a simplex questionnaire (default: simplex "
 "scan)."
 msgstr ""
-"Les images contiennent un scan recto-verso d'un questionnaire en recto "
-"simple (par défaut: scan recto simple)."
 
 #: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:49
 msgid "A number of TIFF image files."
-msgstr "Un nombre de fichiers TIFF."
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:94
 msgid "The --no-copy option is not compatible with --convert!"
-msgstr "L'option --no-copy n'est pas compatible avec --convert !"
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:103
 msgid "Converting input files into a single temporary file."
-msgstr "Convertir les fichiers d'entrée dans un fichier temporaire unique."
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:115
 msgid ""
 "The page count of the created temporary file does not work with this survey."
 msgstr ""
-"Le nombre de pages du fichier temporaire n'est pas compatible avec ce "
-"sondage."
 
 #: ../sdaps/cmdline/add.py:120
 msgid "Running the conversion failed."
-msgstr "La conversion a échoué."
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:125
 #, python-format
 msgid "Processing %s"
-msgstr "Traitement de %s"
+msgstr ""
 
 #: ../sdaps/cmdline/add.py:129 ../sdaps/reset/__init__.py:33
 msgid "Done"
-msgstr "Fait"
+msgstr ""
 
 #: ../sdaps/cmdline/annotate.py:28
 msgid "Annotate the questionnaire and show the recognized positions."
-msgstr "Annoter le questionnaire et montrer les positions reconnues."
+msgstr ""
 
 #: ../sdaps/cmdline/annotate.py:29
 msgid ""
@@ -161,13 +141,10 @@ msgid ""
 "    annotated version of the questionnaire, with the information that SDAPS\n"
 "    knows about it overlayed on top."
 msgstr ""
-"Cette commande est principalement faite pour le débogage. Elle crée une\n"
-"\tversion du questionnaire annotée, comportant les informations \n"
-"\tconnues par SDAPS en surimpression."
 
 #: ../sdaps/cmdline/boxgallery.py:31
 msgid "Create PDFs with boxes sorted by the detection heuristics."
-msgstr "Créer des PDF avec des cadres triés par l'heuristique de détection."
+msgstr ""
 
 #: ../sdaps/cmdline/boxgallery.py:32
 msgid ""
@@ -179,22 +156,16 @@ msgid ""
 "    will be created for each of the heuristics so that one can adjust the\n"
 "    values."
 msgstr ""
-"SDAPS utilise plusieurs méthodes pour déterminer l'état d'une\n"
-"\tcase à cocher. Il y a une liste pour chacune d'elles donnant l'état\n"
-"\tattendu et la qualité du résultat (voir defs.py). Un fichier PDF\n"
-"\tsera généré pour chaque méthode pouvant influer sur le résultat."
 
 #: ../sdaps/cmdline/boxgallery.py:40
 msgid ""
 "Reruns part of the recognition process and retrieves debug images from this "
 "step."
 msgstr ""
-"Exécute à nouveau une partie du processus de reconnaissance et récupère les "
-"images de débogage depuis cette étape."
 
 #: ../sdaps/cmdline/convert.py:30
 msgid "Convert a set of images to the correct image format."
-msgstr "Convertir un lot d'images dans le bon format."
+msgstr ""
 
 #: ../sdaps/cmdline/convert.py:31
 msgid ""
@@ -207,40 +178,33 @@ msgid ""
 "        be performed, using this it may be possible to work with photos of\n"
 "        questionnaires instead of scans."
 msgstr ""
-"Cette commande peut être utilisée si vous numérisez dans un autre\n"
-"\tformat que le TIFF monochrome. Tous les fichiers doivent être\n"
-"\tchargés et enregistrés dans un seul fichier TIFF monochrome (1bpp).\n"
-"\tPour travailler avec des photos des questionnaires il est possible \n"
-"\tde leur appliquer directement une transformation 3D."
 
 #: ../sdaps/cmdline/convert.py:45
 msgid "The location of the output file. Must be given."
-msgstr "L'emplacement du fichier de sortie. Obligatoire."
+msgstr ""
 
 #: ../sdaps/cmdline/convert.py:58
 msgid "No output filename specified!"
-msgstr "Pas de nom de fichier de sortie spécifié !"
+msgstr ""
 
 #: ../sdaps/cmdline/cover.py:27
 msgid "Create a cover for the questionnaires."
-msgstr "Créer une jaquette pour les questionnaires."
+msgstr ""
 
 #: ../sdaps/cmdline/cover.py:28
 msgid ""
 "This command creates a cover page for questionnaires. All\n"
 "    the metadata of the survey will be printed on the page."
 msgstr ""
-"Cette commande crée une jaquette pour les questionnaires. Toutes\n"
-"\tles métadonnées du sondage y seront imprimées."
 
 #: ../sdaps/cmdline/cover.py:31
 #, python-format
 msgid "Filename to store the data to (default: cover_%%i.pdf)"
-msgstr "Nom du fichier des données (par défaut : cover_%%i.pdf)"
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:34
 msgid "Import or export data to/from CSV files."
-msgstr "Importer ou exporter des données depuis/vers un fichier CSV."
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:35
 msgid ""
@@ -251,58 +215,48 @@ msgid ""
 "sheet\n"
 "    which should be updated."
 msgstr ""
-"Importer ou exporter des données depuis/vers un fichier CSV. La première "
-"ligne\n"
-"\test un entête contenant questionnaire_id, global_id puis\n"
-"\tchaque case à cocher et champ texte. Notez que l'importation est "
-"actuellement très\n"
-"\tlimitée ; vous devez indiquer l'identifiant du questionnaire pour choisir "
-"la fiche\n"
-"\tqui doit être mise à jour."
 
 #: ../sdaps/cmdline/csvdata.py:44
 msgid "Export data to CSV file."
-msgstr "Exporter les données dans un fichiers CSV."
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:46
 #, python-format
 msgid "Filename to store the data to (default: data_%%i.csv)"
-msgstr "Nom du fichier des données (par défaut : data_%%i.csv)"
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:48
 msgid "The delimiter used in the CSV file (default ',')"
-msgstr "Le délimiteur utilisé dans le fichier CSV (par défaut ',')"
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:52 ../sdaps/cmdline/report.py:31
 #: ../sdaps/cmdline/reporttex.py:52
 msgid "Filter to only export a partial dataset."
-msgstr "Filtrer pour exporter un lot de données partiel."
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:54
 msgid "Export images of freeform fields."
-msgstr "Exporter les images des champs libres."
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:60
 msgid "Export an image for each question that includes all boxes."
-msgstr "Exporter une image pour chaque question qui inclut toutes les cases."
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:66
 msgid "Export the recognition quality for each checkbox."
-msgstr "Exporter la qualité de la reconnaissance pour chaque case à cocher."
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:74
 msgid "Import data to from a CSV file."
-msgstr "Importer des données depuis vers un fichier CSV."
+msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:76
 msgid "The file to import."
-msgstr "Le fichier à importer."
+msgstr ""
 
 #: ../sdaps/cmdline/gui.py:28
 msgid "Launch a gui. You can view and alter the (recognized) answers with it."
 msgstr ""
-"Lancer l'interface graphique. Vous pouvez y afficher et modifier les "
-"réponses (reconnues)."
 
 #: ../sdaps/cmdline/gui.py:29
 msgid ""
@@ -311,18 +265,14 @@ msgid ""
 "it.\n"
 "    "
 msgstr ""
-"Cette commande affiche une interface graphique qui permet\n"
-"\tde corriger une réponse. Auparavant, vous devrez lancer la commande "
-"\"reconnaître\".\n"
-"    "
 
 #: ../sdaps/cmdline/gui.py:34
 msgid "Filter to only show a partial dataset."
-msgstr "Filtrer pour ne montrer qu'une partie des données."
+msgstr ""
 
 #: ../sdaps/cmdline/ids.py:29
 msgid "Export and import questionnaire IDs."
-msgstr "Exportez et importez les identifiants des questionnaires."
+msgstr ""
 
 #: ../sdaps/cmdline/ids.py:30
 msgid ""
@@ -332,23 +282,19 @@ msgid ""
 "command,\n"
 "    which will give you the PDF at the same time."
 msgstr ""
-"Cette commande peut être utilisée pour importer et exporter des\n"
-"\tIDs de questionnaire. N'est pertinente que dans les projets où l'ID est \n"
-"\timprimé sur le questionnaire. Vous pouvez également ajouter ID à l’aide\n"
-"\tde la commande stamp, qui génère également le PDF.."
 
 #: ../sdaps/cmdline/ids.py:35
 #, python-format
 msgid "Filename to store the data to (default: ids_%%i)"
-msgstr "Nom de fichier pour stocker les données (par défaut : ids_%%i)"
+msgstr ""
 
 #: ../sdaps/cmdline/ids.py:38
 msgid "Add IDs to the internal list from the specified file."
-msgstr "Ajouter les IDs à partir du fichier spécifié."
+msgstr ""
 
 #: ../sdaps/cmdline/info.py:28
 msgid "Display and modify metadata of project."
-msgstr "Affichez et modifiez les métadonnées du projet."
+msgstr ""
 
 #: ../sdaps/cmdline/info.py:29
 msgid ""
@@ -358,31 +304,26 @@ msgid ""
 "    on the report. The only key that always exist is \"title\".\n"
 "    If no key is given then a list of defined keys is printed."
 msgstr ""
-"Cette commande vous permet de modifier les métadonnées du projet \n"
-"\tSDAPS. Vous pouvez modifier, ajouter et supprimer toutes clés utiles \n"
-"\tqui seront imprimées sur le rapport. La seule clé qui existent toujours "
-"est « title ».\n"
-"\tSi aucune clé n’est donnée une liste de clés définies est imprimée."
 
 #: ../sdaps/cmdline/info.py:36
 msgid "The key to display or modify."
-msgstr "La clé à afficher ou modifier."
+msgstr ""
 
 #: ../sdaps/cmdline/info.py:40
 msgid "Set the given key to this value."
-msgstr "La valeur à donner à cette clé."
+msgstr ""
 
 #: ../sdaps/cmdline/info.py:44
 msgid "Delete the key and value pair."
-msgstr "Supprimer la paire clé / valeur."
+msgstr ""
 
 #: ../sdaps/cmdline/info.py:68
 msgid "Existing fields:\n"
-msgstr "Champs existants :\n"
+msgstr ""
 
 #: ../sdaps/cmdline/recognize.py:28
 msgid "Run the optical mark recognition."
-msgstr "Exécutez la reconnaissance optique de marques."
+msgstr ""
 
 #: ../sdaps/cmdline/recognize.py:29
 msgid ""
@@ -391,18 +332,11 @@ msgid ""
 "already\n"
 "    run or manual changes were made."
 msgstr ""
-"Effectue une itération sur toutes les images et exécute la reconnaissance \n"
-"\toptique de marques. Les pages seront évaluées à nouveau, même si "
-"l'option \n"
-"\trecognize a déjà été exécutée ou si des modifications manuelles ont été "
-"apportées."
 
 #: ../sdaps/cmdline/recognize.py:34
 msgid ""
 "Only identify the page properties, but don't recognize the checkbox states."
 msgstr ""
-"Identifie les propriétés de la page, sans reconnaître la valeur des cases à "
-"cocher."
 
 #: ../sdaps/cmdline/recognize.py:39
 msgid ""
@@ -622,9 +556,9 @@ msgid "sdaps questionnaire"
 msgstr ""
 
 #: ../sdaps/csvdata/buddies.py:76
-#, fuzzy, python-format
+#, python-format
 msgid "Not importing unknown questionnaire ID \"%s\""
-msgstr "Exportez et importez les identifiants des questionnaires."
+msgstr ""
 
 #: ../sdaps/gui/__init__.py:59
 msgid ""

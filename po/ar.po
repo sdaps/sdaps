@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-20 22:30+0200\n"
+"POT-Creation-Date: 2017-11-30 14:41+0100\n"
 "PO-Revision-Date: 2015-07-01 10:51+0200\n"
 "Last-Translator: Hatim Alahmadi <mandrivagnome@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/sdaps/master/ar/"
@@ -564,17 +564,17 @@ msgstr ""
 msgid "Not importing unknown questionnaire ID \"%s\""
 msgstr "تصدير واستيراد معرفات الاسئلة."
 
-#: ../sdaps/gui/__init__.py:57
+#: ../sdaps/gui/__init__.py:59
 msgid ""
 "The survey does not have any images! Please add images (and run recognize) "
 "before using the GUI."
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:202
+#: ../sdaps/gui/__init__.py:204
 msgid "Page|Invalid"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:205
+#: ../sdaps/gui/__init__.py:207
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
@@ -585,57 +585,57 @@ msgstr[3] "صفحة %i"
 msgstr[4] "صفحة %i"
 msgstr[5] "صفحة %i"
 
-#: ../sdaps/gui/__init__.py:247
+#: ../sdaps/gui/__init__.py:249
 msgid "Copyright © 2007-2014 The SDAPS Authors"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:249
+#: ../sdaps/gui/__init__.py:251
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:250
+#: ../sdaps/gui/__init__.py:252
 msgid "http://sdaps.org"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:251
+#: ../sdaps/gui/__init__.py:253
 msgid "translator-credits"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:296
+#: ../sdaps/gui/__init__.py:298
 #, python-format
 msgid " of %i"
 msgstr " من %i"
 
-#: ../sdaps/gui/__init__.py:297
+#: ../sdaps/gui/__init__.py:299
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:313
+#: ../sdaps/gui/__init__.py:315
 msgid ""
 "You have reached the first page of the survey. Would you like to go to the "
 "last page?"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:315
+#: ../sdaps/gui/__init__.py:317
 msgid "Go to last page"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:337
+#: ../sdaps/gui/__init__.py:339
 msgid ""
 "You have reached the last page of the survey. Would you like to go to the "
 "first page?"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:339
+#: ../sdaps/gui/__init__.py:341
 msgid "Go to first page"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:447
+#: ../sdaps/gui/__init__.py:449
 msgid "Close without saving"
 msgstr "إغلاق بدون حفظ"
 
-#: ../sdaps/gui/__init__.py:451
+#: ../sdaps/gui/__init__.py:453
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -712,7 +712,7 @@ msgid ""
 "\" in the toplevel directory."
 msgstr ""
 
-#: ../sdaps/utils/opencv.py:34
+#: ../sdaps/utils/opencv.py:33
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
 msgstr ""
 
