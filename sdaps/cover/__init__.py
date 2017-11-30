@@ -37,7 +37,7 @@ def cover(survey, output=None):
 
     doc = template.DocTemplate(
         filename,
-        _(u'sdaps questionnaire'),
+        _(u'SDAPS questionnaire'),
         {
             'title': survey.title,
             'subject': subject
