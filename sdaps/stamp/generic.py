@@ -333,7 +333,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
         try:
             import pyPdf
         except:
-            log.error(_(u'You need to have either pdftk or pyPdf installed. pdftk is the faster method.'))
+            log.error(_(u'You need to have either PDFtk or pyPdf installed. PDFtk is faster.'))
             sys.exit(1)
 
     # Write the "stamp" out to tmp.pdf if are using pdftk.
@@ -416,14 +416,14 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
     if have_pdftk:
         stampsfile.close()
         # Merge using pdftk
-        print _("Stamping using pdftk")
+        print _("Branding using PDFtk")
         tmp_dir = tempfile.mkdtemp(prefix='sdaps-stamp-')
 
         if sheets == 1:
             # Shortcut if we only have one sheet.
             # In this case form data in the PDF will *not* break, in
             # the other code path it *will* break.
-            print _(u"pdftk: Overlaying the original PDF with the markings.")
+            print _(u"PDFtk: Overlaying the original PDF with the markings.")
             subprocess.call(['pdftk',
                              survey.path('questionnaire.pdf'),
                              'multistamp',
@@ -432,7 +432,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
                              output_filename])
         else:
             for page in xrange(1, questionnaire_length + 1):
-                print ungettext(u"pdftk: Splitting out page %d of each sheet.", u"pdftk: Splitting out page %d of each sheet.", page) % page
+                print ungettext(u"PDFtk: Splitting out page %d of each stack.", u"PDFtk: Splitting out page %d of each stack.", page) % page
                 args = []
                 args.append('pdftk')
                 args.append(survey.path('tmp.pdf'))
@@ -446,7 +446,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
                 subprocess.call(args)
 
-            print _(u"pdftk: Splitting the questionnaire for watermarking.")
+            print _(u"PDFtk: Splitting the questionnaire for watermarking.")
             subprocess.call(['pdftk', survey.path('questionnaire.pdf'),
                              'dump_data', 'output',
                              os.path.join(tmp_dir, 'doc_data.txt')])
@@ -457,7 +457,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
 
             if sheets == 1:
                 for page in xrange(1, questionnaire_length + 1):
-                    print ungettext(u"pdftk: Watermarking page %d of all sheets.", u"pdftk: Watermarking page %d of all sheets.", page) % page
+                    print ungettext(u"PDFtk: Watermarking page %d of all stacks.", u"PDFtk: Watermarking page %d of all stacks.", page) % page
                     subprocess.call(['pdftk',
                                      os.path.join(tmp_dir, 'stamp-%d.pdf' % page),
                                      'background',
@@ -466,7 +466,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
                                      os.path.join(tmp_dir, 'watermarked-%d.pdf' % page)])
             else:
                 for page in xrange(1, questionnaire_length + 1):
-                    print ungettext(u"pdftk: Watermarking page %d of all sheets.", u"pdftk: Watermarking page %d of all sheets.", page) % page
+                    print ungettext(u"PDFtk: Watermarking page %d of all stacks.", u"PDFtk: Watermarking page %d of all stacks.", page) % page
                     subprocess.call(['pdftk',
                                      os.path.join(tmp_dir, 'stamp-%d.pdf' % page),
                                      'background',
@@ -526,7 +526,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
             file(survey.path('questionnaire.pdf'), 'rb')
         )
 
-        print _(u'Stamping using pyPdf. For faster stamping, install pdftk.')
+        print _(u'Branding using pyPdf. For faster branding, install PDFtk.')
         log.progressbar.start(sheets)
 
         for i in range(sheets):
