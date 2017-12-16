@@ -41,8 +41,8 @@ parser.add_argument('--3d-transform',
     dest="transform",
     action="store_true",
     default=False)
-parser.add_argument('-o', '--output',
-    help=_("The location of the output file. Must be given."),
+parser.add_argument('-o', '--output', required=True,
+    help=_("The location of the output file."),
     dest="output")
 
 parser.add_argument('images',
