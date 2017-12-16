@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-30 14:41+0100\n"
+"POT-Creation-Date: 2017-12-16 18:30+0100\n"
 "PO-Revision-Date: 2014-07-25 20:08+0200\n"
 "Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/master/"
@@ -86,7 +86,7 @@ msgstr ""
 msgid "Convert given files and add the result."
 msgstr ""
 
-#: ../sdaps/cmdline/add.py:43 ../sdaps/cmdline/convert.py:39
+#: ../sdaps/cmdline/add.py:43
 msgid ""
 "Do a 3D-transformation after finding the corner marks. If the\n"
 "        corner marks are not found then the image will be added as-is."
@@ -119,7 +119,7 @@ msgstr ""
 "As imagens contêm uma digitalização duplex de um questionário simplex "
 "(padrão: digitalização simplex)."
 
-#: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:49
+#: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:48
 msgid "A number of TIFF image files."
 msgstr "Um número de arquivos de imagem TIFF."
 
@@ -196,15 +196,14 @@ msgid "Convert a set of images to the correct image format."
 msgstr "Converte um conjunto de imagens para o formato de imagem correto."
 
 #: ../sdaps/cmdline/convert.py:31
+#, fuzzy
 msgid ""
-"This command can be used if you scanned files in a different\n"
-"        mode than the expected monochrome TIFF file. All the given files "
-"will\n"
-"        be loaded, converted to monochrome and stored into a multipage 1bpp\n"
-"        TIFF file. Optionally you can select that a 3D transformation "
-"should\n"
-"        be performed, using this it may be possible to work with photos of\n"
-"        questionnaires instead of scans."
+"This command can be used if you scanned files in something\n"
+"        other than the expected monochrome TIFF mode. All given files will\n"
+"        be loaded, converted to monochrome and stored in a multipage 1bpp\n"
+"        TIFF file. Optionally, you can select \"3D transformation\"\\ ,which "
+"may facilitate\n"
+"        working with photos of questionnaires instead of scans."
 msgstr ""
 "Esse comando pode ser usado se você tiver arquivos digitalizados em formato "
 "diferente\n"
@@ -216,11 +215,21 @@ msgstr ""
 "invés\n"
 "\tda digitalização convencional."
 
-#: ../sdaps/cmdline/convert.py:45
-msgid "The location of the output file. Must be given."
+#: ../sdaps/cmdline/convert.py:38
+#, fuzzy
+msgid ""
+"Do a 3D-transformation after finding the corner marks.\n"
+"    If they are not found, the image will be processed as-is."
+msgstr ""
+"Faz uma transformação 3D depois de encontrar as marcas de canto.\n"
+"        Se as marcas não forem encontradas, a imagem é adicionada como é."
+
+#: ../sdaps/cmdline/convert.py:44
+#, fuzzy
+msgid "The location of the output file."
 msgstr "A localização do arquivo de saída. Deve ser fornecida."
 
-#: ../sdaps/cmdline/convert.py:58
+#: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
 msgstr "Nome do arquivo de saída não especificado!"
 
@@ -303,15 +312,17 @@ msgid "The file to import."
 msgstr "O arquivo a ser importado."
 
 #: ../sdaps/cmdline/gui.py:28
-msgid "Launch a gui. You can view and alter the (recognized) answers with it."
+#, fuzzy
+msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
 msgstr ""
 "Abrir uma interface gráfica (GUI). Você pode visualizar e alterar as "
 "respostas (reconhecidas) nela."
 
 #: ../sdaps/cmdline/gui.py:29
+#, fuzzy
 msgid ""
 "This command launches a graphical user interface that can\n"
-"    be used to correct answer. You need to run \"recognize\" before using "
+"    be used to correct answers. You need to run \"recognize\" before using "
 "it.\n"
 "    "
 msgstr ""
@@ -659,7 +670,8 @@ msgid "Could not apply 3D-transformation to image '%s', page %i!"
 msgstr "Não foi possível aplicar transformação 3D na imagem '%s', página %i!"
 
 #: ../sdaps/cover/__init__.py:40
-msgid "sdaps questionnaire"
+#, fuzzy
+msgid "SDAPS questionnaire"
 msgstr "questionário sdaps"
 
 #: ../sdaps/csvdata/buddies.py:76
@@ -1150,8 +1162,8 @@ msgid "Questionnaire-ID: %i"
 msgstr "ID do Questionário: %i"
 
 #: ../sdaps/stamp/generic.py:336
-msgid ""
-"You need to have either pdftk or pyPdf installed. pdftk is the faster method."
+#, fuzzy
+msgid "You need to have either PDFtk or pyPdf installed. PDFtk is faster."
 msgstr ""
 "Você precisa ter o pdftk ou o pyPdf instalado. pdftk é o método mais rápido."
 
@@ -1172,31 +1184,34 @@ msgstr[1] "%i folhas; %f segundos por folha"
 
 #. Merge using pdftk
 #: ../sdaps/stamp/generic.py:419
-msgid "Stamping using pdftk"
+#, fuzzy
+msgid "Marking using PDFtk"
 msgstr "Estampando com pdftk"
 
 #. Shortcut if we only have one sheet.
 #. In this case form data in the PDF will *not* break, in
 #. the other code path it *will* break.
 #: ../sdaps/stamp/generic.py:426
-msgid "pdftk: Overlaying the original PDF with the markings."
+#, fuzzy
+msgid "PDFtk: Overlaying the original PDF with the markings."
 msgstr "pdftk: Sobrepondo o PDF original com as marcas."
 
 #: ../sdaps/stamp/generic.py:435
-#, python-format
-msgid "pdftk: Splitting out page %d of each sheet."
-msgid_plural "pdftk: Splitting out page %d of each sheet."
+#, fuzzy, python-format
+msgid "PDFtk: Splitting out page %d of each stack."
+msgid_plural "PDFtk: Splitting out page %d of each stack."
 msgstr[0] "pdftk: Extraindo a página %d de cada folha."
 msgstr[1] "pdftk: Extraindo a página %d de cada folha."
 
 #: ../sdaps/stamp/generic.py:449
-msgid "pdftk: Splitting the questionnaire for watermarking."
+#, fuzzy
+msgid "PDFtk: Splitting the questionnaire for marking."
 msgstr "pdftk: Dividindo o questionário para marca d'água."
 
 #: ../sdaps/stamp/generic.py:460 ../sdaps/stamp/generic.py:469
-#, python-format
-msgid "pdftk: Watermarking page %d of all sheets."
-msgid_plural "pdftk: Watermarking page %d of all sheets."
+#, fuzzy, python-format
+msgid "PDFtk: Marking page %d of all stacks."
+msgid_plural "PDFtk: Marking page %d of all stacks."
 msgstr[0] "pdftk: Criando marca d'água na página %d de todas as folhas."
 msgstr[1] "pdftk: Criando marca d'água na página %d de todas as folhas."
 
@@ -1205,7 +1220,8 @@ msgid "pdftk: Assembling everything into the final PDF."
 msgstr "pdftk: Montando tudo no PDF final."
 
 #: ../sdaps/stamp/generic.py:529
-msgid "Stamping using pyPdf. For faster stamping, install pdftk."
+#, fuzzy
+msgid "Marking using pyPdf. For faster marking, install PDFtk."
 msgstr "Estampando com pyPdf. Para estampar mais rapidamente, instale o pdftk."
 
 #: ../sdaps/stamp/latex.py:18

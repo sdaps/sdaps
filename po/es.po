@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-30 14:41+0100\n"
+"POT-Creation-Date: 2017-12-16 18:30+0100\n"
 "PO-Revision-Date: 2017-12-01 16:49+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/>"
-"\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/"
+">\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -86,7 +86,7 @@ msgstr ""
 msgid "Convert given files and add the result."
 msgstr "Convierte los archivos especificados y añade el resultado."
 
-#: ../sdaps/cmdline/add.py:43 ../sdaps/cmdline/convert.py:39
+#: ../sdaps/cmdline/add.py:43
 msgid ""
 "Do a 3D-transformation after finding the corner marks. If the\n"
 "        corner marks are not found then the image will be added as-is."
@@ -119,7 +119,7 @@ msgstr ""
 "Las imágenes contienen un escaneo doble de un cuestionario sencillo (por "
 "defecto: escaneo sencillo)."
 
-#: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:49
+#: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:48
 msgid "A number of TIFF image files."
 msgstr "Un número de archivos de imagen TIFF."
 
@@ -199,15 +199,14 @@ msgid "Convert a set of images to the correct image format."
 msgstr "Convierte un conjunto de imágenes al formato correcto de imagen."
 
 #: ../sdaps/cmdline/convert.py:31
+#, fuzzy
 msgid ""
-"This command can be used if you scanned files in a different\n"
-"        mode than the expected monochrome TIFF file. All the given files "
-"will\n"
-"        be loaded, converted to monochrome and stored into a multipage 1bpp\n"
-"        TIFF file. Optionally you can select that a 3D transformation "
-"should\n"
-"        be performed, using this it may be possible to work with photos of\n"
-"        questionnaires instead of scans."
+"This command can be used if you scanned files in something\n"
+"        other than the expected monochrome TIFF mode. All given files will\n"
+"        be loaded, converted to monochrome and stored in a multipage 1bpp\n"
+"        TIFF file. Optionally, you can select \"3D transformation\"\\ ,which "
+"may facilitate\n"
+"        working with photos of questionnaires instead of scans."
 msgstr ""
 "Este comando puede ser empleado si usted escaneo archivos en un modo\n"
 "     distinto al archivo TIFF monocromático esperado. Todos los archivos "
@@ -219,11 +218,22 @@ msgstr ""
 "     haciéndolo es posible trabajar con fotografías de\n"
 "     cuestionarios en lugar de escaneos."
 
-#: ../sdaps/cmdline/convert.py:45
-msgid "The location of the output file. Must be given."
+#: ../sdaps/cmdline/convert.py:38
+#, fuzzy
+msgid ""
+"Do a 3D-transformation after finding the corner marks.\n"
+"    If they are not found, the image will be processed as-is."
+msgstr ""
+"Realiza una transformación 3D después de encontrar las marcas de esquina. Si "
+"no\n"
+"    se encuentran las marcas la imagen será añadida tal cual es."
+
+#: ../sdaps/cmdline/convert.py:44
+#, fuzzy
+msgid "The location of the output file."
 msgstr "Se debe proporcionar la localización del archivo de salida."
 
-#: ../sdaps/cmdline/convert.py:58
+#: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
 msgstr "¡No se especificó un nombre de archivo de salida!"
 
@@ -308,15 +318,17 @@ msgid "The file to import."
 msgstr "El archivo a importar."
 
 #: ../sdaps/cmdline/gui.py:28
-msgid "Launch a gui. You can view and alter the (recognized) answers with it."
+#, fuzzy
+msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
 msgstr ""
 "Lanzar una interfaz gráfica. Puede ver y modificar las respuestas "
 "(reconocidas) con ella."
 
 #: ../sdaps/cmdline/gui.py:29
+#, fuzzy
 msgid ""
 "This command launches a graphical user interface that can\n"
-"    be used to correct answer. You need to run \"recognize\" before using "
+"    be used to correct answers. You need to run \"recognize\" before using "
 "it.\n"
 "    "
 msgstr ""
@@ -677,7 +689,8 @@ msgstr ""
 "No fue posible aplicar la transformación 3D a la imagen '%s', página %i!"
 
 #: ../sdaps/cover/__init__.py:40
-msgid "sdaps questionnaire"
+#, fuzzy
+msgid "SDAPS questionnaire"
 msgstr "cuestionario de sdaps"
 
 #: ../sdaps/csvdata/buddies.py:76
@@ -1177,8 +1190,8 @@ msgid "Questionnaire-ID: %i"
 msgstr "ID de Cuestionario: %i"
 
 #: ../sdaps/stamp/generic.py:336
-msgid ""
-"You need to have either pdftk or pyPdf installed. pdftk is the faster method."
+#, fuzzy
+msgid "You need to have either PDFtk or pyPdf installed. PDFtk is faster."
 msgstr "Debe tener instalado pdftk o pyPdf. pdftk es el método más rápido."
 
 #. bottomup = False =>(0, 0) is the upper left corner
@@ -1198,31 +1211,34 @@ msgstr[1] "%i hojas; %f segundos por hoja"
 
 #. Merge using pdftk
 #: ../sdaps/stamp/generic.py:419
-msgid "Stamping using pdftk"
+#, fuzzy
+msgid "Marking using PDFtk"
 msgstr "Estampando utilizando pdftk"
 
 #. Shortcut if we only have one sheet.
 #. In this case form data in the PDF will *not* break, in
 #. the other code path it *will* break.
 #: ../sdaps/stamp/generic.py:426
-msgid "pdftk: Overlaying the original PDF with the markings."
+#, fuzzy
+msgid "PDFtk: Overlaying the original PDF with the markings."
 msgstr "pdftk: Creando una nueva capa en el PDF original con las marcas."
 
 #: ../sdaps/stamp/generic.py:435
-#, python-format
-msgid "pdftk: Splitting out page %d of each sheet."
-msgid_plural "pdftk: Splitting out page %d of each sheet."
+#, fuzzy, python-format
+msgid "PDFtk: Splitting out page %d of each stack."
+msgid_plural "PDFtk: Splitting out page %d of each stack."
 msgstr[0] "pdftk: Extrayendo la página %d de cada hoja."
 msgstr[1] "pdftk: Extrayendo las páginas %d de cada hoja."
 
 #: ../sdaps/stamp/generic.py:449
-msgid "pdftk: Splitting the questionnaire for watermarking."
+#, fuzzy
+msgid "PDFtk: Splitting the questionnaire for marking."
 msgstr "pdftk: Dividiendo el cuestionario para la marca de agua."
 
 #: ../sdaps/stamp/generic.py:460 ../sdaps/stamp/generic.py:469
-#, python-format
-msgid "pdftk: Watermarking page %d of all sheets."
-msgid_plural "pdftk: Watermarking page %d of all sheets."
+#, fuzzy, python-format
+msgid "PDFtk: Marking page %d of all stacks."
+msgid_plural "PDFtk: Marking page %d of all stacks."
 msgstr[0] "pdftk: Creando marca de agua en la página %d de todas las hojas."
 msgstr[1] "pdftk: Creando marca de agua en las páginas %d de todas las hojas."
 
@@ -1231,7 +1247,8 @@ msgid "pdftk: Assembling everything into the final PDF."
 msgstr "pdftk: Uniendo todo en el PDF final."
 
 #: ../sdaps/stamp/generic.py:529
-msgid "Stamping using pyPdf. For faster stamping, install pdftk."
+#, fuzzy
+msgid "Marking using pyPdf. For faster marking, install PDFtk."
 msgstr "Estampando usando pyPdf. Para estampación más rápida, instale pdftk."
 
 #: ../sdaps/stamp/latex.py:18
