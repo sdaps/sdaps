@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-16 18:30+0100\n"
-"PO-Revision-Date: 2018-01-10 14:09+0000\n"
+"PO-Revision-Date: 2018-01-18 16:20+0000\n"
 "Last-Translator: Martina Caramenti <martina.caramenti@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/sdaps/tex/it/>\n"
 "Language: it\n"
@@ -69,7 +69,7 @@ msgid ""
 "that fits best."
 msgstr ""
 "Nelle domande con scala di valutazione (1--\\arabic{markcheckboxcount}) "
-"marcare la casella che rappresenta meglio la propria risposta."
+"marcare la casella che meglio rappresenta la propria risposta."
 
 #. LaTeX based report: Label for the number of people that answered
 #: ../tex_translations.in.h:20
