@@ -3,40 +3,40 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-16 18:30+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2018-01-10 14:09+0000\n"
+"Last-Translator: Martina Caramenti <martina.caramenti@gmail.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/sdaps/tex/it/>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.19-dev\n"
 
 #. The language name of the LaTeX dictionary file for translator
 #: ../tex_translations.in.h:2
 msgid "English"
-msgstr ""
+msgstr "Italian"
 
 #. Used as an overlay for questionnaires that are not yet done
 #: ../tex_translations.in.h:4
 msgid "draft"
-msgstr ""
+msgstr "bozza"
 
 #. Label for the survey-id on the questionnaire (in "classic" mode)
 #: ../tex_translations.in.h:6
 msgid "Survey-ID:"
-msgstr ""
+msgstr "ID del sondaggio:"
 
 #. Label for the questionnaire-id on the questionnaire (in "classic" mode)
 #: ../tex_translations.in.h:8
 msgid "Questionnaire-ID:"
-msgstr ""
+msgstr "ID del Questionario:"
 
 #. Default instructions on the questionnaire
 #: ../tex_translations.in.h:10
@@ -44,21 +44,23 @@ msgid ""
 "This questionnaire is automatically read by a computer program. Please use a "
 "pen for filling in your answers."
 msgstr ""
+"Questo questionario viene letto automaticamente con supporti elettronici. Si "
+"prega di compilarlo usando una penna."
 
 #. Instruction on the questionnaire: Description of a crossed checkbox
 #: ../tex_translations.in.h:12
 msgid "Check"
-msgstr ""
+msgstr "Marcare"
 
 #. Instruction on the questionnaire: Description of a crossed and filled checkbox
 #: ../tex_translations.in.h:14
 msgid "Uncheck to correct"
-msgstr ""
+msgstr "Annerire per correggere"
 
 #. Instruction on the questionnaire: Multiple choice question
 #: ../tex_translations.in.h:16
 msgid "You can check any number of boxes in selection questions."
-msgstr ""
+msgstr "Nelle domande a scelta multipla possono essere marcate più risposte."
 
 #. Instruction on the questionnaire: Mark/range question.
 #: ../tex_translations.in.h:18
@@ -66,18 +68,20 @@ msgid ""
 "For questions with a range (1--\\arabic{markcheckboxcount}) mark the answer "
 "that fits best."
 msgstr ""
+"Nelle domande con scala di valutazione (1--\\arabic{markcheckboxcount}) "
+"marcare la casella che rappresenta meglio la propria risposta."
 
 #. LaTeX based report: Label for the number of people that answered
 #: ../tex_translations.in.h:20
 msgid "Answers"
-msgstr ""
+msgstr "Risposte"
 
 #. LaTeX based report: The calculated mean value
 #: ../tex_translations.in.h:22
 msgid "Mean"
-msgstr ""
+msgstr "Media"
 
 #. LaTeX based report: The standard deviation
 #: ../tex_translations.in.h:24
 msgid "Standard-Deviation"
-msgstr ""
+msgstr "Deviazione Standard"
