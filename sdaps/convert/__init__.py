@@ -34,7 +34,7 @@ def convert_images(images, outfile, paper_width, paper_height, transform=False):
             try:
                 img = opencv.transform_using_corners(img, paper_width, paper_height)
             except AssertionError:
-                log.warning(_("Could not apply 3D-transformation to image '%s', page %i!") % (filename, page))
+                log.warn(_("Could not apply 3D-transformation to image '%s', page %i!") % (filename, page))
 
         mono = opencv.convert_to_monochrome(img)
         image.write_a1_to_tiff(outfile, opencv.to_a1_surf(mono))

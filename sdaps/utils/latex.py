@@ -26,7 +26,7 @@ try:
     from sdaps.utils.latexmap import mapping
 except ImportError:
     mapping = {}
-    log.warning(_(u'The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).'))
+    log.warn(_(u'The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).'))
 
 # Add some more mappings
 # NBSP
