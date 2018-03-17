@@ -129,7 +129,10 @@ def add(cmdline):
             print _('Done')
 
     for file in deletelist:
-        os.unlink(file)
+        try:
+            os.unlink(file)
+        except OSError:
+            pass
 
     if error:
         return 1
