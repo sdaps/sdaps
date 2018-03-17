@@ -42,8 +42,6 @@ parser.add_argument('additional_questions',
 def setup(cmdline):
     from sdaps import setuptex
 
-    survey = model.survey.Survey.new(cmdline['project'])
-
-    return setuptex.setup(survey, cmdline['questionnaire.tex'], cmdline['additional_questions'], cmdline['add'])
+    return setuptex.setup(cmdline['project'], cmdline['questionnaire.tex'], cmdline['additional_questions'], cmdline['add'])
 
 

@@ -22,8 +22,10 @@
 # __init__ functions, as that could cause trouble.
 
 
+from . import db
 from . import buddy
 from . import data
+import sys
 import struct
 
 
@@ -45,6 +47,8 @@ class Questionnaire(buddy.Object):
     Reference: survey.questionnaire
     Parent: self.survey
     '''
+
+    _save_skip = {'survey'}
 
     def __init__(self):
         self.survey = None
@@ -98,12 +102,23 @@ class Questionnaire(buddy.Object):
     def reinit_state(self):
         self._notify_changed_list = list()
 
+    def __setstate__(self, data):
+        self.__dict__ = data
+
+        self._notify_changed_list = list()
+
+        for i in range(len(self.qobjects)):
+            self.qobjects[i] = db.fromJson(self.qobjects[i], sys.modules[__name__])
+            self.qobjects[i].questionnaire = self
+
 class QObject(buddy.Object):
     '''
     Identification: id ==(major, minor)
     Reference: survey.questionnaire.qobjects[i](i != id)
     Parent: self.questionnaire
     '''
+
+    _save_skip = {'survey', 'questionnaire'}
 
     def __init__(self):
         self.questionnaire = None
@@ -163,6 +178,13 @@ class QObject(buddy.Object):
 
         return None
 
+    def __setstate__(self, data):
+        self.__dict__ = data
+        self.id = tuple(self.id)
+
+        for i in range(len(self.boxes)):
+            self.boxes[i] = db.fromJson(self.boxes[i], sys.modules[__name__])
+            self.boxes[i].question = self
 
 class Head(QObject):
 
@@ -364,6 +386,8 @@ class Box(buddy.Object, DataObject):
     Parent: self.question
     '''
 
+    _save_skip = { 'question' }
+
     def __init__(self):
         self.question = None
         self.init_attributes()
@@ -421,6 +445,9 @@ class Box(buddy.Object, DataObject):
         if self.id == oid:
             return self
 
+    def __setstate__(self, data):
+        self.__dict__ = data
+        self.id = tuple(self.id)
 
 class Checkbox(Box):
 

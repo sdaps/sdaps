@@ -17,13 +17,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from . import buddy
-
+from . import data as datamodule
+from . import db
 
 class Sheet(buddy.Object):
 
-    _pickled_attrs = {'survey', 'data', 'images', 'survey_id',
-                      'questionnaire_id', 'global_id', 'valid',
-                      'quality', 'recognized', 'verified'}
+    _save_attrs = {'data', 'images', 'survey_id',
+                   'questionnaire_id', 'global_id', 'valid',
+                   'quality', 'recognized', 'verified'}
 
     def __init__(self):
         self.survey = None
@@ -57,6 +58,29 @@ class Sheet(buddy.Object):
 
             v._parent = obj
 
+    @classmethod
+    def __to_json_state__(cls, state):
+        # json is unable to serialize our tuples as keys, so make strings with
+        # '^' as a separator.
+        orig_data = state['data']
+        state['data'] = dict()
+
+        for k, v in orig_data.items():
+            state['data']['^'.join(str(_) for _ in k)] = v
+
+    def __setstate__(self, data):
+        _tmp = data['data']
+        data['data'] = dict()
+        for k, v in _tmp.items():
+            data['data'][tuple(int(_) for _ in k.split('^'))] = db.fromJson(v, datamodule)
+
+        for k in range(len(data['images'])):
+            data['images'][k] = db.fromJson(data['images'][k], Image)
+            data['images'][k].sheet = self
+
+        self.__dict__ = data
+        self.survey = None
+
     @property
     def empty(self):
         for k, v in self.data.items():
@@ -77,13 +101,36 @@ class Sheet(buddy.Object):
                 return False
         return True
 
+    @property
+    def dirty(self):
+        if hasattr(self, '_dirty'):
+             return True
+        for d in self.data.values():
+            if hasattr(d, '_dirty'):
+                return True
+        for i in self.images:
+            if hasattr(i, '_dirty'):
+                return True
+
+    def _clear_dirty(self):
+        if hasattr(self, '_dirty'):
+             del self._dirty
+        for d in self.data.values():
+            if hasattr(d, '_dirty'):
+                del d._dirty
+        for i in self.images:
+            if hasattr(i, '_dirty'):
+                del i._dirty
+
     def __setattr__(self, attr, value):
-        # Nonexisting attributes should never be set.
-        if attr.startswith('_'):
+        if attr.startswith('_') or attr == 'survey':
             object.__setattr__(self, attr, value)
             return
 
-        assert attr in self._pickled_attrs
+        # Nonexisting attributes should never be set.
+        assert attr in self._save_attrs
+
+        self.__setattr__('_dirty', True)
 
         # We need to fall back to "None" for __init__ to work.
         try:
@@ -99,8 +146,10 @@ class Sheet(buddy.Object):
             if self.survey is not None:
                 self.survey.questionnaire.notify_data_changed(None, None, attr, old_value)
 
-
 class Image(buddy.Object):
+
+    # Could make "sheet" a private property instead!
+    _save_skip = {'sheet'}
 
     def __init__(self):
         self.sheet = None
@@ -115,4 +164,11 @@ class Image(buddy.Object):
         #: Whether the page should be ignored (because it is a blank back side)
         self.ignored = False
 
+    def __setattr__(self, attr, value):
+        if attr.startswith('_'):
+            return object.__setattr__(self, attr, value)
+        if attr != 'sheet':
+            object.__setattr__(self, '_dirty', True)
+
+        object.__setattr__(self, attr, value)
 

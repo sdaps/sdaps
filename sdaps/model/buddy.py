@@ -50,16 +50,6 @@ class Object(object):
             setattr(self, '_%s_object_' % name, getattr(self, '_%s_class_' % name)(self))
             return getattr(self, '_%s_object_' % name)
 
-    def __getstate__(self):
-        '''do not pickle pickle any "private" data.
-        '''
-        dict = self.__dict__.copy()
-        keys = list(dict.keys())
-        for key in keys:
-            if key.startswith('_'):
-                del dict[key]
-        return dict
-
 
 class Register(type):
     '''metaclass to register the class as a buddy'''
