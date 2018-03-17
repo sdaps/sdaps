@@ -85,7 +85,7 @@ def stamp(survey, output_filename, cmdline):
         # use the LaTeX stamper
         from sdaps.stamp.latex import create_stamp_pdf
     else:
-        from sdaps.stamp.generic import create_stamp_pdf
+        raise AssertionError('Only LaTeX stamping is currently supported!')
 
     create_stamp_pdf(survey, output_filename, questionnaire_ids)
 

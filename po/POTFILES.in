@@ -19,7 +19,6 @@ sdaps/cmdline/report.py
 sdaps/cmdline/reporttex.py
 sdaps/cmdline/reset.py
 sdaps/cmdline/setup.py
-sdaps/cmdline/setuptex.py
 sdaps/cmdline/stamp.py
 sdaps/convert/__init__.py
 sdaps/cover/__init__.py
@@ -39,10 +38,7 @@ sdaps/report/__init__.py
 sdaps/reset/__init__.py
 sdaps/setup/__init__.py
 sdaps/setup/buddies.py
-sdaps/setupodt/__init__.py
-sdaps/setupodt/boxesparser.py
 sdaps/stamp/__init__.py
-sdaps/stamp/generic.py
 sdaps/stamp/latex.py
 sdaps/setuptex/__init__.py
 sdaps/reporttex/__init__.py

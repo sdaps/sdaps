@@ -2,13 +2,8 @@
 
 This Program can be used to carry out paper based surveys.
 
-The questionnaire is designed using either OpenOffice/LibreOffice and then
-exported to PDF. SDAPS then uses both the ODT document and the PDF file
-to figure out what questions are asked, and where checkboxes and freeform
-fields are placed.
-Another great way to use SDAPS is together with its LaTeX class. It allows
-you to create questionnaires very easily and is tightly integrated into the
-SDAPS main program.
+SDAPS uses a specialised LaTeX class to define questionnaires. This is tightly
+integrated and is an easy way to create machine readable questionnaires.
 
 After this, the program can create an arbitrary number of (unique)
 questionnaires that can be printed and handed out. After being filled out, you
@@ -37,11 +32,6 @@ graphical user interface (gui):
 reportlab based reports (report):
  * reportlab
  * Python Imaging Library (PIL)
-
-ODT based questionnaires (setup/stamp):
- * reportlab (for barcode rendering)
- * pdftk or pyPdf (pdftk is much faster if you need questionnaire ids)
- * python-pdftools
 
 LaTeX based questionnaires (setup_tex/stamp):
  * pdflatex and packages:
