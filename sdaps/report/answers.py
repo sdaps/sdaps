@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import StringIO
+import io
 from PIL import Image
 
 from reportlab import pdfgen
@@ -35,7 +35,7 @@ from sdaps import image
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-import flowables
+from . import flowables
 
 
 mm = units.mm
@@ -62,7 +62,7 @@ stylesheet['Normal_Highlight'] = styles.ParagraphStyle(
 
 
 class Choice(platypus.Flowable):
-    u'''One answer of a choice
+    '''One answer of a choice
     '''
 
     box_width = 200
@@ -80,7 +80,7 @@ class Choice(platypus.Flowable):
             stylesheet_name = 'Right'
         self.answer = platypus.Paragraph(escape(answer), stylesheet[stylesheet_name])
         self.value = platypus.Paragraph(
-            u'%.2f %%' % (value * 100), stylesheet[stylesheet_name]
+            '%.2f %%' % (value * 100), stylesheet[stylesheet_name]
         )
         self.black_box = flowables.Box(
             value * self.box_width, self.box_height, self.box_depth,
@@ -183,13 +183,13 @@ class Range(platypus.Flowable):
             stylesheet_name = 'Normal'
 
         self.answers_paragraph = \
-            platypus.Paragraph(escape(u' - '.join(answers)), stylesheet[stylesheet_name])
+            platypus.Paragraph(escape(' - '.join(answers)), stylesheet[stylesheet_name])
         self.count_paragraph = \
-            platypus.Paragraph(_(u'Answers: %i') % self.count, stylesheet['Normal'])
+            platypus.Paragraph(_('Answers: %i') % self.count, stylesheet['Normal'])
         self.mean_paragraph = \
-            platypus.Paragraph(_(u'Mean: %.2f') % self.mean, stylesheet['Normal'])
+            platypus.Paragraph(_('Mean: %.2f') % self.mean, stylesheet['Normal'])
         self.stdd_paragraph = \
-            platypus.Paragraph(_(u'Standard Deviation: %.2f') % self.standard_deviation, stylesheet['Normal'])
+            platypus.Paragraph(_('Standard Deviation: %.2f') % self.standard_deviation, stylesheet['Normal'])
 
     def wrap(self, available_width, available_height):
         self.answers_paragraph.wrap(available_width, available_height)
@@ -313,7 +313,7 @@ class Freeform(platypus.Flowable):
         if(self.filename, self.tiff_page, self.bbox) in self.cache:
             img = self.cache[(self.filename, self.tiff_page, self.bbox)]
         else:
-            img = StringIO.StringIO(image.get_pbm(
+            img = io.StringIO(image.get_pbm(
                 image.get_a1_from_tiff(
                     self.filename,
                     self.tiff_page,
@@ -335,9 +335,9 @@ class RawText(platypus.Paragraph):
         # Replace things like 
 
         text = escape(text)
-        text = text.replace('\n', u'<br/>')
+        text = text.replace('\n', '<br/>')
 
         text = text
 
-        platypus.Paragraph.__init__(self, text, *args, bulletText=u'•', **kwargs)
+        platypus.Paragraph.__init__(self, text, *args, bulletText='•', **kwargs)
 

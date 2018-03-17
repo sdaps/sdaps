@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This modules contains a helper function to allow writing filter expressions
 on the command line of sdaps. Using this it is for example possible to create
 a report that only contains a subset of all filled out sheets.

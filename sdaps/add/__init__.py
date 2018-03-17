@@ -52,7 +52,7 @@ def check_image(survey, file, duplex_scan=False, force=False, message=False):
 
     if not image.check_tiff_monochrome(file):
         if message:
-            print _('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.') % (file,)
+            print(_('Invalid input file %s. You need to specify a (multipage) monochrome TIFF as input.') % (file,))
         return False
 
     num_pages = image.get_tiff_page_count(file)
@@ -64,7 +64,7 @@ def check_image(survey, file, duplex_scan=False, force=False, message=False):
     # This test is on the image count that needs to come from the file
     if num_pages % c != 0 and not force:
         if message:
-            print _('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c)
+            print(_('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c))
         return False
 
     return True
@@ -96,7 +96,7 @@ def add_image(survey, file, duplex_scan=False, force=False, copy=True):
     else:
         tiff = os.path.relpath(os.path.abspath(tiff), survey.survey_dir)
 
-    pages = range(num_pages)
+    pages = list(range(num_pages))
     while len(pages) > 0:
         sheet = model.sheet.Sheet()
         survey.add_sheet(sheet)

@@ -20,7 +20,7 @@
 #include "transform.h"
 #include "surface.h"
 #include <Python.h>
-#include <pycairo.h>
+#include <py3cairo.h>
 #include <cairo.h>
 
 static PyObject *wrap_get_a1_from_tiff(PyObject *self, PyObject *args);
@@ -43,9 +43,7 @@ static PyObject *wrap_get_tiff_resolution(PyObject *self, PyObject *args);
 static PyObject *wrap_check_tiff_monochrome(PyObject *self, PyObject *args);
 static PyObject *wrap_kfill_modified(PyObject *self, PyObject *args);
 
-Pycairo_CAPI_t *Pycairo_CAPI;
-
-static PyMethodDef EvaluateMethods[] = {
+static PyMethodDef image_methods[] = {
 	{"get_a1_from_tiff",  wrap_get_a1_from_tiff, METH_VARARGS, "Creates a cairo A1 surface from a monochrome tiff file."},
 	{"write_a1_to_tiff",  wrap_write_a1_to_tiff, METH_VARARGS, "Appends a new page to an existing tiff file or create a new tiff file containing the pixel data from the surface."},
 	{"get_rgb24_from_tiff",  wrap_get_rgb24_from_tiff, METH_VARARGS, "Creates a cairo RGB24 surface from a (monochrome) tiff file."},
@@ -68,27 +66,34 @@ static PyMethodDef EvaluateMethods[] = {
 	{NULL, NULL, 0, NULL} /* Sentinel */
 };
 
-static int
-initpycairo(void)
-{
-	Pycairo_IMPORT;
-	if (Pycairo_CAPI == NULL)
-		return 0;
-
-	return 1;
-}
+static struct PyModuleDef image_module = {
+  PyModuleDef_HEAD_INIT,
+  "image",
+  NULL,
+  0,
+  image_methods,
+  0,  /* m_reload */
+  0,  /* m_traverse */
+  0,  /* m_clear */
+  0,  /* m_free */
+};
 
 PyMODINIT_FUNC
-initimage(void)
+PyInit_image(void)
 {
-	/* Return if pycairo cannot be initilized. */
-	if (!initpycairo())
-		return;
+	PyObject *m;
 
-	Py_InitModule("image", EvaluateMethods);
+	m = PyModule_Create(&image_module);
+	if (m == NULL)
+		return NULL;
+
+	if (import_cairo() < 0)
+		return NULL;
 
 	/* supress warnings from libtiff. */
 	disable_libtiff_warnings ();
+
+	return m;
 }
 
 

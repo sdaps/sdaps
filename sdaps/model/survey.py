@@ -16,8 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import struct
 import bz2
-import cPickle
+import pickle
 import os
 import sys
 from sdaps import defs
@@ -95,7 +96,7 @@ class Survey(object):
     def __init__(self):
         self.questionnaire = None
         self.sheets = list()
-        self.title = unicode()
+        self.title = str()
         self.info = dict()
         self.survey_id = 0
         self.global_id = None
@@ -115,7 +116,7 @@ class Survey(object):
         self.index = len(self.sheets) - 1
 
     def calculate_survey_id(self):
-        u"""Calculate the unique survey ID from the surveys settings and boxes.
+        """Calculate the unique survey ID from the surveys settings and boxes.
 
         The ID only includes the boxes positions, which means that simple typo
         fixes will not change the ID most of the time."""
@@ -131,37 +132,33 @@ class Survey(object):
                 continue
 
             if isinstance(self.defs.__getattribute__(defs_slot), float):
-                md5.update(str(round(self.defs.__getattribute__(defs_slot), 1)))
+                md5.update(str(round(self.defs.__getattribute__(defs_slot), 1)).encode('utf-8'))
             else:
-                md5.update(str(self.defs.__getattribute__(defs_slot)))
+                md5.update(str(self.defs.__getattribute__(defs_slot)).encode('utf-8'))
 
-        self.survey_id = 0
-        # This compresses the md5 hash to a 32 bit unsigned value, by
-        # taking the lower two bits of each byte.
-        for i, c in enumerate(md5.digest()):
-            self.survey_id += bool(ord(c) & 1) << (2 * i)
-            self.survey_id += bool(ord(c) & 2) << (2 * i + 1)
+        # Use the first 32 bits as a little endian unsigned integer
+        self.survey_id = struct.unpack('<I', md5.digest()[0:4])[0]
 
     @staticmethod
     def load(survey_dir):
-        import ConfigParser
+        import configparser
         file = bz2.BZ2File(os.path.join(survey_dir, 'survey'), 'r')
-        survey = cPickle.load(file)
+        survey = pickle.load(file)
         file.close()
         survey.survey_dir = survey_dir
 
-        config = ConfigParser.SafeConfigParser()
+        config = configparser.SafeConfigParser()
         config.optionxform = str
         config.read(os.path.join(survey_dir, 'info'))
-        survey.title = config.get('sdaps', 'title').decode('utf-8')
+        survey.title = config.get('sdaps', 'title')
 
-        survey.global_id = config.get('sdaps', 'global_id').decode('utf-8')
+        survey.global_id = config.get('sdaps', 'global_id')
         if survey.global_id == '' or survey.global_id == 'None':
             survey.global_id = None
 
         survey.info = dict()
         for key, value in config.items('info'):
-            survey.info[key.decode('utf-8')] = value.decode('utf-8')
+            survey.info[key] = value
 
         # Early versions of SDAPS 1.0 did not have the file version number
         if not hasattr(survey, 'version'):
@@ -184,32 +181,32 @@ class Survey(object):
         return survey
 
     def save(self):
-        import ConfigParser
+        import configparser
         file = bz2.BZ2File(os.path.join(self.survey_dir, '.survey.tmp'), 'w')
-        cPickle.dump(self, file, 2)
+        pickle.dump(self, file, 2)
         file.close()
 
         # Hack to include comments. Set allow_no_value here, and add keys
         # with a '#' in the front and no value.
-        config = ConfigParser.SafeConfigParser(allow_no_value=True)
+        config = configparser.SafeConfigParser(allow_no_value=True)
 
         config.optionxform = str
         config.add_section('sdaps')
         config.add_section('info')
         config.add_section('defs')
         config.add_section('questionnaire')
-        config.set('sdaps', 'title', self.title.encode('utf-8'))
+        config.set('sdaps', 'title', self.title)
         if self.global_id is not None:
-            config.set('sdaps', 'global_id', self.global_id.encode('utf-8'))
+            config.set('sdaps', 'global_id', self.global_id)
         else:
             config.set('sdaps', 'global_id', '')
 
-        for key, value in sorted(self.info.iteritems()):
-            config.set('info', key.encode('utf-8'), value.encode('utf-8'))
+        for key, value in sorted(self.info.items()):
+            config.set('info', key, value)
 
         config.set('defs', '# These values are not read back, they exist for information only!')
         for attr in self.defs.__slots__:
-            config.set('defs', attr, str(getattr(self.defs, attr)).encode('utf-8'))
+            config.set('defs', attr, str(getattr(self.defs, attr)))
 
         config.set('questionnaire', '# These values are not read back, they exist for information only!')
         config.set('questionnaire', 'page_count', str(self.questionnaire.page_count))
@@ -268,7 +265,7 @@ class Survey(object):
             if filter():
                 count += 1
 
-        print ungettext('%i sheet', '%i sheets', count) % count
+        print(ungettext('%i sheet', '%i sheets', count) % count)
         if count == 0:
             return
 
@@ -279,18 +276,18 @@ class Survey(object):
                 function()
             log.progressbar.update(self.index + 1)
 
-        print _('%f seconds per sheet') % (
+        print(_('%f seconds per sheet') % (
             float(log.progressbar.elapsed_time) /
             float(log.progressbar.max_value)
-        )
+        ))
 
     def goto_sheet(self, sheet):
-        u'''goto the specified sheet object
+        '''goto the specified sheet object
         '''
         self.index = self.sheets.index(sheet)
 
     def goto_questionnaire_id(self, questionnaire_id):
-        u'''goto the sheet object specified by its questionnaire_id
+        '''goto the sheet object specified by its questionnaire_id
         '''
 
         qids = set()
@@ -301,24 +298,21 @@ class Survey(object):
         except ValueError:
             pass
 
-        sheets = filter(
-            lambda sheet: sheet.questionnaire_id in qids,
-            self.sheets
-        )
+        sheets = [sheet for sheet in self.sheets if sheet.questionnaire_id in qids]
         if len(sheets) == 1:
             self.goto_sheet(sheets[0])
         else:
             raise ValueError
 
     def check_settings(self):
-        u'''Do sanity checks on the different settings.'''
+        '''Do sanity checks on the different settings.'''
 
         if self.defs.duplex and self.questionnaire.page_count % 2 != 0:
-            print _("A questionnaire that is printed in duplex needs an even amount of pages!")
+            print(_("A questionnaire that is printed in duplex needs an even amount of pages!"))
             return False
 
         if self.defs.style == 'classic' and self.questionnaire.page_count > 6:
-            print _("The 'classic' style only supports a maximum of six pages! Use the 'code128' style if you require more pages.")
+            print(_("The 'classic' style only supports a maximum of six pages! Use the 'code128' style if you require more pages."))
             return False
 
         return True
@@ -335,7 +329,7 @@ class Survey(object):
                 sys.exit(1)
         elif self.defs.style == "code128":
             # Check each character for validity
-            for c in unicode(qid):
+            for c in str(qid):
                 if not c in defs.c128_chars:
                     log.error(_("Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!") % (c, qid))
                     sys.exit(1)
@@ -349,10 +343,10 @@ class Survey(object):
             AssertionError()
 
     def __getstate__(self):
-        u'''Only pickle attributes that are in the pickled_attrs set.
+        '''Only pickle attributes that are in the pickled_attrs set.
         '''
         dict = self.__dict__.copy()
-        keys = dict.keys()
+        keys = list(dict.keys())
         for key in keys:
             if not key in self.pickled_attrs:
                 del dict[key]
@@ -394,9 +388,9 @@ class Survey(object):
             # Add the "text" attribute to Textbox.
             from sdaps.model.data import Textbox
             for sheet in self.sheets:
-                for data in sheet.data.itervalues():
+                for data in sheet.data.values():
                     if isinstance(data, Textbox):
-                        data.text = unicode()
+                        data.text = str()
 
         if self.version < 3:
             log.warn(msg % (3))

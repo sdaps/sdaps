@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u'''
+'''
 This module alters sys.stdout and sys.stderr to copy all output into a logfile.
 
 Note that some magic is done when the output stream is not a tty. In that
@@ -27,7 +27,7 @@ output data to `sys.stdout`.
 
 import sys
 import time
-import StringIO
+import io
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
@@ -104,7 +104,7 @@ class Encoder(object):
         self.pipe = pipe
 
     def write(self, data):
-        if isinstance(data, unicode):
+        if isinstance(data, bytes):
             self.pipe.write(data.encode('utf-8'))
         else:
             self.pipe.write(data)
@@ -124,19 +124,20 @@ class Encoder(object):
 class Logfile(object):
 
     def __init__(self):
-        self.logfile = StringIO.StringIO()
+        self.logfile = io.StringIO()
 
     def write(self, data):
         self.logfile.write(data)
+        self.logfile.flush()
 
     def open(self, filename):
-        logfile = Encoder(file(filename, 'a', buffering=0))
+        logfile = Encoder(open(filename, 'a'))
         logfile.write(self.logfile.getvalue())
         self.logfile = logfile
 
     def close(self):
         self.logfile.close()
-        self.logfile = StringIO.StringIO()
+        self.logfile = io.StringIO()
 
     def isatty(self):
         return False

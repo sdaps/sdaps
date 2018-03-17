@@ -17,7 +17,7 @@
 
 from gi.repository import Poppler
 import cairo
-import buddies
+from . import buddies
 import os.path
 
 def annotate(survey, infile=None, outfile=None):
@@ -37,7 +37,7 @@ def annotate(survey, infile=None, outfile=None):
 
     cr = cairo.Context(output)
 
-    for p in xrange(survey.questionnaire.page_count):
+    for p in range(survey.questionnaire.page_count):
         pdf.get_page(p).render_for_printing(cr)
 
         cr.save()

@@ -15,19 +15,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This module reset already stored data so next reports and exports will contain only new questionnaires.
 """
 
 from collections import defaultdict
 from sdaps import model
-import bz2,os,cPickle
+import bz2,os,pickle
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 def reset(survey):
-    print(_("Removing stored data..."))
+    print((_("Removing stored data...")))
     survey.sheets = []
     survey.questionnaire_ids = []
     survey.save()
-    print(_("Done"))
+    print((_("Done")))

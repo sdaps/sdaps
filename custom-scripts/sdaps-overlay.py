@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
@@ -74,7 +74,7 @@ def generate_pdf():
     # Transform to mm space
     cr.scale(72 / 25.4, 72 / 25.4)
 
-    for p in xrange(questionnaire.page_count):
+    for p in range(questionnaire.page_count):
         # 1 based page numbers
         p += 1
 

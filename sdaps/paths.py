@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u'''Some path values, used to find and load program components.
+'''Some path values, used to find and load program components.
 '''
 
 import os
@@ -42,7 +42,7 @@ prefix = str()
 
 
 def init(local_run_value, package_path):
-    u'''Initialize path values for sdaps
+    '''Initialize path values for sdaps
     '''
     global local_run, build_dir, lib_build_dir, source_dir, prefix
 
@@ -87,7 +87,7 @@ def init(local_run_value, package_path):
 
 
 def init_gettext(locale_dir):
-    u'''Initialize gettext using the given directory containing the l10n data.
+    '''Initialize gettext using the given directory containing the l10n data.
     '''
     gettext.bindtextdomain('sdaps', locale_dir)
 

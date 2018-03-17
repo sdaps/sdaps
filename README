@@ -17,17 +17,17 @@ Depending on what part of SDAPS you use, different dependencies are
 required.
 
 general (including recognize):
- * Python 2.7
+ * Python 3.6
  * distutils and distutils-extra
- * python-cairo (including development files)
+ * python3-cairo (including development files)
  * libtiff (including development files)
  * pkg-config
- * python-zbar for "code128" and "qr" styles
- * python development files
+ * zbarimg binary for "code128" and "qr" styles
+ * python3 development files
 
 graphical user interface (gui):
  * GTK+ and introspection data
- * python-gi
+ * python3-gi
 
 reportlab based reports (report):
  * reportlab
@@ -46,13 +46,13 @@ LaTeX based reports:
  * siunitx
 
 Import of other image formats (convert, add --convert):
- * python-opencv
+ * python3-opencv
  * Poppler and introspection data
- * python-gi
+ * python3-gi
 
 Debug output (annotate):
  * Poppler and introspection data
- * python-gi
+ * python3-gi
 
 ## Installation
 

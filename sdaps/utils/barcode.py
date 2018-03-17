@@ -15,21 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This module contains helpers to read barcodes from cairo A1 surfaces.
 """
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
+import os
+import tempfile
 import cairo
-import zbar
+import subprocess
 from sdaps import image
 from sdaps import defs
 
 
 def read_barcode(surface, matrix, x, y, width, height, btype="CODE128"):
-    u"""Tries to read the barcode at the given position"""
+    """Tries to read the barcode at the given position"""
     result = scan(surface, matrix, x, y, width, height, btype)
 
     if result == None:
@@ -74,59 +76,38 @@ def scan(surface, matrix, x, y, width, height, btype="CODE128", kfill=False):
 
         image.kfill_modified(a1_surface, barwidth)
 
-    # zbar does not understand A1, but it can handle 8bit greyscale ...
-    # We create an inverted A8 mask for zbar, which is the same as a greyscale
-    # image.
-    a8_surface = cairo.ImageSurface(cairo.FORMAT_A8, width, height)
-
-    cr = cairo.Context(a8_surface)
+    rgb_surface = cairo.ImageSurface(cairo.FORMAT_RGB24, width, height)
+    cr = cairo.Context(rgb_surface)
     cr.set_source_rgba(1, 1, 1, 1)
     cr.set_operator(cairo.OPERATOR_SOURCE)
     cr.paint()
     cr.set_source_rgba(0, 0, 0, 0)
     cr.mask_surface(a1_surface, 0, 0)
 
-    del cr
-    a8_surface.flush()
+    tmp = tempfile.mktemp(suffix='.png', prefix='sdaps-zbar-')
+    rgb_surface.write_to_png(tmp)
 
-    # Now we have pixel data that can be passed to zbar
-    img = zbar.Image()
-    img.format = "Y800"
-    img.data = str(a8_surface.get_data())
-    img.height = height
-    # Use the stride, it should be the same as width, but if it is not, then
-    # it is saner to add a couple of junk pixels instead of getting weird
-    # offsets and missing data.
-    img.width = a8_surface.get_stride()
+    proc = subprocess.Popen(['zbarimg', '-q', '-Sdisable', '-S%s.enable' % btype.lower(), tmp], stdout=subprocess.PIPE)
+    stdout, stderr = proc.communicate()
 
-    scanner = zbar.ImageScanner()
-    scanner.scan(img)
+    try:
+        os.unlink(tmp)
+    except OSError:
+        pass
 
-    result = None
-    result_quality = -1
-    for symbol in scanner.results:
-        # Ignore barcodes of the wrong type
-        if str(symbol.type) != btype:
-            continue
+    if proc.returncode == 4:
+        return None
 
-        # return the symbol with the highest quality
-        if symbol.quality > result_quality:
-            result = symbol.data
-            result_quality = symbol.quality
+    assert(proc.returncode == 0)
+    barcode = stdout.split(b'\n')[0]
+    assert barcode.split(b':', 1)[0].replace(b'-', b'').lower() == btype.lower().encode('ascii')
 
 
     # The following can be used to look at the images
-    #rgb_surface = cairo.ImageSurface(cairo.FORMAT_RGB24, width, height)
-    #cr = cairo.Context(rgb_surface)
-    #cr.set_source_rgba(1, 1, 1, 1)
-    #cr.set_operator(cairo.OPERATOR_SOURCE)
-    #cr.paint()
-    #cr.set_source_rgba(0, 0, 0, 0)
-    #cr.mask_surface(a1_surface, 0, 0)
     #rgb_surface.write_to_png("/tmp/barcode-%03i.png" % barcode)
     #barcode += 1
 
-    return result
+    return barcode.split(b':', 1)[1].decode('utf-8')
 
 
 

@@ -60,7 +60,7 @@ def iter_images_and_pages(images):
                 pass
 
 
-        for page in xrange(pages):
+        for page in range(pages):
             if is_tiff:
                 # TIFF pages are zero based
                 surf = image.get_rgb24_from_tiff(filename, page, False)
@@ -116,7 +116,7 @@ def to_opencv(surf):
     stride = surf.get_stride()
 
     # We need to ensure a sane stride!
-    np_width = stride / 4
+    np_width = stride // 4
 
     # This converts by doing a copy; first create target numpy array
     # We need a dummy alpha channel ...

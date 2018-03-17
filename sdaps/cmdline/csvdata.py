@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This module implements a simple export/import to/from CSV files.
 """
 
@@ -91,10 +91,10 @@ def csvdata(cmdline):
                 outfile = os.fdopen(outfd, 'w')
             else:
                 filename = cmdline['output']
-                outfile = file(filename, 'w')
+                outfile = open(filename, 'w')
         else:
             filename = survey.new_path('data_%i.csv')
-            outfile = file(filename, 'w')
+            outfile = open(filename, 'w')
 
         csvoptions = { 'delimiter' : cmdline['delimiter'] }
 
@@ -114,7 +114,7 @@ def csvdata(cmdline):
             export_quality=cmdline['export_quality'],
             csvoptions=csvoptions)
     elif cmdline['direction'] == 'import':
-        return csvdata.csvdata_import(survey, file(cmdline['file'], 'r'))
+        return csvdata.csvdata_import(survey, open(cmdline['file'], 'r'))
     else:
         raise AssertionError
 

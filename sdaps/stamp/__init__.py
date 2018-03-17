@@ -60,7 +60,7 @@ def stamp(survey, output_filename, cmdline):
             # Create random IDs
             max = pow(2, 16)
             min = max - 50000
-            questionnaire_ids = range(min, max)
+            questionnaire_ids = list(range(min, max))
 
             # Remove any id that has already been used.
             for id in survey.questionnaire_ids:

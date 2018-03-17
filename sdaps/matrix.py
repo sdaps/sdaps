@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 The matrix module adds support to find out rotation matrix for a scanned
 page. After loading this module you can access the transformation matrices
 (cairo.Martrix instances) via two functions:
@@ -40,14 +40,13 @@ from sdaps import surface
 from sdaps import image
 
 
-class Image(model.buddy.Buddy):
+class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'matrix'
     obj_class = model.sheet.Image
 
     def mm_to_px(self, fallback=True):
-        u"""Return the matrix to convert mm to pixel space. If no matrix
+        """Return the matrix to convert mm to pixel space. If no matrix
         information is available and `fallback` is set to `True` then a matrix
         will be calculated from the size of the image."""
         matrix = self.px_to_mm(fallback)
@@ -56,7 +55,7 @@ class Image(model.buddy.Buddy):
         return matrix
 
     def px_to_mm(self, fallback=True):
-        u"""Return the matrix to convert pixel to mm space. If no matrix
+        """Return the matrix to convert pixel to mm space. If no matrix
         information is available and `fallback` is set to `True` then a matrix
         will be calculated from the size of the image."""
         if self.obj.raw_matrix is not None:
@@ -89,11 +88,11 @@ class Image(model.buddy.Buddy):
             return None
 
     def matrix_valid(self):
-        u"""Checks whether the proper transformation matrix is known."""
+        """Checks whether the proper transformation matrix is known."""
         return self.obj.raw_matrix != None
 
     def set_px_to_mm(self, matrix):
-        u"""Set the stored matrix for the image. You need to pass in the pixel
+        """Set the stored matrix for the image. You need to pass in the pixel
         to mm space conversion matrix. Unsetting can be done by passing `None`.
         """
         if matrix is not None:

@@ -26,27 +26,27 @@ try:
     from sdaps.utils.latexmap import mapping
 except ImportError:
     mapping = {}
-    log.warn(_(u'The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).'))
+    log.warn(_('The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).'))
 
 # Add some more mappings
 # NBSP
-mapping[u'~'] = u' '
+mapping['~'] = ' '
 
 
 re_latex_to_unicode_mapping = {}
-for token, replacement in mapping.iteritems():
-    regexp = re.compile(u'%s(?=^w|})' % re.escape(token))
+for token, replacement in mapping.items():
+    regexp = re.compile('%s(?=^w|})' % re.escape(token))
     re_latex_to_unicode_mapping[regexp] = replacement
 
 # Regular expressions don't work really, but we replace a single string anyways
 unicode_to_latex_mapping = {}
-for token, replacement in mapping.iteritems():
-    unicode_to_latex_mapping[replacement] = u"{%s}" % token
+for token, replacement in mapping.items():
+    unicode_to_latex_mapping[replacement] = "{%s}" % token
 
 
 def latex_to_unicode(string):
-    string = unicode(string)
-    for regexp, replacement in re_latex_to_unicode_mapping.iteritems():
+    string = str(string)
+    for regexp, replacement in re_latex_to_unicode_mapping.items():
         string, count = regexp.subn(replacement, string)
 
     def ret_char(match):
@@ -55,12 +55,12 @@ def latex_to_unicode(string):
     return string
 
 def unicode_to_latex(string):
-    string = unicode(string)
-    for char, replacement in unicode_to_latex_mapping.iteritems():
+    string = str(string)
+    for char, replacement in unicode_to_latex_mapping.items():
         string = string.replace(char, replacement)
 
     # Ensure only ASCII characters are left
-    return string.encode('ascii')
+    return string.encode('ascii').decode('ascii')
 
 def quote_braces(string):
     return string.replace('{', '\\{').replace('}', '\\}')
@@ -115,24 +115,24 @@ def write_override(survey, optfile, draft=False, questionnaire_ids=None):
 
 # This is a list, because the order is relevant!
 ascii_to_latex = [
-    (u'{', u'\\{'),
-    (u'}', u'\\}'),
-    (u'\\', u'{\\textbackslash}'),
-    (u'%', u'\\%'),
-    (u'$', u'\\$'),
-    (u'_', u'\\_'),
-    (u'|', u'{\\textbar}'),
-    (u'>', u'{\\textgreater}'),
-    (u'<', u'{\\textless}'),
-    (u'&', u'\\&'),
-    (u'#', u'\#'),
-    (u'^', u'\\^{}'),
-    (u'~', u'\\~{}'),
-    (u'"', u'\\"{}'),
+    ('{', '\\{'),
+    ('}', '\\}'),
+    ('\\', '{\\textbackslash}'),
+    ('%', '\\%'),
+    ('$', '\\$'),
+    ('_', '\\_'),
+    ('|', '{\\textbar}'),
+    ('>', '{\\textgreater}'),
+    ('<', '{\\textless}'),
+    ('&', '\\&'),
+    ('#', '\#'),
+    ('^', '\\^{}'),
+    ('~', '\\~{}'),
+    ('"', '\\"{}'),
 ]
 
 def raw_unicode_to_latex(string):
-    u"""In addition to converting all unicode characters to LaTeX expressions
+    """In addition to converting all unicode characters to LaTeX expressions
     this function also replaces some characters like newlines with their LaTeX
     equvivalent."""
 
@@ -142,16 +142,16 @@ def raw_unicode_to_latex(string):
 
     string = unicode_to_latex(string)
 
-    string = unicode(string)
+    string = str(string)
 
     # Replace many newlines with a paragraph marker
-    string, count = re.subn('\n\n+', u'\u2029', string, flags=re.MULTILINE)
+    string, count = re.subn('\n\n+', '\u2029', string, flags=re.MULTILINE)
 
     # Replace single newline with \\+newline
     string = string.replace('\n', '\\\\\n')
 
     # And remove the paragraph marker again (insert two newlines)
-    string = string.replace(u'\u2029', '\n\n')
+    string = string.replace('\u2029', '\n\n')
 
     return string.encode('ascii')
 

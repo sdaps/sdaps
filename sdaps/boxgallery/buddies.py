@@ -23,9 +23,8 @@ from sdaps import surface
 from sdaps import matrix
 
 
-class Sheet(model.buddy.Buddy):
+class Sheet(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'boxgallery'
     obj_class = model.sheet.Sheet
 
@@ -40,9 +39,8 @@ class Sheet(model.buddy.Buddy):
                 image.surface.clean()
 
 
-class Questionnaire(model.buddy.Buddy):
+class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'boxgallery'
     obj_class = model.questionnaire.Questionnaire
 
@@ -61,9 +59,8 @@ class Questionnaire(model.buddy.Buddy):
             self.obj.survey.sheet.boxgallery.clean()
 
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'boxgallery'
     obj_class = model.questionnaire.QObject
 
@@ -71,9 +68,8 @@ class QObject(model.buddy.Buddy):
         return []
 
 
-class Question(QObject):
+class Question(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'boxgallery'
     obj_class = model.questionnaire.Question
 
@@ -87,8 +83,7 @@ class Question(QObject):
         return boxes
 
 
-class Box(model.buddy.Buddy):
-    __metaclass__ = model.buddy.Register
+class Box(model.buddy.Buddy, metaclass=model.buddy.Register):
     name = 'boxgallery'
     obj_class = model.questionnaire.Box
 
@@ -96,8 +91,7 @@ class Box(model.buddy.Buddy):
         return None
 
 
-class Checkbox(model.buddy.Buddy):
-    __metaclass__ = model.buddy.Register
+class Checkbox(model.buddy.Buddy, metaclass=model.buddy.Register):
     name = 'boxgallery'
     obj_class = model.questionnaire.Checkbox
 

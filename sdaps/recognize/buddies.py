@@ -35,9 +35,8 @@ pt_to_mm = 25.4 / 72.0
 warned_multipage_not_correctly_scanned = False
 
 
-class Sheet(model.buddy.Buddy):
+class Sheet(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'recognize'
     obj_class = model.sheet.Sheet
 
@@ -282,7 +281,7 @@ class Sheet(model.buddy.Buddy):
             image.recognize.clean()
 
     def duplex_copy_image_attr(self, failed_pages, attr, error_msg=None):
-        u"""If in duplex mode, this function will copy the given attribute
+        """If in duplex mode, this function will copy the given attribute
         from the image that defines it over to the one that does not.
         ie. if the attribute is None in one and differently in the other image
         it is copied.
@@ -307,9 +306,8 @@ class Sheet(model.buddy.Buddy):
             i += 2
 
 
-class Image(model.buddy.Buddy):
+class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'recognize'
     obj_class = model.sheet.Image
 
@@ -317,11 +315,11 @@ class Image(model.buddy.Buddy):
         model.buddy.Buddy.__init__(self, *args)
 
         if self.obj.sheet.survey.defs.style == "classic":
-            import classic
+            from . import classic
         elif self.obj.sheet.survey.defs.style == "code128":
-            import code128
+            from . import code128
         elif self.obj.sheet.survey.defs.style == "qr":
-            import qrcode
+            from . import qrcode
         elif self.obj.sheet.survey.defs.style == "custom":
             if not hasattr(self.obj, "style"):
                 import sys
@@ -458,9 +456,8 @@ class Image(model.buddy.Buddy):
     def matrix(self):
         return self.obj.matrix.mm_to_px(fallback=False)
 
-class Questionnaire(model.buddy.Buddy):
+class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'recognize'
     obj_class = model.questionnaire.Questionnaire
 
@@ -503,9 +500,8 @@ class Questionnaire(model.buddy.Buddy):
         self.obj.sheet.recognize.clean()
 
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'recognize'
     obj_class = model.questionnaire.QObject
 
@@ -516,9 +512,8 @@ class QObject(model.buddy.Buddy):
         return 1
 
 
-class Question(model.buddy.Buddy):
+class Question(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'recognize'
     obj_class = model.questionnaire.Question
 
@@ -534,9 +529,8 @@ class Question(model.buddy.Buddy):
         return result
 
 
-class Box(model.buddy.Buddy):
+class Box(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'recognize'
     obj_class = model.questionnaire.Box
 
@@ -544,9 +538,8 @@ class Box(model.buddy.Buddy):
         pass
 
 
-class Checkbox(Box):
+class Checkbox(Box, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'recognize'
     obj_class = model.questionnaire.Checkbox
 
@@ -686,7 +679,7 @@ class Checkbox(Box):
         state = 0
         quality = -1
         # Iterate the ranges
-        for metric, value in self.obj.data.metrics.iteritems():
+        for metric, value in self.obj.data.metrics.items():
             metric = defs.checkbox_metrics[self.obj.sheet.survey.defs.checkmode][metric]
 
             for lower, upper in zip(metric[:-1], metric[1:]):
@@ -705,9 +698,8 @@ class Checkbox(Box):
         self.obj.data.quality = min(quality, pos_quality)
 
 
-class Textbox(Box):
+class Textbox(Box, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'recognize'
     obj_class = model.questionnaire.Textbox
 
@@ -761,7 +753,7 @@ class Textbox(Box):
                 dist_y = dest_y - y
 
                 length = math.sqrt(dist_x ** 2 + dist_y ** 2)
-                for step in xrange(int(length / step_x)):
+                for step in range(int(length / step_x)):
                     yield x + dist_x * step / (length / step_x), y + dist_y * step / (length / step_x)
                 yield dest_x, dest_y
 
@@ -777,7 +769,7 @@ class Textbox(Box):
                 dist_y = dest_y - y
 
                 length = math.sqrt(dist_x ** 2 + dist_y ** 2)
-                for step in xrange(int(length / step_x)):
+                for step in range(int(length / step_x)):
                     yield x + dist_x * step / (length / step_x), y + dist_y * step / (length / step_x)
                 yield dest_x, dest_y
 
@@ -793,7 +785,7 @@ class Textbox(Box):
                 dist_y = dest_y - y
 
                 length = math.sqrt(dist_x ** 2 + dist_y ** 2)
-                for step in xrange(int(length / step_y)):
+                for step in range(int(length / step_y)):
                     yield x + dist_x * step / (length / step_y), y + dist_y * step / (length / step_y)
                 yield dest_x, dest_y
 
@@ -809,7 +801,7 @@ class Textbox(Box):
                 dist_y = dest_y - y
 
                 length = math.sqrt(dist_x ** 2 + dist_y ** 2)
-                for step in xrange(int(length / step_y)):
+                for step in range(int(length / step_y)):
                     yield x + dist_x * step / (length / step_y), y + dist_y * step / (length / step_y)
                 yield dest_x, dest_y
 

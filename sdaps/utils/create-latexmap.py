@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright(C) 2011, Benjamin Berg <benjamin@sipsolutions.net>
 #
@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This file generates the latexmap.py file which is needed
 to convert latex symbols into their unicode counterpart.
 
@@ -26,7 +26,7 @@ import re
 import sys
 
 if len(sys.argv) != 2:
-    print __doc__
+    print(__doc__)
     sys.exit(1)
 
 output = open('latexmap.py', 'w')

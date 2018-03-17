@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This modules contains a GTK+ user interface. With the help of this GUI it is
 possible to manually correct the automatic recognition and do basic debugging.
 """
@@ -97,7 +97,7 @@ class Provider(object):
 
         self.images.extend(new_images)
         # Insert each image of the sheet into the qualities array
-        for i in xrange(len(new_images)):
+        for i in range(len(new_images)):
             self.qualities.append((self.survey.sheet.quality, len(self.qualities)))
 
     def next(self, cycle=True):
@@ -242,14 +242,14 @@ class MainWindow(object):
             self.about_dialog.set_program_name("SDAPS")
             #self.about_dialog.set_version("")
             self.about_dialog.set_authors(
-                [u"Benjamin Berg <benjamin@sipsolution.net>",
-                 u"Ferdinand Schwenk <ferdisdot@gmail.com>",
-                 u"Christoph Simon <post@christoph-simon.eu>",
-                 u"Tobias Simon <tobsimon@googlemail.com>"])
-            self.about_dialog.set_copyright(_(u"Copyright © 2007-2014 The SDAPS Authors"))
+                ["Benjamin Berg <benjamin@sipsolution.net>",
+                 "Ferdinand Schwenk <ferdisdot@gmail.com>",
+                 "Christoph Simon <post@christoph-simon.eu>",
+                 "Tobias Simon <tobsimon@googlemail.com>"])
+            self.about_dialog.set_copyright(_("Copyright © 2007-2014 The SDAPS Authors"))
             self.about_dialog.set_license_type(Gtk.License.GPL_3_0)
-            self.about_dialog.set_comments(_(u"Scripts for data acquisition with paper based surveys"))
-            self.about_dialog.set_website(_(u"http://sdaps.org"))
+            self.about_dialog.set_comments(_("Scripts for data acquisition with paper based surveys"))
+            self.about_dialog.set_website(_("http://sdaps.org"))
             self.about_dialog.set_translator_credits(_("translator-credits"))
             self.about_dialog.set_default_response(Gtk.ResponseType.CANCEL)
 
@@ -295,8 +295,8 @@ class MainWindow(object):
         position_label = self._builder.get_object("position_label")
         quality_label = self._builder.get_object("quality_label")
         page_spin = self._builder.get_object("page_spin")
-        position_label.set_text(_(u" of %i") % len(self.provider.images))
-        quality_label.set_text(_(u"Recognition Quality: %.2f") % self.provider.image.sheet.quality)
+        position_label.set_text(_(" of %i") % len(self.provider.images))
+        quality_label.set_text(_("Recognition Quality: %.2f") % self.provider.image.sheet.quality)
         #position_label.props.sensitive = True
         page_spin.set_range(1, len(self.provider.images))
         page_spin.set_value(self.provider.index + 1)
@@ -446,11 +446,11 @@ class MainWindow(object):
                 flags=Gtk.DialogFlags.MODAL,
                 type=Gtk.MessageType.WARNING)
             self.close_dialog.add_buttons(
-                _(u"Close without saving"), Gtk.ResponseType.CLOSE,
+                _("Close without saving"), Gtk.ResponseType.CLOSE,
                 Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                 Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
             self.close_dialog.set_markup(
-                _(u"<b>Save the project before closing?</b>\n\nIf you do not save you may loose data."))
+                _("<b>Save the project before closing?</b>\n\nIf you do not save you may loose data."))
             self.close_dialog.set_default_response(Gtk.ResponseType.CANCEL)
 
         response = self.close_dialog.run()

@@ -22,13 +22,13 @@
 # __init__ functions, as that could cause trouble.
 
 
-import buddy
-import data
+from . import buddy
+from . import data
 import struct
 
 
 class DataObject(object):
-    u'''Mixin
+    '''Mixin
     '''
 
     def get_data(self):
@@ -83,9 +83,9 @@ class Questionnaire(buddy.Object):
         self._notify_changed_list.remove(func)
 
     def __unicode__(self):
-        return unicode().join(
-            [u'%s\n' % self.__class__.__name__] +
-            [unicode(qobject) for qobject in self.qobjects]
+        return str().join(
+            ['%s\n' % self.__class__.__name__] +
+            [str(qobject) for qobject in self.qobjects]
         )
 
     def find_object(self, oid):
@@ -133,21 +133,21 @@ class QObject(buddy.Object):
 
     def id_str(self):
         ids = [str(x) for x in self.id]
-        return u'.'.join(ids)
+        return '.'.join(ids)
 
     def id_csv(self):
         if self.var:
             return self.var
 
         ids = [str(x) for x in self.id]
-        return u'_'.join(ids)
+        return '_'.join(ids)
 
     def id_filter(self):
         ids = [str(x) for x in self.id]
-        return u'_' + u'_'.join(ids)
+        return '_' + '_'.join(ids)
 
     def __unicode__(self):
-        return u'(%s)\n' % (
+        return '(%s)\n' % (
             self.__class__.__name__,
         )
 
@@ -168,14 +168,14 @@ class Head(QObject):
 
     def init_attributes(self):
         QObject.init_attributes(self)
-        self.title = unicode()
+        self.title = str()
 
     def init_id(self, id):
         self.id = (id[0] + 1, ) + (0,)*(len(id)-1)
         return self.id
 
     def __unicode__(self):
-        return u'%s(%s) %s\n' % (
+        return '%s(%s) %s\n' % (
             self.id_str(),
             self.__class__.__name__,
             self.title,
@@ -187,7 +187,7 @@ class Question(QObject):
     def init_attributes(self):
         QObject.init_attributes(self)
         self.page_number = 0
-        self.question = unicode()
+        self.question = str()
         self.var = None
 
     def calculate_survey_id(self, md5):
@@ -195,7 +195,7 @@ class Question(QObject):
             box.calculate_survey_id(md5)
 
     def __unicode__(self):
-        return u'%s(%s) %s {%i}\n' % (
+        return '%s(%s) %s {%i}\n' % (
             self.id_str(),
             self.__class__.__name__,
             self.question,
@@ -206,9 +206,9 @@ class Question(QObject):
 class Choice(Question):
 
     def __unicode__(self):
-        return unicode().join(
+        return str().join(
             [Question.__unicode__(self)] +
-            [unicode(box) for box in self.boxes]
+            [str(box) for box in self.boxes]
         )
 
     def get_answer(self):
@@ -228,9 +228,9 @@ class Option(Question):
         self.value_invalid = -2
 
     def __unicode__(self):
-        return unicode().join(
+        return str().join(
             [Question.__unicode__(self)] +
-            [unicode(box) for box in self.boxes]
+            [str(box) for box in self.boxes]
         )
 
     def add_box(self, box):
@@ -272,16 +272,16 @@ class Range(Option):
 
     def __unicode__(self):
         if len(self.answers) == 2:
-            return unicode().join(
+            return str().join(
                 [Question.__unicode__(self)] +
-                [u'\t%s (%i) - %s (%i)\n' % (self.answers[0], self.range[0], self.answers[1], self.range[1])] +
-                [unicode(box) for box in self.boxes]
+                ['\t%s (%i) - %s (%i)\n' % (self.answers[0], self.range[0], self.answers[1], self.range[1])] +
+                [str(box) for box in self.boxes]
             )
         else:
-            return unicode().join(
+            return str().join(
                 [Question.__unicode__(self)] +
-                [u'\t? - ?\n'] +
-                [unicode(box) for box in self.boxes]
+                ['\t? - ?\n'] +
+                [str(box) for box in self.boxes]
             )
 
 class Mark(Range):
@@ -291,9 +291,9 @@ class Mark(Range):
 class Text(Question):
 
     def __unicode__(self):
-        return unicode().join(
+        return str().join(
             [Question.__unicode__(self)] +
-            [unicode(box) for box in self.boxes]
+            [str(box) for box in self.boxes]
         )
 
     def get_answer(self):
@@ -321,9 +321,9 @@ class Additional_Mark(Question, DataObject):
         self.answers = list()
 
     def __unicode__(self):
-        return unicode().join(
+        return str().join(
             [Question.__unicode__(self)] +
-            [u'\t%s - %s\n' % tuple(self.answers)]
+            ['\t%s - %s\n' % tuple(self.answers)]
         )
 
     def get_answer(self):
@@ -343,9 +343,9 @@ class Additional_FilterHistogram(Question, DataObject):
     def __unicode__(self):
         result = []
         result.append(Question.__unicode__(self))
-        for i in xrange(len(self.answers)):
-            result.append(u'\t%s - %s\n' % (self.answers[i], self.filters[i]))
-        return unicode().join(result)
+        for i in range(len(self.answers)):
+            result.append('\t%s - %s\n' % (self.answers[i], self.filters[i]))
+        return str().join(result)
 
     def get_answer(self):
         return self.data.value
@@ -375,7 +375,7 @@ class Box(buddy.Object, DataObject):
         self.width = 0
         self.height = 0
         self.lw = 25.4 / 72.0
-        self.text = unicode()
+        self.text = str()
 
         self.var = None
         self.value = None
@@ -388,14 +388,14 @@ class Box(buddy.Object, DataObject):
 
     def id_str(self):
         ids = [str(x) for x in self.id]
-        return u'.'.join(ids)
+        return '.'.join(ids)
 
     def id_csv(self):
         if self.var:
             return self.var
 
         ids = [str(x) for x in self.id]
-        return u'_'.join(ids)
+        return '_'.join(ids)
 
     def get_sheet(self):
         return self.question.sheet
@@ -407,13 +407,13 @@ class Box(buddy.Object, DataObject):
         md5.update(tmp)
 
     def __unicode__(self):
-        return u'\t%i(%s) %s %s %s %s %s\n' % (
+        return '\t%i(%s) %s %s %s %s %s\n' % (
             self.value,
             (self.__class__.__name__).ljust(8),
-            (u'%.1f' % self.x).rjust(5),
-            (u'%.1f' % self.y).rjust(5),
-            (u'%.1f' % self.width).rjust(5),
-            (u'%.1f' % self.height).rjust(5),
+            ('%.1f' % self.x).rjust(5),
+            ('%.1f' % self.y).rjust(5),
+            ('%.1f' % self.width).rjust(5),
+            ('%.1f' % self.height).rjust(5),
             self.text
         )
 
@@ -430,7 +430,7 @@ class Checkbox(Box):
 
     def calculate_survey_id(self, md5):
         Box.calculate_survey_id(self, md5)
-        md5.update(self.form)
+        md5.update(self.form.encode('utf-8'))
 
 class Textbox(Box):
 

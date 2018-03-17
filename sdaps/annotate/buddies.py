@@ -87,9 +87,8 @@ def show_layout(cr, layout, layout_info, skip=1.25):
 
     return x, y
 
-class Questionnaire(model.buddy.Buddy):
+class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'annotate'
     obj_class = model.questionnaire.Questionnaire
 
@@ -121,9 +120,8 @@ class Questionnaire(model.buddy.Buddy):
             qobject.annotate.draw(cr, page_number, layout_info)
 
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'annotate'
     obj_class = model.questionnaire.QObject
 
@@ -131,9 +129,8 @@ class QObject(model.buddy.Buddy):
         pass
 
 
-class Head(model.buddy.Buddy):
+class Head(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'annotate'
     obj_class = model.questionnaire.Head
 
@@ -143,9 +140,8 @@ class Head(model.buddy.Buddy):
         xpos, ypos = show_layout(cr, layout, layout_info)
 
 
-class Question(model.buddy.Buddy):
+class Question(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'annotate'
     obj_class = model.questionnaire.Question
 
@@ -159,9 +155,8 @@ class Question(model.buddy.Buddy):
             for box in self.obj.boxes:
                 box.annotate.draw(cr, layout_info)
 
-class Range(model.buddy.Buddy):
+class Range(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'annotate'
     obj_class = model.questionnaire.Range
 
@@ -196,9 +191,8 @@ class Range(model.buddy.Buddy):
 
                 box.annotate.draw(cr, layout_info, hide_if_empty=hide_if_empty)
 
-class Box(model.buddy.Buddy):
+class Box(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'annotate'
     obj_class = model.questionnaire.Checkbox
 
@@ -236,9 +230,8 @@ class Box(model.buddy.Buddy):
         cr.new_path()
 
 
-class Checkbox(Box):
+class Checkbox(Box, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'annotate'
     obj_class = model.questionnaire.Checkbox
 
@@ -252,9 +245,8 @@ class Checkbox(Box):
 
 
 
-class Textbox(Box):
+class Textbox(Box, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'annotate'
     obj_class = model.questionnaire.Textbox
 

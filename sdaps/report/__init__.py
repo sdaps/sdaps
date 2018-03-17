@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This modules contains the functionality to create PDF based reports.
 """
 
@@ -51,7 +51,7 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
     # iterate over sheets
     survey.iterate(
         survey.questionnaire.calculate.read,
-        lambda: survey.sheet.valid and not survey.sheet.empty and filter()
+        lambda: survey.sheet.valid and not survey.sheet.empty and list(filter())
     )
 
     # do calculations
@@ -65,14 +65,14 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
     # iterate over sheets
     survey.iterate(
         survey.questionnaire.report.report,
-        lambda: survey.sheet.valid and filter()
+        lambda: survey.sheet.valid and list(filter())
     )
 
     # create story
     story = template.story_title(
         survey,
         {
-            _(u'Turned in Questionnaires'): survey.questionnaire.calculate.count,
+            _('Turned in Questionnaires'): survey.questionnaire.calculate.count,
         }
     )
     story.extend(survey.questionnaire.report.story())
@@ -81,15 +81,15 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
     if filename is None:
         filename = survey.new_path('report_%i.pdf')
     subject = []
-    for key, value in survey.info.iteritems():
-        subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
-    subject = u'\n'.join(subject)
+    for key, value in survey.info.items():
+        subject.append('%(key)s: %(value)s' % {'key': key, 'value': value})
+    subject = '\n'.join(subject)
 
     papersize = paper.get_reportlab_papersize(papersize)
 
     doc = template.DocTemplate(
         filename,
-        _(u'sdaps report'),
+        _('sdaps report'),
         {
             'title': survey.title,
             'subject': subject,

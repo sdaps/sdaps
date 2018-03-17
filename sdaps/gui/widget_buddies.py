@@ -29,11 +29,10 @@ _ = ugettext
 def markup_escape_text(text):
     # Unfortunately the API returns a byte string, so we need to decode it
     # as the formatting would not work otherwise.
-    return GLib.markup_escape_text(text).decode('utf-8')
+    return GLib.markup_escape_text(text)
 
-class Questionnaire(model.buddy.Buddy):
+class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.Questionnaire
 
@@ -53,13 +52,13 @@ class Questionnaire(model.buddy.Buddy):
 
         # First some global options
         widget = Gtk.Label()
-        widget.set_markup(_(u'<b>Global Properties</b>'))
+        widget.set_markup(_('<b>Global Properties</b>'))
         widget.props.xalign = 0.0
         self.box.pack_start(widget, False, True, 0)
 
-        self.valid_checkbox = Gtk.CheckButton.new_with_label(_(u'Sheet valid'))
-        self.verified_checkbox = Gtk.CheckButton.new_with_label(_(u'Verified'))
-        self.empty_checkbox = Gtk.CheckButton.new_with_label(_(u'Empty'))
+        self.valid_checkbox = Gtk.CheckButton.new_with_label(_('Sheet valid'))
+        self.verified_checkbox = Gtk.CheckButton.new_with_label(_('Verified'))
+        self.empty_checkbox = Gtk.CheckButton.new_with_label(_('Empty'))
         self.empty_checkbox.set_sensitive(False)
 
         self.valid_checkbox.connect('toggled', self.toggled_valid_cb)
@@ -71,12 +70,12 @@ class Questionnaire(model.buddy.Buddy):
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         self.qid = Gtk.Label()
-        self.qid.set_markup(_(u'<b>Questionnaire ID: </b>') + markup_escape_text(str(self.obj.survey.sheet.questionnaire_id)))
+        self.qid.set_markup(_('<b>Questionnaire ID: </b>') + markup_escape_text(str(self.obj.survey.sheet.questionnaire_id)))
         self.qid.props.xalign = 0.0
 
         indent.add(vbox)
 
-	vbox.add(self.qid)
+        vbox.add(self.qid)
         vbox.add(self.valid_checkbox)
         vbox.add(self.verified_checkbox)
         vbox.add(self.empty_checkbox)
@@ -95,7 +94,7 @@ class Questionnaire(model.buddy.Buddy):
         for qobject in self.obj.qobjects:
             qobject.widget.sync_state()
 
-        self.qid.set_markup(_(u'<b>Questionnaire ID: </b>') + markup_escape_text(str(self.obj.survey.sheet.questionnaire_id)))
+        self.qid.set_markup(_('<b>Questionnaire ID: </b>') + markup_escape_text(str(self.obj.survey.sheet.questionnaire_id)))
         self.valid_checkbox.set_active(self.obj.survey.sheet.valid)
         self.verified_checkbox.set_active(self.obj.survey.sheet.verified)
         self.empty_checkbox.set_active(self.obj.survey.sheet.empty)
@@ -116,9 +115,8 @@ class Questionnaire(model.buddy.Buddy):
     def toggled_verified_cb(self, widget):
         self.obj.survey.sheet.verified = widget.get_active()
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.QObject
 
@@ -138,23 +136,21 @@ class QObject(model.buddy.Buddy):
             self.obj.boxes[0].widget.focus()
 
 
-class Head(QObject):
+class Head(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.Head
 
     def create_widget(self):
         self.widget = Gtk.Label()
-        self.widget.set_markup(u'<b>%s %s</b>' % (self.obj.id_str(), markup_escape_text(self.obj.title)))
+        self.widget.set_markup('<b>%s %s</b>' % (self.obj.id_str(), markup_escape_text(self.obj.title)))
         self.widget.props.xalign = 0.0
 
         return self.widget
 
 
-class Question(QObject):
+class Question(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.Question
 
@@ -162,7 +158,7 @@ class Question(QObject):
         self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         self.label = Gtk.Label()
-        self.label.set_markup(u'<b>%s %s</b>' % (self.obj.id_str(), markup_escape_text(self.obj.question)))
+        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), markup_escape_text(self.obj.question)))
         self.label.props.xalign = 0.0
 
         self.widget.pack_start(self.label, False, True, 0)
@@ -181,9 +177,8 @@ class Question(QObject):
 
         return self.widget
 
-class Range(Question):
+class Range(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.Range
 
@@ -191,7 +186,7 @@ class Range(Question):
         self.widget = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         self.label = Gtk.Label()
-        self.label.set_markup(u'<b>%s %s</b>' % (self.obj.id_str(), markup_escape_text(self.obj.question)))
+        self.label.set_markup('<b>%s %s</b>' % (self.obj.id_str(), markup_escape_text(self.obj.question)))
         self.label.props.xalign = 0.0
 
         self.widget.pack_start(self.label, False, True, 0)
@@ -225,9 +220,8 @@ class Range(Question):
         return self.widget
 
 
-class Box(model.buddy.Buddy):
+class Box(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.Checkbox
 
@@ -252,16 +246,14 @@ class Box(model.buddy.Buddy):
         self.obj.question.questionnaire.widget.ensure_visible(self.obj.question.widget.widget)
         self.obj.question.questionnaire.widget.ensure_visible(self.widget)
 
-class Checkbox(Box):
+class Checkbox(Box, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.Checkbox
 
 
-class Textbox(Box):
+class Textbox(Box, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'widget'
     obj_class = model.questionnaire.Textbox
 
@@ -291,7 +283,7 @@ class Textbox(Box):
     def buffer_changed_cb(self, buf):
         start = buf.get_start_iter()
         end = buf.get_end_iter()
-        self.obj.data.text = buf.get_text(start, end, False).decode('UTF-8')
+        self.obj.data.text = buf.get_text(start, end, False)
 
     def sync_state(self):
         self.checkbox.props.active = self.obj.data.state
@@ -301,7 +293,7 @@ class Textbox(Box):
         # Only update the text if it changed (or else recursion hits)
         start = self.buffer.get_start_iter()
         end = self.buffer.get_end_iter()
-        currtext = self.buffer.get_text(start, end, False).decode('UTF-8')
+        currtext = self.buffer.get_text(start, end, False)
         if self.obj.data.text != currtext:
             self.buffer.set_text(self.obj.data.text)
 

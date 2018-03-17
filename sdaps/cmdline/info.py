@@ -50,9 +50,9 @@ def info(cmdline):
     survey = model.survey.Survey.load(cmdline['project'])
 
     if cmdline['key']:
-        key = cmdline['key'].decode('utf-8').strip()
+        key = cmdline['key'].strip()
         if cmdline['set']:
-            value = cmdline['set'].decode('utf-8').strip()
+            value = cmdline['set'].strip()
             if key == "title":
                 survey.title = value
             else:
@@ -61,14 +61,14 @@ def info(cmdline):
             del survey.info[key]
         else:
             if key == "title":
-                print survey.title
+                print(survey.title)
             else:
-                print survey.info[key]
+                print(survey.info[key])
     else:
-        log.interactive(_(u'Existing fields:\n'))
-        print "title"
-        for key in survey.info.keys():
-            print key
+        log.interactive(_('Existing fields:\n'))
+        print("title")
+        for key in list(survey.info.keys()):
+            print(key)
 
     survey.save()
 

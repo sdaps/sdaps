@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This modules contains the functionality to create reports using LaTeX.
 """
 
@@ -107,14 +107,14 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
         author = _('author|Unknown')
 
         extra_info = []
-        for key, value in survey.info.iteritems():
+        for key, value in survey.info.items():
             if key == 'Author':
                 author = value
                 continue
 
-            extra_info.append(u'\\addextrainfo{%(key)s}{%(value)s}' % {'key': key, 'value': value})
+            extra_info.append('\\addextrainfo{%(key)s}{%(value)s}' % {'key': key, 'value': value})
 
-        extra_info = u'\n'.join(extra_info)
+        extra_info = '\n'.join(extra_info)
         texfile.write(r"""\documentclass[%(language)s,%(papersize)s]{sdapsreport}
 
     \usepackage{ifxetex}
@@ -136,7 +136,7 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
     \maketitle
 
     """ % {'language': _('tex language|english'),
-           'title': _(u'sdaps report'),
+           'title': _('sdaps report'),
            'turned_in': _('Turned in Questionnaires'),
            'title': survey.title,
            'author': author,
@@ -149,22 +149,23 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
         texfile.write(r"""
     \end{document}
     """)
+        texfile.close()
 
         if tex_only:
-            print _("The TeX project with the report data is located at '%s'.") % tmpdir
+            print(_("The TeX project with the report data is located at '%s'.") % tmpdir)
             return
 
-        print _("Running %s now twice to generate the report.") % defs.latex_engine
+        print(_("Running %s now twice to generate the report.") % defs.latex_engine)
         latex.compile('report.tex', cwd=tmpdir)
 
         if not os.path.exists(os.path.join(tmpdir, 'report.pdf')):
-            print _("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine
+            print(_("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine)
             raise AssertionError('PDF file not generated')
 
         shutil.move(os.path.join(tmpdir, 'report.pdf'), filename)
 
     except:
-        print _("An occured during creation of the report. Temporary files left in '%s'." % tmpdir)
+        print(_("An occured during creation of the report. Temporary files left in '%s'." % tmpdir))
 
         raise
 

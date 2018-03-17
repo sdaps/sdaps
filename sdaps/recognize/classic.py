@@ -35,9 +35,8 @@ _ = ugettext
 # If no data can be retrieved(because eg. it is not printed on that
 # page) they may return None to indicate this.
 
-class Image(model.buddy.Buddy):
+class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'style'
     obj_class = model.sheet.Image
 

@@ -32,12 +32,10 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-class Image(model.buddy.Buddy):
+class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
     """Example buddy class for a "blank" style. It simply assumes
     that everything is good about the page. ie. first page, no rotation,
     correct survey ID, and no other IDs."""
-
-    __metaclass__ = model.buddy.Register
     name = 'style'
     obj_class = model.sheet.Image
 

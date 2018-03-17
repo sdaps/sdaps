@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf8 -*-
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
@@ -45,7 +45,7 @@ images = []
 
 for file in sys.argv[2:]:
     num_pages = image.get_tiff_page_count(file)
-    for page in xrange(num_pages):
+    for page in range(num_pages):
         images.append((file, page))
 
 if len(images) == 0:
@@ -73,14 +73,14 @@ while images:
     sheet.recognize.recognize()
 
     for img in sheet.images:
-        print img.orig_name, img.tiff_page
-        print '\tPage:', img.page_number
-        print '\tRotated:', img.rotated
-        print '\tMatrix (px to mm):', img.raw_matrix
-        print '\tSurvey-ID:', sheet.survey_id
-        print '\tGlobal-ID:', sheet.global_id
-        print '\tQuestionnaire-ID:', sheet.questionnaire_id
-        print
+        print(img.orig_name, img.tiff_page)
+        print('\tPage:', img.page_number)
+        print('\tRotated:', img.rotated)
+        print('\tMatrix (px to mm):', img.raw_matrix)
+        print('\tSurvey-ID:', sheet.survey_id)
+        print('\tGlobal-ID:', sheet.global_id)
+        print('\tQuestionnaire-ID:', sheet.questionnaire_id)
+        print()
 
 # And, we simply quit, ie. we don't save the survey
 

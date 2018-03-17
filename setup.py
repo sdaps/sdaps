@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # SDAPS - Scripts for data acquisition with paper based surveys
 # Copyright (C) 2008, Christoph Simon <post@christoph-simon.eu>
 # Copyright (C) 2008-2013, Benjamin Berg <benjamin@sipsolutions.net>
@@ -21,17 +21,17 @@ from distutils.extension import Extension
 import glob
 import os
 import os.path
-import commands
+import subprocess
 import sys
 from distutils.command import build
 from DistUtilsExtra.command import *
-import ConfigParser
+import configparser
 
 def pkgconfig(*packages, **kw):
     flag_map = {'-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries', '-D' : 'define_macros'}
-    (status, tokens) = commands.getstatusoutput("pkg-config --libs --cflags %s" % ' '.join(packages))
+    (status, tokens) = subprocess.getstatusoutput("pkg-config --libs --cflags %s" % ' '.join(packages))
     if status != 0:
-        print tokens
+        print(tokens)
         sys.exit(1)
 
     for token in tokens.split():
@@ -97,7 +97,7 @@ class sdaps_build_i18n(build_i18n.build_i18n):
             index = key.rfind('[')
             return key[:index], key[index+1:-1]
 
-        parser = ConfigParser.ConfigParser()
+        parser = configparser.ConfigParser()
         parser.read(tex_translations)
 
         langs = {}
@@ -109,7 +109,7 @@ class sdaps_build_i18n(build_i18n.build_i18n):
                 continue
 
             assert lang not in langs
-            assert v not in langs.items()
+            assert v not in list(langs.items())
 
             langs[lang] = v
 
@@ -117,8 +117,8 @@ class sdaps_build_i18n(build_i18n.build_i18n):
         from sdaps.utils.latex import unicode_to_latex
 
         dictfiles = []
-        for lang, name in langs.iteritems():
-            print 'building LaTeX dictionary file for language %s (%s)' % (name, lang if lang else 'C')
+        for lang, name in langs.items():
+            print('building LaTeX dictionary file for language %s (%s)' % (name, lang if lang else 'C'))
             dictfiles.append(os.path.join(dest_dir, 'translator-sdaps-dictionary-%s.dict' % name))
             f = open(dictfiles[-1], 'w')
 
@@ -140,10 +140,9 @@ class sdaps_build_i18n(build_i18n.build_i18n):
 
                 try:
                     value = parser.get("translations", k)
-                except ConfigParser.NoOptionError:
+                except configparser.NoOptionError:
                     value = parser.get("translations", key)
 
-                value = value.decode('UTF-8')
                 value = unicode_to_latex(value)
 
                 f.write('\\providetranslation{%s}{%s}\n' % (key, value))
@@ -160,7 +159,7 @@ class sdaps_clean_i18n(clean_i18n.clean_i18n):
 
         directory = os.path.join('build', self.dict_dir)
         if os.path.isdir(directory):
-            print "removing all LaTeX dictionaries in '%s'" % directory
+            print("removing all LaTeX dictionaries in '%s'" % directory)
             for filename in os.listdir(directory):
                 if filename.startswith('translator-sdaps-dictionary-'):
                     os.unlink(os.path.join(directory, filename))

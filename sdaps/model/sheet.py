@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import buddy
+from . import buddy
 
 
 class Sheet(buddy.Object):
@@ -52,14 +52,14 @@ class Sheet(buddy.Object):
         return None
 
     def reinit_state(self):
-        for k, v in self.data.iteritems():
+        for k, v in self.data.items():
             obj = self.survey.questionnaire.find_object(k)
 
             v._parent = obj
 
     @property
     def empty(self):
-        for k, v in self.data.iteritems():
+        for k, v in self.data.items():
             if not v.empty:
                 return False
 
@@ -72,7 +72,7 @@ class Sheet(buddy.Object):
         ie. it is false if there are missing pages"""
 
         # Simply retrieve every page, and see if it is not None
-        for page in xrange(self.survey.questionnaire.page_count):
+        for page in range(self.survey.questionnaire.page_count):
             if self.get_page_image(page + 1) is None:
                 return False
         return True

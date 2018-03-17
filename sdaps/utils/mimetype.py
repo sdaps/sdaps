@@ -20,7 +20,7 @@ import subprocess
 
 
 def mimetype(filename):
-    u'''return the mimetype of the file as string or an error string,
+    '''return the mimetype of the file as string or an error string,
     if the file does not exist or is not accesible.
     '''
     file = subprocess.Popen(
@@ -30,5 +30,5 @@ def mimetype(filename):
     stdout, stderr = file.communicate()
     if stdout:
         stdout = stdout.strip()
-    return stdout
+    return stdout.decode('ascii')
 

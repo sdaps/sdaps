@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This module reorders already recognized data according to the questionnaire IDs.
 """
 
@@ -76,7 +76,7 @@ def reorder(survey):
     # This could probably be more robust. We don't care about the questionnaire
     # ID itself here, just put each list into sheets, splitting it into many
     # if there are too many images.
-    for img_list in images.itervalues():
+    for img_list in images.values():
 
         while len(img_list) > 0:
             sheet = model.sheet.Sheet()

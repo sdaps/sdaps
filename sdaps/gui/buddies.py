@@ -66,9 +66,8 @@ def inner_ellipse(cr, x, y, width, height):
     # Restore old matrix (without removing the current path)
     cr.restore()
 
-class Questionnaire(model.buddy.Buddy):
+class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'gui'
     obj_class = model.questionnaire.Questionnaire
 
@@ -91,9 +90,8 @@ class Questionnaire(model.buddy.Buddy):
         return None
 
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'gui'
     obj_class = model.questionnaire.QObject
 
@@ -107,9 +105,8 @@ class QObject(model.buddy.Buddy):
         return None
 
 
-class Question(model.buddy.Buddy):
+class Question(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'gui'
     obj_class = model.questionnaire.Question
 
@@ -141,9 +138,8 @@ class Question(model.buddy.Buddy):
         return None
 
 
-class Box(model.buddy.Buddy):
+class Box(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'gui'
     obj_class = model.questionnaire.Checkbox
 
@@ -166,9 +162,8 @@ class Box(model.buddy.Buddy):
         return None
 
 
-class Checkbox(Box):
+class Checkbox(Box, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'gui'
     obj_class = model.questionnaire.Checkbox
 
@@ -219,9 +214,8 @@ class Checkbox(Box):
         cr.restore()
 
 
-class Textbox(Box):
+class Textbox(Box, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'gui'
     obj_class = model.questionnaire.Textbox
 

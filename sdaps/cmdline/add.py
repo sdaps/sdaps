@@ -100,7 +100,7 @@ def add(cmdline):
             log.error("Need to convert the images to monochrome TIFF, however the conversion module cannot be imported. You are likely missing the OpenCV dependency.")
             return 1
 
-        print _("Converting input files into a single temporary file.")
+        print(_("Converting input files into a single temporary file."))
 
         tmp = tempfile.mktemp(suffix='.tif', prefix='sdaps-convert-')
         deletelist.append(tmp)
@@ -115,18 +115,19 @@ def add(cmdline):
                 log.error(_("The page count of the created temporary file does not work with this survey."))
                 raise AssertionError()
 
-        except Exception, e:
+        except Exception as e:
             log.error(str(e))
             log.error(_("Running the conversion failed."))
             error = True
+            raise
 
     if not error:
         for file in filelist:
-            print _('Processing %s') % file
+            print(_('Processing %s') % file)
 
             add_image(survey, file, cmdline['duplex'], cmdline['force'], cmdline['copy'])
 
-            print _('Done')
+            print(_('Done'))
 
     for file in deletelist:
         try:

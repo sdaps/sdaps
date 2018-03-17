@@ -23,7 +23,7 @@ def create_stamp_pdf(survey, output_filename, questionnaire_ids):
     try:
         latex.write_override(survey, os.path.join(tmpdir, 'sdaps.opt'), questionnaire_ids=questionnaire_ids)
 
-        print _("Running %s now twice to generate the stamped questionnaire.") % defs.latex_engine
+        print(_("Running %s now twice to generate the stamped questionnaire.") % defs.latex_engine)
         latex.compile('questionnaire.tex', tmpdir, inputs=[os.path.abspath(survey.path())])
 
         if not os.path.exists(os.path.join(tmpdir, 'questionnaire.pdf')):

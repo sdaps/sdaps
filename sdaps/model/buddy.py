@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u'''
+'''
     sdaps - scripts for data acquisition with paper based surveys
 
     model/buddy - Registration center for buddies
@@ -41,7 +41,7 @@ Defining a buddy
 
 
 class Object(object):
-    u'''class which can have buddies'''
+    '''class which can have buddies'''
 
     def get_buddy(self, name):
         try:
@@ -51,10 +51,10 @@ class Object(object):
             return getattr(self, '_%s_object_' % name)
 
     def __getstate__(self):
-        u'''do not pickle pickle any "private" data.
+        '''do not pickle pickle any "private" data.
         '''
         dict = self.__dict__.copy()
-        keys = dict.keys()
+        keys = list(dict.keys())
         for key in keys:
             if key.startswith('_'):
                 del dict[key]
@@ -62,7 +62,7 @@ class Object(object):
 
 
 class Register(type):
-    u'''metaclass to register the class as a buddy'''
+    '''metaclass to register the class as a buddy'''
 
     def __init__(cls, name, bases, dict):
         type.__init__(cls, name, bases, dict)
@@ -79,10 +79,8 @@ class Register(type):
         )
 
 
-class Buddy(object):
-    u'''base class for buddies'''
-
-    __metaclass__ = Register
+class Buddy(object, metaclass=Register):
+    '''base class for buddies'''
     obj_class = Object
     name = 'my_buddy'
 

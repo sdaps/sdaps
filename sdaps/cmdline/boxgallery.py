@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This modules contains a script for the user to output all boxes sorted by their
 coverage. This can be used to adjust magic values for checkbox recognition.
 """

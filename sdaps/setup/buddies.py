@@ -23,9 +23,8 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.QObject
     name = 'setup'
 
@@ -48,9 +47,8 @@ class QObject(model.buddy.Buddy):
         pass
 
 
-class Head(QObject):
+class Head(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Head
 
     def question(self, chars):
@@ -58,12 +56,11 @@ class Head(QObject):
 
     def validate(self):
         if not self.obj.title:
-            log.warn(_(u'Head %(l0)i got no title.') % {'l0': self.obj.id[0]})
+            log.warn(_('Head %(l0)i got no title.') % {'l0': self.obj.id[0]})
 
 
-class Question(QObject):
+class Question(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Question
 
     def question(self, chars):
@@ -71,15 +68,14 @@ class Question(QObject):
 
     def validate(self):
         if not self.obj.question:
-            log.warn(_(u'%(class)s %(l0)i.%(l1)i got no question.') % {
+            log.warn(_('%(class)s %(l0)i.%(l1)i got no question.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
             })
 
 
-class Choice(Question):
+class Choice(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Choice
 
     def init(self):
@@ -116,21 +112,19 @@ class Choice(Question):
         del self.box_cache
         del self.answer_cache
         if not self.obj.boxes:
-            log.warn(_(u'%(class)s %(l0)i.%(l1)i got no boxes.') % {
+            log.warn(_('%(class)s %(l0)i.%(l1)i got no boxes.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
             })
 
 
-class Option(Choice):
+class Option(Choice, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Option
 
 
-class Range(Option):
+class Range(Option, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Range
 
     def set_lower(self, box, answer):
@@ -167,24 +161,23 @@ class Range(Option):
         boxes = len(self.obj.boxes)
 
         if not (0 <= self.obj.range[0] < boxes):
-            log.warn(_(u'%(class)s %(l0)i.%(l1)i lower box out of range.') % {
+            log.warn(_('%(class)s %(l0)i.%(l1)i lower box out of range.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
             })
         if not (0 <= self.obj.range[1] < boxes):
-            log.warn(_(u'%(class)s %(l0)i.%(l1)i upper box out of range.') % {
+            log.warn(_('%(class)s %(l0)i.%(l1)i upper box out of range.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
             })
         if not (self.obj.range[0] < self.obj.range[1]):
-            log.warn(_(u'%(class)s %(l0)i.%(l1)i lower box not before upper box.') % {
+            log.warn(_('%(class)s %(l0)i.%(l1)i lower box not before upper box.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
             })
 
-class Mark(Range):
+class Mark(Range, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Mark
 
     def init(self):
@@ -214,15 +207,14 @@ class Mark(Range):
     def validate(self):
         Range.validate(self)
         if self.answer_count != 2:
-            log.warn(_(u'%(class)s %(l0)i.%(l1)i got not exactly two answers.') % {
+            log.warn(_('%(class)s %(l0)i.%(l1)i got not exactly two answers.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
             })
 
 
-class Text(Question):
+class Text(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Text
 
     def box(self, box):
@@ -236,15 +228,14 @@ class Text(Question):
     def validate(self):
         Question.validate(self)
         if not len(self.obj.boxes) == 1:
-            log.warn(_(u'%(class)s %(l0)i.%(l1)i got not exactly one box.') % {
+            log.warn(_('%(class)s %(l0)i.%(l1)i got not exactly one box.') % {
                 'class': self.obj.__class__.__name__,
                 'l0': self.obj.id[0], 'l1': self.obj.id[1]
             })
 
 
-class Additional_Head(Head):
+class Additional_Head(Head, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Additional_Head
 
     def setup(self, args):
@@ -253,9 +244,8 @@ class Additional_Head(Head):
         self.validate()
 
 
-class Additional_Mark(Question):
+class Additional_Mark(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Additional_Mark
 
     def setup(self, args):
@@ -266,9 +256,8 @@ class Additional_Mark(Question):
         self.validate()
 
 
-class Additional_FilterHistogram(Question):
+class Additional_FilterHistogram(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Additional_FilterHistogram
 
     def setup(self, args):
@@ -280,9 +269,8 @@ class Additional_FilterHistogram(Question):
         self.validate()
 
 
-class Box(model.buddy.Buddy):
+class Box(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     obj_class = model.questionnaire.Box
     name = 'setup'
 

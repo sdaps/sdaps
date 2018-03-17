@@ -16,17 +16,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 The surface module adds support for loading the scanned images. It adds a buddy
 to the model.sheet.Image and provides the surface via
 model.sheet.Image.surface.surface at runtime.
 """
 
-import model
-import image
+from . import model
+from . import image
 
 
-class Image(model.buddy.Buddy):
+class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
     """
     Buddy to load and cache image data. Do not forget to call :py:meth:`clean`
     when you are done (ie. before moving to the next sheet) or else the
@@ -35,8 +35,6 @@ class Image(model.buddy.Buddy):
     :ivar surface: The cairo A1 surface, after it has been loaded using :py:meth:`load`.
     :ivar surface_rgb: The cairo RGB24 surface, after it has been loaded using :py:meth:`load_rgb`.
     """
-
-    __metaclass__ = model.buddy.Register
     name = 'surface'
     obj_class = model.sheet.Image
 

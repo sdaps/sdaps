@@ -40,7 +40,7 @@ stylesheet['Right'] = styles.ParagraphStyle(
 
 
 class Box(platypus.Flowable):
-    u'''3d box
+    '''3d box
     '''
 
     def __init__(self, a, b, c, margin=0):

@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 Template
 ========
 
@@ -134,20 +134,20 @@ stylesheet['Title'] = styles.ParagraphStyle(
 
 def story_title(survey, info=dict()):
     story = [
-        platypus.Paragraph(unicode(line), stylesheet['Title'])
+        platypus.Paragraph(str(line), stylesheet['Title'])
         for line in survey.title.split('\n')
     ]
     story += [
         platypus.FrameBreak(),
     ]
 
-    keys = survey.info.keys()
+    keys = list(survey.info.keys())
     if keys:
         keys.sort()
         table = [
             [
-                platypus.Paragraph(unicode(key), stylesheet['Normal']),
-                platypus.Paragraph(unicode(survey.info[key]), stylesheet['Normal'])
+                platypus.Paragraph(str(key), stylesheet['Normal']),
+                platypus.Paragraph(str(survey.info[key]), stylesheet['Normal'])
             ]
             for key in keys
         ]
@@ -158,12 +158,12 @@ def story_title(survey, info=dict()):
         story += [
             platypus.Spacer(0, 10 * mm)
         ]
-        keys = info.keys()
+        keys = list(info.keys())
         keys.sort()
         table = [
             [
-                platypus.Paragraph(unicode(key), stylesheet['Normal']),
-                platypus.Paragraph(unicode(info[key]), stylesheet['Normal'])
+                platypus.Paragraph(str(key), stylesheet['Normal']),
+                platypus.Paragraph(str(info[key]), stylesheet['Normal'])
             ]
             for key in keys
         ]

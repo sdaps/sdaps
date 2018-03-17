@@ -25,9 +25,8 @@ import os.path
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-class Questionnaire(model.buddy.Buddy):
+class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Questionnaire
 
@@ -55,25 +54,27 @@ class Questionnaire(model.buddy.Buddy):
 
     def export_data(self):
         data = {
-            'questionnaire_id': unicode(self.obj.sheet.questionnaire_id),
-            'global_id': unicode(self.obj.sheet.global_id),
-            'empty' : unicode(int(self.obj.sheet.empty)),
-            'valid' : unicode(int(self.obj.sheet.valid)),
-            'recognized' : unicode(int(self.obj.sheet.recognized)),
-            'verified' : unicode(int(self.obj.sheet.verified)),
+            'questionnaire_id': str(self.obj.sheet.questionnaire_id),
+            'global_id': str(self.obj.sheet.global_id),
+            'empty' : str(int(self.obj.sheet.empty)),
+            'valid' : str(int(self.obj.sheet.valid)),
+            'recognized' : str(int(self.obj.sheet.recognized)),
+            'verified' : str(int(self.obj.sheet.verified)),
         }
         for qobject in self.obj.qobjects:
             data.update(qobject.csvdata.export_data())
         self.csv.writerow(data)
 
     def export_finish(self):
+        self.file.close()
+        del self.file
         del self.csv
 
     def import_data(self, data):
         try:
             self.obj.survey.goto_questionnaire_id(data['questionnaire_id'])
         except ValueError:
-            print(_('Not importing unknown questionnaire ID "%s"') % data['questionnaire_id'])
+            print((_('Not importing unknown questionnaire ID "%s"') % data['questionnaire_id']))
             # The sheet does not exist
             # Ignore it
             pass
@@ -87,9 +88,8 @@ class Questionnaire(model.buddy.Buddy):
                 qobject.csvdata.import_data(data)
 
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.QObject
 
@@ -111,9 +111,8 @@ class QObject(model.buddy.Buddy):
     def import_data(self, data):
         pass
 
-class QHead(QObject):
+class QHead(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Head
 
@@ -123,9 +122,8 @@ class QHead(QObject):
     def export_data(self):
         return {}
 
-class Choice(QObject):
+class Choice(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Choice
 
@@ -148,9 +146,8 @@ class Choice(QObject):
         for box in self.obj.boxes:
             box.csvdata.import_data(data)
 
-class Text(QObject):
+class Text(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Text
 
@@ -173,9 +170,8 @@ class Text(QObject):
         for box in self.obj.boxes:
             box.csvdata.import_data(data)
 
-class Option(QObject):
+class Option(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Option
 
@@ -194,9 +190,8 @@ class Option(QObject):
             self.obj.set_answer(int(data[self.obj.id_csv()]))
 
 
-class Additional_Mark(model.buddy.Buddy):
+class Additional_Mark(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Additional_Mark
 
@@ -211,9 +206,8 @@ class Additional_Mark(model.buddy.Buddy):
             self.obj.set_answer(int(data[self.obj.id_csv()]))
 
 
-class Box(model.buddy.Buddy):
+class Box(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Box
 
@@ -236,9 +230,8 @@ class Box(model.buddy.Buddy):
         self.obj.data.state = int(data[self.obj.id_csv()])
 
 
-class Textbox(Box):
+class Textbox(Box, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'csvdata'
     obj_class = model.questionnaire.Textbox
 
@@ -252,7 +245,7 @@ class Textbox(Box):
         image_writer = self.obj.question.questionnaire.csvdata.image_writer
 
         if self.obj.data.state and self.obj.data.text:
-            data = self.obj.data.text.encode('utf-8')
+            data = self.obj.data.text
         elif self.obj.data.state and self.obj.question.questionnaire.csvdata.export_images:
             data = image_writer.output_box(self.obj)
 
@@ -266,10 +259,10 @@ class Textbox(Box):
 
         try:
             state = int(data[self.obj.id_csv()])
-            text = u''
+            text = ''
         except ValueError:
             state = 1
-            text = unicode(data[self.obj.id_csv()])
+            text = str(data[self.obj.id_csv()])
 
         self.obj.data.state = state
         self.obj.data.text = text

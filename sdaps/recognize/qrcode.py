@@ -24,9 +24,8 @@ from sdaps.utils.exceptions import RecognitionError
 from sdaps.utils.barcode import read_barcode
 
 
-class Image(model.buddy.Buddy):
+class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'style'
     obj_class = model.sheet.Image
 

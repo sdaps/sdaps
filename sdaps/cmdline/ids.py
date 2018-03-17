@@ -54,7 +54,7 @@ def ids(cmdline):
             if line == "":
                 continue
 
-            line = line.decode('utf-8')
+            line = line
             line = line.strip('\r\n')
             to_add.append(survey.validate_questionnaire_id(line))
 
@@ -68,13 +68,13 @@ def ids(cmdline):
                 ids = os.fdopen(outfd, 'w')
             else:
                 filename = cmdline['output']
-                ids = file(filename, 'w')
+                ids = open(filename, 'w')
         else:
             filename = survey.new_path('ids_%i')
-            ids = file(filename, 'w')
+            ids = open(filename, 'w')
 
         for id in survey.questionnaire_ids:
-            ids.write(unicode(id).encode('utf-8'))
+            ids.write(str(id))
             ids.write('\n')
 
         if ids != sys.stdout:

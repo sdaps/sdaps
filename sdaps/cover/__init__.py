@@ -26,9 +26,9 @@ def cover(survey, output=None):
 
     story = template.story_title(survey)
     subject = []
-    for key, value in survey.info.iteritems():
-        subject.append(u'%(key)s: %(value)s' % {'key': key, 'value': value})
-    subject = u'\n'.join(subject)
+    for key, value in survey.info.items():
+        subject.append('%(key)s: %(value)s' % {'key': key, 'value': value})
+    subject = '\n'.join(subject)
 
     if output:
         filename = output
@@ -37,7 +37,7 @@ def cover(survey, output=None):
 
     doc = template.DocTemplate(
         filename,
-        _(u'SDAPS questionnaire'),
+        _('SDAPS questionnaire'),
         {
             'title': survey.title,
             'subject': subject

@@ -35,9 +35,8 @@ from sdaps.utils.image import ImageWriter
 def format_raw_text(text):
     from sdaps.setuptex import latexmap
 
-class Questionnaire(model.buddy.Buddy):
+class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Questionnaire
 
@@ -68,9 +67,8 @@ class Questionnaire(model.buddy.Buddy):
         return filters
 
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.QObject
 
@@ -87,9 +85,8 @@ class QObject(model.buddy.Buddy):
         return []
 
 
-class Head(QObject):
+class Head(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Head
 
@@ -98,9 +95,8 @@ class Head(QObject):
         out.write('\\section*{%s %s}\n' % (self.obj.id_str(), unicode_to_latex(self.obj.title)))
 
 
-class Question(QObject):
+class Question(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Question
 
@@ -117,9 +113,8 @@ class Question(QObject):
         self.write_end(out)
 
 
-class Choice(Question):
+class Choice(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Choice
 
@@ -159,21 +154,19 @@ class Choice(Question):
 
     def filters(self):
         for box in self.obj.boxes:
-            yield u'%i in %s' % (box.value, self.obj.id_filter())
+            yield '%i in %s' % (box.value, self.obj.id_filter())
 
-class Option(Choice):
+class Option(Choice, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Option
 
     def filters(self):
         for box in self.obj.boxes:
-            yield u'%i == %s' % (box.value, self.obj.id_filter())
+            yield '%i == %s' % (box.value, self.obj.id_filter())
 
-class Range(Question):
+class Range(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Range
 
@@ -208,12 +201,11 @@ class Range(Question):
 
     def filters(self):
         for x in range(len(self.obj.boxes)+1):
-            yield u'%i == %s' % (x, self.obj.id_filter())
+            yield '%i == %s' % (x, self.obj.id_filter())
 
 
-class Text(Question):
+class Text(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Text
 
@@ -241,9 +233,8 @@ class Text(Question):
         Question.write_end(self, out)
 
 
-class Additional_FilterHistogram(Question):
+class Additional_FilterHistogram(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Additional_FilterHistogram
 

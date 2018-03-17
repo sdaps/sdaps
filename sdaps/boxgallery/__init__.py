@@ -102,10 +102,10 @@ def boxgallery(survey, debugrecognition):
 
     keys = set()
     for checkbox in checkboxes:
-        keys = keys.union(checkbox[1].iterkeys())
+        keys = keys.union(iter(checkbox[1].keys()))
 
     for key in keys:
-        print _("Rendering boxgallery for metric \"%s\"." % key)
+        print(_("Rendering boxgallery for metric \"%s\"." % key))
         draw_list = copy.copy(checkboxes)
         draw_list.sort(key=lambda x: x[1][key] if key in x[1] else 0)
 

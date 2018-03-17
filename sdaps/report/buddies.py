@@ -29,8 +29,8 @@ from sdaps import model
 
 from xml.sax.saxutils import escape
 
-import flowables
-import answers
+from . import flowables
+from . import answers
 
 from sdaps import calculate
 
@@ -67,9 +67,8 @@ stylesheet['Text'] = styles.ParagraphStyle(
 )
 
 
-class Questionnaire(model.buddy.Buddy):
+class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Questionnaire
 
@@ -121,9 +120,8 @@ class Questionnaire(model.buddy.Buddy):
         return filters
 
 
-class QObject(model.buddy.Buddy):
+class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.QObject
 
@@ -140,36 +138,33 @@ class QObject(model.buddy.Buddy):
         return []
 
 
-class Head(QObject):
+class Head(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Head
 
     def story(self):
         return [
             platypus.Paragraph(
-                u'%s %s' % (self.obj.id_str(), escape(self.obj.title)),
+                '%s %s' % (self.obj.id_str(), escape(self.obj.title)),
                 stylesheet['Head'])], True
 
 
-class Question(QObject):
+class Question(QObject, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Question
 
     def story(self):
         return [
             platypus.Paragraph(
-                u'%s %s' % (
+                '%s %s' % (
                     self.obj.id_str(), escape(self.obj.question)),
                 stylesheet['Question'])], True
 
 
-class Choice(Question):
+class Choice(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Choice
 
@@ -209,21 +204,19 @@ class Choice(Question):
 
     def filters(self):
         for box in self.obj.boxes:
-            yield u'%i in %s' % (box.value, self.obj.id_filter())
+            yield '%i in %s' % (box.value, self.obj.id_filter())
 
-class Option(Question):
+class Option(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Option
 
     def filters(self):
         for box in self.obj.boxes:
-            yield u'%i == %s' % (box.value, self.obj.id_filter())
+            yield '%i == %s' % (box.value, self.obj.id_filter())
 
-class Range(Option):
+class Range(Option, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Range
 
@@ -258,9 +251,8 @@ class Range(Option):
         return story, False
 
 
-class Text(Question):
+class Text(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Text
 
@@ -289,9 +281,8 @@ class Text(Question):
         return story, False
 
 
-class Additional_FilterHistogram(Question):
+class Additional_FilterHistogram(Question, metaclass=model.buddy.Register):
 
-    __metaclass__ = model.buddy.Register
     name = 'report'
     obj_class = model.questionnaire.Additional_FilterHistogram
 

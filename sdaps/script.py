@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u'''
+'''
 This module defines some decorators, helping to implement sdaps-scripts.
 To register a function as a sdaps-script(callable from the command line), use
 @register
@@ -27,7 +27,7 @@ import os
 import functools
 import argparse
 
-import log
+from . import log
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
@@ -47,7 +47,7 @@ subparsers = parser.add_subparsers(help=_("command list|Commands:"))
                     
                     
 def doc(docstring):
-    u'''decorator to add a docstring to a function.
+    '''decorator to add a docstring to a function.
 
     When using normal Python docstring syntax it cannot be generated
     dynamically. Using this one can for example add translations.
@@ -58,12 +58,12 @@ def doc(docstring):
     '''
 
     def decorator(function):
-        function.func_doc = docstring
+        function.__doc__ = docstring
         return function
     return decorator
 
 def connect(parser, name=None):
-    u'''decorator to connect an already prepared parser to call into a function.
+    '''decorator to connect an already prepared parser to call into a function.
 
     This function initilizes the _func and _name properties for the parser to
     the given function, and its name. It also sets the functions docstring to
@@ -84,14 +84,14 @@ def connect(parser, name=None):
 
         parser.set_defaults(_func=function, _name=local_name)
 
-        function.func_doc = parser.format_help()
+        function.__doc__ = parser.format_help()
 
         return function
 
     return decorator
 
 def logfile(function):
-    u'''open the logfile when running the function and close it afterwards.
+    '''open the logfile when running the function and close it afterwards.
 
     >>> @logfile
     >>> def function(survey_dir, *args, **kwargs):

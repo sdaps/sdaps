@@ -24,11 +24,11 @@ import re
 from sdaps import model
 from sdaps.utils.latex import latex_to_unicode
 
-QOBJECT_PREFIX = u'QObject'
-ANSWER_PREFIX = u'Answer'
-BOX = u'Box'
-TEXTBOX = u'Textbox'
-RANGE_PREFIX = u'Range'
+QOBJECT_PREFIX = 'QObject'
+ANSWER_PREFIX = 'Answer'
+BOX = 'Box'
+TEXTBOX = 'Textbox'
+RANGE_PREFIX = 'Range'
 
 index_re = re.compile(r'''^(?P<index>(?:[0-9]+\.)+)(?P<string>.*)$''')
 arg_index_re = re.compile(r'''^(?P<arg>[^\[]*)(\[(?P<index>([0-9]+\.)*[0-9]+)\])?$''')
@@ -52,7 +52,7 @@ def parse(survey):
 
     sdaps_file = open(survey.path('questionnaire.sdaps'))
     # the file is encoded in ascii format
-    sdaps_data = sdaps_file.read().decode('utf-8')
+    sdaps_data = sdaps_file.read()
     qobject = None
     auto_numbering_id = (0,)
 
@@ -144,9 +144,9 @@ def parse(survey):
 
             range_type = arg[len(RANGE_PREFIX) + 1:].lower()
 
-            if range_type == u'lower':
+            if range_type == 'lower':
                 qobject.setup.set_lower(idx, answer)
-            elif range_type == u'upper':
+            elif range_type == 'upper':
                 qobject.setup.set_upper(idx, answer)
             else:
                 raise AssertionError('File format error, %s has to be either lower or upper!' % RANGE_PREFIX)

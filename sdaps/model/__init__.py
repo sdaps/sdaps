@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u'''data model for sdaps
+'''data model for sdaps
 
 Survey
 ======
@@ -61,10 +61,10 @@ the objects in the model.
 
 '''
 
-import buddy
-import data
-import questionnaire
-import sheet
-import survey
+from . import buddy
+from . import data
+from . import questionnaire
+from . import sheet
+from . import survey
 
 

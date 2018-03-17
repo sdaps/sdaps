@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This modules contains low level image processing functions. These functions
 are implemented in C for speed reasons. Usually one will not need to use these
 directly, instead modules like "recognize" or "surface" use them to load and
@@ -41,9 +41,9 @@ if paths.local_run:
 # Simply importing it without changes to the paths will work.
 
 try:
-    from image import *
-except ImportError, e:
-    print e
+    from .image import *
+except ImportError as e:
+    print(e)
     log.error(_("It appears you have not build the C extension. Please run \"./setup.py build\" in the toplevel directory."))
     sys.exit(1)
 

@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 Contains the functionality to create a new SDAPS project using a LaTeX input
 file.
 """
@@ -99,11 +99,11 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
             else:
                 shutil.copyfile(add_file, survey.path(os.path.basename(add_file)))
 
-        print _("Running %s now twice to generate the questionnaire.") % defs.latex_engine
+        print(_("Running %s now twice to generate the questionnaire.") % defs.latex_engine)
         latex.compile('questionnaire.tex', cwd=survey.path())
 
         if not os.path.exists(survey.path('questionnaire.pdf')):
-            print _("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine
+            print(_("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine)
             raise AssertionError('PDF file not generated')
 
         survey.defs.print_questionnaire_id = False
@@ -119,8 +119,8 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
 
         except:
             log.error(_("Caught an Exception while parsing the SDAPS file. The current state is:"))
-            print >>sys.stderr, unicode(survey.questionnaire)
-            print >>sys.stderr, "------------------------------------"
+            print(str(survey.questionnaire), file=sys.stderr)
+            print("------------------------------------", file=sys.stderr)
 
             raise
 
@@ -139,21 +139,19 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
         # We need to now rebuild everything so that the correct ID is at the bottom
         # Dissable draft mode if the survey doesn't have questionnaire IDs
         latex.write_override(survey, survey.path('sdaps.opt'), draft=survey.defs.print_questionnaire_id)
-        print _("Running %s now twice to generate the questionnaire.") % defs.latex_engine
+        print(_("Running %s now twice to generate the questionnaire.") % defs.latex_engine)
         os.remove(survey.path('questionnaire.pdf'))
         latex.compile('questionnaire.tex', survey.path())
 
         if not os.path.exists(survey.path('questionnaire.pdf')):
-            print _("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine
+            print(_("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine)
             raise AssertionError('PDF file not generated')
 
         # Print the result
-        print survey.title
+        print(survey.title)
 
-        for item in survey.info.items():
-            print u'%s: %s' % item
-
-        print unicode(survey.questionnaire)
+        for item in list(survey.info.items()):
+            print('%s: %s' % item)
 
         log.logfile.open(survey.path('log'))
 

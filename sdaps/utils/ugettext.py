@@ -20,7 +20,7 @@ import gettext
 
 
 def ugettext(string):
-    u'''gettext for unicode objects
+    '''gettext for unicode objects
     '''
     translation = gettext.gettext(string.encode('UTF-8')).decode('UTF-8')
 
@@ -28,7 +28,7 @@ def ugettext(string):
 
 
 def ungettext(singular, plural, n):
-    u'''ngettext for unicode objects
+    '''ngettext for unicode objects
     '''
     return gettext.ngettext(
         singular.encode('UTF-8'),

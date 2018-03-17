@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 sdaps has a modular design. It ships a core python module called "model" which
 is responsible for storing and basic modification of the data. When other
 modules like "recognize" are loaded they '''extend''' the original model.
@@ -32,12 +32,12 @@ Please have a look at the documentation of the "model" package.
 
 import sys
 
-import paths
-import script
+from . import paths
+from . import script
 import os
 import argparse
 
-from utils.ugettext import ugettext, ungettext
+from .utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
@@ -45,14 +45,14 @@ def init(local_run=False):
     paths.init(local_run, __path__[0])
 
 def main(local_run=False):
-    u"""The main SDAPS interface routine. It initilizes all modules, parses
+    """The main SDAPS interface routine. It initilizes all modules, parses
     the command line and passes control over to the selected function."""
     init(local_run)
 
-    import log
+    from . import log
     log.activate_redirects()
 
-    import cmdline
+    from . import cmdline
 
     cmdline = script.parser.parse_args()
     cmdline = vars(cmdline)

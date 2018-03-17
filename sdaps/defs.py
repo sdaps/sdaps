@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 Defs
 ====
 
@@ -189,7 +189,7 @@ image_line_coverage = 0.35
 
 
 # Allowed characters in code 128 barcodes (only ascii for now)
-c128_chars = [chr(i) for i in xrange(32, 127)] #+ [u'È', u'É', u'Ê', u'Ë', u'Ì', u'Í', u'Î', u'Ï', u'Ð', u'Ñ', u'Ò', u'Ó']
+c128_chars = [chr(i) for i in range(32, 127)] #+ [u'È', u'É', u'Ê', u'Ë', u'Ì', u'Í', u'Î', u'Ï', u'Ð', u'Ñ', u'Ò', u'Ó']
 
 
 # External commands =======================================

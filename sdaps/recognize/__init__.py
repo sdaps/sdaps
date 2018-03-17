@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-u"""
+"""
 This module adds the functionality to automatically recognize the scanned image
 data. It reads the image data and tries to guess whether a checkbox is
 empty/checked/filled and finds the written area in a textfield.
