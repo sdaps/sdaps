@@ -41,8 +41,8 @@ from . import sdapsfileparser
 from ..setup import additionalparser
 
 
-def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
-    if os.access(survey.path(), os.F_OK):
+def setup(survey_dir, questionnaire_tex, additionalqobjects=None, extra_files=[]):
+    if os.access(survey_dir, os.F_OK):
         log.error(_('The survey directory already exists.'))
         return 1
 
@@ -57,11 +57,12 @@ def setup(survey, questionnaire_tex, additionalqobjects=None, extra_files=[]):
             log.error(_('Unknown file type (%s). additionalqobjects should be text/plain.') % mime)
             return 1
 
+    # Create the survey directory, and copy the tex file.
+    survey = model.survey.Survey.new(survey_dir)
+
     # Add the new questionnaire
     survey.add_questionnaire(model.questionnaire.Questionnaire())
 
-    # Create the survey directory, and copy the tex file.
-    os.makedirs(survey.path())
     try:
         shutil.copy(questionnaire_tex, survey.path('questionnaire.tex'))
 

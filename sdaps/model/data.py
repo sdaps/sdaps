@@ -44,6 +44,7 @@ class Box(object):
             return
 
         if value != old_value and hasattr(self, '_parent') and self._parent is not None:
+            self._dirty = True
             self._parent.question.questionnaire.notify_data_changed(self._parent, self, name, old_value)
 
     def __getstate__(self):

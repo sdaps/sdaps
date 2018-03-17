@@ -53,12 +53,25 @@ class Object(object):
     def __getstate__(self):
         '''do not pickle pickle any "private" data.
         '''
-        dict = self.__dict__.copy()
-        keys = list(dict.keys())
+        if hasattr(self, '_pickled_attrs'):
+            attrs = getattr(self, '_pickled_attrs')
+            res = dict()
+            for attr in attrs:
+                res[attr] = getattr(self, attr)
+            return res
+
+        if hasattr(self, '_pickle_skip'):
+            skip = getattr(self, '_pickle_skip')
+        else:
+            skip = set()
+
+        res = self.__dict__.copy()
+        keys = list(res.keys())
         for key in keys:
-            if key.startswith('_'):
-                del dict[key]
-        return dict
+           if key.startswith('_') or key in skip:
+               del res[key]
+
+        return res
 
 
 class Register(type):
