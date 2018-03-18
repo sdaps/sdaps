@@ -4,7 +4,7 @@
 # Sun, 17 Feb 2013 12:59:45 +0100
 
 %:
-	dh $@ --with python2
+	dh $@ --with python3 --buildsystem=pybuild
 
 override_dh_clean:
 	rm -rf build/mo
@@ -19,7 +19,5 @@ override_dh_clean:
 override_dh_auto_build:
 	dh_auto_build
 
-	# And run the testsuit
-ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
-	cd test; ./run-test-locally.sh
-endif
+	# Unfortunately, testing does not currently work due to issues
+	# with the local run path magic.
