@@ -58,7 +58,7 @@ static PyMethodDef image_methods[] = {
 	{"get_masked_coverage",  wrap_get_masked_coverage, METH_VARARGS, "Calculates the black coverage in the given mask."},
 	{"get_masked_coverage_without_lines",  wrap_get_masked_coverage_without_lines, METH_VARARGS, "First removes the number of requested lines with the specified stroke width using a hough transformation. Then calculates the coverage. Works on the masked area."},
 	{"get_masked_white_area_count",  wrap_get_masked_white_area_count, METH_VARARGS, "Returns the number and overall size of white areas that are larger than the given percentage of the overall size. Works on the masked area."},
-	{"get_pbm",  wrap_get_pbm, METH_VARARGS, "Returns a string that contains a binary PBM data representation of the cairo A1 surface."},
+	{"get_pbm",  wrap_get_pbm, METH_VARARGS, "Returns a byte string that contains a binary PBM data representation of the cairo A1 surface."},
 	{"set_magic_values",  sdaps_set_magic_values, METH_VARARGS, "Sets some magic values for recognition."},
 	{"enable_debug_surface_creation",  enable_debug_surface_creation, METH_VARARGS, "Sets whether debug images should be created."},
 	{"get_debug_surface",  get_debug_surface, METH_VARARGS, "Returns the last created debug surface. Call immediately after a function that may create such a surface."},
@@ -412,7 +412,7 @@ wrap_get_pbm(PyObject *self, PyObject *args)
 
 	get_pbm(py_surface->surface, &data, &length);
 
-	result = Py_BuildValue("s#", data, length);
+	result = Py_BuildValue("y#", data, length);
 	g_free (data);
 	return result;
 }

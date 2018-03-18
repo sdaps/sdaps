@@ -313,7 +313,7 @@ class Freeform(platypus.Flowable):
         if(self.filename, self.tiff_page, self.bbox) in self.cache:
             img = self.cache[(self.filename, self.tiff_page, self.bbox)]
         else:
-            img = io.StringIO(image.get_pbm(
+            img = io.BytesIO(image.get_pbm(
                 image.get_a1_from_tiff(
                     self.filename,
                     self.tiff_page,
