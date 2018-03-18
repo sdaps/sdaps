@@ -51,7 +51,7 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
     # iterate over sheets
     survey.iterate(
         survey.questionnaire.calculate.read,
-        lambda: survey.sheet.valid and not survey.sheet.empty and list(filter())
+        lambda: survey.sheet.valid and not survey.sheet.empty and filter()
     )
 
     # do calculations
@@ -65,7 +65,7 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
     # iterate over sheets
     survey.iterate(
         survey.questionnaire.report.report,
-        lambda: survey.sheet.valid and list(filter())
+        lambda: survey.sheet.valid and filter()
     )
 
     # create story

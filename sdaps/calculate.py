@@ -211,7 +211,7 @@ class Additional_FilterHistogram(Question, metaclass=model.buddy.Register):
         for i in range(len(self.obj.answers)):
             filter = clifilter.clifilter(
                 self.obj.questionnaire.survey, self.obj.filters[i])
-            if list(filter()):
+            if filter():
                 self.values[i] += 1
 
     def calculate(self):
