@@ -76,24 +76,11 @@ def scan(surface, matrix, x, y, width, height, btype="CODE128", kfill=False):
 
         image.kfill_modified(a1_surface, barwidth)
 
-    rgb_surface = cairo.ImageSurface(cairo.FORMAT_RGB24, width, height)
-    cr = cairo.Context(rgb_surface)
-    cr.set_source_rgba(1, 1, 1, 1)
-    cr.set_operator(cairo.OPERATOR_SOURCE)
-    cr.paint()
-    cr.set_source_rgba(0, 0, 0, 0)
-    cr.mask_surface(a1_surface, 0, 0)
+    pbm = image.get_pbm(a1_surface)
 
-    tmp = tempfile.mktemp(suffix='.png', prefix='sdaps-zbar-')
-    rgb_surface.write_to_png(tmp)
-
-    proc = subprocess.Popen(['zbarimg', '-q', '-Sdisable', '-S%s.enable' % btype.lower(), tmp], stdout=subprocess.PIPE)
-    stdout, stderr = proc.communicate()
-
-    try:
-        os.unlink(tmp)
-    except OSError:
-        pass
+    # Is the /dev/stdin sufficiently portable?
+    proc = subprocess.Popen(['zbarimg', '-q', '-Sdisable', '-S%s.enable' % btype.lower(), '/dev/stdin'], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+    stdout, stderr = proc.communicate(pbm)
 
     if proc.returncode == 4:
         return None
