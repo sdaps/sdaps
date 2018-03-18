@@ -6,7 +6,7 @@ X-Python-Version: >= 3.6
 Build-Depends: python3, python3-dev, libtiff5-dev | libtiff4-dev,
  pkg-config, python3-distutils-extra, python3-pkg-resources, python3-cairo-dev,
  libcairo2-dev, libglib2.0-dev, debhelper (>= 7.4.3),
- python3-imaging, python3-reportlab, python3-zbar,
+ python3-pil, python3-reportlab, zbar-tools,
  texlive, texlive-generic-recommended, pgf | texlive-pictures (>= 2017.20170808),
  latex-beamer | texlive-latex-recommended (>= 2017.20170808),
  texlive-lang-ukenglish | texlive-lang-english, texlive-latex-extra, texlive-science,
@@ -16,8 +16,8 @@ Standards-Version: 3.9.4
 Package: sdaps
 Architecture: any
 Depends: ${misc:Depends}, ${python:Depends}, ${shlibs:Depends},
- python3-cairo, python3-gi, python3-imaging,
- python-reportlab, python-zbar, python-gi-cairo
+ python3-cairo, python3-gi, python3-pil,
+ python3-reportlab, python3-gi-cairo, zbar-tools
 Recommends: gir1.2-gtk-3.0 | gir1.0-gtk-3.0, texlive, texlive-latex-extra,
  texlive-generic-recommended, pgf | texlive-pictures (>= 2017.20170808),
  latex-beamer | texlive-latex-recommended (>= 2017.20170808),
