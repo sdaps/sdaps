@@ -1,3 +1,5 @@
+SOURCES
+BUILD
 MANIFEST
 build
 *.pyc
@@ -15,3 +17,4 @@ backup-*sdaps.tgz
 _build
 dist
 setup.cfg
+sdaps-snapshot.spec
