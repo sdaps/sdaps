@@ -163,8 +163,13 @@ def run_engine(texfile, cwd, inputs=None):
         if inputs:
             os.environ['TEXINPUTS'] = ':'.join(['.'] + inputs + [''])
 
+    verbose = os.environ.get('VERBOSE', '0')
+    if verbose in ['1', 'y']:
+        mode = 'nonstopmode'
+    else:
+        mode = 'batchmode'
     subprocess.call([defs.latex_engine, '-halt-on-error',
-                     '-interaction', 'batchmode', texfile],
+                     '-interaction', mode, texfile],
                     cwd=cwd,
                     preexec_fn=_preexec_fn)
 
