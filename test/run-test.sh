@@ -115,6 +115,12 @@ rm -rf "$PROJECT"
 # Compare info files
 ###########################################################
 
+# Distributions:
+# Run with
+# IGNORE_PATTERN_EXTEND='\|^survey_id'
+# exported in the environment to prevent situations where texlive changes
+# cause build failures.
+
 for i in projects/*; do
   success=0
   error=0
@@ -125,7 +131,7 @@ for i in projects/*; do
     fi;
     # This ignores the title; for whatever reason the \LaTeX
     # is written out differently with newer latex versions.
-    diff -I '^title' "$j" "$i/info" && success=1 || error=1
+    diff -I '^title'"$IGNORE_PATTERN_EXTEND" "$j" "$i/info" && success=1 || error=1
   done
 
   if [ $success -eq 0 -a $error -ne 0 ]; then
