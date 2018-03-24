@@ -10,6 +10,9 @@ else
 	SDAPS="$1"
 fi
 
+# Set VERBOSE so that LaTeX compilation results end up on the console
+export VERBOSE=1
+
 ###########################################################
 # Test Tex with IDs
 ###########################################################
