@@ -77,10 +77,15 @@ def scan(surface, matrix, x, y, width, height, btype="CODE128", kfill=False):
         image.kfill_modified(a1_surface, barwidth)
 
     pbm = image.get_pbm(a1_surface)
+    tmp = tempfile.mktemp(suffix='.png', prefix='sdaps-zbar-')
+    f = open(tmp, 'wb')
+    f.write(pbm)
+    f.close()
 
     # Is the /dev/stdin sufficiently portable?
-    proc = subprocess.Popen(['zbarimg', '-q', '-Sdisable', '-S%s.enable' % btype.lower(), '/dev/stdin'], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-    stdout, stderr = proc.communicate(pbm)
+    proc = subprocess.Popen(['zbarimg', '-q', '-Sdisable', '-S%s.enable' % btype.lower(), tmp], stdout=subprocess.PIPE)
+    stdout, stderr = proc.communicate()
+    os.unlink(tmp)
 
     if proc.returncode == 4:
         return None
