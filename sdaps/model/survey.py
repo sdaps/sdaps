@@ -365,6 +365,14 @@ class Survey(object):
                 if filter():
                     function(*args, **kwargs)
 
+    @property
+    def sheet_count(self):
+        with self._db as con:
+            c = con.cursor()
+            c.execute('SELECT count(*) FROM sheets WHERE survey_rowid=?', (self._survey_rowid,))
+            count = c.fetchone()[0]
+            return count
+
     def iterate_progressbar(self, function, filter=lambda: True, *args, **kwargs):
         '''call function once for each sheet and display a progressbar
         '''
