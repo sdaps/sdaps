@@ -260,7 +260,10 @@ class Survey(object):
     def new(survey_dir):
         survey = Survey()
         survey.survey_dir = survey_dir
-        os.makedirs(survey.path())
+        try:
+            os.makedirs(survey.path())
+        except FileExistsError:
+            pass
 
         dbfile = survey.path('survey.sqlite')
         if os.path.exists(dbfile):
