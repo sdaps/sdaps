@@ -410,6 +410,14 @@ class Survey(object):
 
         self._current_sheet = sheet
 
+    def goto_nth_sheet(self, index):
+        with self._db as con:
+            c = con.cursor()
+            c.execute('SELECT rowid FROM sheets WHERE survey_rowid=? ORDER BY sort,rowid LIMIT 1 OFFSET ?', (self._survey_rowid, index))
+            rowid = c.fetchone()[0]
+
+        self.goto_sheet(self._db_get_sheet(rowid))
+
     def goto_questionnaire_id(self, questionnaire_id):
         '''goto the sheet object specified by its questionnaire_id
         '''
