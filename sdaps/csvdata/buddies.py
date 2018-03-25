@@ -66,7 +66,7 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         self.csv.writerow(data)
 
     def export_finish(self):
-        self.file.close()
+        self.file.flush()
         del self.file
         del self.csv
 
