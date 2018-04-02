@@ -155,10 +155,12 @@ def raw_unicode_to_latex(string):
 
     return string.encode('ascii')
 
-def run_engine(texfile, cwd, inputs=None):
+def run_engine(texfile, cwd, inputs=[]):
     def _preexec_fn():
         if defs.latex_preexec_hook is not None:
             defs.latex_preexec_hook()
+
+        inputs.extend(p for p in os.environ.get('TEXINPUTS', '').split(':') if p not in ['.', ''])
 
         if inputs:
             os.environ['TEXINPUTS'] = ':'.join(['.'] + inputs + [''])
