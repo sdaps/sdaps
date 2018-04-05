@@ -176,7 +176,7 @@ def run_engine(texfile, cwd, inputs=[]):
                     preexec_fn=_preexec_fn)
 
 
-def compile(texfile, cwd, inputs=None):
+def compile(texfile, cwd, inputs=[]):
     run_engine(texfile, cwd, inputs)
     run_engine(texfile, cwd, inputs)
     run_engine(texfile, cwd, inputs)
