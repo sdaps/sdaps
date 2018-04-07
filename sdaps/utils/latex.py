@@ -163,7 +163,7 @@ def run_engine(texfile, cwd, inputs=[]):
         inputs.extend(p for p in os.environ.get('TEXINPUTS', '').split(':') if p not in ['.', ''])
 
         if inputs:
-            os.environ['TEXINPUTS'] = ':'.join(['.'] + inputs + [''])
+            os.environ['TEXINPUTS'] = ':'.join(['.'] + inputs + os.environ.get('TEXINPUTS', '').split(':') + [''])
 
     verbose = os.environ.get('VERBOSE', '0')
     if verbose in ['1', 'y']:
