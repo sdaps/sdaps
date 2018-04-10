@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: SDAPS 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-16 18:30+0100\n"
+"PO-Revision-Date: 2018-04-10 15:00+0200\n"
+"Last-Translator: Damian Kulig <dp.kulig@student.uj.edu.pl>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#. The language name of the LaTeX dictionary file for translator
+#: ../tex_translations.in.h:2
+msgid "English"
+msgstr "Polish"
+
+#. Used as an overlay for questionnaires that are not yet done
+#: ../tex_translations.in.h:4
+msgid "draft"
+msgstr "szkic"
+
+#. Label for the survey-id on the questionnaire (in "classic" mode)
+#: ../tex_translations.in.h:6
+msgid "Survey-ID:"
+msgstr ""
+
+#. Label for the questionnaire-id on the questionnaire (in "classic" mode)
+#: ../tex_translations.in.h:8
+msgid "Questionnaire-ID:"
+msgstr ""
+
+#. Default instructions on the questionnaire
+#: ../tex_translations.in.h:10
+msgid ""
+"This questionnaire is automatically read by a computer program. Please use a "
+"pen for filling in your answers."
+msgstr "Ten kwestianariusz jest sprawdzany automatycznie. Użyj długopisu wpisując odpowiedzi."
+
+#. Instruction on the questionnaire: Description of a crossed checkbox
+#: ../tex_translations.in.h:12
+msgid "Check"
+msgstr "Zaznaczenie"
+
+#. Instruction on the questionnaire: Description of a crossed and filled checkbox
+#: ../tex_translations.in.h:14
+msgid "Uncheck to correct"
+msgstr "Odznaczenie do poprawy"
+
+#. Instruction on the questionnaire: Multiple choice question
+#: ../tex_translations.in.h:16
+msgid "You can check any number of boxes in selection questions."
+msgstr "Możesz wybrać dowolną ilość odpowiedzi w zaznaczając odpowiednie kwadraty."
+
+#. Instruction on the questionnaire: Mark/range question.
+#: ../tex_translations.in.h:18
+msgid ""
+"For questions with a range (1--\\arabic{markcheckboxcount}) mark the answer "
+"that fits best."
+msgstr "Dla pytań (1--\arabic{markcheckboxcount}) wybierz odpowiedź, która najlepiej pasuje."
+
+#. LaTeX based report: Label for the number of people that answered
+#: ../tex_translations.in.h:20
+msgid "Answers"
+msgstr "Odpowiedzi"
+
+#. LaTeX based report: The calculated mean value
+#: ../tex_translations.in.h:22
+msgid "Mean"
+msgstr "Znaczenie"
+
+#. LaTeX based report: The standard deviation
+#: ../tex_translations.in.h:24
+msgid "Standard-Deviation"
+msgstr ""
