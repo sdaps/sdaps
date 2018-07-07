@@ -91,9 +91,11 @@ class Provider(object):
         #self._surface = None
 
     def __call__(self):
+        # Filter out images that have not been reconized correctly
+        valid_images = [img for img in self.survey.sheet.images if img.page_number is not None]
         # Add all images that are "valid" ie. everything except back side of
         # a simplex printout
-        new_images = [img for img in sorted(self.survey.sheet.images, key=lambda Image: Image.page_number) if not img.ignored]
+        new_images = [img for img in sorted(valid_images, key=lambda Image: Image.page_number) if not img.ignored]
 
         self.images.extend(new_images)
         # Insert each image of the sheet into the qualities array
