@@ -84,10 +84,26 @@ def iter_images_and_pages(images):
                     surf = pdfpage.get_image(images[0].image_id)
 
                 else:
-                    # Render page at 300dpi
-                    surf = cairo.ImageSurface(cairo.FORMAT_RGB24, int(300 / 72 * page_width), int(300 / 72 * page_height))
+                    dpi = 0
+                    # Try to detect the DPI of the scan
+                    for img in images:
+                        if img.area.y2 - img.area.y1 < page_height / 2:
+                            continue
+
+                        surf = pdfpage.get_image(img.image_id)
+                        # Calculate DPI from height
+                        dpi_x = round(surf.get_height() / (img.area.y2 - img.area.y1) * 72)
+                        dpi_y = round(surf.get_width() / (img.area.x2 - img.area.x1) * 72)
+                        if abs(dpi_x - dpi_y) <= 1:
+                            dpi = max(dpi, dpi_x, dpi_y)
+
+                    # Fall back to 300dpi for odd values
+                    if dpi < 199 or dpi > 601:
+                        dpi = 300
+
+                    surf = cairo.ImageSurface(cairo.FORMAT_RGB24, int(dpi / 72. * page_width), int(dpi / 72. * page_height))
                     cr = cairo.Context(surf)
-                    cr.scale(300 / 72, 300 / 72)
+                    cr.scale(dpi / 72., dpi / 72.)
                     cr.set_source_rgb(1, 1, 1)
                     cr.paint()
 
