@@ -92,8 +92,15 @@ class Provider(object):
 
     def __call__(self):
         # Add all images that are "valid" ie. everything except back side of
-        # a simplex printout
-        new_images = [img for img in sorted(self.survey.sheet.images, key=lambda Image: Image.page_number) if not img.ignored]
+        # a simplex printout.
+        new_images = [img for img in self.survey.sheet.images if not img.ignored]
+
+        # Try to sort the images, which may fail if the page numbers have not been
+        # recognised
+        try:
+            new_images = list(sorted(new_images, key=lambda Image: Image.page_number))
+        except TypeError:
+            pass
 
         self.images.extend(new_images)
         # Insert each image of the sheet into the qualities array
