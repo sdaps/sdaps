@@ -44,7 +44,7 @@ msgid ""
 "This questionnaire is automatically read by a computer program. Please use a "
 "pen for filling in your answers."
 msgstr ""
-"El cuestionario se lee automáticamente por un programa computarizado.  Por "
+"El cuestionario se lee automáticamente por un programa computerizado.  Por "
 "favor, utilice un bolígrafo para completar sus respuestas."
 
 #. Instruction on the questionnaire: Description of a crossed checkbox
