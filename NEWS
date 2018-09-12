@@ -1,3 +1,18 @@
+Overview of Changes in SDAPS 1.9.3
+==================================
+
+This is a bugfix release.
+
+Important changes:
+ * Fix TEXINPUTS environment variable handling (issue #120)
+ * convert: Improve DPI selection and detection for PDF conversion
+ * latex: Improved whitespace in rangearray with alternative choices
+ * latex: Handle \ior_get_str:NN deprecation
+ * latex: Fix single choice question metadata export
+
+New and updated languages:
+ * Polish
+
 Overview of Changes in SDAPS 1.9.2
 ==================================
 
