@@ -1,6 +1,6 @@
 %global modulename sdaps
 #define commit SNAPSHOT_COMMIT
-%define relversion 1.9.2
+%define relversion 1.9.3
 %if 0%{?commit:1}
   %define shortcommit %(c=%{commit}; echo ${c:0:7})
   %define build_timestamp %(date +"%Y%m%d")
@@ -9,7 +9,7 @@
 Summary: SDAPS OMR utilities
 Name: sdaps
 Version: %{relversion}%{?commit:.}%{?build_timestamp}%{?commit:git}%{?shortcommit}
-Release: 0%{?dist}
+Release: 1%{?dist}
 License: GPLv3, LPPL1.3c
 Source0: %{name}-%{relversion}%{?commit:-}%{?shortcommit}.tar.gz
 Group: Applications/Science
@@ -83,5 +83,8 @@ IGNORE_PATTERN_EXTEND='\|^survey_id' ./run-test-locally.sh
 %{_bindir}/*
 
 %changelog
+* Wed Sep 12 2018 Benjamin Berg <bberg@redhat.com> - 1.9.3-1
+- New SDAPS release
+
 * Fri Mar 24 2017 Benjamin Berg <bberg@redhat.com> - 1.9.2-1
 - Initial package
