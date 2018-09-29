@@ -27,6 +27,7 @@ from sdaps.utils.latex import latex_to_unicode
 QOBJECT_PREFIX = 'QObject'
 ANSWER_PREFIX = 'Answer'
 BOX = 'Box'
+VARIABLE = 'Variable'
 TEXTBOX = 'Textbox'
 RANGE_PREFIX = 'Range'
 
@@ -128,6 +129,11 @@ def parse(survey):
             qobject.setup.init()
 
             qobject.setup.question(string)
+        elif arg == VARIABLE:
+            assert qobject is not None
+
+            qobject.setup.variable_name(value)
+
         elif arg.startswith(ANSWER_PREFIX):
             assert qobject is not None
 

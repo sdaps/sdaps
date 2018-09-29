@@ -40,6 +40,9 @@ class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
     def box(self, box):
         raise AssertionError('Adding a box to this QObject type is not possible.')
 
+    def variable_name(self, value):
+        self.obj.var = value
+
     def validate(self):
         pass
 

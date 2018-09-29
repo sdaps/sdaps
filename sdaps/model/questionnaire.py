@@ -257,16 +257,6 @@ class Option(Question):
             [str(box) for box in self.boxes]
         )
 
-    def add_box(self, box):
-        Question.add_box(self, box)
-        if box.var:
-            var = box.var.rsplit('_', 1)
-            if len(var) != 2:
-                return
-
-            assert not self.var or self.var == var[0]
-            self.var = var[0]
-
     def get_answer(self):
         answer = list()
         for box in self.boxes:
