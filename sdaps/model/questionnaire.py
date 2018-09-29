@@ -266,8 +266,6 @@ class Option(Question):
             self.var = var[0]
 
     def get_answer(self):
-        '''it's a list containing all selected values
-        '''
         answer = list()
         for box in self.boxes:
             if box.data.state:
