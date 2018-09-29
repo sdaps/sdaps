@@ -285,14 +285,15 @@ class Option(Question):
         # Raises an exception if not found
 
         # Unset all if value is the none value
-        if value == self.value_none:
+        if answer == self.value_none:
             for box in self.boxes:
                 box.data.state = 0
             return
 
         # Set all if value is the none value
         # NOTE: Assumes more than one box!
-        if value == self.value_invalid:
+        if answer == self.value_invalid:
+            assert len(self.boxes) > 1
             for box in self.boxes:
                 box.data.state = 1
             return
