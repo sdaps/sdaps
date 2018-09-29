@@ -282,8 +282,32 @@ class Option(Question):
                 return self.value_invalid
 
     def set_answer(self, answer):
+        # Used for CSV import. Set the first box with the right value, unset
+        # all others.
+        # Raises an exception if not found
+
+        # Unset all if value is the none value
+        if value == self.value_none:
+            for box in self.boxes:
+                box.data.state = 0
+            return
+
+        # Set all if value is the none value
+        # NOTE: Assumes more than one box!
+        if value == self.value_invalid:
+            for box in self.boxes:
+                box.data.state = 1
+            return
+
+        found = False
         for box in self.boxes:
-            box.data.state = box.value == answer
+            if not found and box.value == answer:
+                found = True
+                box.data.state = 1
+            else:
+                box.data.state = 0
+
+        assert(found)
 
 class Range(Option):
 
