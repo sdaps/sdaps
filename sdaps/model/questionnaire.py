@@ -124,6 +124,7 @@ class QObject(buddy.Object):
         self.questionnaire = None
         self.boxes = list()
         self.last_id = -1
+        self.max_value = -1
         self.init_attributes()
 
     def init_attributes(self):
@@ -136,6 +137,7 @@ class QObject(buddy.Object):
     def add_box(self, box):
         box.question = self
         self.last_id = box.init_id(self.last_id)
+        self.max_value = max(self.max_value, box.init_value(self.max_value))
         self.boxes.append(box)
 
     def get_sheet(self):
@@ -428,9 +430,17 @@ class Box(buddy.Object, DataObject):
         self.value = None
 
     def init_id(self, id):
+        id = id + 1
+
+        self.id = self.question.id + (id,)
+        return id
+
+    def init_value(self, value):
+        value = value + 1
+
         if self.value is None:
-            self.value = id + 1
-        self.id = self.question.id + (self.value,)
+            self.value = value
+
         return self.value
 
     def id_str(self):
