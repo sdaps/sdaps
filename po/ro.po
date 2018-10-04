@@ -3,33 +3,34 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-29 21:19+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2018-10-04 13:52+0000\n"
+"Last-Translator: vgheo <vlad.gheorghe@gmail.com>\n"
+"Language-Team: Romanian <https://hosted.weblate.org/projects/sdaps/master/ro/"
+">\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2);;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Weblate 3.2-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
-msgstr ""
+msgstr "SDAPS - Utilitar pentru sondaje suport fizic"
 
 #: ../sdaps/script.py:45
 msgid "project directory|The SDAPS project."
-msgstr ""
+msgstr "director proiect|Proiectul SDAPS."
 
 #: ../sdaps/script.py:46
 msgid "command list|Commands:"
-msgstr ""
+msgstr "listă comenzi|Comenzi:"
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
@@ -37,6 +38,8 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
+"Fișier de intrare invalid : \"%s\". Trebuie să specificați ca intrare un "
+"fișier TIFF (multi-pagină) monocrom."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
@@ -44,23 +47,25 @@ msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
 "%i)."
 msgstr ""
+"\"%s\" nu a fost adăugat deoarece are un număr incorect de pagini (trebuie "
+"să fie multiplu de %i)."
 
 #: ../sdaps/boxgallery/__init__.py:108
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
-msgstr ""
+msgstr "Randăm boxgallery pentru metrica \"%s\"."
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
-msgstr ""
+msgstr "Avertizare: "
 
 #: ../sdaps/log.py:41
 msgid "Error: "
-msgstr ""
+msgstr "Eroare: "
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
-msgstr ""
+msgstr "Adaugă chestionarul scanat la sondaj"
 
 #: ../sdaps/cmdline/add.py:32
 msgid ""
@@ -71,70 +76,84 @@ msgid ""
 "case\n"
 "    the data will be referenced using a relative path."
 msgstr ""
+"Această comandă este folosită pentru a adăuga imagini scanate la sondaj.\n"
+"    Imaginile trebuie să fie fișiere TIFF monocrom (multi-pagină) 300dpi.\n"
+"    Puteți alege să nu copiați imaginile în directorul proiectului. In acest "
+"caz\n"
+"    fișierele cu imagini vor fi referențiate folosind o cale relativă."
 
 #: ../sdaps/cmdline/add.py:38
 msgid "Convert given files and add the result."
-msgstr ""
+msgstr "Convertește fișierele date și adaugă rezultatul."
 
 #: ../sdaps/cmdline/add.py:43
 msgid ""
 "Do a 3D-transformation after finding the corner marks. If the\n"
 "        corner marks are not found then the image will be added as-is."
 msgstr ""
+"Aplică o transformare 3D după localizarea marcajelor de colț. Dacă\n"
+"     marcajele de colț nu sunt localizate, imaginea va fi adăugată fără \n"
+"     modificări."
 
 #: ../sdaps/cmdline/add.py:49
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
 msgstr ""
+"Forțează adăugarea imaginilor chiar dacă numărul de pagini este greșit (de "
+"folosit numai dacă știți ce faceți)."
 
 #: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
-msgstr ""
+msgstr "Copiază fișierele în director (implicit)."
 
 #: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
-msgstr ""
+msgstr "Nu copia fișierele în director."
 
 #: ../sdaps/cmdline/add.py:62
 msgid ""
 "Images contain a duplex scan of a simplex questionnaire (default: simplex "
 "scan)."
 msgstr ""
+"Imaginile conțin a scanare duplex a unui chestionar simplex (implicit : "
+"scanare simplex)."
 
 #: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:48
 msgid "A number of TIFF image files."
-msgstr ""
+msgstr "Un număr de fișiere cu imagini TIFF."
 
 #: ../sdaps/cmdline/add.py:94
 msgid "The --no-copy option is not compatible with --convert!"
-msgstr ""
+msgstr "Opțiunea --no-copy nu este compatibilă cu --convert !"
 
 #: ../sdaps/cmdline/add.py:103
 msgid "Converting input files into a single temporary file."
-msgstr ""
+msgstr "Se convertesc fișierele de intrare într-un singur fișier temporar."
 
 #: ../sdaps/cmdline/add.py:115
 msgid ""
 "The page count of the created temporary file does not work with this survey."
 msgstr ""
+"Numărul de pagini al fișierului creat temporar nu este potrivit pentru acest "
+"sondaj."
 
 #: ../sdaps/cmdline/add.py:120
 msgid "Running the conversion failed."
-msgstr ""
+msgstr "Conversia a eșuat."
 
 #: ../sdaps/cmdline/add.py:126
 #, python-format
 msgid "Processing %s"
-msgstr ""
+msgstr "Se procesează %s"
 
 #: ../sdaps/cmdline/add.py:130 ../sdaps/reset/__init__.py:33
 msgid "Done"
-msgstr ""
+msgstr "Gata"
 
 #: ../sdaps/cmdline/annotate.py:28
 msgid "Annotate the questionnaire and show the recognized positions."
-msgstr ""
+msgstr "Adnotați chestionarul și arătați pozițiile recunoscute."
 
 #: ../sdaps/cmdline/annotate.py:29
 msgid ""
@@ -940,6 +959,8 @@ msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
 msgstr ""
+"Combinație de opțiuni și proprietăți ale proiectului incompatibile. Setup "
+"abandonat."
 
 #: ../sdaps/setuptex/__init__.py:162
 msgid ""
@@ -947,19 +968,21 @@ msgid ""
 "You can for example check the questionnaire.log file for LaTeX compile "
 "errors."
 msgstr ""
+"A apărut o eroare în procedura de setup. Directorul sondajului încă există. "
+"Puteți verifica erorile de compilare LaTeX în fișierul questionnaire.log."
 
 #: ../sdaps/reporttex/__init__.py:107
 msgid "author|Unknown"
-msgstr ""
+msgstr "autor|Necunoscut"
 
 #: ../sdaps/reporttex/__init__.py:138
 msgid "tex language|english"
-msgstr ""
+msgstr "limbaj tex|română"
 
 #: ../sdaps/reporttex/__init__.py:155
 #, python-format
 msgid "The TeX project with the report data is located at '%s'."
-msgstr ""
+msgstr "Proiectul TeX cu datele raportului este disponibil la '%s'."
 
 #: ../sdaps/reporttex/__init__.py:158
 #, python-format
