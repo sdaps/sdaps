@@ -19,7 +19,7 @@
 This file generates the latexmap.py file which is needed
 to convert latex symbols into their unicode counterpart.
 
-Run with create-latexmap.py path/to/utf-8enc.dfu
+Run with create-latexmap.py path/to/utf8enc.dfu
 """
 
 import re
