@@ -80,7 +80,7 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
             pass
         else:
             if 'valid' in data:
-                self.obj.sheet.verified = bool(int(data['valid']))
+                self.obj.sheet.valid = bool(int(data['valid']))
             if 'verified' in data:
                 self.obj.sheet.verified = bool(int(data['verified']))
 
