@@ -170,5 +170,14 @@ class Image(buddy.Object):
         if attr != 'sheet':
             object.__setattr__(self, '_dirty', True)
 
+        try:
+            old_value = getattr(self, attr)
+        except AttributeError:
+            old_value = None
+
         object.__setattr__(self, attr, value)
+
+        # survey may be None if the sheet does not belong to a survey yet.
+        if hasattr(self, "sheet") and self.sheet is not None and self.sheet.survey is not None:
+            self.sheet.survey.questionnaire.notify_data_changed(None, None, attr, old_value)
 
