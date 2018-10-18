@@ -494,7 +494,8 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         self.obj.sheet.recognized = True
         # Any newly recognized sheet is definately not verified.
         # This is relevant for reruns.
-        self.obj.sheet.verified = False
+        for img in self.obj.sheet.images:
+            img.verified = False
 
         # clean up
         self.obj.sheet.recognize.clean()

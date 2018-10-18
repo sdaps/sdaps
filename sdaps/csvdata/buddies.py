@@ -82,7 +82,8 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
             if 'valid' in data:
                 self.obj.sheet.valid = bool(int(data['valid']))
             if 'verified' in data:
-                self.obj.sheet.verified = bool(int(data['verified']))
+                for img in self.obj.sheet.images:
+                    img.verified = bool(int(data['verified']))
 
             for qobject in self.obj.qobjects:
                 qobject.csvdata.import_data(data)

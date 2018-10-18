@@ -58,12 +58,13 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         self.box.pack_start(widget, False, True, 0)
 
         self.valid_checkbox = Gtk.CheckButton.new_with_label(_('Sheet valid'))
-        self.verified_checkbox = Gtk.CheckButton.new_with_label(_('Verified'))
+        self.sheet_verified_checkbox = Gtk.CheckButton.new_with_label(_('Sheet Verified'))
+        self.page_verified_checkbox = Gtk.CheckButton.new_with_label(_('Page Verified'))
         self.empty_checkbox = Gtk.CheckButton.new_with_label(_('Empty'))
         self.empty_checkbox.set_sensitive(False)
 
         self.valid_checkbox.connect('toggled', self.toggled_valid_cb)
-        self.verified_checkbox.connect('toggled', self.toggled_verified_cb)
+        self.page_verified_checkbox.connect('toggled', self.toggled_verified_cb)
 
         indent = Gtk.Alignment()
         indent.set_padding(0, 0, 10, 0)
@@ -78,7 +79,8 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
         vbox.add(self.qid)
         vbox.add(self.valid_checkbox)
-        vbox.add(self.verified_checkbox)
+        vbox.add(self.sheet_verified_checkbox)
+        vbox.add(self.page_verified_checkbox)
         vbox.add(self.empty_checkbox)
 
         self.box.pack_start(indent, False, True, 0)
@@ -102,7 +104,8 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
         self.qid.set_markup(_('<b>Questionnaire ID: </b>') + markup_escape_text(str(self.obj.survey.sheet.questionnaire_id)))
         self.valid_checkbox.set_active(self.obj.survey.sheet.valid)
-        self.verified_checkbox.set_active(self.obj.survey.sheet.verified)
+        self.sheet_verified_checkbox.set_active(self.obj.survey.sheet.verified)
+        self.page_verified_checkbox.set_active(self._current_image.verified)
         self.empty_checkbox.set_active(self.obj.survey.sheet.empty)
 
     def ensure_visible(self, widget):
@@ -119,7 +122,7 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         self.obj.survey.sheet.valid = widget.get_active()
 
     def toggled_verified_cb(self, widget):
-        self.obj.survey.sheet.verified = widget.get_active()
+        self._current_image.verified = widget.get_active()
 
 class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 

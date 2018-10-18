@@ -24,7 +24,7 @@ class Sheet(buddy.Object):
 
     _save_attrs = {'data', 'images', 'survey_id',
                    'questionnaire_id', 'global_id', 'valid',
-                   'quality', 'recognized', 'verified'}
+                   'quality', 'recognized' }
 
     def __init__(self):
         self.survey = None
@@ -37,7 +37,6 @@ class Sheet(buddy.Object):
         self.quality = 1
 
         self.recognized = False
-        self.verified = False
 
     def add_image(self, image):
         self.images.append(image)
@@ -69,6 +68,8 @@ class Sheet(buddy.Object):
             state['data']['^'.join(str(_) for _ in k)] = v
 
     def __setstate__(self, data):
+        self.survey = None
+
         _tmp = data['data']
         data['data'] = dict()
         for k, v in _tmp.items():
@@ -78,8 +79,24 @@ class Sheet(buddy.Object):
             data['images'][k] = db.fromJson(data['images'][k], Image)
             data['images'][k].sheet = self
 
+        # Migrate old "verified" flag
+        if 'verified' in data:
+            for img in data['images']:
+                img.verified = data['verified']
+            del data['verified']
+
         self.__dict__ = data
-        self.survey = None
+
+    @property
+    def verified(self):
+        for img in self.images:
+            if img.ignored:
+                continue
+
+            if not img.verified:
+                return False
+
+        return True
 
     @property
     def empty(self):
@@ -163,6 +180,7 @@ class Image(buddy.Object):
         self.questionnaire_id = None
         #: Whether the page should be ignored (because it is a blank back side)
         self.ignored = False
+        self.verified = False
 
     def __setattr__(self, attr, value):
         if attr.startswith('_'):
