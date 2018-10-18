@@ -41,6 +41,7 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
         self.obj.connect_data_changed(self.data_changed)
 
+        self._current_image = None
         self._notify_ensure_visible = list()
 
     def data_changed(self, questionnaire, qobj, obj, name, old_value):
@@ -90,7 +91,12 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
         return self.box
 
-    def sync_state(self):
+    def sync_state(self, image=None):
+        # This is to keep track of the currently active image.
+        if image:
+            self._current_image = image
+            assert self._current_image in self.obj.survey.sheet.images
+
         for qobject in self.obj.qobjects:
             qobject.widget.sync_state()
 

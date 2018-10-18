@@ -311,7 +311,7 @@ class MainWindow(object):
         self.update_page_status()
         self.sheet.update_state()
 
-        self.provider.survey.questionnaire.widget.sync_state()
+        self.provider.survey.questionnaire.widget.sync_state(self.provider.image)
 
     def go_to_previous_page(self, *args):
         if not self.provider.previous(cycle=False):
