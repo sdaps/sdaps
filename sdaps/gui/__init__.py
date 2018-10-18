@@ -423,10 +423,11 @@ class MainWindow(object):
             # is good.
 
             # Mark as verified
-            self.provider.image.sheet.verified = True
+            self.provider.image.verified = True
 
-            # Mark the sheet as valid
-            self.provider.image.sheet.valid = True
+            # Mark the sheet as valid if it is verified
+            if self.provider.image.sheet.verified:
+                self.provider.image.sheet.valid = True
 
             if event.state & Gdk.ModifierType.SHIFT_MASK:
                 self.go_to_previous_page()
