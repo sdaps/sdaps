@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os.path
+import errno
 import cv2
 import numpy as np
 from sdaps import image
@@ -38,6 +40,9 @@ def iter_images_and_pages(images):
     loading method for those."""
 
     for filename in images:
+        if not os.path.exists(filename):
+            raise IOError(errno.ENOENT, _("File does not exist"), filename)
+
         pages = 1
         is_tiff = False
         is_pdf = False
