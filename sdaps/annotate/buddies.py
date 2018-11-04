@@ -65,7 +65,7 @@ def create_layout(cr, text, layout_info, indent=0):
     # Dont recreate the description all the time?
     font = Pango.FontDescription(layout_info['font'])
     layout.set_font_description(font)
-    layout.set_width(layout_info['twidth'] * Pango.SCALE)
+    layout.set_width((layout_info['twidth'] - 2 * indent) * Pango.SCALE)
     layout.set_wrap(Pango.WrapMode.WORD_CHAR)
 
     layout.indent = indent
