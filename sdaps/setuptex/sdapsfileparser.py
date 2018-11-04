@@ -57,7 +57,23 @@ def parse(survey):
     qobject = None
     auto_numbering_id = (0,)
 
-    for line in sdaps_data.split('\n'):
+    sdaps_data = sdaps_data.split('\n')
+
+    if sdaps_data[0].startswith('['):
+        lines = []
+        for line in sdaps_data:
+            # Ignore empty lines
+            if not line:
+                continue
+            num, line = line.split(']', 1)
+            num = int(num[1:])
+            lines.append((num, line))
+
+        lines.sort(key=lambda x: x[0])
+
+        sdaps_data = [l[1] for l in lines]
+
+    for line in sdaps_data:
         line = line.strip()
         if line == "":
             continue
