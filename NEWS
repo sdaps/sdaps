@@ -1,3 +1,21 @@
+Overview of Changes in SDAPS 1.9.4
+==================================
+
+Important changes:
+ * Ensure box IDs are unique (#142)
+ * Fix variable name handling of the single choice questions (#141)
+ * Make "verified" a property of each image, all images need to be marked as verified
+ * Add support for right to left languages:
+   - Implement RTL switching in LaTeX
+   - Make metadata file line numbered
+   - Fix anotation line length (and indentation for RTL languages)
+   - Rework choicequestion layout
+
+New and updated languages:
+ * Romanian
+ * Sinhala
+ * Spanish
+
 Overview of Changes in SDAPS 1.9.3
 ==================================
 
