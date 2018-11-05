@@ -174,7 +174,7 @@ class sdaps_build(build_extra.build_extra):
     sub_commands = build_extra.build_extra.sub_commands + [('build_tex', lambda x : True)]
 
 setup(name='sdaps',
-      version='1.9.3',
+      version='1.9.4',
       description='Scripts for data acquisition with paper-based surveys',
       url='http://sdaps.sipsolutions.net',
       author='Benjamin Berg, Christoph Simon',
