@@ -20,6 +20,7 @@ BuildRequires: python3-imaging, python3-reportlab, zbar
 BuildRequires: opencv-python3, python3-gobject, poppler-glib
 BuildRequires: python3-setuptools, yum
 BuildRequires: intltool
+BuildRequires: gcc
 
 Recommends: opencv-python3, python3-gobject, poppler-glib, gtk3
 Suggests: libtiff-tools
