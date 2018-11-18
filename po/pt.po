@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-17 17:45+0100\n"
-"PO-Revision-Date: 2014-07-25 20:08+0200\n"
-"Last-Translator: Rodrigo <rodrigo_blu@yahoo.com.br>\n"
+"PO-Revision-Date: 2018-11-19 17:07+0000\n"
+"Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/master/"
 "pt/>\n"
 "Language: pt\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.10-dev\n"
+"X-Generator: Weblate 3.3-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
@@ -37,7 +37,7 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
-"Arquivo de entrada inválido %s. Você precisa especificar uma imagem TIFF "
+"Ficheiro de entrada inválido %s. Você precisa especificar uma imagem TIFF "
 "(multipáginas) monocromática como entrada."
 
 #: ../sdaps/add/__init__.py:67
@@ -196,7 +196,6 @@ msgid "Convert a set of images to the correct image format."
 msgstr "Converte um conjunto de imagens para o formato de imagem correto."
 
 #: ../sdaps/cmdline/convert.py:31
-#, fuzzy
 msgid ""
 "This command can be used if you scanned files in something\n"
 "        other than the expected monochrome TIFF mode. All given files will\n"
@@ -205,9 +204,9 @@ msgid ""
 "may facilitate\n"
 "        working with photos of questionnaires instead of scans."
 msgstr ""
-"Esse comando pode ser usado se você tiver arquivos digitalizados em formato "
+"Esse comando pode ser usado se você tiver ficheiros digitalizados em formato "
 "diferente\n"
-"\tao TIFF monocromático esperado. Todos os arquivos serão carregados,\n"
+"\tao TIFF monocromático esperado. Todos os ficheiros serão carregados,\n"
 "\tconvertidos em monocromático e armazenados em um arquivo TIFF multipágina "
 "de 1bpp.\n"
 "\tOpcionalmente, você pode selecionar que se realize uma transformação 3D,\n"
@@ -225,13 +224,12 @@ msgstr ""
 "        Se as marcas não forem encontradas, a imagem é adicionada como é."
 
 #: ../sdaps/cmdline/convert.py:44
-#, fuzzy
 msgid "The location of the output file."
-msgstr "A localização do arquivo de saída. Deve ser fornecida."
+msgstr "A localização do ficheiro de saída. Deve ser fornecida."
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
-msgstr "Nome do arquivo de saída não especificado!"
+msgstr "Nome do ficheiro de saída não especificado!"
 
 #: ../sdaps/cmdline/cover.py:27
 msgid "Create a cover for the questionnaires."
@@ -248,11 +246,11 @@ msgstr ""
 #: ../sdaps/cmdline/cover.py:31
 #, python-format
 msgid "Filename to store the data to (default: cover_%%i.pdf)"
-msgstr "Nome de arquivo para armazenar os dados (padrão: cover_%%i.pdf)"
+msgstr "Nome de ficheiro para armazenar os dados (padrão: cover_%%i.pdf)"
 
 #: ../sdaps/cmdline/csvdata.py:34
 msgid "Import or export data to/from CSV files."
-msgstr "Importar ou exportar dados de/para arquivos CSV."
+msgstr "Importar ou exportar dados de/para ficheiros CSV."
 
 #: ../sdaps/cmdline/csvdata.py:35
 msgid ""
@@ -263,7 +261,7 @@ msgid ""
 "sheet\n"
 "    which should be updated."
 msgstr ""
-"Importar ou exportar dados de/para um arquivo CSV. A primeira linha\n"
+"Importar ou exportar dados de/para um ficheiro CSV. A primeira linha\n"
 "     é um cabeçalho, que define questionnaire_id, global_id e uma coluna\n"
 "     para cada caixa de verificação e campo de texto. Note que a importação "
 "é\n"
@@ -273,12 +271,12 @@ msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:44
 msgid "Export data to CSV file."
-msgstr "Exportar dados para arquivo CSV."
+msgstr "Exportar dados para ficheiro CSV."
 
 #: ../sdaps/cmdline/csvdata.py:46
-#, fuzzy, python-format
+#, python-format
 msgid "Filename to store the data to (default: data_%%i.csv)"
-msgstr "Nome de arquivo para armazenar os dados (padrão: ids_%%i)"
+msgstr "Nome de ficheiro para armazenar os dados (padrão: ids_%%i)"
 
 #: ../sdaps/cmdline/csvdata.py:48
 msgid "The delimiter used in the CSV file (default ',')"
@@ -305,11 +303,11 @@ msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:74
 msgid "Import data to from a CSV file."
-msgstr "Importar dados de um arquivo CSV."
+msgstr "Importar dados de um ficheiro CSV."
 
 #: ../sdaps/cmdline/csvdata.py:76
 msgid "The file to import."
-msgstr "O arquivo a ser importado."
+msgstr "O ficheiro a ser importado."
 
 #: ../sdaps/cmdline/gui.py:28
 #, fuzzy
@@ -350,16 +348,16 @@ msgstr ""
 "Esse comando pode ser usado para importar e exportar IDs de questionário.\n"
 "     Ele só faz sentido em projetos onde tal identificação é impressa no\n"
 "     questionário. Note que você também pode adicionar IDs usando o comando\n"
-"     \"stamp\", que também lhe dará o arquivo PDF."
+"     \"stamp\", que também lhe dará o ficheiro PDF."
 
 #: ../sdaps/cmdline/ids.py:35
 #, python-format
 msgid "Filename to store the data to (default: ids_%%i)"
-msgstr "Nome de arquivo para armazenar os dados (padrão: ids_%%i)"
+msgstr "Nome de ficheiro para armazenar os dados (padrão: ids_%%i)"
 
 #: ../sdaps/cmdline/ids.py:38
 msgid "Add IDs to the internal list from the specified file."
-msgstr "Adicionar IDs à lista interna do arquivo especificado."
+msgstr "Adicionar IDs à lista interna do ficheiro especificado."
 
 #: ../sdaps/cmdline/info.py:28
 msgid "Display and modify metadata of project."
@@ -490,7 +488,7 @@ msgstr ""
 #: ../sdaps/cmdline/report.py:61 ../sdaps/cmdline/reporttex.py:49
 #, python-format
 msgid "Filename to store the data to (default: report_%%i.pdf)"
-msgstr "Nome de arquivo para armazenar os dados (padrão: report_%%i.pdf)"
+msgstr "Nome de ficheiro para armazenar os dados (padrão: report_%%i.pdf)"
 
 #: ../sdaps/cmdline/reporttex.py:26
 msgid "Create a PDF report using LaTeX."
@@ -577,7 +575,7 @@ msgid ""
 "specified file."
 msgstr ""
 "Se estiver usando IDs de questionário, cria questionários com os IDs lidos "
-"do arquivo especificado."
+"do ficheiro especificado."
 
 #: ../sdaps/cmdline/stamp.py:39
 msgid "If using questionnaire IDs, create questionnaires for all stored IDs."
@@ -588,7 +586,7 @@ msgstr ""
 #: ../sdaps/cmdline/stamp.py:42
 #, python-format
 msgid "Filename to store the data to (default: stamp_%%i.pdf)"
-msgstr "Nome de arquivo para armazenar os dados (padrão: stamp_%%i.pdf)"
+msgstr "Nome de ficheiro para armazenar os dados (padrão: stamp_%%i.pdf)"
 
 #: ../sdaps/convert/__init__.py:37
 #, python-format
@@ -817,7 +815,7 @@ msgstr ""
 #, python-format
 msgid "Running upgrade routines for file format version %i"
 msgstr ""
-"Executando rotinas de atualização para a versão de formato de arquivo %i"
+"Executando rotinas de atualização para a versão de formato de ficheiro %i"
 
 #. in simplex mode every page will have a matrix; it might be a None
 #. matrix though
@@ -1046,7 +1044,7 @@ msgstr "Executando %s duas vezes para gerar o questionário estampado."
 #: ../sdaps/setuptex/__init__.py:147 ../sdaps/reporttex/__init__.py:162
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
-msgstr "Erro executando \"%s\" para compilar o arquivo LaTeX."
+msgstr "Erro executando \"%s\" para compilar o ficheiro LaTeX."
 
 #: ../sdaps/stamp/latex.py:36
 #, python-format
@@ -1064,8 +1062,8 @@ msgstr "O diretório da pesquisa já existe."
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
 msgstr ""
-"Tipo de arquivo desconhecido (%s). O questionnaire_tex deve ser do tipo text/"
-"x-tex."
+"Tipo de ficheiro desconhecido (%s). O questionnaire_tex deve ser do tipo "
+"text/x-tex."
 
 #: ../sdaps/setuptex/__init__.py:52
 msgid "Will keep going, but expect failure!"
@@ -1075,7 +1073,7 @@ msgstr "Vai continuar, mas espere por falhas!"
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain."
 msgstr ""
-"Tipo de arquivo desconhecido (%s). O additionalqobjects deve ser do tipo "
+"Tipo de ficheiro desconhecido (%s). O additionalqobjects deve ser do tipo "
 "text/plain."
 
 #: ../sdaps/setuptex/__init__.py:102 ../sdaps/setuptex/__init__.py:142
@@ -1085,7 +1083,7 @@ msgstr "Executando %s duas vezes para gerar o questionário."
 
 #: ../sdaps/setuptex/__init__.py:121
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
-msgstr "Houve uma exceção ao analisar o arquivo SDAPS. O estado atual é:"
+msgstr "Houve uma exceção ao analisar o ficheiro SDAPS. O estado atual é:"
 
 #: ../sdaps/setuptex/__init__.py:135
 msgid ""
@@ -1102,7 +1100,7 @@ msgid ""
 "errors."
 msgstr ""
 "Ocorreu um erro na rotina de instalação. O diretório de pesquisa ainda "
-"existe. Você pode ver o arquivo questionnaire.log para verificar erros de "
+"existe. Você pode ver o ficheiro questionnaire.log para verificar erros de "
 "compilação do LaTeX."
 
 #: ../sdaps/reporttex/__init__.py:107
