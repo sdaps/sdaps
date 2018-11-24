@@ -59,8 +59,15 @@ def unicode_to_latex(string):
     for char, replacement in unicode_to_latex_mapping.items():
         string = string.replace(char, replacement)
 
-    # Ensure only ASCII characters are left
-    return string.encode('ascii').decode('ascii')
+    # The returned string may still contain unicode characters if
+    # the user is using xelatex. But in that case, the remapping is not
+    # needed anyway.
+    # However, it could also mean that the mapping needs to be updated.
+    try:
+        string.encode('ascii')
+    except UnicodeEncodeError:
+        log.warn(_("Generated string for LaTeX contains unicode characters. This may not work correctly and could mean the LaTeX character map needs to be updated."))
+    return string
 
 def quote_braces(string):
     return string.replace('{', '\\{').replace('}', '\\}')
