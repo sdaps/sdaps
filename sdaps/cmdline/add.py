@@ -27,7 +27,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("add",
+parser = script.add_project_subparser("add",
     help=_("Add scanned questionnaires to the survey."),
     description=_("""This command is used to add scanned images to the survey.
     The image data needs to be a (multipage) 300dpi monochrome TIFF file. You

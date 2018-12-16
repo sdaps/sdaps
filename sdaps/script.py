@@ -42,10 +42,15 @@ description = _("SDAPS -- Paper based survey tool.")
 epilog = None
 parser = argparse.ArgumentParser(description=description, epilog=epilog, prog=prog)
 
-parser.add_argument('project', type=str, help=_("project directory|The SDAPS project."))
 subparsers = parser.add_subparsers(help=_("command list|Commands:"))
-                    
-                    
+
+def add_project_subparser(*args, **kwargs):
+    parser = subparsers.add_parser(*args, **kwargs)
+
+    parser.add_argument('project', type=str, help=_("project directory|The SDAPS project."))
+
+    return parser
+
 def doc(docstring):
     '''decorator to add a docstring to a function.
 

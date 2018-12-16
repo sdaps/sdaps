@@ -24,24 +24,25 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("info",
+parser = script.add_project_subparser("info",
     help=_("Display and modify metadata of project."),
     description=_("""This command lets you modify the metadata of the SDAPS
     project. You can modify, add and remove arbitrary keys that will be printed
     on the report. The only key that always exist is "title".
     If no key is given then a list of defined keys is printed."""))
 
+parser.add_argument('-d', '--delete',
+    action="store_true",
+    help=_("Delete the key and value pair."))
+
 parser.add_argument('key',
     nargs="?",
     help=_("The key to display or modify."))
 
-parser.add_argument('-s', '--set',
-    metavar="VALUE",
+parser.add_argument('value',
+    nargs="?",
     help=_("Set the given key to this value."))
 
-parser.add_argument('-d', '--delete',
-    action="store_true",
-    help=_("Delete the key and value pair."))
 
 
 @script.connect(parser)
@@ -51,8 +52,8 @@ def info(cmdline):
 
     if cmdline['key']:
         key = cmdline['key'].strip()
-        if cmdline['set']:
-            value = cmdline['set'].strip()
+        if cmdline['value']:
+            value = cmdline['value'].strip()
             if key == "title":
                 survey.title = value
             else:

@@ -24,7 +24,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("annotate",
+parser = script.add_project_subparser("annotate",
     help=_("Annotate the questionnaire and show the recognized positions."),
     description=_("""This command is mainly a debug utility. It creates an
     annotated version of the questionnaire, with the information that SDAPS

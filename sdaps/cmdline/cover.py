@@ -23,7 +23,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("cover",
+parser = script.add_project_subparser("cover",
     help=_("Create a cover for the questionnaires."),
     description=_("""This command creates a cover page for questionnaires. All
     the metadata of the survey will be printed on the page."""))

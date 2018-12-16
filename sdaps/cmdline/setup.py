@@ -23,7 +23,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("setup", aliases=["setup_tex"],
+parser = script.add_project_subparser("setup",
     help=_("Create a new survey using a LaTeX document."),
     description=_("""Create a new survey from a LaTeX document. You need to
     be using the SDAPS class. All the metadata and options for the project

@@ -27,37 +27,37 @@ fi
 # Remove project dir that may exist
 rm -rf "$PROJECT"
 
-"$SDAPS" "$PROJECT" setup "data/tex/questionnaire_with_ids.tex"
+"$SDAPS" setup "$PROJECT" "data/tex/questionnaire_with_ids.tex"
 
 # Create a cover page in projects/test/cover.pdf
-"$SDAPS" "$PROJECT" cover
+"$SDAPS" cover "$PROJECT"
 
 # Create sheets with some given IDs
-"$SDAPS" "$PROJECT" stamp -f "data/tex/code128_test_ids"
-"$SDAPS" "$PROJECT" ids -o "$PROJECT/ids"
+"$SDAPS" stamp "$PROJECT" -f "data/tex/code128_test_ids"
+"$SDAPS" ids "$PROJECT" -o "$PROJECT/ids"
 diff "data/tex/code128_test_ids" "$PROJECT/ids"
 
 
 
 # Add original PDF and convert
-"$SDAPS" "$PROJECT" add --convert "$PROJECT/stamped_1.pdf"
+"$SDAPS" add "$PROJECT" --convert "$PROJECT/stamped_1.pdf"
 
 # Recognize the empty pages (ie. the barcodes)
-"$SDAPS" "$PROJECT" recognize
+"$SDAPS" recognize "$PROJECT"
 
 # Import some data
-"$SDAPS" "$PROJECT" csv import data/tex/ids_test_import.csv
+"$SDAPS" csv "$PROJECT" import data/tex/ids_test_import.csv
 # Export data again
-"$SDAPS" "$PROJECT" csv export
+"$SDAPS" csv "$PROJECT" export
 # And compare with expected result
 diff -qup data/tex/ids_test_export.csv "$PROJECT/data_1.csv"
 
 # Export all the other extra data
-"$SDAPS" "$PROJECT" csv export --images --question-images --quality
+"$SDAPS" csv "$PROJECT" export --images --question-images --quality
 
 # And finally, create a report with the fake result, both with tex and reportlab
-"$SDAPS" "$PROJECT" report
-"$SDAPS" "$PROJECT" report_tex
+"$SDAPS" report "$PROJECT"
+"$SDAPS" report_tex "$PROJECT"
 
 ###########################################################
 # Test Tex with IDs (classic mode)
@@ -73,10 +73,10 @@ fi
 # Remove project dir that may exist
 rm -rf "$PROJECT"
 
-"$SDAPS" "$PROJECT" setup "data/tex/questionnaire_classic.tex"
+"$SDAPS" setup "$PROJECT" "data/tex/questionnaire_classic.tex"
 
 # Create 10 unique sheets that can be printed and handed out
-"$SDAPS" "$PROJECT" stamp --random 10
+"$SDAPS" stamp "$PROJECT" --random 10
 
 ###########################################################
 # Test Tex without IDs
@@ -92,26 +92,26 @@ fi
 # Remove project dir that may exist
 rm -rf "$PROJECT"
 
-"$SDAPS" "$PROJECT" setup "data/tex/questionnaire_without_ids.tex"
+"$SDAPS" setup "$PROJECT" "data/tex/questionnaire_without_ids.tex"
 
 # Create a cover page in projects/test/cover.pdf
-"$SDAPS" "$PROJECT" cover
+"$SDAPS" cover "$PROJECT"
 
 # Run stamp, not neccessary
-"$SDAPS" "$PROJECT" stamp
+"$SDAPS" stamp "$PROJECT"
 
 # Dump some infos
-"$SDAPS" "$PROJECT" info
-"$SDAPS" "$PROJECT" info title
-"$SDAPS" "$PROJECT" info --set title "asdf"
+"$SDAPS" info "$PROJECT"
+"$SDAPS" info "$PROJECT" title
+"$SDAPS" info "$PROJECT" title "asdf"
 
 # Add and recognize test data
-#"$SDAPS" "$PROJECT" add "data/tex/test_without_ids.tif"
-#"$SDAPS" "$PROJECT" recognize
+#"$SDAPS" add "$PROJECT" "data/tex/test_without_ids.tif"
+#"$SDAPS" recognize "$PROJECT"
 
 
 # And finally, create a report with the result
-#"$SDAPS" "$PROJECT" report_tex
+#"$SDAPS" report_tex "$PROJECT"
 
 
 ###########################################################

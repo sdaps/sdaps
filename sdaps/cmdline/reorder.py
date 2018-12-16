@@ -22,7 +22,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("reorder",
+parser = script.add_project_subparser("reorder",
     help=_("Reorder pages according to questionnaire ID."),
     description=_("""This command reorders all pages according to the already
     recognized questionnaire ID. To use it add all the files to the project,

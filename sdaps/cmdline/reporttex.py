@@ -22,7 +22,7 @@ from sdaps import script
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.subparsers.add_parser("report_tex",
+parser = script.add_project_subparser("report_tex",
     help=_("Create a PDF report using LaTeX."),
     description=_("""This command creates a PDF report using LaTeX that
     contains statistics and freeform fields."""))

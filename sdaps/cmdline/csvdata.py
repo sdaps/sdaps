@@ -30,7 +30,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("csv",
+parser = script.add_project_subparser("csv",
     help=_("Import or export data to/from CSV files."),
     description=_("""Import or export data to/from a CSV file. The first line
     is a header which defines questionnaire_id and global_id, and a column

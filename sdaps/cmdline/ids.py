@@ -25,7 +25,7 @@ import sys
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.subparsers.add_parser("ids",
+parser = script.add_project_subparser("ids",
     help=_("Export and import questionnaire IDs."),
     description=_("""This command can be used to import and export questionnaire
     IDs. It only makes sense in projects where such an ID is printed on the

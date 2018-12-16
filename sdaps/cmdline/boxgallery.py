@@ -27,7 +27,7 @@ from sdaps import script
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.subparsers.add_parser("boxgallery",
+parser = script.add_project_subparser("boxgallery",
     help=_("Create PDFs with boxes sorted by the detection heuristics."),
     description=_("""SDAPS uses multiple heuristics to detect determine the
     state of checkboxes. There is a list for each heuristic giving the expected

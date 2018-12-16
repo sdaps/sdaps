@@ -24,7 +24,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("recognize",
+parser = script.add_project_subparser("recognize",
     help=_("Run the optical mark recognition."),
     description=_("""Iterates over all images and runs the optical mark
     recognition. It will reevaluate sheets even if "recognize" has already

@@ -22,7 +22,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("reset",
+parser = script.add_project_subparser("reset",
     help=_("Reset project into original state"),
     description=_("""This command does a full reset of the project. All data
     will be discarded and only the empty project is left.

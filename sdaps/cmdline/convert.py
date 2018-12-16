@@ -26,7 +26,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("convert",
+parser = script.add_project_subparser("convert",
     help=_("Convert a set of images to the correct image format."),
     description=_("""This command can be used if you scanned files in something
         other than the expected monochrome TIFF mode. All given files will

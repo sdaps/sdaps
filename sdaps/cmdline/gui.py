@@ -24,7 +24,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.subparsers.add_parser("gui",
+parser = script.add_project_subparser("gui",
     help=_("Launch a GUI. You can view and alter the (recognized) answers with it."),
     description=_("""This command launches a graphical user interface that can
     be used to correct answers. You need to run "recognize" before using it.

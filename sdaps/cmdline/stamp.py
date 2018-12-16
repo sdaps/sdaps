@@ -22,7 +22,7 @@ from sdaps import script
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.subparsers.add_parser("stamp",
+parser = script.add_project_subparser("stamp",
     help=_("Add marks for automatic processing."),
     description=_("""This command creates the printable document. Depending on
     the projects setting you are required to specifiy a source for questionnaire
