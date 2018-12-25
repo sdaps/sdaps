@@ -3,20 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-16 17:00+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2018-12-26 14:09+0000\n"
+"Last-Translator: Hyunmin Kim (Brandon) <hmkim@live.co.kr>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/sdaps/master/ko/>"
+"\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.4-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
@@ -24,18 +25,18 @@ msgstr ""
 
 #: ../sdaps/script.py:45
 msgid "command list|Commands:"
-msgstr ""
+msgstr "명령어 항목|명령어들:"
 
 #: ../sdaps/script.py:50
 msgid "project directory|The SDAPS project."
-msgstr ""
+msgstr "프로젝트 경로|새로운 프로젝트."
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
 msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
-msgstr ""
+msgstr "%s 는 유효하지 않은 입력 파일입니다. 입력 파일로써 monochrome TIFF 형식만 가능합니다."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
@@ -51,15 +52,15 @@ msgstr ""
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
-msgstr ""
+msgstr "경고: "
 
 #: ../sdaps/log.py:41
 msgid "Error: "
-msgstr ""
+msgstr "오류: "
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
-msgstr ""
+msgstr "설문 조사를 위해 스캔된 설문 항목을 추가해주세요."
 
 #: ../sdaps/cmdline/add.py:32
 msgid ""
@@ -73,13 +74,15 @@ msgstr ""
 
 #: ../sdaps/cmdline/add.py:38
 msgid "Convert given files and add the result."
-msgstr ""
+msgstr "입력 파일들을 변환하고 그 결과를 추가합니다."
 
 #: ../sdaps/cmdline/add.py:43
 msgid ""
 "Do a 3D-transformation after finding the corner marks. If the\n"
 "        corner marks are not found then the image will be added as-is."
 msgstr ""
+"모서리 표시 위치를 찾은 뒤 3D-변환을 거칩니다. 만일에 그\n"
+"모서리 표시가 발견되지 않으면 이미지가 as-is로 추가될 것입니다."
 
 #: ../sdaps/cmdline/add.py:49
 msgid ""
@@ -89,21 +92,21 @@ msgstr ""
 
 #: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
-msgstr ""
+msgstr "경로에 파일들을 복사합니다 (기본값)."
 
 #: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
-msgstr ""
+msgstr "경로에 파일들을 복사하지 마세요."
 
 #: ../sdaps/cmdline/add.py:62
 msgid ""
 "Images contain a duplex scan of a simplex questionnaire (default: simplex "
 "scan)."
-msgstr ""
+msgstr "간단한 설문조사의 duplex 스캔을 포함하는 이미지들 (기본값: simplex 스캔)."
 
 #: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:48
 msgid "A number of TIFF image files."
-msgstr ""
+msgstr "수많은 TIFF 이미지 파일들."
 
 #: ../sdaps/cmdline/add.py:94
 msgid "The --no-copy option is not compatible with --convert!"
@@ -120,16 +123,16 @@ msgstr ""
 
 #: ../sdaps/cmdline/add.py:120
 msgid "Running the conversion failed."
-msgstr ""
+msgstr "변환 작업이 실패했습니다."
 
 #: ../sdaps/cmdline/add.py:126
 #, python-format
 msgid "Processing %s"
-msgstr ""
+msgstr "진행중 %s"
 
 #: ../sdaps/cmdline/add.py:130 ../sdaps/reset/__init__.py:33
 msgid "Done"
-msgstr ""
+msgstr "완료"
 
 #: ../sdaps/cmdline/annotate.py:28
 msgid "Annotate the questionnaire and show the recognized positions."
@@ -165,7 +168,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/convert.py:30
 msgid "Convert a set of images to the correct image format."
-msgstr ""
+msgstr "이미지 집합을 알맞는 이미지 형식으로 변환합니다."
 
 #: ../sdaps/cmdline/convert.py:31
 msgid ""
@@ -185,15 +188,15 @@ msgstr ""
 
 #: ../sdaps/cmdline/convert.py:44
 msgid "The location of the output file."
-msgstr ""
+msgstr "결과 파일의 위치."
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
-msgstr ""
+msgstr "결과 파일명이 지정되지 않았습니다!"
 
 #: ../sdaps/cmdline/cover.py:27
 msgid "Create a cover for the questionnaires."
-msgstr ""
+msgstr "설문조사에 대한 커버를 만드세요."
 
 #: ../sdaps/cmdline/cover.py:28
 msgid ""
@@ -222,7 +225,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:44
 msgid "Export data to CSV file."
-msgstr ""
+msgstr "CSV 파일로 데이터를 출력합니다."
 
 #: ../sdaps/cmdline/csvdata.py:46
 #, python-format
