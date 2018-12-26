@@ -3,32 +3,32 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:10+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2018-12-27 20:09+0000\n"
+"Last-Translator: Serge Stroobandt <serge@stroobandt.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/sdaps/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.4-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
-msgstr ""
+msgstr "SDAPS -- Hulpmiddel voor bevragingen op papier."
 
 #: ../sdaps/script.py:45
 msgid "command list|Commands:"
-msgstr ""
+msgstr "commandolijst|Commando's:"
 
 #: ../sdaps/script.py:50
 msgid "project directory|The SDAPS project."
-msgstr ""
+msgstr "projectfolder|Het SDAPS-project."
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
@@ -36,6 +36,8 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
+"Ongeldig invoerbestand %s. Gelieve een monochrome TIFF (van meerdere "
+"pagina's) als invoer op te geven."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
@@ -43,23 +45,25 @@ msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
 "%i)."
 msgstr ""
+"%1 werd niet toegevoegd, omdat het paginatotaal niet klopt (dit dient een "
+"meervoud te zijn van %i)."
 
 #: ../sdaps/boxgallery/__init__.py:108
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
-msgstr ""
+msgstr "Opmaak van vakjesgalerij voor meetwaarde \"%s\"."
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
-msgstr ""
+msgstr "Waarschuwing: "
 
 #: ../sdaps/log.py:41
 msgid "Error: "
-msgstr ""
+msgstr "Foutmelding: "
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
-msgstr ""
+msgstr "Ingescande vragenlijsten toevoegen aan de bevraging."
 
 #: ../sdaps/cmdline/add.py:32
 msgid ""
@@ -70,70 +74,85 @@ msgid ""
 "case\n"
 "    the data will be referenced using a relative path."
 msgstr ""
+"Dit commando wordt benut om ingescande afbeeldingen aan de bevraging toe te "
+"voegen.\n"
+"   De afbeelding dient een 300dpi monochroom TIFF-bestand (van meerdere "
+"pagina's) te zijn.\n"
+"   Men kan verkiezen van de data niet in de projectfolder te kopiëren.\n"
+"   In dat geval, zal naar de data worden gerefereerd met een relatief pad."
 
 #: ../sdaps/cmdline/add.py:38
 msgid "Convert given files and add the result."
-msgstr ""
+msgstr "Converteer de gegeven bestanden en voeg het resultaat toe."
 
 #: ../sdaps/cmdline/add.py:43
 msgid ""
 "Do a 3D-transformation after finding the corner marks. If the\n"
 "        corner marks are not found then the image will be added as-is."
 msgstr ""
+"Voer een 3D-transofrmatie uit na het vinden van de hoekmarkeringen. \n"
+"        De afbeelding wordt ongewijzigd opgenomen indien de hoekmarkeringen "
+"niet werden gevonden."
 
 #: ../sdaps/cmdline/add.py:49
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
 msgstr ""
+"Forceer het toevoegen van de afbeeldingen, zelfs als het paginatotaal niet "
+"klopt (enkel gebruiken wanneer men weet wat men doet)."
 
 #: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
-msgstr ""
+msgstr "Kopieer de bestanden in de folder (standaard)."
 
 #: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
-msgstr ""
+msgstr "Kopieer de bestanden niet in de folder."
 
 #: ../sdaps/cmdline/add.py:62
 msgid ""
 "Images contain a duplex scan of a simplex questionnaire (default: simplex "
 "scan)."
 msgstr ""
+"De afbeeldingen bevatten een tweezijdige scan van een enkelzijdige "
+"vragenlijst (standaard: enkelzijdige scan)."
 
 #: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:48
 msgid "A number of TIFF image files."
-msgstr ""
+msgstr "Één of meerdere TIFF-bestanden."
 
 #: ../sdaps/cmdline/add.py:94
 msgid "The --no-copy option is not compatible with --convert!"
-msgstr ""
+msgstr "De --no-copy optie is niet verenigbaar met --convert!"
 
 #: ../sdaps/cmdline/add.py:103
 msgid "Converting input files into a single temporary file."
-msgstr ""
+msgstr "De invoerbestanden worden naar één enkel tijdelijk bestand omgezet."
 
 #: ../sdaps/cmdline/add.py:115
 msgid ""
 "The page count of the created temporary file does not work with this survey."
 msgstr ""
+"Het paginatotaal van het aangemaakt tijdelijk bestand past niet bij deze "
+"bevraging."
 
 #: ../sdaps/cmdline/add.py:120
 msgid "Running the conversion failed."
-msgstr ""
+msgstr "Het omzetten liep fout."
 
 #: ../sdaps/cmdline/add.py:126
 #, python-format
 msgid "Processing %s"
-msgstr ""
+msgstr "%s wordt verwerkt"
 
 #: ../sdaps/cmdline/add.py:130 ../sdaps/reset/__init__.py:33
 msgid "Done"
-msgstr ""
+msgstr "Klaar"
 
 #: ../sdaps/cmdline/annotate.py:28
 msgid "Annotate the questionnaire and show the recognized positions."
-msgstr ""
+msgstr "Markeer de vragenlijst en toon de herkende posities."
 
 #: ../sdaps/cmdline/annotate.py:29
 msgid ""
@@ -141,10 +160,14 @@ msgid ""
 "    annotated version of the questionnaire, with the information that SDAPS\n"
 "    knows about it overlayed on top."
 msgstr ""
+"Dit commando is hoofdzakelijk een hulpmiddel om fouten op te sporen.\n"
+"    Het maakt een versie van de vragenlijst aan, waarbij die wordt "
+"overschreven\n"
+"    met de door SDAPS herkende informatie."
 
 #: ../sdaps/cmdline/boxgallery.py:31
 msgid "Create PDFs with boxes sorted by the detection heuristics."
-msgstr ""
+msgstr "Maak PDF's met vakjes gesorteerd naar de detectieheuristiek."
 
 #: ../sdaps/cmdline/boxgallery.py:32
 msgid ""
@@ -156,16 +179,24 @@ msgid ""
 "    will be created for each of the heuristics so that one can adjust the\n"
 "    values."
 msgstr ""
+"SDAPS gebruikt meervoudige heuristieken om de toestand van de aanvinkvakjes "
+"te bepalen.\n"
+"    Voor elke heuristiek wordt de verwachte toestand en de kwaliteit van de "
+"waarde in een lijst opgenomen (zie defs.py).\n"
+"    Met behulp van dit commando wordt voor elk van de heuristieken een PDF "
+"aangemaakt om de waarden te kunnen aanpassen."
 
 #: ../sdaps/cmdline/boxgallery.py:40
 msgid ""
 "Reruns part of the recognition process and retrieves debug images from this "
 "step."
 msgstr ""
+"Voert het herkenningsproces gedeeltelijk opnieuw uit, waarbij afbeeldingen "
+"worden gemaakt voor foutdiagnose."
 
 #: ../sdaps/cmdline/convert.py:30
 msgid "Convert a set of images to the correct image format."
-msgstr ""
+msgstr "Converteer een groep afbeeldingen naar het correcte afbeeldingsformaat."
 
 #: ../sdaps/cmdline/convert.py:31
 msgid ""
@@ -176,39 +207,50 @@ msgid ""
 "may facilitate\n"
 "        working with photos of questionnaires instead of scans."
 msgstr ""
+"Dit commando kan worden gebruikt wanneer de bestanden in een ander formaat "
+"werden gescand dan het verwachte monochroom TIFF-formaat.\n"
+"        Alle betreffende bestanden zullen worden geladen, omgezet naar "
+"monochroom en bewaard in een 1bpp TIFF-bestand van meerdere pagina's.\n"
+"        Optioneel kan men ook \"3D-transformatie* selecteren, wat het werken "
+"met foto's in plaats van scans van vragenlijsten eenvoudiger maakt."
 
 #: ../sdaps/cmdline/convert.py:38
 msgid ""
 "Do a 3D-transformation after finding the corner marks.\n"
 "    If they are not found, the image will be processed as-is."
 msgstr ""
+"Voer een 3D-transformatie uit na het vinden van de hoekmarkeringen.\n"
+"    Indien deze niet worden gevonden, wordt de afbeelding ongewijzigd "
+"verwerkt."
 
 #: ../sdaps/cmdline/convert.py:44
 msgid "The location of the output file."
-msgstr ""
+msgstr "De locatie van het uitvoerbestand."
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
-msgstr ""
+msgstr "Er werd geen bestandsnaam voor de uitvoer opgegeven!"
 
 #: ../sdaps/cmdline/cover.py:27
 msgid "Create a cover for the questionnaires."
-msgstr ""
+msgstr "Maak een voorblad voor de vragenlijsten aan."
 
 #: ../sdaps/cmdline/cover.py:28
 msgid ""
 "This command creates a cover page for questionnaires. All\n"
 "    the metadata of the survey will be printed on the page."
 msgstr ""
+"Dit commando maakt een voorblad voor de vragenlijsten.\n"
+"    Het voorblad bevat alle metadata van de bevraging."
 
 #: ../sdaps/cmdline/cover.py:31
 #, python-format
 msgid "Filename to store the data to (default: cover_%%i.pdf)"
-msgstr ""
+msgstr "Bestandsnaam voor het opslaan van de data (standaard: cover_%%i.pdf)"
 
 #: ../sdaps/cmdline/csvdata.py:34
 msgid "Import or export data to/from CSV files."
-msgstr ""
+msgstr "Importeer of exporteer data naar/van CSV-bestanden."
 
 #: ../sdaps/cmdline/csvdata.py:35
 msgid ""
@@ -219,48 +261,58 @@ msgid ""
 "sheet\n"
 "    which should be updated."
 msgstr ""
+"Importeer of exporteer data van/naar een CSV-bestand. Hierbij is  de eerste "
+"lijn\n"
+"    een kopregel met questionnaire_id, global_id evenals een dubbelpunt \n"
+"    voor elk aanvinkvakje en tekstveld. De importfunctie werkt momenteel "
+"slechts\n"
+"    gedeeltelijk; men dient de vragenlijst-ID op te geven om het blad te "
+"selecteren\n"
+"    dat dient te worden geactualiseerd."
 
 #: ../sdaps/cmdline/csvdata.py:44
 msgid "Export data to CSV file."
-msgstr ""
+msgstr "Data in CSV-formaat exporteren."
 
 #: ../sdaps/cmdline/csvdata.py:46
 #, python-format
 msgid "Filename to store the data to (default: data_%%i.csv)"
-msgstr ""
+msgstr "Bestandsnaam voor het opslaan in CSV-formaat (standaard: data_%%i.csv)"
 
 #: ../sdaps/cmdline/csvdata.py:48
 msgid "The delimiter used in the CSV file (default ',')"
-msgstr ""
+msgstr "Scheidingsteken voor gebruik in het CSV-bestand (standaard ',')"
 
 #: ../sdaps/cmdline/csvdata.py:52 ../sdaps/cmdline/report.py:31
 #: ../sdaps/cmdline/reporttex.py:52
 msgid "Filter to only export a partial dataset."
-msgstr ""
+msgstr "Filter om enkel een gedeelte van de data te exporteren."
 
 #: ../sdaps/cmdline/csvdata.py:54
 msgid "Export images of freeform fields."
-msgstr ""
+msgstr "Exporteer de afbeeldingen van vrije tekstvelden."
 
 #: ../sdaps/cmdline/csvdata.py:60
 msgid "Export an image for each question that includes all boxes."
-msgstr ""
+msgstr "Exporteer een afbeelding van elke vraag met alle vakjes."
 
 #: ../sdaps/cmdline/csvdata.py:66
 msgid "Export the recognition quality for each checkbox."
-msgstr ""
+msgstr "Exporteer de herkenningskwaliteit van elk vakje."
 
 #: ../sdaps/cmdline/csvdata.py:74
 msgid "Import data to from a CSV file."
-msgstr ""
+msgstr "Importeer data uit een CSV-bestand."
 
 #: ../sdaps/cmdline/csvdata.py:76
 msgid "The file to import."
-msgstr ""
+msgstr "Het te importeren bestand."
 
 #: ../sdaps/cmdline/gui.py:28
 msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
 msgstr ""
+"Start een grafische omgeving. De (herkende) antwoorden kunnen ermee worden "
+"bekeken of gewijzigd."
 
 #: ../sdaps/cmdline/gui.py:29
 msgid ""
@@ -269,14 +321,18 @@ msgid ""
 "it.\n"
 "    "
 msgstr ""
+"Dit commando start een grafische gebruiksomgeving dat\n"
+"    men kan aanwenden voor het verbeteren van antwoorden.\n"
+"    Voor gebruik dient men eerst \"herken\" uit te voeren.\n"
+"    "
 
 #: ../sdaps/cmdline/gui.py:34
 msgid "Filter to only show a partial dataset."
-msgstr ""
+msgstr "Filter om enkel een gedeelte van de data te zien."
 
 #: ../sdaps/cmdline/ids.py:29
 msgid "Export and import questionnaire IDs."
-msgstr ""
+msgstr "Exporteer en importeer vragenlijst-ID's."
 
 #: ../sdaps/cmdline/ids.py:30
 msgid ""
