@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-16 18:30+0100\n"
+"POT-Creation-Date: 2018-12-26 19:09+0100\n"
 "PO-Revision-Date: 2018-10-04 13:52+0000\n"
 "Last-Translator: vgheo <vlad.gheorghe@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/sdaps/tex/ro/>\n"
@@ -41,46 +41,59 @@ msgstr "ID-Chestionar:"
 
 #. Default instructions on the questionnaire
 #: ../tex_translations.in.h:10
+#, fuzzy
 msgid ""
-"This questionnaire is automatically read by a computer program. Please use a "
-"pen for filling in your answers."
+"This questionnaire is evaluated automatically. Please use a pen to fill in "
+"your answers as follows:"
 msgstr ""
 "Acest chestionar va fi citit automat de un program de calculator. Vă rugăm "
 "să folosiți un pix sau un stilou pentru a completa răspunsurile."
 
-#. Instruction on the questionnaire: Description of a crossed checkbox
+#. Instruction on the questionnaire: Next to checked textbox
 #: ../tex_translations.in.h:12
-msgid "Check"
-msgstr "Bifat"
+msgid "Selected"
+msgstr ""
 
-#. Instruction on the questionnaire: Description of a crossed and filled checkbox
+#. Instruction on the questionnaire: Next to filled checkbox
 #: ../tex_translations.in.h:14
-msgid "Uncheck to correct"
-msgstr "De-bifat pentru a corecta"
+msgid "Fill to select"
+msgstr ""
+
+#. Instruction on the questionnaire: Next to filled and checked checkbox
+#: ../tex_translations.in.h:16
+msgid "Undo select"
+msgstr ""
 
 #. Instruction on the questionnaire: Multiple choice question
-#: ../tex_translations.in.h:16
-msgid "You can check any number of boxes in selection questions."
-msgstr "La întrebările cu selecție puteți bifa orice număr de căsuțe."
-
-#. Instruction on the questionnaire: Mark/range question.
 #: ../tex_translations.in.h:18
-msgid ""
-"For questions with a range (1--\\arabic{markcheckboxcount}) mark the answer "
-"that fits best."
+msgid "Multiple-choice (select all applicable options)"
+msgstr ""
+
+#. Instruction on the questionnaire: Single choice question
+#: ../tex_translations.in.h:20
+msgid "Single-choice (select only one option)"
 msgstr ""
 
 #. LaTeX based report: Label for the number of people that answered
-#: ../tex_translations.in.h:20
+#: ../tex_translations.in.h:22
 msgid "Answers"
 msgstr ""
 
 #. LaTeX based report: The calculated mean value
-#: ../tex_translations.in.h:22
+#: ../tex_translations.in.h:24
 msgid "Mean"
 msgstr ""
 
 #. LaTeX based report: The standard deviation
-#: ../tex_translations.in.h:24
+#: ../tex_translations.in.h:26
 msgid "Standard-Deviation"
 msgstr ""
+
+#~ msgid "Check"
+#~ msgstr "Bifat"
+
+#~ msgid "Uncheck to correct"
+#~ msgstr "De-bifat pentru a corecta"
+
+#~ msgid "You can check any number of boxes in selection questions."
+#~ msgstr "La întrebările cu selecție puteți bifa orice număr de căsuțe."

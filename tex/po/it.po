@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-17 17:45+0100\n"
+"POT-Creation-Date: 2018-12-26 19:09+0100\n"
 "PO-Revision-Date: 2018-01-18 16:20+0000\n"
 "Last-Translator: Martina Caramenti <martina.caramenti@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/sdaps/tex/it/>\n"
@@ -40,48 +40,67 @@ msgstr "ID del Questionario:"
 
 #. Default instructions on the questionnaire
 #: ../tex_translations.in.h:10
+#, fuzzy
 msgid ""
-"This questionnaire is automatically read by a computer program. Please use a "
-"pen for filling in your answers."
+"This questionnaire is evaluated automatically. Please use a pen to fill in "
+"your answers as follows:"
 msgstr ""
 "Questo questionario viene letto automaticamente con supporti elettronici. Si "
 "prega di compilarlo usando una penna."
 
-#. Instruction on the questionnaire: Description of a crossed checkbox
+#. Instruction on the questionnaire: Next to checked textbox
 #: ../tex_translations.in.h:12
-msgid "Check"
-msgstr "Marcare"
+msgid "Selected"
+msgstr ""
 
-#. Instruction on the questionnaire: Description of a crossed and filled checkbox
+#. Instruction on the questionnaire: Next to filled checkbox
 #: ../tex_translations.in.h:14
-msgid "Uncheck to correct"
-msgstr "Annerire per correggere"
+msgid "Fill to select"
+msgstr ""
+
+#. Instruction on the questionnaire: Next to filled and checked checkbox
+#: ../tex_translations.in.h:16
+msgid "Undo select"
+msgstr ""
 
 #. Instruction on the questionnaire: Multiple choice question
-#: ../tex_translations.in.h:16
-msgid "You can check any number of boxes in selection questions."
-msgstr "Nelle domande a scelta multipla possono essere marcate più risposte."
-
-#. Instruction on the questionnaire: Mark/range question.
 #: ../tex_translations.in.h:18
-msgid ""
-"For questions with a range (1--\\arabic{markcheckboxcount}) mark the answer "
-"that fits best."
+msgid "Multiple-choice (select all applicable options)"
 msgstr ""
-"Nelle domande con scala di valutazione (1--\\arabic{markcheckboxcount}) "
-"marcare la casella che meglio rappresenta la propria risposta."
+
+#. Instruction on the questionnaire: Single choice question
+#: ../tex_translations.in.h:20
+msgid "Single-choice (select only one option)"
+msgstr ""
 
 #. LaTeX based report: Label for the number of people that answered
-#: ../tex_translations.in.h:20
+#: ../tex_translations.in.h:22
 msgid "Answers"
 msgstr "Risposte"
 
 #. LaTeX based report: The calculated mean value
-#: ../tex_translations.in.h:22
+#: ../tex_translations.in.h:24
 msgid "Mean"
 msgstr "Media"
 
 #. LaTeX based report: The standard deviation
-#: ../tex_translations.in.h:24
+#: ../tex_translations.in.h:26
 msgid "Standard-Deviation"
 msgstr "Deviazione Standard"
+
+#~ msgid "Check"
+#~ msgstr "Marcare"
+
+#~ msgid "Uncheck to correct"
+#~ msgstr "Annerire per correggere"
+
+#~ msgid "You can check any number of boxes in selection questions."
+#~ msgstr ""
+#~ "Nelle domande a scelta multipla possono essere marcate più risposte."
+
+#~ msgid ""
+#~ "For questions with a range (1--\\arabic{markcheckboxcount}) mark the "
+#~ "answer that fits best."
+#~ msgstr ""
+#~ "Nelle domande con scala di valutazione (1--\\arabic{markcheckboxcount}) "
+#~ "marcare la casella che meglio rappresenta la propria risposta."

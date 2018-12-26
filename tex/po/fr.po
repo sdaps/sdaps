@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-17 17:45+0100\n"
+"POT-Creation-Date: 2018-12-26 19:09+0100\n"
 "PO-Revision-Date: 2017-05-30 17:39+0000\n"
 "Last-Translator: Berteh <berteh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/tex/fr/>\n"
@@ -40,49 +40,67 @@ msgstr "ID-Questionnaire :"
 
 #. Default instructions on the questionnaire
 #: ../tex_translations.in.h:10
+#, fuzzy
 msgid ""
-"This questionnaire is automatically read by a computer program. Please use a "
-"pen for filling in your answers."
+"This questionnaire is evaluated automatically. Please use a pen to fill in "
+"your answers as follows:"
 msgstr ""
 "Ce questionnaire est traité automatiquement. Veuillez utiliser un stylo à "
 "bille pour le compléter."
 
-#. Instruction on the questionnaire: Description of a crossed checkbox
+#. Instruction on the questionnaire: Next to checked textbox
 #: ../tex_translations.in.h:12
-msgid "Check"
-msgstr "Cocher"
+msgid "Selected"
+msgstr ""
 
-#. Instruction on the questionnaire: Description of a crossed and filled checkbox
+#. Instruction on the questionnaire: Next to filled checkbox
 #: ../tex_translations.in.h:14
-msgid "Uncheck to correct"
-msgstr "Noircir pour corriger"
+msgid "Fill to select"
+msgstr ""
+
+#. Instruction on the questionnaire: Next to filled and checked checkbox
+#: ../tex_translations.in.h:16
+msgid "Undo select"
+msgstr ""
 
 #. Instruction on the questionnaire: Multiple choice question
-#: ../tex_translations.in.h:16
-msgid "You can check any number of boxes in selection questions."
-msgstr ""
-"Cochez toutes les réponses voulues dans les questions à choix multiples."
-
-#. Instruction on the questionnaire: Mark/range question.
 #: ../tex_translations.in.h:18
-msgid ""
-"For questions with a range (1--\\arabic{markcheckboxcount}) mark the answer "
-"that fits best."
+msgid "Multiple-choice (select all applicable options)"
 msgstr ""
-"Ne cochez qu'une seule réponse pour les questions d'échelles (1--"
-"\\arabic{markcheckboxcount})."
+
+#. Instruction on the questionnaire: Single choice question
+#: ../tex_translations.in.h:20
+msgid "Single-choice (select only one option)"
+msgstr ""
 
 #. LaTeX based report: Label for the number of people that answered
-#: ../tex_translations.in.h:20
+#: ../tex_translations.in.h:22
 msgid "Answers"
 msgstr "Réponses"
 
 #. LaTeX based report: The calculated mean value
-#: ../tex_translations.in.h:22
+#: ../tex_translations.in.h:24
 msgid "Mean"
 msgstr "Moyenne"
 
 #. LaTeX based report: The standard deviation
-#: ../tex_translations.in.h:24
+#: ../tex_translations.in.h:26
 msgid "Standard-Deviation"
 msgstr "Écart-type"
+
+#~ msgid "Check"
+#~ msgstr "Cocher"
+
+#~ msgid "Uncheck to correct"
+#~ msgstr "Noircir pour corriger"
+
+#~ msgid "You can check any number of boxes in selection questions."
+#~ msgstr ""
+#~ "Cochez toutes les réponses voulues dans les questions à choix multiples."
+
+#~ msgid ""
+#~ "For questions with a range (1--\\arabic{markcheckboxcount}) mark the "
+#~ "answer that fits best."
+#~ msgstr ""
+#~ "Ne cochez qu'une seule réponse pour les questions d'échelles (1--"
+#~ "\\arabic{markcheckboxcount})."
