@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-29 21:19+0200\n"
+"POT-Creation-Date: 2018-12-26 19:10+0100\n"
 "PO-Revision-Date: 2018-10-04 13:52+0000\n"
 "Last-Translator: vgheo <vlad.gheorghe@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/sdaps/master/ro/"
@@ -25,12 +25,12 @@ msgid "SDAPS -- Paper based survey tool."
 msgstr "SDAPS - Utilitar pentru sondaje suport fizic"
 
 #: ../sdaps/script.py:45
-msgid "project directory|The SDAPS project."
-msgstr "director proiect|Proiectul SDAPS."
-
-#: ../sdaps/script.py:46
 msgid "command list|Commands:"
 msgstr "listă comenzi|Comenzi:"
+
+#: ../sdaps/script.py:50
+msgid "project directory|The SDAPS project."
+msgstr "director proiect|Proiectul SDAPS."
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
@@ -330,18 +330,18 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/cmdline/info.py:36
-msgid "The key to display or modify."
-msgstr ""
-
-#: ../sdaps/cmdline/info.py:40
-msgid "Set the given key to this value."
-msgstr ""
-
-#: ../sdaps/cmdline/info.py:44
 msgid "Delete the key and value pair."
 msgstr ""
 
-#: ../sdaps/cmdline/info.py:68
+#: ../sdaps/cmdline/info.py:40
+msgid "The key to display or modify."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:44
+msgid "Set the given key to this value."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:69
 msgid "Existing fields:\n"
 msgstr ""
 
@@ -584,11 +584,11 @@ msgstr ""
 msgid "Go to first page"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:456
+#: ../sdaps/gui/__init__.py:457
 msgid "Close without saving"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:460
+#: ../sdaps/gui/__init__.py:461
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -639,23 +639,27 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:55
+#: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:59
+#: ../sdaps/gui/widget_buddies.py:60
 msgid "Sheet valid"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:60
-msgid "Verified"
+#: ../sdaps/gui/widget_buddies.py:61
+msgid "Sheet Verified"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:61
+#: ../sdaps/gui/widget_buddies.py:62
+msgid "Page Verified"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:63
 msgid "Empty"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:73 ../sdaps/gui/widget_buddies.py:97
+#: ../sdaps/gui/widget_buddies.py:75 ../sdaps/gui/widget_buddies.py:105
 msgid "<b>Questionnaire ID: </b>"
 msgstr ""
 
@@ -671,8 +675,18 @@ msgid ""
 "(create-latexmap.py)."
 msgstr ""
 
-#: ../sdaps/utils/opencv.py:33
+#: ../sdaps/utils/latex.py:69
+msgid ""
+"Generated string for LaTeX contains unicode characters. This may not work "
+"correctly and could mean the LaTeX character map needs to be updated."
+msgstr ""
+
+#: ../sdaps/utils/opencv.py:35
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
+msgstr ""
+
+#: ../sdaps/utils/opencv.py:44
+msgid "File does not exist"
 msgstr ""
 
 #. The old code used to first filter, and then run; but that is

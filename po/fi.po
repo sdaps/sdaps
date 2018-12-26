@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-17 17:45+0100\n"
+"POT-Creation-Date: 2018-12-26 19:10+0100\n"
 "PO-Revision-Date: 2014-08-17 13:09+0200\n"
 "Last-Translator: Joonas Joensuu <joonas.joensuu@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/sdaps/master/fi/"
@@ -24,12 +24,12 @@ msgid "SDAPS -- Paper based survey tool."
 msgstr "SDAPS -- Paperipohjainen kyselytyokalu."
 
 #: ../sdaps/script.py:45
-msgid "project directory|The SDAPS project."
-msgstr "projektin hakemisto|SDAPS-projekti."
-
-#: ../sdaps/script.py:46
 msgid "command list|Commands:"
 msgstr "komentolistaus|Komennot:"
+
+#: ../sdaps/script.py:50
+msgid "project directory|The SDAPS project."
+msgstr "projektin hakemisto|SDAPS-projekti."
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
@@ -332,18 +332,18 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/cmdline/info.py:36
-msgid "The key to display or modify."
-msgstr ""
-
-#: ../sdaps/cmdline/info.py:40
-msgid "Set the given key to this value."
-msgstr ""
-
-#: ../sdaps/cmdline/info.py:44
 msgid "Delete the key and value pair."
 msgstr ""
 
-#: ../sdaps/cmdline/info.py:68
+#: ../sdaps/cmdline/info.py:40
+msgid "The key to display or modify."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:44
+msgid "Set the given key to this value."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:69
 msgid "Existing fields:\n"
 msgstr ""
 
@@ -529,68 +529,68 @@ msgid ""
 "before using the GUI."
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:204
+#: ../sdaps/gui/__init__.py:211
 msgid "Page|Invalid"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:207
+#: ../sdaps/gui/__init__.py:214
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/gui/__init__.py:249
+#: ../sdaps/gui/__init__.py:256
 msgid "Copyright © 2007-2014 The SDAPS Authors"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:251
+#: ../sdaps/gui/__init__.py:258
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:252
+#: ../sdaps/gui/__init__.py:259
 msgid "http://sdaps.org"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:253
+#: ../sdaps/gui/__init__.py:260
 msgid "translator-credits"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:298
+#: ../sdaps/gui/__init__.py:305
 #, python-format
 msgid " of %i"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:299
+#: ../sdaps/gui/__init__.py:306
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:315
+#: ../sdaps/gui/__init__.py:322
 msgid ""
 "You have reached the first page of the survey. Would you like to go to the "
 "last page?"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:317
+#: ../sdaps/gui/__init__.py:324
 msgid "Go to last page"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:339
+#: ../sdaps/gui/__init__.py:346
 msgid ""
 "You have reached the last page of the survey. Would you like to go to the "
 "first page?"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:341
+#: ../sdaps/gui/__init__.py:348
 msgid "Go to first page"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:449
+#: ../sdaps/gui/__init__.py:457
 msgid "Close without saving"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:453
+#: ../sdaps/gui/__init__.py:461
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -641,23 +641,27 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:55
+#: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:59
+#: ../sdaps/gui/widget_buddies.py:60
 msgid "Sheet valid"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:60
-msgid "Verified"
+#: ../sdaps/gui/widget_buddies.py:61
+msgid "Sheet Verified"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:61
+#: ../sdaps/gui/widget_buddies.py:62
+msgid "Page Verified"
+msgstr ""
+
+#: ../sdaps/gui/widget_buddies.py:63
 msgid "Empty"
 msgstr ""
 
-#: ../sdaps/gui/widget_buddies.py:73 ../sdaps/gui/widget_buddies.py:97
+#: ../sdaps/gui/widget_buddies.py:75 ../sdaps/gui/widget_buddies.py:105
 msgid "<b>Questionnaire ID: </b>"
 msgstr ""
 
@@ -673,51 +677,58 @@ msgid ""
 "(create-latexmap.py)."
 msgstr ""
 
-#: ../sdaps/utils/opencv.py:33
+#: ../sdaps/utils/latex.py:69
+msgid ""
+"Generated string for LaTeX contains unicode characters. This may not work "
+"correctly and could mean the LaTeX character map needs to be updated."
+msgstr ""
+
+#: ../sdaps/utils/opencv.py:35
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:268
+#: ../sdaps/utils/opencv.py:44
+msgid "File does not exist"
+msgstr ""
+
+#. The old code used to first filter, and then run; but that is
+#. a bit ineffective in a way
+#: ../sdaps/model/survey.py:386
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../sdaps/model/survey.py:279
+#: ../sdaps/model/survey.py:402
 #, python-format
-msgid "%f seconds per sheet"
+msgid "Processed %i of %i sheets, took %f seconds"
 msgstr ""
 
-#: ../sdaps/model/survey.py:311
+#: ../sdaps/model/survey.py:449
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:315
+#: ../sdaps/model/survey.py:453
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
 msgstr ""
 
-#: ../sdaps/model/survey.py:328
+#: ../sdaps/model/survey.py:466
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:334
+#: ../sdaps/model/survey.py:472
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
 
-#: ../sdaps/model/survey.py:338
+#: ../sdaps/model/survey.py:476
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
-msgstr ""
-
-#: ../sdaps/model/survey.py:358
-#, python-format
-msgid "Running upgrade routines for file format version %i"
 msgstr ""
 
 #. in simplex mode every page will have a matrix; it might be a None
@@ -849,47 +860,47 @@ msgstr ""
 msgid "Removing stored data..."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:59
+#: ../sdaps/setup/buddies.py:62
 #, python-format
 msgid "Head %(l0)i got no title."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:71
+#: ../sdaps/setup/buddies.py:74
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got no question."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:111
+#: ../sdaps/setup/buddies.py:114
 #, python-format
 msgid "Error in question \"%s\""
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:115
+#: ../sdaps/setup/buddies.py:118
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got no boxes."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:164
+#: ../sdaps/setup/buddies.py:167
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box out of range."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:169
+#: ../sdaps/setup/buddies.py:172
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i upper box out of range."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:174
+#: ../sdaps/setup/buddies.py:177
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box not before upper box."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:210
+#: ../sdaps/setup/buddies.py:213
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
 msgstr ""
 
-#: ../sdaps/setup/buddies.py:231
+#: ../sdaps/setup/buddies.py:234
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
 msgstr ""
@@ -920,8 +931,8 @@ msgstr ""
 msgid "Running %s now twice to generate the stamped questionnaire."
 msgstr ""
 
-#: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:106
-#: ../sdaps/setuptex/__init__.py:147 ../sdaps/reporttex/__init__.py:162
+#: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:107
+#: ../sdaps/setuptex/__init__.py:148 ../sdaps/reporttex/__init__.py:162
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr ""
@@ -950,22 +961,22 @@ msgstr ""
 msgid "Unknown file type (%s). additionalqobjects should be text/plain."
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:102 ../sdaps/setuptex/__init__.py:142
+#: ../sdaps/setuptex/__init__.py:103 ../sdaps/setuptex/__init__.py:143
 #, python-format
 msgid "Running %s now twice to generate the questionnaire."
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:121
+#: ../sdaps/setuptex/__init__.py:122
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:135
+#: ../sdaps/setuptex/__init__.py:136
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
 msgstr ""
 
-#: ../sdaps/setuptex/__init__.py:161
+#: ../sdaps/setuptex/__init__.py:162
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "

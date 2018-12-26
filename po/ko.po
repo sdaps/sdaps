@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-16 17:00+0100\n"
+"POT-Creation-Date: 2018-12-26 19:10+0100\n"
 "PO-Revision-Date: 2018-12-26 14:09+0000\n"
 "Last-Translator: Hyunmin Kim (Brandon) <hmkim@live.co.kr>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/sdaps/master/ko/>"
@@ -313,18 +313,18 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/cmdline/info.py:36
-msgid "The key to display or modify."
-msgstr ""
-
-#: ../sdaps/cmdline/info.py:40
-msgid "Set the given key to this value."
-msgstr ""
-
-#: ../sdaps/cmdline/info.py:44
 msgid "Delete the key and value pair."
 msgstr ""
 
-#: ../sdaps/cmdline/info.py:68
+#: ../sdaps/cmdline/info.py:40
+msgid "The key to display or modify."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:44
+msgid "Set the given key to this value."
+msgstr ""
+
+#: ../sdaps/cmdline/info.py:69
 msgid "Existing fields:\n"
 msgstr ""
 
