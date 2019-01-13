@@ -1,6 +1,6 @@
 [sdaps]
 title = Testfragebogen \LaTeX
-global_id = SDAPS
+global_id = 
 
 [info]
 Author = Someone
@@ -12,12 +12,12 @@ paper_width = 210.0
 paper_height = 297.0
 print_questionnaire_id = True
 print_survey_id = True
-style = code128
+style = custom
 duplex = True
 checkmode = checkcorrect
 
 [questionnaire]
 # These values are not read back, they exist for information only!
 page_count = 2
-survey_id = 718211651
+survey_id = 3857729017
 

@@ -1,11 +1,10 @@
 [sdaps]
-title = The Title
+title = asdf
 global_id = 
 
 [info]
 Author = The Author
 Date = 10.03.2013
-asdf = title
 
 [defs]
 # These values are not read back, they exist for information only!
@@ -20,5 +19,5 @@ checkmode = checkcorrect
 [questionnaire]
 # These values are not read back, they exist for information only!
 page_count = 2
-survey_id = 1594433271
+survey_id = 3297744764
 
