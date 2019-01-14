@@ -6,16 +6,16 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:10+0100\n"
-"PO-Revision-Date: 2017-07-16 22:17+0000\n"
-"Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/"
-">\n"
+"PO-Revision-Date: 2019-01-14 16:21+0000\n"
+"Last-Translator: Martin Gwerder <martin@gwerder.net>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.16-dev\n"
+"X-Generator: Weblate 3.4-dev\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -203,7 +203,6 @@ msgid "Convert a set of images to the correct image format."
 msgstr "Konvertiert einen Satz von Bildern in das passende Format."
 
 #: ../sdaps/cmdline/convert.py:31
-#, fuzzy
 msgid ""
 "This command can be used if you scanned files in something\n"
 "        other than the expected monochrome TIFF mode. All given files will\n"
@@ -212,25 +211,24 @@ msgid ""
 "may facilitate\n"
 "        working with photos of questionnaires instead of scans."
 msgstr ""
-"Dieser Befehl kann angewndet werden, falls die Bilder nicht als monochromes "
-"TIFF gescannt wurden. Alle angegebenen Dateien werden geladen, konvertiert "
-"und als mehrseitiges TIFF mit einem Bit Farbtiefe gespeichert. Optional kann "
-"eine 3D-Transformation angewendet werden. Dadurch können auch Fotos anstelle "
-"von Scans verarbeitet werden."
+"Dieser Befehl kann angewendet werden, falls die Bilder nicht als monochromes "
+"TIFF gespeichert wurden. Alle angegebenen Dateien werden geladen, "
+"konvertiert und als mehrseitiges TIFF mit einem Bit Farbtiefe gespeichert. "
+"Optional kann eine 3D-Transformation angewendet werden. Dadurch können auch "
+"Fotos anstelle von Scans verarbeitet werden."
 
 #: ../sdaps/cmdline/convert.py:38
-#, fuzzy
 msgid ""
 "Do a 3D-transformation after finding the corner marks.\n"
 "    If they are not found, the image will be processed as-is."
 msgstr ""
 "Wende eine 3D-Transformation an, nachdem die Eckmarkierungen gefunden "
-"wurden. Falls keine Eckmarken gefunden wird das Bild unverändert hinzugefügt."
+"wurden. Falls keine Eckmarken gefunden werden, wird das Bild unverändert "
+"hinzugefügt."
 
 #: ../sdaps/cmdline/convert.py:44
-#, fuzzy
 msgid "The location of the output file."
-msgstr "Speicherort der Ausgabe. Pflichtparamter."
+msgstr "Speicherort der Ausgabedatei."
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
@@ -312,12 +310,12 @@ msgid "The file to import."
 msgstr "Die zu importierende Datei."
 
 #: ../sdaps/cmdline/gui.py:28
-#, fuzzy
 msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
-msgstr "Startet eine Grafische Oberfläche zur Korrektur."
+msgstr ""
+"Startet eine grafische Oberfläche. Sie können mit der Oberfläche die bereits "
+"erkannten (recognize) Antworten anzeigen und ändern."
 
 #: ../sdaps/cmdline/gui.py:29
-#, fuzzy
 msgid ""
 "This command launches a graphical user interface that can\n"
 "    be used to correct answers. You need to run \"recognize\" before using "
@@ -325,8 +323,9 @@ msgid ""
 "    "
 msgstr ""
 "Dieser Befehl startet eine Grafische Oberfläche, mit der es\n"
-"möglich ist Erkennungsfehler zu korrigieren. Bevor dieser Befehl\n"
-"benutzt wird muss der \"recognize\" Schritt schon erfolgt sein."
+"möglich ist Antworten zu korrigieren. Bevor dieser Befehl\n"
+"benutzt werden kann, muss das Kommando \"recognize\" schon erfolgt sein.\n"
+"    "
 
 #: ../sdaps/cmdline/gui.py:34
 msgid "Filter to only show a partial dataset."
@@ -601,14 +600,13 @@ msgstr ""
 
 #
 #: ../sdaps/cover/__init__.py:40
-#, fuzzy
 msgid "SDAPS questionnaire"
-msgstr "sdaps Fragebögen"
+msgstr "SDAPS Fragebögen"
 
 #: ../sdaps/csvdata/buddies.py:77
-#, fuzzy, python-format
+#, python-format
 msgid "Not importing unknown questionnaire ID \"%s\""
-msgstr "Export und Import der Fragebogen-IDs."
+msgstr "Unbekannte Fragebogen-ID \"%s\" wird nicht importiert"
 
 #: ../sdaps/gui/__init__.py:59
 msgid ""
@@ -745,14 +743,12 @@ msgid "Sheet valid"
 msgstr "Bogen gültig"
 
 #: ../sdaps/gui/widget_buddies.py:61
-#, fuzzy
 msgid "Sheet Verified"
-msgstr "Verifiziert"
+msgstr "Blatt überprüft"
 
 #: ../sdaps/gui/widget_buddies.py:62
-#, fuzzy
 msgid "Page Verified"
-msgstr "Verifiziert"
+msgstr "Seite überprüft"
 
 #: ../sdaps/gui/widget_buddies.py:63
 msgid "Empty"
@@ -775,12 +771,17 @@ msgid ""
 "The latex character map is missing! Please build it using the supplied tool "
 "(create-latexmap.py)."
 msgstr ""
+"Die Latex-Zeichensatztabelle fehlt! Bitte erzeugen Sie diese mit dem "
+"mitgelieferten Tool (create-latexmap.py)."
 
 #: ../sdaps/utils/latex.py:69
 msgid ""
 "Generated string for LaTeX contains unicode characters. This may not work "
 "correctly and could mean the LaTeX character map needs to be updated."
 msgstr ""
+"Die durch LaTeX erzeugte Zeichenkette enthält Unicode-Zeichen. Folgedessen "
+"wird die Darstellung möglicherweise nicht richtig funktionieren und es "
+"sollte die LaTeX-Zeichensatztabelle angepasst werden."
 
 #: ../sdaps/utils/opencv.py:35
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
@@ -790,7 +791,7 @@ msgstr ""
 
 #: ../sdaps/utils/opencv.py:44
 msgid "File does not exist"
-msgstr ""
+msgstr "Datei existiert nicht"
 
 #. The old code used to first filter, and then run; but that is
 #. a bit ineffective in a way
@@ -804,7 +805,7 @@ msgstr[1] "%i Bögen"
 #: ../sdaps/model/survey.py:402
 #, python-format
 msgid "Processed %i of %i sheets, took %f seconds"
-msgstr ""
+msgstr "%i von %i Blätter in %f Sekunden verarbeitet"
 
 #: ../sdaps/model/survey.py:449
 msgid ""
