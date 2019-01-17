@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:10+0100\n"
-"PO-Revision-Date: 2019-01-09 14:27+0000\n"
-"Last-Translator: Estébastien Robespi <estebastien@mailbox.org>\n"
+"PO-Revision-Date: 2019-01-18 03:20+0000\n"
+"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
 "Language: fr\n"
@@ -309,10 +309,9 @@ msgid "The file to import."
 msgstr "Le fichier à importer."
 
 #: ../sdaps/cmdline/gui.py:28
-#, fuzzy
 msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
 msgstr ""
-"Lancer l'interface graphique. Vous pouvez y afficher et modifier les "
+"Lancer une interface graphique. Vous pouvez y afficher et modifier les "
 "réponses (reconnues)."
 
 #: ../sdaps/cmdline/gui.py:29
