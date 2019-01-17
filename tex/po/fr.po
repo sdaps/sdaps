@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:09+0100\n"
-"PO-Revision-Date: 2017-05-30 17:39+0000\n"
-"Last-Translator: Berteh <berteh@gmail.com>\n"
+"PO-Revision-Date: 2019-01-18 03:21+0000\n"
+"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/tex/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.14.1\n"
+"X-Generator: Weblate 3.4-dev\n"
 
 #. The language name of the LaTeX dictionary file for translator
 #: ../tex_translations.in.h:2
@@ -40,38 +40,37 @@ msgstr "ID-Questionnaire :"
 
 #. Default instructions on the questionnaire
 #: ../tex_translations.in.h:10
-#, fuzzy
 msgid ""
 "This questionnaire is evaluated automatically. Please use a pen to fill in "
 "your answers as follows:"
 msgstr ""
-"Ce questionnaire est traité automatiquement. Veuillez utiliser un stylo à "
-"bille pour le compléter."
+"Ce questionnaire est évalué automatiquement. Veuillez utiliser un stylo pour "
+"remplir vos réponses comme suit :"
 
 #. Instruction on the questionnaire: Next to checked textbox
 #: ../tex_translations.in.h:12
 msgid "Selected"
-msgstr ""
+msgstr "Sélectionné"
 
 #. Instruction on the questionnaire: Next to filled checkbox
 #: ../tex_translations.in.h:14
 msgid "Fill to select"
-msgstr ""
+msgstr "Cocher pour sélectionner"
 
 #. Instruction on the questionnaire: Next to filled and checked checkbox
 #: ../tex_translations.in.h:16
 msgid "Undo select"
-msgstr ""
+msgstr "Annuler la sélection"
 
 #. Instruction on the questionnaire: Multiple choice question
 #: ../tex_translations.in.h:18
 msgid "Multiple-choice (select all applicable options)"
-msgstr ""
+msgstr "Choix multiples (sélectionnez toutes les options applicables)"
 
 #. Instruction on the questionnaire: Single choice question
 #: ../tex_translations.in.h:20
 msgid "Single-choice (select only one option)"
-msgstr ""
+msgstr "À choix unique (ne choisir qu’une seule option)"
 
 #. LaTeX based report: Label for the number of people that answered
 #: ../tex_translations.in.h:22
