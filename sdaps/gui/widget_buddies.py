@@ -63,6 +63,15 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         self.empty_checkbox = Gtk.CheckButton.new_with_label(_('Empty'))
         self.empty_checkbox.set_sensitive(False)
 
+        frame = Gtk.Frame()
+        self.review_textbox = Gtk.TextView()
+        self.review_textbox.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
+        self.review_buffer = self.review_textbox.get_buffer()
+        self.review_buffer.connect('changed', self.review_buffer_changed_cb)
+        frame.add(self.review_textbox)
+
+        self.review_comments = Gtk.CheckButton.new_with_label(_('Empty'))
+
         self.valid_checkbox.connect('toggled', self.toggled_valid_cb)
         self.page_verified_checkbox.connect('toggled', self.toggled_verified_cb)
 
@@ -82,6 +91,7 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         vbox.add(self.sheet_verified_checkbox)
         vbox.add(self.page_verified_checkbox)
         vbox.add(self.empty_checkbox)
+        vbox.add(frame)
 
         self.box.pack_start(indent, False, True, 0)
 
@@ -108,6 +118,14 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         self.page_verified_checkbox.set_active(self._current_image.verified)
         self.empty_checkbox.set_active(self.obj.survey.sheet.empty)
 
+        # Only update the text if it changed (or else recursion hits)
+        start = self.review_buffer.get_start_iter()
+        end = self.review_buffer.get_end_iter()
+        currtext = self.review_buffer.get_text(start, end, False)
+        review_comment = self.obj.survey.sheet.review_comment if self.obj.survey.sheet.review_comment else ''
+        if review_comment != currtext:
+            self.review_buffer.set_text(review_comment)
+
     def ensure_visible(self, widget):
         for func in self._notify_ensure_visible:
             func(widget)
@@ -117,6 +135,13 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
     def disconnect_ensure_visible(self, func):
         self._notify_ensure_visible.remove(func)
+
+    def review_buffer_changed_cb(self, buf):
+        start = self.review_buffer.get_start_iter()
+        end = self.review_buffer.get_end_iter()
+        currtext = self.review_buffer.get_text(start, end, False)
+
+        self.obj.survey.sheet.review_comment = currtext
 
     def toggled_valid_cb(self, widget):
         self.obj.survey.sheet.valid = widget.get_active()
