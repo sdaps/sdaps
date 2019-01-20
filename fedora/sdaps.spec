@@ -17,7 +17,7 @@ URL: https://sdaps.org
 BuildRequires: python3-devel, libtiff-devel, python3-distutils-extra
 BuildRequires: pkgconfig, python3-pkgconfig, cairo-devel, python3-cairo-devel
 BuildRequires: python3-imaging, python3-reportlab, zbar
-BuildRequires: opencv-python3, python3-gobject, poppler-glib
+BuildRequires: python3-opencv, python3-gobject, poppler-glib
 BuildRequires: python3-setuptools, yum
 BuildRequires: intltool
 BuildRequires: gcc
