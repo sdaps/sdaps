@@ -31,7 +31,7 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
     obj_class = model.questionnaire.Questionnaire
 
     def open_csv(self, csvfile, image_writer=None, export_images=False, export_question_images=False, export_quality=False, csv_options={}):
-        header = ['questionnaire_id', 'global_id', 'empty', 'valid', 'recognized', 'verified']
+        header = ['questionnaire_id', 'global_id', 'empty', 'valid', 'recognized', 'review', 'verified']
 
         self.export_quality = export_quality
 
@@ -59,6 +59,7 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
             'empty' : str(int(self.obj.sheet.empty)),
             'valid' : str(int(self.obj.sheet.valid)),
             'recognized' : str(int(self.obj.sheet.recognized)),
+            'review' : str(self.obj.sheet.review_comment if self.obj.sheet.review_comment else ''),
             'verified' : str(int(self.obj.sheet.verified)),
         }
         for qobject in self.obj.qobjects:
@@ -81,6 +82,8 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         else:
             if 'valid' in data:
                 self.obj.sheet.valid = bool(int(data['valid']))
+            if 'review' in data:
+                self.obj.sheet.review_comment = data['review']
             if 'verified' in data:
                 for img in self.obj.sheet.images:
                     img.verified = bool(int(data['verified']))
@@ -95,10 +98,10 @@ class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
     obj_class = model.questionnaire.QObject
 
     def export_header(self):
-        if self.obj.questionnaire.csvdata.export_question_images:
-            return [self.obj.id_csv() + '_image']
-        else:
-            return []
+        header = [ self.obj.id_csv() + '_review' ]
+        if self.obj.questionnaire.csvdata.export_question_images and self.obj.boxes:
+            header += [self.obj.id_csv() + '_image']
+        return header
 
     def export_data(self):
         data = {}
@@ -107,21 +110,13 @@ class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
                 img = self.obj.questionnaire.csvdata.image_writer.output_boxes(self.obj.boxes, real=False)
                 data[self.obj.id_csv() + '_image'] = img
 
+        data[self.obj.id_csv() + '_review'] = str(self.obj.data.review_comment if self.obj.data.review_comment else '')
+
         return data
 
     def import_data(self, data):
-        pass
-
-class QHead(QObject, metaclass=model.buddy.Register):
-
-    name = 'csvdata'
-    obj_class = model.questionnaire.Head
-
-    def export_header(self):
-        return []
-
-    def export_data(self):
-        return {}
+        if self.obj.id_csv() + '_review' in data:
+            self.obj.data.review_comment = data[self.obj.id_csv() + '_review']
 
 class Choice(QObject, metaclass=model.buddy.Register):
 
@@ -144,6 +139,8 @@ class Choice(QObject, metaclass=model.buddy.Register):
         return data
 
     def import_data(self, data):
+        QObject.import_data(self, data)
+
         for box in self.obj.boxes:
             box.csvdata.import_data(data)
 
@@ -168,6 +165,8 @@ class Text(QObject, metaclass=model.buddy.Register):
         return data
 
     def import_data(self, data):
+        QObject.import_data(self, data)
+
         for box in self.obj.boxes:
             box.csvdata.import_data(data)
 
@@ -187,22 +186,28 @@ class Option(QObject, metaclass=model.buddy.Register):
         return data
 
     def import_data(self, data):
+        QObject.import_data(self, data)
+
         if self.obj.id_csv() in data:
             self.obj.set_answer(int(data[self.obj.id_csv()]))
 
 
-class Additional_Mark(model.buddy.Buddy, metaclass=model.buddy.Register):
+class Additional_Mark(QObject, metaclass=model.buddy.Register):
 
     name = 'csvdata'
     obj_class = model.questionnaire.Additional_Mark
 
     def export_header(self):
-        return [self.obj.id_csv()]
+        return QObject.export_header(self) + [self.obj.id_csv()]
 
     def export_data(self):
-        return {self.obj.id_csv(): '%i' % self.obj.get_answer()}
+        data = {self.obj.id_csv(): '%i' % self.obj.get_answer()}
+        data.update(QObject.export_data(self))
+        return data
 
     def import_data(self, data):
+        QObject.import_data(self, data)
+
         if self.obj.id_csv() in data:
             self.obj.set_answer(int(data[self.obj.id_csv()]))
 
