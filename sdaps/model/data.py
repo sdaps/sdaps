@@ -16,6 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+class QObject(object):
+
+    def __init__(self, parent):
+        self.review_comment = ''
+
+    @property
+    def empty(self):
+        return not self.review_comment
 
 class Box(object):
 

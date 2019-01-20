@@ -24,7 +24,7 @@ class Sheet(buddy.Object):
 
     _save_attrs = {'data', 'images', 'survey_id',
                    'questionnaire_id', 'global_id', 'valid',
-                   'quality', 'recognized' }
+                   'quality', 'recognized', 'review_comment' }
 
     def __init__(self):
         self.survey = None
@@ -35,6 +35,7 @@ class Sheet(buddy.Object):
         self.global_id = None
         self.valid = 1
         self.quality = 1
+        self.review_comment = None
 
         self.recognized = False
 

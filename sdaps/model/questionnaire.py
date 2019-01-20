@@ -35,7 +35,11 @@ class DataObject(object):
 
     def get_data(self):
         if not self.id in self.sheet.data:
-            self.sheet.data[self.id] = getattr(data, self.__class__.__name__)(self)
+            if hasattr(self, '_data_object'):
+                clsname = self._data_object
+            else:
+                clsname = self.__class__.__name__
+            self.sheet.data[self.id] = getattr(data, clsname)(self)
         return self.sheet.data[self.id]
 
     data = property(get_data)
@@ -111,13 +115,14 @@ class Questionnaire(buddy.Object):
             self.qobjects[i] = db.fromJson(self.qobjects[i], sys.modules[__name__])
             self.qobjects[i].questionnaire = self
 
-class QObject(buddy.Object):
+class QObject(buddy.Object, DataObject):
     '''
     Identification: id ==(major, minor)
     Reference: survey.questionnaire.qobjects[i](i != id)
     Parent: self.questionnaire
     '''
 
+    _data_object = 'QObject'
     _save_skip = {'survey', 'questionnaire'}
 
     def __init__(self):
@@ -125,6 +130,7 @@ class QObject(buddy.Object):
         self.boxes = list()
         self.last_id = -1
         self.max_value = -1
+        self.var = None
         self.init_attributes()
 
     def init_attributes(self):
@@ -212,7 +218,6 @@ class Question(QObject):
         QObject.init_attributes(self)
         self.page_number = 0
         self.question = str()
-        self.var = None
 
     def calculate_survey_id(self, md5):
         for box in self.boxes:
@@ -351,7 +356,7 @@ class Additional_Head(Head):
     pass
 
 
-class Additional_Mark(Question, DataObject):
+class Additional_Mark(Question):
 
     def init_attributes(self):
         Question.init_attributes(self)
@@ -370,7 +375,7 @@ class Additional_Mark(Question, DataObject):
         self.data.value = answer
 
 
-class Additional_FilterHistogram(Question, DataObject):
+class Additional_FilterHistogram(Question):
 
     def init_attributes(self):
         Question.init_attributes(self)
