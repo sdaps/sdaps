@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:10+0100\n"
-"PO-Revision-Date: 2018-09-11 02:21+0000\n"
+"PO-Revision-Date: 2019-01-24 22:05+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/sdaps/"
-"master/nb/>\n"
+"master/nb_NO/>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.2-dev\n"
+"X-Generator: Weblate 3.4\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
@@ -110,7 +110,7 @@ msgstr "Et antall TIFF-bildefiler."
 
 #: ../sdaps/cmdline/add.py:94
 msgid "The --no-copy option is not compatible with --convert!"
-msgstr ""
+msgstr "--no-copy -valget er ikke kompatibelt med --convert."
 
 #: ../sdaps/cmdline/add.py:103
 msgid "Converting input files into a single temporary file."
@@ -984,7 +984,7 @@ msgstr ""
 
 #: ../sdaps/reporttex/__init__.py:107
 msgid "author|Unknown"
-msgstr ""
+msgstr "forfatter|Ukjent"
 
 #: ../sdaps/reporttex/__init__.py:138
 msgid "tex language|english"
