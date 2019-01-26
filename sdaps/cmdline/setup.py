@@ -18,6 +18,7 @@
 
 from sdaps import model
 from sdaps import script
+from sdaps import defs
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
@@ -34,6 +35,9 @@ parser.add_argument('questionnaire.tex',
 parser.add_argument('-a', '--add',
     help=_("Additional files that are required by the LaTeX document and need to be copied into the project directory."),
     action='append', default=[])
+parser.add_argument('-e', '--engine',
+    help=_("The engine to use to compile LaTeX documents."),
+    default=defs.latex_engine)
 parser.add_argument('additional_questions',
     nargs='?',
     help=_("Additional questions that are not part of the questionnaire."))
@@ -42,6 +46,10 @@ parser.add_argument('additional_questions',
 def setup(cmdline):
     from sdaps import setuptex
 
-    return setuptex.setup(cmdline['project'], cmdline['questionnaire.tex'], cmdline['additional_questions'], cmdline['add'])
+    return setuptex.setup(cmdline['project'],
+                          cmdline['questionnaire.tex'],
+                          cmdline['engine'],
+                          cmdline['additional_questions'],
+                          cmdline['add'])
 
 

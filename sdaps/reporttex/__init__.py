@@ -155,11 +155,11 @@ def report(survey, filter, filename=None, papersize=None, small=0, suppress=None
             print(_("The TeX project with the report data is located at '%s'.") % tmpdir)
             return
 
-        print(_("Running %s now twice to generate the report.") % defs.latex_engine)
-        latex.compile('report.tex', cwd=tmpdir)
+        print(_("Running %s now multiple times to generate the report.") % survey.defs.engine)
+        latex.compile(survey.defs.engine, 'report.tex', cwd=tmpdir)
 
         if not os.path.exists(os.path.join(tmpdir, 'report.pdf')):
-            print(_("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine)
+            print(_("Error running \"%s\" to compile the LaTeX file.") % survey.defs.engine)
             raise AssertionError('PDF file not generated')
 
         shutil.move(os.path.join(tmpdir, 'report.pdf'), filename)

@@ -41,7 +41,7 @@ from . import sdapsfileparser
 from ..setup import additionalparser
 
 
-def setup(survey_dir, questionnaire_tex, additionalqobjects=None, extra_files=[]):
+def setup(survey_dir, questionnaire_tex, engine, additionalqobjects=None, extra_files=[]):
     if os.access(survey_dir, os.F_OK):
         log.error(_('The survey directory already exists.'))
         return 1
@@ -59,6 +59,7 @@ def setup(survey_dir, questionnaire_tex, additionalqobjects=None, extra_files=[]
 
     # Create the survey directory, and copy the tex file.
     survey = model.survey.Survey.new(survey_dir)
+    survey.defs.engine = engine
 
     # Add the new questionnaire
     survey.add_questionnaire(model.questionnaire.Questionnaire())
@@ -100,8 +101,8 @@ def setup(survey_dir, questionnaire_tex, additionalqobjects=None, extra_files=[]
             else:
                 shutil.copyfile(add_file, survey.path(os.path.basename(add_file)))
 
-        print(_("Running %s now twice to generate the questionnaire.") % defs.latex_engine)
-        latex.compile('questionnaire.tex', cwd=survey.path())
+        print(_("Running %s now multiple times to generate the questionnaire.") % survey.defs.engine)
+        latex.compile(survey.defs.engine, 'questionnaire.tex', cwd=survey.path())
 
         if not os.path.exists(survey.path('questionnaire.pdf')):
             print(_("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine)
@@ -140,12 +141,12 @@ def setup(survey_dir, questionnaire_tex, additionalqobjects=None, extra_files=[]
         # We need to now rebuild everything so that the correct ID is at the bottom
         # Dissable draft mode if the survey doesn't have questionnaire IDs
         latex.write_override(survey, survey.path('sdaps.opt'), draft=survey.defs.print_questionnaire_id)
-        print(_("Running %s now twice to generate the questionnaire.") % defs.latex_engine)
+        print(_("Running %s now multiple imes to generate the questionnaire.") % survey.defs.engine)
         os.remove(survey.path('questionnaire.pdf'))
-        latex.compile('questionnaire.tex', survey.path())
+        latex.compile(survey.defs.engine, 'questionnaire.tex', survey.path())
 
         if not os.path.exists(survey.path('questionnaire.pdf')):
-            print(_("Error running \"%s\" to compile the LaTeX file.") % defs.latex_engine)
+            print(_("Error running \"%s\" to compile the LaTeX file.") % survey.defs.engine)
             raise AssertionError('PDF file not generated')
 
         # Print the result

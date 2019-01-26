@@ -162,7 +162,7 @@ def raw_unicode_to_latex(string):
 
     return string.encode('ascii')
 
-def run_engine(texfile, cwd, inputs=[]):
+def run_engine(engine, texfile, cwd, inputs=[]):
     def _preexec_fn():
         if defs.latex_preexec_hook is not None:
             defs.latex_preexec_hook()
@@ -177,16 +177,16 @@ def run_engine(texfile, cwd, inputs=[]):
         mode = 'nonstopmode'
     else:
         mode = 'batchmode'
-    subprocess.call([defs.latex_engine, '-halt-on-error',
+    subprocess.call([engine, '-halt-on-error',
                      '-interaction', mode, texfile],
                     cwd=cwd,
                     preexec_fn=_preexec_fn)
 
 
-def compile(texfile, cwd, inputs=[]):
-    run_engine(texfile, cwd, inputs)
-    run_engine(texfile, cwd, inputs)
-    run_engine(texfile, cwd, inputs)
-    run_engine(texfile, cwd, inputs)
+def compile(engine, texfile, cwd, inputs=[]):
+    run_engine(engine, texfile, cwd, inputs)
+    run_engine(engine, texfile, cwd, inputs)
+    run_engine(engine, texfile, cwd, inputs)
+    run_engine(engine, texfile, cwd, inputs)
 
 

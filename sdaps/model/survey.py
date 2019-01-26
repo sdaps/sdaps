@@ -70,7 +70,8 @@ class Defs(object):
 
     # Force a certain set of options using slots
     __slots__ = ['paper_width', 'paper_height', 'print_questionnaire_id',
-                 'print_survey_id', 'style', 'duplex', 'checkmode']
+                 'print_survey_id', 'style', 'duplex', 'checkmode',
+                 'engine']
 
     def get_survey_id_pos(self):
         assert(self.style == 'classic')
@@ -170,6 +171,9 @@ class Survey(object):
             if defs_slot == 'checkmode' and self.defs.checkmode == "checkcorrect":
                 continue
 
+            if defs_slot == 'engine':
+                continue
+
             if isinstance(self.defs.__getattribute__(defs_slot), float):
                 md5.update(str(round(self.defs.__getattribute__(defs_slot), 1)).encode('utf-8'))
             else:
@@ -255,6 +259,10 @@ class Survey(object):
         self.questionnaire = db.fromJson(self.questionnaire, questionnaire.Questionnaire)
         self.questionnaire.survey = self
         self.defs = db.fromJson(self.defs, Defs)
+
+        # Migrate old Defs object (from 1.9.5 or newer)
+        if not hasattr(self.defs, 'engine'):
+            self.defs.engine = defs.latex_engine
 
     @staticmethod
     def new(survey_dir):
