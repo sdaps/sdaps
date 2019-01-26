@@ -192,6 +192,14 @@ def parse(survey):
                     box.value = int(args[8]) if args[8] else None
                 else:
                     assert(len(args) == 6)
+            elif boxtype == 'Codebox':
+                box = model.questionnaire.Codebox()
+                if len(args) == 9:
+                    lw = args[6] if args[6] else None
+                    box.var = args[7] if args[7] else None
+                    box.value = int(args[8]) if args[8] else None
+                else:
+                    assert(len(args) == 6)
             else:
                 box = model.questionnaire.Checkbox()
                 if len(args) == 7:

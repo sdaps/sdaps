@@ -491,3 +491,7 @@ class Textbox(Box):
 
     pass
 
+class Codebox(Textbox):
+
+    pass
+

@@ -891,3 +891,36 @@ class Textbox(Box, metaclass=model.buddy.Register):
             self.obj.data.y = self.obj.y
             self.obj.data.width = self.obj.width
             self.obj.data.height = self.obj.height
+
+class Codebox(Textbox, metaclass=model.buddy.Register):
+
+    name = 'recognize'
+    obj_class = model.questionnaire.Codebox
+
+    def recognize(self):
+        img = self.obj.sheet.get_page_image(self.obj.page_number)
+
+        if img is None or img.recognize.matrix is None:
+            self.obj.sheet.valid = 0
+            return
+
+        x = self.obj.x
+        y = self.obj.y
+        width = self.obj.width
+        height = self.obj.height
+
+        surface = img.surface.surface
+        matrix = img.recognize.matrix
+
+        res = read_barcode(surface, matrix.mm_to_px(),
+                           x, y, width, height,
+                           "QRCODE")
+
+        # This is maybe a bit odd, but we accept empty string as a valid
+        # content (if there was a barcode which was just the empty string).
+        if res is not None:
+            self.obj.data.state = True
+            self.obj.data.text = res
+        else:
+            self.obj.data.state = False
+            self.obj.data.text = None

@@ -273,4 +273,37 @@ class Textbox(Box, metaclass=model.buddy.Register):
         self.obj.data.state = state
         self.obj.data.text = text
 
+class Codebox(Textbox, metaclass=model.buddy.Register):
+
+    name = 'csvdata'
+    obj_class = model.questionnaire.Codebox
+
+    def export_header(self):
+        header = [self.obj.id_csv()]
+        return header
+
+    def export_data(self):
+        data = str(int(self.obj.data.state))
+
+        if self.obj.data.state and self.obj.data.text:
+            data = self.obj.data.text
+
+        data = { self.obj.id_csv() : data }
+
+        return data
+
+    def import_data(self, data):
+        if not self.obj.id_csv() in data:
+            return
+
+        try:
+            state = int(data[self.obj.id_csv()])
+            text = ''
+        except ValueError:
+            state = 1
+            text = str(data[self.obj.id_csv()])
+
+        self.obj.data.state = state
+        self.obj.data.text = text
+
 
