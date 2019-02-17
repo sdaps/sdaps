@@ -30,7 +30,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.add_project_subparser("csv",
+parser = script.add_subparser("csv",
     help=_("Import or export data to/from CSV files."),
     description=_("""Import or export data to/from a CSV file. The first line
     is a header which defines questionnaire_id and global_id, and a column
@@ -42,6 +42,8 @@ subparser = parser.add_subparsers()
 
 export = subparser.add_parser('export',
     help=_("Export data to CSV file."))
+script.add_project_argument(export)
+
 export.add_argument('-o', '--output',
     help=_("Filename to store the data to (default: data_%%i.csv)"))
 export.add_argument('-d', '--delimiter',
@@ -72,6 +74,8 @@ export.set_defaults(direction='export')
 
 import_ = subparser.add_parser('import',
     help=_("Import data to from a CSV file."))
+script.add_project_argument(import_)
+
 import_.add_argument('file',
     help=_("The file to import."))
 import_.set_defaults(direction='import')

@@ -46,14 +46,14 @@ diff "data/tex/code128_test_ids" "$PROJECT/ids"
 "$SDAPS" recognize "$PROJECT"
 
 # Import some data
-"$SDAPS" csv "$PROJECT" import data/tex/ids_test_import.csv
+"$SDAPS" csv import "$PROJECT" data/tex/ids_test_import.csv
 # Export data again
-"$SDAPS" csv "$PROJECT" export
+"$SDAPS" csv export "$PROJECT"
 # And compare with expected result
 diff -qup data/tex/ids_test_export.csv "$PROJECT/data_1.csv"
 
 # Export all the other extra data
-"$SDAPS" csv "$PROJECT" export --images --question-images --quality
+"$SDAPS" csv export "$PROJECT" --images --question-images --quality
 
 # And finally, create a report with the fake result, both with tex and reportlab
 "$SDAPS" report "$PROJECT"

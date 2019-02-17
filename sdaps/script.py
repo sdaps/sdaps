@@ -44,10 +44,18 @@ parser = argparse.ArgumentParser(description=description, epilog=epilog, prog=pr
 
 subparsers = parser.add_subparsers(help=_("command list|Commands:"))
 
-def add_project_subparser(*args, **kwargs):
+def add_subparser(*args, **kwargs):
     parser = subparsers.add_parser(*args, **kwargs)
 
+    return parser
+
+def add_project_argument(parser):
     parser.add_argument('project', type=str, help=_("project directory|The SDAPS project."))
+
+def add_project_subparser(*args, **kwargs):
+    parser = add_subparser(*args, **kwargs)
+
+    add_project_argument(parser)
 
     return parser
 
