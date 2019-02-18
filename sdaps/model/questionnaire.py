@@ -90,7 +90,7 @@ class Questionnaire(buddy.Object):
     def disconnect_data_changed(self, func):
         self._notify_changed_list.remove(func)
 
-    def __unicode__(self):
+    def __str__(self):
         return str().join(
             ['%s\n' % self.__class__.__name__] +
             [str(qobject) for qobject in self.qobjects]
@@ -169,7 +169,7 @@ class QObject(buddy.Object, DataObject):
         ids = [str(x) for x in self.id]
         return '_' + '_'.join(ids)
 
-    def __unicode__(self):
+    def __str__(self):
         return '(%s)\n' % (
             self.__class__.__name__,
         )
@@ -204,7 +204,7 @@ class Head(QObject):
         self.id = (id[0] + 1, ) + (0,)*(len(id)-1)
         return self.id
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s(%s) %s\n' % (
             self.id_str(),
             self.__class__.__name__,
@@ -223,7 +223,7 @@ class Question(QObject):
         for box in self.boxes:
             box.calculate_survey_id(md5)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s(%s) %s {%i}\n' % (
             self.id_str(),
             self.__class__.__name__,
@@ -234,9 +234,9 @@ class Question(QObject):
 
 class Choice(Question):
 
-    def __unicode__(self):
+    def __str__(self):
         return str().join(
-            [Question.__unicode__(self)] +
+            [Question.__str__(self)] +
             [str(box) for box in self.boxes]
         )
 
@@ -256,9 +256,9 @@ class Option(Question):
         self.value_none = -1
         self.value_invalid = -2
 
-    def __unicode__(self):
+    def __str__(self):
         return str().join(
-            [Question.__unicode__(self)] +
+            [Question.__str__(self)] +
             [str(box) for box in self.boxes]
         )
 
@@ -312,16 +312,16 @@ class Range(Option):
         self.answers = ("", "")
         self.range = (0, 0)
 
-    def __unicode__(self):
+    def __str__(self):
         if len(self.answers) == 2:
             return str().join(
-                [Question.__unicode__(self)] +
+                [Question.__str__(self)] +
                 ['\t%s (%i) - %s (%i)\n' % (self.answers[0], self.range[0], self.answers[1], self.range[1])] +
                 [str(box) for box in self.boxes]
             )
         else:
             return str().join(
-                [Question.__unicode__(self)] +
+                [Question.__str__(self)] +
                 ['\t? - ?\n'] +
                 [str(box) for box in self.boxes]
             )
@@ -332,9 +332,9 @@ class Mark(Range):
 
 class Text(Question):
 
-    def __unicode__(self):
+    def __str__(self):
         return str().join(
-            [Question.__unicode__(self)] +
+            [Question.__str__(self)] +
             [str(box) for box in self.boxes]
         )
 
@@ -362,9 +362,9 @@ class Additional_Mark(Question):
         Question.init_attributes(self)
         self.answers = list()
 
-    def __unicode__(self):
+    def __str__(self):
         return str().join(
-            [Question.__unicode__(self)] +
+            [Question.__str__(self)] +
             ['\t%s - %s\n' % tuple(self.answers)]
         )
 
@@ -382,9 +382,9 @@ class Additional_FilterHistogram(Question):
         self.answers = list()
         self.filters = list()
 
-    def __unicode__(self):
+    def __str__(self):
         result = []
-        result.append(Question.__unicode__(self))
+        result.append(Question.__str__(self))
         for i in range(len(self.answers)):
             result.append('\t%s - %s\n' % (self.answers[i], self.filters[i]))
         return str().join(result)
@@ -458,7 +458,7 @@ class Box(buddy.Object, DataObject):
         tmp = struct.pack('!ffff', self.x, self.y, self.width, self.height)
         md5.update(tmp)
 
-    def __unicode__(self):
+    def __str__(self):
         return '\t%i(%s) %s %s %s %s %s\n' % (
             self.value,
             (self.__class__.__name__).ljust(8),
