@@ -62,7 +62,7 @@ class sdaps_build_tex(build.build):
             print('Did you forget to checkout the git submodule? See README for more information.')
             os._exit(1)
         os.chdir('tex/class')
-        self.spawn(['./build.lua', 'unpack'])
+        self.spawn(['l3build', 'unpack'])
         os.chdir(maindir)
 
         files = [os.path.join(self.tex_resultdir, f) for f in os.listdir(self.tex_resultdir)]
