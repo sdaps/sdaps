@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:10+0100\n"
-"PO-Revision-Date: 2018-11-19 17:07+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2019-03-30 01:04+0000\n"
+"Last-Translator: Rui Mendes <xz9@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/master/"
 "pt/>\n"
 "Language: pt\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3-dev\n"
+"X-Generator: Weblate 3.6-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
-msgstr "SDAPS -- Ferramenta de questionários baseados em papel."
+msgstr "SDAPS -- Ferramenta para reconhecimento de questionários em papel."
 
 #: ../sdaps/script.py:45
 msgid "command list|Commands:"
@@ -29,7 +29,7 @@ msgstr "lista de comandos|Comandos:"
 
 #: ../sdaps/script.py:50
 msgid "project directory|The SDAPS project."
-msgstr "diretório do projeto|Projeto SDAPS."
+msgstr "pasta do projeto|Projeto SDAPS."
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
@@ -37,8 +37,8 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
-"Ficheiro de entrada inválido %s. Você precisa especificar uma imagem TIFF "
-"(multipáginas) monocromática como entrada."
+"Ficheiro de entrada inválido %s. Tem de especificar uma imagem TIFF (multi-"
+"páginas) monocromática como entrada."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
@@ -46,13 +46,13 @@ msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
 "%i)."
 msgstr ""
-"Não adicionando %s porque ele tem um número de páginas errado (deve ser um "
+"%s não foi adicionado porque tem um número de páginas errado (tem de ser um "
 "múltiplo de %i)."
 
 #: ../sdaps/boxgallery/__init__.py:108
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
-msgstr "Renderizando caixas pela métrica \"%s\"."
+msgstr "A renderizar caixas pela métrica \"%s\"."
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
@@ -76,15 +76,14 @@ msgid ""
 "    the data will be referenced using a relative path."
 msgstr ""
 "Este comando é usado para adicionar imagens digitalizadas na pesquisa.\n"
-"     A imagem precisa ser em formato TIFF (multipáginas) monocromático de "
+"     A imagem tem de ser no formato TIFF (multi-páginas) monocromático a "
 "300dpi.\n"
-"     Você pode optar por não copiar os dados para o diretório do projeto. "
-"Nesse\n"
+"     Pode optar por não copiar os dados para a pasta do projeto. Nesse\n"
 "     caso os dados serão referenciados usando um caminho relativo."
 
 #: ../sdaps/cmdline/add.py:38
 msgid "Convert given files and add the result."
-msgstr ""
+msgstr "Converter os ficheiros especificados e adicionar o resultado."
 
 #: ../sdaps/cmdline/add.py:43
 msgid ""
@@ -92,58 +91,60 @@ msgid ""
 "        corner marks are not found then the image will be added as-is."
 msgstr ""
 "Faz uma transformação 3D depois de encontrar as marcas de canto.\n"
-"        Se as marcas não forem encontradas, a imagem é adicionada como é."
+"        Se as marcas não forem encontradas, a imagem é adicionada tal como "
+"está."
 
 #: ../sdaps/cmdline/add.py:49
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
 msgstr ""
-"Força a adição das imagens, mesmo que a contagem de páginas esteja errada "
-"(só use se você sabe o que está fazendo)."
+"Força a adição das imagens, mesmo que a contagem de páginas esteja errada ("
+"use apenas se souber o que está a fazer)."
 
 #: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
-msgstr "Copie os arquivos para o diretório (padrão)."
+msgstr "Copiar os ficheiros para a pasta (padrão)."
 
 #: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
-msgstr "Não copie os arquivos para o diretório."
+msgstr "Não copiar os ficheiros para a pasta."
 
 #: ../sdaps/cmdline/add.py:62
-#, fuzzy
 msgid ""
 "Images contain a duplex scan of a simplex questionnaire (default: simplex "
 "scan)."
 msgstr ""
-"As imagens contêm uma digitalização duplex de um questionário simplex "
-"(padrão: digitalização simplex)."
+"As imagens contêm uma digitalização das 2 faces de cada página (duplex) de "
+"um questionário só com 1 face de cada página (padrão: digitalização simplex)."
 
 #: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:48
 msgid "A number of TIFF image files."
-msgstr "Um número de arquivos de imagem TIFF."
+msgstr "Um número de ficheiros de imagens TIFF."
 
 #: ../sdaps/cmdline/add.py:94
 msgid "The --no-copy option is not compatible with --convert!"
-msgstr ""
+msgstr "A opção --no-copy não é compatível com --convert!"
 
 #: ../sdaps/cmdline/add.py:103
 msgid "Converting input files into a single temporary file."
-msgstr ""
+msgstr "Converter ficheiros de entrada numa pasta temporária."
 
 #: ../sdaps/cmdline/add.py:115
 msgid ""
 "The page count of the created temporary file does not work with this survey."
 msgstr ""
+"O número de páginas do ficheiro criado temporariamente não funciona com este "
+"questionário."
 
 #: ../sdaps/cmdline/add.py:120
 msgid "Running the conversion failed."
-msgstr ""
+msgstr "A conversão falhou."
 
 #: ../sdaps/cmdline/add.py:126
 #, python-format
 msgid "Processing %s"
-msgstr "Processando %s"
+msgstr "A processar %s"
 
 #: ../sdaps/cmdline/add.py:130 ../sdaps/reset/__init__.py:33
 msgid "Done"
@@ -161,11 +162,11 @@ msgid ""
 msgstr ""
 "Este comando é principalmente um utilitário de depuração. Ele cria uma\n"
 "    versão anotada do questionário, com as informações que o SDAPS\n"
-"    sabe sobre ele sobrepostas na parte superior."
+"    sabe sobre ele, sobrepostas na parte superior."
 
 #: ../sdaps/cmdline/boxgallery.py:31
 msgid "Create PDFs with boxes sorted by the detection heuristics."
-msgstr "Cria PDFs com caixas ordenadas por heurísticas de detecção."
+msgstr "Cria PDFs com caixas ordenadas por heurísticas de deteção."
 
 #: ../sdaps/cmdline/boxgallery.py:32
 msgid ""
@@ -179,7 +180,7 @@ msgid ""
 msgstr ""
 "O SDAPS usa várias heurísticas para determinar o estado das caixas.\n"
 "    Há uma lista para cada heurística dando o estado esperado e a qualidade\n"
-"    do valor (ver defs.py). Usando este comando um PDF será criado para "
+"    do valor (ver defs.py). Usando este comando, será criado um PDF para "
 "cada\n"
 "    uma das heurísticas, para que se possa ajustar os valores."
 
@@ -204,32 +205,31 @@ msgid ""
 "may facilitate\n"
 "        working with photos of questionnaires instead of scans."
 msgstr ""
-"Esse comando pode ser usado se você tiver ficheiros digitalizados em formato "
+"Esse comando pode ser usado se tiver ficheiros digitalizados num formato "
 "diferente\n"
-"\tao TIFF monocromático esperado. Todos os ficheiros serão carregados,\n"
-"\tconvertidos em monocromático e armazenados em um arquivo TIFF multipágina "
+"\tdo TIFF monocromático esperado. Todos os ficheiros serão carregados,\n"
+"\tconvertidos em monocromático e armazenados num ficheiro TIFF multi-página "
 "de 1bpp.\n"
-"\tOpcionalmente, você pode selecionar que se realize uma transformação 3D,\n"
-"\tcom isto pode ser possível trabalhar com fotos dos questionários, ao "
-"invés\n"
-"\tda digitalização convencional."
+"\tOpcionalmente, pode selecionar Transformação 3D, o que pode facilitar\n"
+"\to trabalho com fotos dos questionários em vez da digitalização "
+"convencional."
 
 #: ../sdaps/cmdline/convert.py:38
-#, fuzzy
 msgid ""
 "Do a 3D-transformation after finding the corner marks.\n"
 "    If they are not found, the image will be processed as-is."
 msgstr ""
 "Faz uma transformação 3D depois de encontrar as marcas de canto.\n"
-"        Se as marcas não forem encontradas, a imagem é adicionada como é."
+"        Se as marcas não forem encontradas, a imagem é adicionada tal como "
+"está."
 
 #: ../sdaps/cmdline/convert.py:44
 msgid "The location of the output file."
-msgstr "A localização do ficheiro de saída. Deve ser fornecida."
+msgstr "A localização do ficheiro de saída."
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
-msgstr "Nome do ficheiro de saída não especificado!"
+msgstr "Não foi especificado o nome do ficheiro de saída!"
 
 #: ../sdaps/cmdline/cover.py:27
 msgid "Create a cover for the questionnaires."
