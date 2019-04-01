@@ -493,5 +493,5 @@ class Textbox(Box):
 
 class Codebox(Textbox):
 
-    pass
+    _data_object = 'Textbox'
 
