@@ -912,7 +912,7 @@ class Codebox(Textbox, metaclass=model.buddy.Register):
         surface = img.surface.surface
         matrix = img.recognize.matrix
 
-        res = read_barcode(surface, matrix.mm_to_px(),
+        res = read_barcode(surface, matrix,
                            x, y, width, height,
                            "QRCODE")
 
