@@ -27,6 +27,7 @@ from sdaps import defs
 from sdaps.utils.exceptions import RecognitionError
 from sdaps import log
 
+from sdaps.utils.barcode import read_barcode
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
