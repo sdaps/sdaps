@@ -87,6 +87,19 @@ def scan(surface, matrix, x, y, width, height, btype="CODE128", kfill=False):
     stdout, stderr = proc.communicate()
     os.unlink(tmp)
 
+    # The following can be used to look at the images
+    #rgb_surface = cairo.ImageSurface(cairo.FORMAT_RGB24, width, height)
+    #cr = cairo.Context(rgb_surface)
+    #cr.set_operator(cairo.OPERATOR_SOURCE)
+    #cr.set_source_rgba(1, 1, 1, 1)
+    #cr.paint()
+    #cr.set_operator(cairo.OPERATOR_OVER)
+    #cr.set_source_rgba(0, 0, 0, 1)
+    #cr.mask_surface(a1_surface)
+    #global b_count
+    #rgb_surface.write_to_png("/tmp/barcode-%03i.png" % b_count)
+    #b_count += 1
+
     if proc.returncode == 4:
         return None
 
@@ -94,12 +107,6 @@ def scan(surface, matrix, x, y, width, height, btype="CODE128", kfill=False):
     barcode = stdout.split(b'\n')[0]
     assert barcode.split(b':', 1)[0].replace(b'-', b'').lower() == btype.lower().encode('ascii')
 
-
-    # The following can be used to look at the images
-    #rgb_surface.write_to_png("/tmp/barcode-%03i.png" % barcode)
-    #barcode += 1
-
     return barcode.split(b':', 1)[1].decode('utf-8')
 
-
-
+#b_count = 0
