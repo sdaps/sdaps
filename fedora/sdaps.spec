@@ -1,6 +1,6 @@
 %global modulename sdaps
 #define commit SNAPSHOT_COMMIT
-%define relversion 1.9.5
+%define relversion 1.9.6
 %if 0%{?commit:1}
   %define shortcommit %(c=%{commit}; echo ${c:0:7})
   %define build_timestamp %(date +"%Y%m%d")
@@ -84,6 +84,9 @@ IGNORE_PATTERN_EXTEND='\|^survey_id' ./run-test-locally.sh
 %{_bindir}/*
 
 %changelog
+* Sun Jan 20 2019 Benjamin Berg <bberg@redhat.com> - 1.9.6-1
+- New SDAPS release
+
 * Sun Jan 20 2019 Benjamin Berg <bberg@redhat.com> - 1.9.5-1
 - New SDAPS release
 
