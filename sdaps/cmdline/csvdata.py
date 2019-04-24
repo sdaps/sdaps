@@ -38,7 +38,7 @@ parser = script.add_subparser("csv",
     limited, as you need to specifiy the questionnaire ID to select the sheet
     which should be updated."""))
 
-subparser = parser.add_subparsers()
+subparser = parser.add_subparsers(dest='subcommand', required=True)
 
 export = subparser.add_parser('export',
     help=_("Export data to CSV file."))
