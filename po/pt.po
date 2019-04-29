@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:10+0100\n"
-"PO-Revision-Date: 2019-04-18 22:07+0000\n"
+"PO-Revision-Date: 2019-04-30 00:48+0000\n"
 "Last-Translator: Rui Mendes <xz9@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/master/"
 "pt/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.6-dev\n"
+"X-Generator: Weblate 3.6.1\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
@@ -614,7 +614,7 @@ msgid "Page|Invalid"
 msgstr "Página|Inválida"
 
 #: ../sdaps/gui/__init__.py:214
-#, fuzzy, python-format
+#, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Página %i"
@@ -971,7 +971,6 @@ msgid "Standard Deviation: %.2f"
 msgstr "Desvio padrão: %.2f"
 
 #: ../sdaps/report/__init__.py:75 ../sdaps/reporttex/__init__.py:140
-#, fuzzy
 msgid "Turned in Questionnaires"
 msgstr "Quantidade de questionários"
 
