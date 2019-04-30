@@ -19,8 +19,8 @@ Package: sdaps
 Architecture: any
 Depends: ${misc:Depends}, ${python3:Depends}, ${shlibs:Depends},
  python3-cairo, python3-gi, python3-pil,
- python3-reportlab, python3-gi-cairo, zbar-tools
-Recommends: gir1.2-gtk-3.0 | gir1.0-gtk-3.0, texlive, texlive-latex-extra,
+ python3-reportlab, python3-gi-cairo, zbar-tools,
+ gir1.2-gtk-3.0 | gir1.0-gtk-3.0, texlive, texlive-latex-extra,
  texlive-generic-recommended, pgf | texlive-pictures (>= 2017.20170808),
  latex-beamer | texlive-latex-recommended (>= 2017.20170808),
  texlive-lang-ukenglish | texlive-lang-english, texlive-science,
