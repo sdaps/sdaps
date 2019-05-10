@@ -1,3 +1,20 @@
+=========================
+WARNING
+=========================
+
+These scripts were designed for earlier versions of SDAPS. While the idea
+was that they operate without modifying the underlying database, this is
+currently *not* the case.
+Again, because of changes to the data storage, the survey is actually
+updated *immediately* and changes done by these scripts *will* be written
+to disk.
+
+Also, they are probably broken to begin with …
+
+
+With that warning, the old README
+---------------------------------
+
 These are examples of what can be done by using the SDAPS modules
 directly. This may be useful for specialized use cases, where one
 wants a custom behaviour.
