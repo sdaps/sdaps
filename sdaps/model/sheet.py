@@ -86,6 +86,10 @@ class Sheet(buddy.Object):
                 img.verified = data['verified']
             del data['verified']
 
+        # Ensure value exist if migrated from an old version
+        if 'review_comment' not in data:
+            data['review_comment'] = None
+
         self.__dict__ = data
 
     @property
