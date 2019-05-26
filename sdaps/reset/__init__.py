@@ -26,7 +26,7 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 def reset(survey):
-    print((_("Removing stored data...")))
+    print((_("Removing stored data…")))
     survey.sheets = []
     survey.questionnaire_ids = []
     survey.save()
