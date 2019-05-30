@@ -68,7 +68,7 @@ def fromJson(data, module_or_class):
             setattr(obj, k, v)
 
     else:
-        obj.__dict__ = data
+        obj.__dict__.update(data)
 
     return obj
 

@@ -69,7 +69,9 @@ class Sheet(buddy.Object):
             state['data']['^'.join(str(_) for _ in k)] = v
 
     def __setstate__(self, data):
+        # Attributes that may not (yet) be present in the database
         self.survey = None
+        self.review_comment = None
 
         _tmp = data['data']
         data['data'] = dict()
@@ -86,11 +88,7 @@ class Sheet(buddy.Object):
                 img.verified = data['verified']
             del data['verified']
 
-        # Ensure value exist if migrated from an old version
-        if 'review_comment' not in data:
-            data['review_comment'] = None
-
-        self.__dict__ = data
+        self.__dict__.update(data)
 
     @property
     def verified(self):

@@ -254,8 +254,8 @@ class Survey(object):
         sheet._clear_dirty()
 
     def __setstate__(self, state):
-        self.__dict__ = state
         self._internal_init()
+        self.__dict__.update(state)
         self.questionnaire = db.fromJson(self.questionnaire, questionnaire.Questionnaire)
         self.questionnaire.survey = self
         self.defs = db.fromJson(self.defs, Defs)

@@ -107,7 +107,7 @@ class Questionnaire(buddy.Object):
         self._notify_changed_list = list()
 
     def __setstate__(self, data):
-        self.__dict__ = data
+        self.__dict__.update(data)
 
         self._notify_changed_list = list()
 
@@ -187,7 +187,10 @@ class QObject(buddy.Object, DataObject):
         return None
 
     def __setstate__(self, data):
-        self.__dict__ = data
+        # Attributes that may not (yet) be present in the database
+        self.var = None
+
+        self.__dict__.update(data)
         self.id = tuple(self.id)
 
         for i in range(len(self.boxes)):
@@ -474,7 +477,7 @@ class Box(buddy.Object, DataObject):
             return self
 
     def __setstate__(self, data):
-        self.__dict__ = data
+        self.__dict__.update(data)
         self.id = tuple(self.id)
 
 class Checkbox(Box):
