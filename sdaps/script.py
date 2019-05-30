@@ -42,7 +42,9 @@ description = _("SDAPS -- Paper based survey tool.")
 epilog = None
 parser = argparse.ArgumentParser(description=description, epilog=epilog, prog=prog)
 
-subparsers = parser.add_subparsers(help=_("command list|Commands:"), dest='command', required=True)
+# Set required as an attribute rather than kwarg so that it works with python <3.7
+subparsers = parser.add_subparsers(help=_("command list|Commands:"), dest='command')
+subparsers.required = True
 
 def add_subparser(*args, **kwargs):
     parser = subparsers.add_parser(*args, **kwargs)
