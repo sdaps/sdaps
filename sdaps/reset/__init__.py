@@ -27,7 +27,7 @@ _ = ugettext
 
 def reset(survey):
     print((_("Removing stored data...")))
-    survey.sheets = []
+    survey.iterate(lambda: survey.delete_sheet(survey.get_sheet()))
     survey.questionnaire_ids = []
     survey.save()
     print((_("Done")))
