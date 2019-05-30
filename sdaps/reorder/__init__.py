@@ -45,7 +45,12 @@ def reorder(survey):
     # The images are put into a dictionnary using the questionnaire ID.
     # Each entry in the dictionary is a list.
     images = defaultdict(lambda : [])
-    for sheet in survey.sheets[:]: # Use a flat copy to iterate over
+
+    # Load all sheets into memory
+    sheets = []
+    survey.iterate(lambda: sheets.append(survey.get_sheet()))
+
+    for sheet in sheets: # Use a flat copy to iterate over
         broken = False
         pages = set()
         for image in sheet.images:
@@ -66,7 +71,7 @@ def reorder(survey):
 
         if broken:
             # Drop from the list of sheets
-            survey.sheets.remove(sheet)
+            survey.delete_sheet(sheet)
 
             for image in sheet.images:
                 images[(image.questionnaire_id, image.global_id)].append(image)
