@@ -155,6 +155,17 @@ class Survey(object):
 
         self.goto_sheet(sheet)
 
+    def delete_sheet(self, sheet):
+        """"
+        WARNING: The sheet will remain iteratable until the survey has been
+        saved!
+        """
+        # This is a bit of a hack, but it will work great
+        sheet._delete = True
+        sheet._dirty = True
+
+        self.goto_sheet(None)
+
     def calculate_survey_id(self):
         """Calculate the unique survey ID from the surveys settings and boxes.
 
@@ -241,6 +252,10 @@ class Survey(object):
 
     def _db_save_sheet(self, cursor, sheet):
         if not sheet.dirty and sheet._rowid != -1:
+            return
+
+        if hasattr(sheet, '_delete') and sheet._delete:
+            cursor.execute('DELETE FROM sheets WHERE survey_rowid=? and rowid=?', (self._survey_rowid, sheet._rowid))
             return
 
         tmp = json.dumps(sheet, default=db.toJson)
