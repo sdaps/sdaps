@@ -1,3 +1,18 @@
+Overview of Changes in SDAPS 1.9.7
+==================================
+
+This is a smaller bugfix release mostly to solve compatibility issues with
+older SDAPS versions.
+
+Important changes:
+ * Slightly improved command line parsing
+ * Fix various data format migration issues (#173, #175)
+ * Fix the reset and reorder commands to work again (#168)
+ * Update LaTeX class with a few minor fixes
+
+New and updated languages:
+ * Portuguese
+
 Overview of Changes in SDAPS 1.9.6
 ==================================
 
