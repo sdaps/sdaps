@@ -372,8 +372,9 @@ class Textbox(Box, metaclass=model.buddy.Register):
         start = self.buffer.get_start_iter()
         end = self.buffer.get_end_iter()
         currtext = self.buffer.get_text(start, end, False)
-        if self.obj.data.text != currtext:
-            self.buffer.set_text(self.obj.data.text)
+        text = self.obj.data.text if self.obj.data.text else ''
+        if text != currtext:
+            self.buffer.set_text(text)
 
     def focus(self):
         if self.textbox.props.sensitive:
