@@ -132,7 +132,7 @@ class sdaps_build_i18n(build_i18n.build_i18n):
             f.write('%\n\n')
             f.write('\\ProvidesDictionary{translator-sdaps-dictionary}{%s}\n\n' % name)
 
-            for key in keys:
+            for key in sorted(keys):
                 if lang is not None:
                     k = "%s[%s]" % (key, lang)
                 else:
