@@ -30,6 +30,8 @@ image data(transformation matrix calculation).
 Please have a look at the documentation of the "model" package.
 """
 
+__version__ = '1.9.7'
+
 import sys
 
 from . import paths

@@ -27,6 +27,11 @@ from distutils.command import build
 from DistUtilsExtra.command import *
 import configparser
 
+# We import sdaps to grab the version number; a bit of a hack but
+# it should work just fine as few modules are actually loaded by doing
+# this
+from sdaps import __version__
+
 def pkgconfig(*packages, **kw):
     flag_map = {'-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries', '-D' : 'define_macros'}
     (status, tokens) = subprocess.getstatusoutput("pkg-config --libs --cflags %s" % ' '.join(packages))
@@ -174,7 +179,7 @@ class sdaps_build(build_extra.build_extra):
     sub_commands = build_extra.build_extra.sub_commands + [('build_tex', lambda x : True)]
 
 setup(name='sdaps',
-      version='1.9.7',
+      version=__version__,
       description='Scripts for data acquisition with paper-based surveys',
       url='http://sdaps.sipsolutions.net',
       author='Benjamin Berg, Christoph Simon',
