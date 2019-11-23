@@ -60,25 +60,6 @@ diff -qup data/tex/ids_test_export.csv "$PROJECT/data_1.csv"
 "$SDAPS" report_tex "$PROJECT"
 
 ###########################################################
-# Test Tex with IDs (classic mode)
-###########################################################
-
-PROJECT="projects/test-tex-classic"
-
-# Create projects dir if it does not exist
-if [ ! -e `dirname $PROJECT` ]; then
-	mkdir -p `dirname $PROJECT`
-fi
-
-# Remove project dir that may exist
-rm -rf "$PROJECT"
-
-"$SDAPS" setup "$PROJECT" "data/tex/questionnaire_classic.tex"
-
-# Create 10 unique sheets that can be printed and handed out
-"$SDAPS" stamp "$PROJECT" --random 10
-
-###########################################################
 # Test Tex without IDs
 ###########################################################
 
