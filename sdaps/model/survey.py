@@ -37,18 +37,20 @@ _ = ugettext
 valid_styles = ['classic', 'code128', 'custom', 'qr']
 valid_checkmodes = ['checkcorrect', 'check', 'fill']
 
+# Note that row_id has the same value as the implicit rowid row.
 _db_schema = """
 CREATE TABLE surveys (
+    row_id INTEGER PRIMARY KEY AUTOINCREMENT,
     json TEXT
 );
 CREATE TRIGGER survey_delete AFTER DELETE ON surveys FOR EACH ROW
   BEGIN
-    DELETE FROM sheets WHERE survey_rowid = OLD.rowid;
+    DELETE FROM sheets WHERE survey_rowid = OLD.row_id;
   END;
 
 
 CREATE TABLE sheets (
-    survey_rowid REFERENCES surveys(rowid) NOT NULL,
+    survey_rowid REFERENCES surveys(row_id) NOT NULL,
     sort INTEGER(8),
 
     json TEXT
