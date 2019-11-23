@@ -1,0 +1,24 @@
+[sdaps]
+title = asdf
+global_id = 
+
+[info]
+Author = The Author
+Date = 10.03.2013
+
+[defs]
+# These values are not read back, they exist for information only!
+paper_width = 210.0
+paper_height = 297.0
+print_questionnaire_id = False
+print_survey_id = True
+style = code128
+duplex = True
+checkmode = checkcorrect
+engine = pdflatex
+
+[questionnaire]
+# These values are not read back, they exist for information only!
+page_count = 2
+survey_id = 1056296852
+
