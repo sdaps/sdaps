@@ -28,6 +28,12 @@
 \usepackage{graphicx}
 \graphicspath{{coins/}}
 
+% Load and enable PDF form support; note that \begin{Form}/\end{Form} is needed
+\usepackage{sdapspdf}
+\ExplSyntaxOn
+\sdaps_context_append:nn{*}{pdf_form=true}
+\ExplSyntaxOff
+
 \author{The Author}
 \title{The Title}
 
@@ -37,6 +43,7 @@
   % If you don't like the default text at the beginning of each questionnaire
   % you can remove it with the optional [noinfo] parameter for the environment 
   \begin{questionnaire}
+  \begin{Form}
     % There is a predefined "info" style to hilight some text.
     \begin{info}
       You can create a customized information element similar to the standard
@@ -194,6 +201,8 @@
        \choice[text=Julius Caesar]{\includegraphics[height=4em]{RRC_452-2_Julius_Caesar_coin.jpg}}
        \question[text={Find the other side of Bactriane, Eucratide I, Face}]{Find the other side of \raisebox{-1.5em}{\includegraphics[height=4em,keepaspectratio]{Monnaie_de_Bactriane,_Eucratide_I,_face.jpg}}}
      \end{optiongroup}
+
+  \end{Form}
   \end{questionnaire}
 \end{document}
 
