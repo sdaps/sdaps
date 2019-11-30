@@ -21,11 +21,7 @@
   % checkboxes. valid modes are "checkcorrect" (default), "check" and
   % "fill".
   %checkmode=checkcorrect,
-  %
-  % The following options make sense so that we can get a better feel for the
-  % final look.
-  pagemark,
-  stamp]{sdapsclassic}
+  ]{sdapsclassic}
 \usepackage[utf8]{inputenc}
 % For demonstration purposes
 \usepackage{multicol}
@@ -112,17 +108,13 @@
     % Force a new page here
     \newpage
     \section{Tricks and Features}
-    SDAPS can also use circular checkboxes if you prefere. Or you can use the
-    {\ttfamily multicol} package to create multi-column layouts as is done below.
-
-    % Set checkbox style to be circular
-    \def\checkboxstyle{ellipse}
+    You can use the {\ttfamily multicol} package to create multi-column layouts
+    as is done below.
 
     \begin{multicols}{2}
-      \singlemark{This is a range question}{lower bound}{upper bound}%
-      % Note that we need the % at the end of the last line to prevent
-      % LaTeX from inserting too much whitespace.
-      \label{somelabel}
+      % We should use text= here to not get the label, but the class does not
+      % yet support this.
+      \singlemark{This is a range question\label{somelabel}}{lower bound}{upper bound}
 
       As you can see, this is a multi-column layout. The {\ttfamily markgroup} and
       {\ttfamily choicegroup} environments may be a bit tight in this mode.
@@ -155,8 +147,6 @@
 
     \textbox*{2cm}{And textboxes with a fixed height. This one is exactly 2\,cm high.}
 
-    % Reset checkbox style again.
-    \def\checkboxstyle{box}
 
   \end{questionnaire}
 \end{document}
