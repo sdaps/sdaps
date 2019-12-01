@@ -72,6 +72,16 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
     obj_class = model.questionnaire.Questionnaire
 
     def draw(self, cr, page_number):
+        # Draw an outline for the content area
+        cr.save()
+        cr.set_source_rgba(1.0, 0.0, 0.0, 0.6)
+        cr.set_line_width(LINE_WIDTH)
+        cr.rectangle(defs.corner_mark_left, defs.corner_mark_top,
+                     self.obj.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right,
+                     self.obj.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom)
+        cr.stroke()
+        cr.restore()
+
         for qobject in self.obj.qobjects:
             qobject.gui.draw(cr, page_number)
 

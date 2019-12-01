@@ -278,13 +278,6 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         # Set the matrix _after_ drawing the background pixbuf.
         cr.transform(self._mm_to_widget_matrix)
 
-        cr.set_source_rgba(1.0, 0.0, 0.0, 0.6)
-        cr.set_line_width(1.0 * 25.4 / 72.0)
-        cr.rectangle(defs.corner_mark_left, defs.corner_mark_top,
-                     self.provider.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right,
-                     self.provider.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom)
-        cr.stroke()
-
         # Draw the overlay stuff.
         self.provider.survey.questionnaire.gui.draw(cr, self.provider.image.page_number)
 
