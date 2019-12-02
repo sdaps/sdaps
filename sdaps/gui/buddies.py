@@ -21,7 +21,8 @@ import math
 
 from sdaps import model
 from sdaps import defs
-
+from sdaps import image
+from sdaps.image import TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT
 
 LINE_WIDTH = 25.4/72
 MIN_FREETEXT_SIZE = 4.0
@@ -66,20 +67,51 @@ def inner_ellipse(cr, x, y, width, height):
     # Restore old matrix (without removing the current path)
     cr.restore()
 
+def centered_circle(cr, x, y, radius):
+    inner_ellipse(cr, x - radius, y - radius, 2*radius, 2*radius)
+
 class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
     name = 'gui'
     obj_class = model.questionnaire.Questionnaire
 
+    def __init__(self, *args):
+        self._fixed_points = [TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT]
+        super().__init__(*args)
+
     def draw(self, cr, _image):
-        # Draw an outline for the content area
         cr.save()
+        # Draw an outline for the content area
         cr.set_source_rgba(1.0, 0.0, 0.0, 0.6)
         cr.set_line_width(LINE_WIDTH)
         cr.rectangle(defs.corner_mark_left, defs.corner_mark_top,
                      self.obj.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right,
                      self.obj.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom)
         cr.stroke()
+
+        # Draw draggable corner circles
+        cr.set_source_rgba(0.0, 0.0, 1.0, 0.6)
+        centered_circle(cr, defs.corner_mark_left, defs.corner_mark_top, 5*LINE_WIDTH)
+        if TOP_LEFT in self._fixed_points:
+            cr.fill()
+        else:
+            cr.stroke()
+        centered_circle(cr, self.obj.survey.defs.paper_width - defs.corner_mark_right, defs.corner_mark_top, 5*LINE_WIDTH)
+        if TOP_RIGHT in self._fixed_points:
+            cr.fill()
+        else:
+            cr.stroke()
+        centered_circle(cr, defs.corner_mark_left, self.obj.survey.defs.paper_height - defs.corner_mark_bottom, 5*LINE_WIDTH)
+        if BOTTOM_LEFT in self._fixed_points:
+            cr.fill()
+        else:
+            cr.stroke()
+        centered_circle(cr, self.obj.survey.defs.paper_width - defs.corner_mark_right, self.obj.survey.defs.paper_height - defs.corner_mark_bottom, 5*LINE_WIDTH)
+        if BOTTOM_RIGHT in self._fixed_points:
+            cr.fill()
+        else:
+            cr.stroke()
+
         cr.restore()
 
         for qobject in self.obj.qobjects:
@@ -93,12 +125,71 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         return None
 
     def find_edge(self, _image, x, y, tollerance_x, tollerance_y):
+        # Not technically edges, but first try to find the corner circles
+        corner = -1
+        if math.sqrt((x - defs.corner_mark_left) ** 2 +
+                     (y - defs.corner_mark_top) ** 2) < 5 * LINE_WIDTH + tollerance_x:
+            corner = TOP_LEFT
+
+        if math.sqrt((x + defs.corner_mark_right - self.obj.survey.defs.paper_width) ** 2 +
+                     (y - defs.corner_mark_top) ** 2) < 5 * LINE_WIDTH + tollerance_x:
+            corner = TOP_RIGHT
+
+        if math.sqrt((x - defs.corner_mark_left) ** 2 +
+                     (y + defs.corner_mark_bottom - self.obj.survey.defs.paper_height) ** 2) < 5 * LINE_WIDTH + tollerance_x:
+            corner = BOTTOM_LEFT
+
+        if math.sqrt((x + defs.corner_mark_right - self.obj.survey.defs.paper_width) ** 2 +
+                     (y + defs.corner_mark_bottom - self.obj.survey.defs.paper_height) ** 2) < 5 * LINE_WIDTH + tollerance_x:
+            corner = BOTTOM_RIGHT
+
+        if corner > -1:
+            try:
+                self._fixed_points.remove(corner)
+            except:
+                pass
+            self._fixed_points = [corner] + self._fixed_points[:2]
+
+            return (self.obj, (_image, corner))
+
         for qobject in self.obj.qobjects:
             result = qobject.gui.find_edge(_image.page_number, x, y, tollerance_x, tollerance_y)
             if result:
                 return result
         return None
 
+    def move_edge(self, args, x, y):
+        # Corner was moved, we need to update the matrix in a way to fit the
+        # moved point and the other three "fixed" points
+        # This is largely copy of the calculation in image.c calculate_matrix()
+
+        _image, corner = args
+
+        corners = [None, None, None, None]
+        if TOP_LEFT in self._fixed_points:
+            corners[TOP_LEFT] = (defs.corner_mark_left, defs.corner_mark_top)
+        if TOP_RIGHT in self._fixed_points:
+            corners[TOP_RIGHT] = (self.obj.survey.defs.paper_width - defs.corner_mark_right, defs.corner_mark_top)
+        if BOTTOM_LEFT in self._fixed_points:
+            corners[BOTTOM_LEFT] = (defs.corner_mark_left, self.obj.survey.defs.paper_height - defs.corner_mark_bottom)
+        if BOTTOM_RIGHT in self._fixed_points:
+            corners[BOTTOM_RIGHT] = (self.obj.survey.defs.paper_width - defs.corner_mark_right, self.obj.survey.defs.paper_height - defs.corner_mark_bottom)
+
+        # Put in the location of the corner that is being adjusted
+        corners[corner] = (x, y)
+
+        # Transform each corner into pixel space
+        m = _image.matrix.mm_to_px()
+        corners = [m.transform_point(*c) if c is not None else None for c in corners]
+
+        # Useful constants
+        mm_x = defs.corner_mark_left
+        mm_width = self.obj.sheet.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right
+        mm_y = defs.corner_mark_top
+        mm_height = self.obj.sheet.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom
+
+        m = image.matrix_from_corners_2d(corners, mm_x, mm_y, mm_width, mm_height)
+        _image.matrix.set_px_to_mm(m)
 
 class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
