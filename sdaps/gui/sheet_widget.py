@@ -146,7 +146,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
         if event.button == 3:
             # Give the corresponding widget the focus.
-            box = self.provider.survey.questionnaire.gui.find_box(self.provider.image.page_number, mm_x, mm_y)
+            box = self.provider.survey.questionnaire.gui.find_box(self.provider.image, mm_x, mm_y)
             if hasattr(box, "widget"):
                 box.widget.focus()
 
@@ -157,7 +157,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
 
         # Look for edges to drag first(on a 4x4px target)
         tollerance_x, tollerance_y = self._widget_to_mm_matrix.transform_distance(4.0, 4.0)
-        result = self.provider.survey.questionnaire.gui.find_edge(self.provider.image.page_number, mm_x, mm_y,
+        result = self.provider.survey.questionnaire.gui.find_edge(self.provider.image, mm_x, mm_y,
                                                                   tollerance_x, tollerance_y)
         if result:
             self._edge_drag_active = True
@@ -165,7 +165,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
             self._edge_drag_data = result[1]
             return True
 
-        box = self.provider.survey.questionnaire.gui.find_box(self.provider.image.page_number, mm_x, mm_y)
+        box = self.provider.survey.questionnaire.gui.find_box(self.provider.image, mm_x, mm_y)
 
         if box is not None:
             box.data.state = not box.data.state
@@ -284,7 +284,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         cr.transform(self._mm_to_widget_matrix)
 
         # Draw the overlay stuff.
-        self.provider.survey.questionnaire.gui.draw(cr, self.provider.image.page_number)
+        self.provider.survey.questionnaire.gui.draw(cr, self.provider.image)
 
         def inner_box(cr, x, y, width, height):
             line_width = cr.get_line_width()

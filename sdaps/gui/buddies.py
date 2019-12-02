@@ -71,7 +71,7 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
     name = 'gui'
     obj_class = model.questionnaire.Questionnaire
 
-    def draw(self, cr, page_number):
+    def draw(self, cr, _image):
         # Draw an outline for the content area
         cr.save()
         cr.set_source_rgba(1.0, 0.0, 0.0, 0.6)
@@ -83,18 +83,18 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         cr.restore()
 
         for qobject in self.obj.qobjects:
-            qobject.gui.draw(cr, page_number)
+            qobject.gui.draw(cr, _image.page_number)
 
-    def find_box(self, page_number, x, y):
+    def find_box(self, _image, x, y):
         for qobject in self.obj.qobjects:
-            result = qobject.gui.find_box(page_number, x, y)
+            result = qobject.gui.find_box(_image.page_number, x, y)
             if result:
                 return result
         return None
 
-    def find_edge(self, page_number, x, y, tollerance_x, tollerance_y):
+    def find_edge(self, _image, x, y, tollerance_x, tollerance_y):
         for qobject in self.obj.qobjects:
-            result = qobject.gui.find_edge(page_number, x, y, tollerance_x, tollerance_y)
+            result = qobject.gui.find_edge(_image.page_number, x, y, tollerance_x, tollerance_y)
             if result:
                 return result
         return None
