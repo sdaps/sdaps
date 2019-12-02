@@ -160,6 +160,7 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         result = self.provider.survey.questionnaire.gui.find_edge(self.provider.image, mm_x, mm_y,
                                                                   tollerance_x, tollerance_y)
         if result:
+            self.queue_draw()
             self._edge_drag_active = True
             self._edge_drag_obj = result[0]
             self._edge_drag_data = result[1]
