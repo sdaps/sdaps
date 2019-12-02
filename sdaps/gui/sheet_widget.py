@@ -74,6 +74,11 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
         self.queue_draw()
 
     def partial_update(self, questionnaire, qobj, obj, name, old_value):
+        if qobj is None and name == "raw_matrix":
+            self._update_matrices()
+            self.queue_draw()
+            return
+
         if not isinstance(obj, model.data.Box):
             return
 
