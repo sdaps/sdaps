@@ -25,6 +25,7 @@ analyze the image data.
 
 import os
 import sys
+import cairo
 
 from sdaps import paths
 from sdaps import defs
@@ -53,3 +54,102 @@ set_magic_values(defs.corner_mark_min_length,
                  defs.corner_mark_search_distance,
                  defs.image_line_coverage)
 
+# Offset into corners, not valid for C API which has +1 as offset!
+TOP_LEFT = 0
+TOP_RIGHT = 1
+BOTTOM_RIGHT = 2
+BOTTOM_LEFT = 3
+
+def calculate_matrix(surface, matrix, mm_x, mm_y, mm_width, mm_height):
+    """Detect the transformation matrix
+
+    This runs a detection for the corner marks that denote the bounding box
+    given by mm_x, mm_y, mm_width, mm_height in the surface. The passed matrix
+    is used for to estimate the resolution of the image.
+
+    This function returns a new cairo matrix or raises an error otherwise.
+    """
+    found_corners = 0
+
+    corners = []
+
+    for i in (1, 2, 3, 4):
+        try:
+            corners.append(find_corner_marker (surface, matrix, i))
+            found_corners += 1
+        except:
+            corners.append(None)
+
+    # We need at least 3 corners to do anything
+    assert found_corners >= 3
+
+    return matrix_from_corners_2d(corners, mm_x, mm_y, mm_width, mm_height)
+
+
+def matrix_from_corners_2d(corners, mm_x, mm_y, mm_width, mm_height):
+    """Calculate the transformation matrix from bounding box corners
+
+    Given the list of corners in the order top left, top right, bottom right,
+    bottom left in px space and the bounding box that is defined by these
+    corners in mm space, calcualte the corresponding px to mm transformation
+    matrix.
+
+    This function returns a new cairo matrix or raises an error otherwise.
+    """
+
+    assert len(corners) == 4
+    assert corners.count(None) <= 1
+
+    # Calculate a new "perfect" location for the undefined corner
+    if corners[TOP_LEFT] is None:
+        corners[TOP_LEFT] = (
+                corners[BOTTOM_LEFT][0] - corners[BOTTOM_RIGHT][0] + corners[TOP_RIGHT][0],
+                corners[TOP_RIGHT][1] - corners[BOTTOM_RIGHT][1] + corners[BOTTOM_LEFT][1]
+            )
+    if corners[TOP_RIGHT] is None:
+        corners[TOP_RIGHT] = (
+                corners[BOTTOM_RIGHT][0] - corners[BOTTOM_LEFT][0] + corners[TOP_LEFT][0],
+                corners[TOP_LEFT][1] - corners[BOTTOM_LEFT][1] + corners[BOTTOM_RIGHT][1]
+            )
+    if corners[BOTTOM_LEFT] is None:
+        corners[BOTTOM_LEFT] = (
+                corners[TOP_LEFT][0] - corners[TOP_RIGHT][0] + corners[BOTTOM_RIGHT][0],
+                corners[BOTTOM_RIGHT][1] - corners[TOP_RIGHT][1] + corners[TOP_LEFT][1]
+            )
+    if corners[BOTTOM_RIGHT] is None:
+        corners[BOTTOM_RIGHT] = (
+                corners[TOP_RIGHT][0] - corners[TOP_LEFT][0] + corners[BOTTOM_LEFT][0],
+                corners[BOTTOM_LEFT][1] - corners[TOP_LEFT][1] + corners[TOP_RIGHT][1]
+            )
+
+    # X-Axis
+    dx = ((corners[TOP_RIGHT][0] - corners[TOP_LEFT][0]) + (corners[BOTTOM_RIGHT][0] - corners[BOTTOM_LEFT][0])) / 2
+    dy = ((corners[TOP_RIGHT][1] - corners[TOP_LEFT][1]) + (corners[BOTTOM_RIGHT][1] - corners[BOTTOM_LEFT][1])) / 2
+
+    xx = dx / mm_width
+    yx = dy / mm_width
+
+    # y-Axis
+    dx = ((corners[BOTTOM_RIGHT][0] - corners[TOP_RIGHT][0]) + (corners[BOTTOM_LEFT][0] - corners[TOP_LEFT][0])) / 2
+    dy = ((corners[BOTTOM_RIGHT][1] - corners[TOP_RIGHT][1]) + (corners[BOTTOM_LEFT][1] - corners[TOP_LEFT][1])) / 2
+
+    xy = dx / mm_height
+    yy = dy / mm_height
+
+    # Center everything between the markers
+    x0 = (corners[BOTTOM_LEFT][0] + corners[BOTTOM_RIGHT][0] + corners[TOP_LEFT][0] + corners[TOP_RIGHT][0]) / 4
+    y0 = (corners[BOTTOM_LEFT][1] + corners[BOTTOM_RIGHT][1] + corners[TOP_LEFT][1] + corners[TOP_RIGHT][1]) / 4
+
+    x_center = mm_width / 2 + mm_x
+    y_center = mm_height / 2 + mm_y
+
+    dx = x_center * xx + y_center * xy
+    dy = x_center * yx + y_center * yy
+
+    x0 -= dx
+    y0 -= dy
+
+    m_new = cairo.Matrix(xx, yx, xy, yy, x0, y0)
+    m_new.invert()
+
+    return m_new
