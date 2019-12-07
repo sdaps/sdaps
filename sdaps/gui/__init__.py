@@ -35,6 +35,7 @@ import signal
 
 from sdaps import model
 from sdaps import surface
+from sdaps import recognize
 from sdaps import clifilter
 from sdaps import defs
 from sdaps import paths
@@ -393,6 +394,13 @@ class MainWindow(object):
             self._window.unfullscreen()
         else:
             self._window.fullscreen()
+        return True
+
+    def run_recognition(self, *args):
+        self.provider.survey.questionnaire.recognize.recognize(skip_identify=True,
+                                                               image=self.provider.image)
+        # We need to re-load the page as it gets cleared
+        self.provider.image.surface.load_rgb()
         return True
 
     def save_project(self, *args):
