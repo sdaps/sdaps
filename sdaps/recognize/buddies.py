@@ -467,6 +467,13 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         try:
             self.obj.sheet.recognize.recognize()
             result = True
+
+            # Mark sheet as invalid if any page is missing,
+            for page in range(self.obj.page_count):
+                img = self.obj.sheet.get_page_image(page + 1)
+
+                if img is None or img.recognize.matrix is None:
+                    self.obj.sheet.valid = False
         except RecognitionError:
             self.obj.sheet.quality = 0
             result = False
@@ -628,7 +635,6 @@ class Checkbox(Box, metaclass=model.buddy.Register):
         img = self.obj.sheet.get_page_image(self.obj.page_number)
 
         if img is None or img.recognize.matrix is None:
-            self.obj.sheet.valid = 0
             return
 
         surf, xoff, yoff = self.get_outline_mask()
@@ -834,7 +840,6 @@ class Textbox(Box, metaclass=model.buddy.Register):
         img = self.obj.sheet.get_page_image(self.obj.page_number)
 
         if img is None or img.recognize.matrix is None:
-            self.obj.sheet.valid = 0
             return
 
         x = self.obj.x
@@ -902,7 +907,6 @@ class Codebox(Textbox, metaclass=model.buddy.Register):
         img = self.obj.sheet.get_page_image(self.obj.page_number)
 
         if img is None or img.recognize.matrix is None:
-            self.obj.sheet.valid = 0
             return
 
         x = self.obj.x
