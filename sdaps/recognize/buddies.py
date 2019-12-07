@@ -41,6 +41,10 @@ class Sheet(model.buddy.Buddy, metaclass=model.buddy.Register):
     name = 'recognize'
     obj_class = model.sheet.Sheet
 
+    def __init__(self, *args):
+        model.buddy.Buddy.__init__(self, *args)
+        self.filter_image = None
+
     def recognize(self):
         global warned_multipage_not_correctly_scanned
 
@@ -306,6 +310,12 @@ class Sheet(model.buddy.Buddy, metaclass=model.buddy.Register):
 
             i += 2
 
+    def get_page_image(self, page_number):
+        img = self.obj.get_page_image(page_number)
+        if self.filter_image is not None:
+            return img if img == self.filter_image else None
+        return img
+
 
 class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
 
@@ -553,7 +563,7 @@ class Checkbox(Box, metaclass=model.buddy.Register):
     obj_class = model.questionnaire.Checkbox
 
     def prepare_mask(self):
-        img = self.obj.sheet.get_page_image(self.obj.page_number)
+        img = self.obj.sheet.recognize.get_page_image(self.obj.page_number)
         width, height = self.obj.width, self.obj.height
         line_width = self.obj.lw
 
@@ -632,7 +642,7 @@ class Checkbox(Box, metaclass=model.buddy.Register):
 
 
     def recognize(self):
-        img = self.obj.sheet.get_page_image(self.obj.page_number)
+        img = self.obj.sheet.recognize.get_page_image(self.obj.page_number)
 
         if img is None or img.recognize.matrix is None:
             return
@@ -837,7 +847,7 @@ class Textbox(Box, metaclass=model.buddy.Register):
                     yield x, y
 
         bbox = None
-        img = self.obj.sheet.get_page_image(self.obj.page_number)
+        img = self.obj.sheet.recognize.get_page_image(self.obj.page_number)
 
         if img is None or img.recognize.matrix is None:
             return
@@ -904,7 +914,7 @@ class Codebox(Textbox, metaclass=model.buddy.Register):
     obj_class = model.questionnaire.Codebox
 
     def recognize(self):
-        img = self.obj.sheet.get_page_image(self.obj.page_number)
+        img = self.obj.sheet.recognize.get_page_image(self.obj.page_number)
 
         if img is None or img.recognize.matrix is None:
             return
