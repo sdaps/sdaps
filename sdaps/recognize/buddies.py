@@ -494,13 +494,26 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
         return result
 
-    def recognize(self):
+    def recognize(self, skip_identify=False, image=None):
         # recognize image
-        res = self.identify(clean=False)
+        if not skip_identify:
+            assert image is None
+            res = self.identify(clean=False)
+        elif image is None:
+            for img in self.obj.images:
+                if not img.ignored:
+                    img.surface.load()
+            res = True
+        else:
+            image.surface.load()
+            res = True
+
         if res:
             # iterate over qobjects
+            self.obj.sheet.recognize.filter_image = image
             for qobject in self.obj.qobjects:
                 qobject.recognize.recognize()
+            self.obj.sheet.recognize.filter_image = None
 
             quality = 1
             for qobject in self.obj.qobjects:
