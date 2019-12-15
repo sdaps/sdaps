@@ -466,7 +466,7 @@ class MainWindow(object):
                 Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                 Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
             self.close_dialog.set_markup(
-                _("<b>Save the project before closing?</b>\n\nIf you do not save you may loose data."))
+                _("<b>Save the project before closing?</b>\n\nIf you do not save you may lose data."))
             self.close_dialog.set_default_response(Gtk.ResponseType.CANCEL)
 
         response = self.close_dialog.run()
