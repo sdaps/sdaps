@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:10+0100\n"
-"PO-Revision-Date: 2019-01-18 03:20+0000\n"
-"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
+"PO-Revision-Date: 2020-01-05 19:21+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
 "Language: fr\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 3.10\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
-msgstr "SDAPS -- Outil de sondage papier."
+msgstr "SDAPS - Outil d'enquête sur papier."
 
 #: ../sdaps/script.py:45
 msgid "command list|Commands:"
@@ -37,8 +37,8 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
-"Fichier %s non valide. Veuillez donner une image TIFF monochrome (multipage) "
-"en entrée."
+"Fichier %s non valide. Veuillez spécifier une image au format TIFF "
+"monochrome (multipage) en entrée."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
@@ -47,7 +47,7 @@ msgid ""
 "%i)."
 msgstr ""
 "%s n'a pas été ajouté parce que le nombre de pages est incorrect (doit être "
-"multiple de %i)."
+"un multiple de %i)."
 
 #: ../sdaps/boxgallery/__init__.py:108
 #, python-format
@@ -64,7 +64,7 @@ msgstr "Erreur : "
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
-msgstr "Ajouter au sondage des questionnaires scannés."
+msgstr "Ajouter les questionnaires scannés à l'enquête."
 
 #: ../sdaps/cmdline/add.py:32
 msgid ""
@@ -75,12 +75,12 @@ msgid ""
 "case\n"
 "    the data will be referenced using a relative path."
 msgstr ""
-"Cette commande est utilisée pour ajouter au sondage des images scannées.\n"
-"…Les images doivent être un fichier TIFF 300dpi monochrome (multipage). "
+"Cette commande sert à ajouter des images numérisées au sondage.\n"
+"\tLe fichier image doit être au format TIFF monochrome 300ppp (multipage). "
 "Vous\n"
-"…pouvez décider de ne pas copier les images dans le répertoire du projet. "
-"Dans\n"
-"…ce cas, les fichiers seront référencés par un chemin relatif."
+"\tpouvez choisir de ne pas copier le fichier dans le dossier du projet. Dans "
+"ce cas,\n"
+"\tvous devez indiquer son chemin relatif."
 
 #: ../sdaps/cmdline/add.py:38
 msgid "Convert given files and add the result."
