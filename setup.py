@@ -187,8 +187,8 @@ setup(name='sdaps',
       license='GPL-3',
       long_description="""
 SDAPS is a tool to carry out paper based surveys. You can create machine
-readable questionnaires using LibreOffice and LaTeX. It also provides
-the tools to later analyse the scanned data, and create a report.
+readable questionnaires using LaTeX. It also provides the tools to later
+analyse the scanned data, and create a report.
 """,
       packages=['sdaps',
                 'sdaps.add',
