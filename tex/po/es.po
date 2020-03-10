@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:09+0100\n"
-"PO-Revision-Date: 2014-09-19 15:15+0200\n"
-"Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
+"PO-Revision-Date: 2020-03-10 23:32+0000\n"
+"Last-Translator: Uxío Pérez <uxiopr@yahoo.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/tex/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.10-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #. The language name of the LaTeX dictionary file for translator
 #: ../tex_translations.in.h:2
@@ -40,38 +40,37 @@ msgstr "ID de cuestionario:"
 
 #. Default instructions on the questionnaire
 #: ../tex_translations.in.h:10
-#, fuzzy
 msgid ""
 "This questionnaire is evaluated automatically. Please use a pen to fill in "
 "your answers as follows:"
 msgstr ""
-"El cuestionario se lee automáticamente por un programa computerizado.  Por "
-"favor, utilice un bolígrafo para completar sus respuestas."
+"El cuestionario se evalúa automáticamente por un programa computerizado. Por "
+"favor, utilice un bolígrafo para completar sus respuestas:"
 
 #. Instruction on the questionnaire: Next to checked textbox
 #: ../tex_translations.in.h:12
 msgid "Selected"
-msgstr ""
+msgstr "Seleccionado"
 
 #. Instruction on the questionnaire: Next to filled checkbox
 #: ../tex_translations.in.h:14
 msgid "Fill to select"
-msgstr ""
+msgstr "Rellenar para seleccionar"
 
 #. Instruction on the questionnaire: Next to filled and checked checkbox
 #: ../tex_translations.in.h:16
 msgid "Undo select"
-msgstr ""
+msgstr "Deshacer selección"
 
 #. Instruction on the questionnaire: Multiple choice question
 #: ../tex_translations.in.h:18
 msgid "Multiple-choice (select all applicable options)"
-msgstr ""
+msgstr "Elección múltiple (seleccione todas las opciones aplicables)"
 
 #. Instruction on the questionnaire: Single choice question
 #: ../tex_translations.in.h:20
 msgid "Single-choice (select only one option)"
-msgstr ""
+msgstr "Respuesta única (seleccione sólo una opción)"
 
 #. LaTeX based report: Label for the number of people that answered
 #: ../tex_translations.in.h:22
