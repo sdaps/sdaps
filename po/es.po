@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-26 19:10+0100\n"
-"PO-Revision-Date: 2017-12-01 16:49+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/"
-">\n"
+"PO-Revision-Date: 2020-03-10 23:32+0000\n"
+"Last-Translator: Uxío Pérez <uxiopr@yahoo.es>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/>"
+"\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.18-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../sdaps/script.py:41
 msgid "SDAPS -- Paper based survey tool."
@@ -199,7 +199,6 @@ msgid "Convert a set of images to the correct image format."
 msgstr "Convierte un conjunto de imágenes al formato correcto de imagen."
 
 #: ../sdaps/cmdline/convert.py:31
-#, fuzzy
 msgid ""
 "This command can be used if you scanned files in something\n"
 "        other than the expected monochrome TIFF mode. All given files will\n"
@@ -208,30 +207,28 @@ msgid ""
 "may facilitate\n"
 "        working with photos of questionnaires instead of scans."
 msgstr ""
-"Este comando puede ser empleado si usted escaneo archivos en un modo\n"
+"Este comando puede ser empleado si usted escaneó archivos en un formato\n"
 "     distinto al archivo TIFF monocromático esperado. Todos los archivos "
 "proporcionados\n"
-"     se cargarán, convertirán a monocromático y almacenarán en un archivo "
+"     se cargarán, convertirán a monocromo y almacenarán en un archivo TIFF "
 "multipágina\n"
-"     1bpp TIFF. Opcionamente, usted puede seleccionar que se realice una "
-"transformación 3D,\n"
-"     haciéndolo es posible trabajar con fotografías de\n"
-"     cuestionarios en lugar de escaneos."
+"     1bpp. Opcionamente, puede seleccionar que se realice una transformación "
+"3D,\n"
+"     lo que permite trabajar con fotografías de cuestionarios en lugar de "
+"escaneos."
 
 #: ../sdaps/cmdline/convert.py:38
-#, fuzzy
 msgid ""
 "Do a 3D-transformation after finding the corner marks.\n"
 "    If they are not found, the image will be processed as-is."
 msgstr ""
-"Realiza una transformación 3D después de encontrar las marcas de esquina. Si "
-"no\n"
-"    se encuentran las marcas la imagen será añadida tal cual es."
+"Realiza una transformación 3D después de encontrar las marcas de las "
+"esquinas. Si no\n"
+"    se encuentran las marcas la imagen será procesada tal cual es."
 
 #: ../sdaps/cmdline/convert.py:44
-#, fuzzy
 msgid "The location of the output file."
-msgstr "Se debe proporcionar la localización del archivo de salida."
+msgstr "Localización del archivo de salida."
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
@@ -308,6 +305,7 @@ msgstr ""
 #: ../sdaps/cmdline/csvdata.py:66
 msgid "Export the recognition quality for each checkbox."
 msgstr ""
+"Exportar la calidad del reconocimiento para cada casilla de verificación."
 
 #: ../sdaps/cmdline/csvdata.py:74
 msgid "Import data to from a CSV file."
@@ -318,14 +316,12 @@ msgid "The file to import."
 msgstr "El archivo a importar."
 
 #: ../sdaps/cmdline/gui.py:28
-#, fuzzy
 msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
 msgstr ""
-"Lanzar una interfaz gráfica. Puede ver y modificar las respuestas "
-"(reconocidas) con ella."
+"Mostrar la interfaz gráfica. Con ella puede ver y modificar las respuestas "
+"que el programa ha reconocido."
 
 #: ../sdaps/cmdline/gui.py:29
-#, fuzzy
 msgid ""
 "This command launches a graphical user interface that can\n"
 "    be used to correct answers. You need to run \"recognize\" before using "
@@ -333,8 +329,8 @@ msgid ""
 "    "
 msgstr ""
 "Este comando inicia una interfaz gráfica que puede utilizarse \n"
-"para corregir la respuesta. Necesitará ejecutar \"recognize\" antes de "
-"emplearlo.\n"
+"para corregir respuestas. Necesitará ejecutar la orden \"recognize\" antes "
+"de emplearlo.\n"
 "    "
 
 #: ../sdaps/cmdline/gui.py:34
@@ -526,7 +522,7 @@ msgstr "Guarda los archivos TeX generados en vez del PDF final."
 
 #: ../sdaps/cmdline/reset.py:26
 msgid "Reset project into original state"
-msgstr ""
+msgstr "Devolver el proyecto al su estado original"
 
 #: ../sdaps/cmdline/reset.py:27
 msgid ""
@@ -534,6 +530,9 @@ msgid ""
 "    will be discarded and only the empty project is left.\n"
 "    "
 msgstr ""
+"Este comando realiza un reseteo completo del proyecto. Todos los datos\n"
+"serán descartados y quedará sólo el proyecto vacío.\n"
+"    "
 
 #: ../sdaps/cmdline/setup.py:27
 msgid "Create a new survey using a LaTeX document."
@@ -615,14 +614,15 @@ msgstr ""
 "No fue posible aplicar la transformación 3D a la imagen '%s', página %i!"
 
 #: ../sdaps/cover/__init__.py:40
-#, fuzzy
 msgid "SDAPS questionnaire"
-msgstr "cuestionario de sdaps"
+msgstr "Cuestionario SDAPS"
 
 #: ../sdaps/csvdata/buddies.py:77
-#, fuzzy, python-format
+#, python-format
 msgid "Not importing unknown questionnaire ID \"%s\""
-msgstr "Exportación e importación de IDs de cuestionarios."
+msgstr ""
+"No se están importando identificadores (IDs) desconocidos de cuestionario \"%"
+"s\""
 
 #: ../sdaps/gui/__init__.py:59
 msgid ""
@@ -656,7 +656,6 @@ msgid "http://sdaps.org"
 msgstr "http://sdaps.org"
 
 #: ../sdaps/gui/__init__.py:260
-#, fuzzy
 msgid "translator-credits"
 msgstr "Traductor-créditos"
 
@@ -759,14 +758,12 @@ msgid "Sheet valid"
 msgstr "Hoja válida"
 
 #: ../sdaps/gui/widget_buddies.py:61
-#, fuzzy
 msgid "Sheet Verified"
-msgstr "Verificado"
+msgstr "Hoja Verificada"
 
 #: ../sdaps/gui/widget_buddies.py:62
-#, fuzzy
 msgid "Page Verified"
-msgstr "Verificado"
+msgstr "Página Verificada"
 
 #: ../sdaps/gui/widget_buddies.py:63
 msgid "Empty"
@@ -789,12 +786,17 @@ msgid ""
 "The latex character map is missing! Please build it using the supplied tool "
 "(create-latexmap.py)."
 msgstr ""
+"¡No se encuentra el mapa de caracteres de latex! Debe compilarse empleando "
+"la herramienta correspondiente (create-latexmap.py)."
 
 #: ../sdaps/utils/latex.py:69
 msgid ""
 "Generated string for LaTeX contains unicode characters. This may not work "
 "correctly and could mean the LaTeX character map needs to be updated."
 msgstr ""
+"La expresión generada para LaTeX contiene caracteres unicode. Esto puede no "
+"funcionar correctamente e implicar que se debe actualizar el mapa de "
+"caracteres LaTeX."
 
 #: ../sdaps/utils/opencv.py:35
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
@@ -804,7 +806,7 @@ msgstr ""
 
 #: ../sdaps/utils/opencv.py:44
 msgid "File does not exist"
-msgstr ""
+msgstr "El archivo no existe"
 
 #. The old code used to first filter, and then run; but that is
 #. a bit ineffective in a way
@@ -818,7 +820,7 @@ msgstr[1] "%i hojas"
 #: ../sdaps/model/survey.py:402
 #, python-format
 msgid "Processed %i of %i sheets, took %f seconds"
-msgstr ""
+msgstr "Procesadas %i de %i hojas, tardó %f segundos"
 
 #: ../sdaps/model/survey.py:449
 msgid ""
@@ -999,7 +1001,7 @@ msgstr "informe sdaps"
 
 #: ../sdaps/reset/__init__.py:29
 msgid "Removing stored data..."
-msgstr ""
+msgstr "Eliminando datos almacenados..."
 
 #: ../sdaps/setup/buddies.py:62
 #, python-format
@@ -1022,19 +1024,20 @@ msgid "%(class)s %(l0)i.%(l1)i got no boxes."
 msgstr "%(class)s %(l0)i.%(l1)i no tiene casillas."
 
 #: ../sdaps/setup/buddies.py:167
-#, fuzzy, python-format
+#, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box out of range."
-msgstr "%(class)s %(l0)i.%(l1)i no contiene preguntas."
+msgstr "%(class)s %(l0)i.%(l1)i caja inferior fuera de rango."
 
 #: ../sdaps/setup/buddies.py:172
-#, fuzzy, python-format
+#, python-format
 msgid "%(class)s %(l0)i.%(l1)i upper box out of range."
-msgstr "%(class)s %(l0)i.%(l1)i no tiene casillas."
+msgstr "%(class)s %(l0)i.%(l1)i caja superior fuera de rango."
 
 #: ../sdaps/setup/buddies.py:177
-#, fuzzy, python-format
+#, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box not before upper box."
-msgstr "%(class)s %(l0)i.%(l1)i no tiene exactamente una casilla."
+msgstr ""
+"%(class)s %(l0)i.%(l1)i caja inferior no está antes de la caja superior."
 
 #: ../sdaps/setup/buddies.py:213
 #, python-format
