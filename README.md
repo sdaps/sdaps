@@ -10,6 +10,10 @@ questionnaires that can be printed and handed out. After being filled out, you
 just scan them in, let sdaps run over them, and let it create a report with
 the results.
 
+The main LaTeX class is also available on CTAN (https://ctan.org/pkg/sdaps) and
+may also be installed directly, e.g. using a LaTeX distribution like TeX Live.
+Please check whether you can install it that way, and if not choose the
+`--build-tex` or `--install-tex` for building/installing SDAPS.
 
 ## Requirements
 
