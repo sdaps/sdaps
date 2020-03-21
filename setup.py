@@ -16,14 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
+from distutils.core import setup, Command, Distribution
 from distutils.extension import Extension
 import glob
 import os
 import os.path
 import subprocess
 import sys
-from distutils.command import build
+from distutils.command import build, install, install_data
 from DistUtilsExtra.command import *
 import configparser
 
@@ -58,6 +58,10 @@ class sdaps_build_tex(build.build):
     tex_installdir = 'share/sdaps/tex'
     tex_resultdir = 'tex/class/build/local'
 
+    dict_sourcefile = 'tex/tex_translations.in'
+    dict_dir = 'share/sdaps/tex'
+    dict_filename = 'tex_translations'
+
     def run(self):
         # Build the LaTeX packages and classes, note that they cannot build
         # out of tree currently.
@@ -71,24 +75,13 @@ class sdaps_build_tex(build.build):
         os.chdir(maindir)
 
         files = [os.path.join(self.tex_resultdir, f) for f in os.listdir(self.tex_resultdir)]
-        self.distribution.data_files.append((self.tex_installdir, files))
+        self.distribution.tex_files.append((self.tex_installdir, files))
 
 
-class sdaps_build_i18n(build_i18n.build_i18n):
-
-    # Hardcoded ...
-    dict_sourcefile = 'tex/tex_translations.in'
-    dict_dir = 'share/sdaps/tex'
-    dict_filename = 'tex_translations'
-
-    def run(self):
-        # run the original code
-        build_i18n.build_i18n.run(self)
-
+        # And now the LaTeX translations
         dest_dir = os.path.join('build', self.dict_dir)
         tex_translations = os.path.join(dest_dir, self.dict_filename)
 
-        # Build the tex_translations file
         if not os.path.isdir(dest_dir):
             os.makedirs(dest_dir)
         cmd = ['intltool-merge', '-d', 'tex/po', self.dict_sourcefile, tex_translations]
@@ -153,11 +146,19 @@ class sdaps_build_i18n(build_i18n.build_i18n):
                 f.write('\\providetranslation{%s}{%s}\n' % (key, value))
 
         # And install the dictionary files
-        self.distribution.data_files.append((self.dict_dir, dictfiles))
+        self.distribution.tex_files.append((self.dict_dir, dictfiles))
 
-class sdaps_clean_i18n(clean_i18n.clean_i18n):
+class sdaps_clean_tex(Command):
     dict_dir = 'share/sdaps/tex'
     dict_filename = "tex_translations"
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
 
     def run(self):
         # Remove dictionaries
@@ -173,10 +174,116 @@ class sdaps_clean_i18n(clean_i18n.clean_i18n):
         if os.path.exists(fn):
             os.unlink(fn)
 
-        clean_i18n.clean_i18n.run(self)
+class sdaps_clean(Command):
+    user_options = []
+
+    sub_commands = \
+        [
+            ('clean_tex', lambda x : True ),
+            ('clean_i18n', lambda x : True ),
+        ]
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        for cmd in self.get_sub_commands():
+            self.run_command(cmd)
 
 class sdaps_build(build_extra.build_extra):
-    sub_commands = build_extra.build_extra.sub_commands + [('build_tex', lambda x : True)]
+    sub_commands = \
+        build_extra.build_extra.sub_commands + \
+        [
+            ('build_tex', lambda self : self.build_tex),
+        ]
+
+    user_options = build_extra.build_extra.user_options + [
+        # The format is (long option, short option, description).
+        ('build-tex', None, 'Also build LaTeX class and translations'),
+    ]
+
+    def initialize_options(self):
+        self.build_tex = None
+
+        build_extra.build_extra.initialize_options(self)
+
+    def finalize_options(self):
+        if self.build_tex is None:
+            self.build_tex = False
+
+        build_extra.build_extra.finalize_options(self)
+
+class sdaps_install_tex(install_data.install_data):
+    # We just use install_data, but set data_files from distribution.tex_files
+    # instead.
+
+    description = "install LaTeX data files"
+
+    user_options = install_data.install_data.user_options + [
+        ('skip-build', None, "skip the build steps"),
+    ]
+
+    boolean_options = install_data.install_data.boolean_options + ['skip-build']
+
+    def initialize_options(self):
+        self.skip_build = None
+
+        install_data.install_data.initialize_options(self)
+
+        self.data_files = self.distribution.tex_files
+
+    def finalize_options(self):
+        self.set_undefined_options('install',
+                                   ('skip_build', 'skip_build'),
+                                  )
+
+        install_data.install_data.finalize_options(self)
+
+    def run(self):
+        if not self.skip_build:
+            self.run_command('build_tex')
+
+        install_data.install_data.run(self)
+
+
+class sdaps_install(install.install):
+    sub_commands = \
+        install.install.sub_commands + \
+        [
+            ('install_tex', lambda self : self.install_tex),
+        ]
+
+    # Isn't there a better way to have the build time option also
+    # in the install section?
+    user_options = install.install.user_options + [
+        # The format is (long option, short option, description).
+        ('install-tex', None, 'Disable LaTeX build, should be done if the class is already available e.g. from TeX Live'),
+    ]
+
+    def initialize_options(self):
+        self.install_tex = None
+
+        install.install.initialize_options(self)
+
+    def finalize_options(self):
+        if self.install_tex is None:
+            self.install_tex = False
+
+        install.install.finalize_options(self)
+
+class SDAPSDistribution(Distribution):
+    # All we need is to add tex_files
+
+    def __init__(self, attrs=None):
+        self.tex_files = None
+
+        super().__init__(attrs=attrs)
+
+    def has_tex_files(self):
+        return self.tex_files and len(self.tex_files) > 0
 
 setup(name='sdaps',
       version=__version__,
@@ -190,6 +297,7 @@ SDAPS is a tool to carry out paper based surveys. You can create machine
 readable questionnaires using LaTeX. It also provides the tools to later
 analyse the scanned data, and create a report.
 """,
+      distclass=SDAPSDistribution,
       packages=['sdaps',
                 'sdaps.add',
                 'sdaps.annotate',
@@ -222,17 +330,21 @@ analyse the scanned data, and create a report.
                   ('share/sdaps/ui',
                    glob.glob("sdaps/gui/*.ui")
                   ),
+                  # NOTE: This is on purpose! sdapsreport.cls is not included
+                  #       in the LaTeX package uploaded to CTAN.
                   ('share/sdaps/tex', glob.glob('tex/*.cls')
                   ),
-                  ('share/sdaps/tex', glob.glob('tex/*.tex')
-                  ),
-                  ('share/sdaps/tex', glob.glob('tex/*.sty')
-                  ),
                   ],
-      cmdclass = { "build" : sdaps_build,
+      tex_files=[],
+      cmdclass = { "install": sdaps_install,
+                   "install_tex" : sdaps_install_tex,
+                   "build" : sdaps_build,
                    "build_tex" : sdaps_build_tex,
-                   "build_i18n" :  sdaps_build_i18n,
+                   "build_i18n" :  build_i18n.build_i18n,
                    "build_help" :  build_help.build_help,
                    "build_icons" :  build_icons.build_icons,
-                   "clean" : sdaps_clean_i18n }
+                   "clean" : sdaps_clean,
+                   "clean_i18n" : clean_i18n.clean_i18n,
+                   "clean_tex" : sdaps_clean_tex,
+                  }
      )
