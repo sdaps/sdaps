@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-26 19:10+0100\n"
+"POT-Creation-Date: 2020-03-21 15:07+0100\n"
 "PO-Revision-Date: 2020-03-10 23:32+0000\n"
 "Last-Translator: Uxío Pérez <uxiopr@yahoo.es>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/>"
-"\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/"
+">\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,15 +19,20 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.0-dev\n"
 
-#: ../sdaps/script.py:41
+#: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
 msgstr "SDAPS -- Herramienta para el reconocimiento de documentos impresos."
 
-#: ../sdaps/script.py:45
+#: ../sdaps/script.py:47
+msgid "Display version and exit"
+msgstr ""
+
+#. Set required as an attribute rather than kwarg so that it works with python <3.7
+#: ../sdaps/script.py:52
 msgid "command list|Commands:"
 msgstr "lista de comandos|Comandos:"
 
-#: ../sdaps/script.py:50
+#: ../sdaps/script.py:61
 msgid "project directory|The SDAPS project."
 msgstr "directorio del proyecto|El proyecto SDAPS."
 
@@ -274,44 +279,44 @@ msgstr ""
 "cuestionario para seleccionar\n"
 " la hoja que debe actualizarse."
 
-#: ../sdaps/cmdline/csvdata.py:44
+#: ../sdaps/cmdline/csvdata.py:46
 msgid "Export data to CSV file."
 msgstr "Exportar datos a un archivo CSV."
 
-#: ../sdaps/cmdline/csvdata.py:46
+#: ../sdaps/cmdline/csvdata.py:50
 #, python-format
 msgid "Filename to store the data to (default: data_%%i.csv)"
 msgstr ""
 "Nombre del archivo para almacenar los datos (por defecto: data_%%i.csv)"
 
-#: ../sdaps/cmdline/csvdata.py:48
+#: ../sdaps/cmdline/csvdata.py:52
 msgid "The delimiter used in the CSV file (default ',')"
 msgstr "El delimitador empleado en el archivo CSV (por defecto ',')"
 
-#: ../sdaps/cmdline/csvdata.py:52 ../sdaps/cmdline/report.py:31
+#: ../sdaps/cmdline/csvdata.py:56 ../sdaps/cmdline/report.py:31
 #: ../sdaps/cmdline/reporttex.py:52
 msgid "Filter to only export a partial dataset."
 msgstr "Filtro para exportar solamente un conjunto parcial de datos."
 
-#: ../sdaps/cmdline/csvdata.py:54
+#: ../sdaps/cmdline/csvdata.py:58
 msgid "Export images of freeform fields."
 msgstr "Exportar imágenes de los campos de forma libre."
 
-#: ../sdaps/cmdline/csvdata.py:60
+#: ../sdaps/cmdline/csvdata.py:64
 msgid "Export an image for each question that includes all boxes."
 msgstr ""
 "Exportar una imagen para cada pregunta que incluye a todos los recuadros."
 
-#: ../sdaps/cmdline/csvdata.py:66
+#: ../sdaps/cmdline/csvdata.py:70
 msgid "Export the recognition quality for each checkbox."
 msgstr ""
 "Exportar la calidad del reconocimiento para cada casilla de verificación."
 
-#: ../sdaps/cmdline/csvdata.py:74
+#: ../sdaps/cmdline/csvdata.py:78
 msgid "Import data to from a CSV file."
 msgstr "Importar datos desde un archivo CSV."
 
-#: ../sdaps/cmdline/csvdata.py:76
+#: ../sdaps/cmdline/csvdata.py:82
 msgid "The file to import."
 msgstr "El archivo a importar."
 
@@ -534,11 +539,11 @@ msgstr ""
 "serán descartados y quedará sólo el proyecto vacío.\n"
 "    "
 
-#: ../sdaps/cmdline/setup.py:27
+#: ../sdaps/cmdline/setup.py:28
 msgid "Create a new survey using a LaTeX document."
 msgstr "Crear una nueva encuesta utilizando un documento LaTeX."
 
-#: ../sdaps/cmdline/setup.py:28
+#: ../sdaps/cmdline/setup.py:29
 msgid ""
 "Create a new survey from a LaTeX document. You need to\n"
 "    be using the SDAPS class. All the metadata and options for the project\n"
@@ -549,11 +554,11 @@ msgstr ""
 "proyecto↵\n"
 "    pueden ser definidos en el documento LaTeX."
 
-#: ../sdaps/cmdline/setup.py:33
+#: ../sdaps/cmdline/setup.py:34
 msgid "The LaTeX Document"
 msgstr "El documento LaTeX"
 
-#: ../sdaps/cmdline/setup.py:35
+#: ../sdaps/cmdline/setup.py:36
 msgid ""
 "Additional files that are required by the LaTeX document and need to be "
 "copied into the project directory."
@@ -562,6 +567,10 @@ msgstr ""
 "necesitan ser copiados en el directorio del proyecto."
 
 #: ../sdaps/cmdline/setup.py:39
+msgid "The engine to use to compile LaTeX documents."
+msgstr ""
+
+#: ../sdaps/cmdline/setup.py:43
 msgid "Additional questions that are not part of the questionnaire."
 msgstr "Otras preguntas que no forman parte del cuestionario."
 
@@ -617,14 +626,14 @@ msgstr ""
 msgid "SDAPS questionnaire"
 msgstr "Cuestionario SDAPS"
 
-#: ../sdaps/csvdata/buddies.py:77
+#: ../sdaps/csvdata/buddies.py:78
 #, python-format
 msgid "Not importing unknown questionnaire ID \"%s\""
 msgstr ""
-"No se están importando identificadores (IDs) desconocidos de cuestionario \"%"
-"s\""
+"No se están importando identificadores (IDs) desconocidos de cuestionario "
+"\"%s\""
 
-#: ../sdaps/gui/__init__.py:59
+#: ../sdaps/gui/__init__.py:60
 msgid ""
 "The survey does not have any images! Please add images (and run recognize) "
 "before using the GUI."
@@ -632,74 +641,75 @@ msgstr ""
 "¡La encuesta no tiene ninguna imagen! Por favor añadir imágenes (y ejecutar "
 "reconocimiento) antes de emplear la GUI."
 
-#: ../sdaps/gui/__init__.py:211
+#: ../sdaps/gui/__init__.py:212
 msgid "Page|Invalid"
 msgstr "Página|No válida"
 
-#: ../sdaps/gui/__init__.py:214
+#: ../sdaps/gui/__init__.py:215
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
 msgstr[0] "Página %i"
 msgstr[1] "Página %i"
 
-#: ../sdaps/gui/__init__.py:256
+#: ../sdaps/gui/__init__.py:257
 msgid "Copyright © 2007-2014 The SDAPS Authors"
 msgstr "Copyright © 2007-2014 los autores SDAPS"
 
-#: ../sdaps/gui/__init__.py:258
+#: ../sdaps/gui/__init__.py:259
 msgid "Scripts for data acquisition with paper based surveys"
 msgstr "Guiones para la adquisición de datos en encuestas impresas"
 
-#: ../sdaps/gui/__init__.py:259
+#: ../sdaps/gui/__init__.py:260
 msgid "http://sdaps.org"
 msgstr "http://sdaps.org"
 
-#: ../sdaps/gui/__init__.py:260
+#: ../sdaps/gui/__init__.py:261
 msgid "translator-credits"
 msgstr "Traductor-créditos"
 
-#: ../sdaps/gui/__init__.py:305
+#: ../sdaps/gui/__init__.py:306
 #, python-format
 msgid " of %i"
 msgstr " de %i"
 
-#: ../sdaps/gui/__init__.py:306
+#: ../sdaps/gui/__init__.py:307
 #, python-format
 msgid "Recognition Quality: %.2f"
 msgstr "Calidad de reconocimiento: %.2f"
 
-#: ../sdaps/gui/__init__.py:322
+#: ../sdaps/gui/__init__.py:323
 msgid ""
 "You have reached the first page of the survey. Would you like to go to the "
 "last page?"
 msgstr ""
 "Ha llegado a la primera página de la encuesta. ¿Desea ir a la última página?"
 
-#: ../sdaps/gui/__init__.py:324
+#: ../sdaps/gui/__init__.py:325
 msgid "Go to last page"
 msgstr "Ir a la última página"
 
-#: ../sdaps/gui/__init__.py:346
+#: ../sdaps/gui/__init__.py:347
 msgid ""
 "You have reached the last page of the survey. Would you like to go to the "
 "first page?"
 msgstr ""
 "Ha llegado a la última página de la encuesta. ¿Desea ir a la primera página?"
 
-#: ../sdaps/gui/__init__.py:348
+#: ../sdaps/gui/__init__.py:349
 msgid "Go to first page"
 msgstr "Ir a la primera página"
 
-#: ../sdaps/gui/__init__.py:457
+#: ../sdaps/gui/__init__.py:465
 msgid "Close without saving"
 msgstr "Cerrar sin guardar"
 
-#: ../sdaps/gui/__init__.py:461
+#: ../sdaps/gui/__init__.py:469
+#, fuzzy
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
-"If you do not save you may loose data."
+"If you do not save you may lose data."
 msgstr ""
 "<b>¿Guardar el proyecto antes de cerrar?</b>\n"
 "\n"
@@ -738,14 +748,18 @@ msgid "_Help"
 msgstr "_Ayuda"
 
 #: ../sdaps/gui/main_window.ui.h:9
+msgid "Recognize Page"
+msgstr ""
+
+#: ../sdaps/gui/main_window.ui.h:10
 msgid "Page Rotated"
 msgstr "Página rotada"
 
-#: ../sdaps/gui/main_window.ui.h:10
+#: ../sdaps/gui/main_window.ui.h:11
 msgid "Sort by Quality"
 msgstr "Ordenar por Calidad"
 
-#: ../sdaps/gui/main_window.ui.h:11
+#: ../sdaps/gui/main_window.ui.h:12
 msgid "label"
 msgstr "etiqueta"
 
@@ -765,15 +779,15 @@ msgstr "Hoja Verificada"
 msgid "Page Verified"
 msgstr "Página Verificada"
 
-#: ../sdaps/gui/widget_buddies.py:63
+#: ../sdaps/gui/widget_buddies.py:63 ../sdaps/gui/widget_buddies.py:73
 msgid "Empty"
 msgstr "Vacío"
 
-#: ../sdaps/gui/widget_buddies.py:75 ../sdaps/gui/widget_buddies.py:105
+#: ../sdaps/gui/widget_buddies.py:84 ../sdaps/gui/widget_buddies.py:115
 msgid "<b>Questionnaire ID: </b>"
 msgstr "<b>ID del Cuestionario: </b>"
 
-#: ../sdaps/image/__init__.py:47
+#: ../sdaps/image/__init__.py:48
 msgid ""
 "It appears you have not build the C extension. Please run \"./setup.py build"
 "\" in the toplevel directory."
@@ -810,26 +824,26 @@ msgstr "El archivo no existe"
 
 #. The old code used to first filter, and then run; but that is
 #. a bit ineffective in a way
-#: ../sdaps/model/survey.py:386
+#: ../sdaps/model/survey.py:411
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
 msgstr[0] "%i hoja"
 msgstr[1] "%i hojas"
 
-#: ../sdaps/model/survey.py:402
+#: ../sdaps/model/survey.py:427
 #, python-format
 msgid "Processed %i of %i sheets, took %f seconds"
 msgstr "Procesadas %i de %i hojas, tardó %f segundos"
 
-#: ../sdaps/model/survey.py:449
+#: ../sdaps/model/survey.py:474
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
 "¡Un cuestionario que se imprime en dúplex necesita una cantidad par de "
 "páginas!"
 
-#: ../sdaps/model/survey.py:453
+#: ../sdaps/model/survey.py:478
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
@@ -837,18 +851,18 @@ msgstr ""
 "¡El estilo 'clásico' sólo admite un máximo de seis páginas! Utilice el "
 "estilo 'code128' si requiere de más páginas."
 
-#: ../sdaps/model/survey.py:466
+#: ../sdaps/model/survey.py:491
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr "¡Los IDs deben ser enteros en el estilo clásico!"
 
-#: ../sdaps/model/survey.py:472
+#: ../sdaps/model/survey.py:497
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
 "¡Caracter inválido %s en el ID del cuestionario \"%s\" en el estilo "
 "\"code128\"!"
 
-#: ../sdaps/model/survey.py:476
+#: ../sdaps/model/survey.py:501
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
@@ -858,41 +872,41 @@ msgstr ""
 
 #. in simplex mode every page will have a matrix; it might be a None
 #. matrix though
-#: ../sdaps/recognize/buddies.py:71
+#: ../sdaps/recognize/buddies.py:76
 #, python-format
 msgid "%s, %i: Matrix not recognized."
 msgstr "%s, %i: Matriz no reconocida."
 
-#: ../sdaps/recognize/buddies.py:80
+#: ../sdaps/recognize/buddies.py:85
 #, python-format
 msgid "%s, %i: Rotation not found."
 msgstr "%s, %i: Rotación no encontrada."
 
 #. Copy the rotation over (if required) and print warning if the rotation is unknown
-#: ../sdaps/recognize/buddies.py:84
+#: ../sdaps/recognize/buddies.py:89
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known rotation!"
 msgstr "¡Ni %s, %i o %s, %i tienen una rotación conocida!"
 
-#: ../sdaps/recognize/buddies.py:96
+#: ../sdaps/recognize/buddies.py:101
 #, python-format
 msgid "%s, %i: Matrix not recognized (again)."
 msgstr "%s, %i: Matriz no reconocida (otra vez)."
 
-#: ../sdaps/recognize/buddies.py:110
+#: ../sdaps/recognize/buddies.py:115
 #, python-format
 msgid "%s, %i: Could not get page number."
 msgstr "%s, %i: No se pudo obtener el número de página."
 
 #. Whoa, that should not happen.
-#: ../sdaps/recognize/buddies.py:130
+#: ../sdaps/recognize/buddies.py:135
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known page number!"
 msgstr "¡Ni %s, %i o %s, %i tienen un número de página conocido!"
 
 #. We don't touch the ignore flag in this case
 #. Simply print a message as this should *never* happen
-#: ../sdaps/recognize/buddies.py:141
+#: ../sdaps/recognize/buddies.py:146
 #, python-format
 msgid ""
 "Got a simplex document where two adjacent pages had a known page number. "
@@ -906,61 +920,61 @@ msgstr ""
 "realizó un escáneo simple pero se añadió en modo duplex? Las páginas en "
 "cuestión son %s, %i y %s, %i."
 
-#: ../sdaps/recognize/buddies.py:158
+#: ../sdaps/recognize/buddies.py:163
 #, python-format
 msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
 msgstr ""
 "¡Las imágenes %s, %i y %s, %i no tienen números de página consecutivos!"
 
-#: ../sdaps/recognize/buddies.py:174
+#: ../sdaps/recognize/buddies.py:179
 #, python-format
 msgid "No page number for page %s, %i exists."
 msgstr "No existe número de página para la página %s, %i."
 
-#: ../sdaps/recognize/buddies.py:179
+#: ../sdaps/recognize/buddies.py:184
 #, python-format
 msgid "Page number for page %s, %i already used by another image."
 msgstr ""
 "El número de página para la página %s, %i ya es utilizado por otra imagen."
 
-#: ../sdaps/recognize/buddies.py:185
+#: ../sdaps/recognize/buddies.py:190
 #, python-format
 msgid "Page number %i for page %s, %i is out of range."
 msgstr "El número de página %i para la página %s, %i está fuera de rango."
 
-#: ../sdaps/recognize/buddies.py:202
+#: ../sdaps/recognize/buddies.py:207
 #, python-format
 msgid "%s, %i: Could not read survey ID, but should be able to."
 msgstr ""
 "%s, %i: No se pudo leer el ID del reconocimiento, pero debiera ser capaz de "
 "hacerse."
 
-#: ../sdaps/recognize/buddies.py:206
+#: ../sdaps/recognize/buddies.py:211
 #, python-format
 msgid "Could not read survey ID of either %s, %i or %s, %i!"
 msgstr "No se pudo leer el ID de la encuesta de %s, %i o %s, %i!"
 
 #. Broken survey ID ...
-#: ../sdaps/recognize/buddies.py:213
+#: ../sdaps/recognize/buddies.py:218
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
 msgstr ""
 "Se obtuvo una identificación equivocada de la encuesta (%s, %i)! Es %s, pero "
 "debe ser %i."
 
-#: ../sdaps/recognize/buddies.py:235
+#: ../sdaps/recognize/buddies.py:240
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
 "%s, %i: No se pudo leer el ID del cuestionario, pero usted debe ser capaz de "
 "hacerlo."
 
-#: ../sdaps/recognize/buddies.py:241
+#: ../sdaps/recognize/buddies.py:246
 #, python-format
 msgid "Could not read questionnaire ID of either %s, %i or %s, %i!"
 msgstr "No se pudo leer el ID del cuestionario de %s, %i o %s, %i!"
 
-#: ../sdaps/recognize/buddies.py:271
+#: ../sdaps/recognize/buddies.py:276
 msgid ""
 "Got different IDs on different pages for at least one sheet! Do *NOT* try to "
 "use filters with this survey! You have to run a \"reorder\" step for this to "
@@ -970,7 +984,7 @@ msgstr ""
 "una hoja! *NO* intentar utilizar filtros con esta encuesta! ¡Tiene que "
 "ejecutar el paso de \"reordenar\" para que ello funcione correctamente!"
 
-#: ../sdaps/recognize/buddies.py:326
+#: ../sdaps/recognize/buddies.py:337
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
 msgstr ""
 "No se ha cargado definición de estilo. ¡Esto se debe hacer para el estilo "
@@ -1080,12 +1094,12 @@ msgstr ""
 "Lo voy a hacer igualmente."
 
 #: ../sdaps/stamp/latex.py:26
-#, python-format
-msgid "Running %s now twice to generate the stamped questionnaire."
+#, fuzzy, python-format
+msgid "Running %s now multiple times to generate the stamped questionnaire."
 msgstr "Ejecutando %s dos veces para generar el cuestionario estampado."
 
-#: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:107
-#: ../sdaps/setuptex/__init__.py:148 ../sdaps/reporttex/__init__.py:162
+#: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:108
+#: ../sdaps/setuptex/__init__.py:149 ../sdaps/reporttex/__init__.py:162
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
 msgstr "Error ejecutando \"%s\" para compilar el archivo LaTeX."
@@ -1120,17 +1134,17 @@ msgstr ""
 "Tipo de archivo desconocido (%s). additionalqobjects debe ser del tipo text/"
 "plain."
 
-#: ../sdaps/setuptex/__init__.py:103 ../sdaps/setuptex/__init__.py:143
-#, python-format
-msgid "Running %s now twice to generate the questionnaire."
+#: ../sdaps/setuptex/__init__.py:104
+#, fuzzy, python-format
+msgid "Running %s now multiple times to generate the questionnaire."
 msgstr "Ejecutando %s dos veces para generar el cuestionario."
 
-#: ../sdaps/setuptex/__init__.py:122
+#: ../sdaps/setuptex/__init__.py:123
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
 "Se produjo una excepción al analizar el archivo SDAPS. El estado actual es:"
 
-#: ../sdaps/setuptex/__init__.py:136
+#: ../sdaps/setuptex/__init__.py:137
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
@@ -1138,7 +1152,12 @@ msgstr ""
 "Alguna combinación de opciones y propiedades del proyecto no funciona. "
 "Instalación interrumpida."
 
-#: ../sdaps/setuptex/__init__.py:162
+#: ../sdaps/setuptex/__init__.py:144
+#, fuzzy, python-format
+msgid "Running %s now multiple imes to generate the questionnaire."
+msgstr "Ejecutando %s dos veces para generar el cuestionario."
+
+#: ../sdaps/setuptex/__init__.py:163
 msgid ""
 "An error occured in the setup routine. The survey directory still exists. "
 "You can for example check the questionnaire.log file for LaTeX compile "
@@ -1162,8 +1181,8 @@ msgid "The TeX project with the report data is located at '%s'."
 msgstr "El proyecto TeX con los datos del informe se halla en '%s'."
 
 #: ../sdaps/reporttex/__init__.py:158
-#, python-format
-msgid "Running %s now twice to generate the report."
+#, fuzzy, python-format
+msgid "Running %s now multiple times to generate the report."
 msgstr "Ejecutando %s dos veces para generar el informe."
 
 #: ../sdaps/reporttex/__init__.py:168
