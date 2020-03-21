@@ -1,6 +1,6 @@
 %global modulename sdaps
 #define commit SNAPSHOT_COMMIT
-%define relversion 1.9.7
+%define relversion 1.9.8
 %if 0%{?commit:1}
   %define shortcommit %(c=%{commit}; echo ${c:0:7})
   %define build_timestamp %(date +"%Y%m%d")
