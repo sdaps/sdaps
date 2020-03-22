@@ -51,8 +51,10 @@ def get_index_and_string(string):
 
 def parse(survey):
 
-    sdaps_file = open(survey.path('questionnaire.sdaps'))
-    # the file is encoded in ascii format
+    # Usually the file will contain LaTeX macros for unicode characters, but
+    # UTF-8 may also come through directly. Not sure when, but this is safe.
+    # (see https://github.com/sdaps/sdaps/issues/208)
+    sdaps_file = open(survey.path('questionnaire.sdaps'), encoding='utf-8')
     sdaps_data = sdaps_file.read()
     qobject = None
     auto_numbering_id = (0,)
