@@ -367,7 +367,8 @@ class MainWindow(object):
             if page_number != -1:
                 self.provider.image.page_number = page_number
                 self.provider.image.survey_id = self.provider.survey.survey_id
-            else:
+            elif self.provider.image.survey_id == self.provider.survey.survey_id:
+                # Keep the values as is if it belongs to another survey
                 self.provider.image.page_number = None
                 self.provider.image.survey_id = None
             self.update_ui()
