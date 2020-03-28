@@ -42,3 +42,4 @@ from . import stamp
 
 # And, subparsers of import/export
 from . import csvdata
+from . import feather
