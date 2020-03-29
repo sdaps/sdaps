@@ -54,6 +54,10 @@ Import of other image formats (convert, add --convert):
  * Poppler and introspection data
  * python3-gi
 
+Export to feather format:
+ * python3-pandas
+ * pyarrows
+
 Debug output (annotate):
  * Poppler and introspection data
  * python3-gi
