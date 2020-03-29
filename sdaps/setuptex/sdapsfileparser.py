@@ -30,6 +30,8 @@ BOX = 'Box'
 VARIABLE = 'Variable'
 TEXTBOX = 'Textbox'
 RANGE_PREFIX = 'Range'
+INFO_PREFIX = 'Info-'
+VERSION = 'SDAPSVersion'
 
 index_re = re.compile(r'''^(?P<index>(?:[0-9]+\.)+)(?P<string>.*)$''')
 arg_index_re = re.compile(r'''^(?P<arg>[^\[]*)(\[(?P<index>([0-9]+\.)*[0-9]+)\])?$''')
@@ -219,6 +221,12 @@ def parse(survey):
 
             box.setup.setup(page, x, y, width, height, lw)
             qobject.setup.box(box)
+        elif arg == VERSION:
+            # Ignore for now.
+            pass
+        elif arg.startswith(INFO_PREFIX):
+            # Metadata, from 1.9.9 onwards
+            survey.info[arg[len(INFO_PREFIX):]] = value
         else:
             # Falltrough, it is some metadata:
             survey.info[arg] = value
