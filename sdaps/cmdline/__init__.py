@@ -1,14 +1,36 @@
 
-# Simply import all submodules
+# Import all submodules and register the toplevel grouping parsers
+
+from sdaps import script
+from sdaps.utils.ugettext import ugettext, ungettext
+_ = ugettext
 
 from . import add
 from . import annotate
 from . import boxgallery
 from . import convert
 from . import cover
-from . import csvdata
+
+export = script.subparsers.add_parser('export',
+    help=_("Export data from an SDAPS project."),
+    description=_("""Export data from an SDAPS project. Please check the
+    documentation for the provided formats for more information."""))
+# Set required as an attribute rather than kwarg so that it works with python <3.7
+export_subparser = export.add_subparsers(dest='format')
+export_subparser.required = True
+
 from . import gui
 from . import ids
+
+import_ = script.subparsers.add_parser('import',
+    help=_("Import data into an SDAPS project."),
+    description=_("""Import data into an SDAPS project. This is only useful in
+    rare cases. Please check the documentation for the provided formats for more
+    information."""))
+# Set required as an attribute rather than kwarg so that it works with python <3.7
+import_subparser = import_.add_subparsers(dest='format')
+import_subparser.required = True
+
 from . import info
 from . import recognize
 from . import reorder
@@ -18,4 +40,5 @@ from . import reset
 from . import setup
 from . import stamp
 
-
+# And, subparsers of import/export
+from . import csvdata

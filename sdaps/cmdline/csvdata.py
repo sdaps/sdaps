@@ -26,24 +26,17 @@ import sys
 from sdaps import model
 from sdaps import script
 
+from sdaps.cmdline import export_subparser, import_subparser
+
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.add_subparser("csv",
-    help=_("Import or export data to/from CSV files."),
-    description=_("""Import or export data to/from a CSV file. The first line
-    is a header which defines questionnaire_id and global_id, and a column
-    for each checkbox and textfield. Note that the import is currently very
-    limited, as you need to specifiy the questionnaire ID to select the sheet
-    which should be updated."""))
-
-# Set required as an attribute rather than kwarg so that it works with python <3.7
-subparser = parser.add_subparsers(dest='subcommand')
-subparser.required = True
-
-export = subparser.add_parser('export',
-    help=_("Export data to CSV file."))
+export = export_subparser.add_parser('csv',
+    help=_("Export data to CSV file."),
+    description=_("""Export data to a CSV file. The first line is a header
+    which defines questionnaire_id and global_id, and a column for each
+    checkbox and textfield."""))
 script.add_project_argument(export)
 
 export.add_argument('-o', '--output',
@@ -74,54 +67,62 @@ export.add_argument('--quality',
     default=False)
 export.set_defaults(direction='export')
 
-import_ = subparser.add_parser('import',
-    help=_("Import data to from a CSV file."))
+import_ = import_subparser.add_parser('csv',
+    help=_("Import data to from a CSV file."),
+    description=_("""Import data from a CSV file. The first line is a header
+    which defines questionnaire_id and global_id, and a column for each
+    checkbox and textfield. Note that the import is currently very limited,
+    as you need to specifiy the questionnaire ID to select the sheet
+    which should be updated."""))
 script.add_project_argument(import_)
 
 import_.add_argument('file',
     help=_("The file to import."))
 import_.set_defaults(direction='import')
 
-@script.connect(parser)
+@script.connect(export)
 @script.logfile
-def csvdata(cmdline):
+def csvdata_export(cmdline):
     from sdaps import csvdata
     from sdaps.utils.image import ImageWriter
 
     survey = model.survey.Survey.load(cmdline['project'])
 
-    if cmdline['direction'] == 'export':
-        if cmdline['output']:
-            if cmdline['output'] == '-':
-                outfd = os.dup(sys.stdout.fileno())
-                outfile = os.fdopen(outfd, 'w')
-            else:
-                filename = cmdline['output']
-                outfile = open(filename, 'w')
+    if cmdline['output']:
+        if cmdline['output'] == '-':
+            outfd = os.dup(sys.stdout.fileno())
+            outfile = os.fdopen(outfd, 'w')
         else:
-            filename = survey.new_path('data_%i.csv')
+            filename = cmdline['output']
             outfile = open(filename, 'w')
-
-        csvoptions = { 'delimiter' : cmdline['delimiter'] }
-
-        if cmdline['export_images'] or cmdline['export_question_images'] and cmdline['output'] != '-':
-            img_path = os.path.dirname(filename)
-            img_prefix = os.path.join(os.path.splitext(os.path.basename(filename))[0], 'img')
-
-            image_writer = ImageWriter(img_path, img_prefix)
-        else:
-            image_writer = None
-
-
-        return csvdata.csvdata_export(survey, outfile, image_writer,
-            filter=cmdline['filter'],
-            export_images=cmdline['export_images'],
-            export_question_images=cmdline['export_question_images'],
-            export_quality=cmdline['export_quality'],
-            csvoptions=csvoptions)
-    elif cmdline['direction'] == 'import':
-        return csvdata.csvdata_import(survey, open(cmdline['file'], 'r'))
     else:
-        raise AssertionError
+        filename = survey.new_path('data_%i.csv')
+        outfile = open(filename, 'w')
+
+    csvoptions = { 'delimiter' : cmdline['delimiter'] }
+
+    if cmdline['export_images'] or cmdline['export_question_images'] and cmdline['output'] != '-':
+        img_path = os.path.dirname(filename)
+        img_prefix = os.path.join(os.path.splitext(os.path.basename(filename))[0], 'img')
+
+        image_writer = ImageWriter(img_path, img_prefix)
+    else:
+        image_writer = None
 
 
+    return csvdata.csvdata_export(survey, outfile, image_writer,
+        filter=cmdline['filter'],
+        export_images=cmdline['export_images'],
+        export_question_images=cmdline['export_question_images'],
+        export_quality=cmdline['export_quality'],
+        csvoptions=csvoptions)
+
+@script.connect(import_)
+@script.logfile
+def csvdata_import(cmdline):
+    from sdaps import csvdata
+    from sdaps.utils.image import ImageWriter
+
+    survey = model.survey.Survey.load(cmdline['project'])
+
+    return csvdata.csvdata_import(survey, open(cmdline['file'], 'r'))
