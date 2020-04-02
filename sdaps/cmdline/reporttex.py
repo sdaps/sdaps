@@ -18,14 +18,17 @@
 
 from sdaps import model
 from sdaps import script
+from sdaps.cmdline import report_subparser
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.add_project_subparser("report_tex",
+parser = report_subparser.add_parser("tex",
     help=_("Create a PDF report using LaTeX."),
     description=_("""This command creates a PDF report using LaTeX that
     contains statistics and freeform fields."""))
+script.add_project_argument(parser)
+
 parser.add_argument('--suppress-images',
     help=_('Do not include original images in the report. This is useful if there are privacy concerns.'),
     dest='suppress',

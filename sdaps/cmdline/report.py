@@ -18,14 +18,16 @@
 
 from sdaps import model
 from sdaps import script
+from sdaps.cmdline import report_subparser
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
-parser = script.add_project_subparser("report",
-    help=_("Create a PDF report."),
+parser = report_subparser.add_parser("reportlab",
+    help=_("Create a PDF report using reportlab."),
     description=_("""This command creates a PDF report using reportlab that
     contains statistics and if selected the freeform fields."""))
+script.add_project_argument(parser)
 
 parser.add_argument('-f', '--filter',
     help=_("Filter to only export a partial dataset."))
