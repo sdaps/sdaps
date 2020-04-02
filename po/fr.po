@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-21 15:07+0100\n"
+"POT-Creation-Date: 2020-04-02 23:36+0200\n"
 "PO-Revision-Date: 2020-01-05 19:21+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/"
@@ -253,17 +253,63 @@ msgid "Filename to store the data to (default: cover_%%i.pdf)"
 msgstr ""
 "Nom de fichier pour le stockage des données (par défaut : cover_%%i.pdf)"
 
-#: ../sdaps/cmdline/csvdata.py:34
-msgid "Import or export data to/from CSV files."
-msgstr "Importer ou exporter des données depuis ou vers un fichier CSV."
+#: ../sdaps/cmdline/csvdata.py:36
+msgid "Export data to CSV file."
+msgstr "Exporter les données dans un fichiers CSV."
 
-#: ../sdaps/cmdline/csvdata.py:35
+#: ../sdaps/cmdline/csvdata.py:37
+#, fuzzy
 msgid ""
-"Import or export data to/from a CSV file. The first line\n"
-"    is a header which defines questionnaire_id and global_id, and a column\n"
-"    for each checkbox and textfield. Note that the import is currently very\n"
-"    limited, as you need to specifiy the questionnaire ID to select the "
-"sheet\n"
+"Export data to a CSV file. The first line is a header\n"
+"    which defines questionnaire_id and global_id, and a column for each\n"
+"    checkbox and textfield."
+msgstr ""
+"Importer ou exporter des données depuis ou vers un fichier CSV. La première\n"
+"        ligne est un entête contenant questionnaire_id, global_id puis "
+"chaque case\n"
+"\t à cocher et champ de texte. Notez que l'importation est actuellement "
+"très\n"
+"\tlimitée ; vous devez indiquer l'identifiant du questionnaire pour choisir "
+"la fiche\n"
+"\tqui doit être mise à jour."
+
+#: ../sdaps/cmdline/csvdata.py:43
+#, python-format
+msgid "Filename to store the data to (default: data_%%i.csv)"
+msgstr "Nom de fichier pour stocker les données (par défaut : data_%%i.csv)"
+
+#: ../sdaps/cmdline/csvdata.py:45
+msgid "The delimiter used in the CSV file (default ',')"
+msgstr "Le délimiteur utilisé dans le fichier CSV (par défaut ',')"
+
+#: ../sdaps/cmdline/csvdata.py:49 ../sdaps/cmdline/report.py:33
+#: ../sdaps/cmdline/reporttex.py:55
+msgid "Filter to only export a partial dataset."
+msgstr "Filtrer pour exporter un jeu de données partiel."
+
+#: ../sdaps/cmdline/csvdata.py:51
+msgid "Export images of freeform fields."
+msgstr "Exporter les images des champs libres."
+
+#: ../sdaps/cmdline/csvdata.py:57
+msgid "Export an image for each question that includes all boxes."
+msgstr "Exporter une image pour chaque question qui inclut toutes les cases."
+
+#: ../sdaps/cmdline/csvdata.py:63
+msgid "Export the recognition quality for each checkbox."
+msgstr "Exporter la qualité de la reconnaissance pour chaque case à cocher."
+
+#: ../sdaps/cmdline/csvdata.py:71
+msgid "Import data to from a CSV file."
+msgstr "Importer des données depuis un fichier CSV."
+
+#: ../sdaps/cmdline/csvdata.py:72
+#, fuzzy
+msgid ""
+"Import data from a CSV file. The first line is a header\n"
+"    which defines questionnaire_id and global_id, and a column for each\n"
+"    checkbox and textfield. Note that the import is currently very limited,\n"
+"    as you need to specifiy the questionnaire ID to select the sheet\n"
 "    which should be updated."
 msgstr ""
 "Importer ou exporter des données depuis ou vers un fichier CSV. La première\n"
@@ -275,41 +321,7 @@ msgstr ""
 "la fiche\n"
 "\tqui doit être mise à jour."
 
-#: ../sdaps/cmdline/csvdata.py:46
-msgid "Export data to CSV file."
-msgstr "Exporter les données dans un fichiers CSV."
-
-#: ../sdaps/cmdline/csvdata.py:50
-#, python-format
-msgid "Filename to store the data to (default: data_%%i.csv)"
-msgstr "Nom de fichier pour stocker les données (par défaut : data_%%i.csv)"
-
-#: ../sdaps/cmdline/csvdata.py:52
-msgid "The delimiter used in the CSV file (default ',')"
-msgstr "Le délimiteur utilisé dans le fichier CSV (par défaut ',')"
-
-#: ../sdaps/cmdline/csvdata.py:56 ../sdaps/cmdline/report.py:31
-#: ../sdaps/cmdline/reporttex.py:52
-msgid "Filter to only export a partial dataset."
-msgstr "Filtrer pour exporter un jeu de données partiel."
-
-#: ../sdaps/cmdline/csvdata.py:58
-msgid "Export images of freeform fields."
-msgstr "Exporter les images des champs libres."
-
-#: ../sdaps/cmdline/csvdata.py:64
-msgid "Export an image for each question that includes all boxes."
-msgstr "Exporter une image pour chaque question qui inclut toutes les cases."
-
-#: ../sdaps/cmdline/csvdata.py:70
-msgid "Export the recognition quality for each checkbox."
-msgstr "Exporter la qualité de la reconnaissance pour chaque case à cocher."
-
-#: ../sdaps/cmdline/csvdata.py:78
-msgid "Import data to from a CSV file."
-msgstr "Importer des données depuis un fichier CSV."
-
-#: ../sdaps/cmdline/csvdata.py:82
+#: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
 msgstr "Le fichier à importer."
 
@@ -450,11 +462,12 @@ msgstr ""
 "    cette commande pour trier les données avant la vraie reconnaissance.\n"
 "    "
 
-#: ../sdaps/cmdline/report.py:26
-msgid "Create a PDF report."
-msgstr "Créer un rapport PDF."
-
 #: ../sdaps/cmdline/report.py:27
+#, fuzzy
+msgid "Create a PDF report using reportlab."
+msgstr "Créer un rapport PDF avec LaTex."
+
+#: ../sdaps/cmdline/report.py:28
 msgid ""
 "This command creates a PDF report using reportlab that\n"
 "    contains statistics and if selected the freeform fields."
@@ -462,19 +475,19 @@ msgstr ""
 "Cette commande crée un rapport PDF avec reportlab contenant \n"
 "    des statistiques et, si demandés, les champs libre."
 
-#: ../sdaps/cmdline/report.py:33
+#: ../sdaps/cmdline/report.py:35
 msgid "Create a filtered report for every checkbox."
 msgstr "Créer un rapport filtré pour chaque case."
 
-#: ../sdaps/cmdline/report.py:36
+#: ../sdaps/cmdline/report.py:38
 msgid "Short format (without freeform text fields)."
 msgstr "Format court (sans les champs de texte libre)."
 
-#: ../sdaps/cmdline/report.py:41
+#: ../sdaps/cmdline/report.py:43
 msgid "Detailed output. (default)"
 msgstr "Résultat détaillé (par défaut)"
 
-#: ../sdaps/cmdline/report.py:47 ../sdaps/cmdline/reporttex.py:30
+#: ../sdaps/cmdline/report.py:49 ../sdaps/cmdline/reporttex.py:33
 msgid ""
 "Do not include original images in the report. This is useful if there are "
 "privacy concerns."
@@ -482,24 +495,24 @@ msgstr ""
 "Exclure les image originale du rapport. Peut être utile pour des questions "
 "de confidentialité."
 
-#: ../sdaps/cmdline/report.py:52 ../sdaps/cmdline/reporttex.py:35
+#: ../sdaps/cmdline/report.py:54 ../sdaps/cmdline/reporttex.py:38
 msgid "Do not use substitutions instead of images."
 msgstr "Ne pas substituer les images."
 
-#: ../sdaps/cmdline/report.py:58 ../sdaps/cmdline/reporttex.py:46
+#: ../sdaps/cmdline/report.py:60 ../sdaps/cmdline/reporttex.py:49
 msgid "The paper size used for the output (default: locale dependent)"
 msgstr "Le format de page pour le résultat (par défaut selon la localité)"
 
-#: ../sdaps/cmdline/report.py:61 ../sdaps/cmdline/reporttex.py:49
+#: ../sdaps/cmdline/report.py:63 ../sdaps/cmdline/reporttex.py:52
 #, python-format
 msgid "Filename to store the data to (default: report_%%i.pdf)"
 msgstr "Nom de fichier pour stocker les données (report_%%i.pdf par défaut)"
 
-#: ../sdaps/cmdline/reporttex.py:26
+#: ../sdaps/cmdline/reporttex.py:27
 msgid "Create a PDF report using LaTeX."
 msgstr "Créer un rapport PDF avec LaTex."
 
-#: ../sdaps/cmdline/reporttex.py:27
+#: ../sdaps/cmdline/reporttex.py:28
 msgid ""
 "This command creates a PDF report using LaTeX that\n"
 "    contains statistics and freeform fields."
@@ -507,12 +520,13 @@ msgstr ""
 "Cette commande crée un rapport PDF avec LaTex\n"
 "    contenant des stats et les champs libres."
 
-#: ../sdaps/cmdline/reporttex.py:41
+#: ../sdaps/cmdline/reporttex.py:44
 msgid "Save the generated TeX files instead of the final PDF."
 msgstr "Enregistrer les fichiers Tex générés au lieu du PDF final."
 
 #: ../sdaps/cmdline/reset.py:26
-msgid "Reset project into original state"
+#, fuzzy
+msgid "Reset project into original state."
 msgstr "Rétablir le projet à son état initial"
 
 #: ../sdaps/cmdline/reset.py:27
@@ -525,32 +539,32 @@ msgstr ""
 "   Toute donnée sera perdue excepté le projet vide.\n"
 "    "
 
-#: ../sdaps/cmdline/setup.py:28
+#: ../sdaps/cmdline/setup.py:29
 msgid "Create a new survey using a LaTeX document."
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:29
+#: ../sdaps/cmdline/setup.py:30
 msgid ""
 "Create a new survey from a LaTeX document. You need to\n"
 "    be using the SDAPS class. All the metadata and options for the project\n"
 "    can be set inside the LaTeX document."
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:34
+#: ../sdaps/cmdline/setup.py:36
 msgid "The LaTeX Document"
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:36
+#: ../sdaps/cmdline/setup.py:38
 msgid ""
 "Additional files that are required by the LaTeX document and need to be "
 "copied into the project directory."
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:39
+#: ../sdaps/cmdline/setup.py:41
 msgid "The engine to use to compile LaTeX documents."
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:43
+#: ../sdaps/cmdline/setup.py:45
 msgid "Additional questions that are not part of the questionnaire."
 msgstr ""
 
@@ -663,11 +677,11 @@ msgstr ""
 msgid "Go to first page"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:465
+#: ../sdaps/gui/__init__.py:466
 msgid "Close without saving"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:469
+#: ../sdaps/gui/__init__.py:470
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -1091,3 +1105,9 @@ msgstr ""
 #, python-format
 msgid "An occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
+
+#~ msgid "Import or export data to/from CSV files."
+#~ msgstr "Importer ou exporter des données depuis ou vers un fichier CSV."
+
+#~ msgid "Create a PDF report."
+#~ msgstr "Créer un rapport PDF."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-21 15:07+0100\n"
+"POT-Creation-Date: 2020-04-02 23:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -212,55 +212,57 @@ msgstr ""
 msgid "Filename to store the data to (default: cover_%%i.pdf)"
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:34
-msgid "Import or export data to/from CSV files."
-msgstr ""
-
-#: ../sdaps/cmdline/csvdata.py:35
-msgid ""
-"Import or export data to/from a CSV file. The first line\n"
-"    is a header which defines questionnaire_id and global_id, and a column\n"
-"    for each checkbox and textfield. Note that the import is currently very\n"
-"    limited, as you need to specifiy the questionnaire ID to select the "
-"sheet\n"
-"    which should be updated."
-msgstr ""
-
-#: ../sdaps/cmdline/csvdata.py:46
+#: ../sdaps/cmdline/csvdata.py:36
 msgid "Export data to CSV file."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:50
+#: ../sdaps/cmdline/csvdata.py:37
+msgid ""
+"Export data to a CSV file. The first line is a header\n"
+"    which defines questionnaire_id and global_id, and a column for each\n"
+"    checkbox and textfield."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:43
 #, python-format
 msgid "Filename to store the data to (default: data_%%i.csv)"
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:52
+#: ../sdaps/cmdline/csvdata.py:45
 msgid "The delimiter used in the CSV file (default ',')"
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:56 ../sdaps/cmdline/report.py:31
-#: ../sdaps/cmdline/reporttex.py:52
+#: ../sdaps/cmdline/csvdata.py:49 ../sdaps/cmdline/report.py:33
+#: ../sdaps/cmdline/reporttex.py:55
 msgid "Filter to only export a partial dataset."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:58
+#: ../sdaps/cmdline/csvdata.py:51
 msgid "Export images of freeform fields."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:64
+#: ../sdaps/cmdline/csvdata.py:57
 msgid "Export an image for each question that includes all boxes."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:70
+#: ../sdaps/cmdline/csvdata.py:63
 msgid "Export the recognition quality for each checkbox."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:78
+#: ../sdaps/cmdline/csvdata.py:71
 msgid "Import data to from a CSV file."
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:82
+#: ../sdaps/cmdline/csvdata.py:72
+msgid ""
+"Import data from a CSV file. The first line is a header\n"
+"    which defines questionnaire_id and global_id, and a column for each\n"
+"    checkbox and textfield. Note that the import is currently very limited,\n"
+"    as you need to specifiy the questionnaire ID to select the sheet\n"
+"    which should be updated."
+msgstr ""
+
+#: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
 msgstr ""
 
@@ -370,63 +372,63 @@ msgid ""
 "    "
 msgstr ""
 
-#: ../sdaps/cmdline/report.py:26
-msgid "Create a PDF report."
+#: ../sdaps/cmdline/report.py:27
+msgid "Create a PDF report using reportlab."
 msgstr ""
 
-#: ../sdaps/cmdline/report.py:27
+#: ../sdaps/cmdline/report.py:28
 msgid ""
 "This command creates a PDF report using reportlab that\n"
 "    contains statistics and if selected the freeform fields."
 msgstr ""
 
-#: ../sdaps/cmdline/report.py:33
+#: ../sdaps/cmdline/report.py:35
 msgid "Create a filtered report for every checkbox."
 msgstr ""
 
-#: ../sdaps/cmdline/report.py:36
+#: ../sdaps/cmdline/report.py:38
 msgid "Short format (without freeform text fields)."
 msgstr ""
 
-#: ../sdaps/cmdline/report.py:41
+#: ../sdaps/cmdline/report.py:43
 msgid "Detailed output. (default)"
 msgstr ""
 
-#: ../sdaps/cmdline/report.py:47 ../sdaps/cmdline/reporttex.py:30
+#: ../sdaps/cmdline/report.py:49 ../sdaps/cmdline/reporttex.py:33
 msgid ""
 "Do not include original images in the report. This is useful if there are "
 "privacy concerns."
 msgstr ""
 
-#: ../sdaps/cmdline/report.py:52 ../sdaps/cmdline/reporttex.py:35
+#: ../sdaps/cmdline/report.py:54 ../sdaps/cmdline/reporttex.py:38
 msgid "Do not use substitutions instead of images."
 msgstr ""
 
-#: ../sdaps/cmdline/report.py:58 ../sdaps/cmdline/reporttex.py:46
+#: ../sdaps/cmdline/report.py:60 ../sdaps/cmdline/reporttex.py:49
 msgid "The paper size used for the output (default: locale dependent)"
 msgstr ""
 
-#: ../sdaps/cmdline/report.py:61 ../sdaps/cmdline/reporttex.py:49
+#: ../sdaps/cmdline/report.py:63 ../sdaps/cmdline/reporttex.py:52
 #, python-format
 msgid "Filename to store the data to (default: report_%%i.pdf)"
 msgstr ""
 
-#: ../sdaps/cmdline/reporttex.py:26
+#: ../sdaps/cmdline/reporttex.py:27
 msgid "Create a PDF report using LaTeX."
 msgstr ""
 
-#: ../sdaps/cmdline/reporttex.py:27
+#: ../sdaps/cmdline/reporttex.py:28
 msgid ""
 "This command creates a PDF report using LaTeX that\n"
 "    contains statistics and freeform fields."
 msgstr ""
 
-#: ../sdaps/cmdline/reporttex.py:41
+#: ../sdaps/cmdline/reporttex.py:44
 msgid "Save the generated TeX files instead of the final PDF."
 msgstr ""
 
 #: ../sdaps/cmdline/reset.py:26
-msgid "Reset project into original state"
+msgid "Reset project into original state."
 msgstr ""
 
 #: ../sdaps/cmdline/reset.py:27
@@ -436,32 +438,32 @@ msgid ""
 "    "
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:28
+#: ../sdaps/cmdline/setup.py:29
 msgid "Create a new survey using a LaTeX document."
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:29
+#: ../sdaps/cmdline/setup.py:30
 msgid ""
 "Create a new survey from a LaTeX document. You need to\n"
 "    be using the SDAPS class. All the metadata and options for the project\n"
 "    can be set inside the LaTeX document."
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:34
+#: ../sdaps/cmdline/setup.py:36
 msgid "The LaTeX Document"
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:36
+#: ../sdaps/cmdline/setup.py:38
 msgid ""
 "Additional files that are required by the LaTeX document and need to be "
 "copied into the project directory."
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:39
+#: ../sdaps/cmdline/setup.py:41
 msgid "The engine to use to compile LaTeX documents."
 msgstr ""
 
-#: ../sdaps/cmdline/setup.py:43
+#: ../sdaps/cmdline/setup.py:45
 msgid "Additional questions that are not part of the questionnaire."
 msgstr ""
 
@@ -574,11 +576,11 @@ msgstr ""
 msgid "Go to first page"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:465
+#: ../sdaps/gui/__init__.py:466
 msgid "Close without saving"
 msgstr ""
 
-#: ../sdaps/gui/__init__.py:469
+#: ../sdaps/gui/__init__.py:470
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
