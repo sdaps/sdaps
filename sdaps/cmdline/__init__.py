@@ -34,8 +34,13 @@ import_subparser.required = True
 from . import info
 from . import recognize
 from . import reorder
-from . import report
-from . import reporttex
+
+report_ = script.subparsers.add_parser('report',
+    help=_("Generate a report."))
+# Set required as an attribute rather than kwarg so that it works with python <3.7
+report_subparser = report_.add_subparsers(dest='format')
+report_subparser.required = True
+
 from . import reset
 
 setup_ = script.subparsers.add_parser('setup',
@@ -52,3 +57,7 @@ from . import feather
 
 # setup subparsers (yeah, I know)
 from . import setup
+
+# Report subparsers
+from . import report
+from . import reporttex

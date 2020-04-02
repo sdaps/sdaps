@@ -56,8 +56,8 @@ diff -qup data/tex/ids_test_export.csv "$PROJECT/data_1.csv"
 "$SDAPS" export csv "$PROJECT" --images --question-images --quality
 
 # And finally, create a report with the fake result, both with tex and reportlab
-"$SDAPS" report "$PROJECT"
-"$SDAPS" report_tex "$PROJECT"
+"$SDAPS" report reportlab "$PROJECT"
+"$SDAPS" report tex "$PROJECT"
 
 ###########################################################
 # Test Tex without IDs
