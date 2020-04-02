@@ -27,7 +27,7 @@ fi
 # Remove project dir that may exist
 rm -rf "$PROJECT"
 
-"$SDAPS" setup "$PROJECT" "data/tex/questionnaire_with_ids.tex"
+"$SDAPS" setup tex "$PROJECT" "data/tex/questionnaire_with_ids.tex"
 
 # Create a cover page in projects/test/cover.pdf
 "$SDAPS" cover "$PROJECT"
@@ -73,7 +73,7 @@ fi
 # Remove project dir that may exist
 rm -rf "$PROJECT"
 
-"$SDAPS" setup "$PROJECT" "data/tex/questionnaire_without_ids.tex"
+"$SDAPS" setup tex "$PROJECT" "data/tex/questionnaire_without_ids.tex"
 
 # Create a cover page in projects/test/cover.pdf
 "$SDAPS" cover "$PROJECT"

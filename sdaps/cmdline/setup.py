@@ -19,16 +19,18 @@
 from sdaps import model
 from sdaps import script
 from sdaps import defs
+from sdaps.cmdline import setup_subparser
 
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 
-parser = script.add_project_subparser("setup",
+parser = setup_subparser.add_parser("tex",
     help=_("Create a new survey using a LaTeX document."),
     description=_("""Create a new survey from a LaTeX document. You need to
     be using the SDAPS class. All the metadata and options for the project
     can be set inside the LaTeX document."""))
+script.add_project_argument(parser)
 
 parser.add_argument('questionnaire.tex',
     help=_("The LaTeX Document"))

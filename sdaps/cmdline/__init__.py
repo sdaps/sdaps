@@ -37,9 +37,18 @@ from . import reorder
 from . import report
 from . import reporttex
 from . import reset
-from . import setup
+
+setup_ = script.subparsers.add_parser('setup',
+    help=_("Create a new SDAPS project."))
+# Set required as an attribute rather than kwarg so that it works with python <3.7
+setup_subparser = setup_.add_subparsers(dest='format')
+setup_subparser.required = True
+
 from . import stamp
 
 # And, subparsers of import/export
 from . import csvdata
 from . import feather
+
+# setup subparsers (yeah, I know)
+from . import setup
