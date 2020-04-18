@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2020-04-17 03:11+0000\n"
+"PO-Revision-Date: 2020-04-19 03:11+0000\n"
 "Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0.1-dev\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -525,9 +525,8 @@ msgid "Save the generated TeX files instead of the final PDF."
 msgstr "Enregistrer les fichiers Tex générés au lieu du PDF final."
 
 #: ../sdaps/cmdline/reset.py:26
-#, fuzzy
 msgid "Reset project into original state."
-msgstr "Rétablir le projet à son état initial"
+msgstr "Rétablir le projet à son état initial."
 
 #: ../sdaps/cmdline/reset.py:27
 msgid ""
@@ -541,7 +540,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/setup.py:29
 msgid "Create a new survey using a LaTeX document."
-msgstr ""
+msgstr "Créer un nouveau sondage en utilisant un document LaTeX."
 
 #: ../sdaps/cmdline/setup.py:30
 msgid ""
