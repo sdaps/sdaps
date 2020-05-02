@@ -23,7 +23,7 @@ import os
 import os.path
 import subprocess
 import sys
-from distutils.command import build, install, install_data
+from distutils.command import build, install, install_data, clean
 from DistUtilsExtra.command import *
 import configparser
 
@@ -148,17 +148,9 @@ class sdaps_build_tex(build.build):
         # And install the dictionary files
         self.distribution.tex_files.append((self.dict_dir, dictfiles))
 
-class sdaps_clean_tex(Command):
+class sdaps_clean_tex(clean.clean):
     dict_dir = 'share/sdaps/tex'
     dict_filename = "tex_translations"
-
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
 
     def run(self):
         # Remove dictionaries
@@ -174,20 +166,12 @@ class sdaps_clean_tex(Command):
         if os.path.exists(fn):
             os.unlink(fn)
 
-class sdaps_clean(Command):
-    user_options = []
-
+class sdaps_clean(clean.clean):
     sub_commands = \
         [
             ('clean_tex', lambda x : True ),
             ('clean_i18n', lambda x : True ),
         ]
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
 
     def run(self):
         for cmd in self.get_sub_commands():
