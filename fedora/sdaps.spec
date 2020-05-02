@@ -1,6 +1,6 @@
 %global modulename sdaps
 #define commit SNAPSHOT_COMMIT
-%define relversion 1.9.8
+%define relversion 1.9.9
 %if 0%{?commit:1}
   %define shortcommit %(c=%{commit}; echo ${c:0:7})
   %define build_timestamp %(date +"%Y%m%d")
@@ -64,12 +64,12 @@ analyse the scanned data, and create a report.
 %setup -q -n %{name}-%{relversion}%{?commit:-}%{?shortcommit}
 
 %build
-%{__python3} setup.py build
+%{__python3} setup.py build --build-tex
 
 %install
 # Note: Ideally we would pass --skip-build, but the build system is too stupid
 # to install data files then.
-%{__python3} setup.py install --root %{buildroot}
+%{__python3} setup.py install --install-tex --root %{buildroot}
 
 %check
 cd test
