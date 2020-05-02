@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-02 23:36+0200\n"
+"POT-Creation-Date: 2020-05-02 16:34+0200\n"
 "PO-Revision-Date: 2020-04-19 03:11+0000\n"
 "Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
-"\n"
+"Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/"
+">\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,6 +66,40 @@ msgstr "Avertissement : "
 #: ../sdaps/log.py:41
 msgid "Error: "
 msgstr "Erreur : "
+
+#: ../sdaps/cmdline/__init__.py:15
+#, fuzzy
+msgid "Export data from an SDAPS project."
+msgstr "Importer des données depuis un fichier CSV."
+
+#: ../sdaps/cmdline/__init__.py:16
+msgid ""
+"Export data from an SDAPS project. Please check the\n"
+"    documentation for the provided formats for more information."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:26
+#, fuzzy
+msgid "Import data into an SDAPS project."
+msgstr "répertoire du projet|Le projet SDAPS."
+
+#: ../sdaps/cmdline/__init__.py:27
+msgid ""
+"Import data into an SDAPS project. This is only useful in\n"
+"    rare cases. Please check the documentation for the provided formats for "
+"more\n"
+"    information."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:39
+#, fuzzy
+msgid "Generate a report."
+msgstr "Créer un rapport PDF."
+
+#: ../sdaps/cmdline/__init__.py:47
+#, fuzzy
+msgid "Create a new SDAPS project."
+msgstr "Créer un rapport PDF."
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
@@ -282,8 +316,8 @@ msgstr "Nom de fichier pour stocker les données (par défaut : data_%%i.csv)"
 msgid "The delimiter used in the CSV file (default ',')"
 msgstr "Le délimiteur utilisé dans le fichier CSV (par défaut ',')"
 
-#: ../sdaps/cmdline/csvdata.py:49 ../sdaps/cmdline/report.py:33
-#: ../sdaps/cmdline/reporttex.py:55
+#: ../sdaps/cmdline/csvdata.py:49 ../sdaps/cmdline/feather.py:40
+#: ../sdaps/cmdline/report.py:33 ../sdaps/cmdline/reporttex.py:55
 msgid "Filter to only export a partial dataset."
 msgstr "Filtrer pour exporter un jeu de données partiel."
 
@@ -324,6 +358,16 @@ msgstr ""
 #: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
 msgstr "Le fichier à importer."
+
+#: ../sdaps/cmdline/feather.py:36
+#, fuzzy
+msgid "Export data to feather file."
+msgstr "Exporter les données dans un fichiers CSV."
+
+#: ../sdaps/cmdline/feather.py:38
+#, fuzzy, python-format
+msgid "Filename to store the data to (default: data_%%i.feather)"
+msgstr "Nom de fichier pour stocker les données (par défaut : data_%%i.csv)"
 
 #: ../sdaps/cmdline/gui.py:28
 msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
@@ -1107,6 +1151,3 @@ msgstr ""
 
 #~ msgid "Import or export data to/from CSV files."
 #~ msgstr "Importer ou exporter des données depuis ou vers un fichier CSV."
-
-#~ msgid "Create a PDF report."
-#~ msgstr "Créer un rapport PDF."

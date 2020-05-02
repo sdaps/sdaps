@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-02 23:36+0200\n"
+"POT-Creation-Date: 2020-05-02 16:34+0200\n"
 "PO-Revision-Date: 2018-12-26 14:09+0000\n"
 "Last-Translator: Hyunmin Kim (Brandon) <hmkim@live.co.kr>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/sdaps/master/ko/"
@@ -64,6 +64,39 @@ msgstr "경고: "
 #: ../sdaps/log.py:41
 msgid "Error: "
 msgstr "오류: "
+
+#: ../sdaps/cmdline/__init__.py:15
+#, fuzzy
+msgid "Export data from an SDAPS project."
+msgstr "프로젝트 경로|새로운 프로젝트."
+
+#: ../sdaps/cmdline/__init__.py:16
+msgid ""
+"Export data from an SDAPS project. Please check the\n"
+"    documentation for the provided formats for more information."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:26
+#, fuzzy
+msgid "Import data into an SDAPS project."
+msgstr "프로젝트 경로|새로운 프로젝트."
+
+#: ../sdaps/cmdline/__init__.py:27
+msgid ""
+"Import data into an SDAPS project. This is only useful in\n"
+"    rare cases. Please check the documentation for the provided formats for "
+"more\n"
+"    information."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:39
+msgid "Generate a report."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:47
+#, fuzzy
+msgid "Create a new SDAPS project."
+msgstr "프로젝트 경로|새로운 프로젝트."
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
@@ -237,8 +270,8 @@ msgstr ""
 msgid "The delimiter used in the CSV file (default ',')"
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:49 ../sdaps/cmdline/report.py:33
-#: ../sdaps/cmdline/reporttex.py:55
+#: ../sdaps/cmdline/csvdata.py:49 ../sdaps/cmdline/feather.py:40
+#: ../sdaps/cmdline/report.py:33 ../sdaps/cmdline/reporttex.py:55
 msgid "Filter to only export a partial dataset."
 msgstr ""
 
@@ -269,6 +302,16 @@ msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
+msgstr ""
+
+#: ../sdaps/cmdline/feather.py:36
+#, fuzzy
+msgid "Export data to feather file."
+msgstr "CSV 파일로 데이터를 출력합니다."
+
+#: ../sdaps/cmdline/feather.py:38
+#, python-format
+msgid "Filename to store the data to (default: data_%%i.feather)"
 msgstr ""
 
 #: ../sdaps/cmdline/gui.py:28

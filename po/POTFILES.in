@@ -4,12 +4,14 @@ sdaps/add/__init__.py
 sdaps/annotate/__init__.py
 sdaps/boxgallery/__init__.py
 sdaps/log.py
+sdaps/cmdline/__init__.py
 sdaps/cmdline/add.py
 sdaps/cmdline/annotate.py
 sdaps/cmdline/boxgallery.py
 sdaps/cmdline/convert.py
 sdaps/cmdline/cover.py
 sdaps/cmdline/csvdata.py
+sdaps/cmdline/feather.py
 sdaps/cmdline/gui.py
 sdaps/cmdline/ids.py
 sdaps/cmdline/info.py

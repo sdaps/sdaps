@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-02 23:36+0200\n"
+"POT-Creation-Date: 2020-05-02 16:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,6 +61,36 @@ msgstr ""
 
 #: ../sdaps/log.py:41
 msgid "Error: "
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:15
+msgid "Export data from an SDAPS project."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:16
+msgid ""
+"Export data from an SDAPS project. Please check the\n"
+"    documentation for the provided formats for more information."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:26
+msgid "Import data into an SDAPS project."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:27
+msgid ""
+"Import data into an SDAPS project. This is only useful in\n"
+"    rare cases. Please check the documentation for the provided formats for "
+"more\n"
+"    information."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:39
+msgid "Generate a report."
+msgstr ""
+
+#: ../sdaps/cmdline/__init__.py:47
+msgid "Create a new SDAPS project."
 msgstr ""
 
 #: ../sdaps/cmdline/add.py:31
@@ -232,8 +262,8 @@ msgstr ""
 msgid "The delimiter used in the CSV file (default ',')"
 msgstr ""
 
-#: ../sdaps/cmdline/csvdata.py:49 ../sdaps/cmdline/report.py:33
-#: ../sdaps/cmdline/reporttex.py:55
+#: ../sdaps/cmdline/csvdata.py:49 ../sdaps/cmdline/feather.py:40
+#: ../sdaps/cmdline/report.py:33 ../sdaps/cmdline/reporttex.py:55
 msgid "Filter to only export a partial dataset."
 msgstr ""
 
@@ -264,6 +294,15 @@ msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
+msgstr ""
+
+#: ../sdaps/cmdline/feather.py:36
+msgid "Export data to feather file."
+msgstr ""
+
+#: ../sdaps/cmdline/feather.py:38
+#, python-format
+msgid "Filename to store the data to (default: data_%%i.feather)"
 msgstr ""
 
 #: ../sdaps/cmdline/gui.py:28
