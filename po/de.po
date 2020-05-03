@@ -5,17 +5,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-02 16:34+0200\n"
-"PO-Revision-Date: 2019-01-14 16:21+0000\n"
-"Last-Translator: Martin Gwerder <martin@gwerder.net>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/"
-">\n"
+"POT-Creation-Date: 2020-04-02 23:36+0200\n"
+"PO-Revision-Date: 2020-05-04 04:11+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -26,7 +26,7 @@ msgstr "SDAPS -- Werkzeug für Umfragen mit Papier-Fragebögen."
 
 #: ../sdaps/script.py:47
 msgid "Display version and exit"
-msgstr ""
+msgstr "Version anzeigen und beenden"
 
 #. Set required as an attribute rather than kwarg so that it works with python <3.7
 #: ../sdaps/script.py:52
@@ -295,18 +295,15 @@ msgid "Export data to CSV file."
 msgstr "Daten im CSV Format exportieren."
 
 #: ../sdaps/cmdline/csvdata.py:37
-#, fuzzy
 msgid ""
 "Export data to a CSV file. The first line is a header\n"
 "    which defines questionnaire_id and global_id, and a column for each\n"
 "    checkbox and textfield."
 msgstr ""
-"Dieser Befehl ermöglicht den Import und Export der Daten im CSV Format. "
-"Dabei\n"
-"ist die erste Zeile eine Kopfzeile, die angibt, welche Werte in der Spalte\n"
-"gespeichert werden. Der Import kann derzeit nur im Zusammenhang mit der "
-"Fragebogen-ID\n"
-"benutzt werden."
+"Daten in eine CSV-Datei exportieren. Die erste Zeile ist eine Kopfzeile\n"
+"    sie definiert questionnaire_id und global_id, sowie eine Spalte für "
+"jede\n"
+"    Kontrollkästchen und Textfeld."
 
 #: ../sdaps/cmdline/csvdata.py:43
 #, python-format
@@ -339,7 +336,6 @@ msgid "Import data to from a CSV file."
 msgstr "Daten aus einer CSV Datei importieren."
 
 #: ../sdaps/cmdline/csvdata.py:72
-#, fuzzy
 msgid ""
 "Import data from a CSV file. The first line is a header\n"
 "    which defines questionnaire_id and global_id, and a column for each\n"
@@ -347,12 +343,13 @@ msgid ""
 "    as you need to specifiy the questionnaire ID to select the sheet\n"
 "    which should be updated."
 msgstr ""
-"Dieser Befehl ermöglicht den Import und Export der Daten im CSV Format. "
-"Dabei\n"
-"ist die erste Zeile eine Kopfzeile, die angibt, welche Werte in der Spalte\n"
-"gespeichert werden. Der Import kann derzeit nur im Zusammenhang mit der "
-"Fragebogen-ID\n"
-"benutzt werden."
+"Daten aus einer CSV-Datei importieren. Die erste Zeile ist eine Kopfzeile\n"
+"    sie definiert questionnaire_id und global_id, sowie eine Spalte für "
+"jedes\n"
+"    Kontrollkästchen und Textfeld. Beachten Sie, dass der Import derzeit "
+"sehr begrenzt ist,\n"
+"    da die Fragebogen-ID angeben werden müssen, um das zu aktualisierende\n"
+"    Blatt auszuwählen."
 
 #: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
@@ -504,9 +501,8 @@ msgstr ""
 "zu erkennen."
 
 #: ../sdaps/cmdline/report.py:27
-#, fuzzy
 msgid "Create a PDF report using reportlab."
-msgstr "Erstellt ein PDF Report mit LaTeX."
+msgstr "PDF-Bericht mit reportlab erstellen."
 
 #: ../sdaps/cmdline/report.py:28
 msgid ""
@@ -567,9 +563,8 @@ msgid "Save the generated TeX files instead of the final PDF."
 msgstr "Speichert die generierten TeX-Dateien anstelle des erstellten PDFs."
 
 #: ../sdaps/cmdline/reset.py:26
-#, fuzzy
 msgid "Reset project into original state."
-msgstr "Projekt in Originalzustand zurücksetzen"
+msgstr "Projekt in Originalzustand zurücksetzen."
 
 #: ../sdaps/cmdline/reset.py:27
 msgid ""
@@ -611,7 +606,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/setup.py:41
 msgid "The engine to use to compile LaTeX documents."
-msgstr ""
+msgstr "Die Engine zum Kompilieren von LaTeX-Dokumenten."
 
 #: ../sdaps/cmdline/setup.py:45
 msgid "Additional questions that are not part of the questionnaire."
@@ -747,13 +742,13 @@ msgid "Close without saving"
 msgstr "Beenden ohne zu Speichern"
 
 #: ../sdaps/gui/__init__.py:470
-#, fuzzy
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
 "If you do not save you may lose data."
 msgstr ""
-"<b>Beenden ohne zu Speichern?</b>\n"
+"<b>Speichern vor dem Beenden?</b>\n"
+"\n"
 "Wenn Sie nicht speichern, kann es zu Datenverlust kommen."
 
 #: ../sdaps/gui/main_window.ui.h:1
@@ -790,7 +785,7 @@ msgstr "_Hilfe"
 
 #: ../sdaps/gui/main_window.ui.h:9
 msgid "Recognize Page"
-msgstr ""
+msgstr "Seite erkennen"
 
 #: ../sdaps/gui/main_window.ui.h:10
 msgid "Page Rotated"
@@ -1127,9 +1122,10 @@ msgstr ""
 "Die gewünschte Aktion wird dennoch durchgeführt."
 
 #: ../sdaps/stamp/latex.py:26
-#, fuzzy, python-format
+#, python-format
 msgid "Running %s now multiple times to generate the stamped questionnaire."
-msgstr "Führe %s zwei mal aus um den gestempelten Fragebogen zu erstellen."
+msgstr ""
+"%s wird nun mehrmals ausgeführt, um den gestempelten Fragebogen zu erstellen."
 
 #: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:108
 #: ../sdaps/setuptex/__init__.py:149 ../sdaps/reporttex/__init__.py:162
@@ -1164,9 +1160,9 @@ msgid "Unknown file type (%s). additionalqobjects should be text/plain."
 msgstr "Unbekanntes Dateiformat (%s). additionalqobjects muss text/plain sein."
 
 #: ../sdaps/setuptex/__init__.py:104
-#, fuzzy, python-format
+#, python-format
 msgid "Running %s now multiple times to generate the questionnaire."
-msgstr "Führe %s zwei mal aus um den Fragebogen zu erstellen."
+msgstr "%s wird nun mehrmals ausgeführt, um den Fragebogen zu erstellen."
 
 #: ../sdaps/setuptex/__init__.py:123
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
@@ -1183,9 +1179,9 @@ msgstr ""
 "funktionieren."
 
 #: ../sdaps/setuptex/__init__.py:144
-#, fuzzy, python-format
+#, python-format
 msgid "Running %s now multiple imes to generate the questionnaire."
-msgstr "Führe %s zwei mal aus um den Fragebogen zu erstellen."
+msgstr "%s wird nun mehrmals ausgeführt, um den Fragebogen zu erstellen."
 
 #: ../sdaps/setuptex/__init__.py:163
 msgid ""
@@ -1211,9 +1207,9 @@ msgid "The TeX project with the report data is located at '%s'."
 msgstr "Das TeX-Projekt für den Report liegt unter '%s'."
 
 #: ../sdaps/reporttex/__init__.py:158
-#, fuzzy, python-format
+#, python-format
 msgid "Running %s now multiple times to generate the report."
-msgstr "Führe %s zwei mal aus um den Report zu erstellen."
+msgstr "%s wird nun mehrmals ausgeführt, um den Bericht zu erstellen."
 
 #: ../sdaps/reporttex/__init__.py:168
 #, python-format
