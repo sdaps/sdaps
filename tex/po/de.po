@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-02 16:34+0200\n"
+"POT-Creation-Date: 2020-05-27 09:48+0200\n"
 "PO-Revision-Date: 2019-01-09 14:27+0000\n"
 "Last-Translator: JinaJita <what@hab-verschlafen.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/sdaps/tex/de/>\n"
@@ -48,27 +48,27 @@ msgstr ""
 "Der Fragebogen wird maschinell erfasst. Bitte mit Kugelschreiber wie folgt "
 "ausfüllen:"
 
-#. Instruction on the questionnaire: Next to checked textbox
+#. Instruction on the questionnaire: Next to checked textbox (keep short to avoid line breaks)
 #: ../tex_translations.in.h:12
 msgid "Selected"
 msgstr "Ausgewählt"
 
-#. Instruction on the questionnaire: Next to filled checkbox
+#. Instruction on the questionnaire: Next to filled checkbox (keep short to avoid line breaks)
 #: ../tex_translations.in.h:14
 msgid "Fill to select"
 msgstr "Ausfüllen zum auswählen"
 
-#. Instruction on the questionnaire: Next to filled and checked checkbox
+#. Instruction on the questionnaire: Next to filled and checked checkbox (keep short to avoid line breaks)
 #: ../tex_translations.in.h:16
 msgid "Undo select"
 msgstr "Auswahl zurücknehmen"
 
-#. Instruction on the questionnaire: Multiple choice question
+#. Instruction on the questionnaire: Multiple choice question (keep short to avoid line breaks)
 #: ../tex_translations.in.h:18
 msgid "Multiple-choice (select all applicable options)"
 msgstr "Mehrfachauswahl (alle zutreffenden Optionen auswählen)"
 
-#. Instruction on the questionnaire: Single choice question
+#. Instruction on the questionnaire: Single choice question (keep short to avoid line breaks)
 #: ../tex_translations.in.h:20
 msgid "Single-choice (select only one option)"
 msgstr "Einzelauswahl (nur eine Option auswählen)"

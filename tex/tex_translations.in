@@ -24,15 +24,15 @@ _questionnaireid=Questionnaire-ID:
 # Default instructions on the questionnaire
 _infotext=This questionnaire is evaluated automatically. Please use a pen to fill in your answers as follows:
 
-# Instruction on the questionnaire: Next to checked textbox
+# Instruction on the questionnaire: Next to checked textbox (keep short to avoid line breaks)
 _info-cross=Selected
-# Instruction on the questionnaire: Next to filled checkbox
+# Instruction on the questionnaire: Next to filled checkbox (keep short to avoid line breaks)
 _info-fill=Fill to select
-# Instruction on the questionnaire: Next to filled and checked checkbox
+# Instruction on the questionnaire: Next to filled and checked checkbox (keep short to avoid line breaks)
 _info-corrected=Undo select
-# Instruction on the questionnaire: Multiple choice question
+# Instruction on the questionnaire: Multiple choice question (keep short to avoid line breaks)
 _info-multi=Multiple-choice (select all applicable options)
-# Instruction on the questionnaire: Single choice question
+# Instruction on the questionnaire: Single choice question (keep short to avoid line breaks)
 _info-single=Single-choice (select only one option)
 
 # LaTeX based report: Label for the number of people that answered
