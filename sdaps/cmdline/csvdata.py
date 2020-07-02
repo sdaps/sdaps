@@ -84,7 +84,6 @@ import_.set_defaults(direction='import')
 @script.logfile
 def csvdata_export(cmdline):
     from sdaps import csvdata
-    from sdaps.utils.image import ImageWriter
 
     survey = model.survey.Survey.load(cmdline['project'])
 
@@ -102,6 +101,8 @@ def csvdata_export(cmdline):
     csvoptions = { 'delimiter' : cmdline['delimiter'] }
 
     if cmdline['export_images'] or cmdline['export_question_images'] and cmdline['output'] != '-':
+        from sdaps.utils.image import ImageWriter
+
         img_path = os.path.dirname(filename)
         img_prefix = os.path.join(os.path.splitext(os.path.basename(filename))[0], 'img')
 
