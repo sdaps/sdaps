@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2020-07-07 05:06+0000\n"
+"PO-Revision-Date: 2020-07-07 05:22+0000\n"
 "Last-Translator: Александр Рас <alexras007@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/sdaps/tex/ru/>\n"
 "Language: ru\n"
@@ -66,12 +66,12 @@ msgstr "Отменить выбор"
 #. Instruction on the questionnaire: Multiple choice question (keep short to avoid line breaks)
 #: ../tex_translations.in.h:18
 msgid "Multiple-choice (select all applicable options)"
-msgstr "Множественный выбор (выберите все применимые параметры)"
+msgstr "Множественный выбор (несколько вариантов)"
 
 #. Instruction on the questionnaire: Single choice question (keep short to avoid line breaks)
 #: ../tex_translations.in.h:20
 msgid "Single-choice (select only one option)"
-msgstr "Единый выбор (выберите только один вариант)"
+msgstr "Единственный выбор (один вариант)"
 
 #. LaTeX based report: Label for the number of people that answered
 #: ../tex_translations.in.h:22
