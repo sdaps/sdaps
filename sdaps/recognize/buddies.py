@@ -478,12 +478,18 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
             self.obj.sheet.recognize.recognize()
             result = True
 
-            # Mark sheet as invalid if any page is missing,
-            for page in range(self.obj.page_count):
-                img = self.obj.sheet.get_page_image(page + 1)
+            if self.obj.sheet.grouped:
+                # Mark sheet as invalid if any page is missing,
+                for page in range(self.obj.page_count):
+                    img = self.obj.sheet.get_page_image(page + 1)
 
-                if img is None or img.recognize.matrix is None:
-                    self.obj.sheet.valid = False
+                    if img is None or img.recognize.matrix is None:
+                        self.obj.sheet.valid = False
+            else:
+                # This is a single page rather than the full questionnaire,
+                # consider it valid if those pages are correct. i.e. we don't
+                # need to do anything.
+                pass
         except RecognitionError:
             self.obj.sheet.quality = 0
             result = False

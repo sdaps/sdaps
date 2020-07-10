@@ -91,6 +91,19 @@ class Sheet(buddy.Object):
         self.__dict__.update(data)
 
     @property
+    def grouped(self):
+        """Whether this is a full sheet (i.e. a group of pages) or just a single
+        page of a sheet."""
+
+        if self.survey.questionnaire.page_count == (2 if self.survey.defs.duplex else 1):
+            return True
+
+        # More than two pages, means we are dealing with a grouped sheet.
+        # (otherwise we'll have exactly two pages, possibly a dummy in simplex
+        # mode)
+        return len(self.images) > 2
+
+    @property
     def verified(self):
         for img in self.images:
             if img.ignored:
