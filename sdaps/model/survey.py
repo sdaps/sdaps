@@ -315,7 +315,7 @@ class Survey(object):
 
         # Sanity check that there is no sheet object alive that is dirty
         for sheet in self._loaded_sheets.values():
-            assert sheet is None or (not sheet.dirty and sheet._rowid != -1)
+            assert sheet is None or hasattr(sheet, '_delete') or (not sheet.dirty and sheet._rowid != -1)
 
         ###############
         # Write out the info file next
