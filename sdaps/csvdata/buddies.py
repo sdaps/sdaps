@@ -206,11 +206,20 @@ class Option(QObject, metaclass=model.buddy.Register):
     def export_header(self):
         header = QObject.export_header(self)
         header += [self.obj.id_csv()]
+
+        # Also export each box separately
+        for box in self.obj.boxes:
+            header += box.csvdata.export_header()
+
         return header
 
     def export_data(self):
         data = {self.obj.id_csv(): '%i' % self.obj.get_answer()}
         data.update(QObject.export_data(self))
+
+        for box in self.obj.boxes:
+            data.update(box.csvdata.export_data())
+
         return data
 
     def import_data(self, data):
