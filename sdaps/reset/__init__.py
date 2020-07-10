@@ -20,14 +20,39 @@ This module reset already stored data so next reports and exports will contain o
 """
 
 from collections import defaultdict
-from sdaps import model
+from sdaps import model, log
 import bz2,os,pickle
+import os.path
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 def reset(survey):
     print((_("Removing stored data...")))
-    survey.iterate(lambda: survey.delete_sheet(survey.get_sheet()))
+    image_files = set()
+
+    def delete_sheet():
+        sheet = survey.get_sheet()
+        for img in sheet.images:
+            if img.ignored:
+                continue
+
+            image_files.add(img.filename)
+
+        survey.delete_sheet(survey.get_sheet())
+
+    survey.iterate(delete_sheet)
     survey.questionnaire_ids = []
+
+    # Try to delete all the source files, but only if they are relative
+    for f in image_files:
+        try:
+            full_path = os.path.abspath(survey.path(f))
+            # Only delete file if it is in the survey directory
+            if not full_path.startswith(os.path.abspath(survey.survey_dir)):
+                continue
+            os.unlink(full_path)
+        except OSError as e:
+            log.warn(_("Failed to delete file {}: {}").format(full_path, e.strerror))
+
     survey.save()
     print((_("Done")))
