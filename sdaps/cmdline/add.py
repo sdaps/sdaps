@@ -49,6 +49,10 @@ parser.add_argument('--force',
     help=_("Force adding the images even if the page count is wrong (only use if you know what you are doing)."),
     action="store_true",
     default=False)
+parser.add_argument('--single-pages',
+    help=_("Import each page on its own rather instead of grouping them (use if pages may be mixed up and you are able to correctly match them yourself)."),
+    action="store_true",
+    default=False)
 parser.add_argument('--copy',
     help=_("Copy the files into the directory (default)."),
     dest="copy",
@@ -85,7 +89,7 @@ def add(cmdline):
         for file in cmdline['images']:
             filelist.append(file)
 
-            if not check_image(survey, file, cmdline['duplex'], cmdline['force'], message=True):
+            if not check_image(survey, file, cmdline['duplex'], cmdline['force'], not cmdline['single_pages'], message=True):
                 error=True
         if error:
             return
@@ -111,7 +115,7 @@ def add(cmdline):
         try:
             convert_images(cmdline['images'], tmp, survey.defs.paper_width, survey.defs.paper_height, cmdline['transform'])
 
-            if not check_image(survey, tmp, cmdline['duplex'], cmdline['force']):
+            if not check_image(survey, tmp, cmdline['duplex'], cmdline['force'], not cmdline['single_pages']):
                 log.error(_("The page count of the created temporary file does not work with this survey."))
                 raise AssertionError()
 
@@ -125,7 +129,7 @@ def add(cmdline):
         for file in filelist:
             print(_('Processing %s') % file)
 
-            add_image(survey, file, cmdline['duplex'], cmdline['force'], cmdline['copy'])
+            add_image(survey, file, cmdline['duplex'], cmdline['force'], not cmdline['single_pages'], cmdline['copy'])
 
             print(_('Done'))
 
