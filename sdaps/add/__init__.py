@@ -46,7 +46,7 @@ def _insert_dummy_pages(survey, duplex_scan):
 
     return insert_dummy_pages, image_count_factor
 
-def check_image(survey, file, duplex_scan=False, force=False, message=False):
+def check_image(survey, file, duplex_scan=False, force=False, group=True, message=False):
 
     insert_dummy_pages, image_count_factor = _insert_dummy_pages(survey, duplex_scan)
 
@@ -56,20 +56,24 @@ def check_image(survey, file, duplex_scan=False, force=False, message=False):
         return False
 
     num_pages = image.get_tiff_page_count(file)
+    if insert_dummy_pages:
+        num_pages *= 2
 
-    c = survey.questionnaire.page_count
-    if not insert_dummy_pages:
-        c = c * image_count_factor
+    if group:
+        sheet_page_count = survey.questionnaire.page_count * image_count_factor
+    else:
+        # We always consider only one (duplex) page
+        sheet_page_count = 2
 
     # This test is on the image count that needs to come from the file
-    if num_pages % c != 0 and not force:
+    if num_pages % sheet_page_count != 0 and not force:
         if message:
             print(_('Not adding %s because it has a wrong page count (needs to be a mulitple of %i).') % (file, c))
         return False
 
     return True
 
-def add_image(survey, file, duplex_scan=False, force=False, copy=True):
+def add_image(survey, file, duplex_scan=False, force=False, group=True, copy=True):
 
     insert_dummy_pages, image_count_factor = _insert_dummy_pages(survey, duplex_scan)
 
@@ -78,12 +82,13 @@ def add_image(survey, file, duplex_scan=False, force=False, copy=True):
 
     num_pages = image.get_tiff_page_count(file)
 
-    c = survey.questionnaire.page_count
-    if not insert_dummy_pages:
-        c = c * image_count_factor
-
-    if insert_dummy_pages:
-        c = c * image_count_factor
+    if group:
+        sheet_page_count = survey.questionnaire.page_count
+        if not insert_dummy_pages:
+            sheet_page_count = sheet_page_count * image_count_factor
+    else:
+        # We always consider only one (duplex) page
+        sheet_page_count = 2
 
     if copy:
         tiff = survey.new_path('%i.tif')
@@ -100,7 +105,7 @@ def add_image(survey, file, duplex_scan=False, force=False, copy=True):
     while len(pages) > 0:
         sheet = model.sheet.Sheet()
         survey.add_sheet(sheet)
-        while len(pages) > 0 and len(sheet.images) < c:
+        while len(pages) > 0 and len(sheet.images) < sheet_page_count:
             img = model.sheet.Image()
             sheet.add_image(img)
             img.filename = tiff
