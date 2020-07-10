@@ -25,6 +25,9 @@ import os.path
 from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
+class SkipData(Exception):
+    pass
+
 class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
     name = 'csvdata'
@@ -63,7 +66,11 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
             'verified' : str(int(self.obj.sheet.verified)),
         }
         for qobject in self.obj.qobjects:
-            data.update(qobject.csvdata.export_data())
+            try:
+                data.update(qobject.csvdata.export_data())
+            except SkipData:
+                # Ignore skip data error
+                pass
         self.csv.writerow(data)
 
     def export_finish(self):
@@ -105,6 +112,13 @@ class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
 
     def export_data(self):
         data = {}
+
+        # Skip export if we don't have the corresponding page in the sheet
+        # (either becaues the user chose not to group the pages, or because one
+        # couldn't be recognised and the whole sheet is already marked invalid)
+        if self.obj.questionnaire.sheet.get_page_image(self.obj.page_number) is None:
+            raise SkipData
+
         if self.obj.questionnaire.csvdata.export_question_images:
             if self.obj.boxes:
                 img = self.obj.questionnaire.csvdata.image_writer.output_boxes(self.obj.boxes, real=False)
@@ -117,6 +131,20 @@ class QObject(model.buddy.Buddy, metaclass=model.buddy.Register):
     def import_data(self, data):
         if self.obj.id_csv() + '_review' in data:
             self.obj.data.review_comment = data[self.obj.id_csv() + '_review']
+
+class Head(QObject, metaclass=model.buddy.Register):
+
+    name = 'csvdata'
+    obj_class = model.questionnaire.Head
+
+    def export_data(self):
+        data = {}
+
+        # Head has no page number, as such we need to override the default
+        # implementation
+        data[self.obj.id_csv() + '_review'] = str(self.obj.data.review_comment if self.obj.data.review_comment else '')
+
+        return data
 
 class Choice(QObject, metaclass=model.buddy.Register):
 
