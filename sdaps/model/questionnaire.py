@@ -66,10 +66,16 @@ class Questionnaire(buddy.Object):
 
     def add_qobject(self, qobject, new_id=None):
         qobject.questionnaire = self
-        # XXX: Is this any good?
+
         if new_id is not None:
-            assert new_id > self.last_id
-            self.last_id = new_id
+            # We allow IDs to move backward, but will continue auto-counting
+            # at the last increasing position.
+            if new_id > self.last_id:
+                self.last_id = new_id
+            else:
+                # If it moved backward, assert that there is no collision
+                for q in self.qobjects:
+                    assert q.id != new_id
             qobject.id = new_id
         else:
             self.last_id = qobject.init_id(self.last_id)
