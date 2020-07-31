@@ -3,21 +3,22 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-02 16:34+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-04-02 23:36+0200\n"
+"PO-Revision-Date: 2020-08-01 06:41+0000\n"
+"Last-Translator: Daniel <dan.ef1999@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/sdaps/master/ru/>"
+"\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -25,7 +26,7 @@ msgstr ""
 
 #: ../sdaps/script.py:47
 msgid "Display version and exit"
-msgstr ""
+msgstr "Отобразить версию и выйти"
 
 #. Set required as an attribute rather than kwarg so that it works with python <3.7
 #: ../sdaps/script.py:52
@@ -57,11 +58,11 @@ msgstr ""
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
-msgstr ""
+msgstr "Предупреждение: "
 
 #: ../sdaps/log.py:41
 msgid "Error: "
-msgstr ""
+msgstr "Ошибка: "
 
 #: ../sdaps/cmdline/__init__.py:15
 msgid "Export data from an SDAPS project."
@@ -125,11 +126,11 @@ msgstr ""
 
 #: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
-msgstr ""
+msgstr "Копировать файлы в директорию (по умолчанию)."
 
 #: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
-msgstr ""
+msgstr "Не копировать файлы в директорию."
 
 #: ../sdaps/cmdline/add.py:62
 msgid ""
@@ -139,15 +140,15 @@ msgstr ""
 
 #: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:48
 msgid "A number of TIFF image files."
-msgstr ""
+msgstr "Количество TIFF изображений."
 
 #: ../sdaps/cmdline/add.py:94
 msgid "The --no-copy option is not compatible with --convert!"
-msgstr ""
+msgstr "Параметр --no-copy несовместим с --convert!"
 
 #: ../sdaps/cmdline/add.py:103
 msgid "Converting input files into a single temporary file."
-msgstr ""
+msgstr "Преобразовать входные файлы в один временный файл."
 
 #: ../sdaps/cmdline/add.py:115
 msgid ""
@@ -161,11 +162,11 @@ msgstr ""
 #: ../sdaps/cmdline/add.py:126
 #, python-format
 msgid "Processing %s"
-msgstr ""
+msgstr "Обработка %s"
 
 #: ../sdaps/cmdline/add.py:130 ../sdaps/reset/__init__.py:33
 msgid "Done"
-msgstr ""
+msgstr "Готово"
 
 #: ../sdaps/cmdline/annotate.py:28
 msgid "Annotate the questionnaire and show the recognized positions."
@@ -225,7 +226,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
-msgstr ""
+msgstr "Выходной файл не указан!"
 
 #: ../sdaps/cmdline/cover.py:27
 msgid "Create a cover for the questionnaires."
@@ -281,7 +282,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:71
 msgid "Import data to from a CSV file."
-msgstr ""
+msgstr "Импорт данных из CSV файла."
 
 #: ../sdaps/cmdline/csvdata.py:72
 msgid ""
@@ -294,7 +295,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
-msgstr ""
+msgstr "Импортируемый файл."
 
 #: ../sdaps/cmdline/feather.py:36
 msgid "Export data to feather file."
@@ -413,7 +414,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/report.py:27
 msgid "Create a PDF report using reportlab."
-msgstr ""
+msgstr "Создать PDF отчет с помощью reportlab."
 
 #: ../sdaps/cmdline/report.py:28
 msgid ""
@@ -454,7 +455,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/reporttex.py:27
 msgid "Create a PDF report using LaTeX."
-msgstr ""
+msgstr "Создать PDF отчет с помощью LaTeX."
 
 #: ../sdaps/cmdline/reporttex.py:28
 msgid ""
@@ -490,7 +491,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/setup.py:36
 msgid "The LaTeX Document"
-msgstr ""
+msgstr "Документ LaTeX"
 
 #: ../sdaps/cmdline/setup.py:38
 msgid ""
@@ -579,7 +580,7 @@ msgstr ""
 
 #: ../sdaps/gui/__init__.py:260
 msgid "http://sdaps.org"
-msgstr ""
+msgstr "http://sdaps.org"
 
 #: ../sdaps/gui/__init__.py:261
 msgid "translator-credits"
@@ -593,7 +594,7 @@ msgstr ""
 #: ../sdaps/gui/__init__.py:307
 #, python-format
 msgid "Recognition Quality: %.2f"
-msgstr ""
+msgstr "Качество распознавания: %.2f"
 
 #: ../sdaps/gui/__init__.py:323
 msgid ""
@@ -603,7 +604,7 @@ msgstr ""
 
 #: ../sdaps/gui/__init__.py:325
 msgid "Go to last page"
-msgstr ""
+msgstr "Перейти на последнюю страницу"
 
 #: ../sdaps/gui/__init__.py:347
 msgid ""
@@ -613,11 +614,11 @@ msgstr ""
 
 #: ../sdaps/gui/__init__.py:349
 msgid "Go to first page"
-msgstr ""
+msgstr "Перейти на первую страницу"
 
 #: ../sdaps/gui/__init__.py:466
 msgid "Close without saving"
-msgstr ""
+msgstr "Закрыть без сохранения"
 
 #: ../sdaps/gui/__init__.py:470
 msgid ""
@@ -625,6 +626,9 @@ msgid ""
 "\n"
 "If you do not save you may lose data."
 msgstr ""
+"<b>Сохранить проект перед закрытием?</b>\n"
+"\n"
+"Если вы не сохраните, вы можете потерять данные."
 
 #: ../sdaps/gui/main_window.ui.h:1
 msgid "Forward"
@@ -636,15 +640,15 @@ msgstr ""
 
 #: ../sdaps/gui/main_window.ui.h:3
 msgid "Zoom In"
-msgstr ""
+msgstr "Приблизить"
 
 #: ../sdaps/gui/main_window.ui.h:4
 msgid "Zoom Out"
-msgstr ""
+msgstr "Отдалить"
 
 #: ../sdaps/gui/main_window.ui.h:5
 msgid "SDAPS"
-msgstr ""
+msgstr "SDAPS"
 
 #: ../sdaps/gui/main_window.ui.h:6
 msgid "_File"
@@ -668,7 +672,7 @@ msgstr ""
 
 #: ../sdaps/gui/main_window.ui.h:11
 msgid "Sort by Quality"
-msgstr ""
+msgstr "Сортировать по Качеству"
 
 #: ../sdaps/gui/main_window.ui.h:12
 msgid "label"
@@ -676,7 +680,7 @@ msgstr ""
 
 #: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
-msgstr ""
+msgstr "<b>Глобальные Настройки</b>"
 
 #: ../sdaps/gui/widget_buddies.py:60
 msgid "Sheet valid"
@@ -692,7 +696,7 @@ msgstr ""
 
 #: ../sdaps/gui/widget_buddies.py:63 ../sdaps/gui/widget_buddies.py:73
 msgid "Empty"
-msgstr ""
+msgstr "Пусто"
 
 #: ../sdaps/gui/widget_buddies.py:84 ../sdaps/gui/widget_buddies.py:115
 msgid "<b>Questionnaire ID: </b>"
@@ -722,7 +726,7 @@ msgstr ""
 
 #: ../sdaps/utils/opencv.py:44
 msgid "File does not exist"
-msgstr ""
+msgstr "Файл не существует"
 
 #. The old code used to first filter, and then run; but that is
 #. a bit ineffective in a way
@@ -869,7 +873,7 @@ msgstr ""
 #: ../sdaps/report/answers.py:188
 #, python-format
 msgid "Answers: %i"
-msgstr ""
+msgstr "Ответов: %i"
 
 #: ../sdaps/report/answers.py:190
 #, python-format
@@ -906,7 +910,7 @@ msgstr ""
 #: ../sdaps/setup/buddies.py:114
 #, python-format
 msgid "Error in question \"%s\""
-msgstr ""
+msgstr "Ошибка в вопросе \"%s\""
 
 #: ../sdaps/setup/buddies.py:118
 #, python-format
