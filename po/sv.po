@@ -3,24 +3,25 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-02 16:34+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-04-02 23:36+0200\n"
+"PO-Revision-Date: 2020-08-20 16:36+0000\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"Language-Team: Swedish <https://hosted.weblate.org/projects/sdaps/master/sv/>"
+"\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.2.1-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
-msgstr ""
+msgstr "SDAPS -- Pappersbaserad enkätverktyg"
 
 #: ../sdaps/script.py:47
 msgid "Display version and exit"
@@ -29,11 +30,11 @@ msgstr ""
 #. Set required as an attribute rather than kwarg so that it works with python <3.7
 #: ../sdaps/script.py:52
 msgid "command list|Commands:"
-msgstr ""
+msgstr "kommandolista|Kommandon:"
 
 #: ../sdaps/script.py:61
 msgid "project directory|The SDAPS project."
-msgstr ""
+msgstr "projektkatalog | SDAPS Projektet."
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
@@ -41,6 +42,7 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
+"Ogiltig indata fil %s. Du måste ange en (flersidig) monokrom TIFF som indata."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
