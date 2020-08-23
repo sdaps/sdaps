@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-02 16:34+0200\n"
-"PO-Revision-Date: 2019-04-18 22:07+0000\n"
-"Last-Translator: Rui Mendes <xz9@protonmail.com>\n"
+"POT-Creation-Date: 2020-04-02 23:36+0200\n"
+"PO-Revision-Date: 2020-08-30 18:10+0000\n"
+"Last-Translator: Jean Carlos Silva <jeancarlossilva0@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "sdaps/master/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.6-dev\n"
+"X-Generator: Weblate 4.2.1-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -25,7 +25,7 @@ msgstr "SDAPS -- Ferramenta de questionários baseados em papel."
 
 #: ../sdaps/script.py:47
 msgid "Display version and exit"
-msgstr ""
+msgstr "Exibir versão e sair"
 
 #. Set required as an attribute rather than kwarg so that it works with python <3.7
 #: ../sdaps/script.py:52
@@ -256,18 +256,16 @@ msgstr ""
 "\tda digitalização convencional."
 
 #: ../sdaps/cmdline/convert.py:38
-#, fuzzy
 msgid ""
 "Do a 3D-transformation after finding the corner marks.\n"
 "    If they are not found, the image will be processed as-is."
 msgstr ""
-"Faz uma transformação 3D depois de encontrar as marcas de canto.\n"
-"        Se as marcas não forem encontradas, a imagem é adicionada como é."
+"Faça uma transformação 3D depois de encontrar as marcas de canto.\n"
+"     Se eles não forem encontrados, a imagem será processada como está."
 
 #: ../sdaps/cmdline/convert.py:44
-#, fuzzy
 msgid "The location of the output file."
-msgstr "A localização do arquivo de saída. Deve ser fornecida."
+msgstr "A localização do arquivo de saída."
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
@@ -295,18 +293,14 @@ msgid "Export data to CSV file."
 msgstr "Exportar dados para arquivo CSV."
 
 #: ../sdaps/cmdline/csvdata.py:37
-#, fuzzy
 msgid ""
 "Export data to a CSV file. The first line is a header\n"
 "    which defines questionnaire_id and global_id, and a column for each\n"
 "    checkbox and textfield."
 msgstr ""
-"Importar ou exportar dados de/para um arquivo CSV. A primeira linha\n"
-"     é um cabeçalho, que define questionnaire_id, global_id e uma coluna\n"
-"     para cada caixa de seleção e campo de texto. Note que a importação é\n"
-"     atualmente muito limitada, já que você precisa especificar o "
-"identificador\n"
-"     do questionário para selecionar a folha que deverá ser atualizada."
+"Exporte dados para um arquivo CSV. A primeira linha é um cabeçalho\n"
+"     que define questionário_id e global_id, e uma coluna para cada\n"
+"     caixa de seleção e campo de texto."
 
 #: ../sdaps/cmdline/csvdata.py:43
 #, python-format
@@ -339,7 +333,6 @@ msgid "Import data to from a CSV file."
 msgstr "Importar dados de um arquivo CSV."
 
 #: ../sdaps/cmdline/csvdata.py:72
-#, fuzzy
 msgid ""
 "Import data from a CSV file. The first line is a header\n"
 "    which defines questionnaire_id and global_id, and a column for each\n"
@@ -347,12 +340,13 @@ msgid ""
 "    as you need to specifiy the questionnaire ID to select the sheet\n"
 "    which should be updated."
 msgstr ""
-"Importar ou exportar dados de/para um arquivo CSV. A primeira linha\n"
-"     é um cabeçalho, que define questionnaire_id, global_id e uma coluna\n"
-"     para cada caixa de seleção e campo de texto. Note que a importação é\n"
-"     atualmente muito limitada, já que você precisa especificar o "
-"identificador\n"
-"     do questionário para selecionar a folha que deverá ser atualizada."
+"Importe dados de um arquivo CSV. A primeira linha é um cabeçalho\n"
+"     que define questionário_id e global_id, e uma coluna para cada\n"
+"     caixa de seleção e campo de texto. Observe que a importação é "
+"atualmente muito limitada,\n"
+"     pois você precisa especificar o ID do questionário para selecionar a "
+"folha\n"
+"     que deve ser atualizado."
 
 #: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
@@ -369,7 +363,6 @@ msgid "Filename to store the data to (default: data_%%i.feather)"
 msgstr "Nome de arquivo para armazenar os dados (padrão: data_%%i.csv)"
 
 #: ../sdaps/cmdline/gui.py:28
-#, fuzzy
 msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
 msgstr ""
 "Abrir uma interface gráfica (GUI). Você pode visualizar e alterar as "
