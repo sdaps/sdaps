@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-02 16:34+0200\n"
-"PO-Revision-Date: 2020-03-10 23:32+0000\n"
-"Last-Translator: Uxío Pérez <uxiopr@yahoo.es>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/"
-">\n"
+"POT-Creation-Date: 2020-04-02 23:36+0200\n"
+"PO-Revision-Date: 2020-08-30 18:10+0000\n"
+"Last-Translator: Scoopity Whoop <Scoo0p@yandex.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/>"
+"\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.2.1-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -25,7 +25,7 @@ msgstr "SDAPS -- Herramienta para el reconocimiento de documentos impresos."
 
 #: ../sdaps/script.py:47
 msgid "Display version and exit"
-msgstr ""
+msgstr "Mostrar versión y salir"
 
 #. Set required as an attribute rather than kwarg so that it works with python <3.7
 #: ../sdaps/script.py:52
@@ -296,20 +296,14 @@ msgid "Export data to CSV file."
 msgstr "Exportar datos a un archivo CSV."
 
 #: ../sdaps/cmdline/csvdata.py:37
-#, fuzzy
 msgid ""
 "Export data to a CSV file. The first line is a header\n"
 "    which defines questionnaire_id and global_id, and a column for each\n"
 "    checkbox and textfield."
 msgstr ""
-"Importar o exportar datos a/desde un archivo CSV. La primera línea\n"
-" es un encabezado que define  questionnaire_id y  global_id, así como una "
-"columna\n"
-" para cada casilla de verificación y campo de texto. Tenga en cuenta que "
-"actualmente la\n"
-" importación es muy limitada, dado que debe especificar el ID del "
-"cuestionario para seleccionar\n"
-" la hoja que debe actualizarse."
+"Exporta los datos a un archivo CSV. La primera línea es un encabezado\n"
+"    que define questionnaire_id y global_id, y una columna para cada\n"
+"    casilla de verificación y campo de texto."
 
 #: ../sdaps/cmdline/csvdata.py:43
 #, python-format
@@ -338,14 +332,13 @@ msgstr ""
 #: ../sdaps/cmdline/csvdata.py:63
 msgid "Export the recognition quality for each checkbox."
 msgstr ""
-"Exportar la calidad del reconocimiento para cada casilla de verificación."
+"Exportar la calidad de reconocimiento para cada casilla de verificación."
 
 #: ../sdaps/cmdline/csvdata.py:71
 msgid "Import data to from a CSV file."
 msgstr "Importar datos desde un archivo CSV."
 
 #: ../sdaps/cmdline/csvdata.py:72
-#, fuzzy
 msgid ""
 "Import data from a CSV file. The first line is a header\n"
 "    which defines questionnaire_id and global_id, and a column for each\n"
@@ -353,14 +346,13 @@ msgid ""
 "    as you need to specifiy the questionnaire ID to select the sheet\n"
 "    which should be updated."
 msgstr ""
-"Importar o exportar datos a/desde un archivo CSV. La primera línea\n"
-" es un encabezado que define  questionnaire_id y  global_id, así como una "
-"columna\n"
-" para cada casilla de verificación y campo de texto. Tenga en cuenta que "
-"actualmente la\n"
-" importación es muy limitada, dado que debe especificar el ID del "
-"cuestionario para seleccionar\n"
-" la hoja que debe actualizarse."
+"Importar datos desde un archivo CSV. La primera línea es un encabezado\n"
+"    que define questionnaire_id y global_id, y una columna para cada\n"
+"    casilla de verificación y campo de texto. Tenga en cuenta que la "
+"importación es actualmente muy limitada,\n"
+"    ya que es necesario especificar el ID del cuestionario para seleccionar "
+"la hoja\n"
+"    que debe ser actualizada."
 
 #: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
@@ -411,11 +403,12 @@ msgid ""
 "command,\n"
 "    which will give you the PDF at the same time."
 msgstr ""
-"Este comando puede utilizarse para importar y exportar IDs de cuestionarios "
-"IDs.       Sólo tiene sentido en proyectos donde el ID se imprime en el "
-"cuestionario.\n"
-" Tenga en cuenta que también puede agregar IDs mediante el comando stamp,\n"
-" el cual le dará el PDF al mismo tiempo."
+"Este comando puede utilizarse para la importación y exportación\n"
+"    IDs del cuestionario. Sólo tiene sentido en los proyectos en los que tal "
+"identificación está impresa en el\n"
+"    cuestionario. Tenga en cuenta que también puede añadir identificaciones "
+"utilizando el comando de sellado,\n"
+"    que le dará el PDF al mismo tiempo."
 
 #: ../sdaps/cmdline/ids.py:35
 #, python-format
@@ -438,13 +431,12 @@ msgid ""
 "    on the report. The only key that always exist is \"title\".\n"
 "    If no key is given then a list of defined keys is printed."
 msgstr ""
-"Este comando permite modificar los metadatos del proyecto SDAPS.\n"
-" Usted puede modificar, agregar y quitar claves arbitrarias que se "
+"Este comando permite modificar los metadatos del proyecto\n"
+"    SDAPS. PuedeS modificar, añadir y eliminar las teclas arbitrarias que se "
 "imprimirán\n"
-" en el informe. La única llave que siempre existen es \"título\".\n"
-" Si no se proporciona ninguna llave entonces se imprime una lista de claves "
-"ya\n"
-" definidas."
+"    en el informe. La única clave que siempre existe es el \"título\".\n"
+"    Si no se da ninguna clave, entonces se imprime una lista de claves "
+"definidas."
 
 #: ../sdaps/cmdline/info.py:36
 msgid "Delete the key and value pair."
@@ -518,9 +510,8 @@ msgstr ""
 "    "
 
 #: ../sdaps/cmdline/report.py:27
-#, fuzzy
 msgid "Create a PDF report using reportlab."
-msgstr "Crea un informe en PDF utilizando LaTeX."
+msgstr "Crear un informe en PDF usando reportlab."
 
 #: ../sdaps/cmdline/report.py:28
 msgid ""
@@ -584,9 +575,8 @@ msgid "Save the generated TeX files instead of the final PDF."
 msgstr "Guarda los archivos TeX generados en vez del PDF final."
 
 #: ../sdaps/cmdline/reset.py:26
-#, fuzzy
 msgid "Reset project into original state."
-msgstr "Devolver el proyecto al su estado original"
+msgstr "Resetear el proyecto a su estado original."
 
 #: ../sdaps/cmdline/reset.py:27
 msgid ""
@@ -627,7 +617,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/setup.py:41
 msgid "The engine to use to compile LaTeX documents."
-msgstr ""
+msgstr "El motor a utilizar para compilar documentos LaTeX."
 
 #: ../sdaps/cmdline/setup.py:45
 msgid "Additional questions that are not part of the questionnaire."
@@ -764,7 +754,6 @@ msgid "Close without saving"
 msgstr "Cerrar sin guardar"
 
 #: ../sdaps/gui/__init__.py:470
-#, fuzzy
 msgid ""
 "<b>Save the project before closing?</b>\n"
 "\n"
@@ -772,7 +761,7 @@ msgid ""
 msgstr ""
 "<b>¿Guardar el proyecto antes de cerrar?</b>\n"
 "\n"
-"Si no guarda puede perder datos."
+"Si no se guarda, se pueden perder datos."
 
 #: ../sdaps/gui/main_window.ui.h:1
 msgid "Forward"
@@ -808,7 +797,7 @@ msgstr "_Ayuda"
 
 #: ../sdaps/gui/main_window.ui.h:9
 msgid "Recognize Page"
-msgstr ""
+msgstr "Reconocer Página"
 
 #: ../sdaps/gui/main_window.ui.h:10
 msgid "Page Rotated"
@@ -973,11 +962,11 @@ msgid ""
 "inserting dummy pages. Maybe you did a simplex scan but added it in duplex "
 "mode? The pages in question are %s, %i and %s, %i."
 msgstr ""
-"Se obtuvo un documento simple donde dos páginas adyacentes tenían un número "
-"de página conocido. Esto nunca debe suceder dado que  incluso exploraciones "
-"simples se convierten en dúplex insertando páginas vacías. ¿Tal vez se "
-"realizó un escáneo simple pero se añadió en modo duplex? Las páginas en "
-"cuestión son %s, %i y %s, %i."
+"Obtuviste un documento simple donde dos páginas adyacentes tienen un número "
+"de página conocido. Esto nunca debería suceder ya que incluso los escaneos "
+"simplex se convierten en dúplex insertando páginas falsas. ¿Quizás hiciste "
+"un escaneo simple pero lo agregaste en modo dúplex? Las páginas en cuestión "
+"son %s, %i y %s, %i."
 
 #: ../sdaps/recognize/buddies.py:163
 #, python-format
@@ -1153,9 +1142,10 @@ msgstr ""
 "Lo voy a hacer igualmente."
 
 #: ../sdaps/stamp/latex.py:26
-#, fuzzy, python-format
+#, python-format
 msgid "Running %s now multiple times to generate the stamped questionnaire."
-msgstr "Ejecutando %s dos veces para generar el cuestionario estampado."
+msgstr ""
+"Ejecutando %s ahora múltiples veces para generar el cuestionario estampado."
 
 #: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:108
 #: ../sdaps/setuptex/__init__.py:149 ../sdaps/reporttex/__init__.py:162
@@ -1179,7 +1169,7 @@ msgstr "El directorio de la encuesta ya existe."
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
 msgstr ""
-"Tipo de archivo desconocido (%s).  questionnaire_tex debería ser del tipo "
+"Tipo de archivo desconocido (%s). questionnaire_tex debería ser del tipo "
 "text/x-tex."
 
 #: ../sdaps/setuptex/__init__.py:52
@@ -1194,9 +1184,9 @@ msgstr ""
 "plain."
 
 #: ../sdaps/setuptex/__init__.py:104
-#, fuzzy, python-format
+#, python-format
 msgid "Running %s now multiple times to generate the questionnaire."
-msgstr "Ejecutando %s dos veces para generar el cuestionario."
+msgstr "Ejecutando %s ahora múltiples veces para generar el cuestionario."
 
 #: ../sdaps/setuptex/__init__.py:123
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
@@ -1212,9 +1202,9 @@ msgstr ""
 "Instalación interrumpida."
 
 #: ../sdaps/setuptex/__init__.py:144
-#, fuzzy, python-format
+#, python-format
 msgid "Running %s now multiple imes to generate the questionnaire."
-msgstr "Ejecutando %s dos veces para generar el cuestionario."
+msgstr "Ejecutando %s ahora múltiples veces para generar el cuestionario."
 
 #: ../sdaps/setuptex/__init__.py:163
 msgid ""
@@ -1240,9 +1230,9 @@ msgid "The TeX project with the report data is located at '%s'."
 msgstr "El proyecto TeX con los datos del informe se halla en '%s'."
 
 #: ../sdaps/reporttex/__init__.py:158
-#, fuzzy, python-format
+#, python-format
 msgid "Running %s now multiple times to generate the report."
-msgstr "Ejecutando %s dos veces para generar el informe."
+msgstr "Ejecutando %s ahora múltiples veces para generar el informe."
 
 #: ../sdaps/reporttex/__init__.py:168
 #, python-format
