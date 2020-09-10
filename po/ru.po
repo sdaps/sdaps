@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2020-08-01 06:41+0000\n"
-"Last-Translator: Daniel <dan.ef1999@gmail.com>\n"
+"PO-Revision-Date: 2020-09-10 17:36+0000\n"
+"Last-Translator: Irina <irinaabissinian@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/sdaps/master/ru/>"
 "\n"
 "Language: ru\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -43,6 +43,8 @@ msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
 msgstr ""
+"Неверный входной файл %s. Вам нужно указать (мультистраничный) монохромный "
+"TIFF на вводе."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
@@ -157,7 +159,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/add.py:120
 msgid "Running the conversion failed."
-msgstr ""
+msgstr "Запуск конверсии не удался."
 
 #: ../sdaps/cmdline/add.py:126
 #, python-format
@@ -202,7 +204,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/convert.py:30
 msgid "Convert a set of images to the correct image format."
-msgstr ""
+msgstr "Конвертировать пакет изображений в корректный формат изображений."
 
 #: ../sdaps/cmdline/convert.py:31
 msgid ""
@@ -222,7 +224,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/convert.py:44
 msgid "The location of the output file."
-msgstr ""
+msgstr "Расположение выходного файла."
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
@@ -230,7 +232,7 @@ msgstr "Выходной файл не указан!"
 
 #: ../sdaps/cmdline/cover.py:27
 msgid "Create a cover for the questionnaires."
-msgstr ""
+msgstr "Создать обложку для опросников."
 
 #: ../sdaps/cmdline/cover.py:28
 msgid ""
@@ -241,11 +243,11 @@ msgstr ""
 #: ../sdaps/cmdline/cover.py:31
 #, python-format
 msgid "Filename to store the data to (default: cover_%%i.pdf)"
-msgstr ""
+msgstr "Имя файла для сохранения данных в (по умолчанию: cover_%%i.pdf)"
 
 #: ../sdaps/cmdline/csvdata.py:36
 msgid "Export data to CSV file."
-msgstr ""
+msgstr "Экспорт данных в файл CSV."
 
 #: ../sdaps/cmdline/csvdata.py:37
 msgid ""
@@ -257,7 +259,7 @@ msgstr ""
 #: ../sdaps/cmdline/csvdata.py:43
 #, python-format
 msgid "Filename to store the data to (default: data_%%i.csv)"
-msgstr ""
+msgstr "Имя файла для сохранения данных в (по умолчанию: data_%%i.csv)"
 
 #: ../sdaps/cmdline/csvdata.py:45
 msgid "The delimiter used in the CSV file (default ',')"
@@ -324,7 +326,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/ids.py:29
 msgid "Export and import questionnaire IDs."
-msgstr ""
+msgstr "Экспорт и импорт ID опросников."
 
 #: ../sdaps/cmdline/ids.py:30
 msgid ""
@@ -338,7 +340,7 @@ msgstr ""
 #: ../sdaps/cmdline/ids.py:35
 #, python-format
 msgid "Filename to store the data to (default: ids_%%i)"
-msgstr ""
+msgstr "Имя файла для сохранения данных в (по умолчанию: ids_%%i)"
 
 #: ../sdaps/cmdline/ids.py:38
 msgid "Add IDs to the internal list from the specified file."
@@ -346,7 +348,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/info.py:28
 msgid "Display and modify metadata of project."
-msgstr ""
+msgstr "Показать и изменить метаданные проекта."
 
 #: ../sdaps/cmdline/info.py:29
 msgid ""
@@ -363,7 +365,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/info.py:40
 msgid "The key to display or modify."
-msgstr ""
+msgstr "Ключ к показу или изменению."
 
 #: ../sdaps/cmdline/info.py:44
 msgid "Set the given key to this value."
@@ -371,7 +373,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/info.py:69
 msgid "Existing fields:\n"
-msgstr ""
+msgstr "Существующие поля:\n"
 
 #: ../sdaps/cmdline/recognize.py:28
 msgid "Run the optical mark recognition."
@@ -451,7 +453,7 @@ msgstr ""
 #: ../sdaps/cmdline/report.py:63 ../sdaps/cmdline/reporttex.py:52
 #, python-format
 msgid "Filename to store the data to (default: report_%%i.pdf)"
-msgstr ""
+msgstr "Имя файла для сохранения данных в (по умолчанию: report_%%i.pdf)"
 
 #: ../sdaps/cmdline/reporttex.py:27
 msgid "Create a PDF report using LaTeX."
@@ -480,7 +482,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/setup.py:29
 msgid "Create a new survey using a LaTeX document."
-msgstr ""
+msgstr "Создать новый опрос, используя документ LaTeX."
 
 #: ../sdaps/cmdline/setup.py:30
 msgid ""
@@ -505,7 +507,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/setup.py:45
 msgid "Additional questions that are not part of the questionnaire."
-msgstr ""
+msgstr "Дополнительные вопросы, не являющиеся частью опросника."
 
 #: ../sdaps/cmdline/stamp.py:26
 msgid "Add marks for automatic processing."
@@ -537,7 +539,7 @@ msgstr ""
 #: ../sdaps/cmdline/stamp.py:42
 #, python-format
 msgid "Filename to store the data to (default: stamp_%%i.pdf)"
-msgstr ""
+msgstr "Имя файла для сохранения данных в (по умолчанию: stamp_%%i.pdf)"
 
 #: ../sdaps/convert/__init__.py:37
 #, python-format
@@ -546,7 +548,7 @@ msgstr ""
 
 #: ../sdaps/cover/__init__.py:40
 msgid "SDAPS questionnaire"
-msgstr ""
+msgstr "Опросник SDAPS"
 
 #: ../sdaps/csvdata/buddies.py:78
 #, python-format
@@ -636,7 +638,7 @@ msgstr ""
 
 #: ../sdaps/gui/main_window.ui.h:2
 msgid "Previous"
-msgstr ""
+msgstr "Предыдущий"
 
 #: ../sdaps/gui/main_window.ui.h:3
 msgid "Zoom In"
@@ -652,7 +654,7 @@ msgstr "SDAPS"
 
 #: ../sdaps/gui/main_window.ui.h:6
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
 #: ../sdaps/gui/main_window.ui.h:7
 msgid "_View"
@@ -660,11 +662,11 @@ msgstr ""
 
 #: ../sdaps/gui/main_window.ui.h:8
 msgid "_Help"
-msgstr ""
+msgstr "_Помощь"
 
 #: ../sdaps/gui/main_window.ui.h:9
 msgid "Recognize Page"
-msgstr ""
+msgstr "Распознать страницу"
 
 #: ../sdaps/gui/main_window.ui.h:10
 msgid "Page Rotated"
@@ -676,7 +678,7 @@ msgstr "Сортировать по Качеству"
 
 #: ../sdaps/gui/main_window.ui.h:12
 msgid "label"
-msgstr ""
+msgstr "метка"
 
 #: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
@@ -794,7 +796,7 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:115
 #, python-format
 msgid "%s, %i: Could not get page number."
-msgstr ""
+msgstr "%s, %i: Невозможно получить номер страницы."
 
 #. Whoa, that should not happen.
 #: ../sdaps/recognize/buddies.py:135
@@ -891,11 +893,11 @@ msgstr ""
 
 #: ../sdaps/report/__init__.py:92 ../sdaps/reporttex/__init__.py:139
 msgid "sdaps report"
-msgstr ""
+msgstr "отчет sdaps"
 
 #: ../sdaps/reset/__init__.py:29
 msgid "Removing stored data..."
-msgstr ""
+msgstr "Удаление сохраненных данных..."
 
 #: ../sdaps/setup/buddies.py:62
 #, python-format
@@ -978,11 +980,11 @@ msgstr ""
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."
-msgstr ""
+msgstr "Возникла ошибка при создании отчета. Временные файлы в '%s'."
 
 #: ../sdaps/setuptex/__init__.py:46
 msgid "The survey directory already exists."
-msgstr ""
+msgstr "Директория опроса уже существует."
 
 #: ../sdaps/setuptex/__init__.py:51
 #, python-format
@@ -1046,4 +1048,4 @@ msgstr ""
 #: ../sdaps/reporttex/__init__.py:168
 #, python-format
 msgid "An occured during creation of the report. Temporary files left in '%s'."
-msgstr ""
+msgstr "Возникла ошибка при создании отчета. Временные файлы в '%s'."
