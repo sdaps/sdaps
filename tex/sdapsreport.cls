@@ -89,7 +89,7 @@
 \RequirePackage{graphicx}
 
 % headers and footers
-\usepackage{scrpage2}
+\usepackage{scrlayer-scrpage}
 \clearscrheadings
   \chead[\@author\\\@title]{\@author\\\@title}
 \pagestyle{scrheadings}
