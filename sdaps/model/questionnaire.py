@@ -262,8 +262,8 @@ class Option(Question):
 
     def init_attributes(self):
         Question.init_attributes(self)
-        self.value_none = -1
-        self.value_invalid = -2
+        self.value_none = "NA"
+        self.value_invalid = "error-multi-select"
 
     def __str__(self):
         return str().join(
@@ -290,15 +290,15 @@ class Option(Question):
         # all others.
         # Raises an exception if not found
 
-        # Unset all if value is the none value
-        if answer == self.value_none:
+        # Unset all if value is the none value or None
+        if answer == self.value_none or answer is None:
             for box in self.boxes:
                 box.data.state = 0
             return
 
-        # Set all if value is the none value
+        # Set all if value is not an integer or the invalid value
         # NOTE: Assumes more than one box!
-        if answer == self.value_invalid:
+        if answer == self.value_invalid or not isinstance(answer, int):
             assert len(self.boxes) > 1
             for box in self.boxes:
                 box.data.state = 1

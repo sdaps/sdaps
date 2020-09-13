@@ -128,7 +128,8 @@ class Option(Choice, metaclass=model.buddy.Register):
     def read(self):
         answer = self.obj.get_answer()
 
-        if answer is not False and answer >= 0:
+        # NOTE: We don't count invalid answers at all currently
+        if answer != self.obj.value_none and answer != self.obj.value_invalid:
             self.count += 1
             self.values[answer] += 1
 
