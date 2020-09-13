@@ -186,7 +186,7 @@ class Option(QObject, metaclass=model.buddy.Register):
         return header
 
     def export_data(self):
-        data = {self.obj.id_csv(): '%i' % self.obj.get_answer()}
+        data = {self.obj.id_csv(): self.obj.get_answer()}
         data.update(QObject.export_data(self))
 
         for box in self.obj.boxes:
@@ -210,7 +210,7 @@ class Additional_Mark(QObject, metaclass=model.buddy.Register):
         return QObject.export_header(self) + [self.obj.id_csv()]
 
     def export_data(self):
-        data = {self.obj.id_csv(): '%i' % self.obj.get_answer()}
+        data = {self.obj.id_csv(): self.obj.get_answer()}
         data.update(QObject.export_data(self))
         return data
 
