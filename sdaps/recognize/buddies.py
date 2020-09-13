@@ -268,9 +268,9 @@ class Sheet(model.buddy.Buddy, metaclass=model.buddy.Register):
         self.obj.global_id = self.obj.images[0].global_id
 
         for image in self.obj.images:
-            if self.obj.global_id != image.global_id or \
-                self.obj.survey_id != image.survey_id or \
-                self.obj.questionnaire_id != image.questionnaire_id:
+            if (image.global_id is not None and self.obj.global_id != image.global_id) or \
+                (image.survey_id is not None and self.obj.survey_id != image.survey_id) or \
+                (image.questionnaire_id is not None and self.obj.questionnaire_id != image.questionnaire_id):
 
                 if not warned_multipage_not_correctly_scanned:
                     log.warn(_("Got different IDs on different pages for at least one sheet! Do *NOT* try to use filters with this survey! You have to run a \"reorder\" step for this to work properly!"))
