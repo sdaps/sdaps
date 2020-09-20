@@ -130,6 +130,17 @@ def parse(survey):
             survey.defs.paper_width = width
             survey.defs.paper_height = height
 
+        elif arg == "CornerMarkMargin":
+            args = value.split(',')
+            args = [arg.strip() for arg in args]
+
+            left, right, top, bottom = [round(float(arg[:-2]) / 72.27 * 25.4, 3) for arg in args]
+
+            survey.defs.corner_mark_left = left
+            survey.defs.corner_mark_right = right
+            survey.defs.corner_mark_top = top
+            survey.defs.corner_mark_bottom = bottom
+
         elif arg.startswith(QOBJECT_PREFIX):
             index, string = get_index_and_string(value)
             if index:

@@ -47,9 +47,9 @@ class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
         code = \
             read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                          paper_width / 2,
-                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
+                         paper_height - self.obj.sheet.survey.defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
                          paper_width / 2,
-                         defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+                         self.obj.sheet.survey.defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
         if code is None:
             # Well, that failed, so try to search the upper left corner instead
@@ -57,7 +57,7 @@ class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
                 read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                              0, 0,
                              paper_width / 2,
-                             defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+                             self.obj.sheet.survey.defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
             if code is not None:
                 return True
@@ -78,9 +78,9 @@ class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
         code = \
             read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                          paper_width / 2,
-                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
+                         paper_height - self.obj.sheet.survey.defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
                          paper_width / 2,
-                         defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+                         self.obj.sheet.survey.defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
         # The code needs to be entirely numeric and at least 4 characters for the page
         if code is None or(not code.isdigit() and len(code) < 4):
@@ -101,9 +101,9 @@ class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
         code = \
             read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                          paper_width / 2,
-                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
+                         paper_height - self.obj.sheet.survey.defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
                          paper_width / 2,
-                         defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+                         self.obj.sheet.survey.defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
         if code is None or not code.isdigit() or len(code) <= 4:
             return None
@@ -121,9 +121,9 @@ class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
         code = \
             read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                          0,
-                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
+                         paper_height - self.obj.sheet.survey.defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
                          paper_width / 2,
-                         defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+                         self.obj.sheet.survey.defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
         # Simply return the code, it may be alphanumeric, we don't care here
         # XXX: Is that assumption sane?
@@ -140,9 +140,9 @@ class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
         code = \
             read_barcode(self.obj.surface.surface, self.obj.matrix.mm_to_px(),
                          paper_width / 4,
-                         paper_height - defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
+                         paper_height - self.obj.sheet.survey.defs.corner_mark_bottom - defs.code128_vpad - defs.code128_height - 5,
                          paper_width / 2,
-                         defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
+                         self.obj.sheet.survey.defs.corner_mark_bottom + defs.code128_vpad + defs.code128_height + 5)
 
         # Simply return the code, it may be alphanumeric, we don't care here
         return code

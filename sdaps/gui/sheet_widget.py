@@ -297,22 +297,22 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
             half_pt = 0.5 / 72.0 * 25.4
             pt = 1.0 / 72.0 * 25.4
             inner_box(cr,
-                      defs.corner_mark_left + defs.corner_box_padding - half_pt,
-                      defs.corner_mark_top + defs.corner_box_padding - half_pt,
+                      self.provider.survey.defs.corner_mark_left + defs.corner_box_padding - half_pt,
+                      self.provider.survey.defs.corner_mark_top + defs.corner_box_padding - half_pt,
                       defs.corner_box_width + pt,
                       defs.corner_box_height + pt)
             inner_box(cr,
                       self.provider.survey.defs.paper_width
-                          - defs.corner_mark_right
+                          - self.provider.survey.defs.corner_mark_right
                           - defs.corner_box_padding
                           - defs.corner_box_width - half_pt,
-                      defs.corner_mark_top + defs.corner_box_padding - half_pt,
+                      self.provider.survey.defs.corner_mark_top + defs.corner_box_padding - half_pt,
                       defs.corner_box_width + pt,
                       defs.corner_box_height + pt)
             inner_box(cr,
-                      defs.corner_mark_left + defs.corner_box_padding - half_pt,
+                      self.provider.survey.defs.corner_mark_left + defs.corner_box_padding - half_pt,
                       self.provider.survey.defs.paper_height
-                          - defs.corner_mark_bottom
+                          - self.provider.survey.defs.corner_mark_bottom
                           - defs.corner_box_padding
                           - defs.corner_box_height
                           - half_pt,
@@ -320,12 +320,12 @@ class SheetWidget(Gtk.DrawingArea, Gtk.Scrollable):
                       defs.corner_box_height + pt)
             inner_box(cr,
                       self.provider.survey.defs.paper_width
-                          - defs.corner_mark_right
+                          - self.provider.survey.defs.corner_mark_right
                           - defs.corner_box_padding
                           - defs.corner_box_width
                           - half_pt,
                       self.provider.survey.defs.paper_height
-                          - defs.corner_mark_bottom
+                          - self.provider.survey.defs.corner_mark_bottom
                           - defs.corner_box_padding
                           - defs.corner_box_height
                           - half_pt,

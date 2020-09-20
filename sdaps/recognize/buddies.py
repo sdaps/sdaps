@@ -385,9 +385,9 @@ class Image(model.buddy.Buddy, metaclass=model.buddy.Register):
             matrix = image.calculate_matrix(
                 self.obj.surface.surface,
                 self.obj.matrix.mm_to_px(),
-                defs.corner_mark_left, defs.corner_mark_top,
-                self.obj.sheet.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right,
-                self.obj.sheet.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom,
+                self.obj.sheet.survey.defs.corner_mark_left, self.obj.sheet.survey.defs.corner_mark_top,
+                self.obj.sheet.survey.defs.paper_width - self.obj.sheet.survey.defs.corner_mark_left - self.obj.sheet.survey.defs.corner_mark_right,
+                self.obj.sheet.survey.defs.paper_height - self.obj.sheet.survey.defs.corner_mark_top - self.obj.sheet.survey.defs.corner_mark_bottom,
             )
         except AssertionError:
             self.obj.matrix.set_px_to_mm(None)

@@ -96,21 +96,21 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         cr.set_line_width(LINE_WIDTH)
 
         # Draw corner marks.
-        cr.move_to(defs.corner_mark_left + defs.corner_mark_length, defs.corner_mark_top)
-        cr.line_to(defs.corner_mark_left, defs.corner_mark_top)
-        cr.line_to(defs.corner_mark_left, defs.corner_mark_top+defs.corner_mark_length)
+        cr.move_to(self.obj.survey.defs.corner_mark_left + defs.corner_mark_length, self.obj.survey.defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.corner_mark_top+defs.corner_mark_length)
 
-        cr.move_to(self.obj.survey.defs.paper_width - defs.corner_mark_right - defs.corner_mark_length, defs.corner_mark_top)
-        cr.line_to(self.obj.survey.defs.paper_width - defs.corner_mark_right, defs.corner_mark_top)
-        cr.line_to(self.obj.survey.defs.paper_width - defs.corner_mark_right, defs.corner_mark_top + defs.corner_mark_length)
+        cr.move_to(self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right - defs.corner_mark_length, self.obj.survey.defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right, self.obj.survey.defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right, self.obj.survey.defs.corner_mark_top + defs.corner_mark_length)
 
-        cr.move_to(defs.corner_mark_left + defs.corner_mark_length, self.obj.survey.defs.paper_height - defs.corner_mark_bottom)
-        cr.line_to(defs.corner_mark_left, self.obj.survey.defs.paper_height - defs.corner_mark_top)
-        cr.line_to(defs.corner_mark_left, self.obj.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_length)
+        cr.move_to(self.obj.survey.defs.corner_mark_left + defs.corner_mark_length, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_bottom)
+        cr.line_to(self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_top - defs.corner_mark_length)
 
-        cr.move_to(self.obj.survey.defs.paper_width - defs.corner_mark_right - defs.corner_mark_length, self.obj.survey.defs.paper_height - defs.corner_mark_top)
-        cr.line_to(self.obj.survey.defs.paper_width - defs.corner_mark_right, self.obj.survey.defs.paper_height - defs.corner_mark_top)
-        cr.line_to(self.obj.survey.defs.paper_width - defs.corner_mark_right, self.obj.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_length)
+        cr.move_to(self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right - defs.corner_mark_length, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_top)
+        cr.line_to(self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_top - defs.corner_mark_length)
 
         cr.stroke()
 

@@ -26,11 +26,14 @@ This module contains constants and some magic values.
 
 # Corner Marks ============================================
 
-# The position of the corner markings from the side of the paper
-corner_mark_left = 10.0 # mm
-corner_mark_right = 10.0 # mm
-corner_mark_top = 12.0 # mm
-corner_mark_bottom = 12.0 # mm
+# The position of the corner markings from the side of the paper, these are
+# just defaults used during setup if nothing has been specified
+# (LaTeX class 1.9.9 and older).
+# Length cannot be customised currently.
+_corner_mark_left = 10.0 # mm
+_corner_mark_right = 10.0 # mm
+_corner_mark_top = 12.0 # mm
+_corner_mark_bottom = 12.0 # mm
 corner_mark_length = 20.0 # mm
 
 # Bottom page margin (for QR-Code size calculation in fallback rendering)

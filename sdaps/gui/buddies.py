@@ -84,29 +84,29 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         # Draw an outline for the content area
         cr.set_source_rgba(1.0, 0.0, 0.0, 0.6)
         cr.set_line_width(LINE_WIDTH)
-        cr.rectangle(defs.corner_mark_left, defs.corner_mark_top,
-                     self.obj.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right,
-                     self.obj.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom)
+        cr.rectangle(self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.corner_mark_top,
+                     self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_left - self.obj.survey.defs.corner_mark_right,
+                     self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_top - self.obj.survey.defs.corner_mark_bottom)
         cr.stroke()
 
         # Draw draggable corner circles
         cr.set_source_rgba(0.0, 0.0, 1.0, 0.6)
-        centered_circle(cr, defs.corner_mark_left, defs.corner_mark_top, 5*LINE_WIDTH)
+        centered_circle(cr, self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.corner_mark_top, 5*LINE_WIDTH)
         if TOP_LEFT in self._fixed_points:
             cr.fill()
         else:
             cr.stroke()
-        centered_circle(cr, self.obj.survey.defs.paper_width - defs.corner_mark_right, defs.corner_mark_top, 5*LINE_WIDTH)
+        centered_circle(cr, self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right, self.obj.survey.defs.corner_mark_top, 5*LINE_WIDTH)
         if TOP_RIGHT in self._fixed_points:
             cr.fill()
         else:
             cr.stroke()
-        centered_circle(cr, defs.corner_mark_left, self.obj.survey.defs.paper_height - defs.corner_mark_bottom, 5*LINE_WIDTH)
+        centered_circle(cr, self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_bottom, 5*LINE_WIDTH)
         if BOTTOM_LEFT in self._fixed_points:
             cr.fill()
         else:
             cr.stroke()
-        centered_circle(cr, self.obj.survey.defs.paper_width - defs.corner_mark_right, self.obj.survey.defs.paper_height - defs.corner_mark_bottom, 5*LINE_WIDTH)
+        centered_circle(cr, self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_bottom, 5*LINE_WIDTH)
         if BOTTOM_RIGHT in self._fixed_points:
             cr.fill()
         else:
@@ -127,20 +127,20 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
     def find_edge(self, _image, x, y, tollerance_x, tollerance_y):
         # Not technically edges, but first try to find the corner circles
         corner = -1
-        if math.sqrt((x - defs.corner_mark_left) ** 2 +
-                     (y - defs.corner_mark_top) ** 2) < 5 * LINE_WIDTH + tollerance_x:
+        if math.sqrt((x - self.obj.survey.defs.corner_mark_left) ** 2 +
+                     (y - self.obj.survey.defs.corner_mark_top) ** 2) < 5 * LINE_WIDTH + tollerance_x:
             corner = TOP_LEFT
 
-        if math.sqrt((x + defs.corner_mark_right - self.obj.survey.defs.paper_width) ** 2 +
-                     (y - defs.corner_mark_top) ** 2) < 5 * LINE_WIDTH + tollerance_x:
+        if math.sqrt((x + self.obj.survey.defs.corner_mark_right - self.obj.survey.defs.paper_width) ** 2 +
+                     (y - self.obj.survey.defs.corner_mark_top) ** 2) < 5 * LINE_WIDTH + tollerance_x:
             corner = TOP_RIGHT
 
-        if math.sqrt((x - defs.corner_mark_left) ** 2 +
-                     (y + defs.corner_mark_bottom - self.obj.survey.defs.paper_height) ** 2) < 5 * LINE_WIDTH + tollerance_x:
+        if math.sqrt((x - self.obj.survey.defs.corner_mark_left) ** 2 +
+                     (y + self.obj.survey.defs.corner_mark_bottom - self.obj.survey.defs.paper_height) ** 2) < 5 * LINE_WIDTH + tollerance_x:
             corner = BOTTOM_LEFT
 
-        if math.sqrt((x + defs.corner_mark_right - self.obj.survey.defs.paper_width) ** 2 +
-                     (y + defs.corner_mark_bottom - self.obj.survey.defs.paper_height) ** 2) < 5 * LINE_WIDTH + tollerance_x:
+        if math.sqrt((x + self.obj.survey.defs.corner_mark_right - self.obj.survey.defs.paper_width) ** 2 +
+                     (y + self.obj.survey.defs.corner_mark_bottom - self.obj.survey.defs.paper_height) ** 2) < 5 * LINE_WIDTH + tollerance_x:
             corner = BOTTOM_RIGHT
 
         if corner > -1:
@@ -167,11 +167,11 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
 
         corners = [None, None, None, None]
         if TOP_LEFT in self._fixed_points:
-            corners[TOP_LEFT] = (defs.corner_mark_left, defs.corner_mark_top)
+            corners[TOP_LEFT] = (self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.corner_mark_top)
         if TOP_RIGHT in self._fixed_points:
-            corners[TOP_RIGHT] = (self.obj.survey.defs.paper_width - defs.corner_mark_right, defs.corner_mark_top)
+            corners[TOP_RIGHT] = (self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right, self.obj.survey.defs.corner_mark_top)
         if BOTTOM_LEFT in self._fixed_points:
-            corners[BOTTOM_LEFT] = (defs.corner_mark_left, self.obj.survey.defs.paper_height - defs.corner_mark_bottom)
+            corners[BOTTOM_LEFT] = (self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_bottom)
         if BOTTOM_RIGHT in self._fixed_points:
             corners[BOTTOM_RIGHT] = (self.obj.survey.defs.paper_width - defs.corner_mark_right, self.obj.survey.defs.paper_height - defs.corner_mark_bottom)
 
@@ -183,10 +183,10 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         corners = [m.transform_point(*c) if c is not None else None for c in corners]
 
         # Useful constants
-        mm_x = defs.corner_mark_left
-        mm_width = self.obj.sheet.survey.defs.paper_width - defs.corner_mark_left - defs.corner_mark_right
-        mm_y = defs.corner_mark_top
-        mm_height = self.obj.sheet.survey.defs.paper_height - defs.corner_mark_top - defs.corner_mark_bottom
+        mm_x = self.obj.survey.defs.corner_mark_left
+        mm_width = self.obj.sheet.survey.defs.paper_width - self.obj.survey.defs.corner_mark_left - self.obj.survey.defs.corner_mark_right
+        mm_y = self.obj.survey.defs.corner_mark_top
+        mm_height = self.obj.sheet.survey.defs.paper_height - self.obj.survey.defs.corner_mark_top - self.obj.survey.defs.corner_mark_bottom
 
         m = image.matrix_from_corners_2d(corners, mm_x, mm_y, mm_width, mm_height)
         _image.matrix.set_px_to_mm(m)
@@ -364,27 +364,27 @@ class Textbox(Box, metaclass=model.buddy.Register):
 
     def move_edge(self, side, x, y):
         if side == _LEFT:
-            x = max(x, defs.corner_mark_left)
+            x = max(x, self.obj.survey.defs.corner_mark_left)
             new_width = max(MIN_FREETEXT_SIZE, self.obj.data.width + self.obj.data.x - x)
             x = self.obj.data.x + (self.obj.data.width - new_width)
 
             self.obj.data.width = new_width
             self.obj.data.x = x
         elif side == _RIGHT:
-            x = min(x, self.obj.question.questionnaire.survey.defs.paper_width - defs.corner_mark_right)
+            x = min(x, self.obj.question.questionnaire.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right)
             new_width = max(MIN_FREETEXT_SIZE, x - self.obj.data.x)
             new_width = min(new_width, self.obj.data.x + self.obj.data.width)
 
             self.obj.data.width = new_width
         elif side == _TOP:
-            y = max(y, defs.corner_mark_top)
+            y = max(y, self.obj.survey.defs.corner_mark_top)
             new_height = max(MIN_FREETEXT_SIZE, self.obj.data.height + self.obj.data.y - y)
             new_y = self.obj.data.y + (self.obj.data.height - new_height)
 
             self.obj.data.height = new_height
             self.obj.data.y = new_y
         elif side == _BOTTOM:
-            y = min(y, self.obj.question.questionnaire.survey.defs.paper_height - defs.corner_mark_bottom)
+            y = min(y, self.obj.question.questionnaire.survey.defs.paper_height - self.obj.survey.defs.corner_mark_bottom)
             new_height = max(MIN_FREETEXT_SIZE, y - self.obj.data.y)
 
             self.obj.data.height = new_height
