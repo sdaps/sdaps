@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2020-09-27 01:40+0000\n"
+"PO-Revision-Date: 2020-10-10 04:26+0000\n"
 "Last-Translator: Atrate <Atrate@protonmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/sdaps/master/pl/>"
 "\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../sdaps/script.py:47
 msgid "Display version and exit"
-msgstr ""
+msgstr "Wyświetl wersję i zakończ"
 
 #. Set required as an attribute rather than kwarg so that it works with python <3.7
 #: ../sdaps/script.py:52
