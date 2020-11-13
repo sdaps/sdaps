@@ -3,51 +3,52 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-02 16:34+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-04-02 23:36+0200\n"
+"PO-Revision-Date: 2020-11-13 14:28+0000\n"
+"Last-Translator: Aoinzer_Ex <1246206018@qq.com>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
+"sdaps/master/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
-msgstr ""
+msgstr "SDAPS --基于纸张的调查工具。"
 
 #: ../sdaps/script.py:47
 msgid "Display version and exit"
-msgstr ""
+msgstr "显示版本且退出"
 
 #. Set required as an attribute rather than kwarg so that it works with python <3.7
 #: ../sdaps/script.py:52
 msgid "command list|Commands:"
-msgstr ""
+msgstr "命令列表|命令行:"
 
 #: ../sdaps/script.py:61
 msgid "project directory|The SDAPS project."
-msgstr ""
+msgstr "项目目录|SDAPS项目。"
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
 msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
-msgstr ""
+msgstr "无效的导入文件%s。请选择一个或者多个黑白的tiff文件作为导入。"
 
 #: ../sdaps/add/__init__.py:67
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
 "%i)."
-msgstr ""
+msgstr "无法添加%s，因为其指定的页数错误（应是一个8进制数%i？）。"
 
 #: ../sdaps/boxgallery/__init__.py:108
 #, python-format
@@ -56,11 +57,11 @@ msgstr ""
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
-msgstr ""
+msgstr "警告: "
 
 #: ../sdaps/log.py:41
 msgid "Error: "
-msgstr ""
+msgstr "错误: "
 
 #: ../sdaps/cmdline/__init__.py:15
 msgid "Export data from an SDAPS project."
@@ -94,7 +95,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
-msgstr ""
+msgstr "添加了可浏览的问卷到这个调查项目中。"
 
 #: ../sdaps/cmdline/add.py:32
 msgid ""
@@ -105,10 +106,14 @@ msgid ""
 "case\n"
 "    the data will be referenced using a relative path."
 msgstr ""
+"这个命令是用来在此项调查中添加图像。\n"
+"…这个图像的数据需要是一个300dpi的黑白tiff文件。\n"
+"…你可以选择复制数据到这个项目下。\n"
+"…这样的话，就会使用它的相对路径。"
 
 #: ../sdaps/cmdline/add.py:38
 msgid "Convert given files and add the result."
-msgstr ""
+msgstr "转换给定的文件并添加结果。"
 
 #: ../sdaps/cmdline/add.py:43
 msgid ""
@@ -120,15 +125,15 @@ msgstr ""
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
-msgstr ""
+msgstr "即使页面计数错误，也强制添加图像（确保你知道你要干什么）。"
 
 #: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
-msgstr ""
+msgstr "复制文件到目录中（默认）。"
 
 #: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
-msgstr ""
+msgstr "请不要复制文件到目录中。"
 
 #: ../sdaps/cmdline/add.py:62
 msgid ""
@@ -138,15 +143,15 @@ msgstr ""
 
 #: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:48
 msgid "A number of TIFF image files."
-msgstr ""
+msgstr "若干tiff图像文件。"
 
 #: ../sdaps/cmdline/add.py:94
 msgid "The --no-copy option is not compatible with --convert!"
-msgstr ""
+msgstr "这个--no-copy 选项并不兼容--convert！"
 
 #: ../sdaps/cmdline/add.py:103
 msgid "Converting input files into a single temporary file."
-msgstr ""
+msgstr "将输入文件转换为单个临时文件。"
 
 #: ../sdaps/cmdline/add.py:115
 msgid ""
