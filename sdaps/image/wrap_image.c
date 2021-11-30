@@ -19,6 +19,9 @@
 #include "image.h"
 #include "transform.h"
 #include "surface.h"
+
+#define PY_SSIZE_T_CLEAN
+
 #include <Python.h>
 #include <py3cairo.h>
 #include <cairo.h>
@@ -374,7 +377,7 @@ wrap_get_pbm(PyObject *self, PyObject *args)
 {
 	PycairoSurface *py_surface;
 	PyObject* result;
-	int length = 0;
+	Py_ssize_t length = 0;
 	void *data = NULL;
 
 	if (!PyArg_ParseTuple(args, "O!",
