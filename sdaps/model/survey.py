@@ -83,6 +83,11 @@ class Defs(object):
         self.corner_mark_top = defs._corner_mark_top
         self.corner_mark_bottom = defs._corner_mark_bottom
 
+    def __setstate__(self, data):
+        self.__init__()
+        for k, v in data.items():
+            setattr(self, k, v)
+
     def get_survey_id_pos(self):
         assert(self.style == 'classic')
 
