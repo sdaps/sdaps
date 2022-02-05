@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2020-12-09 10:29+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2022-02-05 12:57+0000\n"
+"Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -595,7 +595,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/setup.py:36
 msgid "The LaTeX Document"
-msgstr ""
+msgstr "Le document LaTeX"
 
 #: ../sdaps/cmdline/setup.py:38
 msgid ""
@@ -605,7 +605,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/setup.py:41
 msgid "The engine to use to compile LaTeX documents."
-msgstr ""
+msgstr "Le moteur à utiliser pour compiler les documents LaTeX."
 
 #: ../sdaps/cmdline/setup.py:45
 msgid "Additional questions that are not part of the questionnaire."
@@ -642,6 +642,7 @@ msgstr ""
 #, python-format
 msgid "Filename to store the data to (default: stamp_%%i.pdf)"
 msgstr ""
+"Le nom de fichier pour enregistrer les données (par défaut : stamp_%%i.pdf)"
 
 #: ../sdaps/convert/__init__.py:37
 #, python-format
@@ -650,7 +651,7 @@ msgstr ""
 
 #: ../sdaps/cover/__init__.py:40
 msgid "SDAPS questionnaire"
-msgstr ""
+msgstr "Questionnaire SDAPS"
 
 #: ../sdaps/csvdata/buddies.py:78
 #, fuzzy, python-format
@@ -671,12 +672,12 @@ msgstr ""
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Page %i"
+msgstr[1] "Page %i"
 
 #: ../sdaps/gui/__init__.py:257
 msgid "Copyright © 2007-2014 The SDAPS Authors"
-msgstr ""
+msgstr "Copyright © 2007-2014 Les auteurs de SDAPS"
 
 #: ../sdaps/gui/__init__.py:259
 msgid "Scripts for data acquisition with paper based surveys"
@@ -684,7 +685,7 @@ msgstr ""
 
 #: ../sdaps/gui/__init__.py:260
 msgid "http://sdaps.org"
-msgstr ""
+msgstr "http://sdaps.org"
 
 #: ../sdaps/gui/__init__.py:261
 msgid "translator-credits"
@@ -693,12 +694,12 @@ msgstr ""
 #: ../sdaps/gui/__init__.py:306
 #, python-format
 msgid " of %i"
-msgstr ""
+msgstr " sur %i"
 
 #: ../sdaps/gui/__init__.py:307
 #, python-format
 msgid "Recognition Quality: %.2f"
-msgstr ""
+msgstr "Qualité de reconnaissance : %.2f"
 
 #: ../sdaps/gui/__init__.py:323
 msgid ""
@@ -708,7 +709,7 @@ msgstr ""
 
 #: ../sdaps/gui/__init__.py:325
 msgid "Go to last page"
-msgstr ""
+msgstr "Aller à la dernière page"
 
 #: ../sdaps/gui/__init__.py:347
 msgid ""
@@ -718,11 +719,11 @@ msgstr ""
 
 #: ../sdaps/gui/__init__.py:349
 msgid "Go to first page"
-msgstr ""
+msgstr "Aller à la première page"
 
 #: ../sdaps/gui/__init__.py:466
 msgid "Close without saving"
-msgstr ""
+msgstr "Fermer sans enregistrer"
 
 #: ../sdaps/gui/__init__.py:470
 msgid ""
@@ -730,38 +731,41 @@ msgid ""
 "\n"
 "If you do not save you may lose data."
 msgstr ""
+"<b>Enregistrer le projet avec de le fermer ?</b>\n"
+"\n"
+"Si vous ne l'enregistrez pas, vous risquez de perdre des données."
 
 #: ../sdaps/gui/main_window.ui.h:1
 msgid "Forward"
-msgstr ""
+msgstr "Suivant"
 
 #: ../sdaps/gui/main_window.ui.h:2
 msgid "Previous"
-msgstr ""
+msgstr "Précédent"
 
 #: ../sdaps/gui/main_window.ui.h:3
 msgid "Zoom In"
-msgstr ""
+msgstr "Agrandir"
 
 #: ../sdaps/gui/main_window.ui.h:4
 msgid "Zoom Out"
-msgstr ""
+msgstr "Réduire"
 
 #: ../sdaps/gui/main_window.ui.h:5
 msgid "SDAPS"
-msgstr ""
+msgstr "SDAPS"
 
 #: ../sdaps/gui/main_window.ui.h:6
 msgid "_File"
-msgstr ""
+msgstr "_Fichier"
 
 #: ../sdaps/gui/main_window.ui.h:7
 msgid "_View"
-msgstr ""
+msgstr "_Vue"
 
 #: ../sdaps/gui/main_window.ui.h:8
 msgid "_Help"
-msgstr ""
+msgstr "_Aide"
 
 #: ../sdaps/gui/main_window.ui.h:9
 msgid "Recognize Page"
@@ -769,11 +773,11 @@ msgstr ""
 
 #: ../sdaps/gui/main_window.ui.h:10
 msgid "Page Rotated"
-msgstr ""
+msgstr "Page pivotée"
 
 #: ../sdaps/gui/main_window.ui.h:11
 msgid "Sort by Quality"
-msgstr ""
+msgstr "Trier par qualité"
 
 #: ../sdaps/gui/main_window.ui.h:12
 msgid "label"
@@ -781,27 +785,27 @@ msgstr ""
 
 #: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
-msgstr ""
+msgstr "<b>Propriétés globales</b>"
 
 #: ../sdaps/gui/widget_buddies.py:60
 msgid "Sheet valid"
-msgstr ""
+msgstr "Feuille valide"
 
 #: ../sdaps/gui/widget_buddies.py:61
 msgid "Sheet Verified"
-msgstr ""
+msgstr "Feuille vérifiée"
 
 #: ../sdaps/gui/widget_buddies.py:62
 msgid "Page Verified"
-msgstr ""
+msgstr "Page vérifiée"
 
 #: ../sdaps/gui/widget_buddies.py:63 ../sdaps/gui/widget_buddies.py:73
 msgid "Empty"
-msgstr ""
+msgstr "Vide"
 
 #: ../sdaps/gui/widget_buddies.py:84 ../sdaps/gui/widget_buddies.py:115
 msgid "<b>Questionnaire ID: </b>"
-msgstr ""
+msgstr "<b>Id du questionnaire : </b>"
 
 #: ../sdaps/image/__init__.py:48
 msgid ""
@@ -814,6 +818,8 @@ msgid ""
 "The latex character map is missing! Please build it using the supplied tool "
 "(create-latexmap.py)."
 msgstr ""
+"La carte des caractères latex est manquante ! Veuillez le constuire avec "
+"l'outil inclus (create-latexmap.py)."
 
 #: ../sdaps/utils/latex.py:69
 msgid ""
@@ -827,7 +833,7 @@ msgstr ""
 
 #: ../sdaps/utils/opencv.py:44
 msgid "File does not exist"
-msgstr ""
+msgstr "Le fichier n'existe pas"
 
 #. The old code used to first filter, and then run; but that is
 #. a bit ineffective in a way
@@ -835,13 +841,13 @@ msgstr ""
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i feuille"
+msgstr[1] "%i feuilles"
 
 #: ../sdaps/model/survey.py:427
 #, python-format
 msgid "Processed %i of %i sheets, took %f seconds"
-msgstr ""
+msgstr "Feuille %i sur %i traitée, en %f secondes"
 
 #: ../sdaps/model/survey.py:474
 msgid ""
@@ -874,34 +880,34 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:76
 #, python-format
 msgid "%s, %i: Matrix not recognized."
-msgstr ""
+msgstr "%s, %i : La matrice n'a pas été reconnue."
 
 #: ../sdaps/recognize/buddies.py:85
 #, python-format
 msgid "%s, %i: Rotation not found."
-msgstr ""
+msgstr "%s, %i : Rotation non trouvée."
 
 #. Copy the rotation over (if required) and print warning if the rotation is unknown
 #: ../sdaps/recognize/buddies.py:89
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known rotation!"
-msgstr ""
+msgstr "Aucun de %s, %i ou de %s, %i n'a de rotation connue !"
 
 #: ../sdaps/recognize/buddies.py:101
 #, python-format
 msgid "%s, %i: Matrix not recognized (again)."
-msgstr ""
+msgstr "%s, %i : Matrice non reconnue (encore)."
 
 #: ../sdaps/recognize/buddies.py:115
 #, python-format
 msgid "%s, %i: Could not get page number."
-msgstr ""
+msgstr "%s, %i : Le numéro de page n'a pu être récupérer."
 
 #. Whoa, that should not happen.
 #: ../sdaps/recognize/buddies.py:135
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known page number!"
-msgstr ""
+msgstr "Aucun de %s, %i ou de %s, %i n'a de numéro de page connu !"
 
 #. We don't touch the ignore flag in this case
 #. Simply print a message as this should *never* happen
@@ -918,11 +924,12 @@ msgstr ""
 #, python-format
 msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
 msgstr ""
+"Les images %s, %i et %s, %i n'ont pas des numéros de page consécutives !"
 
 #: ../sdaps/recognize/buddies.py:179
 #, python-format
 msgid "No page number for page %s, %i exists."
-msgstr ""
+msgstr "Aucun numéro de page pour %s, %i existe."
 
 #: ../sdaps/recognize/buddies.py:184
 #, python-format
@@ -932,7 +939,7 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:190
 #, python-format
 msgid "Page number %i for page %s, %i is out of range."
-msgstr ""
+msgstr "Le numéro de page %i pour la page %s, %i est hors limite."
 
 #: ../sdaps/recognize/buddies.py:207
 #, python-format
@@ -954,6 +961,7 @@ msgstr ""
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
 msgstr ""
+"%s, %i : l'ID du questionnaire ne peut être lu, mais devrait pourtant l'être."
 
 #: ../sdaps/recognize/buddies.py:246
 #, python-format
@@ -974,17 +982,17 @@ msgstr ""
 #: ../sdaps/report/answers.py:188
 #, python-format
 msgid "Answers: %i"
-msgstr ""
+msgstr "Réponses : %i"
 
 #: ../sdaps/report/answers.py:190
 #, python-format
 msgid "Mean: %.2f"
-msgstr ""
+msgstr "Moyenne : %.2f"
 
 #: ../sdaps/report/answers.py:192
 #, python-format
 msgid "Standard Deviation: %.2f"
-msgstr ""
+msgstr "Déviation standard : %.2f"
 
 #: ../sdaps/report/__init__.py:75 ../sdaps/reporttex/__init__.py:140
 msgid "Turned in Questionnaires"
@@ -992,31 +1000,31 @@ msgstr ""
 
 #: ../sdaps/report/__init__.py:92 ../sdaps/reporttex/__init__.py:139
 msgid "sdaps report"
-msgstr ""
+msgstr "rapport sdaps"
 
 #: ../sdaps/reset/__init__.py:29
 msgid "Removing stored data..."
-msgstr ""
+msgstr "Suppression des données stockées..."
 
 #: ../sdaps/setup/buddies.py:62
 #, python-format
 msgid "Head %(l0)i got no title."
-msgstr ""
+msgstr "L'entête %(l0)i n'a pas de titre."
 
 #: ../sdaps/setup/buddies.py:74
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got no question."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i n'a aucune question."
 
 #: ../sdaps/setup/buddies.py:114
 #, python-format
 msgid "Error in question \"%s\""
-msgstr ""
+msgstr "Erreur dans la question « %s »"
 
 #: ../sdaps/setup/buddies.py:118
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got no boxes."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i n'a aucune boite."
 
 #: ../sdaps/setup/buddies.py:167
 #, python-format
@@ -1073,7 +1081,7 @@ msgstr ""
 #: ../sdaps/setuptex/__init__.py:149 ../sdaps/reporttex/__init__.py:162
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
-msgstr ""
+msgstr "Échec de \"%s\" pour la compilation du fichier LaTeX."
 
 #: ../sdaps/stamp/latex.py:36
 #, python-format
@@ -1089,24 +1097,27 @@ msgstr ""
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
 msgstr ""
+"Type de fichier inconnu (%s). questionnaire_tex doit être de type text/x-tex."
 
 #: ../sdaps/setuptex/__init__.py:52
 msgid "Will keep going, but expect failure!"
-msgstr ""
+msgstr "Ça va continuer, mais ça peut échouer !"
 
 #: ../sdaps/setuptex/__init__.py:57
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain."
-msgstr ""
+msgstr "Type de fichier inconnu (%s). additionalqobjects doit être text/plain."
 
 #: ../sdaps/setuptex/__init__.py:104
 #, python-format
 msgid "Running %s now multiple times to generate the questionnaire."
-msgstr ""
+msgstr "Lancement de %s plusieurs fois pour générer le questionnaire."
 
 #: ../sdaps/setuptex/__init__.py:123
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
 msgstr ""
+"Une exception a été lancée lors de l'interprétation du fichier SDAPS. L'état "
+"actuel est :"
 
 #: ../sdaps/setuptex/__init__.py:137
 msgid ""
@@ -1117,7 +1128,7 @@ msgstr ""
 #: ../sdaps/setuptex/__init__.py:144
 #, python-format
 msgid "Running %s now multiple imes to generate the questionnaire."
-msgstr ""
+msgstr "Lancement de %s plusieurs fois pour générer le questionnaire."
 
 #: ../sdaps/setuptex/__init__.py:163
 msgid ""
@@ -1128,7 +1139,7 @@ msgstr ""
 
 #: ../sdaps/reporttex/__init__.py:107
 msgid "author|Unknown"
-msgstr ""
+msgstr "auteur|Inconnu"
 
 #: ../sdaps/reporttex/__init__.py:138
 msgid "tex language|english"
@@ -1137,12 +1148,12 @@ msgstr ""
 #: ../sdaps/reporttex/__init__.py:155
 #, python-format
 msgid "The TeX project with the report data is located at '%s'."
-msgstr ""
+msgstr "Le projet TeX avec les données du rapport est à '%s'."
 
 #: ../sdaps/reporttex/__init__.py:158
 #, python-format
 msgid "Running %s now multiple times to generate the report."
-msgstr ""
+msgstr "Lancement de %s plusieurs fois pour générer le rapport."
 
 #: ../sdaps/reporttex/__init__.py:168
 #, python-format
