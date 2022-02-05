@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2022-02-05 12:57+0000\n"
+"PO-Revision-Date: 2022-02-06 04:57+0000\n"
 "Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
@@ -609,11 +609,11 @@ msgstr "Le moteur à utiliser pour compiler les documents LaTeX."
 
 #: ../sdaps/cmdline/setup.py:45
 msgid "Additional questions that are not part of the questionnaire."
-msgstr ""
+msgstr "Les questions supplémentaires qui ne font pas parti du questionnaire."
 
 #: ../sdaps/cmdline/stamp.py:26
 msgid "Add marks for automatic processing."
-msgstr ""
+msgstr "Ajouter les marqueurs pour le traitement automatique."
 
 #: ../sdaps/cmdline/stamp.py:27
 msgid ""
@@ -622,6 +622,9 @@ msgid ""
 "questionnaire\n"
 "    IDs."
 msgstr ""
+"Cette commande crée un document imprimable. Suivant\n"
+"    les préférences du projet, vous devez renseigner une source\n"
+"    pour les identifiants du questionnaire."
 
 #: ../sdaps/cmdline/stamp.py:33
 msgid ""
@@ -647,7 +650,7 @@ msgstr ""
 #: ../sdaps/convert/__init__.py:37
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
-msgstr ""
+msgstr "Échec de la transformation 3D de l'image '%s' dans la page %i !"
 
 #: ../sdaps/cover/__init__.py:40
 msgid "SDAPS questionnaire"
@@ -663,6 +666,8 @@ msgid ""
 "The survey does not have any images! Please add images (and run recognize) "
 "before using the GUI."
 msgstr ""
+"L'enquête n'a aucune image ! Veuillez ajouter des images (et lancer la "
+"reconnaissance) avant d'utiliser l'interface."
 
 #: ../sdaps/gui/__init__.py:212
 msgid "Page|Invalid"
@@ -681,7 +686,7 @@ msgstr "Copyright © 2007-2014 Les auteurs de SDAPS"
 
 #: ../sdaps/gui/__init__.py:259
 msgid "Scripts for data acquisition with paper based surveys"
-msgstr ""
+msgstr "Les scripts pour l'extraction des données depuis les enquêtes papier"
 
 #: ../sdaps/gui/__init__.py:260
 msgid "http://sdaps.org"
@@ -706,6 +711,8 @@ msgid ""
 "You have reached the first page of the survey. Would you like to go to the "
 "last page?"
 msgstr ""
+"Vous êtes sur la première page de l'enquête. Voulez-vous aller à la dernière "
+"page ?"
 
 #: ../sdaps/gui/__init__.py:325
 msgid "Go to last page"
@@ -716,6 +723,8 @@ msgid ""
 "You have reached the last page of the survey. Would you like to go to the "
 "first page?"
 msgstr ""
+"Vous êtes sur la dernière page de l'enquête. Voulez-vous aller à la première "
+"page ?"
 
 #: ../sdaps/gui/__init__.py:349
 msgid "Go to first page"
@@ -769,7 +778,7 @@ msgstr "_Aide"
 
 #: ../sdaps/gui/main_window.ui.h:9
 msgid "Recognize Page"
-msgstr ""
+msgstr "Reconnaitre la page"
 
 #: ../sdaps/gui/main_window.ui.h:10
 msgid "Page Rotated"
@@ -781,7 +790,7 @@ msgstr "Trier par qualité"
 
 #: ../sdaps/gui/main_window.ui.h:12
 msgid "label"
-msgstr ""
+msgstr "étiquette"
 
 #: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
@@ -812,6 +821,8 @@ msgid ""
 "It appears you have not build the C extension. Please run \"./setup.py build"
 "\" in the toplevel directory."
 msgstr ""
+"Il semble que l'extension C n'a pas été compilée. Veuillez lancer « ./"
+"setup.py build » depuis le dossier racine."
 
 #: ../sdaps/utils/latex.py:29
 msgid ""
@@ -826,6 +837,9 @@ msgid ""
 "Generated string for LaTeX contains unicode characters. This may not work "
 "correctly and could mean the LaTeX character map needs to be updated."
 msgstr ""
+"Le texte LaTeX généré contient des caractères unicode. Ceci peut ne pas "
+"fonctionner correctement, la liste des caractères de LaTeX devrait être mise "
+"à jour."
 
 #: ../sdaps/utils/opencv.py:35
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
@@ -853,16 +867,21 @@ msgstr "Feuille %i sur %i traitée, en %f secondes"
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
 msgstr ""
+"Un questionnaire qui est imprimé en recto-verso doit avoir un nombre pair de "
+"pages !"
 
 #: ../sdaps/model/survey.py:478
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
 msgstr ""
+"Le style « classic » ne supporte que six pages ! Utilisez « code128 » si "
+"vous avez besoin de plus de pages."
 
 #: ../sdaps/model/survey.py:491
 msgid "IDs need to be integers in \"classic\" style!"
 msgstr ""
+"Les identifiants doivent être des nombres entiers pour le style \"classic\" !"
 
 #: ../sdaps/model/survey.py:497
 #, python-format
@@ -944,18 +963,18 @@ msgstr "Le numéro de page %i pour la page %s, %i est hors limite."
 #: ../sdaps/recognize/buddies.py:207
 #, python-format
 msgid "%s, %i: Could not read survey ID, but should be able to."
-msgstr ""
+msgstr "%s, %i : Échec de la lecture de l'Id d'enquête."
 
 #: ../sdaps/recognize/buddies.py:211
 #, python-format
 msgid "Could not read survey ID of either %s, %i or %s, %i!"
-msgstr ""
+msgstr "L'Id de l'enquête %s, %i ou %s, %i de n'a pu être lu !"
 
 #. Broken survey ID ...
 #: ../sdaps/recognize/buddies.py:218
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
-msgstr ""
+msgstr "L'id (%s, %i) de l'enquête est incorrect ! C'est %s, et non %i."
 
 #: ../sdaps/recognize/buddies.py:240
 #, python-format
@@ -996,7 +1015,7 @@ msgstr "Déviation standard : %.2f"
 
 #: ../sdaps/report/__init__.py:75 ../sdaps/reporttex/__init__.py:140
 msgid "Turned in Questionnaires"
-msgstr ""
+msgstr "Remise des questionnaires"
 
 #: ../sdaps/report/__init__.py:92 ../sdaps/reporttex/__init__.py:139
 msgid "sdaps report"
@@ -1027,29 +1046,29 @@ msgid "%(class)s %(l0)i.%(l1)i got no boxes."
 msgstr "%(class)s %(l0)i.%(l1)i n'a aucune boite."
 
 #: ../sdaps/setup/buddies.py:167
-#, python-format
+#, fuzzy, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box out of range."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i la boite du bas est hors limite."
 
 #: ../sdaps/setup/buddies.py:172
-#, python-format
+#, fuzzy, python-format
 msgid "%(class)s %(l0)i.%(l1)i upper box out of range."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i la boite du haut est hors limite."
 
 #: ../sdaps/setup/buddies.py:177
-#, python-format
+#, fuzzy, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box not before upper box."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i la boite du bas n'est pas avant celle du haut."
 
 #: ../sdaps/setup/buddies.py:213
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i n'a pas exactement deux réponses."
 
 #: ../sdaps/setup/buddies.py:234
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i n'a pas qu'une seule boite."
 
 #: ../sdaps/stamp/__init__.py:38
 msgid ""
@@ -1088,10 +1107,12 @@ msgstr "Échec de \"%s\" pour la compilation du fichier LaTeX."
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
+"Échec de la création du rapport. Les fichiers temporaires sont encore dans "
+"'%s'."
 
 #: ../sdaps/setuptex/__init__.py:46
 msgid "The survey directory already exists."
-msgstr ""
+msgstr "Le dossier de l'enquête existe déjà."
 
 #: ../sdaps/setuptex/__init__.py:51
 #, python-format
@@ -1124,6 +1145,8 @@ msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
 msgstr ""
+"Une certaine combinaison d'options et de propriétés du projet ne fonctionne "
+"pas. Échec de la configuration."
 
 #: ../sdaps/setuptex/__init__.py:144
 #, python-format
@@ -1143,7 +1166,7 @@ msgstr "auteur|Inconnu"
 
 #: ../sdaps/reporttex/__init__.py:138
 msgid "tex language|english"
-msgstr ""
+msgstr "tex language|french"
 
 #: ../sdaps/reporttex/__init__.py:155
 #, python-format
@@ -1159,6 +1182,8 @@ msgstr "Lancement de %s plusieurs fois pour générer le rapport."
 #, python-format
 msgid "An occured during creation of the report. Temporary files left in '%s'."
 msgstr ""
+"Échec de la création du rapport. Les fichiers temporaires sont encore dans "
+"'%s'."
 
 #~ msgid "Import or export data to/from CSV files."
 #~ msgstr "Importer ou exporter des données depuis ou vers un fichier CSV."
