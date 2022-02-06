@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2022-02-06 04:57+0000\n"
+"PO-Revision-Date: 2022-02-07 05:57+0000\n"
 "Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
@@ -236,7 +236,6 @@ msgid "Convert a set of images to the correct image format."
 msgstr "Convertir un lot d'images dans le bon format."
 
 #: ../sdaps/cmdline/convert.py:31
-#, fuzzy
 msgid ""
 "This command can be used if you scanned files in something\n"
 "        other than the expected monochrome TIFF mode. All given files will\n"
@@ -246,20 +245,21 @@ msgid ""
 "        working with photos of questionnaires instead of scans."
 msgstr ""
 "Cette commande peut être utilisée si vous numérisez dans un autre\n"
-"\tformat que le TIFF monochrome. Tous les fichiers doivent être\n"
-"\tchargés et enregistrés dans un seul fichier TIFF monochrome (1bpp).\n"
-"\tPour travailler avec des photos des questionnaires il est possible \n"
-"\tde leur appliquer directement une transformation 3D."
+"\tformat que le TIFF monochrome. Tous les fichiers doivent être chargés\n"
+"        puis enregistrés dans un seul fichier TIFF monochrome (1 bit par "
+"pixel).\n"
+"\tVous pouvez aussi sélectionner « transformation 3D » si vous travaillez\n"
+"        avec des photos des questionnaires plutôt que des fichiers scannés."
 
 #: ../sdaps/cmdline/convert.py:38
-#, fuzzy
 msgid ""
 "Do a 3D-transformation after finding the corner marks.\n"
 "    If they are not found, the image will be processed as-is."
 msgstr ""
-"Effectuer une transformation 3D après avoir repéré les marques des coins. Si "
-"les\n"
-"\tmarques des coins ne sont pas trouvées l'image est ajoutée en l'état."
+"Effectuer une transformation 3D après avoir repéré les marqueurs dans les "
+"coins.\n"
+"        Si ces marqueurs ne sont pas visibles, l'image sera ajoutée en "
+"l'état."
 
 #: ../sdaps/cmdline/convert.py:44
 msgid "The location of the output file."
@@ -592,6 +592,9 @@ msgid ""
 "    be using the SDAPS class. All the metadata and options for the project\n"
 "    can be set inside the LaTeX document."
 msgstr ""
+"Créer une nouvelle enquête depuis un document LaTeX. Vous devez\n"
+"    utiliser la classe SDAPS. Toutes les méta-données et options du projet\n"
+"    peuvent être configurées dans le document LaTeX."
 
 #: ../sdaps/cmdline/setup.py:36
 msgid "The LaTeX Document"
@@ -602,6 +605,8 @@ msgid ""
 "Additional files that are required by the LaTeX document and need to be "
 "copied into the project directory."
 msgstr ""
+"Les fichiers supplémentaires qui sont requis par le document LaTeX et qui "
+"doivent être copiés dans le dossier du projet."
 
 #: ../sdaps/cmdline/setup.py:41
 msgid "The engine to use to compile LaTeX documents."
@@ -671,7 +676,7 @@ msgstr ""
 
 #: ../sdaps/gui/__init__.py:212
 msgid "Page|Invalid"
-msgstr ""
+msgstr "Page|Invalide"
 
 #: ../sdaps/gui/__init__.py:215
 #, python-format
@@ -694,7 +699,7 @@ msgstr "http://sdaps.org"
 
 #: ../sdaps/gui/__init__.py:261
 msgid "translator-credits"
-msgstr ""
+msgstr "Estébastien Robespi, J. Lavoie et d'autres"
 
 #: ../sdaps/gui/__init__.py:306
 #, python-format
@@ -844,6 +849,8 @@ msgstr ""
 #: ../sdaps/utils/opencv.py:35
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
 msgstr ""
+"La conversion en PDF est impossible parce que « poppler » n'est pas installé "
+"ou utilisable !"
 
 #: ../sdaps/utils/opencv.py:44
 msgid "File does not exist"
@@ -887,12 +894,16 @@ msgstr ""
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
 msgstr ""
+"Caractère %s invalide pour l'id du questionnaire \"%s\" dans le style "
+"\"code128\" !"
 
 #: ../sdaps/model/survey.py:501
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
 msgstr ""
+"SDAPS ne peut dessiner l'id du questionnaire avec le style \"custom\". Vous "
+"devez le faire manuellement !"
 
 #. in simplex mode every page will have a matrix; it might be a None
 #. matrix though
@@ -953,7 +964,7 @@ msgstr "Aucun numéro de page pour %s, %i existe."
 #: ../sdaps/recognize/buddies.py:184
 #, python-format
 msgid "Page number for page %s, %i already used by another image."
-msgstr ""
+msgstr "Le numéro de la page %s, %i est déjà utilisé par une autre image."
 
 #: ../sdaps/recognize/buddies.py:190
 #, python-format
@@ -985,7 +996,7 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:246
 #, python-format
 msgid "Could not read questionnaire ID of either %s, %i or %s, %i!"
-msgstr ""
+msgstr "L'id de questionnaire ne peut être lu pour %s, %i ni pour %s, %i !"
 
 #: ../sdaps/recognize/buddies.py:276
 msgid ""
@@ -1085,16 +1096,21 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/stamp/latex.py:18
+#, fuzzy
 msgid ""
 "There should be no need to stamp a SDAPS Project that uses LaTeX and does "
 "not have different questionnaire IDs printed on each sheet.\n"
 "I am going to do so anyways."
 msgstr ""
+"Il est inutile d'estampiller un projet SDAPS qui utilise LaTeX et n'a pas "
+"des identifiants de questionnaire différents imprimés sur chaque feuille.\n"
+"Le programme va tout de même le faire."
 
 #: ../sdaps/stamp/latex.py:26
 #, python-format
 msgid "Running %s now multiple times to generate the stamped questionnaire."
 msgstr ""
+"Lancement de %s plusieurs fois pour générer le questionnaire estampillé."
 
 #: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:108
 #: ../sdaps/setuptex/__init__.py:149 ../sdaps/reporttex/__init__.py:162
@@ -1159,6 +1175,9 @@ msgid ""
 "You can for example check the questionnaire.log file for LaTeX compile "
 "errors."
 msgstr ""
+"Échec de la configuration de la routine. Le dossier de l'enquête n'a pas été "
+"effacé. Vous pouvez, par exemple, consulter le fichier « questionnaire.log » "
+"pour obtenir les erreurs de compilation de LaTeX."
 
 #: ../sdaps/reporttex/__init__.py:107
 msgid "author|Unknown"
