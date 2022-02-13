@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2020-09-30 22:40+0000\n"
+"PO-Revision-Date: 2022-02-14 03:58+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/master/"
 "pt/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -25,7 +25,7 @@ msgstr "SDAPS -- Ferramenta para reconhecimento de questionários em papel."
 
 #: ../sdaps/script.py:47
 msgid "Display version and exit"
-msgstr ""
+msgstr "Exibir versão e sair"
 
 #. Set required as an attribute rather than kwarg so that it works with python <3.7
 #: ../sdaps/script.py:52
@@ -604,8 +604,9 @@ msgstr ""
 "copiados para o diretório do projeto."
 
 #: ../sdaps/cmdline/setup.py:41
+#, fuzzy
 msgid "The engine to use to compile LaTeX documents."
-msgstr ""
+msgstr "O mecanismo a ser usado para compilar documentos LaTeX."
 
 #: ../sdaps/cmdline/setup.py:45
 msgid "Additional questions that are not part of the questionnaire."
@@ -783,7 +784,7 @@ msgstr "_Ajuda"
 
 #: ../sdaps/gui/main_window.ui.h:9
 msgid "Recognize Page"
-msgstr ""
+msgstr "Reconhecer página"
 
 #: ../sdaps/gui/main_window.ui.h:10
 msgid "Page Rotated"
