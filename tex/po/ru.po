@@ -22,7 +22,7 @@ msgstr ""
 #. The language name of the LaTeX dictionary file for translator
 #: ../tex_translations.in.h:2
 msgid "English"
-msgstr "Русский"
+msgstr "Russian"
 
 #. Used as an overlay for questionnaires that are not yet done
 #: ../tex_translations.in.h:4
