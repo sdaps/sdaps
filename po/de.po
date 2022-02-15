@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2022-02-14 22:51+0000\n"
-"Last-Translator: Ferdinand Schwenk <ferdisdot@gmail.com>\n"
+"PO-Revision-Date: 2022-02-15 14:54+0000\n"
+"Last-Translator: Benjamin Berg <benjamin@sipsolutions.net>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/sdaps/master/de/>"
 "\n"
 "Language: de\n"
@@ -70,7 +70,7 @@ msgstr "Fehler: "
 
 #: ../sdaps/cmdline/__init__.py:15
 msgid "Export data from an SDAPS project."
-msgstr "Exportierte Daten eines SDPAS Projekts."
+msgstr "Exportierte Daten eines SDAPS Projekts."
 
 #: ../sdaps/cmdline/__init__.py:16
 msgid ""
