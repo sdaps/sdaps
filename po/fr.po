@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2022-02-07 12:57+0000\n"
+"PO-Revision-Date: 2022-03-11 12:56+0000\n"
 "Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -68,9 +68,8 @@ msgid "Error: "
 msgstr "Erreur : "
 
 #: ../sdaps/cmdline/__init__.py:15
-#, fuzzy
 msgid "Export data from an SDAPS project."
-msgstr "Importer des données depuis un fichier CSV."
+msgstr "Exporter des données depuis un projet SDAPS."
 
 #: ../sdaps/cmdline/__init__.py:16
 msgid ""
@@ -79,9 +78,8 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/cmdline/__init__.py:26
-#, fuzzy
 msgid "Import data into an SDAPS project."
-msgstr "répertoire du projet|Le projet SDAPS."
+msgstr "Importer les données depuis un projet SDAPS."
 
 #: ../sdaps/cmdline/__init__.py:27
 msgid ""
@@ -92,9 +90,8 @@ msgid ""
 msgstr ""
 
 #: ../sdaps/cmdline/__init__.py:39
-#, fuzzy
 msgid "Generate a report."
-msgstr "Créer un rapport PDF."
+msgstr "Générer un rapport."
 
 #: ../sdaps/cmdline/__init__.py:47
 #, fuzzy
