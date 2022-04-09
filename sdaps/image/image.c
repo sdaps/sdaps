@@ -276,7 +276,7 @@ get_tiff_resolution (const char *filename, gint page, gdouble *xresolution, gdou
 	TIFF* tiff;
 	float xres = 0.0;
 	float yres = 0.0;
-	uint16 unit = RESUNIT_NONE;
+	guint16 unit = RESUNIT_NONE;
 
 	tiff = TIFFOpen(filename, "r");
 	if (tiff == NULL)
@@ -318,7 +318,7 @@ check_tiff_monochrome (const char *filename)
 		return FALSE;
 
 	do {
-		uint16 bits_per_sample;
+		guint16 bits_per_sample;
 		TIFFGetField(tiff, TIFFTAG_BITSPERSAMPLE, &bits_per_sample);
 		if (bits_per_sample != 1)
 			monochrome = FALSE;
