@@ -51,7 +51,7 @@ cairo_surface_t*
 surface_inverted_copy_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y);
 
 void
-get_pbm(cairo_surface_t *surface, void **data, int *length);
+get_pbm(cairo_surface_t *surface, void **data, gssize *length);
 
 #if 0
 void
