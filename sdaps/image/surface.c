@@ -152,7 +152,7 @@ set_pixels_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width
 }
 
 void
-get_pbm(cairo_surface_t *surface, void **data, int *length)
+get_pbm(cairo_surface_t *surface, void **data, gssize *length)
 {
 	int width, height;
 	int s_stride;
