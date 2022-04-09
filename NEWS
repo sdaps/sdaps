@@ -1,3 +1,31 @@
+Overview of Changes in SDAPS 1.9.10
+===================================
+
+Important changes:
+ * New LaTeX class fixing compatibility and other issues
+ * Delete image files on reset
+ * Fix an issue after resetting a project
+ * Export checkbox data separately for single choice questions
+ * Export invalid single choice responses using strings (in new projects)
+ * Change logging to be 1 based for pages (rather than 0)
+ * Permit modifying the corner mark positions
+ * Updates and improvements to examples
+ * Fix issue opening old surveys
+ * Fix image processing on big endian machines
+
+New and updated languages:
+ * German
+ * Russian
+ * Swedish
+ * Spanish
+ * Portuguese (Brazil)
+ * Polish
+ * Portuguese
+ * Italian
+ * Chinese (Simplified)
+ * French
+
+
 Overview of Changes in SDAPS 1.9.9
 ==================================
 
