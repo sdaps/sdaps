@@ -1,17 +1,9 @@
-%global modulename sdaps
-#define commit SNAPSHOT_COMMIT
-%define relversion 1.9.9
-%if 0%{?commit:1}
-  %define shortcommit %(c=%{commit}; echo ${c:0:7})
-  %define build_timestamp %(date +"%Y%m%d")
-%endif
-
 Summary: SDAPS OMR utilities
 Name: sdaps
-Version: %{relversion}%{?commit:.}%{?build_timestamp}%{?commit:git}%{?shortcommit}
+Version: 0
 Release: 1%{?dist}
 License: GPLv3, LPPL1.3c
-Source0: %{name}-%{relversion}%{?commit:-}%{?shortcommit}.tar.gz
+Source0: https://sdaps.org/releases/%{name}-%{version}.tar.gz
 Group: Applications/Science
 URL: https://sdaps.org
 BuildRequires: python3-devel, libtiff-devel, python3-distutils-extra
@@ -61,7 +53,7 @@ readable questionnaires using LaTeX. It also provides the tools to later
 analyse the scanned data, and create a report.
 
 %prep
-%setup -q -n %{name}-%{relversion}%{?commit:-}%{?shortcommit}
+%setup -q -n sdaps-1.9.9
 
 %build
 %{__python3} setup.py build --build-tex
@@ -77,27 +69,11 @@ IGNORE_PATTERN_EXTEND='\|^survey_id' ./run-test-locally.sh
 
 %files
 %defattr(-,root,root,-)
-#%doc README.rst LICENSE
+%doc README.md
+%doc examples
 %{python3_sitearch}/sdaps*
 %{_datadir}/sdaps*
 %{_datadir}/locale*
 %{_bindir}/*
 
 %changelog
-* Sat Jun 01 2019 Benjamin Berg <bberg@redhat.com> - 1.9.7-1
-- New SDAPS release
-
-* Sun Jan 20 2019 Benjamin Berg <bberg@redhat.com> - 1.9.6-1
-- New SDAPS release
-
-* Sun Jan 20 2019 Benjamin Berg <bberg@redhat.com> - 1.9.5-1
-- New SDAPS release
-
-* Mon Nov 05 2018 Benjamin Berg <bberg@redhat.com> - 1.9.4-1
-- New SDAPS release
-
-* Wed Sep 12 2018 Benjamin Berg <bberg@redhat.com> - 1.9.3-1
-- New SDAPS release
-
-* Fri Mar 24 2017 Benjamin Berg <bberg@redhat.com> - 1.9.2-1
-- Initial package
