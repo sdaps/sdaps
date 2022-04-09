@@ -28,7 +28,7 @@ void
 kfill_modified(cairo_surface_t* surface, gint k);
 
 guint
-flood_fill(cairo_surface_t *surface, cairo_surface_t *debug_surf, gint x, gint y, gint orig_color);
+flood_fill(cairo_surface_t *surface, cairo_surface_t *debug_surf, gint x, gint y, guint orig_color);
 
 void
 remove_maximum_line(cairo_surface_t *surface, cairo_surface_t *debug_surf, gdouble width);

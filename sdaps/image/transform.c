@@ -137,7 +137,7 @@ kfill_modified(cairo_surface_t* surface, gint k)
 			kfill_get_condition_variables(tmp_pixels, tmp_stride, k, x, y, &n, &r, &c);
 
 			/* more than half black or white? This would be the new core color. */
-			core_color = core_pixels * 2 >= (k-2)*(k-2);
+			core_color = core_pixels * 2 >= (guint) (k-2)*(k-2);
 
 			if (core_color) {
 				n = ( 4*(k-1) ) - n;
@@ -169,9 +169,9 @@ mark_pixel(cairo_surface_t *debug_surf, gint x, gint y)
  * TODO: Rewrite in a saner and faster way.
  * Returns the size of the filled area. */
 guint
-flood_fill(cairo_surface_t *surface, cairo_surface_t *debug_surf, gint x, gint y, gint orig_color)
+flood_fill(cairo_surface_t *surface, cairo_surface_t *debug_surf, gint x, gint y, guint orig_color)
 {
-	guint img_width, img_height;
+	gint img_width, img_height;
 	guint stride;
 	guint32 *pixels;
 	guint result;
@@ -237,7 +237,7 @@ hough_add_point(hough_data *hough, guint x, guint y, guint filter_width, guint *
 	guint angle_step;
 	gdouble r;
 	gint r_bin, filt_bin;
-	gint i;
+	guint i;
 
 
 	for (angle_step = 0; angle_step < hough->angle_bins; angle_step++) {
@@ -249,7 +249,7 @@ hough_add_point(hough_data *hough, guint x, guint y, guint filter_width, guint *
 		for (i = 0; i < filter_width; i++) {
 			filt_bin = r_bin + i - filter_width / 2;
 
-			if ((filt_bin >= 0) && (filt_bin < hough->distance_bins)) {
+			if ((filt_bin >= 0) && ((guint) filt_bin < hough->distance_bins)) {
 				hough->data[angle_step*hough->distance_bins + filt_bin] += filter_coff[i];
 			}
 		}
@@ -383,7 +383,7 @@ remove_line(cairo_surface_t *surface, gdouble width, gdouble r_max, gdouble phi_
 void
 remove_maximum_line(cairo_surface_t *surface, cairo_surface_t *debug_surf, gdouble width)
 {
-	int r, phi;
+	guint r, phi;
 	gdouble r_max, phi_max, maximum;
 	hough_data *hough = hough_transform(surface, 60, 30, width / 2.0);
 

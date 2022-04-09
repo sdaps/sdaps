@@ -142,7 +142,7 @@ surface_inverted_copy_masked(cairo_surface_t *surface, cairo_surface_t *mask, gi
 void
 set_pixels_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height, int value)
 {
-	guint x_pos, y_pos;
+	gint x_pos, y_pos;
 
 	for (y_pos = y; y_pos < y + height; y_pos++) {
 		for (x_pos = x; x_pos < x + width; x_pos++) {
@@ -193,7 +193,7 @@ count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint hei
 {
 	guint32 *pixels;
 	guint stride;
-	guint img_width, img_height;
+	gint img_width, img_height;
 
 	pixels = (guint32*) cairo_image_surface_get_data(surface);
 	img_width = cairo_image_surface_get_width(surface);
@@ -223,7 +223,7 @@ count_black_pixel(cairo_surface_t *surface, gint x, gint y, gint width, gint hei
 gint
 count_black_pixel_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gint width, gint height)
 {
-	guint y_pos;
+	gint y_pos;
 	guint black_pixel = 0;
 
 	ensure_bitcount_table();
@@ -268,7 +268,7 @@ count_black_pixel_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x
 	guint stride;
 	guint mask_stride;
 	gint width, height;
-	guint img_width, img_height;
+	gint img_width, img_height;
 
 	width = cairo_image_surface_get_width(mask);
 	height = cairo_image_surface_get_height(mask);
@@ -302,7 +302,7 @@ count_black_pixel_masked(cairo_surface_t *surface, cairo_surface_t *mask, gint x
 gint
 count_black_pixel_masked_unchecked(guint32* pixels, guint32 stride, guint32 *mask_pixels, guint32 mask_stride, gint x, gint y, gint width, gint height)
 {
-	guint y_pos;
+	gint y_pos;
 	guint black_pixel = 0;
 
 	ensure_bitcount_table();
