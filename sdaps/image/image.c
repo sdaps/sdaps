@@ -158,9 +158,10 @@ write_a1_to_tiff (const char *filename, cairo_surface_t *surf)
 	if (tiff == NULL)
 		return FALSE;
 
-	/* Reverse *ALL* bits ...
-	 * TODO: Is this correct for big endian??? */
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+	/* Reverse *ALL* bits ... */
 	TIFFReverseBits(data, stride*(height-1) + (width+7)/8);
+#endif
 
 	/* Setup the new image. */
 	TIFFSetField(tiff, TIFFTAG_IMAGEWIDTH, width);
@@ -183,16 +184,20 @@ write_a1_to_tiff (const char *filename, cairo_surface_t *surf)
 			goto BAIL_WRITE_A1;
 	}
 
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
 	/* Undo reversal again. */
 	TIFFReverseBits(data, stride*(height-1) + (width+7)/8);
+#endif
 	TIFFClose(tiff);
 
 	return TRUE;
 
 BAIL_WRITE_A1:
 
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
 	/* Undo reversal again. */
 	TIFFReverseBits(data, stride*(height-1) + (width+7)/8);
+#endif
 	TIFFClose(tiff);
 
 	return FALSE;
