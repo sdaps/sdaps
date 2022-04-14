@@ -237,14 +237,14 @@ count_black_pixel_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gin
 		int pos;
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
-		start_mask = (1 << (x & 0x1f)) - 1;
-		end_mask = -(1 << ((x + width) & 0x1f));
+		start_mask = 0xffffffff >> (x & 0x1f);
+		end_mask = (0xffffffff << (-(x + width) & 0x1f));
 #else
-		start_mask = -(1 << (x & 0x1f));
-		end_mask = (1 << ((x + width) & 0x1f)) - 1;
+		start_mask = 0xffffffff << (x & 0x1f);
+		end_mask = (0xffffffff >> (-(x + width) & 0x1f));
 #endif
 		start = x >> 5;
-		end = (x + width) >> 5;
+		end = (x + width - 1) >> 5;
 
 		if (start == end) {
 			black_pixel += WORD_COUNT_BITS(pixels[start + y_pos * stride / 4] & start_mask & end_mask);
@@ -314,11 +314,11 @@ count_black_pixel_masked_unchecked(guint32* pixels, guint32 stride, guint32 *mas
 		int pos;
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
-		end_mask = -(1 << (width & 0x1f));
+		end_mask = (0xffffffff << (-(x + width) & 0x1f));
 #else
-		end_mask = (1 << (width & 0x1f)) - 1;
+		end_mask = (0xffffffff >> (-(x + width) & 0x1f));
 #endif
-		end = width >> 5;
+		end = (width - 1) >> 5;
 
 		for (pos = 0; pos <= end; pos++) {
 			/* Note that a shift of 32 is not defined, it may also be 0. */
