@@ -18,27 +18,7 @@
 #include "string.h"
 #include "surface.h"
 
-#define WORD_COUNT_BITS(x) (bitcount_table[(x) & 0xff] + bitcount_table[((x) >> 8) & 0xff] + bitcount_table[((x) >> 16) & 0xff] + bitcount_table[((x) >> 24) & 0xff])
-
-static guint8 bitcount_table[256];
-static gint bitcount_table_initialized = FALSE;
-
-static void
-ensure_bitcount_table(void)
-{
-	if (G_UNLIKELY(!bitcount_table_initialized)) {
-		int i;
-
-		for (i = 0; i < 256; i++) {
-			int j;
-			bitcount_table[i] = 0;
-			for (j = i; j; j = j >> 1) {
-				bitcount_table[i] += j & 0x1;
-			}
-		}
-		bitcount_table_initialized = TRUE;
-	}
-}
+#define WORD_COUNT_BITS(x) __builtin_popcount(x)
 
 cairo_surface_t*
 surface_copy_partial(cairo_surface_t *surface, int x, int y, int width, int height)
@@ -226,8 +206,6 @@ count_black_pixel_unchecked(guint32* pixels, guint32 stride, gint x, gint y, gin
 	gint y_pos;
 	guint black_pixel = 0;
 
-	ensure_bitcount_table();
-
 	for (y_pos = y; y_pos < y + height; y_pos++) {
 
 		guint32 start_mask;
@@ -304,8 +282,6 @@ count_black_pixel_masked_unchecked(guint32* pixels, guint32 stride, guint32 *mas
 {
 	gint y_pos;
 	guint black_pixel = 0;
-
-	ensure_bitcount_table();
 
 	for (y_pos = 0; y_pos < height; y_pos++) {
 		guint32 end_mask;
