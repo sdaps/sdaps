@@ -936,7 +936,7 @@ calculate_correction_matrix_masked(cairo_surface_t  *surface,
 	result->x0 = tmp_x - mm_x;
 	result->y0 = tmp_y - mm_y;
 
-	*covered = coverage / (float) count_black_pixel(mask, 0, 0, px_width, px_height);
+	*covered = coverage / (gdouble) count_black_pixel(mask, 0, 0, px_width, px_height);
 
 	return result;
 }
@@ -1022,7 +1022,7 @@ find_box_corners(cairo_surface_t  *surface,
 	return TRUE;
 }
 
-float
+gdouble
 get_coverage(cairo_surface_t *surface,
              cairo_matrix_t  *matrix,
              gdouble          mm_x,
@@ -1061,10 +1061,10 @@ get_coverage(cairo_surface_t *surface,
 		cairo_surface_flush(surf);
 	}
 
-	return black / (double) all;
+	return black / (gdouble) all;
 }
 
-float
+gdouble
 get_masked_coverage(cairo_surface_t *surface,
                     cairo_surface_t *mask,
                     gint             x,
@@ -1090,7 +1090,7 @@ get_masked_coverage(cairo_surface_t *surface,
 		cairo_surface_flush(surf);
 	}
 
-	return black / (double) all;
+	return black / (gdouble) all;
 }
 
 /* First removes the number of lines, and then calculates the coverage of what
