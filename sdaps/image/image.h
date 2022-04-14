@@ -65,10 +65,10 @@ gboolean
 find_box_corners(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height,
                  gdouble *mm_x1, gdouble *mm_y1, gdouble *mm_x2, gdouble *mm_y2, gdouble *mm_x3, gdouble *mm_y3, gdouble *mm_x4, gdouble *mm_y4);
 
-float
+gdouble
 get_coverage(cairo_surface_t *surface, cairo_matrix_t *matrix, gdouble mm_x, gdouble mm_y, gdouble mm_width, gdouble mm_height);
 
-float
+gdouble
 get_masked_coverage(cairo_surface_t *surface, cairo_surface_t *mask, gint x, gint y);
 
 gdouble
