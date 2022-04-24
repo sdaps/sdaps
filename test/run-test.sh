@@ -95,6 +95,23 @@ rm -rf "$PROJECT"
 #"$SDAPS" report_tex "$PROJECT"
 
 
+
+###########################################################
+# Test compilation of example document (with images)
+###########################################################
+
+PROJECT="projects/test-example"
+
+# Create projects dir if it does not exist
+if [ ! -e `dirname $PROJECT` ]; then
+	mkdir -p `dirname $PROJECT`
+fi
+
+# Remove project dir that may exist
+rm -rf "$PROJECT"
+
+"$SDAPS" setup tex "$PROJECT" "../examples/example.tex" --add "../examples/coins"
+
 ###########################################################
 # Compare info files
 ###########################################################
