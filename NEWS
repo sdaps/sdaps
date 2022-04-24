@@ -1,3 +1,10 @@
+Overview of Changes in SDAPS 1.9.11
+===================================
+
+Important changes:
+ * Update setup.py to work with newer python versions
+ * Include all required files in the tarball
+
 Overview of Changes in SDAPS 1.9.10
 ===================================
 
