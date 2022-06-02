@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2022-03-11 12:56+0000\n"
+"PO-Revision-Date: 2022-06-02 11:19+0000\n"
 "Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sdaps/master/fr/>"
 "\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -94,9 +94,8 @@ msgid "Generate a report."
 msgstr "Générer un rapport."
 
 #: ../sdaps/cmdline/__init__.py:47
-#, fuzzy
 msgid "Create a new SDAPS project."
-msgstr "Créer un rapport PDF."
+msgstr "Créer un nouveau projet SDAPS."
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
@@ -1088,7 +1087,6 @@ msgstr ""
 "existants."
 
 #: ../sdaps/stamp/latex.py:18
-#, fuzzy
 msgid ""
 "There should be no need to stamp a SDAPS Project that uses LaTeX and does "
 "not have different questionnaire IDs printed on each sheet.\n"
