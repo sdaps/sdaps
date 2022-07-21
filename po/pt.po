@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2022-02-14 03:58+0000\n"
+"PO-Revision-Date: 2022-07-21 20:18+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/sdaps/master/"
 "pt/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -77,6 +77,8 @@ msgid ""
 "Export data from an SDAPS project. Please check the\n"
 "    documentation for the provided formats for more information."
 msgstr ""
+"Exportar dados de um projeto de SDAPS. Por favor, verifique na\n"
+"    documentação para os formatos fornecidos para mais informações."
 
 #: ../sdaps/cmdline/__init__.py:26
 #, fuzzy
@@ -90,6 +92,10 @@ msgid ""
 "more\n"
 "    information."
 msgstr ""
+"Importar dados para um projeto de SDAPS. Isto só é útil em\n"
+"    raros casos. Por favor, verifique na documentação para os formatos "
+"fornecidos\n"
+"     para mais informações."
 
 #: ../sdaps/cmdline/__init__.py:39
 #, fuzzy
