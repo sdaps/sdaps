@@ -8,24 +8,24 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-02 16:34+0200\n"
-"PO-Revision-Date: 2018-12-26 14:09+0000\n"
-"Last-Translator: Hyunmin Kim (Brandon) <hmkim@live.co.kr>\n"
-"Language-Team: Korean <https://hosted.weblate.org/projects/sdaps/master/ko/"
-">\n"
+"PO-Revision-Date: 2022-09-29 21:15+0000\n"
+"Last-Translator: 이정희 <daemul72@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/sdaps/master/ko/>"
+"\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.4-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
-msgstr ""
+msgstr "SDAPS -- 종이 기반 설문조사 도구."
 
 #: ../sdaps/script.py:47
 msgid "Display version and exit"
-msgstr ""
+msgstr "버전 드러내고 종료하기"
 
 #. Set required as an attribute rather than kwarg so that it works with python <3.7
 #: ../sdaps/script.py:52
@@ -34,28 +34,27 @@ msgstr "명령어 항목|명령어들:"
 
 #: ../sdaps/script.py:61
 msgid "project directory|The SDAPS project."
-msgstr "프로젝트 경로|새로운 프로젝트."
+msgstr "프로젝트 디렉터리| SDAPS 프로젝트입니다."
 
 #: ../sdaps/add/__init__.py:55
 #, python-format
 msgid ""
 "Invalid input file %s. You need to specify a (multipage) monochrome TIFF as "
 "input."
-msgstr ""
-"%s 는 유효하지 않은 입력 파일입니다. 입력 파일로써 monochrome TIFF 형식만 가"
-"능합니다."
+msgstr "%s 는 유효하지 않은 입력 파일입니다. (여러 페이지) 단색으로 된 TIFF를 "
+"입력으로 지정해야 합니다."
 
 #: ../sdaps/add/__init__.py:67
 #, python-format
 msgid ""
 "Not adding %s because it has a wrong page count (needs to be a mulitple of "
 "%i)."
-msgstr ""
+msgstr "잘못된 페이지 수가 있기 때문에 %s을(를) 추가하지 않습니다(%i의 배수여야 함)."
 
 #: ../sdaps/boxgallery/__init__.py:108
 #, python-format
 msgid "Rendering boxgallery for metric \"%s\"."
-msgstr ""
+msgstr "메트릭 \"%s\"에 대한 렌더링 박스갤러리입니다."
 
 #: ../sdaps/log.py:37
 msgid "Warning: "
@@ -66,20 +65,20 @@ msgid "Error: "
 msgstr "오류: "
 
 #: ../sdaps/cmdline/__init__.py:15
-#, fuzzy
 msgid "Export data from an SDAPS project."
-msgstr "프로젝트 경로|새로운 프로젝트."
+msgstr "SDAPS 프로젝트에서 데이터를 내보냅니다."
 
 #: ../sdaps/cmdline/__init__.py:16
 msgid ""
 "Export data from an SDAPS project. Please check the\n"
 "    documentation for the provided formats for more information."
 msgstr ""
+"SDAPS 프로젝트에서 데이터를 내보냅니다. \n"
+"    자세한 내용은 제공된 형식에 대한 설명서를 확인하십시오."
 
 #: ../sdaps/cmdline/__init__.py:26
-#, fuzzy
 msgid "Import data into an SDAPS project."
-msgstr "프로젝트 경로|새로운 프로젝트."
+msgstr "SDAPS 프로젝트로 데이터를 가져옵니다."
 
 #: ../sdaps/cmdline/__init__.py:27
 msgid ""
@@ -88,19 +87,20 @@ msgid ""
 "more\n"
 "    information."
 msgstr ""
+"데이터를 SDAPS 프로젝트로 가져옵니다. 이것은 드문 경우에만 유용합니다. \n"
+"    자세한 내용은 제공된 형식에 대한 설명서를 확인하십시오."
 
 #: ../sdaps/cmdline/__init__.py:39
 msgid "Generate a report."
-msgstr ""
+msgstr "보고서를 생성합니다."
 
 #: ../sdaps/cmdline/__init__.py:47
-#, fuzzy
 msgid "Create a new SDAPS project."
-msgstr "프로젝트 경로|새로운 프로젝트."
+msgstr "새 SDAPS 프로젝트를 만듭니다."
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
-msgstr "설문 조사를 위해 스캔된 설문 항목을 추가해주세요."
+msgstr "스캔한 설문지를 설문조사에 추가합니다."
 
 #: ../sdaps/cmdline/add.py:32
 msgid ""
@@ -111,65 +111,69 @@ msgid ""
 "case\n"
 "    the data will be referenced using a relative path."
 msgstr ""
+"이 명령은 스캔한 이미지를 설문조사에 추가하는 데 사용됩니다.\n"
+"    이미지 데이터는 (여러 페이지) 300dpi 흑백 TIFF 파일이어야 합니다. \n"
+"    데이터를 프로젝트 디렉토리에 복사하지 않도록 선택할 수 있습니다. \n"
+"    이 경우 데이터는 상대 경로를 사용하여 참조됩니다."
 
 #: ../sdaps/cmdline/add.py:38
 msgid "Convert given files and add the result."
-msgstr "입력 파일들을 변환하고 그 결과를 추가합니다."
+msgstr "주어진 파일을 변환하고 결과를 추가합니다."
 
 #: ../sdaps/cmdline/add.py:43
 msgid ""
 "Do a 3D-transformation after finding the corner marks. If the\n"
 "        corner marks are not found then the image will be added as-is."
 msgstr ""
-"모서리 표시 위치를 찾은 뒤 3D-변환을 거칩니다. 만일에 그\n"
-"모서리 표시가 발견되지 않으면 이미지가 as-is로 추가될 것입니다."
+"모서리 표시 위치를 찾은 뒤 3D-변환을 거칩니다. 만일에 그 모서리\n"
+"        표시를 찾을 수 없으면 이미지가 있는 그대로 추가됩니다."
 
 #: ../sdaps/cmdline/add.py:49
 msgid ""
 "Force adding the images even if the page count is wrong (only use if you "
 "know what you are doing)."
-msgstr ""
+msgstr "페이지 수가 잘못된 경우에도 이미지를 강제로 추가합니다(무엇을 하는지 알고 "
+"있는 경우에만 사용)."
 
 #: ../sdaps/cmdline/add.py:53
 msgid "Copy the files into the directory (default)."
-msgstr "경로에 파일들을 복사합니다 (기본값)."
+msgstr "파일을 디렉터리에 복사합니다(기본값)."
 
 #: ../sdaps/cmdline/add.py:58
 msgid "Do not copy the files into the directory."
-msgstr "경로에 파일들을 복사하지 마세요."
+msgstr "파일을 디렉터리에 복사하지 마십시오."
 
 #: ../sdaps/cmdline/add.py:62
 msgid ""
 "Images contain a duplex scan of a simplex questionnaire (default: simplex "
 "scan)."
-msgstr ""
-"간단한 설문조사의 duplex 스캔을 포함하는 이미지들 (기본값: simplex 스캔)."
+msgstr "이미지에는 단면 설문지의 양면 스캔이 포함되어 있습니다(기본값: 단면 스캔)."
 
 #: ../sdaps/cmdline/add.py:68 ../sdaps/cmdline/convert.py:48
 msgid "A number of TIFF image files."
-msgstr "수많은 TIFF 이미지 파일들."
+msgstr "여러 TIFF 이미지 파일입니다."
 
 #: ../sdaps/cmdline/add.py:94
 msgid "The --no-copy option is not compatible with --convert!"
-msgstr ""
+msgstr "--no-copy 옵션은 --convert와 호환되지 않습니다!"
 
 #: ../sdaps/cmdline/add.py:103
 msgid "Converting input files into a single temporary file."
-msgstr ""
+msgstr "입력 파일을 단일 임시 파일로 변환합니다."
 
 #: ../sdaps/cmdline/add.py:115
 msgid ""
 "The page count of the created temporary file does not work with this survey."
-msgstr ""
+msgstr "생성된 임시 파일의 페이지 수는 이 설문조사에서 작동하지 않습니다."
 
 #: ../sdaps/cmdline/add.py:120
 msgid "Running the conversion failed."
-msgstr "변환 작업이 실패했습니다."
+msgstr "변환을 실행하지 못했습니다."
 
 #: ../sdaps/cmdline/add.py:126
 #, python-format
 msgid "Processing %s"
-msgstr "진행중 %s"
+msgstr "%s 처리"
 
 #: ../sdaps/cmdline/add.py:130 ../sdaps/reset/__init__.py:33
 msgid "Done"
@@ -177,7 +181,7 @@ msgstr "완료"
 
 #: ../sdaps/cmdline/annotate.py:28
 msgid "Annotate the questionnaire and show the recognized positions."
-msgstr ""
+msgstr "설문지에 주석을 달고 인식된 위치를 표시합니다."
 
 #: ../sdaps/cmdline/annotate.py:29
 msgid ""
@@ -185,10 +189,12 @@ msgid ""
 "    annotated version of the questionnaire, with the information that SDAPS\n"
 "    knows about it overlayed on top."
 msgstr ""
+"이 명령은 주로 디버그 유틸리티입니다. SDAPS가 알고 있는 \n"
+"   정보를 맨 위에 오버레이하여 주석이 달린 설문지 버전을 만듭니다."
 
 #: ../sdaps/cmdline/boxgallery.py:31
 msgid "Create PDFs with boxes sorted by the detection heuristics."
-msgstr ""
+msgstr "탐지 휴리스틱으로 정렬된 상자가 있는 PDF를 만듭니다."
 
 #: ../sdaps/cmdline/boxgallery.py:32
 msgid ""
@@ -200,16 +206,20 @@ msgid ""
 "    will be created for each of the heuristics so that one can adjust the\n"
 "    values."
 msgstr ""
+"SDAPS는 여러 휴리스틱을 사용하여 확인란 상태를 탐지합니다.\n"
+"    예상 상태와 값의 품질을 제공하는 각 휴리스틱에 대한 목록이 있습니다\n"
+"    (defs.py 참조). 이 명령을 사용하면 값을 조정할 수 있도록 각 휴리스틱에 \n"
+"    대한 PDF가 만들어집니다."
 
 #: ../sdaps/cmdline/boxgallery.py:40
 msgid ""
 "Reruns part of the recognition process and retrieves debug images from this "
 "step."
-msgstr ""
+msgstr "인식 프로세스의 일부를 다시 실행하고 이 단계에서 디버그 이미지를 검색합니다."
 
 #: ../sdaps/cmdline/convert.py:30
 msgid "Convert a set of images to the correct image format."
-msgstr "이미지 집합을 알맞는 이미지 형식으로 변환합니다."
+msgstr "이미지 집합을 올바른 이미지 형식으로 변환합니다."
 
 #: ../sdaps/cmdline/convert.py:31
 msgid ""
@@ -220,39 +230,50 @@ msgid ""
 "may facilitate\n"
 "        working with photos of questionnaires instead of scans."
 msgstr ""
+"이 명령은 예상되는 단색으로 된 TIFF 모드가 아닌 다른 모드에서 파일을 스캔한 "
+"경우\n"
+"        사용할 수 있습니다. 주어진 모든 파일을 불러오고 단색으로 변환되어 \n"
+"        여러 페이지의 1bpp TIFF 파일에 저장됩니다. 선택적으로, \"3D 변환\""
+"\\을 \n"
+"        선택할 수 있습니다. 스캔 대신 설문지 사진 작업을 용이하게 할 수 "
+"있습니다."
 
 #: ../sdaps/cmdline/convert.py:38
 msgid ""
 "Do a 3D-transformation after finding the corner marks.\n"
 "    If they are not found, the image will be processed as-is."
 msgstr ""
+"모서리 표시를 찾은 후 3D 변환을 수행합니다.\n"
+"    찾을 수 없는 경우 이미지는 있는 그대로 처리됩니다."
 
 #: ../sdaps/cmdline/convert.py:44
 msgid "The location of the output file."
-msgstr "결과 파일의 위치."
+msgstr "출력 파일의 위치입니다."
 
 #: ../sdaps/cmdline/convert.py:57
 msgid "No output filename specified!"
-msgstr "결과 파일명이 지정되지 않았습니다!"
+msgstr "출력 파일 이름이 지정되지 않았습니다!"
 
 #: ../sdaps/cmdline/cover.py:27
 msgid "Create a cover for the questionnaires."
-msgstr "설문조사에 대한 커버를 만드세요."
+msgstr "설문지의 표지를 만듭니다."
 
 #: ../sdaps/cmdline/cover.py:28
 msgid ""
 "This command creates a cover page for questionnaires. All\n"
 "    the metadata of the survey will be printed on the page."
 msgstr ""
+"이 명령은 설문지의 표지를 만듭니다\n"
+"    모두 설문조사의 메타데이터가 페이지에 인쇄됩니다."
 
 #: ../sdaps/cmdline/cover.py:31
 #, python-format
 msgid "Filename to store the data to (default: cover_%%i.pdf)"
-msgstr ""
+msgstr "데이터를 저장할 파일 이름(기본값: cover_%%i.pdf)"
 
 #: ../sdaps/cmdline/csvdata.py:36
 msgid "Export data to CSV file."
-msgstr "CSV 파일로 데이터를 출력합니다."
+msgstr "데이터를 CSV 파일로 내보냅니다."
 
 #: ../sdaps/cmdline/csvdata.py:37
 msgid ""
@@ -260,36 +281,39 @@ msgid ""
 "    which defines questionnaire_id and global_id, and a column for each\n"
 "    checkbox and textfield."
 msgstr ""
+"데이터를 CSV 파일로 내보냅니다. 첫 번째 줄은 \n"
+"    question_id 및 global_id를 정의하는 헤더와 각 확인란 및 텍스트 필드에 \n"
+"    대한 열입니다."
 
 #: ../sdaps/cmdline/csvdata.py:43
 #, python-format
 msgid "Filename to store the data to (default: data_%%i.csv)"
-msgstr ""
+msgstr "데이터를 저장할 파일 이름(기본값: data_%%i.csv)"
 
 #: ../sdaps/cmdline/csvdata.py:45
 msgid "The delimiter used in the CSV file (default ',')"
-msgstr ""
+msgstr "CSV 파일에 사용된 구분 기호(기본값 ',')"
 
 #: ../sdaps/cmdline/csvdata.py:49 ../sdaps/cmdline/feather.py:40
 #: ../sdaps/cmdline/report.py:33 ../sdaps/cmdline/reporttex.py:55
 msgid "Filter to only export a partial dataset."
-msgstr ""
+msgstr "부분 데이터세트만 내보내도록 필터링합니다."
 
 #: ../sdaps/cmdline/csvdata.py:51
 msgid "Export images of freeform fields."
-msgstr ""
+msgstr "자유로운 형식의 필드의 이미지를 내보냅니다."
 
 #: ../sdaps/cmdline/csvdata.py:57
 msgid "Export an image for each question that includes all boxes."
-msgstr ""
+msgstr "모든 상자를 포함하는 각 질문에 대한 이미지를 내보냅니다."
 
 #: ../sdaps/cmdline/csvdata.py:63
 msgid "Export the recognition quality for each checkbox."
-msgstr ""
+msgstr "각 확인란에 대한 인식 품질을 내보냅니다."
 
 #: ../sdaps/cmdline/csvdata.py:71
 msgid "Import data to from a CSV file."
-msgstr ""
+msgstr "CSV 파일에서 데이터를 가져옵니다."
 
 #: ../sdaps/cmdline/csvdata.py:72
 msgid ""
@@ -299,24 +323,27 @@ msgid ""
 "    as you need to specifiy the questionnaire ID to select the sheet\n"
 "    which should be updated."
 msgstr ""
+"CSV 파일에서 데이터를 가져옵니다. 첫 번째 줄은 \n"
+"    question_id 및 global_id를 정의하는 헤더와 각 확인란 및 텍스트 필드에 \n"
+"    대한 열입니다. 업데이트해야 하는 시트를 선택하려면 설문지 ID를 \n"
+"    지정해야 하므로 가져오기가 현재 매우 제한되어 있습니다."
 
 #: ../sdaps/cmdline/csvdata.py:80
 msgid "The file to import."
-msgstr ""
+msgstr "가져올 파일입니다."
 
 #: ../sdaps/cmdline/feather.py:36
-#, fuzzy
 msgid "Export data to feather file."
-msgstr "CSV 파일로 데이터를 출력합니다."
+msgstr "데이터를 페더 파일로 내보냅니다."
 
 #: ../sdaps/cmdline/feather.py:38
 #, python-format
 msgid "Filename to store the data to (default: data_%%i.feather)"
-msgstr ""
+msgstr "데이터를 저장할 파일 이름(기본값: data_%%i.feather)"
 
 #: ../sdaps/cmdline/gui.py:28
 msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
-msgstr ""
+msgstr "GUI를 시작합니다. 그것으로 (인식된) 답변을 보고 변경할 수 있습니다."
 
 #: ../sdaps/cmdline/gui.py:29
 msgid ""
@@ -325,14 +352,17 @@ msgid ""
 "it.\n"
 "    "
 msgstr ""
+"이 명령은 다음을 수행할 수 있는 그래픽 사용자 인터페이스를 시작합니다.\n"
+"    정답을 맞추는 데 사용됩니다. 사용하기 전에 \"인식\"을 실행해야 합니다.\n"
+"    "
 
 #: ../sdaps/cmdline/gui.py:34
 msgid "Filter to only show a partial dataset."
-msgstr ""
+msgstr "부분 데이터세트만 표시하도록 필터링합니다."
 
 #: ../sdaps/cmdline/ids.py:29
 msgid "Export and import questionnaire IDs."
-msgstr ""
+msgstr "설문지 ID를 내보내고 가져옵니다."
 
 #: ../sdaps/cmdline/ids.py:30
 msgid ""
@@ -342,19 +372,22 @@ msgid ""
 "command,\n"
 "    which will give you the PDF at the same time."
 msgstr ""
+"이 명령을 사용하여 질문 ID를 가져오고 내보낼 수 있습니다. \n"
+"    그러한 ID가 설문지에 인쇄된 프로젝트에서만 의미가 있습니다. \n"
+"    PDF를 동시에 제공하는 스탬프 명령을 사용하여 ID를 추가할 수도 있습니다."
 
 #: ../sdaps/cmdline/ids.py:35
 #, python-format
 msgid "Filename to store the data to (default: ids_%%i)"
-msgstr ""
+msgstr "데이터를 저장할 파일 이름(기본값: ids_%%i)"
 
 #: ../sdaps/cmdline/ids.py:38
 msgid "Add IDs to the internal list from the specified file."
-msgstr ""
+msgstr "지정된 파일의 내부 목록에 ID를 추가합니다."
 
 #: ../sdaps/cmdline/info.py:28
 msgid "Display and modify metadata of project."
-msgstr ""
+msgstr "프로젝트의 메타데이터를 드러내고 수정합니다."
 
 #: ../sdaps/cmdline/info.py:29
 msgid ""
@@ -367,23 +400,23 @@ msgstr ""
 
 #: ../sdaps/cmdline/info.py:36
 msgid "Delete the key and value pair."
-msgstr ""
+msgstr "키와 값 쌍을 삭제합니다."
 
 #: ../sdaps/cmdline/info.py:40
 msgid "The key to display or modify."
-msgstr ""
+msgstr "표시하거나 수정할 키입니다."
 
 #: ../sdaps/cmdline/info.py:44
 msgid "Set the given key to this value."
-msgstr ""
+msgstr "주어진 키를 이 값으로 설정합니다."
 
 #: ../sdaps/cmdline/info.py:69
 msgid "Existing fields:\n"
-msgstr ""
+msgstr "기존 필드:\n"
 
 #: ../sdaps/cmdline/recognize.py:28
 msgid "Run the optical mark recognition."
-msgstr ""
+msgstr "광학 마크 인식을 실행합니다."
 
 #: ../sdaps/cmdline/recognize.py:29
 msgid ""
@@ -396,17 +429,18 @@ msgstr ""
 #: ../sdaps/cmdline/recognize.py:34
 msgid ""
 "Only identify the page properties, but don't recognize the checkbox states."
-msgstr ""
+msgstr "페이지 속성만 식별하지만, 확인란 상태는 인식하지 않습니다."
 
 #: ../sdaps/cmdline/recognize.py:39
 msgid ""
 "Rerun the recognition for all pages. The default is to skip all pages that "
 "were recognized or verified already."
-msgstr ""
+msgstr "모든 페이지에 대한 인식을 다시 실행합니다. 기본값은 이미 인식되거나 확인된 "
+"모든 페이지를 건너뜁니다."
 
 #: ../sdaps/cmdline/reorder.py:26
 msgid "Reorder pages according to questionnaire ID."
-msgstr ""
+msgstr "설문지 ID에 따라 페이지 순서를 변경합니다."
 
 #: ../sdaps/cmdline/reorder.py:27
 msgid ""
@@ -422,7 +456,7 @@ msgstr ""
 
 #: ../sdaps/cmdline/report.py:27
 msgid "Create a PDF report using reportlab."
-msgstr ""
+msgstr "보고서랩을 사용하여 PDF 보고서를 만듭니다."
 
 #: ../sdaps/cmdline/report.py:28
 msgid ""
@@ -432,52 +466,55 @@ msgstr ""
 
 #: ../sdaps/cmdline/report.py:35
 msgid "Create a filtered report for every checkbox."
-msgstr ""
+msgstr "모든 확인란에 대해 필터링된 보고서를 만듭니다."
 
 #: ../sdaps/cmdline/report.py:38
 msgid "Short format (without freeform text fields)."
-msgstr ""
+msgstr "짧은 형식 (자유로운 형식의 텍스트 필드 제외)."
 
 #: ../sdaps/cmdline/report.py:43
 msgid "Detailed output. (default)"
-msgstr ""
+msgstr "자세한 출력. (기본값)"
 
 #: ../sdaps/cmdline/report.py:49 ../sdaps/cmdline/reporttex.py:33
 msgid ""
 "Do not include original images in the report. This is useful if there are "
 "privacy concerns."
-msgstr ""
+msgstr "보고서에 원본 이미지를 포함하지 마십시오. 이는 개인 정보 보호 문제가 있는 "
+"경우에 유용합니다."
 
 #: ../sdaps/cmdline/report.py:54 ../sdaps/cmdline/reporttex.py:38
 msgid "Do not use substitutions instead of images."
-msgstr ""
+msgstr "이미지 대신 대체물을 사용하지 마십시오."
 
 #: ../sdaps/cmdline/report.py:60 ../sdaps/cmdline/reporttex.py:49
 msgid "The paper size used for the output (default: locale dependent)"
-msgstr ""
+msgstr "출력에 사용된 용지 크기(기본값: 로케일에 따라 다름)"
 
 #: ../sdaps/cmdline/report.py:63 ../sdaps/cmdline/reporttex.py:52
 #, python-format
 msgid "Filename to store the data to (default: report_%%i.pdf)"
-msgstr ""
+msgstr "데이터를 저장할 파일 이름(기본값: report_%%i.pdf)"
 
 #: ../sdaps/cmdline/reporttex.py:27
 msgid "Create a PDF report using LaTeX."
-msgstr ""
+msgstr "LaTeX를 사용하여 PDF 보고서를 만듭니다."
 
 #: ../sdaps/cmdline/reporttex.py:28
 msgid ""
 "This command creates a PDF report using LaTeX that\n"
 "    contains statistics and freeform fields."
 msgstr ""
+"이 명령은 통계 및 자유 형식 필드가 포함된 \n"
+"    LaTeX를 사용하여 PDF 보고서를 만듭니다."
 
 #: ../sdaps/cmdline/reporttex.py:44
 msgid "Save the generated TeX files instead of the final PDF."
-msgstr ""
+msgstr "최종 PDF 대신 생성된 TeX 파일을 저장합니다."
 
 #: ../sdaps/cmdline/reset.py:26
 msgid "Reset project into original state."
-msgstr ""
+msgstr "프로젝트를 원래 상태로 재설정합니다."
 
 #: ../sdaps/cmdline/reset.py:27
 msgid ""
@@ -485,10 +522,13 @@ msgid ""
 "    will be discarded and only the empty project is left.\n"
 "    "
 msgstr ""
+"이 명령은 프로젝트의 전체 재설정을 수행합니다. \n"
+"    모든 데이터는 삭제되고 빈 프로젝트만 남습니다.\n"
+"    "
 
 #: ../sdaps/cmdline/setup.py:29
 msgid "Create a new survey using a LaTeX document."
-msgstr ""
+msgstr "LaTeX 문서를 사용하여 새 설문조사를 만듭니다."
 
 #: ../sdaps/cmdline/setup.py:30
 msgid ""
@@ -496,28 +536,31 @@ msgid ""
 "    be using the SDAPS class. All the metadata and options for the project\n"
 "    can be set inside the LaTeX document."
 msgstr ""
+"LaTeX 문서에서 새 설문 조사를 만듭니다. SDAPS 클래스를 \n"
+"    사용해야 합니다. 프로젝트의 모든 메타데이터와 옵션은 LaTeX 문서 내에서 \n"
+"    설정할 수 있습니다."
 
 #: ../sdaps/cmdline/setup.py:36
 msgid "The LaTeX Document"
-msgstr ""
+msgstr "LaTeX 문서"
 
 #: ../sdaps/cmdline/setup.py:38
 msgid ""
 "Additional files that are required by the LaTeX document and need to be "
 "copied into the project directory."
-msgstr ""
+msgstr "LaTeX 문서에 필요하며 프로젝트 디렉토리에 복사해야 하는 부가적인 파일입니다."
 
 #: ../sdaps/cmdline/setup.py:41
 msgid "The engine to use to compile LaTeX documents."
-msgstr ""
+msgstr "LaTeX 문서를 컴파일하는 데 사용할 엔진입니다."
 
 #: ../sdaps/cmdline/setup.py:45
 msgid "Additional questions that are not part of the questionnaire."
-msgstr ""
+msgstr "질문에 포함되지 않은 부가적인 질문입니다."
 
 #: ../sdaps/cmdline/stamp.py:26
 msgid "Add marks for automatic processing."
-msgstr ""
+msgstr "자동 처리를 위한 마크를 추가합니다."
 
 #: ../sdaps/cmdline/stamp.py:27
 msgid ""
@@ -526,107 +569,109 @@ msgid ""
 "questionnaire\n"
 "    IDs."
 msgstr ""
+"이 명령은 인쇄 가능한 문서를 만듭니다. \n"
+"    프로젝트 설정에 따라 설문 ID 소스를 지정해야 합니다."
 
 #: ../sdaps/cmdline/stamp.py:33
 msgid ""
 "If using questionnaire IDs, create N questionnaires with randomized IDs."
-msgstr ""
+msgstr "설문지 ID를 사용하는 경우 무작위 ID로 N 개의 설문지를 만듭니다."
 
 #: ../sdaps/cmdline/stamp.py:36
 msgid ""
 "If using questionnaire IDs, create questionnaires from the IDs read from the "
 "specified file."
-msgstr ""
+msgstr "설문지 ID를 사용하는 경우 지정된 파일에서 읽은 ID로 설문지를 만듭니다."
 
 #: ../sdaps/cmdline/stamp.py:39
 msgid "If using questionnaire IDs, create questionnaires for all stored IDs."
-msgstr ""
+msgstr "설문지 ID를 사용하는 경우 저장된 모든 ID에 대한 설문지를 만듭니다."
 
 #: ../sdaps/cmdline/stamp.py:42
 #, python-format
 msgid "Filename to store the data to (default: stamp_%%i.pdf)"
-msgstr ""
+msgstr "데이터를 저장할 파일 이름(기본값: stamp_%%i.pdf)"
 
 #: ../sdaps/convert/__init__.py:37
 #, python-format
 msgid "Could not apply 3D-transformation to image '%s', page %i!"
-msgstr ""
+msgstr "이미지 '%s', 페이지 %i에 3D 변환을 적용할 수 없습니다!"
 
 #: ../sdaps/cover/__init__.py:40
 msgid "SDAPS questionnaire"
-msgstr ""
+msgstr "SDAPS 설문지"
 
 #: ../sdaps/csvdata/buddies.py:78
 #, python-format
 msgid "Not importing unknown questionnaire ID \"%s\""
-msgstr ""
+msgstr "알 수 없는 설문지 ID \"%s\"을(를) 가져오지 않습니다"
 
 #: ../sdaps/gui/__init__.py:60
 msgid ""
 "The survey does not have any images! Please add images (and run recognize) "
 "before using the GUI."
-msgstr ""
+msgstr "설문조사에 이미지가 없습니다! GUI를 사용하기 전에 이미지를 추가하고 인식을 "
+"실행하십시오."
 
 #: ../sdaps/gui/__init__.py:212
 msgid "Page|Invalid"
-msgstr ""
+msgstr "페이지|잘못된"
 
 #: ../sdaps/gui/__init__.py:215
 #, python-format
 msgid "Page %i"
 msgid_plural "Page %i"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i 페이지"
 
 #: ../sdaps/gui/__init__.py:257
 msgid "Copyright © 2007-2014 The SDAPS Authors"
-msgstr ""
+msgstr "저작권 © 2007-2014 SDAPS 작성자"
 
 #: ../sdaps/gui/__init__.py:259
 msgid "Scripts for data acquisition with paper based surveys"
-msgstr ""
+msgstr "종이 기반 설문조사를 통한 데이터 수집용 스크립트"
 
 #: ../sdaps/gui/__init__.py:260
 msgid "http://sdaps.org"
-msgstr ""
+msgstr "http://sdaps.org"
 
 #: ../sdaps/gui/__init__.py:261
 msgid "translator-credits"
-msgstr ""
+msgstr "이정희 <daemul72@gmail.com>"
 
 #: ../sdaps/gui/__init__.py:306
 #, python-format
 msgid " of %i"
-msgstr ""
+msgstr " / %i"
 
 #: ../sdaps/gui/__init__.py:307
 #, python-format
 msgid "Recognition Quality: %.2f"
-msgstr ""
+msgstr "인식 품질: %.2f"
 
 #: ../sdaps/gui/__init__.py:323
 msgid ""
 "You have reached the first page of the survey. Would you like to go to the "
 "last page?"
-msgstr ""
+msgstr "설문조사의 첫 페이지에 도달했습니다. 마지막 페이지로 이동하시겠습니까?"
 
 #: ../sdaps/gui/__init__.py:325
 msgid "Go to last page"
-msgstr ""
+msgstr "마지막 페이지로 가기"
 
 #: ../sdaps/gui/__init__.py:347
 msgid ""
 "You have reached the last page of the survey. Would you like to go to the "
 "first page?"
-msgstr ""
+msgstr "설문조사의 마지막 페이지에 도달했습니다. 첫 페이지로 가시겠습니까?"
 
 #: ../sdaps/gui/__init__.py:349
 msgid "Go to first page"
-msgstr ""
+msgstr "첫 페이지로 가기"
 
 #: ../sdaps/gui/__init__.py:466
 msgid "Close without saving"
-msgstr ""
+msgstr "저장하지 않고 닫기"
 
 #: ../sdaps/gui/__init__.py:470
 msgid ""
@@ -634,104 +679,113 @@ msgid ""
 "\n"
 "If you do not save you may lose data."
 msgstr ""
+"<b>닫기 전에 프로젝트를 저장하시겠습니까?</b>\n"
+"\n"
+"저장하지 않으면 데이터가 손실될 수 있습니다."
 
 #: ../sdaps/gui/main_window.ui.h:1
 msgid "Forward"
-msgstr ""
+msgstr "앞으로"
 
 #: ../sdaps/gui/main_window.ui.h:2
 msgid "Previous"
-msgstr ""
+msgstr "이전"
 
 #: ../sdaps/gui/main_window.ui.h:3
 msgid "Zoom In"
-msgstr ""
+msgstr "확대"
 
 #: ../sdaps/gui/main_window.ui.h:4
 msgid "Zoom Out"
-msgstr ""
+msgstr "축소"
 
 #: ../sdaps/gui/main_window.ui.h:5
 msgid "SDAPS"
-msgstr ""
+msgstr "SDAPS"
 
 #: ../sdaps/gui/main_window.ui.h:6
 msgid "_File"
-msgstr ""
+msgstr "파일(_F)"
 
 #: ../sdaps/gui/main_window.ui.h:7
 msgid "_View"
-msgstr ""
+msgstr "보기(_V)"
 
 #: ../sdaps/gui/main_window.ui.h:8
 msgid "_Help"
-msgstr ""
+msgstr "도움말(_H)"
 
 #: ../sdaps/gui/main_window.ui.h:9
 msgid "Recognize Page"
-msgstr ""
+msgstr "페이지 인식하기"
 
 #: ../sdaps/gui/main_window.ui.h:10
 msgid "Page Rotated"
-msgstr ""
+msgstr "페이지 회전됨"
 
 #: ../sdaps/gui/main_window.ui.h:11
 msgid "Sort by Quality"
-msgstr ""
+msgstr "품질순으로 정렬하기"
 
 #: ../sdaps/gui/main_window.ui.h:12
 msgid "label"
-msgstr ""
+msgstr "레이블"
 
 #: ../sdaps/gui/widget_buddies.py:56
 msgid "<b>Global Properties</b>"
-msgstr ""
+msgstr "<b> 전역 속성</b>"
 
 #: ../sdaps/gui/widget_buddies.py:60
 msgid "Sheet valid"
-msgstr ""
+msgstr "유효한 시트"
 
 #: ../sdaps/gui/widget_buddies.py:61
 msgid "Sheet Verified"
-msgstr ""
+msgstr "시트 확인됨"
 
 #: ../sdaps/gui/widget_buddies.py:62
 msgid "Page Verified"
-msgstr ""
+msgstr "페이지 확인됨"
 
 #: ../sdaps/gui/widget_buddies.py:63 ../sdaps/gui/widget_buddies.py:73
 msgid "Empty"
-msgstr ""
+msgstr "빈 항목"
 
 #: ../sdaps/gui/widget_buddies.py:84 ../sdaps/gui/widget_buddies.py:115
 msgid "<b>Questionnaire ID: </b>"
-msgstr ""
+msgstr "<b> 설문지 ID: </b>"
 
 #: ../sdaps/image/__init__.py:48
 msgid ""
 "It appears you have not build the C extension. Please run \"./setup.py build"
 "\" in the toplevel directory."
-msgstr ""
+msgstr "C 확장을 빌드하지 않은 것 같습니다. 최상위 디렉터리에서 \"./setup.py "
+"build\"를 실행하십시오."
 
 #: ../sdaps/utils/latex.py:29
 msgid ""
 "The latex character map is missing! Please build it using the supplied tool "
 "(create-latexmap.py)."
-msgstr ""
+msgstr "Latex 문자 맵이 없습니다! 제공된 도구(create-latexmap.py)를 사용하여 "
+"빌드하십시오."
 
 #: ../sdaps/utils/latex.py:69
 msgid ""
 "Generated string for LaTeX contains unicode characters. This may not work "
 "correctly and could mean the LaTeX character map needs to be updated."
 msgstr ""
+"LaTeX용으로 생성된 문자열에는 유니코드 문자가 포함되어 있습니다. 이것은 "
+"제대로 작동하지 않을 수 있으며 LaTeX 문자 맵을 업데이트해야 함을 의미할 수 "
+"있습니다."
 
 #: ../sdaps/utils/opencv.py:35
 msgid "Cannot convert PDF files as poppler is not installed or usable!"
-msgstr ""
+msgstr "poppler가 설치되어 있지 않거나 사용할 수 없기 때문에 PDF 파일을 변환할 수 "
+"없습니다!"
 
 #: ../sdaps/utils/opencv.py:44
 msgid "File does not exist"
-msgstr ""
+msgstr "파일이 존재하지 않습니다"
 
 #. The old code used to first filter, and then run; but that is
 #. a bit ineffective in a way
@@ -739,8 +793,7 @@ msgstr ""
 #, python-format
 msgid "%i sheet"
 msgid_plural "%i sheets"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i 시트"
 
 #: ../sdaps/model/survey.py:427
 #, python-format
@@ -750,40 +803,42 @@ msgstr ""
 #: ../sdaps/model/survey.py:474
 msgid ""
 "A questionnaire that is printed in duplex needs an even amount of pages!"
-msgstr ""
+msgstr "양면 인쇄된 설문지는 짝수 페이지가 필요합니다!"
 
 #: ../sdaps/model/survey.py:478
 msgid ""
 "The 'classic' style only supports a maximum of six pages! Use the 'code128' "
 "style if you require more pages."
-msgstr ""
+msgstr "'클래식' 스타일은 최대 6페이지까지만 지원합니다! 더 많은 페이지가 필요한 "
+"경우 'code128' 스타일을 사용하세요."
 
 #: ../sdaps/model/survey.py:491
 msgid "IDs need to be integers in \"classic\" style!"
-msgstr ""
+msgstr "ID는 \"클래식\" 스타일의 정수여야 합니다!"
 
 #: ../sdaps/model/survey.py:497
 #, python-format
 msgid "Invalid character %s in questionnaire ID \"%s\" in \"code128\" style!"
-msgstr ""
+msgstr "\"code128\" 스타일의 설문지 ID \"%s\"에 잘못된 문자 %s가 있습니다!"
 
 #: ../sdaps/model/survey.py:501
 msgid ""
 "SDAPS cannot draw a questionnaire ID with the \"custom\" style. Do this "
 "yourself somehow!"
-msgstr ""
+msgstr "SDAPS는 \"사용자 지정\" 스타일로 설문지 ID를 그릴 수 없습니다. 어떻게든 직접 "
+"해보세요!"
 
 #. in simplex mode every page will have a matrix; it might be a None
 #. matrix though
 #: ../sdaps/recognize/buddies.py:76
 #, python-format
 msgid "%s, %i: Matrix not recognized."
-msgstr ""
+msgstr "%s, %i: Matrix가 인식되지 않습니다."
 
 #: ../sdaps/recognize/buddies.py:85
 #, python-format
 msgid "%s, %i: Rotation not found."
-msgstr ""
+msgstr "%s, %i: 회전을 찾을 수 없습니다."
 
 #. Copy the rotation over (if required) and print warning if the rotation is unknown
 #: ../sdaps/recognize/buddies.py:89
@@ -794,18 +849,18 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:101
 #, python-format
 msgid "%s, %i: Matrix not recognized (again)."
-msgstr ""
+msgstr "%s, %i: Matrix가 인식되지 않습니다(다시)."
 
 #: ../sdaps/recognize/buddies.py:115
 #, python-format
 msgid "%s, %i: Could not get page number."
-msgstr ""
+msgstr "%s, %i: 페이지 번호를 받을 수 없습니다."
 
 #. Whoa, that should not happen.
 #: ../sdaps/recognize/buddies.py:135
 #, python-format
 msgid "Neither %s, %i or %s, %i has a known page number!"
-msgstr ""
+msgstr "%s, %i 또는 %s, %i에 알려진 페이지 번호가 없습니다!"
 
 #. We don't touch the ignore flag in this case
 #. Simply print a message as this should *never* happen
@@ -821,17 +876,17 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:163
 #, python-format
 msgid "Images %s, %i and %s, %i do not have consecutive page numbers!"
-msgstr ""
+msgstr "이미지 %s, %i 및 %s, %i에 연속 페이지 번호가 없습니다!"
 
 #: ../sdaps/recognize/buddies.py:179
 #, python-format
 msgid "No page number for page %s, %i exists."
-msgstr ""
+msgstr "페이지 %s, %i에 대한 페이지 번호가 없습니다."
 
 #: ../sdaps/recognize/buddies.py:184
 #, python-format
 msgid "Page number for page %s, %i already used by another image."
-msgstr ""
+msgstr "다른 이미지에서 이미 사용 중인 %s, %i 페이지의 페이지 번호입니다."
 
 #: ../sdaps/recognize/buddies.py:190
 #, python-format
@@ -841,28 +896,28 @@ msgstr ""
 #: ../sdaps/recognize/buddies.py:207
 #, python-format
 msgid "%s, %i: Could not read survey ID, but should be able to."
-msgstr ""
+msgstr "%s, %i: 설문조사 ID를 읽을 수 없지만, 읽을 수 있어야 합니다."
 
 #: ../sdaps/recognize/buddies.py:211
 #, python-format
 msgid "Could not read survey ID of either %s, %i or %s, %i!"
-msgstr ""
+msgstr "%s, %i 또는 %s, %i의 설문 조사 ID를 읽을 수 없습니다!"
 
 #. Broken survey ID ...
 #: ../sdaps/recognize/buddies.py:218
 #, python-format
 msgid "Got a wrong survey ID (%s, %i)! It is %s, but should be %i."
-msgstr ""
+msgstr "설문조사 ID가 잘못되었습니다(%s, %i)! %s이지만 %i여야 합니다."
 
 #: ../sdaps/recognize/buddies.py:240
 #, python-format
 msgid "%s, %i: Could not read questionnaire ID, but should be able to."
-msgstr ""
+msgstr "%s, %i: 설문지 ID를 읽을 수 없지만 읽을 수 있어야 합니다."
 
 #: ../sdaps/recognize/buddies.py:246
 #, python-format
 msgid "Could not read questionnaire ID of either %s, %i or %s, %i!"
-msgstr ""
+msgstr "%s, %i 또는 %s, %i의 설문지 ID를 읽을 수 없습니다!"
 
 #: ../sdaps/recognize/buddies.py:276
 msgid ""
@@ -873,64 +928,65 @@ msgstr ""
 
 #: ../sdaps/recognize/buddies.py:337
 msgid "No style buddy loaded. This needs to be done for the \"custom\" style!"
-msgstr ""
+msgstr "불러온 스타일 친구가 없습니다. 이것은 \"사용자 지정\" 스타일에 대해 수행해야 "
+"합니다!"
 
 #: ../sdaps/report/answers.py:188
 #, python-format
 msgid "Answers: %i"
-msgstr ""
+msgstr "답변 : %i"
 
 #: ../sdaps/report/answers.py:190
 #, python-format
 msgid "Mean: %.2f"
-msgstr ""
+msgstr "평균: %.2f"
 
 #: ../sdaps/report/answers.py:192
 #, python-format
 msgid "Standard Deviation: %.2f"
-msgstr ""
+msgstr "표준 편차: %.2f"
 
 #: ../sdaps/report/__init__.py:75 ../sdaps/reporttex/__init__.py:140
 msgid "Turned in Questionnaires"
-msgstr ""
+msgstr "설문지 제출"
 
 #: ../sdaps/report/__init__.py:92 ../sdaps/reporttex/__init__.py:139
 msgid "sdaps report"
-msgstr ""
+msgstr "sdaps 보고서"
 
 #: ../sdaps/reset/__init__.py:29
 msgid "Removing stored data..."
-msgstr ""
+msgstr "저장된 데이터 제거 중..."
 
 #: ../sdaps/setup/buddies.py:62
 #, python-format
 msgid "Head %(l0)i got no title."
-msgstr ""
+msgstr "헤드 %(l0)i에는 제목이 없습니다."
 
 #: ../sdaps/setup/buddies.py:74
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got no question."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i는 질문이 없습니다."
 
 #: ../sdaps/setup/buddies.py:114
 #, python-format
 msgid "Error in question \"%s\""
-msgstr ""
+msgstr "\"%s\" 질문의 오류"
 
 #: ../sdaps/setup/buddies.py:118
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got no boxes."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i에는 상자가 없습니다."
 
 #: ../sdaps/setup/buddies.py:167
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i lower box out of range."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i 하단 상자가 범위를 벗어났습니다."
 
 #: ../sdaps/setup/buddies.py:172
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i upper box out of range."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i 상단 상자가 범위를 벗어났습니다."
 
 #: ../sdaps/setup/buddies.py:177
 #, python-format
@@ -940,12 +996,12 @@ msgstr ""
 #: ../sdaps/setup/buddies.py:213
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly two answers."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i는 정확히 두 가지 답변을 얻지 못했습니다."
 
 #: ../sdaps/setup/buddies.py:234
 #, python-format
 msgid "%(class)s %(l0)i.%(l1)i got not exactly one box."
-msgstr ""
+msgstr "%(class)s %(l0)i.%(l1)i에는 정확히 한 상자가 없습니다."
 
 #: ../sdaps/stamp/__init__.py:38
 msgid ""
@@ -953,6 +1009,8 @@ msgid ""
 "will be identical as the survey has been configured to not use questionnaire "
 "IDs for each sheet."
 msgstr ""
+"이 설문조사의 시트 수를 지정할 수 없습니다. 설문지는 각 시트에 대해 설문지 "
+"ID를 사용하지 않도록 구성되었으므로 모든 설문지는 동일합니다."
 
 #: ../sdaps/stamp/__init__.py:76
 msgid ""
@@ -960,6 +1018,8 @@ msgid ""
 "will be unique. You need to use on of the options to add new IDs or use the "
 "existing ones."
 msgstr ""
+"이 설문조사는 설문지 ID를 사용하도록 구성되었습니다. 각 설문지는 고유합니다. "
+"새 ID를 추가하거나 기존 ID를 사용하려면 옵션 중 켜기를 사용해야 합니다."
 
 #: ../sdaps/stamp/latex.py:18
 msgid ""
@@ -967,61 +1027,65 @@ msgid ""
 "not have different questionnaire IDs printed on each sheet.\n"
 "I am going to do so anyways."
 msgstr ""
+"LaTeX를 사용하고 각 시트에 다른 설문지 ID가 인쇄되어 있지 않은 SDAPS "
+"프로젝트에는 스탬프를 찍을 필요가 없습니다.\n"
+"어쨌든 그렇게 할 것입니다."
 
 #: ../sdaps/stamp/latex.py:26
 #, python-format
 msgid "Running %s now multiple times to generate the stamped questionnaire."
-msgstr ""
+msgstr "이제 %s를 여러 번 실행하여 스탬프가 찍힌 설문지를 생성합니다."
 
 #: ../sdaps/stamp/latex.py:30 ../sdaps/setuptex/__init__.py:108
 #: ../sdaps/setuptex/__init__.py:149 ../sdaps/reporttex/__init__.py:162
 #, python-format
 msgid "Error running \"%s\" to compile the LaTeX file."
-msgstr ""
+msgstr "LaTeX 파일을 컴파일하기 위해 \"%s\"를 실행하는 동안 오류가 발생했습니다."
 
 #: ../sdaps/stamp/latex.py:36
 #, python-format
 msgid ""
 "An error occured during creation of the report. Temporary files left in '%s'."
-msgstr ""
+msgstr "보고서를 만드는 동안 오류가 발생했습니다. 임시 파일은 '%s'에 남아 있습니다."
 
 #: ../sdaps/setuptex/__init__.py:46
 msgid "The survey directory already exists."
-msgstr ""
+msgstr "설문조사 디렉터리가 이미 존재합니다."
 
 #: ../sdaps/setuptex/__init__.py:51
 #, python-format
 msgid "Unknown file type (%s). questionnaire_tex should be of type text/x-tex."
-msgstr ""
+msgstr "알 수 없는 파일 형식(%s). Question_tex는 text/x-tex 유형이어야 합니다."
 
 #: ../sdaps/setuptex/__init__.py:52
 msgid "Will keep going, but expect failure!"
-msgstr ""
+msgstr "계속하지만 실패를 예상하십시오!"
 
 #: ../sdaps/setuptex/__init__.py:57
 #, python-format
 msgid "Unknown file type (%s). additionalqobjects should be text/plain."
-msgstr ""
+msgstr "알 수 없는 파일 형식(%s). 부가적인객체는 텍스트/일반이어야 합니다."
 
 #: ../sdaps/setuptex/__init__.py:104
 #, python-format
 msgid "Running %s now multiple times to generate the questionnaire."
-msgstr ""
+msgstr "%s를 여러 번 실행하여 설문지를 생성합니다."
 
 #: ../sdaps/setuptex/__init__.py:123
 msgid "Caught an Exception while parsing the SDAPS file. The current state is:"
-msgstr ""
+msgstr "SDAPS 파일을 구문 분석하는 동안 예외가 발생했습니다. 현재 상태는 다음과 "
+"같습니다:"
 
 #: ../sdaps/setuptex/__init__.py:137
 msgid ""
 "Some combination of options and project properties do not work. Aborted "
 "Setup."
-msgstr ""
+msgstr "옵션과 프로젝트 속성의 일부 조합이 작동하지 않습니다. 설치가 중단되었습니다."
 
 #: ../sdaps/setuptex/__init__.py:144
 #, python-format
 msgid "Running %s now multiple imes to generate the questionnaire."
-msgstr ""
+msgstr "이제 %s를 여러 개의 IME를 실행하여 설문지를 생성합니다."
 
 #: ../sdaps/setuptex/__init__.py:163
 msgid ""
@@ -1029,26 +1093,28 @@ msgid ""
 "You can for example check the questionnaire.log file for LaTeX compile "
 "errors."
 msgstr ""
+"설정 루틴에서 오류가 발생했습니다. 설문조사 디렉토리는 여전히 존재합니다. "
+"예를 들어 Question.log 파일에서 LaTeX 컴파일 오류를 확인할 수 있습니다."
 
 #: ../sdaps/reporttex/__init__.py:107
 msgid "author|Unknown"
-msgstr ""
+msgstr "작성자|알 수 없음"
 
 #: ../sdaps/reporttex/__init__.py:138
 msgid "tex language|english"
-msgstr ""
+msgstr "tex 언어|한국어"
 
 #: ../sdaps/reporttex/__init__.py:155
 #, python-format
 msgid "The TeX project with the report data is located at '%s'."
-msgstr ""
+msgstr "보고서 데이터가 있는 TeX 프로젝트는 '%s'에 있습니다."
 
 #: ../sdaps/reporttex/__init__.py:158
 #, python-format
 msgid "Running %s now multiple times to generate the report."
-msgstr ""
+msgstr "이제 %s를 여러 번 실행하여 보고서를 생성합니다."
 
 #: ../sdaps/reporttex/__init__.py:168
 #, python-format
 msgid "An occured during creation of the report. Temporary files left in '%s'."
-msgstr ""
+msgstr "보고서를 만드는 동안 오류가 발생했습니다. 임시 파일은 '%s'에 남아 있습니다."
