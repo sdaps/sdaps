@@ -22,6 +22,9 @@ from sdaps import defs
 import subprocess
 import os
 
+from sdaps.utils.ugettext import ugettext, ungettext
+_ = ugettext
+
 try:
     from sdaps.utils.latexmap import mapping
 except ImportError:
