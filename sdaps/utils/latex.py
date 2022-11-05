@@ -31,6 +31,7 @@ except ImportError:
     mapping = {}
     log.warn(_('The latex character map is missing! Please build it using the supplied tool (create-latexmap.py).'))
 
+warned_mapping = False
 # Add some more mappings
 # NBSP
 mapping['~'] = ' '
@@ -69,7 +70,10 @@ def unicode_to_latex(string):
     try:
         string.encode('ascii')
     except UnicodeEncodeError:
-        log.warn(_("Generated string for LaTeX contains unicode characters. This may not work correctly and could mean the LaTeX character map needs to be updated."))
+        global warned_mapping
+        if not warned_mapping:
+            warned_mapping = True
+            log.warn(_("Generated string for LaTeX contains unicode characters. This is likely fine!"))
     return string
 
 def quote_braces(string):
