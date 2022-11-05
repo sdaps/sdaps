@@ -19,6 +19,8 @@ downstream_package_name: sdaps
 srpm_build_deps:
  - python3-distutils-extra
  - python3-cairo-devel
+ - python3-pkgconfig
+ - pkgconfig(libtiff-4)
 
 actions:
   post-upstream-clone:
@@ -32,13 +34,23 @@ actions:
 jobs:
   - job: copr_build
     trigger: pull_request
-    metadata:
-      targets:
-        - fedora-development-x86_64
-        - fedora-development-i386
-        - fedora-development-aarch64
-        - fedora-development-ppc64le
-        - fedora-development-s390x
-        - fedora-development-armhfp
+    targets:
+     - fedora-development-x86_64
+     - fedora-development-i386
+     - fedora-development-aarch64
+     - fedora-development-ppc64le
+     - fedora-development-s390x
+     - fedora-development-armhfp
 
-
+  - job: copr_build
+    trigger: release
+    owner: benzea
+    project: sdaps
+    list_on_homepage: true
+    targets:
+     - fedora-all-x86_64
+     - fedora-all-i386
+     - fedora-all-aarch64
+     - fedora-all-ppc64le
+     - fedora-all-s390x
+     - fedora-all-armhfp
