@@ -20,7 +20,7 @@
 '''
 
 import os
-
+import sys
 
 import gettext
 import locale
@@ -55,7 +55,6 @@ def init(local_run_value, package_path):
         source_dir = base_dir
 
         from pkg_resources import get_build_platform
-        from distutils.sysconfig import get_python_version
 
         # Initialize gettext
         init_gettext(os.path.join(
@@ -69,8 +68,13 @@ def init(local_run_value, package_path):
         # Initialize build_dir
         lib_build_dir = os.path.join(
             base_dir,
-            'build', 'lib.%s-%s' % (get_build_platform(), get_python_version()),
+            'build', 'lib.%s-%s' % (get_build_platform(), sys.implementation.cache_tag),
             'sdaps')
+        if not os.path.exists(lib_build_dir):
+            lib_build_dir = os.path.join(
+                base_dir,
+                'build', 'lib.%s-%d.%d' % (get_build_platform(), *sys.version_info[:2]),
+                'sdaps')
     else:
         # Look for the data in the parent directories
         path = base_dir
