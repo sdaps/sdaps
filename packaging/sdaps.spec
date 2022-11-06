@@ -6,12 +6,11 @@ License: GPLv3, LPPL1.3c
 Source0: https://sdaps.org/releases/%{name}-%{version}.tar.gz
 Group: Applications/Science
 URL: https://sdaps.org
-BuildRequires: python3-devel, libtiff-devel, python3-distutils-extra
+BuildRequires: python3-devel, libtiff-devel
 BuildRequires: pkgconfig, python3-pkgconfig, cairo-devel, python3-cairo-devel
 BuildRequires: python3-imaging, python3-reportlab, zbar
 BuildRequires: python3-opencv, python3-gobject, poppler-glib
-BuildRequires: python3-setuptools, yum
-BuildRequires: texlive-l3build
+BuildRequires: python3-setuptools, python3-pkgconfig, yum
 BuildRequires: intltool
 BuildRequires: gcc
 
@@ -60,8 +59,6 @@ analyse the scanned data, and create a report.
 %{__python3} setup.py build --build-tex
 
 %install
-# Note: Ideally we would pass --skip-build, but the build system is too stupid
-# to install data files then.
 %{__python3} setup.py install --install-tex --root %{buildroot}
 
 %check
