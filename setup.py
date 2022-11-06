@@ -16,15 +16,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup, Command, Distribution
-from distutils.extension import Extension
+from setuptools import setup, Distribution, Extension, Command
+
+# Command imports (try setuptools and fall back to distutils)
+from setuptools.command.sdist import sdist
+from setuptools.command.install import install
+try:
+    from setuptools.command.build import build
+except:
+    from distutils.command.build import build
+
+try:
+    from setuptools.command.clean import clean
+except:
+    from distutils.command.clean import clean
+
+# Needed stuff
+from pkgconfig import pkgconfig
 import glob
 import os
 import os.path
 import subprocess
 import sys
-from distutils.command import build, install, install_data, clean
-from DistUtilsExtra.command import *
 import configparser
 
 # We import sdaps to grab the version number; a bit of a hack but
@@ -32,25 +45,8 @@ import configparser
 # this
 from sdaps import __version__
 
-def pkgconfig(*packages, **kw):
-    flag_map = {'-I': 'include_dirs', '-L': 'library_dirs', '-l': 'libraries', '-D' : 'define_macros'}
-    (status, tokens) = subprocess.getstatusoutput("pkg-config --libs --cflags %s" % ' '.join(packages))
-    if status != 0:
-        print(tokens)
-        sys.exit(1)
 
-    for token in tokens.split():
-        type = flag_map.get(token[:2])
-        value = token[2:]
-        if type == 'define_macros':
-            value = tuple(value.split('=', 1))
-        if type is None:
-           value = token
-           type = 'extra_compile_args'
-        kw.setdefault(type, []).append(value)
-    return kw
-
-class sdaps_build_tex(build.build):
+class sdaps_build_tex(Command):
 
     description = "build and install the LaTeX packages and classes"
 
@@ -61,6 +57,20 @@ class sdaps_build_tex(build.build):
     dict_sourcefile = 'tex/tex_translations.in'
     dict_dir = 'share/sdaps/tex'
     dict_filename = 'tex_translations'
+
+    user_options = []
+
+    def update_data_files(self):
+        data_files = getattr(self.distribution, 'data_files', [])
+
+        files = [os.path.join(self.tex_resultdir, f) for f in os.listdir(self.tex_resultdir)]
+        data_files.append((self.tex_installdir, files))
+
+        dict_dir = os.path.join('build', self.dict_dir)
+
+        # And install the dictionary files
+        data_files.append((self.dict_dir, glob.glob(os.path.join(dict_dir, '*.dict'))))
+
 
     def run(self):
         # Build the LaTeX packages and classes, note that they cannot build
@@ -73,10 +83,6 @@ class sdaps_build_tex(build.build):
         os.chdir('tex/class')
         self.spawn(['./build.lua', 'unpack'])
         os.chdir(maindir)
-
-        files = [os.path.join(self.tex_resultdir, f) for f in os.listdir(self.tex_resultdir)]
-        self.distribution.tex_files.append((self.tex_installdir, files))
-
 
         # And now the LaTeX translations
         dest_dir = os.path.join('build', self.dict_dir)
@@ -145,12 +151,19 @@ class sdaps_build_tex(build.build):
 
                 f.write('\\providetranslation{%s}{%s}\n' % (key, value))
 
-        # And install the dictionary files
-        self.distribution.tex_files.append((self.dict_dir, dictfiles))
+        self.update_data_files()
 
-class sdaps_clean_tex(clean.clean):
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+class sdaps_clean_tex(Command):
     dict_dir = 'share/sdaps/tex'
     dict_filename = "tex_translations"
+
+    user_options = []
 
     def run(self):
         # Remove dictionaries
@@ -166,122 +179,153 @@ class sdaps_clean_tex(clean.clean):
         if os.path.exists(fn):
             os.unlink(fn)
 
-class sdaps_clean(clean.clean):
-    sub_commands = \
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+class sdaps_clean(clean):
+    clean.sub_commands += \
         [
             ('clean_tex', lambda x : True ),
-            ('clean_i18n', lambda x : True ),
+            #('clean_i18n', lambda x : True ),
         ]
 
-    def run(self):
-        for cmd in self.get_sub_commands():
-            self.run_command(cmd)
-
-class sdaps_build(build_extra.build_extra):
+class sdaps_build(build):
     sub_commands = \
-        build_extra.build_extra.sub_commands + \
+        build.sub_commands + \
         [
+            ('build_i18n', lambda self : True),
             ('build_tex', lambda self : self.build_tex),
         ]
 
-    user_options = build_extra.build_extra.user_options + [
+    user_options = build.user_options + [
         # The format is (long option, short option, description).
         ('build-tex', None, 'Also build LaTeX class and translations'),
     ]
 
+    boolean_options = install.boolean_options + ['build-tex']
+
     def initialize_options(self):
         self.build_tex = None
 
-        build_extra.build_extra.initialize_options(self)
+        build.initialize_options(self)
 
     def finalize_options(self):
         if self.build_tex is None:
             self.build_tex = False
 
-        build_extra.build_extra.finalize_options(self)
+        build.finalize_options(self)
 
-class sdaps_install_tex(install_data.install_data):
-    # We just use install_data, but set data_files from distribution.tex_files
-    # instead.
-
+class sdaps_install_tex(sdaps_build_tex):
     description = "install LaTeX data files"
 
-    user_options = install_data.install_data.user_options + [
-        ('skip-build', None, "skip the build steps"),
-    ]
-
-    boolean_options = install_data.install_data.boolean_options + ['skip-build']
-
-    def initialize_options(self):
-        self.skip_build = None
-
-        install_data.install_data.initialize_options(self)
-
-        self.data_files = self.distribution.tex_files
-
-    def finalize_options(self):
-        self.set_undefined_options('install',
-                                   ('skip_build', 'skip_build'),
-                                  )
-
-        install_data.install_data.finalize_options(self)
+    user_options = []
 
     def run(self):
-        if not self.skip_build:
-            self.run_command('build_tex')
+        self.update_data_files()
 
-        install_data.install_data.run(self)
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
 
 
-class sdaps_install(install.install):
+class sdaps_install(install):
     sub_commands = \
-        install.install.sub_commands + \
         [
+            ('install_i18n', lambda self : True),
             ('install_tex', lambda self : self.install_tex),
-        ]
+        ] + install.sub_commands
 
     # Isn't there a better way to have the build time option also
     # in the install section?
-    user_options = install.install.user_options + [
+    user_options = install.user_options + [
         # The format is (long option, short option, description).
-        ('install-tex', None, 'Disable LaTeX build, should be done if the class is already available e.g. from TeX Live'),
+        ('install-tex', None, 'Install LaTeX file (use with TeX Live < 2022)'),
     ]
+    boolean_options = install.boolean_options + ['install-tex']
+
+    def run(self):
+        # Hmm, without this install_tex is not run?
+        super().run()
 
     def initialize_options(self):
         self.install_tex = None
 
-        install.install.initialize_options(self)
+        install.initialize_options(self)
 
     def finalize_options(self):
         if self.install_tex is None:
             self.install_tex = False
 
-        install.install.finalize_options(self)
+        install.finalize_options(self)
 
-class SDAPSDistribution(Distribution):
-    # All we need is to add tex_files
+class sdaps_build_i18n(Command):
+    """Simple gettext wrapper (only needed when building from source)"""
+    user_options = []
 
-    def __init__(self, attrs=None):
-        self.tex_files = None
+    def doit(self, msgfmt=True):
+        data_files = getattr(self.distribution, 'data_files', [])
 
-        super().__init__(attrs=attrs)
+        for po_file in glob.glob("po/*.po"):
+            lang = os.path.basename(po_file[:-3])
+            mo_dir = os.path.join("build", "mo", lang, "LC_MESSAGES")
+            os.makedirs(mo_dir, exist_ok=True)
+            mo_file = os.path.join(mo_dir, "sdaps.mo")
 
-    def has_tex_files(self):
-        return self.tex_files and len(self.tex_files) > 0
+            if msgfmt:
+                self.spawn(["msgfmt", po_file, "-o", mo_file])
 
-setup(name='sdaps',
-      version=__version__,
-      description='Scripts for data acquisition with paper-based surveys',
-      url='http://sdaps.sipsolutions.net',
-      author='Benjamin Berg, Christoph Simon',
-      author_email='benjamin@sipsolutions.net, post@christoph-simon.eu',
-      license='GPL-3',
-      long_description="""
-SDAPS is a tool to carry out paper based surveys. You can create machine
-readable questionnaires using LaTeX. It also provides the tools to later
-analyse the scanned data, and create a report.
-""",
-      distclass=SDAPSDistribution,
+            targetpath = os.path.join("share/locale", lang, "LC_MESSAGES")
+            data_files.append((targetpath, (mo_file,)))
+
+    def run(self):
+        "Compile .po to .mo"
+        self.doit(True)
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+class sdaps_install_i18n(sdaps_build_i18n):
+    """Simple gettext wrapper (only needed when building from source)"""
+    user_options = []
+
+    def run(self):
+        "Compile .po to .mo"
+        self.doit(False)
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+cmdclass = {
+    'build' : sdaps_build,
+    'build_i18n' : sdaps_build_i18n,
+    'build_tex' : sdaps_build_tex,
+    'clean_tex' : sdaps_clean_tex,
+    'install' : sdaps_install,
+    'install_i18n' : sdaps_install_i18n,
+    'install_tex' : sdaps_install_tex,
+}
+
+
+image_ext = Extension('sdaps.image.image',
+                      ['sdaps/image/wrap_image.c',
+                       'sdaps/image/image.c',
+                       'sdaps/image/transform.c',
+                       'sdaps/image/surface.c'])
+
+pkgconfig.configure_extension(image_ext, 'py3cairo cairo glib-2.0 libtiff-4')
+
+setup(version=__version__,
       packages=['sdaps',
                 'sdaps.add',
                 'sdaps.annotate',
@@ -304,31 +348,13 @@ analyse the scanned data, and create a report.
                 'sdaps.utils'
       ],
       package_dir={'sdaps.gui': 'sdaps/gui'},
-      scripts=[
-               'bin/sdaps',
-               ],
-      ext_modules=[Extension('sdaps.image.image',
-                   ['sdaps/image/wrap_image.c', 'sdaps/image/image.c', 'sdaps/image/transform.c', 'sdaps/image/surface.c'],
-                   **pkgconfig('py3cairo', 'cairo', 'glib-2.0', libraries=['tiff']))],
+      scripts=['bin/sdaps',],
+      ext_modules=[image_ext],
+      # NOTE: This is on purpose! sdapsreport.cls is not included
+      #       in the LaTeX package uploaded to CTAN.
       data_files=[
-                  ('share/sdaps/ui',
-                   glob.glob("sdaps/gui/*.ui")
-                  ),
-                  # NOTE: This is on purpose! sdapsreport.cls is not included
-                  #       in the LaTeX package uploaded to CTAN.
-                  ('share/sdaps/tex', glob.glob('tex/*.cls')
-                  ),
-                  ],
-      tex_files=[],
-      cmdclass = { "install": sdaps_install,
-                   "install_tex" : sdaps_install_tex,
-                   "build" : sdaps_build,
-                   "build_tex" : sdaps_build_tex,
-                   "build_i18n" :  build_i18n.build_i18n,
-                   "build_help" :  build_help.build_help,
-                   "build_icons" :  build_icons.build_icons,
-                   "clean" : sdaps_clean,
-                   "clean_i18n" : clean_i18n.clean_i18n,
-                   "clean_tex" : sdaps_clean_tex,
-                  }
+          ('share/sdaps/tex', glob.glob('tex/*.cls')),
+          ('share/sdaps/ui', glob.glob("sdaps/gui/*.ui")),
+      ],
+      cmdclass = cmdclass,
      )
