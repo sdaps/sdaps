@@ -3,6 +3,7 @@
 
 specfile_path: packaging/sdaps.spec
 upstream_project_url: https://github.com/sdaps/sdaps
+upstream_tag_template: v{version}
 
 # add or remove files that should be synced
 files_to_sync:
