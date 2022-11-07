@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: SDAPS 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 23:36+0200\n"
-"PO-Revision-Date: 2022-09-21 21:23+0000\n"
-"Last-Translator: Eduardo Malaspina <vaio0@swismail.com>\n"
+"PO-Revision-Date: 2022-11-07 20:02+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sdaps/master/es/>"
 "\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #: ../sdaps/script.py:42
 msgid "SDAPS -- Paper based survey tool."
@@ -68,9 +68,8 @@ msgid "Error: "
 msgstr "Error: "
 
 #: ../sdaps/cmdline/__init__.py:15
-#, fuzzy
 msgid "Export data from an SDAPS project."
-msgstr "Importar datos desde un archivo CSV."
+msgstr "Exportar datos de un proyecto SDAPS."
 
 #: ../sdaps/cmdline/__init__.py:16
 msgid ""
@@ -81,9 +80,8 @@ msgstr ""
 "    documentación de los formatos brindados para más información."
 
 #: ../sdaps/cmdline/__init__.py:26
-#, fuzzy
 msgid "Import data into an SDAPS project."
-msgstr "directorio del proyecto|El proyecto SDAPS."
+msgstr "Importar datos en un proyecto SDAPS."
 
 #: ../sdaps/cmdline/__init__.py:27
 msgid ""
@@ -98,14 +96,12 @@ msgstr ""
 "    información."
 
 #: ../sdaps/cmdline/__init__.py:39
-#, fuzzy
 msgid "Generate a report."
-msgstr "Crear un informe en PDF."
+msgstr "Generar un informe."
 
 #: ../sdaps/cmdline/__init__.py:47
-#, fuzzy
 msgid "Create a new SDAPS project."
-msgstr "Crear un informe en PDF."
+msgstr "Cree un nuevo proyecto SDAPS."
 
 #: ../sdaps/cmdline/add.py:31
 msgid "Add scanned questionnaires to the survey."
@@ -365,15 +361,15 @@ msgid "The file to import."
 msgstr "El archivo a importar."
 
 #: ../sdaps/cmdline/feather.py:36
-#, fuzzy
 msgid "Export data to feather file."
-msgstr "Exportar datos a un archivo CSV."
+msgstr "Exportar datos en formato Feather."
 
 #: ../sdaps/cmdline/feather.py:38
-#, fuzzy, python-format
+#, python-format
 msgid "Filename to store the data to (default: data_%%i.feather)"
 msgstr ""
-"Nombre del archivo para almacenar los datos (por defecto: data_%%i.csv)"
+"Nombre del archivo en el que almacenar los datos (predeterminado: data_%%i."
+"feather)"
 
 #: ../sdaps/cmdline/gui.py:28
 msgid "Launch a GUI. You can view and alter the (recognized) answers with it."
