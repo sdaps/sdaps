@@ -290,9 +290,9 @@ count_black_pixel_masked_unchecked(guint32* pixels, guint32 stride, guint32 *mas
 		int pos;
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
-		end_mask = (0xffffffff << (-(x + width) & 0x1f));
+		end_mask = (0xffffffff << (-width & 0x1f));
 #else
-		end_mask = (0xffffffff >> (-(x + width) & 0x1f));
+		end_mask = (0xffffffff >> (-width & 0x1f));
 #endif
 		end = (width - 1) >> 5;
 
