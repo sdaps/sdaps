@@ -1,4 +1,4 @@
-project('sdaps', 'c', version: '1.9.11')
+project('sdaps', 'c', version: '1.9.12')
 
 py_mod = import('python')
 py = py_mod.find_installation(pure: false)
@@ -31,6 +31,12 @@ sdaps_ext = py.extension_module(
 
 subdir('test')
 
+install_data(
+    'bin/sdaps',
+    install_dir: get_option('bindir'),
+    install_tag: 'bin'
+)
+
 modules = {
     'sdaps': [
         'calculate.py',
@@ -62,6 +68,7 @@ modules = {
         'report.py',
         'reporttex.py',
         'reset.py',
+        'setup.py',
         'stamp.py',
     ],
     'sdaps/convert': [],

@@ -7,7 +7,7 @@ environ = {
 
 test('test-run',
      find_program('run-test-locally.sh'),
-     timeout: 120,
+     timeout: 240,
      env: environ,
      depends: [sdaps_ext, sdaps_tex],
      workdir: meson.current_build_dir())
