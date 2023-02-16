@@ -27,7 +27,7 @@ sdaps/cover/__init__.py
 sdaps/csvdata/__init__.py
 sdaps/csvdata/buddies.py
 sdaps/gui/__init__.py
-[type: gettext/glade] sdaps/gui/main_window.ui
+sdaps/gui/main_window.ui
 sdaps/gui/widget_buddies.py
 sdaps/image/__init__.py
 sdaps/utils/latex.py

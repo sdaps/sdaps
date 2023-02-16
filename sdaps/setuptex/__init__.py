@@ -72,9 +72,9 @@ def setup(survey_dir, questionnaire_tex, engine, additionalqobjects=None, extra_
         # Copy class and dictionary files
         if paths.local_run:
             cls_extra_files = os.path.join(paths.source_dir, 'tex', '*.cls')
-            cls_files = os.path.join(paths.source_dir, 'tex', 'class', 'build', 'local', '*.cls')
-            tex_files = os.path.join(paths.source_dir, 'tex', 'class', 'build', 'local', '*.tex')
-            sty_files = os.path.join(paths.source_dir, 'tex', 'class', 'build', 'local', '*.sty')
+            cls_files = os.path.join(paths.build_dir, 'tex', '*.cls')
+            tex_files = os.path.join(paths.build_dir, 'tex', '*.tex')
+            sty_files = os.path.join(paths.build_dir, 'tex', '*.sty')
             dict_files = os.path.join(paths.build_dir, 'tex', '*.dict')
         else:
             cls_extra_files = None

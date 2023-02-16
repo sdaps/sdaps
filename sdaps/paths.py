@@ -32,9 +32,6 @@ local_run = False
 build_dir = str()
 
 # required if local_run == True
-lib_build_dir = str()
-
-# required if local_run == True
 source_dir = str()
 
 # required if local_run == False
@@ -47,34 +44,16 @@ def init(local_run_value, package_path):
     global local_run, build_dir, lib_build_dir, source_dir, prefix
 
     # Initialize local_run
-    local_run = local_run_value
+    local_run = bool(local_run_value)
 
     base_dir = os.path.split(os.path.abspath(package_path))[0]
 
     if local_run:
         source_dir = base_dir
-
-        from pkg_resources import get_build_platform
+        build_dir = local_run_value
 
         # Initialize gettext
-        init_gettext(os.path.join(
-            base_dir,
-            'build',
-            'mo'))
-
-        # Initialize build_dir
-        build_dir = os.path.join(base_dir, 'build', 'share', 'sdaps')
-
-        # Initialize build_dir
-        lib_build_dir = os.path.join(
-            base_dir,
-            'build', 'lib.%s-%s' % (get_build_platform(), sys.implementation.cache_tag),
-            'sdaps')
-        if not os.path.exists(lib_build_dir):
-            lib_build_dir = os.path.join(
-                base_dir,
-                'build', 'lib.%s-%d.%d' % (get_build_platform(), *sys.version_info[:2]),
-                'sdaps')
+        init_gettext(os.path.join(build_dir, 'po'))
     else:
         # Look for the data in the parent directories
         path = base_dir
@@ -94,12 +73,6 @@ def init_gettext(locale_dir):
     '''Initialize gettext using the given directory containing the l10n data.
     '''
     gettext.bindtextdomain('sdaps', locale_dir)
-
-    if hasattr(gettext, 'bind_textdomain_codeset'):
-        gettext.bind_textdomain_codeset('sdaps', 'UTF-8')
-        gettext.textdomain('sdaps')
-    if hasattr(locale, 'bind_textdomain_codeset'):
-        locale.bindtextdomain('sdaps', locale_dir)
-        locale.bind_textdomain_codeset('sdaps', 'UTF-8')
-        locale.textdomain('sdaps')
+    gettext.textdomain('sdaps')
+    locale.textdomain('sdaps')
 

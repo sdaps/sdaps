@@ -10,6 +10,8 @@ else
 	SDAPS="$1"
 fi
 
+export
+
 SRCDIR="$( dirname "$0" )"
 
 # Set VERBOSE so that LaTeX compilation results end up on the console
