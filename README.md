@@ -22,7 +22,6 @@ required.
 
 general (including recognize):
  * Python 3.6
- * distutils and distutils-extra
  * python3-cairo (including development files)
  * libtiff (including development files)
  * pkg-config
@@ -37,10 +36,11 @@ reportlab based reports (report):
  * reportlab
  * Python Imaging Library (PIL)
 
-LaTeX based questionnaires (setup_tex/stamp):
+LaTeX based questionnaires (`setup tex`/`stamp`):
  * pdflatex and packages:
    * PGF/TikZ
    * translator (part of beamer)
+   * l3build (for building)
    * and more
 
 LaTeX based reports:
@@ -64,33 +64,36 @@ Debug output (annotate):
 
 ## Installation
 
-You can install sdaps using `./setup.py install` or
-`./setup.py install --install-tex`. The C extension will be compiled
-automatically, but of course you have to have all the dependencies installed
-for this to work. When `--install-tex` is passed, the LaTeX class files
-will also be installed. This is only necessary if your LaTeX distribution
-does not yet include the sdaps package.
+You can install sdaps using meson. To do so, run:
+ * `meson setup _build`
+ * `ninja -C _build`
+ * `ninja -C _build install`
+
+If you do *not* have a new enough version of the SDAPS LaTeX class installed
+already, you can build and install a private copy by passing
+`-Dlatex=true` to `meson setup`, i.e.
+ * `$ meson setup _build -Dlatex=true` (add `--wipe` or `--reconfigure` if needed)
+
+and continue as before. Note that in this case LaTeX will *not* find the class
+in the default search path and extra steps will be needed if you want to compile
+the LaTeX document without running `sdaps setup tex`.
 
 Please note that this git repository uses submodules to pull in the LaTeX
 code. This means you need to run
- $ git submodule init
+ * `git submodule init`
+
 and then run
- $ git submodule update
+ * `git submodule update`
+
 to checkout and update the repository after a pull.
 
-Alternatively, do the initial clone using "git clone --recursive".
+Alternatively, do the initial clone using `git clone --recursive`.
 
 ## Standalone execution
 
-As an alternative to installing sdaps it is also supported to run it without
-installation. To do this run `./setup.py build` or
-`./setup.py build --build-tex` to build the binary modules, translation and
-possibly LaTeX class files. After this execute sdaps using the provided
-`sdaps.py` script in the toplevel directory.
-
-Adding `--build-tex` is only neccessary when testing the latest version of the
-LaTeX class or if the class is not already installed using other means (e.g.
-distribution LaTeX installation).
+You can also run SDAPS directly from the build directory. To do so, just skip
+the installation step and run `./sdaps.py` from the source directory (this
+assumes the build directory is `_build` as in the above example).
 
 ## Using SDAPS
 
