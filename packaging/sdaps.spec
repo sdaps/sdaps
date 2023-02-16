@@ -53,17 +53,18 @@ readable questionnaires using LaTeX. It also provides the tools to later
 analyse the scanned data, and create a report.
 
 %prep
-%setup -q -n sdaps-1.9.9
+%autosetup -n %{name}-%{version} -S git
 
 %build
-%{__python3} setup.py build --build-tex
+# Unfortunately, TeXLive is currently still too old
+%meson -Dlatex=true
+%meson_build
 
 %install
-%{__python3} setup.py install --install-tex --root %{buildroot}
+%meson_install
 
 %check
-cd test
-IGNORE_PATTERN_EXTEND='\|^survey_id' ./run-test-locally.sh
+%meson_test
 
 %files
 %defattr(-,root,root,-)

@@ -35,8 +35,8 @@ from sdaps.utils.ugettext import ugettext, ungettext
 _ = ugettext
 
 if paths.local_run:
-    # image.so liegt in lib_build_dir/image/
-    __path__.append(os.path.join(paths.lib_build_dir, 'image'))
+    # image.so is build from the toplevel directory currently
+    __path__.append(os.path.join(paths.build_dir))
 
 # If SDAPS is installed, then the image.so file is in the current directory.
 # Simply importing it without changes to the paths will work.
@@ -45,7 +45,7 @@ try:
     from .image import *
 except ImportError as e:
     print(e)
-    log.error(_("It appears you have not build the C extension. Please run \"./setup.py build\" in the toplevel directory."))
+    log.error(_("It appears you have not build the C extension. Please re-build (and install)."))
     sys.exit(1)
 
 set_magic_values(defs.corner_mark_min_length,

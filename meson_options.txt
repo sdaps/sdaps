@@ -1,0 +1,8 @@
+option('latex',
+       description: 'Whether to build and install the LaTeX class, enable if not already included in your TeX distribution',
+       type: 'boolean',
+       value: false)
+option('test-latex',
+       description: 'Run strict LaTeX tests. Useful for development, but likely fails if the LaTeX distribution changes.',
+       type: 'boolean',
+       value: false)
