@@ -10,6 +10,8 @@ else
 	SDAPS="$1"
 fi
 
+SRCDIR="$( dirname "$0" )"
+
 # Set VERBOSE so that LaTeX compilation results end up on the console
 export VERBOSE=1
 
@@ -27,15 +29,15 @@ fi
 # Remove project dir that may exist
 rm -rf "$PROJECT"
 
-"$SDAPS" setup tex "$PROJECT" "data/tex/questionnaire_with_ids.tex"
+"$SDAPS" setup tex "$PROJECT" "$SRCDIR/data/tex/questionnaire_with_ids.tex"
 
 # Create a cover page in projects/test/cover.pdf
 "$SDAPS" cover "$PROJECT"
 
 # Create sheets with some given IDs
-"$SDAPS" stamp "$PROJECT" -f "data/tex/code128_test_ids"
+"$SDAPS" stamp "$PROJECT" -f "$SRCDIR/data/tex/code128_test_ids"
 "$SDAPS" ids "$PROJECT" -o "$PROJECT/ids"
-diff "data/tex/code128_test_ids" "$PROJECT/ids"
+diff "$SRCDIR/data/tex/code128_test_ids" "$PROJECT/ids"
 
 
 
@@ -46,11 +48,11 @@ diff "data/tex/code128_test_ids" "$PROJECT/ids"
 "$SDAPS" recognize "$PROJECT"
 
 # Import some data
-"$SDAPS" import csv "$PROJECT" data/tex/ids_test_import.csv
+"$SDAPS" import csv "$PROJECT" "$SRCDIR/data/tex/ids_test_import.csv"
 # Export data again
 "$SDAPS" export csv "$PROJECT"
 # And compare with expected result
-diff -qup data/tex/ids_test_export.csv "$PROJECT/data_1.csv"
+diff -qup "$SRCDIR/data/tex/ids_test_export.csv" "$PROJECT/data_1.csv"
 
 # Export all the other extra data
 "$SDAPS" export csv "$PROJECT" --images --question-images --quality
@@ -73,7 +75,7 @@ fi
 # Remove project dir that may exist
 rm -rf "$PROJECT"
 
-"$SDAPS" setup tex "$PROJECT" "data/tex/questionnaire_without_ids.tex"
+"$SDAPS" setup tex "$PROJECT" "$SRCDIR/data/tex/questionnaire_without_ids.tex"
 
 # Create a cover page in projects/test/cover.pdf
 "$SDAPS" cover "$PROJECT"
@@ -110,7 +112,7 @@ fi
 # Remove project dir that may exist
 rm -rf "$PROJECT"
 
-"$SDAPS" setup tex "$PROJECT" "../examples/example.tex" --add "../examples/coins"
+"$SDAPS" setup tex "$PROJECT" "$SRCDIR/../examples/example.tex" --add "$SRCDIR/../examples/coins"
 
 ###########################################################
 # Compare info files
@@ -126,7 +128,7 @@ for i in projects/*; do
   success=0
   error=0
   name=`basename "$i"`
-  for j in "data/info_files/$name" data/info_files/$name.*; do
+  for j in "data/info_files/$name" "$SRCDIR/data/info_files/$name.*"; do
     if [ ! -f "$j" ]; then
       continue;
     fi;
