@@ -90,13 +90,13 @@ def csvdata_export(cmdline):
     if cmdline['output']:
         if cmdline['output'] == '-':
             outfd = os.dup(sys.stdout.fileno())
-            outfile = os.fdopen(outfd, 'w')
+            outfile = os.fdopen(outfd, 'w', encoding='utf-8')
         else:
             filename = cmdline['output']
-            outfile = open(filename, 'w')
+            outfile = open(filename, 'w', encoding='utf-8')
     else:
         filename = survey.new_path('data_%i.csv')
-        outfile = open(filename, 'w')
+        outfile = open(filename, 'w', encoding='utf-8')
 
     csvoptions = { 'delimiter' : cmdline['delimiter'] }
 
@@ -126,4 +126,4 @@ def csvdata_import(cmdline):
 
     survey = model.survey.Survey.load(cmdline['project'])
 
-    return csvdata.csvdata_import(survey, open(cmdline['file'], 'r'))
+    return csvdata.csvdata_import(survey, open(cmdline['file'], 'r', encoding='utf-8'))
