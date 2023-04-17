@@ -38,6 +38,12 @@ install_data(
     install_tag: 'bin'
 )
 
+install_data(
+    'sdaps/gui/main_window.ui',
+    install_dir: get_option('datadir') / meson.project_name() / 'ui',
+    install_tag: 'gui'
+)
+
 modules = {
     'sdaps': [
         'calculate.py',
