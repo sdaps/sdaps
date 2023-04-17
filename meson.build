@@ -1,7 +1,7 @@
 project('sdaps', 'c', version: '1.9.12')
 
 py_mod = import('python')
-py = py_mod.find_installation(pure: false)
+py = py_mod.find_installation()
 
 pycairo = dependency('py3cairo')
 cairo = dependency('cairo')
@@ -26,7 +26,8 @@ sdaps_ext = py.extension_module(
      'sdaps/image/surface.h'],
     install: true,
     subdir: 'sdaps/image',
-    dependencies: [pycairo, cairo, glib, tiff],
+    # py.dependency() is only needed for meson < 0.63.0
+    dependencies: [pycairo, cairo, glib, tiff, py.dependency()],
 )
 
 subdir('test')
