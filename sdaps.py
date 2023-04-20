@@ -25,10 +25,10 @@ bdir = '_build'
 bpath = os.getenv('BUILDDIR', os.path.join(os.path.dirname(__file__), '_build'))
 
 if not os.path.exists(bpath):
-    sys.stderr.write('You need to build SDAPS into {bdir} or install it on the system\n\n')
+    sys.stderr.write(f'You need to build SDAPS into {bdir} or install it on the system\n\n')
     sys.stderr.write('To do this, run the following commands in the source directory:\n')
-    sys.stderr.write(' * meson setup {bdir} [-Dlatex-class=true]\n')
-    sys.stderr.write(' * ninja -C {bdir}\n')
+    sys.stderr.write(f' * meson setup {bdir} [-Dlatex-class=true]\n')
+    sys.stderr.write(f' * ninja -C {bdir}\n')
     sys.stderr.write('You can also set the BUILDDIR environment variable.\n')
     sys.exit(1)
 
