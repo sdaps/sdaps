@@ -1,4 +1,4 @@
-project('sdaps', 'c', version: '1.9.12')
+project('sdaps', 'c', version: '1.9.13')
 
 py_mod = import('python')
 py = py_mod.find_installation()
