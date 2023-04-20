@@ -142,5 +142,5 @@ foreach module, files: modules
     foreach file: files
         sources += module / file
     endforeach
-    py.install_sources(sources, subdir: module)
+    py.install_sources(sources, subdir: module, pure: false)
 endforeach
