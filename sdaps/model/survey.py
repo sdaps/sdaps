@@ -245,7 +245,7 @@ class Survey(object):
 
         ##########
         # Load the info file
-        config = configparser.SafeConfigParser()
+        config = configparser.ConfigParser()
         config.optionxform = str
         config.read(os.path.join(survey_dir, 'info'))
         survey.title = config.get('sdaps', 'title')
@@ -348,7 +348,7 @@ class Survey(object):
 
         # Hack to include comments. Set allow_no_value here, and add keys
         # with a '#' in the front and no value.
-        config = configparser.SafeConfigParser(allow_no_value=True)
+        config = configparser.ConfigParser(allow_no_value=True)
 
         config.optionxform = str
         config.add_section('sdaps')
