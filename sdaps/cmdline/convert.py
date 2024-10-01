@@ -31,7 +31,7 @@ parser = script.add_project_subparser("convert",
     description=_("""This command can be used if you scanned files in something
         other than the expected monochrome TIFF mode. All given files will
         be loaded, converted to monochrome and stored in a multipage 1bpp
-        TIFF file. Optionally, you can select \"3D transformation"\ ,which may facilitate
+        TIFF file. Optionally, you can select \"3D transformation\" ,which may facilitate
         working with photos of questionnaires instead of scans."""))
 
 parser.add_argument('--3d-transform',
