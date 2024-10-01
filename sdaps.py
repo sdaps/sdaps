@@ -22,7 +22,7 @@ import os
 import os.path
 
 bdir = '_build'
-bpath = os.getenv('BUILDDIR', os.path.join(os.path.dirname(__file__), '_build'))
+bpath = os.getenv('BUILDDIR', os.path.join(os.path.dirname(os.path.realpath(__file__)), '_build'))
 
 if not os.path.exists(bpath):
     sys.stderr.write(f'You need to build SDAPS into {bdir} or install it on the system\n\n')
