@@ -92,7 +92,7 @@ def write_override(survey, optfile, draft=False, questionnaire_ids=None):
 %% It is parsed after the setup phase of the SDAPS class.
 
 %% Old class vs. new class
-\\ifcsname @PAGEMARKtrue\endcsname
+\\ifcsname @PAGEMARKtrue\\endcsname
     \\setcounter{surveyidlshw}{%(survey_id_lshw)i}
     \\setcounter{surveyidmshw}{%(survey_id_mshw)i}
     \\def\\surveyid{%(survey_id)i}
@@ -108,12 +108,12 @@ def write_override(survey, optfile, draft=False, questionnaire_ids=None):
       %(noglobalid)s\\tl_gset:Nn \\g_sdaps_global_id_tl { #2 }
       \\seq_gset_from_clist:Nn \\g_sdaps_questionnaire_ids_seq { #3 }
     }
-    \\bool_gset_%(draft)s:N \g_sdaps_draft_bool
+    \\bool_gset_%(draft)s:N \\g_sdaps_draft_bool
 
     \\ExplSyntaxOff
       \\setoptions{%(survey_id)i}{%(global_id)s}{%(qids)s}
     \\ExplSyntaxOn
-  \group_end:
+  \\group_end:
 \\fi
 ''' % {
             'survey_id' : survey.survey_id,
@@ -139,7 +139,7 @@ ascii_to_latex = [
     ('>', '{\\textgreater}'),
     ('<', '{\\textless}'),
     ('&', '\\&'),
-    ('#', '\#'),
+    ('#', '\\#'),
     ('^', '\\^{}'),
     ('~', '\\~{}'),
     ('"', '\\"{}'),
