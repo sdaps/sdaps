@@ -1,7 +1,16 @@
 #!/usr/bin/make -f
 
-# Install TeX files for now as upstream TeX Live has a bug
-export MESON_BUILD_ARGS=-Dlatex=true
+BUILDDIR = $(CURDIR)/obj-$(DEB_HOST_GNU_TYPE)
 
 %:
-	dh $@ --buildsystem=meson
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(CONFIG_ARGS)
+
+override_dh_auto_test:
+	dh_auto_test -- -C $(BUILDDIR) --timeout-multiplier 5
+
+override_dh_auto_clean:
+	rm -rf tests/__pycache__
+	dh_auto_clean
