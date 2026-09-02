@@ -21,10 +21,9 @@ from sdaps import model
 
 def parse(survey, additionalqobjects):
 
-    document = file(additionalqobjects, 'r')
+    document = open(additionalqobjects, 'r')
 
     for line in document:
-        line = line.decode('utf-8')
         args = line.strip().split('\t')
         qobject = getattr(model.questionnaire, 'Additional_%s' % args.pop(0))
         assert issubclass(qobject, model.questionnaire.QObject)

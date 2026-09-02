@@ -243,8 +243,8 @@ class Additional_FilterHistogram(Question, metaclass=model.buddy.Register):
 
         if self.obj.calculate.count:
             for i in range(len(self.obj.calculate.values)):
-                out.write('''\\choiceanswer{%s}{%.3f}{%.3f}\n''' %
-                          (unicode_to_latex(self.obj.answers[i]), self.obj.calculate.values[i], self.obj.calculate.significant[i]))
+                out.write('''\\choiceanswer{%s}{%.3f}\n''' %
+                          (unicode_to_latex(self.obj.answers[i]), self.obj.calculate.values[i]))
 
         Question.write_end(self, out)
 
