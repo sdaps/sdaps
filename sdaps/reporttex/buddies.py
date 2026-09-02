@@ -102,7 +102,8 @@ class Question(QObject, metaclass=model.buddy.Register):
 
     def write_begin(self, out):
         # Smarter numbering handling?
-        out.write('\\begin{question}{%s %s}\n' % (self.obj.id_str(), unicode_to_latex(self.obj.question)))
+        title = self.obj.question or self.obj.var or ''
+        out.write('\\begin{question}{%s %s}\n' % (self.obj.id_str(), unicode_to_latex(title)))
 
     def write_end(self, out):
         # Smarter numbering handling?
@@ -137,7 +138,8 @@ class Choice(Question, metaclass=model.buddy.Register):
 
     def write_begin(self, out):
         # Smarter numbering handling?
-        out.write('\\begin{choicequestion}{%s %s}\n' % (self.obj.id_str(), unicode_to_latex(self.obj.question)))
+        title = self.obj.question or self.obj.var or ''
+        out.write('\\begin{choicequestion}{%s %s}\n' % (self.obj.id_str(), unicode_to_latex(title)))
 
     def write_end(self, out):
         # Smarter numbering handling?

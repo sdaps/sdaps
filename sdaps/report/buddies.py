@@ -156,10 +156,11 @@ class Question(QObject, metaclass=model.buddy.Register):
     obj_class = model.questionnaire.Question
 
     def story(self):
+        title = self.obj.question or self.obj.var or ''
         return [
             platypus.Paragraph(
                 '%s %s' % (
-                    self.obj.id_str(), escape(self.obj.question)),
+                    self.obj.id_str(), escape(title)),
                 stylesheet['Question'])], True
 
 
