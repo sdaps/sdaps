@@ -173,7 +173,7 @@ class Questionnaire(model.buddy.Buddy, metaclass=model.buddy.Register):
         if BOTTOM_LEFT in self._fixed_points:
             corners[BOTTOM_LEFT] = (self.obj.survey.defs.corner_mark_left, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_bottom)
         if BOTTOM_RIGHT in self._fixed_points:
-            corners[BOTTOM_RIGHT] = (self.obj.survey.defs.paper_width - defs.corner_mark_right, self.obj.survey.defs.paper_height - defs.corner_mark_bottom)
+            corners[BOTTOM_RIGHT] = (self.obj.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right, self.obj.survey.defs.paper_height - self.obj.survey.defs.corner_mark_bottom)
 
         # Put in the location of the corner that is being adjusted
         corners[corner] = (x, y)
@@ -364,27 +364,27 @@ class Textbox(Box, metaclass=model.buddy.Register):
 
     def move_edge(self, side, x, y):
         if side == _LEFT:
-            x = max(x, self.obj.survey.defs.corner_mark_left)
+            x = max(x, self.obj.question.questionnaire.survey.defs.corner_mark_left)
             new_width = max(MIN_FREETEXT_SIZE, self.obj.data.width + self.obj.data.x - x)
             x = self.obj.data.x + (self.obj.data.width - new_width)
 
             self.obj.data.width = new_width
             self.obj.data.x = x
         elif side == _RIGHT:
-            x = min(x, self.obj.question.questionnaire.survey.defs.paper_width - self.obj.survey.defs.corner_mark_right)
+            x = min(x, self.obj.question.questionnaire.survey.defs.paper_width - self.obj.question.questionnaire.survey.defs.corner_mark_right)
             new_width = max(MIN_FREETEXT_SIZE, x - self.obj.data.x)
             new_width = min(new_width, self.obj.data.x + self.obj.data.width)
 
             self.obj.data.width = new_width
         elif side == _TOP:
-            y = max(y, self.obj.survey.defs.corner_mark_top)
+            y = max(y, self.obj.question.questionnaire.survey.defs.corner_mark_top)
             new_height = max(MIN_FREETEXT_SIZE, self.obj.data.height + self.obj.data.y - y)
             new_y = self.obj.data.y + (self.obj.data.height - new_height)
 
             self.obj.data.height = new_height
             self.obj.data.y = new_y
         elif side == _BOTTOM:
-            y = min(y, self.obj.question.questionnaire.survey.defs.paper_height - self.obj.survey.defs.corner_mark_bottom)
+            y = min(y, self.obj.question.questionnaire.survey.defs.paper_height - self.obj.question.questionnaire.survey.defs.corner_mark_bottom)
             new_height = max(MIN_FREETEXT_SIZE, y - self.obj.data.y)
 
             self.obj.data.height = new_height
